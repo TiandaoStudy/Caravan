@@ -618,6 +618,10 @@ body {
 /*******************************************************************************
   DATA GRID
 *******************************************************************************/
+.datagrid td,
+.datagrid th {
+  border: 1px solid #ddd !important;
+}
 .datagrid-info {
   float: left;
   margin-left: 5px;

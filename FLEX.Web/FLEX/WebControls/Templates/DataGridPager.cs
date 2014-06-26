@@ -139,15 +139,6 @@ namespace FLEX.Web.WebControls.Templates
          }      
 
          Controls.Add(new Literal {Text = "</ul></div>"});
-
-         //var initScript = String.Format("<script type=\"text-javascript\">initDataGridPager('{0}');</script>", TheGrid.ClientID);
-         //if (!IsPostBack)
-         //{
-         //   // On the first load, we must run the script through the script manager, 
-         //   // otherwise it will not be loaded until next async postback. 
-         //   Page.ClientScript.RegisterStartupScript(Page.GetType(), "__INIT_DATA_GRID__", initScript, false);
-         //}
-         //Controls.Add(new Literal {Text = initScript});
       }
 
       private void CreateGridInfo()

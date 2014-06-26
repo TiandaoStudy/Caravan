@@ -35,7 +35,7 @@ namespace FLEX.Web.WebControls
 
          // Default settings - Styling
          BorderWidth = CellPadding = CellSpacing = 0;
-         CssClass = "datagrid table table-bordered table-striped table-hover";
+         CssClass = "datagrid table table-striped table-hover";
          GridLines = GridLines.Both;
 
          // Default settings - Miscellanea
