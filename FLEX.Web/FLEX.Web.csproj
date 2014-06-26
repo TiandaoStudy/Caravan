@@ -1,0 +1,631 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{407B5921-9039-4D0D-A40A-36A19C251CDC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FLEX.Web</RootNamespace>
+    <AssemblyName>FLEX.Web</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;USETHROWER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;USETHROWER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\FLEX.Web.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Thrower">
+      <HintPath>..\packages\Thrower.0.11\lib\net35-client\Thrower.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AjaxLookupData.Serialization.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CacheManager.cs" />
+    <Compile Include="Core\BaseStatePersister.cs" />
+    <Compile Include="Core\CacheViewStatePersister.cs" />
+    <Compile Include="Core\GridPager.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Core\ViewStateStorageSettings.cs" />
+    <Compile Include="FLEX\MasterPages\IPopupBase.cs" />
+    <Compile Include="FLEX\MasterPages\IPageBase.cs" />
+    <Compile Include="FLEX\Pages\AjaxLookup.aspx.cs">
+      <DependentUpon>AjaxLookup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\AjaxLookup.aspx.designer.cs">
+      <DependentUpon>AjaxLookup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\Pages\CacheOverview.aspx.cs">
+      <DependentUpon>CacheOverview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\CacheOverview.aspx.designer.cs">
+      <DependentUpon>CacheOverview.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\Pages\Lookup.aspx.cs">
+      <DependentUpon>Lookup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\Lookup.aspx.designer.cs">
+      <DependentUpon>Lookup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\Pages\MenuNavigator.aspx.cs">
+      <DependentUpon>MenuNavigator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\MenuNavigator.aspx.designer.cs">
+      <DependentUpon>MenuNavigator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\Pages\PageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\PageBaseListAndSearch.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Services\AjaxLookup.asmx.cs">
+      <DependentUpon>AjaxLookup.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\AjaxControlBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\ImageButton.ascx.cs">
+      <DependentUpon>ImageButton.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\ImageButton.ascx.designer.cs">
+      <DependentUpon>ImageButton.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\SearchButton.ascx.cs">
+      <DependentUpon>SearchButton.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\SearchButton.ascx.designer.cs">
+      <DependentUpon>SearchButton.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\DatePicker.ascx.cs">
+      <DependentUpon>DatePicker.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\DatePicker.ascx.designer.cs">
+      <DependentUpon>DatePicker.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\OnOffSwitch.ascx.cs">
+      <DependentUpon>OnOffSwitch.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\OnOffSwitch.ascx.designer.cs">
+      <DependentUpon>OnOffSwitch.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\UserControls\LongTextContainer.ascx.cs">
+      <DependentUpon>LongTextContainer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\LongTextContainer.ascx.designer.cs">
+      <DependentUpon>LongTextContainer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\WebControls\Templates\ControlTemplate.cs" />
+    <Compile Include="FLEX\WebControls\Templates\DataGridEmpty.cs" />
+    <Compile Include="FLEX\WebControls\Templates\DataGridPager.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\WebControls\DataGrid.cs" />
+    <Compile Include="Interfaces.cs" />
+    <Compile Include="Item.Serialization.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LookupData.Serialization.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\MasterPages\Base.Master.cs">
+      <DependentUpon>Base.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\MasterPages\Base.Master.designer.cs">
+      <DependentUpon>Base.Master</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\MasterPages\MultiSelect.Master.cs">
+      <DependentUpon>MultiSelect.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\MasterPages\MultiSelect.Master.designer.cs">
+      <DependentUpon>MultiSelect.Master</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\MasterPages\Head.Master.cs">
+      <DependentUpon>Head.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\MasterPages\Head.Master.designer.cs">
+      <DependentUpon>Head.Master</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\MasterPages\Popup.Master.cs">
+      <DependentUpon>Popup.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\MasterPages\Popup.Master.designer.cs">
+      <DependentUpon>Popup.Master</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\MasterPages\DataView.Master.cs">
+      <DependentUpon>DataView.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\MasterPages\DataView.Master.designer.cs">
+      <DependentUpon>DataView.Master</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\MasterPages\VerticalSearch.Master.cs">
+      <DependentUpon>VerticalSearch.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\MasterPages\VerticalSearch.Master.designer.cs">
+      <DependentUpon>VerticalSearch.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Menu.Serialization.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FLEX\UserControls\Ajax\AutoSuggest.ascx.cs">
+      <DependentUpon>AutoSuggest.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\AutoSuggest.ascx.designer.cs">
+      <DependentUpon>AutoSuggest.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\CollapsibleCheckBoxList.ascx.cs">
+      <DependentUpon>CollapsibleCheckBoxList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\CollapsibleCheckBoxList.ascx.designer.cs">
+      <DependentUpon>CollapsibleCheckBoxList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\RadioList.ascx.cs">
+      <DependentUpon>RadioList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\RadioList.ascx.designer.cs">
+      <DependentUpon>RadioList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\MultiAutoSuggest.ascx.cs">
+      <DependentUpon>MultiAutoSuggest.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\MultiAutoSuggest.ascx.designer.cs">
+      <DependentUpon>MultiAutoSuggest.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\ClearButton.ascx.cs">
+      <DependentUpon>ClearButton.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\ClearButton.ascx.designer.cs">
+      <DependentUpon>ClearButton.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\FixedSelect.ascx.cs">
+      <DependentUpon>FixedSelect.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\FixedSelect.ascx.designer.cs">
+      <DependentUpon>FixedSelect.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\HiddenTrigger.ascx.cs">
+      <DependentUpon>HiddenTrigger.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\HiddenTrigger.ascx.designer.cs">
+      <DependentUpon>HiddenTrigger.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\UserControls\MenuBar.ascx.cs">
+      <DependentUpon>MenuBar.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\MenuBar.ascx.designer.cs">
+      <DependentUpon>MenuBar.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\ErrorHandler.ascx.cs">
+      <DependentUpon>ErrorHandler.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\ErrorHandler.ascx.designer.cs">
+      <DependentUpon>ErrorHandler.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="WebSettings.cs" />
+    <Compile Include="XsdClassGen.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FLEX\Fonts\fontawesome-webfont.svg" />
+    <Content Include="FLEX\Fonts\icomoon.svg" />
+    <Content Include="FLEX\Fonts\ionicons.svg" />
+    <Content Include="FLEX\Images\bootstrap-checkbox.png" />
+    <Content Include="FLEX\Images\pattern.png" />
+    <Content Include="FLEX\Scripts\bootstrap-checkbox.js" />
+    <Content Include="FLEX\Scripts\bootstrap-checkbox.min.js">
+      <DependentUpon>bootstrap-checkbox.js</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Bootstrap-checkbox.css">
+      <DependentUpon>Bootstrap-checkbox.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Bootstrap-checkbox.min.css">
+      <DependentUpon>Bootstrap-checkbox.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Bootstrap-plugins.css">
+      <DependentUpon>Bootstrap-plugins.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Bootstrap-plugins.min.css">
+      <DependentUpon>Bootstrap-plugins.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\UserControls\LongTextContainer.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <None Include=".bin\bower.cmd" />
+    <None Include=".bin\git.cmd" />
+    <None Include=".bin\node.cmd" />
+    <None Include="FLEX\Logs\FLEX.Web.log" />
+    <None Include="FLEX\Logs\FLEX.Common.log" />
+    <Content Include="FLEX\Images\sort_asc.png" />
+    <Content Include="FLEX\Images\sort_asc_disabled.png" />
+    <Content Include="FLEX\Images\sort_both.png" />
+    <Content Include="FLEX\Images\sort_desc.png" />
+    <Content Include="FLEX\Images\sort_desc_disabled.png" />
+    <Content Include="FLEX\Pages\AjaxLookup.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\Pages\CacheOverview.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\Pages\Lookup.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\Pages\MenuNavigator.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\Scripts\bootstrap-file-input.js" />
+    <Content Include="FLEX\Scripts\bootstrap-file-input.min.js">
+      <DependentUpon>bootstrap-file-input.js</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Scripts\bootstrap-switch.js" />
+    <Content Include="FLEX\Scripts\bootstrap-switch.min.js">
+      <DependentUpon>bootstrap-switch.js</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Services\AjaxLookup.asmx" />
+    <Content Include="FLEX\Styles\Fonts.css">
+      <DependentUpon>Fonts.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Fonts.min.css">
+      <DependentUpon>Fonts.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\IcoMoon.css">
+      <DependentUpon>IcoMoon.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\IcoMoon.min.css">
+      <DependentUpon>IcoMoon.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Ionicons.css">
+      <DependentUpon>Ionicons.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Ionicons.min.css">
+      <DependentUpon>Ionicons.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\UserControls\Ajax\ImageButton.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\UserControls\Ajax\SearchButton.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\UserControls\Ajax\DatePicker.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\Scripts\bootstrap-datepicker.js" />
+    <Content Include="FLEX\Scripts\bootstrap-datepicker.min.js">
+      <DependentUpon>bootstrap-datepicker.js</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Scripts\bootstrap.js" />
+    <Content Include="FLEX\Scripts\bootstrap.min.js">
+      <DependentUpon>bootstrap.js</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Scripts\FLEX.js">
+      <DependentUpon>FLEX.coffee</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Scripts\FLEX.min.js">
+      <DependentUpon>FLEX.coffee</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="FLEX\MasterPages\Base.Master" />
+    <Content Include="FLEX\Scripts\html5shiv.js" />
+    <Content Include="FLEX\Scripts\html5shiv.min.js">
+      <DependentUpon>html5shiv.js</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Scripts\jquery-ui.js" />
+    <Content Include="FLEX\Scripts\jquery-ui.min.js">
+      <DependentUpon>jquery-ui.js</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Scripts\jquery.js" />
+    <Content Include="FLEX\Scripts\jquery.min.js">
+      <DependentUpon>jquery.js</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Scripts\popupHandler.js" />
+    <Content Include="FLEX\Scripts\popupHandler.min.js">
+      <DependentUpon>popupHandler.js</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Scripts\respond.js" />
+    <Content Include="FLEX\Scripts\respond.min.js">
+      <DependentUpon>respond.js</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Scripts\underscore.js" />
+    <Content Include="FLEX\Scripts\underscore.min.js">
+      <DependentUpon>underscore.js</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Scripts\webLibrary.js" />
+    <Content Include="FLEX\Styles\Bootstrap-datepicker.css">
+      <DependentUpon>Bootstrap-datepicker.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Bootstrap-datepicker.min.css">
+      <DependentUpon>Bootstrap-datepicker.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Bootstrap-switch.css">
+      <DependentUpon>Bootstrap-switch.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Bootstrap-switch.min.css">
+      <DependentUpon>Bootstrap-switch.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Bootstrap.css">
+      <DependentUpon>Bootstrap.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Bootstrap.min.css">
+      <DependentUpon>Bootstrap.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\FLEX.css">
+      <DependentUpon>FLEX.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\FLEX.min.css">
+      <DependentUpon>FLEX.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\UserControls\Ajax\RadioList.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\UserControls\Ajax\HiddenTrigger.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\UserControls\Ajax\ErrorHandler.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\Styles\FontAwesome.css">
+      <DependentUpon>FontAwesome.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\FontAwesome.min.css">
+      <DependentUpon>FontAwesome.less</DependentUpon>
+    </Content>
+    <None Include="bower.json" />
+    <Content Include="FLEX\MasterPages\VerticalSearch.Master">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <None Include="FLEX\Fonts\fontawesome-webfont.eot" />
+    <None Include="FLEX\Fonts\fontawesome-webfont.ttf" />
+    <None Include="FLEX\Fonts\fontawesome-webfont.woff" />
+    <None Include="FLEX\Fonts\FontAwesome.otf" />
+    <None Include="FLEX\Fonts\icomoon.eot" />
+    <None Include="FLEX\Fonts\icomoon.ttf" />
+    <None Include="FLEX\Fonts\icomoon.woff" />
+    <None Include="FLEX\Fonts\ionicons.eot" />
+    <None Include="FLEX\Fonts\ionicons.ttf" />
+    <None Include="FLEX\Fonts\ionicons.woff" />
+    <Content Include="FLEX\MasterPages\DataView.Master">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\MasterPages\Popup.Master">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\MasterPages\Head.Master">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\MasterPages\MultiSelect.Master">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <None Include="FLEX\Fonts\_tMhxyW6i8lbI7YsUdFlGA.eot" />
+    <None Include="FLEX\Fonts\_xyN3apAT_yRRDeqB3sPRg.woff" />
+    <None Include="FLEX\Scripts\bootstrap-checkbox.min.js.map">
+      <DependentUpon>bootstrap-checkbox.js</DependentUpon>
+    </None>
+    <None Include="FLEX\Scripts\bootstrap-datepicker.min.js.map">
+      <DependentUpon>bootstrap-datepicker.js</DependentUpon>
+    </None>
+    <None Include="FLEX\Scripts\bootstrap-file-input.min.js.map">
+      <DependentUpon>bootstrap-file-input.js</DependentUpon>
+    </None>
+    <None Include="FLEX\Scripts\bootstrap-switch.min.js.map">
+      <DependentUpon>bootstrap-switch.js</DependentUpon>
+    </None>
+    <None Include="FLEX\Scripts\bootstrap.min.js.map">
+      <DependentUpon>bootstrap.js</DependentUpon>
+    </None>
+    <None Include="FLEX\Scripts\FLEX.coffee" />
+    <None Include="FLEX\Scripts\FLEX.min.js.map">
+      <DependentUpon>FLEX.js</DependentUpon>
+    </None>
+    <None Include="FLEX\Fonts\glyphicons-halflings-regular.eot" />
+    <None Include="FLEX\Fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="FLEX\Fonts\glyphicons-halflings-regular.woff" />
+    <None Include="FLEX\Styles\Bootstrap-checkbox.less" />
+    <None Include="FLEX\Styles\Bootstrap-plugins.less" />
+    <None Include="FLEX\Styles\Bootstrap-variables.less" />
+    <None Include="FLEX\Styles\Fonts.less" />
+    <None Include="FLEX\Styles\IcoMoon.less" />
+    <None Include="FLEX\Styles\Ionicons.less" />
+    <None Include="FLEX\XmlSettings\AjaxLookups\AjaxLookup.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="FLEX\XmlSettings\Lookups\Lookup.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="FLEX\XmlSettings\MenuBar.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="FLEX\Scripts\html5shiv.min.js.map">
+      <DependentUpon>html5shiv.js</DependentUpon>
+    </None>
+    <None Include="FLEX\Scripts\jquery-ui.min.js.map">
+      <DependentUpon>jquery-ui.js</DependentUpon>
+    </None>
+    <None Include="FLEX\Scripts\jquery.min.js.map">
+      <DependentUpon>jquery.js</DependentUpon>
+    </None>
+    <None Include="FLEX\Scripts\popupHandler.min.js.map">
+      <DependentUpon>popupHandler.js</DependentUpon>
+    </None>
+    <None Include="FLEX\Scripts\respond.min.js.map">
+      <DependentUpon>respond.js</DependentUpon>
+    </None>
+    <None Include="FLEX\Scripts\underscore.min.js.map">
+      <DependentUpon>underscore.js</DependentUpon>
+    </None>
+    <None Include="FLEX\Styles\Bootstrap-datepicker.less" />
+    <None Include="FLEX\Styles\Bootstrap-switch.less" />
+    <None Include="FLEX\Styles\Bootstrap.less" />
+    <None Include="FLEX\Styles\FLEX.less" />
+    <None Include="FLEX\Styles\FontAwesome.less" />
+    <None Include="XsdClassGen.mapping" />
+    <None Include="XsdClassGen.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>XsdClassGen.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FLEX\UserControls\Ajax\AutoSuggest.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\Images\progress-circle.gif" />
+    <Content Include="FLEX\UserControls\Ajax\CollapsibleCheckBoxList.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\UserControls\Ajax\MultiAutoSuggest.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\UserControls\Ajax\ClearButton.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\UserControls\Ajax\FixedSelect.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\UserControls\Ajax\OnOffSwitch.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\UserControls\MenuBar.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\FLEX.Common\FLEX.Common.csproj">
+      <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>
+      <Name>FLEX.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>:: FONTS - Package
+copy $(ProjectDir)\FLEX\Fonts\*.* $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Fonts
+:: FONTS - Test Web UI
+copy $(ProjectDir)\FLEX\Fonts\*.* $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Fonts
+
+:: IMAGES - Package
+del $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Images
+copy $(ProjectDir)\FLEX\Images\*.* $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Images
+:: IMAGES - Test Web UI
+del $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Images
+copy $(ProjectDir)\FLEX\Images\*.* $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Images
+
+:: LOGS - Package
+copy $(ProjectDir)\FLEX\Logs\*.log $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Logs
+:: LOGS - Test Web UI
+copy $(ProjectDir)\FLEX\Logs\*.log $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Logs
+
+:: MASTER PAGES - Package
+copy $(ProjectDir)\FLEX\MasterPages\*.Master $(SolutionDir)\FLEX.Web.Packager\content\FLEX\MasterPages
+:: MASTER PAGES - Test Web UI
+copy $(ProjectDir)\FLEX\MasterPages\*.Master $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\MasterPages
+
+:: PAGES - Package
+copy $(ProjectDir)\FLEX\Pages\*.aspx $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Pages
+:: PAGES - Test Web UI
+copy $(ProjectDir)\FLEX\Pages\*.aspx $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Pages
+
+:: SERVICES - Package
+copy $(ProjectDir)\FLEX\Services\*.asmx $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Services
+:: SERVICES - Test Web UI
+copy $(ProjectDir)\FLEX\Services\*.asmx $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Services
+
+:: SCRIPTS - Package
+copy $(ProjectDir)\FLEX\Scripts\*.js $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Scripts
+copy $(ProjectDir)\FLEX\Scripts\*.map $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Scripts
+:: SCRIPTS - Test Web UI
+copy $(ProjectDir)\FLEX\Scripts\*.js $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Scripts
+copy $(ProjectDir)\FLEX\Scripts\*.map $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Scripts
+
+:: STYLES - Package
+copy $(ProjectDir)\FLEX\Styles\*.css $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Styles\*.css
+:: STYLES - Test Web UI
+copy $(ProjectDir)\FLEX\Styles\*.css $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Styles\*.css
+
+:: USER CONTROLS - Package
+copy $(ProjectDir)\FLEX\UserControls\*.ascx $(SolutionDir)\FLEX.Web.Packager\content\FLEX\UserControls
+copy $(ProjectDir)\FLEX\UserControls\Ajax\*.ascx $(SolutionDir)\FLEX.Web.Packager\content\FLEX\UserControls\Ajax
+:: USER CONTROLS - Test Web UI
+copy $(ProjectDir)\FLEX\UserControls\*.ascx $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\UserControls
+copy $(ProjectDir)\FLEX\UserControls\Ajax\*.ascx $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\UserControls\Ajax
+
+:: XML SETTINGS - Package
+copy $(ProjectDir)\FLEX\XmlSettings\*.xsd $(SolutionDir)\FLEX.Web.Packager\content\FLEX\XmlSettings
+copy $(ProjectDir)\FLEX\XmlSettings\AjaxLookups\*.xsd $(SolutionDir)\FLEX.Web.Packager\content\FLEX\XmlSettings\AjaxLookups
+copy $(ProjectDir)\FLEX\XmlSettings\Lookups\*.xsd $(SolutionDir)\FLEX.Web.Packager\content\FLEX\XmlSettings\Lookups
+:: XML SETTINGS - Test Web UI
+copy $(ProjectDir)\FLEX\XmlSettings\*.xsd $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\XmlSettings
+copy $(ProjectDir)\FLEX\XmlSettings\AjaxLookups\*.xsd $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\XmlSettings\AjaxLookups
+copy $(ProjectDir)\FLEX\XmlSettings\Lookups\*.xsd $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\XmlSettings\Lookups
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
