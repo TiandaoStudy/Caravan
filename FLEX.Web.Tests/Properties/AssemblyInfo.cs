@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("FLEX.Web.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Finsa S.p.A.")]
+[assembly: AssemblyCompany("FINSA S.p.A.")]
 [assembly: AssemblyProduct("FLEX.Web.Tests")]
-[assembly: AssemblyCopyright("Copyright © Finsa S.p.A. 2014")]
+[assembly: AssemblyCopyright("Copyright ©FINSA S.p.A. 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

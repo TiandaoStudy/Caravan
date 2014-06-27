@@ -47,6 +47,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASP.NET", "ASP.NET", "{D2B1
 		FLEX.Docs\Issues and Solutions\ASP.NET\ASP.NET 3.5 and Validators in IE9.pdf = FLEX.Docs\Issues and Solutions\ASP.NET\ASP.NET 3.5 and Validators in IE9.pdf
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3495129D-5A6D-47A5-9121-317E6EE3CBB4}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True

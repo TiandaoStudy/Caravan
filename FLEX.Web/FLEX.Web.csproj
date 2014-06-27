@@ -9,13 +9,15 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FLEX.Web</RootNamespace>
     <AssemblyName>FLEX.Web</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SccProjectName>Svn</SccProjectName>
     <SccLocalPath>Svn</SccLocalPath>
     <SccAuxPath>Svn</SccAuxPath>
     <SccProvider>SubversionScc</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,7 +46,8 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Thrower">
+    <Reference Include="Thrower, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thrower.0.11\lib\net35-client\Thrower.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -144,12 +147,6 @@
     </Compile>
     <Compile Include="FLEX\WebControls\DataGrid.cs" />
     <Compile Include="Interfaces.cs" />
-    <Compile Include="Item.Serialization.cs">
-      <DependentUpon>XsdClassGen.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LookupData.Serialization.cs">
-      <DependentUpon>XsdClassGen.tt</DependentUpon>
-    </Compile>
     <Compile Include="FLEX\MasterPages\Base.Master.cs">
       <DependentUpon>Base.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -191,6 +188,12 @@
     </Compile>
     <Compile Include="FLEX\MasterPages\VerticalSearch.Master.designer.cs">
       <DependentUpon>VerticalSearch.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Item.Serialization.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LookupData.Serialization.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
     <Compile Include="Menu.Serialization.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
@@ -497,7 +500,6 @@
     <None Include="FLEX\XmlSettings\MenuBar.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
     <None Include="FLEX\Scripts\html5shiv.min.js.map">
       <DependentUpon>html5shiv.js</DependentUpon>
     </None>
@@ -521,6 +523,7 @@
     <None Include="FLEX\Styles\Bootstrap.less" />
     <None Include="FLEX\Styles\FLEX.less" />
     <None Include="FLEX\Styles\FontAwesome.less" />
+    <None Include="packages.config" />
     <None Include="XsdClassGen.mapping" />
     <None Include="XsdClassGen.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -627,6 +630,13 @@ if $(ConfigurationName) == Release (
     copy "$(TargetDir)FLEX.Web.xml" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
 )</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
