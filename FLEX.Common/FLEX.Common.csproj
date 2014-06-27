@@ -85,10 +85,10 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (
-    set dir="$(SolutionDir)FLEX.Common.Packager/lib/net45"
+    set dir="$(SolutionDir)FLEX.Common.Packager/lib/net40"
     if not exist "%25dir%25" mkdir "%25dir%25"
-    copy "$(TargetDir)FLEX.Common.dll" "$(SolutionDir)FLEX.Common.Packager/lib/net45"
-    copy "$(TargetDir)FLEX.Common.xml" "$(SolutionDir)FLEX.Common.Packager/lib/net45"
+    copy "$(TargetDir)FLEX.Common.dll" "$(SolutionDir)FLEX.Common.Packager/lib/net40"
+    copy "$(TargetDir)FLEX.Common.xml" "$(SolutionDir)FLEX.Common.Packager/lib/net40"
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

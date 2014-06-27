@@ -619,7 +619,13 @@ copy $(ProjectDir)\FLEX\XmlSettings\Lookups\*.xsd $(SolutionDir)\FLEX.Web.Packag
 copy $(ProjectDir)\FLEX\XmlSettings\*.xsd $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\XmlSettings
 copy $(ProjectDir)\FLEX\XmlSettings\AjaxLookups\*.xsd $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\XmlSettings\AjaxLookups
 copy $(ProjectDir)\FLEX\XmlSettings\Lookups\*.xsd $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\XmlSettings\Lookups
-</PostBuildEvent>
+
+if $(ConfigurationName) == Release (
+    set dir="$(SolutionDir)FLEX.Web.Packager/lib/net40"
+    if not exist "%25dir%25" mkdir "%25dir%25"
+    copy "$(TargetDir)FLEX.Web.dll" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
+    copy "$(TargetDir)FLEX.Web.xml" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
+)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

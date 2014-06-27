@@ -633,17 +633,17 @@ body {
 .datagrid-not-sorted {
   background-image: url(../Images/sort_both.png);
   background-repeat: no-repeat;
-  background-position: right 0px;
+  background-position: right;
 }
 .datagrid-sort-asc {
   background-image: url(../Images/sort_asc.png);
   background-repeat: no-repeat;
-  background-position: right 0px;
+  background-position: right;
 }
 .datagrid-sort-desc {
   background-image: url(../Images/sort_desc.png);
   background-repeat: no-repeat;
-  background-position: right 0px;
+  background-position: right;
 }
 /*******************************************************************************
   LONG TEXT CONTAINER
@@ -651,6 +651,7 @@ body {
 .long-text-ctn-label {
   color: #158cba;
   cursor: pointer;
+  margin-bottom: 0px;
   text-decoration: none;
 }
 /*******************************************************************************
