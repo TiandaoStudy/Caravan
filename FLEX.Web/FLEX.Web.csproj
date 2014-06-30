@@ -102,6 +102,13 @@
       <DependentUpon>AjaxLookup.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="FLEX\Pages\Templates\VerticalSearch.aspx.cs">
+      <DependentUpon>VerticalSearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\Templates\VerticalSearch.aspx.designer.cs">
+      <DependentUpon>VerticalSearch.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FLEX\UserControls\Ajax\AjaxControlBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -293,6 +300,9 @@
     </Content>
     <Content Include="FLEX\Styles\Bootstrap-plugins.min.css">
       <DependentUpon>Bootstrap-plugins.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Pages\Templates\VerticalSearch.aspx">
+      <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\UserControls\LongTextContainer.ascx">
       <SubType>ASPXCodeBehind</SubType>
