@@ -85,6 +85,13 @@
     <Compile Include="FLEX\Pages\CacheOverview.aspx.designer.cs">
       <DependentUpon>CacheOverview.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FLEX\Pages\ErrorHandler.aspx.cs">
+      <DependentUpon>ErrorHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\ErrorHandler.aspx.designer.cs">
+      <DependentUpon>ErrorHandler.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FLEX\Pages\Lookup.aspx.cs">
       <DependentUpon>Lookup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -299,6 +306,9 @@
     <Content Include="FLEX\Fonts\ionicons.svg" />
     <Content Include="FLEX\Images\bootstrap-checkbox.png" />
     <Content Include="FLEX\Images\pattern.png" />
+    <Content Include="FLEX\Pages\ErrorHandler.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="FLEX\Scripts\bootstrap-checkbox.js" />
     <Content Include="FLEX\Scripts\bootstrap-checkbox.min.js">
       <DependentUpon>bootstrap-checkbox.js</DependentUpon>
@@ -315,9 +325,7 @@
     <Content Include="FLEX\Styles\Bootstrap-plugins.min.css">
       <DependentUpon>Bootstrap-plugins.less</DependentUpon>
     </Content>
-    <Content Include="FLEX\Pages\Templates\VerticalSearch.aspx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="FLEX\Pages\Templates\VerticalSearch.aspx" />
     <Content Include="FLEX\UserControls\LongTextContainer.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>

@@ -21,7 +21,7 @@ namespace FLEX.Web.Pages
 
       #region IPageBase Members
 
-      public ErrorHandler ErrorHandler { get; private set; }
+      public UserControls.Ajax.ErrorHandler ErrorHandler { get; private set; }
       public bool HasPageVisibleHandlers { get; private set; }
       public HtmlForm MainForm { get; private set; }
       public MenuBar MenuBar { get; private set; }
