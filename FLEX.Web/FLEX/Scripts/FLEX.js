@@ -116,9 +116,12 @@
 
   root.pageLoad = function() {
     var prm;
-    prm = Sys.WebForms.PageRequestManager.getInstance();
-    prm.add_beginRequest(beginRequestHandler);
-    return prm.add_endRequest(endRequestHandler);
+    if (!root.pageLoaded) {
+      prm = Sys.WebForms.PageRequestManager.getInstance();
+      prm.add_beginRequest(beginRequestHandler);
+      prm.add_endRequest(endRequestHandler);
+      root.pageLoaded = true;
+    }
   };
 
   $(document).ready(function() {
