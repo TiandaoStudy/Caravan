@@ -95,7 +95,7 @@ root.fixDataGridPager = (tableId) ->
 ################################################################################
 
 root.displaySystemError = () ->
-   window.open("ErrorHandler.aspx", "SystemError",
+   window.open("FLEX/Pages/ErrorHandler.aspx", "SystemError",
                "menubar=no,location=yes,resizable=yes,scrollbars=yes,status=no,height=500,width=800")
 
 ################################################################################
