@@ -58,6 +58,13 @@ namespace FLEX.Web.Pages
                  }
                     
               }
+               ErrorArray[0] = txtMessage.Text;
+               ErrorArray[1] = txtSource.Text;
+               ErrorArray[2] = txtDetail.Text;
+
+               //prima la svuoto e poi la valorizzo con i dati del messaggio d'errore 
+               Session["STAMPA_ERRORE"] = null;
+               Session["STAMPA_ERRORE"] = ErrorArray;
 
            }
 
