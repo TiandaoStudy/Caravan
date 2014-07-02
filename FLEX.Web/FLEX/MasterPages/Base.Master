@@ -105,5 +105,5 @@
    <asp:ContentPlaceHolder ID="footerContent" runat="server" />
    
    <!-- Page footer, customized by each project -->
-   <flex:PageFooter ID="flexPageFooter" runat="server"/>   
+   <flex:PageFooter ID="flexPageFooter" runat="server" />   
 </asp:Content>

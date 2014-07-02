@@ -33,6 +33,7 @@
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-datepicker.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-file-input.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-switch.min.js"></script>
+      <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-touchspin.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootbox.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/popupHandler.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/webLibrary.js<%=NoCacheTag%>"></script>

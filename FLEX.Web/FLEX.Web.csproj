@@ -317,6 +317,10 @@
     <Content Include="FLEX\Scripts\bootstrap-checkbox.min.js">
       <DependentUpon>bootstrap-checkbox.js</DependentUpon>
     </Content>
+    <Content Include="FLEX\Scripts\bootstrap-touchspin.js" />
+    <Content Include="FLEX\Scripts\bootstrap-touchspin.min.js">
+      <DependentUpon>bootstrap-touchspin.js</DependentUpon>
+    </Content>
     <Content Include="FLEX\Styles\Bootstrap-checkbox.css">
       <DependentUpon>Bootstrap-checkbox.less</DependentUpon>
     </Content>
@@ -330,6 +334,12 @@
       <DependentUpon>Bootstrap-plugins.less</DependentUpon>
     </Content>
     <Content Include="FLEX\Pages\Templates\VerticalSearch.aspx" />
+    <Content Include="FLEX\Styles\Bootstrap-touchspin.css">
+      <DependentUpon>Bootstrap-touchspin.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Bootstrap-touchspin.min.css">
+      <DependentUpon>Bootstrap-touchspin.less</DependentUpon>
+    </Content>
     <Content Include="FLEX\UserControls\LongTextContainer.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -520,6 +530,9 @@
     <None Include="FLEX\Scripts\bootstrap-switch.min.js.map">
       <DependentUpon>bootstrap-switch.js</DependentUpon>
     </None>
+    <None Include="FLEX\Scripts\bootstrap-touchspin.min.js.map">
+      <DependentUpon>bootstrap-touchspin.js</DependentUpon>
+    </None>
     <None Include="FLEX\Scripts\bootstrap.min.js.map">
       <DependentUpon>bootstrap.js</DependentUpon>
     </None>
@@ -532,6 +545,7 @@
     <None Include="FLEX\Fonts\glyphicons-halflings-regular.woff" />
     <None Include="FLEX\Styles\Bootstrap-checkbox.less" />
     <None Include="FLEX\Styles\Bootstrap-plugins.less" />
+    <None Include="FLEX\Styles\Bootstrap-touchspin.less" />
     <None Include="FLEX\Styles\Bootstrap-variables.less" />
     <None Include="FLEX\Styles\Fonts.less" />
     <None Include="FLEX\Styles\IcoMoon.less" />
