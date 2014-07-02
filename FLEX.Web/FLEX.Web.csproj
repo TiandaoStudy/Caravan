@@ -309,6 +309,10 @@
     <Content Include="FLEX\Pages\ErrorHandler.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Content Include="FLEX\Scripts\bootbox.js" />
+    <Content Include="FLEX\Scripts\bootbox.min.js">
+      <DependentUpon>bootbox.js</DependentUpon>
+    </Content>
     <Content Include="FLEX\Scripts\bootstrap-checkbox.js" />
     <Content Include="FLEX\Scripts\bootstrap-checkbox.min.js">
       <DependentUpon>bootstrap-checkbox.js</DependentUpon>
@@ -501,6 +505,9 @@
     <Content Include="FLEX\MasterPages\CustomView.Master">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <None Include="FLEX\Scripts\bootbox.min.js.map">
+      <DependentUpon>bootbox.js</DependentUpon>
+    </None>
     <None Include="FLEX\Scripts\bootstrap-checkbox.min.js.map">
       <DependentUpon>bootstrap-checkbox.js</DependentUpon>
     </None>
