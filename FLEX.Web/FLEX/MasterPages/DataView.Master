@@ -1,0 +1,45 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="DataView.master.cs" Inherits="FLEX.Web.MasterPages.DataView" MasterPageFile="~/FLEX/MasterPages/Base.Master" %>
+<%@ MasterType VirtualPath="../MasterPages/Base.Master"%>
+<%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
+
+<asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">
+   <script type="text/javascript">
+      var hasPageVisibleHandlers = <%= HasPageVisibleHandlers.ToString().ToLower() %>;
+
+      $(document).ready(function() {
+         $("#pageTitle").html(document.title);
+      });
+   </script>
+    
+   <asp:ContentPlaceHolder ID="headContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="aspMainContent" ContentPlaceHolderID="mainContent" runat="server">
+   <!-- Start Data Grid -->
+   <div id="divDataGrid" class="col-xs-12">
+      <div class="panel panel-primary">
+         <div class="panel-heading">
+            <strong id="pageTitle" class="panel-title"></strong>
+         </div>
+         
+         <div class="workingArea">
+            <ajax:UpdatePanel ID="gridUpdatePanel" runat="server">
+               <ContentTemplate>
+                  <asp:ContentPlaceHolder ID="gridContent" runat="server"></asp:ContentPlaceHolder>
+               </ContentTemplate>
+            </ajax:UpdatePanel>
+         </div>
+         
+         <div class="panel-footer clearfix">
+            <div class="pull-right btn-row">
+               <asp:ContentPlaceHolder ID="buttonsContent" runat="server"></asp:ContentPlaceHolder>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- End Data Grid -->
+</asp:Content>
+
+<asp:Content ID="aspFooterContent" ContentPlaceHolderID="footerContent" runat="server">
+   <asp:ContentPlaceHolder ID="footerContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>

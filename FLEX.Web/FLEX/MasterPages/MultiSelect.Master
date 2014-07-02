@@ -1,0 +1,92 @@
+﻿<%@ Master AutoEventWireup="true" CodeBehind="MultiSelect.Master.cs" Inherits="FLEX.Web.MasterPages.MultiSelect" Language="C#" MasterPageFile="~/FLEX/MasterPages/Popup.Master" %>
+<%@ MasterType VirtualPath="~/FLEX/MasterPages/Popup.Master" %>
+<%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
+
+<asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">
+   <style type="text/css">
+      .workingArea {
+         height: 400px;
+      }
+
+      #buttons {
+         margin-top: 15%;
+      }
+   </style>
+
+   <asp:ContentPlaceHolder ID="headContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="aspMainContent" ContentPlaceHolderID="mainContent" runat="server">
+   <div class="row">
+      <asp:ContentPlaceHolder ID="upperContent" runat="server"></asp:ContentPlaceHolder>
+   </div>
+
+   <div class="row" style="margin-top: 3%;">
+      <!-- Start Left Panel -->
+      <div id="leftPanel" class="col-xs-5-5">
+         <ajax:UpdatePanel ID="leftUpdatePanel" runat="server">
+            <ContentTemplate>
+               <div class="panel panel-primary"> 
+                  <div class="panel-heading">
+                     <strong ID="leftPanelTitle" class="panel-title" runat="server"></strong>
+                  </div>
+                  <div class="workingArea">
+                     <asp:ContentPlaceHolder ID="leftPanelBody" runat="server">
+                        <!-- Custom content, like a grid view -->
+                     </asp:ContentPlaceHolder>
+                  </div>
+               </div>
+            </ContentTemplate>
+         </ajax:UpdatePanel>
+      </div>
+      <!-- End Left Panel -->
+
+      <!-- Start Vertical Buttons -->
+      <ajax:UpdatePanel runat="server">
+         <contenttemplate>
+            <div id="buttons" class="col-xs-1 btn-group-vertical">
+               <asp:LinkButton ID="btnMoveRight" runat="server" CssClass="btn btn-success btn-sm">
+                  <span class="glyphicon glyphicon-chevron-right"></span>
+               </asp:LinkButton>
+               <asp:LinkButton ID="btnMoveAllRight" runat="server" CssClass="btn btn-success btn-sm">
+                  <span class="glyphicon glyphicon-forward"></span>
+               </asp:LinkButton>
+               <asp:LinkButton ID="btnMoveAllLeft" runat="server" CssClass="btn btn-danger btn-sm">
+                  <span class="glyphicon glyphicon-backward"></span>
+               </asp:LinkButton>
+               <asp:LinkButton ID="btnMoveLeft" runat="server" CssClass="btn btn-danger btn-sm">
+                  <span class="glyphicon glyphicon-chevron-left"></span>
+               </asp:LinkButton>
+            </div>
+         </contenttemplate>
+      </ajax:UpdatePanel>
+      <!-- End Vertical Buttons -->
+
+      <!-- Start Right Panel -->
+      <div id="rightPanel" class="col-xs-5-5">
+         <ajax:UpdatePanel ID="rightUpdatePanel" runat="server">
+            <ContentTemplate>
+               <div class="panel panel-primary">
+                  <div class="panel-heading">
+                     <strong ID="rightPanelTitle" class="panel-title" runat="server"></strong>
+                  </div>
+                  <div class="workingArea">
+                     <asp:ContentPlaceHolder ID="rightPanelBody" runat="server">
+                        <!-- Custom content, like a grid view -->
+                     </asp:ContentPlaceHolder>
+                  </div>
+               </div>
+            </ContentTemplate>
+         </ajax:UpdatePanel>
+      </div>
+      <!-- End Right Panel -->
+   </div>
+
+   <div class="row">
+      <asp:ContentPlaceHolder ID="lowerContent" runat="server"></asp:ContentPlaceHolder>
+   </div>
+</asp:Content>
+
+<asp:Content ID="aspButtonsContent" ContentPlaceHolderID="buttonsContent" runat="server">
+   <asp:ContentPlaceHolder ID="buttonsContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
