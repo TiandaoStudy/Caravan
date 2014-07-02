@@ -329,9 +329,7 @@
     <Content Include="FLEX\UserControls\LongTextContainer.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\UserControls\PageFooter.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="FLEX\UserControls\PageFooter.ascx" />
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />

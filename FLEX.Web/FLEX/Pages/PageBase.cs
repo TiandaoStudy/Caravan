@@ -21,11 +21,36 @@ namespace FLEX.Web.Pages
 
       #region IPageBase Members
 
-      public UserControls.Ajax.ErrorHandler ErrorHandler { get; private set; }
-      public bool HasPageVisibleHandlers { get; private set; }
-      public HtmlForm MainForm { get; private set; }
-      public MenuBar MenuBar { get; private set; }
-      public ScriptManager ScriptManager { get; private set; }
+      public UserControls.Ajax.ErrorHandler ErrorHandler
+      {
+         get { return (Master as IPageBase).ErrorHandler; }
+      }
+
+      public bool HasPageVisibleHandlers
+      {
+         get { return (Master as IPageBase).HasPageVisibleHandlers; }
+      }
+
+      public HtmlForm MainForm
+      {
+         get { return (Master as IPageBase).MainForm; }
+      }
+
+      public MenuBar MenuBar
+      {
+         get { return (Master as IPageBase).MenuBar; }
+      }
+
+      public PageFooter PageFooter
+      {
+         get { return (Master as IPageBase).PageFooter; }
+      }
+
+      public ScriptManager ScriptManager
+      {
+         get { return (Master as IPageBase).ScriptManager; }
+      }
+
       public event EventHandler Page_Visible;
 
       #endregion
