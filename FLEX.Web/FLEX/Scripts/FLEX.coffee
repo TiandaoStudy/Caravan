@@ -93,9 +93,9 @@ root.displaySystemError = () ->
 ################################################################################
 
 root.triggerAsyncPostBack = (hiddenTriggerId) ->
-   hiddenTrigger = $("##{hiddenTriggerId}");
-   hiddenTrigger.val(Math.random());
-   hiddenTrigger.change();
+   hiddenTrigger = $("##{hiddenTriggerId}")
+   hiddenTrigger.val(Math.random())
+   hiddenTrigger.change()
 
 ################################################################################
 # UpdatePanel & JS
@@ -108,9 +108,12 @@ root.endRequestHandler = (sender, args) ->
    $(document).trigger(root.settings.endAjaxRequest, [sender, args])
 
 root.pageLoad = () ->
-   prm = Sys.WebForms.PageRequestManager.getInstance()
-   prm.add_beginRequest(beginRequestHandler)
-   prm.add_endRequest(endRequestHandler)
+   unless root.pageLoaded
+      prm = Sys.WebForms.PageRequestManager.getInstance()
+      prm.add_beginRequest(beginRequestHandler)
+      prm.add_endRequest(endRequestHandler)
+      root.pageLoaded = true
+   return 
 
 $(document).ready(() ->
    # Sets controls styles
