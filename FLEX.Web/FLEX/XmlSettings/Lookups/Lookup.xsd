@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="FLEX.Extensions.Web.XmlSettings.Lookup"
+           xmlns="FLEX.Extensions.Web.XmlSettings.Lookup">
+  <xs:element name="LookupData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DataColumns">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DataColumn" maxOccurs="unbounded" minOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="Type" />
+                    <xs:element type="xs:string" name="DataField" />
+                    <xs:element type="xs:string" name="SortExpression" />
+                    <xs:element type="xs:string" name="HeaderText" />
+                    <xs:element type="xs:string" name="ReturnElement" />
+                    <xs:element type="xs:string" name="DataType" />
+                    <xs:element type="xs:short" name="Width" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="LookupQuery" />
+      </xs:sequence>
+      <xs:attribute type="xs:string" name="DefaultSort" />
+      <xs:attribute type="xs:boolean" name="AllowCancel" />
+      <xs:attribute type="xs:boolean" name="DisableFirstSearch" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
