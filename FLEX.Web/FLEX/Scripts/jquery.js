@@ -1,4 +1,10 @@
 /*!
+ * ATTENZIONE, QUANDO SI AGGIORNA IL FILE, OCCORRE FARE UN SEARCH E REPLACE DI:
+ * ' undefined' -> ' (void 0)' (senza apici)
+ * '	undefined' -> ' (void 0)' (senza apici, versione con TAB)
+ */
+
+/*!
  * jQuery JavaScript Library v2.1.1
  * http://jquery.com/
  *
@@ -227,8 +233,8 @@ jQuery.extend = jQuery.fn.extend = function() {
 					// Never move original objects, clone them
 					target[ name ] = jQuery.extend( deep, clone, copy );
 
-				// Don't bring in undefined values
-				} else if ( copy !== undefined ) {
+				// Don't bring in (void 0) values
+				} else if ( copy !== (void 0) ) {
 					target[ name ] = copy;
 				}
 			}
@@ -502,9 +508,9 @@ jQuery.extend({
 		}
 
 		// Quick check to determine if target is callable, in the spec
-		// this throws a TypeError, but we will just return undefined.
+		// this throws a TypeError, but we will just return (void 0).
 		if ( !jQuery.isFunction( fn ) ) {
-			return undefined;
+			return (void 0);
 		}
 
 		// Simulated bind
@@ -597,7 +603,7 @@ var i,
 	},
 
 	// General-purpose constants
-	strundefined = typeof undefined,
+	strundefined = typeof (void 0),
 	MAX_NEGATIVE = 1 << 31,
 
 	// Instance methods
@@ -1029,7 +1035,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 	// Support: IE>8
 	// If iframe document is assigned to "document" variable and if iframe has been reloaded,
 	// IE will throw "permission denied" error when accessing "document" variable, see jQuery #13936
-	// IE6-8 do not support the defaultView property so parent will be undefined
+	// IE6-8 do not support the defaultView property so parent will be (void 0)
 	if ( parent && parent !== parent.top ) {
 		// IE11 does not have attachEvent, so all must suffer
 		if ( parent.addEventListener ) {
@@ -1422,9 +1428,9 @@ Sizzle.attr = function( elem, name ) {
 		// Don't get fooled by Object.prototype properties (jQuery #13807)
 		val = fn && hasOwn.call( Expr.attrHandle, name.toLowerCase() ) ?
 			fn( elem, name, !documentIsHTML ) :
-			undefined;
+		 (void 0);
 
-	return val !== undefined ?
+	return val !== (void 0) ?
 		val :
 		support.attributes || !documentIsHTML ?
 			elem.getAttribute( name ) :
@@ -2796,7 +2802,7 @@ var rootjQuery,
 				selector( jQuery );
 		}
 
-		if ( selector.selector !== undefined ) {
+		if ( selector.selector !== (void 0) ) {
 			this.selector = selector.selector;
 			this.context = selector.context;
 		}
@@ -2823,7 +2829,7 @@ var rparentsprev = /^(?:parents|prev(?:Until|All))/,
 jQuery.extend({
 	dir: function( elem, dir, until ) {
 		var matched = [],
-			truncate = until !== undefined;
+			truncate = until !== (void 0);
 
 		while ( (elem = elem[ dir ]) && elem.nodeType !== 9 ) {
 			if ( elem.nodeType === 1 ) {
@@ -3155,7 +3161,7 @@ jQuery.Callbacks = function( options ) {
 			},
 			// Have the list do nothing anymore
 			disable: function() {
-				list = stack = memory = undefined;
+				list = stack = memory = (void 0);
 				return this;
 			},
 			// Is it disabled?
@@ -3164,7 +3170,7 @@ jQuery.Callbacks = function( options ) {
 			},
 			// Lock the list in its current state
 			lock: function() {
-				stack = undefined;
+				stack = (void 0);
 				if ( !memory ) {
 					self.disable();
 				}
@@ -3452,7 +3458,7 @@ var access = jQuery.access = function( elems, fn, key, value, chainable, emptyGe
 		}
 
 	// Sets one value
-	} else if ( value !== undefined ) {
+	} else if ( value !== (void 0) ) {
 		chainable = true;
 
 		if ( !jQuery.isFunction( value ) ) {
@@ -3592,7 +3598,7 @@ Data.prototype = {
 		// empty data object. A valid owner object must be provided.
 		var cache = this.cache[ this.key( owner ) ];
 
-		return key === undefined ?
+		return key === (void 0) ?
 			cache : cache[ key ];
 	},
 	access: function( owner, key, value ) {
@@ -3608,12 +3614,12 @@ Data.prototype = {
 		//   1. The entire cache object
 		//   2. The data stored at the key
 		//
-		if ( key === undefined ||
-				((key && typeof key === "string") && value === undefined) ) {
+		if ( key === (void 0) ||
+				((key && typeof key === "string") && value === (void 0)) ) {
 
 			stored = this.get( owner, key );
 
-			return stored !== undefined ?
+			return stored !== (void 0) ?
 				stored : this.get( owner, jQuery.camelCase(key) );
 		}
 
@@ -3627,14 +3633,14 @@ Data.prototype = {
 
 		// Since the "set" path can have two possible entry points
 		// return the expected data based on which path was taken[*]
-		return value !== undefined ? value : key;
+		return value !== (void 0) ? value : key;
 	},
 	remove: function( owner, key ) {
 		var i, name, camel,
 			unlock = this.key( owner ),
 			cache = this.cache[ unlock ];
 
-		if ( key === undefined ) {
+		if ( key === (void 0) ) {
 			this.cache[ unlock ] = {};
 
 		} else {
@@ -3703,7 +3709,7 @@ function dataAttr( elem, key, data ) {
 
 	// If nothing was found internally, try to fetch any
 	// data from the HTML5 data-* attribute
-	if ( data === undefined && elem.nodeType === 1 ) {
+	if ( data === (void 0) && elem.nodeType === 1 ) {
 		name = "data-" + key.replace( rmultiDash, "-$1" ).toLowerCase();
 		data = elem.getAttribute( name );
 
@@ -3721,7 +3727,7 @@ function dataAttr( elem, key, data ) {
 			// Make sure we set the data so it isn't changed later
 			data_user.set( elem, key, data );
 		} else {
-			data = undefined;
+			data = (void 0);
 		}
 	}
 	return data;
@@ -3758,7 +3764,7 @@ jQuery.fn.extend({
 			attrs = elem && elem.attributes;
 
 		// Gets all values
-		if ( key === undefined ) {
+		if ( key === (void 0) ) {
 			if ( this.length ) {
 				data = data_user.get( elem );
 
@@ -3796,28 +3802,28 @@ jQuery.fn.extend({
 
 			// The calling jQuery object (element matches) is not empty
 			// (and therefore has an element appears at this[ 0 ]) and the
-			// `value` parameter was not undefined. An empty jQuery object
+			// `value` parameter was not (void 0). An empty jQuery object
 			// will result in `undefined` for elem = this[ 0 ] which will
 			// throw an exception if an attempt to read a data cache is made.
-			if ( elem && value === undefined ) {
+			if ( elem && value === (void 0) ) {
 				// Attempt to get data from the cache
 				// with the key as-is
 				data = data_user.get( elem, key );
-				if ( data !== undefined ) {
+				if ( data !== (void 0) ) {
 					return data;
 				}
 
 				// Attempt to get data from the cache
 				// with the key camelized
 				data = data_user.get( elem, camelKey );
-				if ( data !== undefined ) {
+				if ( data !== (void 0) ) {
 					return data;
 				}
 
 				// Attempt to "discover" the data in
 				// HTML5 custom data-* attrs
-				data = dataAttr( elem, camelKey, undefined );
-				if ( data !== undefined ) {
+				data = dataAttr( elem, camelKey, (void 0) );
+				if ( data !== (void 0) ) {
 					return data;
 				}
 
@@ -3839,7 +3845,7 @@ jQuery.fn.extend({
 				// *... In the case of properties that might _actually_
 				// have dashes, we need to also store a copy of that
 				// unchanged property.
-				if ( key.indexOf("-") !== -1 && data !== undefined ) {
+				if ( key.indexOf("-") !== -1 && data !== (void 0) ) {
 					data_user.set( this, key, value );
 				}
 			});
@@ -3934,7 +3940,7 @@ jQuery.fn.extend({
 			return jQuery.queue( this[0], type );
 		}
 
-		return data === undefined ?
+		return data === (void 0) ?
 			this :
 			this.each(function() {
 				var queue = jQuery.queue( this, type, data );
@@ -3971,7 +3977,7 @@ jQuery.fn.extend({
 
 		if ( typeof type !== "string" ) {
 			obj = type;
-			type = undefined;
+			type = (void 0);
 		}
 		type = type || "fx";
 
@@ -4024,7 +4030,7 @@ var rcheckableType = (/^(?:checkbox|radio)$/i);
 	div.innerHTML = "<textarea>x</textarea>";
 	support.noCloneChecked = !!div.cloneNode( true ).lastChild.defaultValue;
 })();
-var strundefined = typeof undefined;
+var strundefined = typeof (void 0);
 
 
 
@@ -4092,7 +4098,7 @@ jQuery.event = {
 				// Discard the second event of a jQuery.event.trigger() and
 				// when an event is called after a page has unloaded
 				return typeof jQuery !== strundefined && jQuery.event.triggered !== e.type ?
-					jQuery.event.dispatch.apply( elem, arguments ) : undefined;
+					jQuery.event.dispatch.apply( elem, arguments ) : (void 0);
 			};
 		}
 
@@ -4275,7 +4281,7 @@ jQuery.event = {
 			null;
 
 		// Clean up the event in case it is being reused
-		event.result = undefined;
+		event.result = (void 0);
 		if ( !event.target ) {
 			event.target = elem;
 		}
@@ -4355,7 +4361,7 @@ jQuery.event = {
 					// Prevent re-triggering of the same event, since we already bubbled it above
 					jQuery.event.triggered = type;
 					elem[ type ]();
-					jQuery.event.triggered = undefined;
+					jQuery.event.triggered = (void 0);
 
 					if ( tmp ) {
 						elem[ ontype ] = tmp;
@@ -4408,7 +4414,7 @@ jQuery.event = {
 					ret = ( (jQuery.event.special[ handleObj.origType ] || {}).handle || handleObj.handler )
 							.apply( matched.elem, args );
 
-					if ( ret !== undefined ) {
+					if ( ret !== (void 0) ) {
 						if ( (event.result = ret) === false ) {
 							event.preventDefault();
 							event.stopPropagation();
@@ -4448,7 +4454,7 @@ jQuery.event = {
 						// Don't conflict with Object.prototype properties (#13203)
 						sel = handleObj.selector + " ";
 
-						if ( matches[ sel ] === undefined ) {
+						if ( matches[ sel ] === (void 0) ) {
 							matches[ sel ] = handleObj.needsContext ?
 								jQuery( sel, this ).index( cur ) >= 0 :
 								jQuery.find( sel, this, null, [ cur ] ).length;
@@ -4508,7 +4514,7 @@ jQuery.event = {
 
 			// Add which for click: 1 === left; 2 === middle; 3 === right
 			// Note: button is not normalized, so don't use it
-			if ( !event.which && button !== undefined ) {
+			if ( !event.which && button !== (void 0) ) {
 				event.which = ( button & 1 ? 1 : ( button & 2 ? 3 : ( button & 4 ? 2 : 0 ) ) );
 			}
 
@@ -4602,7 +4608,7 @@ jQuery.event = {
 
 				// Support: Firefox 20+
 				// Firefox doesn't alert if the returnValue field is not set.
-				if ( event.result !== undefined && event.originalEvent ) {
+				if ( event.result !== (void 0) && event.originalEvent ) {
 					event.originalEvent.returnValue = event.result;
 				}
 			}
@@ -4653,7 +4659,7 @@ jQuery.Event = function( src, props ) {
 		// Events bubbling up the document may have been marked as prevented
 		// by a handler lower down the tree; reflect the correct value.
 		this.isDefaultPrevented = src.defaultPrevented ||
-				src.defaultPrevented === undefined &&
+				src.defaultPrevented === (void 0) &&
 				// Support: Android < 4.0
 				src.returnValue === false ?
 			returnTrue :
@@ -4791,7 +4797,7 @@ jQuery.fn.extend({
 			if ( typeof selector !== "string" ) {
 				// ( types-Object, data )
 				data = data || selector;
-				selector = undefined;
+				selector = (void 0);
 			}
 			for ( type in types ) {
 				this.on( type, selector, data, types[ type ], one );
@@ -4802,17 +4808,17 @@ jQuery.fn.extend({
 		if ( data == null && fn == null ) {
 			// ( types, fn )
 			fn = selector;
-			data = selector = undefined;
+			data = selector = (void 0);
 		} else if ( fn == null ) {
 			if ( typeof selector === "string" ) {
 				// ( types, selector, fn )
 				fn = data;
-				data = undefined;
+				data = (void 0);
 			} else {
 				// ( types, data, fn )
 				fn = data;
 				data = selector;
-				selector = undefined;
+				selector = (void 0);
 			}
 		}
 		if ( fn === false ) {
@@ -4860,7 +4866,7 @@ jQuery.fn.extend({
 		if ( selector === false || typeof selector === "function" ) {
 			// ( types [, fn] )
 			fn = selector;
-			selector = undefined;
+			selector = (void 0);
 		}
 		if ( fn === false ) {
 			fn = returnFalse;
@@ -4994,7 +5000,7 @@ function getAll( context, tag ) {
 			context.querySelectorAll ? context.querySelectorAll( tag || "*" ) :
 			[];
 
-	return tag === undefined || tag && jQuery.nodeName( context, tag ) ?
+	return tag === (void 0) || tag && jQuery.nodeName( context, tag ) ?
 		jQuery.merge( [ context ], ret ) :
 		ret;
 }
@@ -5149,7 +5155,7 @@ jQuery.extend({
 			special = jQuery.event.special,
 			i = 0;
 
-		for ( ; (elem = elems[ i ]) !== undefined; i++ ) {
+		for ( ; (elem = elems[ i ]) !== (void 0); i++ ) {
 			if ( jQuery.acceptData( elem ) ) {
 				key = elem[ data_priv.expando ];
 
@@ -5180,7 +5186,7 @@ jQuery.extend({
 jQuery.fn.extend({
 	text: function( value ) {
 		return access( this, function( value ) {
-			return value === undefined ?
+			return value === (void 0) ?
 				jQuery.text( this ) :
 				this.empty().each(function() {
 					if ( this.nodeType === 1 || this.nodeType === 11 || this.nodeType === 9 ) {
@@ -5278,7 +5284,7 @@ jQuery.fn.extend({
 				i = 0,
 				l = this.length;
 
-			if ( value === undefined && elem.nodeType === 1 ) {
+			if ( value === (void 0) && elem.nodeType === 1 ) {
 				return elem.innerHTML;
 			}
 
@@ -5559,7 +5565,7 @@ function curCSS( elem, name, computed ) {
 		}
 	}
 
-	return ret !== undefined ?
+	return ret !== (void 0) ?
 		// Support: IE
 		// IE returns zIndex value as an integer.
 		ret + "" :
@@ -5734,7 +5740,7 @@ function vendorPropName( style, name ) {
 function setPositiveNumber( elem, value, subtract ) {
 	var matches = rnumsplit.exec( value );
 	return matches ?
-		// Guard against undefined "subtract", e.g., when used as in cssHooks
+		// Guard against (void 0) "subtract", e.g., when used as in cssHooks
 		Math.max( 0, matches[ 1 ] - ( subtract || 0 ) ) + ( matches[ 2 ] || "px" ) :
 		value;
 }
@@ -5786,7 +5792,7 @@ function getWidthOrHeight( elem, name, extra ) {
 		styles = getStyles( elem ),
 		isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box";
 
-	// some non-html elements return undefined for offsetWidth, so check for null/undefined
+	// some non-html elements return (void 0) for offsetWidth, so check for null/undefined
 	// svg - https://bugzilla.mozilla.org/show_bug.cgi?id=649285
 	// MathML - https://bugzilla.mozilla.org/show_bug.cgi?id=491668
 	if ( val <= 0 || val == null ) {
@@ -5930,7 +5936,7 @@ jQuery.extend({
 		hooks = jQuery.cssHooks[ name ] || jQuery.cssHooks[ origName ];
 
 		// Check if we're setting a value
-		if ( value !== undefined ) {
+		if ( value !== (void 0) ) {
 			type = typeof value;
 
 			// convert relative number strings (+= or -=) to relative numbers. #7345
@@ -5957,13 +5963,13 @@ jQuery.extend({
 			}
 
 			// If a hook was provided, use that value, otherwise just set the specified value
-			if ( !hooks || !("set" in hooks) || (value = hooks.set( elem, value, extra )) !== undefined ) {
+			if ( !hooks || !("set" in hooks) || (value = hooks.set( elem, value, extra )) !== (void 0) ) {
 				style[ name ] = value;
 			}
 
 		} else {
 			// If a hook was provided get the non-computed value from there
-			if ( hooks && "get" in hooks && (ret = hooks.get( elem, false, extra )) !== undefined ) {
+			if ( hooks && "get" in hooks && (ret = hooks.get( elem, false, extra )) !== (void 0) ) {
 				return ret;
 			}
 
@@ -5989,7 +5995,7 @@ jQuery.extend({
 		}
 
 		// Otherwise, if a way to get the computed value exists, use that
-		if ( val === undefined ) {
+		if ( val === (void 0) ) {
 			val = curCSS( elem, name, styles );
 		}
 
@@ -6094,7 +6100,7 @@ jQuery.fn.extend({
 				return map;
 			}
 
-			return value !== undefined ?
+			return value !== (void 0) ?
 				jQuery.style( elem, name, value ) :
 				jQuery.css( elem, name );
 		}, name, value, arguments.length > 1 );
@@ -6187,7 +6193,7 @@ Tween.propHooks = {
 			// so, simple values such as "10px" are parsed to Float.
 			// complex values such as "rotate(1rad)" are returned as is.
 			result = jQuery.css( tween.elem, tween.prop, "" );
-			// Empty strings, null, undefined and "auto" are converted to 0.
+			// Empty strings, null, (void 0) and "auto" are converted to 0.
 			return !result || result === "auto" ? 0 : result;
 		},
 		set: function( tween ) {
@@ -6292,7 +6298,7 @@ var
 // Animations created synchronously will run synchronously
 function createFxNow() {
 	setTimeout(function() {
-		fxNow = undefined;
+		fxNow = (void 0);
 	});
 	return ( fxNow = jQuery.now() );
 }
@@ -6406,7 +6412,7 @@ function defaultPrefilter( elem, props, opts ) {
 			if ( value === ( hidden ? "hide" : "show" ) ) {
 
 				// If there is dataShow left over from a stopped hide or show and we are going to proceed with show, we should pretend to be hidden
-				if ( value === "show" && dataShow && dataShow[ prop ] !== undefined ) {
+				if ( value === "show" && dataShow && dataShow[ prop ] !== (void 0) ) {
 					hidden = true;
 				} else {
 					continue;
@@ -6416,7 +6422,7 @@ function defaultPrefilter( elem, props, opts ) {
 
 		// Any non-fx value stops us from restoring the original display value
 		} else {
-			display = undefined;
+			display = (void 0);
 		}
 	}
 
@@ -6706,7 +6712,7 @@ jQuery.fn.extend({
 		if ( typeof type !== "string" ) {
 			gotoEnd = clearQueue;
 			clearQueue = type;
-			type = undefined;
+			type = (void 0);
 		}
 		if ( clearQueue && type !== false ) {
 			this.queue( type || "fx", [] );
@@ -6831,7 +6837,7 @@ jQuery.fx.tick = function() {
 	if ( !timers.length ) {
 		jQuery.fx.stop();
 	}
-	fxNow = undefined;
+	fxNow = (void 0);
 };
 
 jQuery.fx.timer = function( timer ) {
@@ -6946,12 +6952,12 @@ jQuery.extend({
 				( jQuery.expr.match.bool.test( name ) ? boolHook : nodeHook );
 		}
 
-		if ( value !== undefined ) {
+		if ( value !== (void 0) ) {
 
 			if ( value === null ) {
 				jQuery.removeAttr( elem, name );
 
-			} else if ( hooks && "set" in hooks && (ret = hooks.set( elem, value, name )) !== undefined ) {
+			} else if ( hooks && "set" in hooks && (ret = hooks.set( elem, value, name )) !== (void 0) ) {
 				return ret;
 
 			} else {
@@ -6965,9 +6971,9 @@ jQuery.extend({
 		} else {
 			ret = jQuery.find.attr( elem, name );
 
-			// Non-existent attributes return null, we normalize to undefined
+			// Non-existent attributes return null, we normalize to (void 0)
 			return ret == null ?
-				undefined :
+			 (void 0) :
 				ret;
 		}
 	},
@@ -7081,8 +7087,8 @@ jQuery.extend({
 			hooks = jQuery.propHooks[ name ];
 		}
 
-		if ( value !== undefined ) {
-			return hooks && "set" in hooks && (ret = hooks.set( elem, value, name )) !== undefined ?
+		if ( value !== (void 0) ) {
+			return hooks && "set" in hooks && (ret = hooks.set( elem, value, name )) !== (void 0) ?
 				ret :
 				( elem[ name ] = value );
 
@@ -7299,7 +7305,7 @@ jQuery.fn.extend({
 			if ( elem ) {
 				hooks = jQuery.valHooks[ elem.type ] || jQuery.valHooks[ elem.nodeName.toLowerCase() ];
 
-				if ( hooks && "get" in hooks && (ret = hooks.get( elem, "value" )) !== undefined ) {
+				if ( hooks && "get" in hooks && (ret = hooks.get( elem, "value" )) !== (void 0) ) {
 					return ret;
 				}
 
@@ -7345,8 +7351,8 @@ jQuery.fn.extend({
 
 			hooks = jQuery.valHooks[ this.type ] || jQuery.valHooks[ this.nodeName.toLowerCase() ];
 
-			// If set returns undefined, fall back to normal setting
-			if ( !hooks || !("set" in hooks) || hooks.set( this, val, "value" ) === undefined ) {
+			// If set returns (void 0), fall back to normal setting
+			if ( !hooks || !("set" in hooks) || hooks.set( this, val, "value" ) === (void 0) ) {
 				this.value = val;
 			}
 		});
@@ -7509,7 +7515,7 @@ jQuery.parseXML = function( data ) {
 		tmp = new DOMParser();
 		xml = tmp.parseFromString( data, "text/xml" );
 	} catch ( e ) {
-		xml = undefined;
+		xml = (void 0);
 	}
 
 	if ( !xml || xml.getElementsByTagName( "parsererror" ).length ) {
@@ -7634,7 +7640,7 @@ function ajaxExtend( target, src ) {
 		flatOptions = jQuery.ajaxSettings.flatOptions || {};
 
 	for ( key in src ) {
-		if ( src[ key ] !== undefined ) {
+		if ( src[ key ] !== (void 0) ) {
 			( flatOptions[ key ] ? target : ( deep || (deep = {}) ) )[ key ] = src[ key ];
 		}
 	}
@@ -7658,7 +7664,7 @@ function ajaxHandleResponses( s, jqXHR, responses ) {
 	// Remove auto dataType and get content-type in the process
 	while ( dataTypes[ 0 ] === "*" ) {
 		dataTypes.shift();
-		if ( ct === undefined ) {
+		if ( ct === (void 0) ) {
 			ct = s.mimeType || jqXHR.getResponseHeader("Content-Type");
 		}
 	}
@@ -7894,7 +7900,7 @@ jQuery.extend({
 		// If url is an object, simulate pre-1.5 signature
 		if ( typeof url === "object" ) {
 			options = url;
-			url = undefined;
+			url = (void 0);
 		}
 
 		// Force options to be an object
@@ -8181,7 +8187,7 @@ jQuery.extend({
 
 			// Dereference transport for early garbage collection
 			// (no matter how long the jqXHR object will be used)
-			transport = undefined;
+			transport = (void 0);
 
 			// Cache response headers
 			responseHeadersString = headers || "";
@@ -8255,7 +8261,7 @@ jQuery.extend({
 
 			// Status-dependent callbacks
 			jqXHR.statusCode( statusCode );
-			statusCode = undefined;
+			statusCode = (void 0);
 
 			if ( fireGlobals ) {
 				globalEventContext.trigger( isSuccess ? "ajaxSuccess" : "ajaxError",
@@ -8282,7 +8288,7 @@ jQuery.extend({
 	},
 
 	getScript: function( url, callback ) {
-		return jQuery.get( url, undefined, callback, "script" );
+		return jQuery.get( url, (void 0), callback, "script" );
 	}
 });
 
@@ -8292,7 +8298,7 @@ jQuery.each( [ "get", "post" ], function( i, method ) {
 		if ( jQuery.isFunction( data ) ) {
 			type = type || callback;
 			callback = data;
-			data = undefined;
+			data = (void 0);
 		}
 
 		return jQuery.ajax({
@@ -8454,7 +8460,7 @@ jQuery.param = function( a, traditional ) {
 		};
 
 	// Set traditional to true for jQuery <= 1.3.2 behavior.
-	if ( traditional === undefined ) {
+	if ( traditional === (void 0) ) {
 		traditional = jQuery.ajaxSettings && jQuery.ajaxSettings.traditional;
 	}
 
@@ -8603,7 +8609,7 @@ jQuery.ajaxTransport(function( options ) {
 									// (#11426)
 									typeof xhr.responseText === "string" ? {
 										text: xhr.responseText
-									} : undefined,
+									} : (void 0),
 									xhr.getAllResponseHeaders()
 								);
 							}
@@ -8659,7 +8665,7 @@ jQuery.ajaxSetup({
 
 // Handle cache's special case and crossDomain
 jQuery.ajaxPrefilter( "script", function( s ) {
-	if ( s.cache === undefined ) {
+	if ( s.cache === (void 0) ) {
 		s.cache = false;
 	}
 	if ( s.crossDomain ) {
@@ -8775,7 +8781,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 				overwritten( responseContainer[ 0 ] );
 			}
 
-			responseContainer = overwritten = undefined;
+			responseContainer = overwritten = (void 0);
 		});
 
 		// Delegate to script
@@ -8842,7 +8848,7 @@ jQuery.fn.load = function( url, params, callback ) {
 
 		// We assume that it's the callback
 		callback = params;
-		params = undefined;
+		params = (void 0);
 
 	// Otherwise, build a param string
 	} else if ( params && typeof params === "object" ) {
@@ -8854,7 +8860,7 @@ jQuery.fn.load = function( url, params, callback ) {
 		jQuery.ajax({
 			url: url,
 
-			// if "type" variable is undefined, then "GET" method will be used
+			// if "type" variable is (void 0), then "GET" method will be used
 			type: type,
 			dataType: "html",
 			data: params
@@ -8953,7 +8959,7 @@ jQuery.offset = {
 jQuery.fn.extend({
 	offset: function( options ) {
 		if ( arguments.length ) {
-			return options === undefined ?
+			return options === (void 0) ?
 				this :
 				this.each(function( i ) {
 					jQuery.offset.setOffset( this, options, i );
@@ -9045,7 +9051,7 @@ jQuery.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
 		return access( this, function( elem, method, val ) {
 			var win = getWindow( elem );
 
-			if ( val === undefined ) {
+			if ( val === (void 0) ) {
 				return win ? win[ prop ] : elem[ method ];
 			}
 
@@ -9112,13 +9118,13 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 					);
 				}
 
-				return value === undefined ?
+				return value === (void 0) ?
 					// Get width or height on the element, requesting but not forcing parseFloat
 					jQuery.css( elem, type, extra ) :
 
 					// Set width or height on the element
 					jQuery.style( elem, type, value, extra );
-			}, type, chainable ? margin : undefined, chainable, null );
+			}, type, chainable ? margin : (void 0), chainable, null );
 		};
 	});
 });
