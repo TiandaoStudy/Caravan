@@ -38,6 +38,7 @@ namespace FLEX.Web.UserControls.Ajax
          txtKey.ReadOnly = !Enabled;
 
          txtSuggestion.ReadOnly = !Enabled;
+         txtSuggestion.Attributes.Add("placeholder", PlaceHolder);
       }
 
       #region Public Properties
@@ -72,6 +73,8 @@ namespace FLEX.Web.UserControls.Ajax
 
       // Imposta un'altezza alla tendinda dei suggerimenti (def: 250px)
       public string MaxMenuHeight { get; set; }
+
+      public string PlaceHolder { get; set; }
 
       #endregion
 
