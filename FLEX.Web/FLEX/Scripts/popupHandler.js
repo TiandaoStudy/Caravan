@@ -589,7 +589,7 @@ function openModal(options) {
       $("#modal-header-title").html(settings.title);
       // Impostazione del bottone di chiusura
       var modalClose = $("#modal-close");
-      modalClose.html('<a href="#" onclick="closeWindow();" class="close">x</a>');
+      modalClose.html('<a href="#" class="close">x</a>');
       modalClose.addClass('modal-close');
       // Rimozione click dall'overlay
       document.getElementById("modal-overlay").onclick = null;

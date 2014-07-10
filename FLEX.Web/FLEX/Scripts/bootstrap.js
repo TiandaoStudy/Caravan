@@ -1,4 +1,10 @@
 /*!
+ * ATTENZIONE, QUANDO SI AGGIORNA IL FILE, OCCORRE FARE UN SEARCH E REPLACE DI:
+ * ' undefined' -> ' (void 0)' (senza apici)
+ * '	undefined' -> ' (void 0)' (senza apici)
+ */
+
+/*!
  * Bootstrap v3.1.1 (http://getbootstrap.com)
  * Copyright 2011-2014 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
@@ -32,7 +38,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     }
 
     for (var name in transEndEventNames) {
-      if (el.style[name] !== undefined) {
+      if (el.style[name] !== (void 0)) {
         return { end: transEndEventNames[name] }
       }
     }

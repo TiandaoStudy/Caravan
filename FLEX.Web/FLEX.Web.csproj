@@ -433,7 +433,9 @@
       <DependentUpon>FontAwesome.less</DependentUpon>
     </Content>
     <None Include="bower.json" />
-    <Content Include="FLEX\MasterPages\VerticalSearch.Master" />
+    <Content Include="FLEX\MasterPages\VerticalSearch.Master">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <None Include="FLEX\Fonts\fontawesome-webfont.eot" />
     <None Include="FLEX\Fonts\fontawesome-webfont.ttf" />
     <None Include="FLEX\Fonts\fontawesome-webfont.woff" />
@@ -447,10 +449,10 @@
     <Content Include="FLEX\MasterPages\DataView.Master">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\MasterPages\Popup.Master">
+    <Content Include="FLEX\MasterPages\Popup.Master" />
+    <Content Include="FLEX\MasterPages\Head.Master">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\MasterPages\Head.Master" />
     <Content Include="FLEX\MasterPages\MultiSelect.Master">
       <SubType>ASPXCodeBehind</SubType>
     </Content>

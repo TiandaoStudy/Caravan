@@ -29,7 +29,9 @@
       var hasPageVisibleHandlers = <%= HasPageVisibleHandlers.ToString().ToLower() %>;
 
       $(window).resize(function() {
-         centerMainContainer();
+         if (typeof(centerMainContainer) != "undefined") {
+            centerMainContainer();
+         }
       });
    </script>
    
