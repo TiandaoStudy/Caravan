@@ -30,14 +30,16 @@
             if (onPopupClose) {
                onPopupClose(top.returnValue);
             }
-            setTimeout(function() {
+            setTimeout(function () {
                closeWindow();
-            }, 0);
+            }, 100);
          }
       }
 
       $(document).ready(function () {
-         checkClose();
+         setTimeout(function () {
+            checkClose();
+         }, 0);
 
          // Validation summary customization
          var summary = $("#<%= validationSummary.ClientID %>");
@@ -51,7 +53,16 @@
 
 <asp:Content ID="aspMainContent" ContentPlaceHolderID="mainContent" runat="server">
    <!-- Used to close popup after a postback -->
-   <asp:TextBox runat="server" CssClass="hidden" ID="txtDoClose" />  
+   <asp:UpdatePanel ID="closeUpdPanel" runat="server">
+      <ContentTemplate>
+         <asp:TextBox runat="server" CssClass="hidden" ID="txtDoClose" />
+         <script type="text/javascript">
+            setTimeout(function () {
+               checkClose();
+            }, 0);
+         </script>
+      </ContentTemplate>
+   </asp:UpdatePanel>
    
    <div id="mainContainer" class="container-fluid">   
       <asp:ValidationSummary ID="validationSummary" ValidationGroup="mainValidationSummary" HeaderText="You must fill in the following fields:" DisplayMode="BulletList" EnableClientScript="True" ShowSummary="True" runat="server" />

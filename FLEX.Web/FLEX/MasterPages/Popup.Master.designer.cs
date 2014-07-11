@@ -22,6 +22,15 @@ namespace FLEX.Web.MasterPages {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder headContent;
         
         /// <summary>
+        /// closeUpdPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.UpdatePanel closeUpdPanel;
+        
+        /// <summary>
         /// txtDoClose control.
         /// </summary>
         /// <remarks>

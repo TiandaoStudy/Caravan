@@ -38,7 +38,7 @@ root.randomQueryTag = (opts) ->
    unless opts.isFirst
       opts.isFirst = defaults.isFirst
    tag = if opts.isFirst then "_ID_=" else "&_ID_="
-   return tag + new Date().getDate().toString()
+   return tag + Date.now()
    
 root.centerMainContainer = () ->
    frm = $('#mainContainer')

@@ -54,7 +54,7 @@
       opts.isFirst = defaults.isFirst;
     }
     tag = opts.isFirst ? "_ID_=" : "&_ID_=";
-    return tag + new Date().getDate().toString();
+    return tag + Date.now();
   };
 
   root.centerMainContainer = function() {

@@ -32,6 +32,7 @@ namespace FLEX.Web.MasterPages
 
       public void RegisterCloseScript(Page child)
       {
+         txtDoClose.Text = "CLOSE";
          var closeCallback = String.Format("document.getElementById('{0}').value = 'CLOSE'; checkClose();", txtDoClose.ClientID);
          RegisterStartupScript(Page, closeCallback, "_ReturnDataAndExit_");
       }
