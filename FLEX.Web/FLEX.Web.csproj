@@ -305,6 +305,7 @@
     <Content Include="FLEX\Fonts\icomoon.svg" />
     <Content Include="FLEX\Fonts\ionicons.svg" />
     <Content Include="FLEX\Images\bootstrap-checkbox.png" />
+    <Content Include="FLEX\Images\logo-finsa.png" />
     <Content Include="FLEX\Images\pattern.png" />
     <Content Include="FLEX\Pages\ErrorHandler.aspx">
       <SubType>ASPXCodeBehind</SubType>
@@ -343,7 +344,9 @@
     <Content Include="FLEX\UserControls\LongTextContainer.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\UserControls\PageFooter.ascx" />
+    <Content Include="FLEX\UserControls\PageFooter.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />

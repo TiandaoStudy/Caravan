@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.UI;
 
 // ReSharper disable CheckNamespace
@@ -11,6 +12,8 @@ namespace FLEX.Web.UserControls
   {
     protected void Page_Load(object sender, EventArgs e)
     {
+      
+       lblHost.Text = "Host : "+HttpContext.Current.Server.MachineName;
     }
   }
 }
