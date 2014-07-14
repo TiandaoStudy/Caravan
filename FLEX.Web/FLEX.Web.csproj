@@ -342,6 +342,12 @@
     <Content Include="FLEX\Styles\Bootstrap-touchspin.min.css">
       <DependentUpon>Bootstrap-touchspin.less</DependentUpon>
     </Content>
+    <Content Include="FLEX\Styles\Octicons.css">
+      <DependentUpon>Octicons.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Octicons.min.css">
+      <DependentUpon>Octicons.less</DependentUpon>
+    </Content>
     <Content Include="FLEX\UserControls\LongTextContainer.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
