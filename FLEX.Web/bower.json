@@ -32,6 +32,7 @@
     "bootstrap.checkbox": "~1.0.0",
     "bootbox": "~4.2.0",
     "bootstrap-touchspin": "~3.0.1",
-    "backbone": "~1.1.2"
+    "backbone": "~1.1.2",
+    "octicons": "~2.1.0"
   }
 }

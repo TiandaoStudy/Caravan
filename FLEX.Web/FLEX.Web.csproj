@@ -304,6 +304,7 @@
     <Content Include="FLEX\Fonts\fontawesome-webfont.svg" />
     <Content Include="FLEX\Fonts\icomoon.svg" />
     <Content Include="FLEX\Fonts\ionicons.svg" />
+    <Content Include="FLEX\Fonts\octicons.svg" />
     <Content Include="FLEX\Images\bootstrap-checkbox.png" />
     <Content Include="FLEX\Images\logo-finsa.png" />
     <Content Include="FLEX\Images\pattern.png" />
@@ -350,6 +351,9 @@
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
+    <None Include="FLEX\Fonts\octicons.eot" />
+    <None Include="FLEX\Fonts\octicons.ttf" />
+    <None Include="FLEX\Fonts\octicons.woff" />
     <None Include="FLEX\Logs\FLEX.Web.log" />
     <None Include="FLEX\Logs\FLEX.Common.log" />
     <Content Include="FLEX\Images\sort_asc.png" />
@@ -553,6 +557,7 @@
     <None Include="FLEX\Styles\Fonts.less" />
     <None Include="FLEX\Styles\IcoMoon.less" />
     <None Include="FLEX\Styles\Ionicons.less" />
+    <None Include="FLEX\Styles\Octicons.less" />
     <None Include="FLEX\XmlSettings\AjaxLookups\AjaxLookup.xsd">
       <SubType>Designer</SubType>
     </None>
