@@ -39,6 +39,11 @@ namespace FLEX.Web.MasterPages
          get { return Master.MenuBar; }
       }
 
+      public PageFooter PageFooter
+      {
+         get { return Master.PageFooter; }
+      }
+
       public ScriptManager ScriptManager
       {
          get { return Master.ScriptManager; }

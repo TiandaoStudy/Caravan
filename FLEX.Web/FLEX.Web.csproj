@@ -9,13 +9,15 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FLEX.Web</RootNamespace>
     <AssemblyName>FLEX.Web</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SccProjectName>Svn</SccProjectName>
     <SccLocalPath>Svn</SccLocalPath>
     <SccAuxPath>Svn</SccAuxPath>
     <SccProvider>SubversionScc</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,7 +46,8 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Thrower">
+    <Reference Include="Thrower, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thrower.0.11\lib\net35-client\Thrower.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -59,6 +62,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Core\ViewStateStorageSettings.cs" />
+    <Compile Include="FLEX\MasterPages\CustomView.Master.cs">
+      <DependentUpon>CustomView.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\MasterPages\CustomView.Master.designer.cs">
+      <DependentUpon>CustomView.Master</DependentUpon>
+    </Compile>
     <Compile Include="FLEX\MasterPages\IPopupBase.cs" />
     <Compile Include="FLEX\MasterPages\IPageBase.cs" />
     <Compile Include="FLEX\Pages\AjaxLookup.aspx.cs">
@@ -74,6 +84,13 @@
     </Compile>
     <Compile Include="FLEX\Pages\CacheOverview.aspx.designer.cs">
       <DependentUpon>CacheOverview.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\Pages\ErrorHandler.aspx.cs">
+      <DependentUpon>ErrorHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\ErrorHandler.aspx.designer.cs">
+      <DependentUpon>ErrorHandler.aspx</DependentUpon>
     </Compile>
     <Compile Include="FLEX\Pages\Lookup.aspx.cs">
       <DependentUpon>Lookup.aspx</DependentUpon>
@@ -98,6 +115,13 @@
     <Compile Include="FLEX\Services\AjaxLookup.asmx.cs">
       <DependentUpon>AjaxLookup.asmx</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\Templates\VerticalSearch.aspx.cs">
+      <DependentUpon>VerticalSearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\Templates\VerticalSearch.aspx.designer.cs">
+      <DependentUpon>VerticalSearch.aspx</DependentUpon>
     </Compile>
     <Compile Include="FLEX\UserControls\Ajax\AjaxControlBase.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -137,6 +161,13 @@
     <Compile Include="FLEX\UserControls\LongTextContainer.ascx.designer.cs">
       <DependentUpon>LongTextContainer.ascx</DependentUpon>
     </Compile>
+    <Compile Include="FLEX\UserControls\PageFooter.ascx.cs">
+      <DependentUpon>PageFooter.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\PageFooter.ascx.designer.cs">
+      <DependentUpon>PageFooter.ascx</DependentUpon>
+    </Compile>
     <Compile Include="FLEX\WebControls\Templates\ControlTemplate.cs" />
     <Compile Include="FLEX\WebControls\Templates\DataGridEmpty.cs" />
     <Compile Include="FLEX\WebControls\Templates\DataGridPager.cs">
@@ -144,12 +175,6 @@
     </Compile>
     <Compile Include="FLEX\WebControls\DataGrid.cs" />
     <Compile Include="Interfaces.cs" />
-    <Compile Include="Item.Serialization.cs">
-      <DependentUpon>XsdClassGen.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LookupData.Serialization.cs">
-      <DependentUpon>XsdClassGen.tt</DependentUpon>
-    </Compile>
     <Compile Include="FLEX\MasterPages\Base.Master.cs">
       <DependentUpon>Base.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -191,6 +216,12 @@
     </Compile>
     <Compile Include="FLEX\MasterPages\VerticalSearch.Master.designer.cs">
       <DependentUpon>VerticalSearch.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Item.Serialization.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LookupData.Serialization.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
     <Compile Include="Menu.Serialization.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
@@ -273,11 +304,24 @@
     <Content Include="FLEX\Fonts\fontawesome-webfont.svg" />
     <Content Include="FLEX\Fonts\icomoon.svg" />
     <Content Include="FLEX\Fonts\ionicons.svg" />
+    <Content Include="FLEX\Fonts\octicons.svg" />
     <Content Include="FLEX\Images\bootstrap-checkbox.png" />
+    <Content Include="FLEX\Images\logo-finsa.png" />
     <Content Include="FLEX\Images\pattern.png" />
+    <Content Include="FLEX\Pages\ErrorHandler.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\Scripts\bootbox.js" />
+    <Content Include="FLEX\Scripts\bootbox.min.js">
+      <DependentUpon>bootbox.js</DependentUpon>
+    </Content>
     <Content Include="FLEX\Scripts\bootstrap-checkbox.js" />
     <Content Include="FLEX\Scripts\bootstrap-checkbox.min.js">
       <DependentUpon>bootstrap-checkbox.js</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Scripts\bootstrap-touchspin.js" />
+    <Content Include="FLEX\Scripts\bootstrap-touchspin.min.js">
+      <DependentUpon>bootstrap-touchspin.js</DependentUpon>
     </Content>
     <Content Include="FLEX\Styles\Bootstrap-checkbox.css">
       <DependentUpon>Bootstrap-checkbox.less</DependentUpon>
@@ -291,12 +335,25 @@
     <Content Include="FLEX\Styles\Bootstrap-plugins.min.css">
       <DependentUpon>Bootstrap-plugins.less</DependentUpon>
     </Content>
+    <Content Include="FLEX\Pages\Templates\VerticalSearch.aspx" />
+    <Content Include="FLEX\Styles\Bootstrap-touchspin.css">
+      <DependentUpon>Bootstrap-touchspin.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Bootstrap-touchspin.min.css">
+      <DependentUpon>Bootstrap-touchspin.less</DependentUpon>
+    </Content>
     <Content Include="FLEX\UserControls\LongTextContainer.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\UserControls\PageFooter.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
+    <None Include="FLEX\Fonts\octicons.eot" />
+    <None Include="FLEX\Fonts\octicons.ttf" />
+    <None Include="FLEX\Fonts\octicons.woff" />
     <None Include="FLEX\Logs\FLEX.Web.log" />
     <None Include="FLEX\Logs\FLEX.Common.log" />
     <Content Include="FLEX\Images\sort_asc.png" />
@@ -367,7 +424,9 @@
       <DependentUpon>FLEX.coffee</DependentUpon>
     </Content>
     <Content Include="FLEX\Fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="FLEX\MasterPages\Base.Master" />
+    <Content Include="FLEX\MasterPages\Base.Master">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="FLEX\Scripts\html5shiv.js" />
     <Content Include="FLEX\Scripts\html5shiv.min.js">
       <DependentUpon>html5shiv.js</DependentUpon>
@@ -458,6 +517,12 @@
     </Content>
     <None Include="FLEX\Fonts\_tMhxyW6i8lbI7YsUdFlGA.eot" />
     <None Include="FLEX\Fonts\_xyN3apAT_yRRDeqB3sPRg.woff" />
+    <Content Include="FLEX\MasterPages\CustomView.Master">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <None Include="FLEX\Scripts\bootbox.min.js.map">
+      <DependentUpon>bootbox.js</DependentUpon>
+    </None>
     <None Include="FLEX\Scripts\bootstrap-checkbox.min.js.map">
       <DependentUpon>bootstrap-checkbox.js</DependentUpon>
     </None>
@@ -469,6 +534,9 @@
     </None>
     <None Include="FLEX\Scripts\bootstrap-switch.min.js.map">
       <DependentUpon>bootstrap-switch.js</DependentUpon>
+    </None>
+    <None Include="FLEX\Scripts\bootstrap-touchspin.min.js.map">
+      <DependentUpon>bootstrap-touchspin.js</DependentUpon>
     </None>
     <None Include="FLEX\Scripts\bootstrap.min.js.map">
       <DependentUpon>bootstrap.js</DependentUpon>
@@ -482,10 +550,12 @@
     <None Include="FLEX\Fonts\glyphicons-halflings-regular.woff" />
     <None Include="FLEX\Styles\Bootstrap-checkbox.less" />
     <None Include="FLEX\Styles\Bootstrap-plugins.less" />
+    <None Include="FLEX\Styles\Bootstrap-touchspin.less" />
     <None Include="FLEX\Styles\Bootstrap-variables.less" />
     <None Include="FLEX\Styles\Fonts.less" />
     <None Include="FLEX\Styles\IcoMoon.less" />
     <None Include="FLEX\Styles\Ionicons.less" />
+    <None Include="FLEX\Styles\Octicons.less" />
     <None Include="FLEX\XmlSettings\AjaxLookups\AjaxLookup.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -495,7 +565,6 @@
     <None Include="FLEX\XmlSettings\MenuBar.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
     <None Include="FLEX\Scripts\html5shiv.min.js.map">
       <DependentUpon>html5shiv.js</DependentUpon>
     </None>
@@ -519,6 +588,7 @@
     <None Include="FLEX\Styles\Bootstrap.less" />
     <None Include="FLEX\Styles\FLEX.less" />
     <None Include="FLEX\Styles\FontAwesome.less" />
+    <None Include="packages.config" />
     <None Include="XsdClassGen.mapping" />
     <None Include="XsdClassGen.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -625,6 +695,13 @@ if $(ConfigurationName) == Release (
     copy "$(TargetDir)FLEX.Web.xml" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
 )</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

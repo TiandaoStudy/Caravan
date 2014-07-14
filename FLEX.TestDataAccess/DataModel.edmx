@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FLEX.Extensions.TestDataAccess.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2006/04/edm/ssdl">
+    <Schema Namespace="FLEX.Extensions.TestDataAccess.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="FLEXExtensionsTestDataAccessStoreContainer">
-          <EntitySet Name="Candidate" EntityType="FLEX.Extensions.TestDataAccess.Store.Candidate" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="CandidateAttended" EntityType="FLEX.Extensions.TestDataAccess.Store.CandidateAttended" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Gender" EntityType="FLEX.Extensions.TestDataAccess.Store.Gender" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="School" EntityType="FLEX.Extensions.TestDataAccess.Store.School" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="sysdiagrams" EntityType="FLEX.Extensions.TestDataAccess.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Candidate" EntityType="FLEX.Extensions.TestDataAccess.Store.Candidate" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="CandidateAttended" EntityType="FLEX.Extensions.TestDataAccess.Store.CandidateAttended" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Gender" EntityType="FLEX.Extensions.TestDataAccess.Store.Gender" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="School" EntityType="FLEX.Extensions.TestDataAccess.Store.School" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="sysdiagrams" EntityType="FLEX.Extensions.TestDataAccess.Store.sysdiagrams" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <AssociationSet Name="FK_Candidate_Gender" Association="FLEX.Extensions.TestDataAccess.Store.FK_Candidate_Gender">
             <End Role="Gender" EntitySet="Gender" />
             <End Role="Candidate" EntitySet="Candidate" />
@@ -107,8 +107,8 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2006/04/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="FLEX.Extensions.TestDataAccess" Alias="Self"  >
-        <EntityContainer Name="DataContext" >
+      <Schema Namespace="FLEX.Extensions.TestDataAccess" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="DataContext">
           <EntitySet Name="Schools" EntityType="FLEX.Extensions.TestDataAccess.School" />
           <EntitySet Name="Candidates" EntityType="FLEX.Extensions.TestDataAccess.Candidate" />
           <EntitySet Name="sysdiagrams" EntityType="FLEX.Extensions.TestDataAccess.sysdiagram" />
@@ -171,7 +171,7 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-    <Mapping Space="C-S" xmlns="urn:schemas-microsoft-com:windows:storage:mapping:CS">
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="FLEXExtensionsTestDataAccessStoreContainer" CdmEntityContainer="DataContext">
           <EntitySetMapping Name="Schools">
             <EntityTypeMapping TypeName="FLEX.Extensions.TestDataAccess.School">
@@ -230,14 +230,14 @@
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:Designer>
     <edmx:Connection>
-      <DesignerInfoPropertySet>
+      <DesignerInfoPropertySet xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
       </DesignerInfoPropertySet>
     </edmx:Connection>
     <edmx:Options>
-      <DesignerInfoPropertySet>
+      <DesignerInfoPropertySet xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />

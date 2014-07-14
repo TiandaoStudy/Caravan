@@ -32,6 +32,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bootstrap", "Bootstrap", "{BA4644BC-0508-43EE-BF18-CA5725108E59}"
 	ProjectSection(SolutionItems) = preProject
 		FLEX.Docs\Tools\Bootstrap\Bootstrap, jQuery UI and sortable.oxps = FLEX.Docs\Tools\Bootstrap\Bootstrap, jQuery UI and sortable.oxps
+		FLEX.Docs\Tools\Bootstrap\DataTables and Bootstrap 3.png = FLEX.Docs\Tools\Bootstrap\DataTables and Bootstrap 3.png
 		FLEX.Docs\Tools\Bootstrap\IE8 issues with Bootstrap.oxps = FLEX.Docs\Tools\Bootstrap\IE8 issues with Bootstrap.oxps
 	EndProjectSection
 EndProject
@@ -45,6 +46,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASP.NET", "ASP.NET", "{D2B116DB-FC08-49C0-B409-375C74CA3BA4}"
 	ProjectSection(SolutionItems) = preProject
 		FLEX.Docs\Issues and Solutions\ASP.NET\ASP.NET 3.5 and Validators in IE9.pdf = FLEX.Docs\Issues and Solutions\ASP.NET\ASP.NET 3.5 and Validators in IE9.pdf
+		FLEX.Docs\Issues and Solutions\ASP.NET\Closing JavaScript Modals on IE9.pdf = FLEX.Docs\Issues and Solutions\ASP.NET\Closing JavaScript Modals on IE9.pdf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3495129D-5A6D-47A5-9121-317E6EE3CBB4}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
 Global

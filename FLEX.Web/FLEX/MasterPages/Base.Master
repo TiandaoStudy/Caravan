@@ -1,6 +1,7 @@
 ﻿<%@ Master AutoEventWireup="true" CodeBehind="Base.Master.cs" Inherits="FLEX.Web.MasterPages.Base" Language="C#" MasterPageFile="~/FLEX/MasterPages/Head.Master" %>
 <%@ MasterType VirtualPath="~/FLEX/MasterPages/Head.Master"%>
 <%@ Register TagPrefix="flex" TagName="MenuBar" Src="../UserControls/MenuBar.ascx" %>
+<%@ Register TagPrefix="flex" TagName="PageFooter" Src="../UserControls/PageFooter.ascx" %>
 <%@ Register TagPrefix="flex" TagName="HiddenTrigger" Src="../UserControls/Ajax/HiddenTrigger.ascx" %>
 
 <asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">
@@ -55,6 +56,7 @@
 </asp:Content>
 
 <asp:Content ID="aspMainContent" ContentPlaceHolderID="mainContent" runat="server">
+   <!-- Menu bar, only visible in pages and not in modals -->
    <flex:MenuBar ID="flexMenuBar" runat="server" />
    
    <!--[if lt IE 9]>  
@@ -101,6 +103,9 @@
       </div>   
    </div>
 
-   <!-- Footer content -->
-   <asp:ContentPlaceHolder ID="footerContent" runat="server" />        
+   <!-- Lower content -->
+   <asp:ContentPlaceHolder ID="footerContent" runat="server" />
+   
+   <!-- Page footer, customized by each project -->
+   <flex:PageFooter ID="flexPageFooter" runat="server" />   
 </asp:Content>

@@ -22,6 +22,16 @@ root.common = Common
 # Various
 ################################################################################
 
+String.prototype.escapeSpecialChars = () ->
+    return this.replace(/\\n/g, "\\n")
+               .replace(/\\'/g, "\\'")
+               .replace(/\\"/g, '\\"')
+               .replace(/\\&/g, "\\&")
+               .replace(/\\r/g, "\\r")
+               .replace(/\\t/g, "\\t")
+               .replace(/\\b/g, "\\b")
+               .replace(/\\f/g, "\\f")
+
 root.bootstrapifyControls = () ->
    # Makes form elements prettier
    $(".form-group input[type=text], .form-group textarea, .form-group select").addClass("form-control")
@@ -85,7 +95,7 @@ root.fixDataGridPager = (tableId) ->
 ################################################################################
 
 root.displaySystemError = () ->
-   window.open("ErrorHandler.aspx", "SystemError",
+   window.open("FLEX/Pages/ErrorHandler.aspx", "SystemError",
                "menubar=no,location=yes,resizable=yes,scrollbars=yes,status=no,height=500,width=800")
 
 ################################################################################
@@ -137,7 +147,7 @@ $(document).on(root.settings.beginAjaxRequest, (ev, sender, args) ->
 $(document).on(root.settings.endAjaxRequest, (ev, sender, args) ->
    for panel in sender._updatePanelClientIDs
       scripts = $("##{panel} script")
-      for script in scripts then eval(script.innerHTML)
+      for script in scripts then eval(script.innerHTML.escapeSpecialChars())
       
    # Restores controls styles
    root.bootstrapifyControls()

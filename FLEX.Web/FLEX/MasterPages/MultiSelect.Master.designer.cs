@@ -13,6 +13,15 @@ namespace FLEX.Web.MasterPages {
     public partial class MultiSelect {
         
         /// <summary>
+        /// headContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder headContent;
+        
+        /// <summary>
         /// upperContent control.
         /// </summary>
         /// <remarks>
@@ -121,14 +130,23 @@ namespace FLEX.Web.MasterPages {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder lowerContent;
         
         /// <summary>
+        /// buttonsContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder buttonsContent;
+        
+        /// <summary>
         /// Master property.
         /// </summary>
         /// <remarks>
         /// Auto-generated property.
         /// </remarks>
-        public new MasterPages.Popup Master {
+        public new FLEX.Web.MasterPages.Popup Master {
             get {
-                return ((MasterPages.Popup)(base.Master));
+                return ((FLEX.Web.MasterPages.Popup)(base.Master));
             }
         }
     }

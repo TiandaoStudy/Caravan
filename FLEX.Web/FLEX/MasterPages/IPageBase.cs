@@ -32,6 +32,14 @@ namespace FLEX.Web.MasterPages
       /// </summary>
       MenuBar MenuBar { get; }
 
+      /// <summary>
+      /// 
+      /// </summary>
+      PageFooter PageFooter { get; }
+
+      /// <summary>
+      /// 
+      /// </summary>
       ScriptManager ScriptManager { get; }
 
       /// <summary>

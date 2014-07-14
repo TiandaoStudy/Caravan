@@ -33,6 +33,10 @@
 
   root.common = Common;
 
+  String.prototype.escapeSpecialChars = function() {
+    return this.replace(/\\n/g, "\\n").replace(/\\'/g, "\\'").replace(/\\"/g, '\\"').replace(/\\&/g, "\\&").replace(/\\r/g, "\\r").replace(/\\t/g, "\\t").replace(/\\b/g, "\\b").replace(/\\f/g, "\\f");
+  };
+
   root.bootstrapifyControls = function() {
     $(".form-group input[type=text], .form-group textarea, .form-group select").addClass("form-control");
     $('input[type=file]').bootstrapFileInput();
@@ -92,7 +96,7 @@
   };
 
   root.displaySystemError = function() {
-    return window.open("ErrorHandler.aspx", "SystemError", "menubar=no,location=yes,resizable=yes,scrollbars=yes,status=no,height=500,width=800");
+    return window.open("FLEX/Pages/ErrorHandler.aspx", "SystemError", "menubar=no,location=yes,resizable=yes,scrollbars=yes,status=no,height=500,width=800");
   };
 
   root.triggerAsyncPostBack = function(hiddenTriggerId) {
@@ -139,7 +143,7 @@
       scripts = $("#" + panel + " script");
       for (_j = 0, _len1 = scripts.length; _j < _len1; _j++) {
         script = scripts[_j];
-        eval(script.innerHTML);
+        eval(script.innerHTML.escapeSpecialChars());
       }
     }
     root.bootstrapifyControls();

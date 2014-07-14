@@ -71,7 +71,7 @@
          <asp:ContentPlaceHolder ID="mainContent" runat="server" />
       </div>
 
-      <div id="buttonsArea" class="panel-footer text-right navbar-fixed-bottom">
+      <div id="buttonsArea" class="panel-footer text-right navbar-fixed-bottom btn-row">
          <asp:ContentPlaceHolder ID="buttonsContent" runat="server" />
       </div>
    </div>         

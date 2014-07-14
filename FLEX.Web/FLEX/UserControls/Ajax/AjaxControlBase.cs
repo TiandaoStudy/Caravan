@@ -7,7 +7,7 @@ namespace FLEX.Web.UserControls.Ajax
       protected AjaxControlBase()
       {
          // Default values
-         DoPostBack = true;
+         DoPostBack = false;
          Enabled = true;
       }
 
