@@ -1,5 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Popup.Master.cs" Inherits="FLEX.Web.MasterPages.Popup" MasterPageFile="~/FLEX/MasterPages/Head.Master" %>
 <%@ MasterType VirtualPath="~/FLEX/MasterPages/Head.Master"%>
+<%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
 
 <asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">
    <style type="text/css">
@@ -53,7 +54,7 @@
 
 <asp:Content ID="aspMainContent" ContentPlaceHolderID="mainContent" runat="server">
    <!-- Used to close popup after a postback -->
-   <asp:UpdatePanel ID="closeUpdPanel" runat="server">
+   <ajax:UpdatePanel ID="closeUpdPanel" runat="server">
       <ContentTemplate>
          <asp:TextBox runat="server" CssClass="hidden" ID="txtDoClose" />
          <script type="text/javascript">
@@ -62,7 +63,7 @@
             }, 0);
          </script>
       </ContentTemplate>
-   </asp:UpdatePanel>
+   </ajax:UpdatePanel>
    
    <div id="mainContainer" class="container-fluid">   
       <asp:ValidationSummary ID="validationSummary" ValidationGroup="mainValidationSummary" HeaderText="You must fill in the following fields:" DisplayMode="BulletList" EnableClientScript="True" ShowSummary="True" runat="server" />
