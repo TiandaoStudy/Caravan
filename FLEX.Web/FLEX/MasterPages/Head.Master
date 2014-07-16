@@ -55,6 +55,11 @@
          
          <!-- Main content -->
          <asp:ContentPlaceHolder ID="mainContent" runat="server" />
+         
+         <!-- Hidden content -->
+         <div class="hidden">
+            <asp:ContentPlaceHolder ID="hiddenContent" runat="server" />
+         </div>
       </form>
    </body>
    

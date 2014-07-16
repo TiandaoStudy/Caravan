@@ -1,11 +1,11 @@
 {
   "name": "FLEX.Web",
-  "version": "0.1.0",
+  "version": 0.9.3",
   "authors": [
     "Alessio Parma <alessio.parma@finsa.it>",
     "Diana Martinez Gonzalez <diana.martinezgonzalez@finsa.it>"
   ],
-  "description": "Finsa S.p.A.",
+  "description": "FINSA S.p.A.",
   "license": "MIT",
   "homepage": "http://www.finsa.it",
   "ignore": [

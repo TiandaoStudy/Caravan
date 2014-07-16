@@ -12,102 +12,118 @@ namespace FLEX.Web.Pages
 {
    public abstract class PageBaseListAndSearch : PageBase
    {
-      protected readonly SearchCriteria SearchCriteria = new SearchCriteria();
+      #region Constants
 
-      //protected SearchCriteria SearchCriteria { get; private set; }
+      private const string StoreSearchCriteriaTag = "STORE_SEARCH_CRITERIA_FOR_";
+      private const string SearchCriteriaTag = "SEARCH_CRITERIA_FOR_";
 
-      //private const string StoreSearchCriteriaTag = "_STORE_SEARCH_CRITERIA";
+      #endregion
 
-      //private const string SearchCriteriaTag = "_SEARCH_CRITERIA";
-      //protected readonly string PageId;
+      protected PageBaseListAndSearch()
+      {
+         Load += Page_Load;
+      }
 
-      //protected PageBaseListAndSearch(string newPageId)
-      //{
-      //   Load += Page_Load;
-      //   PageId = newPageId;
-      //}
+      private void Page_Load(object sender, EventArgs e)
+      {
+         try
+         {
+            LoadSearchCriteria();
+         }
+         catch (Exception ex)
+         {
+            ErrorHandler.CatchException(ex, ErrorLocation.PageEvent);
+         }
+      }
 
-      //private void Page_Load(object sender, EventArgs e)
-      //{
-      //   try
-      //   {
-      //      LoadSearchCriteria();
-      //   }
-      //   catch (Exception ex)
-      //   {
-      //      ErrorHandler.CatchException(ex, ErrorLocation.PageEvent);
-      //   }
-      //}
+      #region Search Criteria
+      
+      /// <summary>
+      /// 
+      /// </summary>
+      protected SearchCriteria SearchCriteria { get; private set; }
 
-      //#region "Search Criteria"
+      /// <summary>
+      /// 
+      /// </summary>
+      protected abstract void FillSearchCriteria();
 
-      //protected abstract void FillSearchCriteria();
+      /// <summary>
+      ///   Inizializza i criteri di ricerca.
+      /// </summary>
+      /// <param name="criteria"></param>
+      /// <remarks></remarks>
+      protected abstract void RegisterSearchCriteria(SearchCriteria criteria);    
 
-      ///// <summary>
-      /////   Inizializza i criteri di ricerca.
-      ///// </summary>
-      ///// <param name="criteria"></param>
-      ///// <remarks></remarks>
-      //protected abstract void RegisterSearchCriteria(SearchCriteria criteria);
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="session"></param>
+      /// <param name="pageIdToBeKept"></param>
+      public static void StoreSearchCriteriaForPage(HttpSessionState session, string pageIdToBeKept)
+      {
+         session[StoreSearchCriteriaTag + pageIdToBeKept] = SearchCriteriaStorage.Keep;
+      }
 
-      //private void LoadSearchCriteria()
-      //{
-      //   dynamic storeSearchCriteriaObj = Session(PageId + StoreSearchCriteriaTag);
+      #endregion
 
-      //   var storeSearchCriteria = default(SearchCriteriaStorage);
-      //   if (storeSearchCriteriaObj == null)
-      //   {
-      //      storeSearchCriteria = SearchCriteriaStorage.Discard;
-      //   }
-      //   else
-      //   {
-      //      storeSearchCriteria = (SearchCriteriaStorage) storeSearchCriteriaObj;
-      //   }
+      #region Private Methods
 
-      //   dynamic searchCriteriaObj = Session(PageId + SearchCriteriaTag);
+      private void LoadSearchCriteria()
+      {
+         // Locally cached for performance reasons.
+         var flexID = FlexID;
+         
+         var storeSearchCriteriaObj = Session[StoreSearchCriteriaTag + flexID];
 
-      //   if (storeSearchCriteria == SearchCriteriaStorage.Discard || searchCriteriaObj == null)
-      //   {
-      //      SearchCriteria = new SearchCriteria();
-      //   }
-      //   else
-      //   {
-      //      SearchCriteria = (SearchCriteria) searchCriteriaObj;
-      //      Session(PageId + StoreSearchCriteriaTag) = SearchCriteriaStorage.Discard;
-      //   }
+         SearchCriteriaStorage storeSearchCriteria;
+         if (storeSearchCriteriaObj == null)
+         {
+            storeSearchCriteria = SearchCriteriaStorage.Discard;
+         }
+         else
+         {
+            storeSearchCriteria = (SearchCriteriaStorage) storeSearchCriteriaObj;
+         }
 
-      //   Debug.Assert(SearchCriteria != null);
-      //   Debug.Assert(SearchCriteria is SearchCriteria);
+         var searchCriteriaObj = Session[SearchCriteriaTag + flexID];
 
-      //   Session[PageId + SearchCriteriaTag] = SearchCriteria;
-      //   if (!IsPostBack)
-      //   {
-      //      FillSearchCriteria();
-      //   }
-      //   RegisterSearchCriteria(SearchCriteria);
-      //}
+         if (storeSearchCriteria == SearchCriteriaStorage.Discard || searchCriteriaObj == null)
+         {
+            SearchCriteria = new SearchCriteria();
+         }
+         else
+         {
+            SearchCriteria = (SearchCriteria) searchCriteriaObj;
+            Session[StoreSearchCriteriaTag + flexID] = SearchCriteriaStorage.Discard;
+         }
 
-      //public static void StoreSearchCriteriaForPage(HttpSessionState session, string pageIdToBeKept)
-      //{
-      //   session[pageIdToBeKept + StoreSearchCriteriaTag] = SearchCriteriaStorage.Keep;
-      //}
+         Debug.Assert(SearchCriteria != null);
 
-      //#endregion
+         Session[SearchCriteriaTag + flexID] = SearchCriteria;
+         if (!IsPostBack)
+         {
+            FillSearchCriteria();
+         }
+         RegisterSearchCriteria(SearchCriteria);
+      }
 
-      ///// <summary>
-      ///// 
-      ///// </summary>
-      //protected enum SearchCriteriaStorage
-      //{
-      //   /// <summary>
-      //   /// 
-      //   /// </summary>
-      //   Keep,
+      #endregion
 
-      //   /// <summary>
-      //   /// 
-      //   /// </summary>
-      //   Discard
-      //}
+      /// <summary>
+      /// 
+      /// </summary>
+      protected enum SearchCriteriaStorage : byte
+      {
+         /// <summary>
+         /// 
+         /// </summary>
+         Discard = 0,
+
+         /// <summary>
+         /// 
+         /// </summary>
+         Keep = 1
+      }
    }
 }
