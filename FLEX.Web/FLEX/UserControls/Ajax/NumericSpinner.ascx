@@ -3,16 +3,20 @@
 
 <ajax:UpdatePanel runat="server" ID="updPanel">
    <ContentTemplate>
-      <asp:TextBox ID="txtNumber" runat="server" />
-      <div class="input-group-btn">
-         <button type="button" class="btn btn-default style_padding">Apply</button>
+      <div class="input-group">
+         <asp:TextBox ID="txtNumber" runat="server" />
+         <div class="input-group-btn">
+            <asp:LinkButton runat="server" ID="btnApply" CssClass="btn btn-default numeric-spinner-apply" Text="Apply" />
+         </div>
       </div>
 
       <script type="text/javascript">
-         $("<%= txtNumber.ClientID %>").TouchSpin({
+         $("#<%= txtNumber.ClientID %>").TouchSpin({
             initval: "", // Applied when no explicit value is set on the input with the value attribute. Empty string means that the value remains empty on initialization.
             min: <%= MinValue %>, // Minimum value.
             max: <%= MaxValue %>, // Maximum value.
+            decimals: <%= DecimalCount %>, // Number of decimal points.
+            step: <%= Step %>, // Incremental-decremental step on up-down change.
             stepinterval: 50,
             booster: true, // If enabled, the the spinner is continually becoming faster as holding the button.
             boostat: 10, // Boost at every nth step.

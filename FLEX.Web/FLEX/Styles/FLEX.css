@@ -660,6 +660,20 @@ body {
   text-decoration: none;
 }
 /*******************************************************************************
+  NUMERIC SPINNER
+*******************************************************************************/
+.bootstrap-touchspin-up,
+.bootstrap-touchspin-down,
+.bootstrap-touchspin-prefix {
+  padding: 0px !important;
+  height: 24px;
+  width: 22px;
+}
+.numeric-spinner-apply {
+  padding: 0px !important;
+  height: 24px;
+}
+/*******************************************************************************
   ON OFF SWITCH
 *******************************************************************************/
 .btn-on-off {
