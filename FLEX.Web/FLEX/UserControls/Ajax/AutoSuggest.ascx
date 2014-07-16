@@ -23,7 +23,7 @@
       var searchText = txtSugg.val();
 
       // La stringa da ricercare deve avere almeno due caratteri
-      if (!searchText || searchText.length < 2) {
+      if (!searchText || searchText.length < <%= MinLengthForHint %>) {
          // Se è stata effettuata una ricerca precedente ed il campo e' vuoto
          if (txtKey.val() != "" && searchText == "") {
             txtKey.val(""); // Resetto il codice

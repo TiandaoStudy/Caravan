@@ -56,6 +56,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{349512
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.Web.Core", "FLEX.Web.Core\FLEX.Web.Core.csproj", "{831570B2-B46A-448B-AD66-B97687D13172}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -94,6 +96,10 @@ Global
 		{4F1024FA-992F-442C-B32F-E4BE589D5EF4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BBCDDB1C-8127-4623-B40B-5109DE5A63EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BBCDDB1C-8127-4623-B40B-5109DE5A63EF}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{831570B2-B46A-448B-AD66-B97687D13172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{831570B2-B46A-448B-AD66-B97687D13172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{831570B2-B46A-448B-AD66-B97687D13172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{831570B2-B46A-448B-AD66-B97687D13172}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

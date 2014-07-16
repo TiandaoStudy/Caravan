@@ -46,9 +46,9 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Thrower, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Thrower, Version=0.12.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thrower.0.11\lib\net35-client\Thrower.dll</HintPath>
+      <HintPath>..\packages\Thrower.0.12.0\lib\net40-client\Thrower.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +153,13 @@
     </Compile>
     <Compile Include="FLEX\UserControls\Ajax\OnOffSwitch.ascx.designer.cs">
       <DependentUpon>OnOffSwitch.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\NumericSpinner.ascx.cs">
+      <DependentUpon>NumericSpinner.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\NumericSpinner.ascx.designer.cs">
+      <DependentUpon>NumericSpinner.ascx</DependentUpon>
     </Compile>
     <Compile Include="FLEX\UserControls\LongTextContainer.ascx.cs">
       <DependentUpon>LongTextContainer.ascx</DependentUpon>
@@ -347,6 +354,9 @@
     </Content>
     <Content Include="FLEX\Styles\Octicons.min.css">
       <DependentUpon>Octicons.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\UserControls\Ajax\NumericSpinner.ascx">
+      <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\UserControls\LongTextContainer.ascx">
       <SubType>ASPXCodeBehind</SubType>

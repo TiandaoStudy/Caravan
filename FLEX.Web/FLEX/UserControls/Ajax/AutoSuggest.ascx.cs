@@ -27,6 +27,7 @@ namespace FLEX.Web.UserControls.Ajax
          // Default values
          QueryFilter = "''";
          MaxMenuHeight = "250";
+         MinLengthForHint = 2;
       }
 
       protected void Page_Load(object sender, EventArgs e)
@@ -70,6 +71,11 @@ namespace FLEX.Web.UserControls.Ajax
       public string LookupBy { get; set; }
 
       public string QueryFilter { get; set; }
+
+      /// <summary>
+      ///   Minimum number of characters required for the auto suggest to trigger itself.
+      /// </summary>
+      public int MinLengthForHint { get; set; }
 
       // Imposta un'altezza alla tendinda dei suggerimenti (def: 250px)
       public string MaxMenuHeight { get; set; }
