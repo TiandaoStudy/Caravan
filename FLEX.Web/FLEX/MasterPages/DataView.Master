@@ -40,6 +40,10 @@
    <!-- End Data Grid -->
 </asp:Content>
 
-<asp:Content ID="aspFooterContent" ContentPlaceHolderID="footerContent" runat="server">
+<asp:Content ID="aspFooterContent" ContentPlaceHolderID="lowerContent" runat="server">
    <asp:ContentPlaceHolder ID="footerContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="aspHiddenContent" ContentPlaceHolderID="hiddenContent" runat="server">
+   <asp:ContentPlaceHolder ID="hiddenContent" runat="server"></asp:ContentPlaceHolder>
 </asp:Content>

@@ -10,7 +10,7 @@
 namespace FLEX.Web.Pages.Templates {
     
     
-    public partial class VerticalSearch {
+    public partial class CustomView {
         
         /// <summary>
         /// Master property.
@@ -18,9 +18,9 @@ namespace FLEX.Web.Pages.Templates {
         /// <remarks>
         /// Auto-generated property.
         /// </remarks>
-        public new FLEX.Web.MasterPages.VerticalSearch Master {
+        public new FLEX.Web.MasterPages.CustomView Master {
             get {
-                return ((FLEX.Web.MasterPages.VerticalSearch)(base.Master));
+                return ((FLEX.Web.MasterPages.CustomView)(base.Master));
             }
         }
     }

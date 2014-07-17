@@ -22,6 +22,15 @@ namespace FLEX.Web.MasterPages {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder headContent;
         
         /// <summary>
+        /// upperContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder upperContent;
+        
+        /// <summary>
         /// customContent control.
         /// </summary>
         /// <remarks>
@@ -31,22 +40,49 @@ namespace FLEX.Web.MasterPages {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder customContent;
         
         /// <summary>
-        /// buttonsContent control.
+        /// leftButtonsContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder buttonsContent;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder leftButtonsContent;
         
         /// <summary>
-        /// footerContent control.
+        /// centerButtonsContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder footerContent;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder centerButtonsContent;
+        
+        /// <summary>
+        /// rightButtonsContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder rightButtonsContent;
+        
+        /// <summary>
+        /// lowerContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder lowerContent;
+        
+        /// <summary>
+        /// hiddenContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder hiddenContent;
         
         /// <summary>
         /// Master property.

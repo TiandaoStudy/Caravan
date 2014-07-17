@@ -112,6 +112,13 @@
     <Compile Include="FLEX\Pages\PageBaseListAndSearch.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="FLEX\Pages\Templates\CustomView.aspx.cs">
+      <DependentUpon>CustomView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\Templates\CustomView.aspx.designer.cs">
+      <DependentUpon>CustomView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FLEX\Services\AjaxLookup.asmx.cs">
       <DependentUpon>AjaxLookup.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -318,6 +325,9 @@
     <Content Include="FLEX\Pages\ErrorHandler.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Content Include="FLEX\Pages\Templates\CustomView.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="FLEX\Scripts\bootbox.js" />
     <Content Include="FLEX\Scripts\bootbox.min.js">
       <DependentUpon>bootbox.js</DependentUpon>
@@ -342,7 +352,9 @@
     <Content Include="FLEX\Styles\Bootstrap-plugins.min.css">
       <DependentUpon>Bootstrap-plugins.less</DependentUpon>
     </Content>
-    <Content Include="FLEX\Pages\Templates\VerticalSearch.aspx" />
+    <Content Include="FLEX\Pages\Templates\VerticalSearch.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="FLEX\Styles\Bootstrap-touchspin.css">
       <DependentUpon>Bootstrap-touchspin.less</DependentUpon>
     </Content>

@@ -81,6 +81,12 @@ namespace FLEX.Web.WebControls
 
       #region GridView Overrides
 
+      protected override void OnPagePreLoad(object sender, EventArgs e)
+      {
+         base.OnPagePreLoad(sender, e);
+         DataSource = ViewState[DataSrcViewStateTag];
+      }
+
       private void OnPageIndexChanging(object s, GridViewPageEventArgs e)
       {
          PageIndex = e.NewPageIndex;

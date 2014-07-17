@@ -40,6 +40,15 @@ namespace FLEX.Web.MasterPages {
         protected global::FLEX.Web.UserControls.Ajax.HiddenTrigger flexHiddenTrigger;
         
         /// <summary>
+        /// upperContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder upperContent;
+        
+        /// <summary>
         /// mainContent control.
         /// </summary>
         /// <remarks>
@@ -49,13 +58,13 @@ namespace FLEX.Web.MasterPages {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder mainContent;
         
         /// <summary>
-        /// footerContent control.
+        /// lowerContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder footerContent;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder lowerContent;
         
         /// <summary>
         /// flexPageFooter control.
@@ -65,6 +74,15 @@ namespace FLEX.Web.MasterPages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::FLEX.Web.UserControls.PageFooter flexPageFooter;
+        
+        /// <summary>
+        /// hiddenContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder hiddenContent;
         
         /// <summary>
         /// Master property.

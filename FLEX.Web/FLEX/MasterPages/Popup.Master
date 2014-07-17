@@ -77,3 +77,7 @@
       </div>
    </div>         
 </asp:Content>
+
+<asp:Content ID="aspHiddenContent" ContentPlaceHolderID="hiddenContent" runat="server">
+   <asp:ContentPlaceHolder ID="hiddenContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
