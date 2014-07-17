@@ -58,7 +58,12 @@
          
          <!-- Hidden content -->
          <div class="hidden">
-            <asp:ContentPlaceHolder ID="hiddenContent" runat="server" />
+            <!-- Fields are placed in an update panel, to avoid common issues on partial postbacks. -->
+            <ajax:UpdatePanel runat="server">
+               <ContentTemplate>
+                  <asp:ContentPlaceHolder ID="hiddenContent" runat="server" />
+               </ContentTemplate>
+            </ajax:UpdatePanel>
          </div>
       </form>
    </body>

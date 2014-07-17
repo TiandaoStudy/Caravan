@@ -166,11 +166,13 @@
          </div>
          
          <div class="panel-footer clearfix">
-            <div class="text-left btn-row">
-               <asp:ContentPlaceHolder ID="leftButtonsContent" runat="server"></asp:ContentPlaceHolder>
-            </div>
-            <div class="text-right btn-row">
-               <asp:ContentPlaceHolder ID="rightButtonsContent" runat="server"></asp:ContentPlaceHolder>
+            <div class="row">
+               <div class="text-left btn-row col-xs-6">
+                  <asp:ContentPlaceHolder ID="leftButtonsContent" runat="server"></asp:ContentPlaceHolder>
+               </div>
+               <div class="text-right btn-row col-xs-6">
+                  <asp:ContentPlaceHolder ID="rightButtonsContent" runat="server"></asp:ContentPlaceHolder>
+               </div>
             </div>
          </div>
       </div>
