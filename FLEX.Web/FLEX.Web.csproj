@@ -62,6 +62,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Core\ViewStateStorageSettings.cs" />
+    <Compile Include="FlexWebFormsConfiguration.cs" />
     <Compile Include="FLEX\MasterPages\CustomView.Master.cs">
       <DependentUpon>CustomView.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

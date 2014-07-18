@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleNotifyPropertyChangedBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\" />
