@@ -222,14 +222,14 @@ namespace FLEX.Web.WebControls
          if (dataView != null)
          {
             dataView.Sort = sortExp;
-            return dataView;
+            return dataView.Table;
          }
 
          var dataTable = dataSrc as DataTable;
          if (dataTable != null)
          {
             dataTable.DefaultView.Sort = sortExp;
-            return dataTable.DefaultView;
+            return dataTable;
          }
 
          // Data source type not handled
