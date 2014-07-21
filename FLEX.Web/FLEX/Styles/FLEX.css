@@ -1,3 +1,6 @@
+/*******************************************************************************
+  VARIABLES
+*******************************************************************************/
 body {
   margin: 0;
   padding: 0;
@@ -27,6 +30,18 @@ header .navbar-default .navbar-brand .logo-finsa {
   margin-right: 5px;
   width: 60px;
   height: 40px;
+}
+footer .navbar-default {
+  min-height: 20px !important;
+}
+footer .navbar-default .navbar-brand {
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  height: 10px !important;
+}
+footer .navbar-default .navbar-nav > li > a {
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
 }
 /*******************************************************************************
   MAIN FORM

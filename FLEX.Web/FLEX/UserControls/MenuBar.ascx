@@ -111,7 +111,7 @@
    <div id="menuBar" class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-default-collapse">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menuBar-collapse">
                <span class="icon-bar"></span>
                <span class="icon-bar"></span>
                <span class="icon-bar"></span>
@@ -120,7 +120,7 @@
                <img src='<%= Head.MyFlexPath %>/Images/logo-menubar.png' class='logo' alt='Logo' />&nbsp;<%= WebSettings.ProjectName %>
             </a>
          </div>
-         <div id="navbar-default-collapse" class="navbar-collapse collapse">
+         <div id="menuBar-collapse" class="navbar-collapse collapse">
             <ul class="nav navbar-nav" id="ul_menu" runat="server"></ul>
             <ul class="nav navbar-nav navbar-right">
                <li>
