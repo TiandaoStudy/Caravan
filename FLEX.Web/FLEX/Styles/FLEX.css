@@ -26,22 +26,21 @@ header .navbar-default .navbar-brand .logo {
   width: 24px;
   height: 24px;
 }
-header .navbar-default .navbar-brand .logo-finsa {
-  margin-right: 5px;
-  width: 60px;
-  height: 40px;
-}
 footer .navbar-default {
   min-height: 10px !important;
 }
 footer .navbar-default .navbar-brand {
-  padding-top: 4px !important;
-  padding-bottom: 4px !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
   height: 10px !important;
 }
+footer .navbar-default .navbar-brand .logo-finsa {
+  margin-right: 5px;
+  height: 18px;
+}
 footer .navbar-default .navbar-nav > li > a {
-  padding-top: 4px !important;
-  padding-bottom: 4px !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
 }
 /*******************************************************************************
   MAIN FORM

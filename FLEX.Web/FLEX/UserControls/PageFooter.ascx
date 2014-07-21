@@ -16,17 +16,17 @@
          <asp:Repeater id="rptFooterInfo" runat="server">
             <HeaderTemplate>
                <div id="pageFooter-collapse" class="navbar-collapse collapse"> 
-               <ul class="nav navbar-nav navbar-right">
-               <li>
+               <ul class="nav navbar-nav navbar-right">        
             </HeaderTemplate>
             <ItemTemplate>
-               <a>
-                  <strong><asp:Label ID="lblKey" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Key") %>' />:</strong>&nbsp;
-                  <asp:Label ID="lblValue" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Value") %>' />
-               </a>
+               <li>
+                  <a>
+                     <strong><asp:Label ID="lblKey" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "First") %>' />:</strong>&nbsp;
+                     <asp:Label ID="lblValue" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Second") %>' />
+                  </a>
+               </li>
             </ItemTemplate>
             <FooterTemplate>
-               </li>
                </ul>
                </div>
             </FooterTemplate>

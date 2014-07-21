@@ -11,6 +11,6 @@ namespace FLEX.Common.Web
       /// 
       /// </summary>
       /// <returns></returns>
-      IDictionary<string, string> GetFooterInfo();
+      IList<Pair<string, string>> GetFooterInfo();
    }
 }
