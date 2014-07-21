@@ -56,7 +56,7 @@ namespace FLEX.Common
             var row = table.NewRow();
             foreach (PropertyDescriptor property in properties)
             {
-               row[property.Name] = property.GetValue(item);
+               row[property.Name] = property.GetValue(item) ?? DBNull.Value;
             }
             table.Rows.Add(row);
          }
@@ -73,10 +73,11 @@ namespace FLEX.Common
          var table = new DataTable(entityType.Name);
          // Get the property list
          properties = TypeDescriptor.GetProperties(entityType);
-         foreach (PropertyDescriptor prop in properties)
+         foreach (PropertyDescriptor property in properties)
          {
             // Add property as column
-            table.Columns.Add(prop.Name, prop.PropertyType);
+            var type = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+            table.Columns.Add(property.Name, type);
          }
          return table;
       }
