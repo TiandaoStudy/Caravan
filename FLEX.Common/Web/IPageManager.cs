@@ -1,4 +1,4 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections.Generic;
 
 namespace FLEX.Common.Web
 {
@@ -10,8 +10,7 @@ namespace FLEX.Common.Web
       /// <summary>
       /// 
       /// </summary>
-      /// <returns></re
-      /// turns>
-      NameValueCollection GetFooterInfo();
+      /// <returns></returns>
+      IDictionary<string, string> GetFooterInfo();
    }
 }

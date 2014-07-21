@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("FINSA S.p.A.")]
 [assembly: AssemblyProduct("FLEX.Web")]
-[assembly: AssemblyCopyright("Copyright © FINSA S.p.A. 2014")]
+[assembly: AssemblyCopyright("Copyright © FINSA S.p.A. 2014-2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

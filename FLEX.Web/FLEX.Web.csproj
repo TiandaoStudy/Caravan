@@ -38,6 +38,7 @@
     <DocumentationFile>bin\Release\FLEX.Web.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -56,13 +57,14 @@
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
     <Compile Include="CacheManager.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="Core\BaseStatePersister.cs" />
     <Compile Include="Core\CacheViewStatePersister.cs" />
     <Compile Include="Core\GridPager.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Core\SimpleNotifyPropertyChangedBase.cs" />
     <Compile Include="Core\ViewStateStorageSettings.cs" />
-    <Compile Include="FlexWebFormsConfiguration.cs" />
     <Compile Include="FLEX\MasterPages\CustomView.Master.cs">
       <DependentUpon>CustomView.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

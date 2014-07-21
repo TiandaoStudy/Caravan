@@ -5,7 +5,7 @@ namespace FLEX.Web.Core
    /// <summary>
    /// This class is an example of a BaseStatePersister implementation.
    /// </summary>
-   public sealed class CacheViewStatePersister : BaseStatePersister
+   internal sealed class CacheViewStatePersister : BaseStatePersister
    {
       //required constructor
       public CacheViewStatePersister(Page page) : base(page)

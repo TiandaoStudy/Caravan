@@ -62,7 +62,7 @@
     <None Include="Package.nuspec" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="lib\" />
+    <Folder Include="lib\net40\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FLEX.Common\FLEX.Common.csproj">

@@ -26,7 +26,7 @@ namespace FLEX.Web.Core
    /// Represents the group of options used by the Flesk.Accelerator.Page class
    /// to determine the storage method of the ViewState object.
    /// </summary>
-   public sealed class ViewStateStorageSettings : ICloneable
+   internal sealed class ViewStateStorageSettings : ICloneable
    {
       private ViewStateStorageMethod _method;
       private ViewStateStorageBehavior _behavior;

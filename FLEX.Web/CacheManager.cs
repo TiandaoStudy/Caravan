@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Caching;
@@ -114,11 +113,5 @@ namespace FLEX.Web
          // It's safe to remove the key.
          return true;
       }
-
-      //private static string GenerateHash(string input)
-      //{
-      //   var data = MD5.Create().ComputeHash(Encoding.Default.GetBytes(input));
-      //   return BitConverter.ToString(data);
-      //}
    }
 }

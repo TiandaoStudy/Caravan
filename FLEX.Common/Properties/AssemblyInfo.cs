@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("FINSA S.p.A.")]
 [assembly: AssemblyProduct("FLEX.Common")]
-[assembly: AssemblyCopyright("Copyright © FINSA S.p.A. 2014")]
+[assembly: AssemblyCopyright("Copyright © FINSA S.p.A. 2014-2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -37,8 +37,8 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("0.9.6.*")]
+[assembly: AssemblyFileVersion("0.9.6.*")]
 
 // Attributes added to allow stronger development.
 
