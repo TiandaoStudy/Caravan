@@ -32,7 +32,7 @@ header .navbar-default .navbar-brand .logo-finsa {
   height: 40px;
 }
 footer .navbar-default {
-  min-height: 20px !important;
+  min-height: 10px !important;
 }
 footer .navbar-default .navbar-brand {
   padding-top: 4px !important;

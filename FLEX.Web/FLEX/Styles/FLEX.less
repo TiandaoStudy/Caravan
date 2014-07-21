@@ -6,6 +6,7 @@
 *******************************************************************************/
 
 @footer-padding: 4px;
+@footer-min-height: 10px;
 
 body {
   margin: 0;
@@ -47,7 +48,7 @@ header {
 
 footer {
    .navbar-default {
-      min-height: 20px !important;
+      min-height: @footer-min-height !important;
    }
 
       .navbar-default .navbar-nav > .active > a:hover,
@@ -74,7 +75,7 @@ footer {
    .navbar-default .navbar-brand {
       padding-top: @footer-padding !important;
       padding-bottom: @footer-padding !important;
-      height: 10px !important;
+      height: @footer-min-height !important;
    }
 
       .navbar-default .navbar-brand:hover {
