@@ -9,21 +9,21 @@ body {
 /*******************************************************************************
   MENU BAR
 *******************************************************************************/
-.navbar-default {
+header .navbar-default {
   font-size: 14px;
   border-radius: 0px;
 }
-.navbar-default .navbar-brand {
+header .navbar-default .navbar-brand {
   font-size: 20px;
   padding-top: 10px;
   padding-bottom: 5px;
 }
-.navbar-default .navbar-brand .logo {
+header .navbar-default .navbar-brand .logo {
   margin-right: 5px;
   width: 24px;
   height: 24px;
 }
-.navbar-default .navbar-brand .logo-finsa {
+header .navbar-default .navbar-brand .logo-finsa {
   margin-right: 5px;
   width: 60px;
   height: 40px;

@@ -107,37 +107,39 @@
    });
 </script>
 
-<div id="menuBar" class="navbar navbar-default navbar-fixed-top">
-   <div class="container-fluid">
-      <div class="navbar-header">
-         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-default-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-         </button>
-         <a class="navbar-brand" href="#" onclick="<%= WebSettings.UserControls_MenuBar_BrandClick %>">
-            <img src='<%= Head.MyFlexPath %>/Images/logo-menubar.png' class='logo' alt='Logo' />&nbsp;<%= WebSettings.ProjectName %>
-         </a>
-      </div>
-      <div id="navbar-default-collapse" class="navbar-collapse collapse">
-         <ul class="nav navbar-nav" id="ul_menu" runat="server"></ul>
-         <ul class="nav navbar-nav navbar-right">
-            <li>
-               <a href="#" onclick="<%= WebSettings.UserControls_MenuBar_HomeClick %>">
-                  <span class="glyphicon glyphicon-home padded-icon"></span>Home
-               </a>
-            </li>
-            <li>
-               <a href="#" onclick="<%= WebSettings.UserControls_MenuBar_LogoutClick %>">
-                  <span class="glyphicon glyphicon-circle-arrow-left padded-icon"></span>Logout
-               </a>
-            </li>
-            <li>
-               <a href="#" onclick="<%= WebSettings.UserControls_MenuBar_InfoClick %>">
-                  <span class="glyphicon glyphicon-info-sign padded-icon"></span>Info
-               </a>
-            </li>
-         </ul>
+<header>
+   <div id="menuBar" class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+         <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-default-collapse">
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" onclick="<%= WebSettings.UserControls_MenuBar_BrandClick %>">
+               <img src='<%= Head.MyFlexPath %>/Images/logo-menubar.png' class='logo' alt='Logo' />&nbsp;<%= WebSettings.ProjectName %>
+            </a>
+         </div>
+         <div id="navbar-default-collapse" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav" id="ul_menu" runat="server"></ul>
+            <ul class="nav navbar-nav navbar-right">
+               <li>
+                  <a href="#" onclick="<%= WebSettings.UserControls_MenuBar_HomeClick %>">
+                     <span class="glyphicon glyphicon-home padded-icon"></span>Home
+                  </a>
+               </li>
+               <li>
+                  <a href="#" onclick="<%= WebSettings.UserControls_MenuBar_LogoutClick %>">
+                     <span class="glyphicon glyphicon-circle-arrow-left padded-icon"></span>Logout
+                  </a>
+               </li>
+               <li>
+                  <a href="#" onclick="<%= WebSettings.UserControls_MenuBar_InfoClick %>">
+                     <span class="glyphicon glyphicon-info-sign padded-icon"></span>Info
+                  </a>
+               </li>
+            </ul>
+         </div>
       </div>
    </div>
-</div>
+</header>
