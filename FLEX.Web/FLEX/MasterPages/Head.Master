@@ -1,0 +1,92 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Head.Master.cs" Inherits="FLEX.Web.MasterPages.Head" %>
+<%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
+<%@ Register TagPrefix="flex" TagName="ErrorHandler" Src="../UserControls/Ajax/ErrorHandler.ascx" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <!-- Required for IE compatibility -->
+      <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=EDGE" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      <!-- CSS for Bootstrap, respond.js must be AFTER this CSS -->
+      <link href="<%=FlexPath%>/Styles/Fonts.min.css<%=NoCacheTag%>" rel="stylesheet" media="screen" />
+      <link href="<%=FlexPath%>/Styles/Bootstrap.min.css<%=NoCacheTag%>" rel="stylesheet" media="screen" />
+      <link href="<%=FlexPath%>/Styles/Bootstrap-plugins.min.css<%=NoCacheTag%>" rel="stylesheet" media="screen" />
+      <link href="<%=FlexPath%>/Styles/FLEX.min.css<%=NoCacheTag%>" rel="stylesheet" media="screen" />
+      <!--[if lt IE 9]>  
+         <script src="<%=FlexPath%>/Scripts/html5shiv.min.js<%=NoCacheTag%>"></script>
+         <script src="<%=FlexPath%>/Scripts/respond.min.js<%=NoCacheTag%>"></script>
+      <![endif]-->
+      
+      <!-- Favicon -->
+      <link rel="shortcut icon" href="<%=MyFlexPath%>/Images/favicon.png" />
+        
+      <!-- JavaScript used throughout the website -->
+      <script type="text/javascript" src="<%=FlexPath%>/Scripts/jquery.min.js<%=NoCacheTag%>"></script>
+      <script type="text/javascript" src="<%=FlexPath%>/Scripts/jquery-ui.min.js<%=NoCacheTag%>"></script>
+      <script type="text/javascript" src="<%=FlexPath%>/Scripts/underscore.min.js<%=NoCacheTag%>"></script>
+      <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap.min.js<%=NoCacheTag%>"></script>
+      <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-checkbox.min.js<%=NoCacheTag%>"></script>
+      <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-datepicker.min.js<%=NoCacheTag%>"></script>
+      <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-file-input.min.js<%=NoCacheTag%>"></script>
+      <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-switch.min.js<%=NoCacheTag%>"></script>
+      <script type="text/javascript" src="<%=FlexPath%>/Scripts/popupHandler.min.js<%=NoCacheTag%>"></script>
+      <script type="text/javascript" src="<%=FlexPath%>/Scripts/webLibrary.js<%=NoCacheTag%>"></script>
+        
+      <!-- Place holder for head contents -->
+      <asp:ContentPlaceHolder ID="headContent" runat="server" />
+   </head>
+   
+   <body>
+      <form id="aspnetForm" runat="server">
+         <!-- Required in order to update panel to work -->
+         <ajax:ScriptManager ID="scriptManager" EnablePartialRendering="True" ScriptMode="Release" runat="server" />
+      
+         <!-- Must be put after script manager, because it relies on elements introduced by it -->
+         <script type="text/javascript" src="<%=FlexPath%>/Scripts/FLEX.js<%=NoCacheTag%>"></script>
+      
+         <!-- Error handler -->
+         <flex:ErrorHandler ID="flexErrorHandler" runat="server" />
+         
+         <!-- Main content -->
+         <asp:ContentPlaceHolder ID="mainContent" runat="server" />
+      </form>
+   </body>
+   
+   <script type="text/javascript">
+      // See documentation: "FLEX.Docs/Issues and Solutions/ASP.NET/ASP.NET 3.5 and Validators in IE9.pdf"
+      // This script overrides default validator, therefore it should not be included if framework version is >= 4.0.
+      function ValidatorOnChange(event) {
+         if (!event) {
+            event = window.event;
+         }
+         Page_InvalidControlToBeFocused = null;
+         var targetedControl;
+         if ((typeof (event.srcElement) != "undefined") && (event.srcElement != null)) {
+            targetedControl = event.srcElement;
+         } else {
+            targetedControl = event.target;
+         }
+         var vals;
+         if (typeof (targetedControl.Validators) != "undefined") {
+            vals = targetedControl.Validators;
+
+         } else {
+            if (targetedControl.tagName.toLowerCase() == "label") {
+               targetedControl = document.getElementById(targetedControl.htmlFor);
+               vals = targetedControl.Validators;
+            }
+         }
+         var i;
+         if (vals) {
+            for (i = 0; i < vals.length; i++) {
+               ValidatorValidate(vals[i], null, event);
+            }
+         }
+         ValidatorUpdateIsValid();
+      }
+   </script>
+</html>

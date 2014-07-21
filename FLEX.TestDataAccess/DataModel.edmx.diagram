@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2007/06/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d8b82643a0f944d6ac8a71c628e144fd" Name="Diagram1" >
+        <EntityTypeShape EntityType="FLEX.Extensions.TestDataAccess.School" Width="1.5" PointX="8.375" PointY="5.5" />
+        <EntityTypeShape EntityType="FLEX.Extensions.TestDataAccess.Candidate" Width="1.5" PointX="2.8087929537560758" PointY="4.2707167287686456" />
+        <EntityTypeShape EntityType="FLEX.Extensions.TestDataAccess.sysdiagram" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="false" />
+        <AssociationConnector Association="FLEX.Extensions.TestDataAccess.CandidateAttended" />
+        <EntityTypeShape EntityType="FLEX.Extensions.TestDataAccess.Gender" Width="1.5" PointX="2.75" PointY="1.625" />
+        <AssociationConnector Association="FLEX.Extensions.TestDataAccess.FK_Candidate_Gender" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
