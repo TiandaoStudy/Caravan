@@ -14,15 +14,15 @@ namespace FLEX.Web.UserControls
    {
       protected void Page_Load(object sender, EventArgs e)
       {
+         // ...
+         if (IsPostBack) return;
+
          try
          {
-            if (!IsPostBack)
-            {
-               var pageManagerTypeInfo = Configuration.Instance.PageManagerTypeInfo;
-               var pageManager = ServiceLocator.Load<IPageManager>(pageManagerTypeInfo);
-               rptFooterInfo.DataSource = pageManager.GetFooterInfo().ToList();
-               rptFooterInfo.DataBind();
-            }
+            var pageManagerTypeInfo = Configuration.Instance.PageManagerTypeInfo;
+            var pageManager = ServiceLocator.Load<IPageManager>(pageManagerTypeInfo);
+            rptFooterInfo.DataSource = pageManager.GetFooterInfo().ToList();
+            rptFooterInfo.DataBind();
          }
          catch (Exception ex)
          {

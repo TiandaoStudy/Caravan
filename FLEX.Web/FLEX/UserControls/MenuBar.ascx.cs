@@ -17,21 +17,33 @@ namespace FLEX.Web.UserControls
    {
       protected void Page_Load(object sender, EventArgs e)
       {
-         // Legge il file XML con il quale si configura la barra del menu.
-         var xml = new XmlDocument();
-         xml.Load(Server.MapPath(WebSettings.MenuBar_XmlPath));
-         var sourceXml = xml.OuterXml;
+         // ...
+         if (IsPostBack) return;
 
-         var secManager = ServiceLocator.Load<ISecurityManager>(CommonSettings.Web_SecurityManagerInfo);
-         sourceXml = secManager.ApplyMenuSecurity(Context.User, sourceXml);
-
-         Menu menu;
-         using (var sourceStream = new MemoryStream(Encoding.UTF8.GetBytes(sourceXml)))
+         try
          {
-            menu = Menu.DeserializeFrom(sourceStream);
+
+            // Legge il file XML con il quale si configura la barra del menu.
+            var xml = new XmlDocument();
+            xml.Load(Server.MapPath(WebSettings.MenuBar_XmlPath));
+            var sourceXml = xml.OuterXml;
+
+            var secManager = ServiceLocator.Load<ISecurityManager>(CommonSettings.Web_SecurityManagerInfo);
+            sourceXml = secManager.ApplyMenuSecurity(Context.User, sourceXml);
+
+            Menu menu;
+            using (var sourceStream = new MemoryStream(Encoding.UTF8.GetBytes(sourceXml)))
+            {
+               menu = Menu.DeserializeFrom(sourceStream);
+            }
+            // Aggiungere elementi al menu
+            ul_menu.InnerHtml = menu.Group.Aggregate("", (current, item) => current + Recursivo(item, true));
          }
-         // Aggiungere elementi al menu
-         ul_menu.InnerHtml = menu.Group.Aggregate("", (current, item) => current + Recursivo(item, true));
+         catch (Exception ex)
+         {
+            QuickLogger.LogError<MenuBar>(ex);
+            throw;
+         }        
       }
 
       private static string Recursivo(Item item, bool firstLevel)
