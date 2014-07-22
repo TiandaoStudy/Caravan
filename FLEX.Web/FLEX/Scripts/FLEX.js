@@ -82,16 +82,11 @@
   };
 
   root.fixDataGridPager = function(tableId) {
-    var maxWidth, pageBtnWidths, pageButtons, row;
-    pageButtons = $("#" + tableId + " .datagrid-pager span, #" + tableId + " .datagrid-pager a");
-    pageBtnWidths = _.map(pageButtons, function(x) {
-      return $(x).width();
-    });
-    maxWidth = _.max(pageBtnWidths);
-    pageButtons.width(maxWidth);
+    var row;
     row = $("#" + tableId + " .datagrid-pager").parent();
     row.css({
-      backgroundColor: "white"
+      backgroundColor: "white",
+      borderBottom: "0px"
     });
   };
 

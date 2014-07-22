@@ -78,14 +78,14 @@ root.fixAllDataGrids = () ->
 
 root.fixDataGridPager = (tableId) ->
    # All buttons should have the same width
-   pageButtons = $("##{tableId} .datagrid-pager span, ##{tableId} .datagrid-pager a");
-   pageBtnWidths = _.map(pageButtons, (x) -> $(x).width())
-   maxWidth = _.max(pageBtnWidths)
-   pageButtons.width(maxWidth)
+#   pageButtons = $("##{tableId} .datagrid-pager span, ##{tableId} .datagrid-pager a");
+#   pageBtnWidths = _.map(pageButtons, (x) -> $(x).width())
+#   maxWidth = _.max(pageBtnWidths)
+#   pageButtons.width(maxWidth)
    
    # Pagination should neither hover, nor have an alternating background
    row = $("##{tableId} .datagrid-pager").parent()
-   row.css({backgroundColor: "white"})
+   row.css({backgroundColor: "white"; borderBottom: "0px"})
    
    # Required to avoid strange CoffeeScript behaviour
    return

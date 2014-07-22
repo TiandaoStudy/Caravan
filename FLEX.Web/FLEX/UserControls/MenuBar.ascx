@@ -107,7 +107,7 @@
    });
 </script>
 
-<header>
+<nav>
    <div id="menuBar" class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
          <div class="navbar-header">
@@ -142,4 +142,4 @@
          </div>
       </div>
    </div>
-</header>
+</nav>

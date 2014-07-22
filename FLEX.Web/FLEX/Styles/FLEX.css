@@ -12,16 +12,16 @@ body {
 /*******************************************************************************
   MENU BAR
 *******************************************************************************/
-header .navbar-default {
+nav .navbar-default {
   font-size: 14px;
   border-radius: 0px;
 }
-header .navbar-default .navbar-brand {
+nav .navbar-default .navbar-brand {
   font-size: 20px;
   padding-top: 10px;
   padding-bottom: 5px;
 }
-header .navbar-default .navbar-brand .logo {
+nav .navbar-default .navbar-brand .logo {
   margin-right: 5px;
   width: 24px;
   height: 24px;
