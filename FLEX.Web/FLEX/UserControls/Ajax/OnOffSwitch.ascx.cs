@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using FLEX.Common.Collections;
 using FLEX.Common.Web;
 using Thrower;
@@ -25,8 +24,6 @@ namespace FLEX.Web.UserControls.Ajax
          {
             SetButtonsStyle();
          }
-         btnON.UseSubmitBehavior = btnOFF.UseSubmitBehavior = DoPostBack;
-         btnON.Enabled = btnOFF.Enabled = Enabled;
       }
 
       #region Public Properties
@@ -50,6 +47,18 @@ namespace FLEX.Web.UserControls.Ajax
       #endregion
 
       #region IAjaxControl Members
+
+      public override bool DoPostBack
+      {
+         get { return base.DoPostBack; }
+         set { base.DoPostBack = btnON.UseSubmitBehavior = btnOFF.UseSubmitBehavior = value; }
+      }
+
+      public override bool Enabled
+      {
+         get { return base.Enabled; }
+         set { base.Enabled = btnON.Enabled = btnOFF.Enabled = value; }
+      }
 
       public UpdatePanel UpdatePanel
       {

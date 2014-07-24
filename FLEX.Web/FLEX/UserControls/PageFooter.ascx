@@ -21,7 +21,7 @@
             <ItemTemplate>
                <li>
                   <a>
-                     <strong><asp:Label ID="lblKey" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "First") %>' />:</strong>&nbsp;
+                     <strong><asp:Label ID="lblKey" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "First") %>' /></strong>:&nbsp;
                      <asp:Label ID="lblValue" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Second") %>' />
                   </a>
                </li>

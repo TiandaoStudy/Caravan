@@ -11,8 +11,8 @@ namespace FLEX.Web.UserControls.Ajax
          Enabled = true;
       }
 
-      public bool DoPostBack { get; set; }
+      public virtual bool DoPostBack { get; set; }
 
-      public bool Enabled { get; set; }
+      public virtual bool Enabled { get; set; }
    }
 }
