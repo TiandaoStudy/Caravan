@@ -11,6 +11,7 @@ class Settings
    @endAjaxRequest: "endAjaxRequest"
    @minFormOffset: 10
    @sessionTimeoutInMilliseconds: 0 # This variable is set in Head.Master
+   @sessionExpiredPageUrl: "" # This variable is set in Head.Master
    
 root.settings = Settings
 
@@ -132,7 +133,7 @@ root.setSessionJsTimeout = () ->
    if common.sessionJsTimeout
       window.clearTimeout(common.sessionJsTimeout)
    common.sessionJsTimeout = window.setTimeout(() ->
-      window.location = ""
+      window.location = settings.sessionExpiredPageUrl
    , settings.sessionTimeoutInMilliseconds)
    return
 
@@ -140,4 +141,8 @@ root.initPage = () ->
    # Sets controls styles
    root.bootstrapifyControls()
    root.fixAllDataGrids()
+   
+   # Automatic session expiry maganagement
+   root.setSessionJsTimeout()
+   
    return

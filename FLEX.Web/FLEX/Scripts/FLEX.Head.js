@@ -17,6 +17,8 @@
 
     Settings.sessionTimeoutInMilliseconds = 0;
 
+    Settings.sessionExpiredPageUrl = "";
+
     return Settings;
 
   })();
@@ -122,13 +124,14 @@
       window.clearTimeout(common.sessionJsTimeout);
     }
     common.sessionJsTimeout = window.setTimeout(function() {
-      return window.location = "";
+      return window.location = settings.sessionExpiredPageUrl;
     }, settings.sessionTimeoutInMilliseconds);
   };
 
   root.initPage = function() {
     root.bootstrapifyControls();
     root.fixAllDataGrids();
+    root.setSessionJsTimeout();
   };
 
 }).call(this);

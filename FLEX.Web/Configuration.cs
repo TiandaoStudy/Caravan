@@ -9,6 +9,7 @@ namespace FLEX.Web
    {
       private const string SectionName = "FlexWebConfiguration";
       private const string PageManagerTypeInfoKey = "PageManagerTypeInfo";
+      private const string SessionExpiredPageUrlKey = "SessionExpiredPageUrl";
 
       private static readonly Configuration CachedInstance = ConfigurationManager.GetSection(SectionName) as Configuration;
 
@@ -21,6 +22,12 @@ namespace FLEX.Web
       public string PageManagerTypeInfo
       {
          get { return (string) this[PageManagerTypeInfoKey]; }
+      }
+
+      [ConfigurationProperty(SessionExpiredPageUrlKey, IsRequired = true)]
+      public string SessionExpiredPageUrl
+      {
+         get { return (string) this[SessionExpiredPageUrlKey]; }
       }
    }
 }

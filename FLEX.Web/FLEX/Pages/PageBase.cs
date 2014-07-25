@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using FLEX.Web.Core;
@@ -44,6 +45,17 @@ namespace FLEX.Web.Pages
       private void Page_Load(object sender, EventArgs e)
       {
          InitID();
+
+         // If user is not authenticated, then we redirect her to the session expired page.
+         if (!HttpContext.Current.User.Identity.IsAuthenticated)
+         {
+            Response.Redirect(Configuration.Instance.SessionExpiredPageUrl, endResponse: true);
+         }
+
+         // Browser cache management
+         Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+         Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+         Response.AppendHeader("Expires", "0"); // Proxies.
       }
 
       protected override sealed PageStatePersister PageStatePersister
