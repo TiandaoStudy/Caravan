@@ -161,8 +161,9 @@ namespace FLEX.Web.WebControls
       {
          // Reset pager
          PageIndex = 0;
-         // Cache data source
-         ViewState[DataSrcViewStateTag] = DataSource = dataSource;
+         // Cache and sort data source
+         ViewState[DataSrcViewStateTag] = dataSource;
+         DataSource = SortCachedDataSource();
          // Redraw grid
          DataBind();
       }

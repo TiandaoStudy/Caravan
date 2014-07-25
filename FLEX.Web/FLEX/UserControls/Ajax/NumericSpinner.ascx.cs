@@ -37,6 +37,9 @@ namespace FLEX.Web.UserControls.Ajax
       protected void Page_Load(object sender, EventArgs e)
       {
          btnApply.Click += btnApply_Click;
+
+         txtNumber.Enabled = Enabled;
+         txtNumber.ReadOnly = !Enabled;
       }
 
       #region Public Properties
@@ -122,10 +125,7 @@ namespace FLEX.Web.UserControls.Ajax
 
       private void btnApply_Click(object sender, EventArgs e)
       {
-         if (ValueSelected != null)
-         {
-            ValueSelected(this, new SearchCriteriaSelectedArgs());
-         }
+         Basics.TriggerEvent(ValueSelected, this, new SearchCriteriaSelectedArgs());
       }
 
       #endregion

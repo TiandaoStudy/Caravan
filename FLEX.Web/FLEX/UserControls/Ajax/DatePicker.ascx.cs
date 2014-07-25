@@ -36,6 +36,7 @@ namespace FLEX.Web.UserControls.Ajax
 
          txtDate.AutoPostBack = DoPostBack;
          txtDate.TextChanged += txtDate_TextChanged;
+         txtDate.Enabled = Enabled;
          txtDate.ReadOnly = txtDate.Enabled = !Enabled;
       }
 
