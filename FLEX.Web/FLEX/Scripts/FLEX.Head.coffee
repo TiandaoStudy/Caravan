@@ -10,11 +10,13 @@ class Settings
    @beginAjaxRequest: "beginAjaxRequest"
    @endAjaxRequest: "endAjaxRequest"
    @minFormOffset: 10
+   @sessionTimeoutInMilliseconds: 0 # This variable is set in Head.Master
    
 root.settings = Settings
 
 class Common
-   @disableButtonsBeforePostBack = true;
+   @disableButtonsBeforePostBack = true
+   @sessionJsTimeout = null
    
 root.common = Common
 
@@ -76,13 +78,7 @@ root.centerMainContainer = () ->
 root.fixAllDataGrids = () ->
    $(".datagrid").each((idx, dg) -> root.fixDataGridPager(dg.id))
 
-root.fixDataGridPager = (tableId) ->
-   # All buttons should have the same width
-#   pageButtons = $("##{tableId} .datagrid-pager span, ##{tableId} .datagrid-pager a");
-#   pageBtnWidths = _.map(pageButtons, (x) -> $(x).width())
-#   maxWidth = _.max(pageBtnWidths)
-#   pageButtons.width(maxWidth)
-   
+root.fixDataGridPager = (tableId) ->   
    # Pagination should neither hover, nor have an alternating background
    row = $("##{tableId} .datagrid-pager").parent()
    row.css({backgroundColor: "white"; borderBottom: "0px"})
@@ -106,68 +102,9 @@ root.triggerAsyncPostBack = (hiddenTriggerId) ->
    hiddenTrigger = $("##{hiddenTriggerId}")
    hiddenTrigger.val(Math.random())
    hiddenTrigger.change()
-
+   
 ################################################################################
-# UpdatePanel & JS
-################################################################################
-
-root.beginRequestHandler = (sender, args) ->
-   $(document).trigger(root.settings.beginAjaxRequest, [sender, args])
-
-root.endRequestHandler = (sender, args) ->
-   $(document).trigger(root.settings.endAjaxRequest, [sender, args])
-
-root.pageLoad = () ->
-   unless root.pageLoaded
-      prm = Sys.WebForms.PageRequestManager.getInstance()
-      prm.add_beginRequest(beginRequestHandler)
-      prm.add_endRequest(endRequestHandler)
-      root.pageLoaded = true
-   return 
-
-$(document).ready(() ->
-   # Sets controls styles
-   root.bootstrapifyControls()
-   root.fixAllDataGrids()
-   
-   # Required to avoid strange CoffeeScript behaviour
-   return
-)
-
-$(document).on(root.settings.beginAjaxRequest, (ev, sender, args) ->
-   # Stores control with focus
-   if document.activeElement and document.activeElement.id
-      root.lastActiveElement = document.activeElement.id
-   
-   # Required to avoid strange CoffeeScript behaviour
-   return
-)
-
-# Reloads scripts inside each update panel
-$(document).on(root.settings.endAjaxRequest, (ev, sender, args) ->
-   for panel in sender._updatePanelClientIDs
-      scripts = $("##{panel} script")
-      for script in scripts then eval(script.innerHTML.escapeSpecialChars())
-      
-   # Restores controls styles
-   root.bootstrapifyControls()
-   root.fixAllDataGrids()
-   
-   # It seems that some HTML elements do not have a focus method...
-   if root.lastActiveElement
-      elemToFocus = document.getElementById(root.lastActiveElement)
-      if elemToFocus and elemToFocus.focus
-         elemToFocus.focus()
-   
-   # We need to enable buttons, because IE9 treats partial postbacks as full postbacks
-   root.enableButtonsAfterPostBack()
-   
-   # Required to avoid strange CoffeeScript behaviour
-   return
-)
-
-################################################################################
-# PostBack
+# PostBack Management
 ################################################################################
 
 root.disableButtonsBeforePostBack = () ->
@@ -185,3 +122,22 @@ root.enableButtonsAfterPostBack = () ->
    return 
 
 window.onbeforeunload = disableButtonsBeforePostBack;
+
+################################################################################
+# Page Management
+################################################################################
+
+root.setSessionJsTimeout = () ->
+   # A timeout is already active, therefore we should stop it.
+   if common.sessionJsTimeout
+      window.clearTimeout(common.sessionJsTimeout)
+   common.sessionJsTimeout = window.setTimeout(() ->
+      window.location = ""
+   , settings.sessionTimeoutInMilliseconds)
+   return
+
+root.initPage = () ->
+   # Sets controls styles
+   root.bootstrapifyControls()
+   root.fixAllDataGrids()
+   return

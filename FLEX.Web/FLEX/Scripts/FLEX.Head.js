@@ -15,6 +15,8 @@
 
     Settings.minFormOffset = 10;
 
+    Settings.sessionTimeoutInMilliseconds = 0;
+
     return Settings;
 
   })();
@@ -26,6 +28,8 @@
     function Common() {}
 
     Common.disableButtonsBeforePostBack = true;
+
+    Common.sessionJsTimeout = null;
 
     return Common;
 
@@ -101,57 +105,6 @@
     return hiddenTrigger.change();
   };
 
-  root.beginRequestHandler = function(sender, args) {
-    return $(document).trigger(root.settings.beginAjaxRequest, [sender, args]);
-  };
-
-  root.endRequestHandler = function(sender, args) {
-    return $(document).trigger(root.settings.endAjaxRequest, [sender, args]);
-  };
-
-  root.pageLoad = function() {
-    var prm;
-    if (!root.pageLoaded) {
-      prm = Sys.WebForms.PageRequestManager.getInstance();
-      prm.add_beginRequest(beginRequestHandler);
-      prm.add_endRequest(endRequestHandler);
-      root.pageLoaded = true;
-    }
-  };
-
-  $(document).ready(function() {
-    root.bootstrapifyControls();
-    root.fixAllDataGrids();
-  });
-
-  $(document).on(root.settings.beginAjaxRequest, function(ev, sender, args) {
-    if (document.activeElement && document.activeElement.id) {
-      root.lastActiveElement = document.activeElement.id;
-    }
-  });
-
-  $(document).on(root.settings.endAjaxRequest, function(ev, sender, args) {
-    var elemToFocus, panel, script, scripts, _i, _j, _len, _len1, _ref;
-    _ref = sender._updatePanelClientIDs;
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      panel = _ref[_i];
-      scripts = $("#" + panel + " script");
-      for (_j = 0, _len1 = scripts.length; _j < _len1; _j++) {
-        script = scripts[_j];
-        eval(script.innerHTML.escapeSpecialChars());
-      }
-    }
-    root.bootstrapifyControls();
-    root.fixAllDataGrids();
-    if (root.lastActiveElement) {
-      elemToFocus = document.getElementById(root.lastActiveElement);
-      if (elemToFocus && elemToFocus.focus) {
-        elemToFocus.focus();
-      }
-    }
-    root.enableButtonsAfterPostBack();
-  });
-
   root.disableButtonsBeforePostBack = function() {
     if (root.common.disableButtonsBeforePostBack) {
       $(".btn").addClass("disabled");
@@ -163,5 +116,19 @@
   };
 
   window.onbeforeunload = disableButtonsBeforePostBack;
+
+  root.setSessionJsTimeout = function() {
+    if (common.sessionJsTimeout) {
+      window.clearTimeout(common.sessionJsTimeout);
+    }
+    common.sessionJsTimeout = window.setTimeout(function() {
+      return window.location = "";
+    }, settings.sessionTimeoutInMilliseconds);
+  };
+
+  root.initPage = function() {
+    root.bootstrapifyControls();
+    root.fixAllDataGrids();
+  };
 
 }).call(this);

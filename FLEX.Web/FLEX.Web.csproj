@@ -343,6 +343,21 @@
     <Content Include="FLEX\Scripts\bootstrap-touchspin.min.js">
       <DependentUpon>bootstrap-touchspin.js</DependentUpon>
     </Content>
+    <Content Include="FLEX\Scripts\FLEX.Body.js">
+      <DependentUpon>FLEX.Body.coffee</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Scripts\FLEX.Body.min.js">
+      <DependentUpon>FLEX.Body.coffee</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Scripts\FLEX.Head.js">
+      <DependentUpon>FLEX.Head.coffee</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Scripts\FLEX.Head.min.js">
+      <DependentUpon>FLEX.Head.coffee</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Scripts\webLibrary.min.js">
+      <DependentUpon>webLibrary.js</DependentUpon>
+    </Content>
     <Content Include="FLEX\Styles\Bootstrap-checkbox.css">
       <DependentUpon>Bootstrap-checkbox.less</DependentUpon>
     </Content>
@@ -447,12 +462,6 @@
     <Content Include="FLEX\Scripts\bootstrap.js" />
     <Content Include="FLEX\Scripts\bootstrap.min.js">
       <DependentUpon>bootstrap.js</DependentUpon>
-    </Content>
-    <Content Include="FLEX\Scripts\FLEX.js">
-      <DependentUpon>FLEX.coffee</DependentUpon>
-    </Content>
-    <Content Include="FLEX\Scripts\FLEX.min.js">
-      <DependentUpon>FLEX.coffee</DependentUpon>
     </Content>
     <Content Include="FLEX\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="FLEX\MasterPages\Base.Master">
@@ -574,13 +583,14 @@
     <None Include="FLEX\Scripts\bootstrap.min.js.map">
       <DependentUpon>bootstrap.js</DependentUpon>
     </None>
-    <None Include="FLEX\Scripts\FLEX.coffee" />
-    <None Include="FLEX\Scripts\FLEX.min.js.map">
-      <DependentUpon>FLEX.js</DependentUpon>
-    </None>
+    <None Include="FLEX\Scripts\FLEX.Body.coffee" />
+    <None Include="FLEX\Scripts\FLEX.Head.coffee" />
     <None Include="FLEX\Fonts\glyphicons-halflings-regular.eot" />
     <None Include="FLEX\Fonts\glyphicons-halflings-regular.ttf" />
     <None Include="FLEX\Fonts\glyphicons-halflings-regular.woff" />
+    <None Include="FLEX\Scripts\webLibrary.min.js.map">
+      <DependentUpon>webLibrary.js</DependentUpon>
+    </None>
     <None Include="FLEX\Styles\Bootstrap-checkbox.less" />
     <None Include="FLEX\Styles\Bootstrap-plugins.less" />
     <None Include="FLEX\Styles\Bootstrap-touchspin.less" />

@@ -36,8 +36,15 @@
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-touchspin.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootbox.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/popupHandler.min.js"></script>
-      <script type="text/javascript" src="<%=FlexPath%>/Scripts/webLibrary.js<%=NoCacheTag%>"></script>
-        
+      <script type="text/javascript" src="<%=FlexPath%>/Scripts/FLEX.Head.min.js<%=NoCacheTag%>"></script>
+      <script type="text/javascript" src="<%=FlexPath%>/Scripts/webLibrary.min.js<%=NoCacheTag%>"></script>
+      
+      <!-- JavaScript that must be put here in order to take advantage of the ASP.NET preprocessor -->
+      <script type="text/javascript">
+         // Session expiry management
+         settings.sessionTimeoutInMilliseconds = <%= (Session.Timeout - 1) * 60 * 1000 %>;
+      </script>
+
       <!-- Place holder for head contents -->
       <asp:ContentPlaceHolder ID="headContent" runat="server" />
    </head>
@@ -48,7 +55,7 @@
          <ajax:ScriptManager ID="scriptManager" EnablePartialRendering="True" ScriptMode="Release" runat="server" />
       
          <!-- Must be put after script manager, because it relies on elements introduced by it -->
-         <script type="text/javascript" src="<%=FlexPath%>/Scripts/FLEX.js<%=NoCacheTag%>"></script>
+         <script type="text/javascript" src="<%=FlexPath%>/Scripts/FLEX.Body.min.js<%=NoCacheTag%>"></script>
       
          <!-- Error handler -->
          <flex:ErrorHandler ID="flexErrorHandler" runat="server" />
