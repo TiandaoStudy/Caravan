@@ -11,19 +11,18 @@ using Thrower;
 namespace FLEX.Web.UserControls.Ajax
 // ReSharper restore CheckNamespace
 {
+   /// <summary>
+   ///   TODO
+   /// </summary>
    public partial class OnOffSwitch : AjaxControlBase, IAjaxControl, ISearchControl
    {
-      protected OnOffSwitch()
-      {
-         // Default values
-      }
-
       protected void Page_Load(object sender, EventArgs e)
       {
-         if (!IsPostBack)
-         {
-            SetButtonsStyle();
-         }
+         btnON.Enabled = btnOFF.Enabled = Enabled;
+         var onClientClick = DoPostBack ? "return true;" : "return false;";
+         btnON.OnClientClick = btnOFF.OnClientClick = onClientClick;
+
+         SetButtonsStyle();
       }
 
       #region Public Properties
@@ -47,18 +46,6 @@ namespace FLEX.Web.UserControls.Ajax
       #endregion
 
       #region IAjaxControl Members
-
-      public override bool DoPostBack
-      {
-         get { return base.DoPostBack; }
-         set { base.DoPostBack = btnON.UseSubmitBehavior = btnOFF.UseSubmitBehavior = value; }
-      }
-
-      public override bool Enabled
-      {
-         get { return base.Enabled; }
-         set { base.Enabled = btnON.Enabled = btnOFF.Enabled = value; }
-      }
 
       public UpdatePanel UpdatePanel
       {
@@ -135,9 +122,8 @@ namespace FLEX.Web.UserControls.Ajax
 
       private void SetButtonsStyle()
       {
-         var inactiveCss = "btn btn-sm btn-on-off btn-default";
-         var activeCss = "btn btn-sm btn-on-off btn-primary";
-
+         const string inactiveCss = "btn btn-sm btn-on-off btn-default";
+         const string activeCss = "btn btn-sm btn-on-off btn-primary";
          btnON.CssClass = chkSwitch.Checked ? activeCss : inactiveCss;
          btnOFF.CssClass = chkSwitch.Checked ? inactiveCss : activeCss;
       }

@@ -36,9 +36,9 @@ namespace FLEX.Web.UserControls.Ajax
          Raise<ArgumentException>.IfIsEmpty(LookupBy);
 
          txtKey.TextChanged += txtKey_TextChanged;
-         txtKey.ReadOnly = !Enabled;
+         txtKey.ReadOnly = txtKey.Enabled = !Enabled;
 
-         txtSuggestion.ReadOnly = !Enabled;
+         txtSuggestion.ReadOnly = txtSuggestion.Enabled = !Enabled;
          txtSuggestion.Attributes.Add("placeholder", PlaceHolder);
       }
 

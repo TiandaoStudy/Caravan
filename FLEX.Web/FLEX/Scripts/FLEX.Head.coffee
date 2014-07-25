@@ -132,9 +132,11 @@ root.setSessionJsTimeout = () ->
    # A timeout is already active, therefore we should stop it.
    if common.sessionJsTimeout
       window.clearTimeout(common.sessionJsTimeout)
+   
    common.sessionJsTimeout = window.setTimeout(() ->
       window.location = settings.sessionExpiredPageUrl
    , settings.sessionTimeoutInMilliseconds)
+   
    return
 
 root.initPage = () ->

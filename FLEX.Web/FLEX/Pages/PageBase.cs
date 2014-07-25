@@ -47,7 +47,7 @@ namespace FLEX.Web.Pages
          InitID();
 
          // If user is not authenticated, then we redirect her to the session expired page.
-         if (!HttpContext.Current.User.Identity.IsAuthenticated)
+         if (Configuration.Instance.CheckSecurity && !HttpContext.Current.User.Identity.IsAuthenticated)
          {
             Response.Redirect(Configuration.Instance.SessionExpiredPageUrl, endResponse: true);
          }

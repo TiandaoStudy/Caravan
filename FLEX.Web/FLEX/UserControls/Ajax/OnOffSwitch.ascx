@@ -3,11 +3,11 @@
 
 <div class="btn-group">
    <ajax:UpdatePanel ID="updPanel" runat="server">
-      <ContentTemplate>           
+      <ContentTemplate>
          <asp:CheckBox ID="chkSwitch" runat="server" CssClass="hidden" AutoPostBack="False" />
          <div class="btn-group">
-            <asp:Button ID="btnON" Text="ON" runat="server" OnClick="btnON_Click" />
-            <asp:Button ID="btnOFF" Text="OFF" runat="server" OnClick="btnOFF_Click" />
+            <asp:Button ID="btnON" Text="ON" runat="server" OnClick="btnON_Click" UseSubmitBehavior="False" CausesValidation="False" />
+            <asp:Button ID="btnOFF" Text="OFF" runat="server" OnClick="btnOFF_Click" UseSubmitBehavior="False" CausesValidation="False" />
          </div>
       </ContentTemplate>
    </ajax:UpdatePanel> 

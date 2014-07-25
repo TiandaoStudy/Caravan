@@ -8,6 +8,7 @@ namespace FLEX.Web
    public sealed class Configuration : ConfigurationSection
    {
       private const string SectionName = "FlexWebConfiguration";
+      private const string CheckSecurityKey = "CheckSecurity";
       private const string PageManagerTypeInfoKey = "PageManagerTypeInfo";
       private const string SessionExpiredPageUrlKey = "SessionExpiredPageUrl";
 
@@ -16,6 +17,12 @@ namespace FLEX.Web
       public static Configuration Instance 
       {
          get { return CachedInstance; }
+      }
+
+      [ConfigurationProperty(CheckSecurityKey, IsRequired = false, DefaultValue = true)]
+      public bool CheckSecurity
+      {
+         get { return (bool) this[CheckSecurityKey]; }
       }
 
       [ConfigurationProperty(PageManagerTypeInfoKey, IsRequired = true)]
