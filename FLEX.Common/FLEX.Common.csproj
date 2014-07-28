@@ -67,6 +67,7 @@
     <Compile Include="Collections\OneItemList.cs" />
     <Compile Include="CommonSettings.cs" />
     <Compile Include="Conversions.cs" />
+    <Compile Include="Data\IDbLogger.cs" />
     <Compile Include="Data\IQueryExecutor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuickLogger.cs" />
