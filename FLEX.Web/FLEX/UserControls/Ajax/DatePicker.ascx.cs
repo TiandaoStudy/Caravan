@@ -33,11 +33,6 @@ namespace FLEX.Web.UserControls.Ajax
       {
          Raise<ArgumentException>.IfIsEmpty(StartDate);
          Raise<ArgumentException>.IfIsEmpty(EndDate);
-
-         txtDate.AutoPostBack = DoPostBack;
-         txtDate.TextChanged += txtDate_TextChanged;
-         txtDate.Enabled = Enabled;
-         txtDate.ReadOnly = txtDate.Enabled = !Enabled;
       }
 
       #region Public Properties
@@ -158,14 +153,28 @@ namespace FLEX.Web.UserControls.Ajax
 
       #endregion
 
+      #region AjaxControlBase Members
+
+      protected override void OnDoPostBackChanged(bool doPostBack)
+      {
+         base.OnDoPostBackChanged(doPostBack);
+         txtDate.AutoPostBack = doPostBack;
+      }
+
+      protected override void OnEnabledChanged(bool enabled)
+      {
+         base.OnEnabledChanged(enabled);
+         txtDate.Enabled = enabled;
+         txtDate.ReadOnly = !enabled;
+      }
+
+      #endregion
+
       #region Private Members
 
-      private void txtDate_TextChanged(object sender, EventArgs e)
+      protected void txtDate_TextChanged(object sender, EventArgs e)
       {
-         if (ValueSelected != null)
-         {
-            ValueSelected(this, new SearchCriteriaSelectedArgs());
-         }
+         Basics.TriggerEvent(ValueSelected, this, new SearchCriteriaSelectedArgs());
       }
 
       private static bool DateIsValid(string dateStr)

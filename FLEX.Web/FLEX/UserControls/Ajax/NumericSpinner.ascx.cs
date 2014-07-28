@@ -29,19 +29,6 @@ namespace FLEX.Web.UserControls.Ajax
          Step = 0.5M;
       }
 
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="sender"></param>
-      /// <param name="e"></param>
-      protected void Page_Load(object sender, EventArgs e)
-      {
-         btnApply.Click += btnApply_Click;
-
-         txtNumber.Enabled = Enabled;
-         txtNumber.ReadOnly = !Enabled;
-      }
-
       #region Public Properties
 
       /// <summary>
@@ -121,9 +108,20 @@ namespace FLEX.Web.UserControls.Ajax
 
       #endregion
 
+      #region AjaxControlBase Members
+
+      protected override void OnEnabledChanged(bool enabled)
+      {
+         base.OnEnabledChanged(enabled);
+         txtNumber.Enabled = btnApply.Enabled = enabled;
+         txtNumber.ReadOnly = !enabled;         
+      }
+
+      #endregion
+
       #region Private Members
 
-      private void btnApply_Click(object sender, EventArgs e)
+      protected void btnApply_Click(object sender, EventArgs e)
       {
          Basics.TriggerEvent(ValueSelected, this, new SearchCriteriaSelectedArgs());
       }

@@ -38,10 +38,20 @@
     <DocumentationFile>bin\Release\FLEX.Web.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.27\lib\net40\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="KVLite">
+      <HintPath>..\packages\PommaLabs.KVLite.0.1.7-alpha\lib\net40\KVLite.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
@@ -335,10 +345,6 @@
     <Content Include="FLEX\Scripts\bootbox.min.js">
       <DependentUpon>bootbox.js</DependentUpon>
     </Content>
-    <Content Include="FLEX\Scripts\bootstrap-checkbox.js" />
-    <Content Include="FLEX\Scripts\bootstrap-checkbox.min.js">
-      <DependentUpon>bootstrap-checkbox.js</DependentUpon>
-    </Content>
     <Content Include="FLEX\Scripts\bootstrap-touchspin.js" />
     <Content Include="FLEX\Scripts\bootstrap-touchspin.min.js">
       <DependentUpon>bootstrap-touchspin.js</DependentUpon>
@@ -357,12 +363,6 @@
     </Content>
     <Content Include="FLEX\Scripts\webLibrary.min.js">
       <DependentUpon>webLibrary.js</DependentUpon>
-    </Content>
-    <Content Include="FLEX\Styles\Bootstrap-checkbox.css">
-      <DependentUpon>Bootstrap-checkbox.less</DependentUpon>
-    </Content>
-    <Content Include="FLEX\Styles\Bootstrap-checkbox.min.css">
-      <DependentUpon>Bootstrap-checkbox.less</DependentUpon>
     </Content>
     <Content Include="FLEX\Styles\Bootstrap-plugins.css">
       <DependentUpon>Bootstrap-plugins.less</DependentUpon>
@@ -565,9 +565,6 @@
     <None Include="FLEX\Scripts\bootbox.min.js.map">
       <DependentUpon>bootbox.js</DependentUpon>
     </None>
-    <None Include="FLEX\Scripts\bootstrap-checkbox.min.js.map">
-      <DependentUpon>bootstrap-checkbox.js</DependentUpon>
-    </None>
     <None Include="FLEX\Scripts\bootstrap-datepicker.min.js.map">
       <DependentUpon>bootstrap-datepicker.js</DependentUpon>
     </None>
@@ -591,7 +588,6 @@
     <None Include="FLEX\Scripts\webLibrary.min.js.map">
       <DependentUpon>webLibrary.js</DependentUpon>
     </None>
-    <None Include="FLEX\Styles\Bootstrap-checkbox.less" />
     <None Include="FLEX\Styles\Bootstrap-plugins.less" />
     <None Include="FLEX\Styles\Bootstrap-touchspin.less" />
     <None Include="FLEX\Styles\Bootstrap-variables.less" />
@@ -736,7 +732,11 @@ if $(ConfigurationName) == Release (
     if not exist "%25dir%25" mkdir "%25dir%25"
     copy "$(TargetDir)FLEX.Web.dll" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
     copy "$(TargetDir)FLEX.Web.xml" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
-)</PostBuildEvent>
+)
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

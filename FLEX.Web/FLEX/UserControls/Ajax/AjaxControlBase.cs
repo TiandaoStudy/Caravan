@@ -1,4 +1,5 @@
-﻿using System.Web.UI;
+﻿using System;
+using System.Web.UI;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -32,7 +33,11 @@ namespace FLEX.Web.UserControls.Ajax
             }
             return (bool) ViewState[DoPostBackViewStateKey];
          }
-         set { ViewState[DoPostBackViewStateKey] = value; }
+         set
+         {
+            ViewState[DoPostBackViewStateKey] = value;
+            OnDoPostBackChanged(value);
+         }
       }
 
       /// <summary>
@@ -48,9 +53,30 @@ namespace FLEX.Web.UserControls.Ajax
             }
             return (bool) ViewState[EnabledViewStateKey];
          }
-         set { ViewState[EnabledViewStateKey] = value; }
+         set
+         {
+            ViewState[EnabledViewStateKey] = value;
+            OnEnabledChanged(value);
+         }
       }
 
       #endregion
+
+      protected virtual void Page_Load(object sender, EventArgs e)
+      {
+         // Automatically uses default values...
+         OnDoPostBackChanged(DoPostBack);
+         OnEnabledChanged(Enabled);
+      }
+
+      protected virtual void OnDoPostBackChanged(bool doPostBack)
+      {
+         // Empty...
+      }
+
+      protected virtual void OnEnabledChanged(bool enabled)
+      {
+         // Empty...
+      }
    }
 }

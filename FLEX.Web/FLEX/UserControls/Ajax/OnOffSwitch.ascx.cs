@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.UI;
+using FLEX.Common;
 using FLEX.Common.Collections;
 using FLEX.Common.Web;
 using Thrower;
@@ -16,13 +17,15 @@ namespace FLEX.Web.UserControls.Ajax
    /// </summary>
    public partial class OnOffSwitch : AjaxControlBase, IAjaxControl, ISearchControl
    {
+      private const string SwitchedViewStateKey = "OnOffSwitch.Switched";
+
+      private const bool SwitchedDefaultValue = false;
+
       protected void Page_Load(object sender, EventArgs e)
       {
-         btnON.Enabled = btnOFF.Enabled = Enabled;
-         var onClientClick = DoPostBack ? "return true;" : "return false;";
-         btnON.OnClientClick = btnOFF.OnClientClick = onClientClick;
-
-         SetButtonsStyle();
+         OnSwitchedChanged(Switched);
+         var switchFunction = String.Format("switchOnOff_{0}(event);", ClientID);
+         btnON.OnClientClick = btnOFF.OnClientClick = switchFunction;
       }
 
       #region Public Properties
@@ -37,10 +40,34 @@ namespace FLEX.Web.UserControls.Ajax
          get { return "0"; }
       }
 
+      /// <summary>
+      ///   TODO
+      /// </summary>
       public bool Switched
       {
-         get { return chkSwitch.Checked; }
-         set { chkSwitch.Checked = value; }
+         get
+         {
+            if (ViewState[SwitchedViewStateKey] == null)
+            {
+               ViewState[SwitchedViewStateKey] = SwitchedDefaultValue;
+            }
+            return (bool) ViewState[SwitchedViewStateKey];
+         }
+         set
+         {
+            ViewState[SwitchedViewStateKey] = value;
+            OnSwitchedChanged(value);
+         }
+      }
+
+      public string ActiveClass
+      {
+         get { return "btn btn-sm btn-on-off btn-primary switch-active"; }
+      }
+
+      public string InactiveClass
+      {
+         get { return "btn btn-sm btn-on-off btn-default switch-inactive"; }
       }
 
       #endregion
@@ -79,7 +106,7 @@ namespace FLEX.Web.UserControls.Ajax
 
       public IList<string> SelectedValues // Valore attualmente selezionato
       {
-         get { return new OneItemList<string>(chkSwitch.Checked ? OnValue : OffValue); }
+         get { return new OneItemList<string>(Switched ? OnValue : OffValue); }
       }
 
       public event Action<ISearchControl, SearchCriteriaSelectedArgs> ValueSelected;
@@ -87,7 +114,6 @@ namespace FLEX.Web.UserControls.Ajax
       public void ClearContents()
       {
          Switched = false;
-         SetButtonsStyle();
       }
 
       public void CopySelectedValuesFrom(ISearchControl searchControl)
@@ -95,37 +121,35 @@ namespace FLEX.Web.UserControls.Ajax
          Raise<ArgumentException>.IfIsNotInstanceOf<OnOffSwitch>(searchControl);
 
          var otherSwitch = (OnOffSwitch) searchControl;
-         chkSwitch.Checked = otherSwitch.chkSwitch.Checked;
+         otherSwitch.Switched = otherSwitch.Switched;
       }
 
       #endregion
 
-      protected void btnON_Click(object sender, EventArgs e)
+      #region AjaxControlBase Members
+
+      protected override void OnEnabledChanged(bool enabled)
       {
-         Switched = true;
-         SetButtonsStyle();
-         if (ValueSelected != null)
-         {
-            ValueSelected(this, new SearchCriteriaSelectedArgs());
-         }
+         base.OnEnabledChanged(enabled);
+         btnON.Enabled = btnOFF.Enabled = enabled;
       }
 
-      protected void btnOFF_Click(object sender, EventArgs e)
+      #endregion
+
+      #region Private Methods
+
+      protected void btnON_OFF_OnClick(object sender, EventArgs e)
       {
-         Switched = false;
-         SetButtonsStyle();
-         if (ValueSelected != null)
-         {
-            ValueSelected(this, new SearchCriteriaSelectedArgs());
-         }
+         Switched = !Switched;
+         Basics.TriggerEvent(ValueSelected, this, new SearchCriteriaSelectedArgs());
       }
 
-      private void SetButtonsStyle()
+      private void OnSwitchedChanged(bool switched)
       {
-         const string inactiveCss = "btn btn-sm btn-on-off btn-default";
-         const string activeCss = "btn btn-sm btn-on-off btn-primary";
-         btnON.CssClass = chkSwitch.Checked ? activeCss : inactiveCss;
-         btnOFF.CssClass = chkSwitch.Checked ? inactiveCss : activeCss;
+         btnON.CssClass = switched ? ActiveClass : InactiveClass;
+         btnOFF.CssClass = switched ? InactiveClass : ActiveClass;
       }
+
+      #endregion
    }
 }

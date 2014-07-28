@@ -39,10 +39,6 @@ root.bootstrapifyControls = () ->
    # Makes form elements prettier
    $(".form-group input[type=text], .form-group textarea, .form-group select").addClass("form-control")
    $('input[type=file]').bootstrapFileInput()
-   $('input[type="checkbox"]').checkbox({
-      checkedClass: 'icomoon icon-checkbox-checked',
-      uncheckedClass: 'icomoon icon-checkbox-unchecked'
-   })
 
 root.randomQueryTag = (opts) ->
    defaults = {isFirst: false}

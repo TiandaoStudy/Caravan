@@ -45,11 +45,7 @@
 
   root.bootstrapifyControls = function() {
     $(".form-group input[type=text], .form-group textarea, .form-group select").addClass("form-control");
-    $('input[type=file]').bootstrapFileInput();
-    return $('input[type="checkbox"]').checkbox({
-      checkedClass: 'icomoon icon-checkbox-checked',
-      uncheckedClass: 'icomoon icon-checkbox-unchecked'
-    });
+    return $('input[type=file]').bootstrapFileInput();
   };
 
   root.randomQueryTag = function(opts) {

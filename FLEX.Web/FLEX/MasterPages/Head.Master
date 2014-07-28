@@ -29,7 +29,6 @@
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/jquery-ui.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/underscore.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap.min.js"></script>
-      <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-checkbox.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-datepicker.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-file-input.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-switch.min.js"></script>
