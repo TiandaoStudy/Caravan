@@ -55,9 +55,11 @@
     <None Include="NuGet.config" />
     <None Include="Package.nuspec" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="content\FLEX\Packages\" />
-    <Folder Include="content\FLEX\Tables\" />
+    <Content Include="content\FLEX\Packages\PCK_FLEX_LOG.sql" />
+    <Content Include="content\FLEX\Sequences\FLEX_LOG_SEQ.sql" />
+    <Content Include="content\FLEX\Tables\FLEX_LOG.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
