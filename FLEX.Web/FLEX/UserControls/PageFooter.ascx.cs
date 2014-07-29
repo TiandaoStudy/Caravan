@@ -12,8 +12,6 @@ namespace FLEX.Web.UserControls
 {
    public partial class PageFooter : UserControl
    {
-      private static readonly string FlexVersion = "v" + FileVersionInfo.GetVersionInfo(typeof (PageFooter).Assembly.Location).FileVersion;
-
       protected void Page_Load(object sender, EventArgs e)
       {
          // ...
