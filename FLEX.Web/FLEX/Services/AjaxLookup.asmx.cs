@@ -37,7 +37,7 @@ namespace FLEX.Web.Services
          }
          catch (Exception exc)
          {
-            QuickLogger.LogError<AjaxLookup>(exc);
+            DbLogger.Instance.LogError<AjaxLookup>("Lookup(...)", exc);
             return new List<Result> {new Result("ERR", "Service Error", exc.Message)};
          }
       }

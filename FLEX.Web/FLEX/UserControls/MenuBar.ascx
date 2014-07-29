@@ -117,7 +117,7 @@
                <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#" onclick="<%= WebSettings.UserControls_MenuBar_BrandClick %>">
-               <img src='<%= Head.MyFlexPath %>/Images/logo-menubar.png' class='logo' alt='Logo' />&nbsp;<%= WebSettings.ProjectName %>
+               <img src='<%= Head.MyFlexPath %>/Images/logo-menubar.png' class='logo' alt='Logo' />&nbsp;<%= FLEX.Common.Configuration.Instance.ApplicationName %>
             </a>
          </div>
          <div id="menuBar-collapse" class="navbar-collapse collapse">

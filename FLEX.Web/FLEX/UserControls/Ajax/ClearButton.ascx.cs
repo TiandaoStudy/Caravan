@@ -9,10 +9,6 @@ namespace FLEX.Web.UserControls.Ajax
 {
    public partial class ClearButton : AjaxControlBase, IAjaxControl
    {
-      protected void Page_Load(object sender, EventArgs e)
-      {
-      }
-
       #region IAjaxControl Members
 
       public UpdatePanel UpdatePanel

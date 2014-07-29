@@ -29,8 +29,10 @@ namespace FLEX.Web.UserControls.Ajax
          MinView = MinViewMode.Days;
       }
 
-      protected void Page_Load(object sender, EventArgs e)
+      protected override void Page_Load(object sender, EventArgs e)
       {
+         base.Page_Load(sender, e);
+
          Raise<ArgumentException>.IfIsEmpty(StartDate);
          Raise<ArgumentException>.IfIsEmpty(EndDate);
       }

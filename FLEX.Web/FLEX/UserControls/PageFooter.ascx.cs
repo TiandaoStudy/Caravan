@@ -34,7 +34,7 @@ namespace FLEX.Web.UserControls
          }
          catch (Exception ex)
          {
-            QuickLogger.LogError<PageFooter>(ex);
+            DbLogger.Instance.LogError<PageFooter>("Page_Load(sender, e)", ex);
             throw;
          }
       }

@@ -400,8 +400,6 @@
     <None Include="FLEX\Fonts\octicons.eot" />
     <None Include="FLEX\Fonts\octicons.ttf" />
     <None Include="FLEX\Fonts\octicons.woff" />
-    <None Include="FLEX\Logs\FLEX.Web.log" />
-    <None Include="FLEX\Logs\FLEX.Common.log" />
     <Content Include="FLEX\Images\sort_asc.png" />
     <Content Include="FLEX\Images\sort_asc_disabled.png" />
     <Content Include="FLEX\Images\sort_both.png" />

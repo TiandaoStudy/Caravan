@@ -22,8 +22,10 @@ namespace FLEX.Web.UserControls.Ajax
          // Empty, for now...
       }
 
-      protected void Page_Load(object sender, EventArgs e)
+      protected override void Page_Load(object sender, EventArgs e)
       {
+         base.Page_Load(sender, e);
+
          VisibleCheckBoxList.RepeatDirection = RepeatDirection.Vertical;
          VisibleCheckBoxList.SelectedIndexChanged += CheckBoxListData_OnSelectedIndexChanged;
          VisibleCheckBoxList.AutoPostBack = DoPostBack;

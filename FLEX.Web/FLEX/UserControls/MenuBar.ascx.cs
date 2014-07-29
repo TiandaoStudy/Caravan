@@ -41,7 +41,7 @@ namespace FLEX.Web.UserControls
          }
          catch (Exception ex)
          {
-            QuickLogger.LogError<MenuBar>(ex);
+            DbLogger.Instance.LogError<MenuBar>("Page_Load(sender, e)", ex);
             throw;
          }        
       }

@@ -21,8 +21,10 @@ namespace FLEX.Web.UserControls.Ajax
 
       private const bool SwitchedDefaultValue = false;
 
-      protected void Page_Load(object sender, EventArgs e)
+      protected override void Page_Load(object sender, EventArgs e)
       {
+         base.Page_Load(sender, e);
+
          OnSwitchedChanged(Switched);
          var switchFunction = String.Format("switchOnOff_{0}(event);", ClientID);
          btnON.OnClientClick = btnOFF.OnClientClick = switchFunction;

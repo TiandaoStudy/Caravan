@@ -9,8 +9,9 @@ namespace FLEX.Web.UserControls.Ajax
 {
    public partial class ImageButton : AjaxControlBase, IAjaxControl
    {
-      protected void Page_Load(object sender, EventArgs e)
+      protected override void Page_Load(object sender, EventArgs e)
       {
+         base.Page_Load(sender, e);
          btn.CssClass = String.IsNullOrEmpty(ButtonClass) ? String.Empty : ButtonClass;
          btnIcon.Attributes["class"] = String.IsNullOrEmpty(IconClass) ? String.Empty : IconClass;
          btnText.InnerText = String.IsNullOrEmpty(ButtonText) ? String.Empty : " " + ButtonText;

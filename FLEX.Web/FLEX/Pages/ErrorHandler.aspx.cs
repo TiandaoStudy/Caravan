@@ -16,7 +16,7 @@ namespace FLEX.Web.Pages
            string[] ErrorArray= new string[3];
            btnPrint.Attributes["onclick"]= "return openReportViewer('REPORT=StampaErrorHandler');";
 
-           txtTitle.Text =WebSettings.ProjectName;
+           txtTitle.Text = Common.Configuration.Instance.ApplicationName;
 
            //Per errore potrei chiamare la pagina e la sessione è vuota
            if (Session[WebSettings.UserControls_Ajax_ErrorHandler_ExceptionSessionKey] == null) 

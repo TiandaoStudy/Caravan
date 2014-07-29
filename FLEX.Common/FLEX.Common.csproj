@@ -71,7 +71,7 @@
     <Compile Include="Data\IDbLogger.cs" />
     <Compile Include="Data\IQueryExecutor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QuickLogger.cs" />
+    <Compile Include="DbLogger.cs" />
     <Compile Include="ServiceLocator.cs" />
     <Compile Include="Testing\RandomDataTableGenerator.cs" />
     <Compile Include="Text\StringExtensions.cs" />

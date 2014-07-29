@@ -19,7 +19,7 @@ namespace FLEX.Common
 
       public static string QuickLogger_LogsPath
       {
-         get { return AppSettings["FLEX.Common.QuickLogger.LogsPath"]; }
+         get { return AppSettings["FLEX.Common.DbLogger.LogsPath"]; }
       }
 
       public static string Web_SecurityManagerInfo
