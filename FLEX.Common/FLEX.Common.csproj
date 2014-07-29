@@ -65,6 +65,7 @@
     <Compile Include="Basics.cs" />
     <Compile Include="Collections\ConcurrentFileCache.cs" />
     <Compile Include="Collections\OneItemList.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="CommonSettings.cs" />
     <Compile Include="Conversions.cs" />
     <Compile Include="Data\IDbLogger.cs" />

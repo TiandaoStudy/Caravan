@@ -59,6 +59,7 @@
   <ItemGroup>
     <Content Include="content\FLEX\Packages\PCK_FLEX_LOG.sql" />
     <Content Include="content\FLEX\Sequences\FLEX_LOG_SEQ.sql" />
+    <Content Include="content\FLEX\Tables\FLEX_LOG_SETTINGS.sql" />
     <Content Include="content\FLEX\Tables\FLEX_LOG.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
