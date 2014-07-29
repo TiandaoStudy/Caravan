@@ -92,7 +92,7 @@ NotInheritable Class OracleDbLogger
             .p_code_unit = GetType(TCodeUnit).FullName,
             .p_function = [function],
             .p_short_msg = shortMessage.ToString(),
-            .p_long_msg = longMessage.ToString(),
+            .p_long_msg = If(longMessage Is Nothing, Nothing, longMessage.ToString()),
             .p_context = context
          }
          connection.Execute("pck_flex_log.sp_log", params, commandType:=CommandType.StoredProcedure)
