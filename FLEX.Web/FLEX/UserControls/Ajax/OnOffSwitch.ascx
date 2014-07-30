@@ -6,15 +6,17 @@
       var btnON = $("#<%= btnON.ClientID %>");
       var btnOFF = $("#<%= btnOFF.ClientID %>");
 
-      var checked = !btnON.hasClass("switch-active");
-      $("#<%= hidSwitched.ClientID %>").val(checked ? 1 : 0);
+      var checked = !btnON.hasClass("switch-active");     
 
       var activeClass = "<%= ActiveClass %>";
       var inactiveClass = "<%= InactiveClass %>";
       btnON.attr("class", checked ? activeClass : inactiveClass);
       btnOFF.attr("class", checked ? inactiveClass : activeClass);
 
-      if (<%= (!DoPostBack).ToString().ToLower() %>) event.preventDefault();
+      var onValue = "<%= OnValue %>";
+      var offValue = "<%= OffValue %>";
+      // This may trigger the real postback.
+      $("#<%= txtSwitched.ClientID %>").val(checked ? onValue : offValue);
    }
 
    function styleOnOff_<%= ClientID %>() {
@@ -25,10 +27,10 @@
 <div class="btn-group">
    <ajax:UpdatePanel ID="updPanel" runat="server">
       <ContentTemplate>
-         <asp:HiddenField runat="server" ID="hidSwitched" />
+         <asp:TextBox runat="server" ID="txtSwitched" CssClass="hidden" OnTextChanged="txtSwitched_OnTextChanged" />
          <div class="btn-group">
-            <asp:Button ID="btnON" runat="server" Text="ON" OnClick="btnON_OFF_OnClick" CausesValidation="False" />
-            <asp:Button ID="btnOFF" runat="server" Text="OFF" OnClick="btnON_OFF_OnClick" CausesValidation="False" />
+            <asp:Button ID="btnON" runat="server" Text="ON" CausesValidation="False" />
+            <asp:Button ID="btnOFF" runat="server" Text="OFF" CausesValidation="False" />
          </div>
       </ContentTemplate>
    </ajax:UpdatePanel> 

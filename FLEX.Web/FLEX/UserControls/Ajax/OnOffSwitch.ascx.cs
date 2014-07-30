@@ -17,10 +17,6 @@ namespace FLEX.Web.UserControls.Ajax
    /// </summary>
    public partial class OnOffSwitch : AjaxControlBase, IAjaxControl, ISearchControl
    {
-      private const string SwitchedViewStateKey = "OnOffSwitch.Switched";
-
-      private const bool SwitchedDefaultValue = false;
-
       protected override void Page_Load(object sender, EventArgs e)
       {
          base.Page_Load(sender, e);
@@ -49,15 +45,16 @@ namespace FLEX.Web.UserControls.Ajax
       {
          get
          {
-            if (ViewState[SwitchedViewStateKey] == null)
+            if (String.IsNullOrWhiteSpace(txtSwitched.Text))
             {
-               ViewState[SwitchedViewStateKey] = SwitchedDefaultValue;
+               txtSwitched.Text = OnValue;
+               return true;
             }
-            return (bool) ViewState[SwitchedViewStateKey];
+            return txtSwitched.Text == OnValue;
          }
          set
          {
-            ViewState[SwitchedViewStateKey] = value;
+            txtSwitched.Text = value ? OnValue : OffValue;
             OnSwitchedChanged(value);
          }
       }
@@ -130,6 +127,12 @@ namespace FLEX.Web.UserControls.Ajax
 
       #region AjaxControlBase Members
 
+      protected override void OnDoPostBackChanged(bool doPostBack)
+      {
+         base.OnDoPostBackChanged(doPostBack);
+         txtSwitched.AutoPostBack = doPostBack;
+      }
+
       protected override void OnEnabledChanged(bool enabled)
       {
          base.OnEnabledChanged(enabled);
@@ -140,9 +143,9 @@ namespace FLEX.Web.UserControls.Ajax
 
       #region Private Methods
 
-      protected void btnON_OFF_OnClick(object sender, EventArgs e)
+      protected void txtSwitched_OnTextChanged(object sender, EventArgs e)
       {
-         Switched = !Switched;
+         OnSwitchedChanged(Switched);
          Basics.TriggerEvent(ValueSelected, this, new SearchCriteriaSelectedArgs());
       }
 
