@@ -21,7 +21,7 @@ namespace FLEX.Web.Pages
 
       protected void fdtgLogs_DataSourceUpdating(object sender, EventArgs args)
       {
-         fdtgLogs.DataSource = DbLogger.Instance.RetrieveCurrentApplicationLogs();
+         fdtgLogs.DataSource = DbLogger.Instance.RetrieveCurrentApplicationLogsTable();
       }
    }
 }

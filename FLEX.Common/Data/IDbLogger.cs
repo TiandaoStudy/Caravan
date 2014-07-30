@@ -35,6 +35,7 @@ namespace FLEX.Common.Data
       DataTable RetrieveCurrentApplicationLogsTable();
    }
 
+   [Serializable]
    public sealed class DbLog
    {
       public DateTime EntryDate { get; set; }
