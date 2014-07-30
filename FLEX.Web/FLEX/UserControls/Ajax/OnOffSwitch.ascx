@@ -13,8 +13,8 @@
       btnON.attr("class", checked ? activeClass : inactiveClass);
       btnOFF.attr("class", checked ? inactiveClass : activeClass);
 
-      var onValue = "<%= OnValue %>";
-      var offValue = "<%= OffValue %>";
+      var onValue = <%= EncodeJsString(OnValue) %>;
+      var offValue = <%= EncodeJsString(OffValue) %>;
       // This may trigger the real postback.
       $("#<%= txtSwitched.ClientID %>").val(checked ? onValue : offValue);
    }

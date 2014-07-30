@@ -8,7 +8,7 @@
       placement: "auto",
       html: true,
       trigger: "hover",
-      content: "<%= Text %>".escapeSpecialChars(),
-      title: "<%= ContainerTitle %>".escapeSpecialChars()
+      content: <%= EncodeJsString(Text) %>,
+      title: <%= EncodeJsString(ContainerTitle) %>
    });
 </script>

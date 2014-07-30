@@ -13,7 +13,7 @@ using FLEX.Common.Web;
 namespace FLEX.Web.UserControls
 // ReSharper restore CheckNamespace
 {
-   public partial class MenuBar : UserControl
+   public partial class MenuBar : ControlBase
    {
       protected void Page_Load(object sender, EventArgs e)
       {

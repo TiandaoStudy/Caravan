@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web.UI;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -10,7 +9,7 @@ namespace FLEX.Web.UserControls.Ajax
    /// <summary>
    ///   TODO
    /// </summary>
-   public abstract class AjaxControlBase : UserControl
+   public abstract class AjaxControlBase : ControlBase
    {
       private const string DoPostBackViewStateKey = "AjaxControlBase.DoPostBack";
       private const string EnabledViewStateKey = "AjaxControlBase.Enabled";

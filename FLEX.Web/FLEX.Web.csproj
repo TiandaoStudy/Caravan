@@ -98,6 +98,13 @@
     <Compile Include="FLEX\Pages\CacheOverview.aspx.designer.cs">
       <DependentUpon>CacheOverview.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FLEX\Pages\LogSearch.aspx.cs">
+      <DependentUpon>LogSearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\LogSearch.aspx.designer.cs">
+      <DependentUpon>LogSearch.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FLEX\Pages\ErrorHandler.aspx.cs">
       <DependentUpon>ErrorHandler.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -180,6 +187,9 @@
     </Compile>
     <Compile Include="FLEX\UserControls\Ajax\NumericSpinner.ascx.designer.cs">
       <DependentUpon>NumericSpinner.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\UserControls\ControlBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="FLEX\UserControls\LongTextContainer.ascx.cs">
       <DependentUpon>LongTextContainer.ascx</DependentUpon>
@@ -335,6 +345,9 @@
     <Content Include="FLEX\Images\bootstrap-checkbox.png" />
     <Content Include="FLEX\Images\logo-finsa.png" />
     <Content Include="FLEX\Images\pattern.png" />
+    <Content Include="FLEX\Pages\LogSearch.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="FLEX\Pages\ErrorHandler.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>

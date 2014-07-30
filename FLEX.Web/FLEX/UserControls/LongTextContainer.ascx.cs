@@ -8,7 +8,7 @@ using Thrower;
 namespace FLEX.Web.UserControls
 // ReSharper restore CheckNamespace
 {
-   public partial class LongTextContainer : UserControl
+   public partial class LongTextContainer : ControlBase
    {
       private string _text = String.Empty;
 

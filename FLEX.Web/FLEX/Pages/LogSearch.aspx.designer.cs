@@ -10,7 +10,7 @@
 namespace FLEX.Web.Pages {
     
     
-    public partial class CacheOverview {
+    public partial class LogSearch {
         
         /// <summary>
         /// fdtgLogs control.
@@ -19,7 +19,7 @@ namespace FLEX.Web.Pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.WebControls.DataGrid fdtgCache;
+        protected global::FLEX.Web.WebControls.DataGrid fdtgLogs;
         
         /// <summary>
         /// btnRefresh control.
@@ -29,15 +29,6 @@ namespace FLEX.Web.Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::FLEX.Web.UserControls.Ajax.ImageButton btnRefresh;
-        
-        /// <summary>
-        /// btnClear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.ImageButton btnClear;
         
         /// <summary>
         /// Master property.

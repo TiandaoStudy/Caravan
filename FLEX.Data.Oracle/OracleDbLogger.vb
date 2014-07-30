@@ -2,9 +2,12 @@
 Imports FLEX.Common
 Imports FLEX.Common.Data
 Imports System.Data.OracleClient
+Imports Thrower
 
 NotInheritable Class OracleDbLogger
    Implements IDbLogger
+
+#Region "Public Properties"
 
    ReadOnly Property IsDebugEnabled As Boolean Implements IDbLogger.IsDebugEnabled
       Get
@@ -35,6 +38,10 @@ NotInheritable Class OracleDbLogger
          Return IsLevelEnabled("FATAL")
       End Get
    End Property
+
+#End Region
+
+#Region "Logging Methods"
 
    Sub LogDebug(Of TCodeUnit)([function] As String, shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing) Implements IDbLogger.LogDebug
       Log(Of TCodeUnit)("DEBUG", [function], shortMessage, longMessage, context, args)
@@ -76,6 +83,52 @@ NotInheritable Class OracleDbLogger
       Log(Of TCodeUnit)("FATAL", [function], exception, context, args)
    End Sub
 
+#End Region
+
+#Region "Logs Retrieval"
+
+   Public Function RetrieveAllLogs() As IEnumerable(Of DbLog) Implements IDbLogger.RetrieveAllLogs
+      Dim query As String = <![CDATA[
+         select flog_entry_date as EntryDate, flog_type as Type, flog_Application as Application, flog_code_unit as CodeUnit,
+                flog_function as Function, flog_short_msg as ShortMessage, flog_long_msg as LongMessage, flog_context as Context,
+                flog_key_0 as Key0, flog_value0 as Value0, flog_key_1 as Key1, flog_value1 as Value1, flog_key_2 as Key2, flog_value2 as Value2,
+                flog_key_3 as Key3, flog_value3 as Value3, flog_key_4 as Key4, flog_value4 as Value4, flog_key_5 as Key5, flog_value5 as Value5,
+                flog_key_6 as Key6, flog_value6 as Value6, flog_key_7 as Key7, flog_value7 as Value7, flog_key_8 as Key8, flog_value8 as Value8,
+                flog_key_9 as Key9, flog_value9 as Value9
+           from flex_log
+      ]]>.Value
+      Using connection = OpenConnection()
+         Return connection.Query(Of DbLog)(query)
+      End Using
+   End Function
+
+   Public Function RetrieveCurrentApplicationLogs() As IEnumerable(Of DbLog) Implements IDbLogger.RetrieveCurrentApplicationLogs
+      Dim query As String = <![CDATA[
+         select flog_entry_date as EntryDate, flog_type as Type, flog_Application as Application, flog_code_unit as CodeUnit,
+                flog_function as Function, flog_short_msg as ShortMessage, flog_long_msg as LongMessage, flog_context as Context,
+                flog_key_0 as Key0, flog_value0 as Value0, flog_key_1 as Key1, flog_value1 as Value1, flog_key_2 as Key2, flog_value2 as Value2,
+                flog_key_3 as Key3, flog_value3 as Value3, flog_key_4 as Key4, flog_value4 as Value4, flog_key_5 as Key5, flog_value5 as Value5,
+                flog_key_6 as Key6, flog_value6 as Value6, flog_key_7 as Key7, flog_value7 as Value7, flog_key_8 as Key8, flog_value8 as Value8,
+                flog_key_9 as Key9, flog_value9 as Value9
+          where upper(flog_application) = upper(:ApplicationName)
+      ]]>.Value
+      Using connection = OpenConnection()
+         Return connection.Query(Of DbLog)(query, New With {Configuration.Instance.ApplicationName})
+      End Using
+   End Function
+
+   Public Function RetrieveAllLogsTable() As DataTable Implements IDbLogger.RetrieveAllLogsTable
+      Return RetrieveAllLogs().ToDataTable()
+   End Function
+
+   Public Function RetrieveCurrentApplicationLogsTable() As DataTable Implements IDbLogger.RetrieveCurrentApplicationLogsTable
+      Return RetrieveCurrentApplicationLogs().ToDataTable()
+   End Function
+
+#End Region
+
+#Region "Private Methods"
+
    Private Shared Function IsLevelEnabled(type As String) As Boolean
       type = type.ToUpper()
       Using connection = OpenConnection()
@@ -85,6 +138,8 @@ NotInheritable Class OracleDbLogger
    End Function
 
    Private Shared Sub Log(Of TCodeUnit)(type As String, [function] As String, shortMessage As Object, longMessage As Object, context As String, args As IDictionary(Of String, Object))
+      Raise(Of ArgumentNullException).IfIsNull(shortMessage)
+
       Using connection = OpenConnection()
          Dim params = New With {
             .p_type = type,
@@ -109,5 +164,7 @@ NotInheritable Class OracleDbLogger
       connection.Open()
       Return connection
    End Function
+
+#End Region
 
 End Class

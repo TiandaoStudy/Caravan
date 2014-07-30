@@ -23,8 +23,13 @@
      <dependencies>
         <dependency id="Dapper" />
         <dependency id="FLEX.Common" />
+        <dependency id="Thrower" />
      </dependencies>
     <references></references>
+     <frameworkAssemblies>
+        <frameworkAssembly assemblyName="System.Xml" />
+        <frameworkAssembly assemblyName="System.Xml.Linq" />
+     </frameworkAssemblies>
     <tags>Microsoft</tags>
   </metadata>
   <files>
