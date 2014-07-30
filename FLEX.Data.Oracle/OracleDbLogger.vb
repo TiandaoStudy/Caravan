@@ -161,7 +161,7 @@ NotInheritable Class OracleDbLogger
 
    Private Shared Function OpenConnection() As IDbConnection
       Dim connection = OracleClientFactory.Instance.CreateConnection()
-      connection.ConnectionString = Configuration.Instance.ConnectionString
+      connection.ConnectionString = QueryExecutor.Instance.ConnectionString
       connection.Open()
       Return connection
    End Function

@@ -10,6 +10,7 @@ namespace FLEX.Common
       private const string SectionName = "FlexCommonConfiguration";
       private const string ApplicationNameKey = "ApplicationName";
       private const string DbLoggerTypeInfoKey = "DbLoggerTypeInfo";
+      private const string QueryExecutorTypeInfoKey = "QueryExecutorTypeInfo";
 
       private static readonly Configuration CachedInstance = ConfigurationManager.GetSection(SectionName) as Configuration;
 
@@ -27,12 +28,16 @@ namespace FLEX.Common
          get { return (string) this[ApplicationNameKey]; }
       }
 
-      public string ConnectionString { get; set; }
-
       [ConfigurationProperty(DbLoggerTypeInfoKey, IsRequired = true)]
       public string DbLoggerTypeInfo
       {
          get { return (string) this[DbLoggerTypeInfoKey]; }
+      }
+
+      [ConfigurationProperty(QueryExecutorTypeInfoKey, IsRequired = true)]
+      public string QueryExecutorTypeInfo
+      {
+         get { return (string) this[QueryExecutorTypeInfoKey]; }
       }
    }
 }

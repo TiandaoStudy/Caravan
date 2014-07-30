@@ -62,11 +62,6 @@ namespace FLEX.Web
          get { return CultureInfo.CreateSpecificCulture("it-IT"); }
       }
 
-      public static string QueryExecutors
-      {
-         get { return AppSettings["QueryExecutors"]; }
-      }
-
       public static string Templates_ImagesPath
       {
          get { return AppSettings["Templates_ImagesPath"]; }

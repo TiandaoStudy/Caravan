@@ -4,7 +4,6 @@ using System.IO;
 using System.Web;
 using System.Xml;
 using FLEX.Common;
-using FLEX.Common.Data;
 using Thrower;
 
 // ReSharper disable CheckNamespace
@@ -21,10 +20,8 @@ namespace FLEX.Web.Pages
 
       public static DataTable RetrieveData(string lookup)
       {
-         var lookupData = LoadLookupData(lookup);
-         var assemblyInfo = WebSettings.QueryExecutors;
-         var queryExecutor = ServiceLocator.Load<IQueryExecutor>(assemblyInfo);
-         return queryExecutor.FillDataTableFromQuery(lookupData.LookupQuery);
+         var lookupQuery = LoadLookupData(lookup).LookupQuery;
+         return QueryExecutor.Instance.FillDataTableFromQuery(lookupQuery);
       }
 
       #region Lookup XML Handlers

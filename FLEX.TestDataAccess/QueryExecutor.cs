@@ -7,7 +7,10 @@ namespace FLEX.Extensions.TestDataAccess
 {
    public sealed class QueryExecutor : IQueryExecutor
    {
-      private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["QueryProvider"].ConnectionString;
+      public string ConnectionString
+      {
+         get { return ConfigurationManager.ConnectionStrings["QueryProvider"].ConnectionString; }
+      }
 
       public int ExecuteStoredProcedure(string storedProcedure)
       {
