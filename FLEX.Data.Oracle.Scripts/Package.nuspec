@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>FLEX.Data.Oracle.Scripts</id>
-    <version>1.0.0</version>
+    <version>0.9.15</version>
     <title>FLEX.Data.Oracle.Scripts</title>
     <authors>alessiop</authors>
     <owners>Microsoft</owners>

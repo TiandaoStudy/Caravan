@@ -91,10 +91,10 @@ NotInheritable Class OracleDbLogger
       Dim query As String = <![CDATA[
          select flog_entry_date as EntryDate, flog_type as Type, flog_Application as Application, flog_code_unit as CodeUnit,
                 flog_function as Function, flog_short_msg as ShortMessage, flog_long_msg as LongMessage, flog_context as Context,
-                flog_key_0 as Key0, flog_value0 as Value0, flog_key_1 as Key1, flog_value1 as Value1, flog_key_2 as Key2, flog_value2 as Value2,
-                flog_key_3 as Key3, flog_value3 as Value3, flog_key_4 as Key4, flog_value4 as Value4, flog_key_5 as Key5, flog_value5 as Value5,
-                flog_key_6 as Key6, flog_value6 as Value6, flog_key_7 as Key7, flog_value7 as Value7, flog_key_8 as Key8, flog_value8 as Value8,
-                flog_key_9 as Key9, flog_value9 as Value9
+                flog_key_0 as Key0, flog_value_0 as Value0, flog_key_1 as Key1, flog_value_1 as Value1, flog_key_2 as Key2, flog_value_2 as Value2,
+                flog_key_3 as Key3, flog_value_3 as Value3, flog_key_4 as Key4, flog_value_4 as Value4, flog_key_5 as Key5, flog_value_5 as Value5,
+                flog_key_6 as Key6, flog_value_6 as Value6, flog_key_7 as Key7, flog_value_7 as Value7, flog_key_8 as Key8, flog_value_8 as Value8,
+                flog_key_9 as Key9, flog_value_9 as Value9
            from flex_log
       ]]>.Value
       Using connection = OpenConnection()
@@ -106,10 +106,11 @@ NotInheritable Class OracleDbLogger
       Dim query As String = <![CDATA[
          select flog_entry_date as EntryDate, flog_type as Type, flog_Application as Application, flog_code_unit as CodeUnit,
                 flog_function as Function, flog_short_msg as ShortMessage, flog_long_msg as LongMessage, flog_context as Context,
-                flog_key_0 as Key0, flog_value0 as Value0, flog_key_1 as Key1, flog_value1 as Value1, flog_key_2 as Key2, flog_value2 as Value2,
-                flog_key_3 as Key3, flog_value3 as Value3, flog_key_4 as Key4, flog_value4 as Value4, flog_key_5 as Key5, flog_value5 as Value5,
-                flog_key_6 as Key6, flog_value6 as Value6, flog_key_7 as Key7, flog_value7 as Value7, flog_key_8 as Key8, flog_value8 as Value8,
-                flog_key_9 as Key9, flog_value9 as Value9
+                flog_key_0 as Key0, flog_value_0 as Value0, flog_key_1 as Key1, flog_value_1 as Value1, flog_key_2 as Key2, flog_value_2 as Value2,
+                flog_key_3 as Key3, flog_value_3 as Value3, flog_key_4 as Key4, flog_value_4 as Value4, flog_key_5 as Key5, flog_value_5 as Value5,
+                flog_key_6 as Key6, flog_value_6 as Value6, flog_key_7 as Key7, flog_value_7 as Value7, flog_key_8 as Key8, flog_value_8 as Value8,
+                flog_key_9 as Key9, flog_value_9 as Value9
+           from flex_log
           where upper(flog_application) = upper(:ApplicationName)
       ]]>.Value
       Using connection = OpenConnection()

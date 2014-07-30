@@ -397,7 +397,7 @@ package body mydb.pck_flex_log as
          insert into mydb.flex_log("FLOG_ID", "FLOG_ENTRY_DATE", "FLOG_TYPE", "FLOG_APPLICATION", "FLOG_CODE_UNIT", "FLOG_FUNCTION", "FLOG_SHORT_MSG", "FLOG_LONG_MSG", "FLOG_CONTEXT", 
                                    "FLOG_KEY_0", "FLOG_VALUE_0", "FLOG_KEY_1", "FLOG_VALUE_1", "FLOG_KEY_2", "FLOG_VALUE_2", "FLOG_KEY_3", "FLOG_VALUE_3", "FLOG_KEY_4", "FLOG_VALUE_4",
                                    "FLOG_KEY_5", "FLOG_VALUE_5", "FLOG_KEY_6", "FLOG_VALUE_6", "FLOG_KEY_7", "FLOG_VALUE_7", "FLOG_KEY_8", "FLOG_VALUE_8", "FLOG_KEY_9", "FLOG_VALUE_9")
-         values (mydb.flex_log_seq.nextval, sysdate, p_type, p_application, p_code_unit, p_function, p_short_msg, p_long_msg, p_context,
+         values (mydb.flex_log_seq.nextval, sysdate, UPPER(p_type), UPPER(p_application), p_code_unit, p_function, p_short_msg, p_long_msg, p_context,
                  p_key_0, p_value_0, p_key_1, p_value_1, p_key_2, p_value_2, p_key_3, p_value_3, p_key_4, p_value_4,
                  p_key_5, p_value_5, p_key_6, p_value_6, p_key_7, p_value_7, p_key_8, p_value_8, p_key_9, p_value_9); 
 
