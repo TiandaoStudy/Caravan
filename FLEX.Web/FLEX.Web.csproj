@@ -38,8 +38,17 @@
     <DocumentationFile>bin\Release\FLEX.Web.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClosedXML">
+      <HintPath>..\packages\ClosedXML.0.73.0\lib\net40-client\ClosedXML.dll</HintPath>
+    </Reference>
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.27\lib\net40\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\packages\iTextSharp.5.5.2\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="KVLite">
       <HintPath>..\packages\PommaLabs.KVLite.0.1.7-alpha\lib\net40\KVLite.dll</HintPath>
@@ -204,6 +213,13 @@
     </Compile>
     <Compile Include="FLEX\UserControls\PageFooter.ascx.designer.cs">
       <DependentUpon>PageFooter.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\UserControls\ExportList.ascx.cs">
+      <DependentUpon>ExportList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\ExportList.ascx.designer.cs">
+      <DependentUpon>ExportList.ascx</DependentUpon>
     </Compile>
     <Compile Include="FLEX\WebControls\Templates\ControlTemplate.cs" />
     <Compile Include="FLEX\WebControls\Templates\DataGridEmpty.cs" />
@@ -405,6 +421,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\UserControls\PageFooter.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\UserControls\ExportList.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <None Include=".bin\bower.cmd" />

@@ -52,7 +52,9 @@ namespace FLEX.Extensions.TestDataAccess
          {
             sql.AppendFormat(" and c.Cand_Id = '{0}' ", candId[0]);
          }
-         return new QueryExecutor().FillDataTableFromQuery(sql.ToString());
+         var _results = new QueryExecutor().FillDataTableFromQuery(sql.ToString());
+         _results.TableName = "Candidates";
+         return _results;
       }
 
       private static string ToCommaSeparetedList(IEnumerable<string> values)
