@@ -21,7 +21,7 @@ using System.Text;
 namespace FLEX.Web.UserControls
 // ReSharper restore CheckNamespace
 {
-   public partial class ExportList
+   public partial class ExportList : UserControl
    {
       protected ExportList()
       {
@@ -77,8 +77,10 @@ namespace FLEX.Web.UserControls
          DataSourceNeeded(sender, e);
         if (DataSource != null)
         {
-           var wb = new XLWorkbook();
-           wb.Worksheets.Add(DataSource);
+           XLWorkbook wb = new XLWorkbook();
+           wb.AddWorksheet(DataSource);
+           //wb.Worksheets.Add(DataSource);
+         
            var response = HttpContext.Current.Response;
            response.Clear();
            response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -98,12 +100,12 @@ namespace FLEX.Web.UserControls
          DataSourceNeeded(sender, e);
          if (DataSource != null)
          {
-            Document pdfDoc = new Document();
-            pdfDoc.SetPageSize(PageSize.A4.Rotate());
+            Document pdfDoc = new Document(iTextSharp.text.PageSize.A4.Rotate(), 5, 10, 20, 20);
+            //pdfDoc.SetPageSize(PageSize.A4.Rotate());
+            
+
 
             PdfWriter.GetInstance(pdfDoc, System.Web.HttpContext.Current.Response.OutputStream);
-            pdfDoc.Open();
-
             PdfPTable PdfTable = new PdfPTable(DataSource.Columns.Count);
             PdfTable.WidthPercentage = 100;
 
@@ -124,14 +126,14 @@ namespace FLEX.Web.UserControls
                      PdfTable.AddCell(pdfPCell);
                }
             }
-
+            pdfDoc.Open();
             PdfTable.SpacingBefore = 15.0F; //Give some space after the text or it may overlap the table            
             pdfDoc.Add(PdfTable); //add pdf table to the document   
             pdfDoc.Close();
 
             var response = HttpContext.Current.Response;
-            response.Clear();
-            response.ContentType = "application/pdf";
+          
+            response.ContentType = "pdf/application";
             response.AddHeader("content-disposition", "attachment;filename=" + ReportName + "PDF.pdf");
             response.Write(pdfDoc);
             response.Flush();
@@ -147,7 +149,7 @@ namespace FLEX.Web.UserControls
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/csv";
-            response.AddHeader("content-disposition", "attachment;filename=" + ReportName + "CVS.csv");
+            response.AddHeader("content-disposition", "attachment;filename=" + ReportName + "CSV.csv");
 
             using (var memoryStream = new MemoryStream())
             {

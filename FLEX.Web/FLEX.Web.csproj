@@ -216,6 +216,7 @@
     </Compile>
     <Compile Include="FLEX\UserControls\ExportList.ascx.cs">
       <DependentUpon>ExportList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="FLEX\UserControls\ExportList.ascx.designer.cs">
       <DependentUpon>ExportList.ascx</DependentUpon>
