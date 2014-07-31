@@ -1,0 +1,129 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.TestWebUI", "FLEX.Extensions.TestWebUI\FLEX.TestWebUI.csproj", "{B3C22B2A-06D3-454F-BF86-0CCE7C744AE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.Web", "FLEX.Web\FLEX.Web.csproj", "{407B5921-9039-4D0D-A40A-36A19C251CDC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FLEX.Docs", "FLEX.Docs", "{BF4277FD-24C4-45AC-B871-98E1FEEDC623}"
+	ProjectSection(SolutionItems) = preProject
+		README.txt = README.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Coding Standards", "Coding Standards", "{C79157DB-09C9-401F-B4BD-4D6A193790D0}"
+	ProjectSection(SolutionItems) = preProject
+		FLEX.Docs\Coding Standards\CSharp.pdf = FLEX.Docs\Coding Standards\CSharp.pdf
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.Web.Packager", "FLEX.Web.Packager\FLEX.Web.Packager.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.TestDataAccess", "FLEX.TestDataAccess\FLEX.TestDataAccess.csproj", "{9F1BAA6D-7E1E-43CC-94CE-0B0AF04C753F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.Common", "FLEX.Common\FLEX.Common.csproj", "{11904ED0-33D2-4005-8766-B1E393A32EA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.Web.Tests", "FLEX.Web.Tests\FLEX.Web.Tests.csproj", "{3A48F406-2440-4E9B-9919-ED46BC3CD234}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.Common.Tests", "FLEX.Common.Tests\FLEX.Common.Tests.csproj", "{4F1024FA-992F-442C-B32F-E4BE589D5EF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.Common.Packager", "FLEX.Common.Packager\FLEX.Common.Packager.csproj", "{BBCDDB1C-8127-4623-B40B-5109DE5A63EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{816548D1-F582-4AC1-B4F3-E3997F2B4C14}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bootstrap", "Bootstrap", "{BA4644BC-0508-43EE-BF18-CA5725108E59}"
+	ProjectSection(SolutionItems) = preProject
+		FLEX.Docs\Tools\Bootstrap\Bootstrap, jQuery UI and sortable.oxps = FLEX.Docs\Tools\Bootstrap\Bootstrap, jQuery UI and sortable.oxps
+		FLEX.Docs\Tools\Bootstrap\DataTables and Bootstrap 3.png = FLEX.Docs\Tools\Bootstrap\DataTables and Bootstrap 3.png
+		FLEX.Docs\Tools\Bootstrap\IE8 issues with Bootstrap.oxps = FLEX.Docs\Tools\Bootstrap\IE8 issues with Bootstrap.oxps
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "jQuery UI", "jQuery UI", "{404C846A-E6C5-41ED-84E7-476EA90CF12C}"
+	ProjectSection(SolutionItems) = preProject
+		FLEX.Docs\Tools\jQuery UI\CSS for Autocomplete.xps = FLEX.Docs\Tools\jQuery UI\CSS for Autocomplete.xps
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Issues and Solutions", "Issues and Solutions", "{2BAED882-BB9A-41E8-9DC6-07823A9BC60F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASP.NET", "ASP.NET", "{D2B116DB-FC08-49C0-B409-375C74CA3BA4}"
+	ProjectSection(SolutionItems) = preProject
+		FLEX.Docs\Issues and Solutions\ASP.NET\ASP.NET 3.5 and Validators in IE9.pdf = FLEX.Docs\Issues and Solutions\ASP.NET\ASP.NET 3.5 and Validators in IE9.pdf
+		FLEX.Docs\Issues and Solutions\ASP.NET\Closing JavaScript Modals on IE9.pdf = FLEX.Docs\Issues and Solutions\ASP.NET\Closing JavaScript Modals on IE9.pdf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3495129D-5A6D-47A5-9121-317E6EE3CBB4}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FLEX.Data.Oracle", "FLEX.Data.Oracle\FLEX.Data.Oracle.vbproj", "{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FLEX.Data.SqlServer", "FLEX.Data.SqlServer\FLEX.Data.SqlServer.vbproj", "{8A967FF7-C58E-48FC-9244-5CB27F924509}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.Data.Oracle.Scripts", "FLEX.Data.Oracle.Scripts\FLEX.Data.Oracle.Scripts.csproj", "{83554880-C1CC-4B35-9BA8-CE8864B30E3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.Data.Packager", "FLEX.Data.Packager\FLEX.Data.Packager.csproj", "{BD471427-A76A-4764-94C1-08C8C3BC1379}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3C22B2A-06D3-454F-BF86-0CCE7C744AE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3C22B2A-06D3-454F-BF86-0CCE7C744AE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3C22B2A-06D3-454F-BF86-0CCE7C744AE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3C22B2A-06D3-454F-BF86-0CCE7C744AE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{407B5921-9039-4D0D-A40A-36A19C251CDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{407B5921-9039-4D0D-A40A-36A19C251CDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{407B5921-9039-4D0D-A40A-36A19C251CDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{407B5921-9039-4D0D-A40A-36A19C251CDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F1BAA6D-7E1E-43CC-94CE-0B0AF04C753F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F1BAA6D-7E1E-43CC-94CE-0B0AF04C753F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F1BAA6D-7E1E-43CC-94CE-0B0AF04C753F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F1BAA6D-7E1E-43CC-94CE-0B0AF04C753F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11904ED0-33D2-4005-8766-B1E393A32EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11904ED0-33D2-4005-8766-B1E393A32EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11904ED0-33D2-4005-8766-B1E393A32EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11904ED0-33D2-4005-8766-B1E393A32EA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A48F406-2440-4E9B-9919-ED46BC3CD234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A48F406-2440-4E9B-9919-ED46BC3CD234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A48F406-2440-4E9B-9919-ED46BC3CD234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A48F406-2440-4E9B-9919-ED46BC3CD234}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F1024FA-992F-442C-B32F-E4BE589D5EF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F1024FA-992F-442C-B32F-E4BE589D5EF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F1024FA-992F-442C-B32F-E4BE589D5EF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F1024FA-992F-442C-B32F-E4BE589D5EF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBCDDB1C-8127-4623-B40B-5109DE5A63EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBCDDB1C-8127-4623-B40B-5109DE5A63EF}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A967FF7-C58E-48FC-9244-5CB27F924509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A967FF7-C58E-48FC-9244-5CB27F924509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A967FF7-C58E-48FC-9244-5CB27F924509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A967FF7-C58E-48FC-9244-5CB27F924509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83554880-C1CC-4B35-9BA8-CE8864B30E3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83554880-C1CC-4B35-9BA8-CE8864B30E3B}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD471427-A76A-4764-94C1-08C8C3BC1379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD471427-A76A-4764-94C1-08C8C3BC1379}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C79157DB-09C9-401F-B4BD-4D6A193790D0} = {BF4277FD-24C4-45AC-B871-98E1FEEDC623}
+		{816548D1-F582-4AC1-B4F3-E3997F2B4C14} = {BF4277FD-24C4-45AC-B871-98E1FEEDC623}
+		{2BAED882-BB9A-41E8-9DC6-07823A9BC60F} = {BF4277FD-24C4-45AC-B871-98E1FEEDC623}
+		{BA4644BC-0508-43EE-BF18-CA5725108E59} = {816548D1-F582-4AC1-B4F3-E3997F2B4C14}
+		{404C846A-E6C5-41ED-84E7-476EA90CF12C} = {816548D1-F582-4AC1-B4F3-E3997F2B4C14}
+		{D2B116DB-FC08-49C0-B409-375C74CA3BA4} = {2BAED882-BB9A-41E8-9DC6-07823A9BC60F}
+	EndGlobalSection
+EndGlobal
