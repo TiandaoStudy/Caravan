@@ -106,7 +106,10 @@ root.triggerAsyncPostBack = (hiddenTriggerId) ->
 
 root.disableButtonsBeforePostBack = () ->
    if root.common.disableButtonsBeforePostBack
-      $(".btn").addClass("disabled")
+      buttons = $(".btn")
+      buttons.addClass("disabled")
+      # This line is needed for IE9, since "disabled" class is not enough...
+      buttons.prop("disabled", true)
    # We do not need to cleanup that value, because the post back will.
    # Therefore, on next run, disableButtonsBeforePostBack will be correctly true.
    
@@ -114,7 +117,9 @@ root.disableButtonsBeforePostBack = () ->
    return 
 
 root.enableButtonsAfterPostBack = () ->
-   $(".btn").removeClass("disabled")
+   buttons = $(".btn")
+   buttons.prop("disabled", false)
+   buttons.removeClass("disabled")
    # Required, otherwise browser shows a quit message
    return 
 

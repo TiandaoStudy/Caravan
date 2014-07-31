@@ -104,13 +104,19 @@
   };
 
   root.disableButtonsBeforePostBack = function() {
+    var buttons;
     if (root.common.disableButtonsBeforePostBack) {
-      $(".btn").addClass("disabled");
+      buttons = $(".btn");
+      buttons.addClass("disabled");
+      buttons.prop("disabled", true);
     }
   };
 
   root.enableButtonsAfterPostBack = function() {
-    $(".btn").removeClass("disabled");
+    var buttons;
+    buttons = $(".btn");
+    buttons.prop("disabled", false);
+    buttons.removeClass("disabled");
   };
 
   window.onbeforeunload = disableButtonsBeforePostBack;
