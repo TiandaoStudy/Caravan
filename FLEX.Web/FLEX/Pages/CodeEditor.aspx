@@ -16,7 +16,7 @@
     }
 </style>
 
-   <script src="FLEX/Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+   <script src="../Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
 
 <script>
 
