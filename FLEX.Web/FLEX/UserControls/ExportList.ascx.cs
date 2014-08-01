@@ -14,6 +14,7 @@ using Thrower;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Text;
+using FLEX.Web.MasterPages;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -74,118 +75,185 @@ namespace FLEX.Web.UserControls
 
       protected void ExportList_OnClickExcel(object sender, EventArgs e)
       {
-         DataSourceNeeded(sender, e);
-        if (DataSource != null)
-        {
-           XLWorkbook wb = new XLWorkbook();
-           wb.AddWorksheet(DataSource);
-           //wb.Worksheets.Add(DataSource);
-         
-           var response = HttpContext.Current.Response;
-           response.Clear();
-           response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-           response.AddHeader("content-disposition", "attachment;filename=" + ReportName + "Excel.xlsx");
+         try
+         {
+            DataSourceNeeded(sender, e);
+            if (DataSource != null)
+            {
+               XLWorkbook wb = new XLWorkbook();
+               wb.AddWorksheet(DataSource);
+               //wb.Worksheets.Add(DataSource);
 
-           using (var memoryStream = new MemoryStream())
-           {
-              wb.SaveAs(memoryStream);
-              memoryStream.WriteTo(response.OutputStream);
-           }
-           response.End();
-        }
+               var response = HttpContext.Current.Response;
+
+               response.Clear();
+               response.ClearContent();
+               response.ClearHeaders();
+
+               response.AddHeader("content-disposition", "attachment;filename=" + ReportName + "Excel.xlsx");
+               response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+               using (var memoryStream = new MemoryStream())
+               {
+                  wb.SaveAs(memoryStream);
+                  memoryStream.WriteTo(response.OutputStream);
+               }
+               response.OutputStream.Flush();
+               response.OutputStream.Close();
+               response.End();
+            }
+         }
+
+         catch (System.Threading.ThreadAbortException)
+         {
+            throw;
+         }
+
+         catch (Exception ex)
+         {
+           (Page.Master as IPageBase).ErrorHandler.CatchException(ex);
+         }
+
       }
 
       protected void ExportList_OnClickPdf(object sender, EventArgs e)
       {
-         DataSourceNeeded(sender, e);
-         if (DataSource != null)
+         try
          {
-            Document pdfDoc = new Document(iTextSharp.text.PageSize.A4.Rotate(), 5, 10, 20, 20);
-            //pdfDoc.SetPageSize(PageSize.A4.Rotate());
-            
-
-
-            PdfWriter.GetInstance(pdfDoc, System.Web.HttpContext.Current.Response.OutputStream);
-            PdfPTable PdfTable = new PdfPTable(DataSource.Columns.Count);
-            PdfTable.WidthPercentage = 100;
-
-            iTextSharp.text.Font font = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 14, Font.BOLD);
-            PdfPCell pdfPCell = null;
-
-            foreach (DataColumn c in DataSource.Columns)
+            DataSourceNeeded(sender, e);
+            if (DataSource != null)
             {
-               PdfTable.AddCell(new Phrase(c.ColumnName, font));
-            }
+               Document pdfDoc = new Document(iTextSharp.text.PageSize.A4.Rotate(), 5, 10, 20, 20);
+               //pdfDoc.SetPageSize(PageSize.A4.Rotate());
 
-            for (int row = 0; row < DataSource.Rows.Count; row++)
-            {
-               for (int col = 0; col < DataSource.Columns.Count; col++)
+
+
+               PdfWriter.GetInstance(pdfDoc, System.Web.HttpContext.Current.Response.OutputStream);
+               PdfPTable PdfTable = new PdfPTable(DataSource.Columns.Count);
+               PdfTable.WidthPercentage = 100;
+
+               iTextSharp.text.Font font = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 14, Font.BOLD);
+               PdfPCell pdfPCell = null;
+
+               foreach (DataColumn c in DataSource.Columns)
                {
+                  PdfTable.AddCell(new Phrase(c.ColumnName, font));
+               }
+
+               for (int row = 0; row < DataSource.Rows.Count; row++)
+               {
+                  for (int col = 0; col < DataSource.Columns.Count; col++)
+                  {
                      pdfPCell = new PdfPCell(new Phrase(new Chunk(DataSource.Rows[row][col].ToString())));
                      pdfPCell.HorizontalAlignment = iTextSharp.text.pdf.PdfPCell.ALIGN_CENTER;
                      PdfTable.AddCell(pdfPCell);
+                  }
                }
-            }
-            pdfDoc.Open();
-            PdfTable.SpacingBefore = 15.0F; //Give some space after the text or it may overlap the table            
-            pdfDoc.Add(PdfTable); //add pdf table to the document   
-            pdfDoc.Close();
+               pdfDoc.Open();
+               PdfTable.SpacingBefore = 15.0F; //Give some space after the text or it may overlap the table            
+               pdfDoc.Add(PdfTable); //add pdf table to the document   
+               pdfDoc.Close();
 
-            var response = HttpContext.Current.Response;
-          
-            response.ContentType = "pdf/application";
-            response.AddHeader("content-disposition", "attachment;filename=" + ReportName + "PDF.pdf");
-            response.Write(pdfDoc);
-            response.Flush();
-            response.End();
+               var response = HttpContext.Current.Response;
+               response.Clear();
+               response.ClearContent();
+               response.ClearHeaders();
+               response.AddHeader("content-disposition", "attachment;filename=" + ReportName + "PDF.pdf");
+               response.ContentType = "pdf/application";
+               
+               response.Write(pdfDoc);
+               response.OutputStream.Flush();
+               response.OutputStream.Close();
+               response.End();
+            }
+         }
+
+         catch (System.Threading.ThreadAbortException)
+         {
+            throw;
+         }
+         catch (Exception ex)
+         {
+            (Page.Master as IPageBase).ErrorHandler.CatchException(ex);
          }
       }
 
       protected void ExportList_OnClickCSV(object sender, EventArgs e)
       {
-         DataSourceNeeded(sender, e);
-         if (DataSource != null)
+         try
          {
-            var response = HttpContext.Current.Response;
-            response.Clear();
-            response.ContentType = "application/csv";
-            response.AddHeader("content-disposition", "attachment;filename=" + ReportName + "CSV.csv");
-
-            using (var memoryStream = new MemoryStream())
+            DataSourceNeeded(sender, e);
+            if (DataSource != null)
             {
-               StreamWriter csvWriter = new StreamWriter(memoryStream, Encoding.UTF8);
-               WriteDataTable(DataSource, csvWriter, true);
-               memoryStream.WriteTo(response.OutputStream);
+               var response = HttpContext.Current.Response;
+               response.Clear();
+               response.ClearContent();
+               response.ClearHeaders();
+
+               response.AddHeader("content-disposition", "attachment;filename=" + ReportName + "CSV.csv");
+               response.ContentType = "application/csv";
+
+               using (var memoryStream = new MemoryStream())
+               {
+                  StreamWriter csvWriter = new StreamWriter(memoryStream, Encoding.UTF8);
+                  WriteDataTable(DataSource, csvWriter, true);
+                  memoryStream.WriteTo(response.OutputStream);
+               }
+
+               response.OutputStream.Flush();
+               response.OutputStream.Close();
+               response.End();
             }
-            response.End();
+         }
+
+         catch (System.Threading.ThreadAbortException) 
+         {
+            throw;
+         }
+         catch (Exception ex)
+         {
+
+            (Page.Master as IPageBase).ErrorHandler.CatchException(ex);
          }
       }
 
       private void WriteDataTable(DataTable sourceTable, StreamWriter writer, bool includeHeaders)
       {
-         if (includeHeaders)
+         try
          {
-            List<string> headerValues = new List<string>();
-            foreach (DataColumn column in DataSource.Columns)
+            if (includeHeaders)
             {
-               headerValues.Add(QuoteValue(column.ColumnName));
+               List<string> headerValues = new List<string>();
+               foreach (DataColumn column in DataSource.Columns)
+               {
+                  headerValues.Add(QuoteValue(column.ColumnName));
+               }
+               writer.WriteLine(string.Join(";", headerValues.ToArray()));
             }
-            writer.WriteLine(string.Join(";", headerValues.ToArray()));
+
+            string[] items = null;
+            foreach (DataRow row in DataSource.Rows)
+            {
+               items = row.ItemArray.Select(x => QuoteValue(x.ToString())).ToArray();
+               writer.WriteLine(String.Join(";", items));
+            }
+            writer.Flush();
          }
 
-         string[] items = null;
-         foreach (DataRow row in DataSource.Rows)
+         catch (System.Threading.ThreadAbortException)
          {
-           items= row.ItemArray.Select(x=> QuoteValue(x.ToString())).ToArray();
-           writer.WriteLine(String.Join(";", items));
+            throw;
          }
-         writer.Flush();
+         catch (Exception ex)
+         {
+            (Page.Master as IPageBase).ErrorHandler.CatchException(ex);
+         }
       }
 
       private string QuoteValue(string value)
-   {
-      return string.Concat("\"", value.Replace("\"", "\"\""), "\"");
-   }
+      {
+          return string.Concat("\"", value.Replace("\"", "\"\""), "\"");
+      }
   
       #endregion
 
