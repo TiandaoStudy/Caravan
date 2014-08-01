@@ -99,7 +99,6 @@ namespace FLEX.Web.UserControls
                   memoryStream.WriteTo(response.OutputStream);
                }
                response.OutputStream.Flush();
-               response.OutputStream.Close();
                response.End();
             }
          }
@@ -155,15 +154,11 @@ namespace FLEX.Web.UserControls
                pdfDoc.Close();
 
                var response = HttpContext.Current.Response;
-               response.Clear();
-               response.ClearContent();
-               response.ClearHeaders();
                response.AddHeader("content-disposition", "attachment;filename=" + ReportName + "PDF.pdf");
                response.ContentType = "pdf/application";
                
                response.Write(pdfDoc);
                response.OutputStream.Flush();
-               response.OutputStream.Close();
                response.End();
             }
          }
@@ -201,7 +196,6 @@ namespace FLEX.Web.UserControls
                }
 
                response.OutputStream.Flush();
-               response.OutputStream.Close();
                response.End();
             }
          }
