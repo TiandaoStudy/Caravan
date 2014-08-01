@@ -38,8 +38,14 @@
     <DocumentationFile>bin\Release\FLEX.Web.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Armando">
+      <HintPath>..\packages\PommaLabs.Armando.0.1.3-alpha\lib\net40\Armando.dll</HintPath>
+    </Reference>
     <Reference Include="ClosedXML">
       <HintPath>..\packages\ClosedXML.0.73.0\lib\net40-client\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="CSScriptLibrary">
+      <HintPath>..\packages\CS-Script.3.8.3.0\lib\net40\CSScriptLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.27\lib\net40\Dapper.dll</HintPath>
@@ -54,6 +60,9 @@
       <HintPath>..\packages\PommaLabs.KVLite.0.1.7-alpha\lib\net40\KVLite.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mono.CSharp">
+      <HintPath>..\packages\CS-Script.3.8.3.0\lib\net40\Mono.CSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -106,6 +115,13 @@
     </Compile>
     <Compile Include="FLEX\Pages\CacheOverview.aspx.designer.cs">
       <DependentUpon>CacheOverview.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\Pages\CodeEditor.aspx.cs">
+      <DependentUpon>CodeEditor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\CodeEditor.aspx.designer.cs">
+      <DependentUpon>CodeEditor.aspx</DependentUpon>
     </Compile>
     <Compile Include="FLEX\Pages\LogSearch.aspx.cs">
       <DependentUpon>LogSearch.aspx</DependentUpon>
@@ -361,6 +377,9 @@
     <Content Include="FLEX\Images\bootstrap-checkbox.png" />
     <Content Include="FLEX\Images\logo-finsa.png" />
     <Content Include="FLEX\Images\pattern.png" />
+    <Content Include="FLEX\Pages\CodeEditor.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="FLEX\Pages\LogSearch.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
