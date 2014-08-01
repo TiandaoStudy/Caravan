@@ -1,35 +1,24 @@
 ﻿-- REPLACE 'mydb' WITH DB NAME
 
---------------------------------------------------------
---  DDL for Table FLEX_LOG_SETTINGS
---------------------------------------------------------
+CREATE TABLE mydb.flex_log_settings
+   (
+      flos_type      VARCHAR2(10)   NOT NULL
+    , flos_enabled   NUMBER(1)      NOT NULL
+    , flos_days      NUMBER(3)      NOT NULL
+    , CHECK (flos_type IN ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'FATAL')) ENABLE
+    , CHECK (flos_enabled IN (0,1)) ENABLE
+    , CONSTRAINT pk_flex_log_settings PRIMARY KEY (flos_type) USING INDEX TABLESPACE dati_base_index ENABLE
+   )
+   TABLESPACE dati_base;
 
-  CREATE TABLE "mydb"."FLEX_LOG_SETTINGS" 
-   (	"FLOS_TYPE" VARCHAR2(10 CHAR), 
-	"FLOS_ENABLED" NUMBER(*,0), 
-	"FLOS_DAYS" NUMBER(*,0)
-   ) ;
-REM INSERTING into mydb.FLEX_LOG_SETTINGS
-SET DEFINE OFF;
-Insert into mydb.FLEX_LOG_SETTINGS (FLOS_TYPE,FLOS_ENABLED,FLOS_DAYS) values ('DEBUG','1','90');
-Insert into mydb.FLEX_LOG_SETTINGS (FLOS_TYPE,FLOS_ENABLED,FLOS_DAYS) values ('INFO','1','90');
-Insert into mydb.FLEX_LOG_SETTINGS (FLOS_TYPE,FLOS_ENABLED,FLOS_DAYS) values ('WARNING','1','90');
-Insert into mydb.FLEX_LOG_SETTINGS (FLOS_TYPE,FLOS_ENABLED,FLOS_DAYS) values ('ERROR','1','90');
-Insert into mydb.FLEX_LOG_SETTINGS (FLOS_TYPE,FLOS_ENABLED,FLOS_DAYS) values ('FATAL','1','90');
---------------------------------------------------------
---  DDL for Index FLEX_LOG_SETTINGS_PK
---------------------------------------------------------
+COMMENT ON TABLE mydb.flex_log_settings IS 'Tabelle delle impostazioni del sistema di logging delle applicazioni FINSA';
+COMMENT ON COLUMN mydb.flex_log_settings.flos_type IS 'Tipo di logging, può assumere i valori DEBUG, INFO, WARNING, ERROR, FATAL';
+COMMENT ON COLUMN mydb.flex_log_settings.flos_enabled IS 'Attivazione del logging, 0 spento, 1 acceso';
+COMMENT ON COLUMN mydb.flex_log_settings.flos_days IS 'Numeri di giorni di persistenza della riga di log';
 
-  CREATE UNIQUE INDEX "mydb"."FLEX_LOG_SETTINGS_PK" ON "mydb"."FLEX_LOG_SETTINGS" ("FLOS_TYPE") 
-  ;
---------------------------------------------------------
---  Constraints for Table FLEX_LOG_SETTINGS
---------------------------------------------------------
 
-  ALTER TABLE "mydb"."FLEX_LOG_SETTINGS" ADD CONSTRAINT "FLEX_LOG_SETTINGS_PK" PRIMARY KEY ("FLOS_TYPE") ENABLE;
- 
-  ALTER TABLE "mydb"."FLEX_LOG_SETTINGS" MODIFY ("FLOS_TYPE" NOT NULL ENABLE);
- 
-  ALTER TABLE "mydb"."FLEX_LOG_SETTINGS" MODIFY ("FLOS_ENABLED" NOT NULL ENABLE);
- 
-  ALTER TABLE "mydb"."FLEX_LOG_SETTINGS" MODIFY ("FLOS_DAYS" NOT NULL ENABLE);
+INSERT INTO mydb.flex_log_settings (flos_type,flos_enabled,flos_days) VALUES ('DEBUG','1','90');
+INSERT INTO mydb.flex_log_settings (flos_type,flos_enabled,flos_days) VALUES ('INFO','1','90');
+INSERT INTO mydb.flex_log_settings (flos_type,flos_enabled,flos_days) VALUES ('WARNING','1','90');
+INSERT INTO mydb.flex_log_settings (flos_type,flos_enabled,flos_days) VALUES ('ERROR','1','90');
+INSERT INTO mydb.flex_log_settings (flos_type,flos_enabled,flos_days) VALUES ('FATAL','1','90');

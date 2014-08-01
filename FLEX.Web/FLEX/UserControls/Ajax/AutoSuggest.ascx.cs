@@ -39,7 +39,7 @@ namespace FLEX.Web.UserControls.Ajax
 
          txtKey.TextChanged += txtKey_TextChanged;
          txtKey.Enabled = Enabled;
-         txtKey.ReadOnly = txtKey.Enabled = !Enabled;
+         txtKey.ReadOnly = !Enabled;
 
          txtSuggestion.Enabled = Enabled;
          txtSuggestion.ReadOnly = !Enabled;

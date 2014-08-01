@@ -1,7 +1,6 @@
 ﻿-- REPLACE 'mydb' WITH DB NAME
 
-create or replace
-package mydb.pck_flex_log as
+CREATE OR REPLACE PACKAGE mydb.pck_flex_log AS
 
    procedure sp_log_debug         (p_application           in varchar2,
                                    p_code_unit             in varchar2,
@@ -169,11 +168,10 @@ package mydb.pck_flex_log as
 end pck_flex_log;
 
 /
+CREATE OR REPLACE PACKAGE body mydb.pck_flex_log AS
 
-create or replace
-package body mydb.pck_flex_log as
-
-   procedure sp_log_debug         (p_application           in varchar2,
+   --****************************************************************************************
+   PROCEDURE sp_log_debug         (p_application           in varchar2,
                                    p_code_unit             in varchar2,
                                    p_function              in varchar2,
                                    p_short_msg             in varchar2,
@@ -199,16 +197,17 @@ package body mydb.pck_flex_log as
                                    p_value_8               in varchar2 default null,
                                    p_key_9                 in varchar2 default null,
                                    p_value_9               in varchar2 default null)
-   as
-   begin
+   AS
+   BEGIN
       
       mydb.pck_flex_log.sp_log('DEBUG', UPPER(p_application), UPPER(p_code_unit), UPPER(p_function), p_short_msg, p_long_msg,
-         p_key_0, p_value_0, p_key_1, p_value_1, p_key_2, p_value_2, p_key_3, p_value_3, p_key_4, p_value_4,
-         p_key_5, p_value_5, p_key_6, p_value_6, p_key_7, p_value_7, p_key_8, p_value_8, p_key_9, p_value_9); 
-   
-   end sp_log_debug;
+                                   p_key_0, p_value_0, p_key_1, p_value_1, p_key_2, p_value_2, p_key_3, p_value_3, p_key_4, p_value_4,
+                                   p_key_5, p_value_5, p_key_6, p_value_6, p_key_7, p_value_7, p_key_8, p_value_8, p_key_9, p_value_9); 
+   END sp_log_debug;
 
-   procedure sp_log_info          (p_application           in varchar2,
+
+   --****************************************************************************************
+   PROCEDURE sp_log_info          (p_application           in varchar2,
                                    p_code_unit             in varchar2,
                                    p_function              in varchar2,
                                    p_short_msg             in varchar2,
@@ -234,16 +233,18 @@ package body mydb.pck_flex_log as
                                    p_value_8               in varchar2 default null,
                                    p_key_9                 in varchar2 default null,
                                    p_value_9               in varchar2 default null)
-   as
-   begin
+   AS
+   BEGIN
       
       mydb.pck_flex_log.sp_log('INFO', UPPER(p_application), UPPER(p_code_unit), UPPER(p_function), p_short_msg, p_long_msg,
-         p_key_0, p_value_0, p_key_1, p_value_1, p_key_2, p_value_2, p_key_3, p_value_3, p_key_4, p_value_4,
-         p_key_5, p_value_5, p_key_6, p_value_6, p_key_7, p_value_7, p_key_8, p_value_8, p_key_9, p_value_9); 
+                                   p_key_0, p_value_0, p_key_1, p_value_1, p_key_2, p_value_2, p_key_3, p_value_3, p_key_4, p_value_4,
+                                   p_key_5, p_value_5, p_key_6, p_value_6, p_key_7, p_value_7, p_key_8, p_value_8, p_key_9, p_value_9); 
 
-   end sp_log_info;
+   END sp_log_info;
 
-   procedure sp_log_warning       (p_application           in varchar2,
+
+   --****************************************************************************************
+   PROCEDURE sp_log_warning       (p_application           in varchar2,
                                    p_code_unit             in varchar2,
                                    p_function              in varchar2,
                                    p_short_msg             in varchar2,
@@ -269,16 +270,18 @@ package body mydb.pck_flex_log as
                                    p_value_8               in varchar2 default null,
                                    p_key_9                 in varchar2 default null,
                                    p_value_9               in varchar2 default null)
-   as
-   begin
+   AS
+   BEGIN
       
-      mydb.pck_flex_log.sp_log('WARNING', UPPER(p_application), UPPER(p_code_unit), UPPER(p_function), p_short_msg, p_long_msg,
-         p_key_0, p_value_0, p_key_1, p_value_1, p_key_2, p_value_2, p_key_3, p_value_3, p_key_4, p_value_4,
-         p_key_5, p_value_5, p_key_6, p_value_6, p_key_7, p_value_7, p_key_8, p_value_8, p_key_9, p_value_9); 
+      mydb.pck_flex_log.sp_log('WARNING', UPPER(P_APPLICATION), UPPER(P_CODE_UNIT), UPPER(P_FUNCTION), P_SHORT_MSG, P_LONG_MSG,
+                                   p_key_0, p_value_0, p_key_1, p_value_1, p_key_2, p_value_2, p_key_3, p_value_3, p_key_4, p_value_4,
+                                   p_key_5, p_value_5, p_key_6, p_value_6, p_key_7, p_value_7, p_key_8, p_value_8, p_key_9, p_value_9); 
 
-   end sp_log_warning;
+   END sp_log_warning;
 
-   procedure sp_log_error         (p_application           in varchar2,
+
+   --****************************************************************************************
+   PROCEDURE sp_log_error         (p_application           in varchar2,
                                    p_code_unit             in varchar2,
                                    p_function              in varchar2,
                                    p_short_msg             in varchar2,
@@ -304,16 +307,18 @@ package body mydb.pck_flex_log as
                                    p_value_8               in varchar2 default null,
                                    p_key_9                 in varchar2 default null,
                                    p_value_9               in varchar2 default null)
-   as
-   begin
+   AS
+   BEGIN
       
       mydb.pck_flex_log.sp_log('ERROR', UPPER(p_application), UPPER(p_code_unit), UPPER(p_function), p_short_msg, p_long_msg,
-         p_key_0, p_value_0, p_key_1, p_value_1, p_key_2, p_value_2, p_key_3, p_value_3, p_key_4, p_value_4,
-         p_key_5, p_value_5, p_key_6, p_value_6, p_key_7, p_value_7, p_key_8, p_value_8, p_key_9, p_value_9); 
+                                   p_key_0, p_value_0, p_key_1, p_value_1, p_key_2, p_value_2, p_key_3, p_value_3, p_key_4, p_value_4,
+                                   p_key_5, p_value_5, p_key_6, p_value_6, p_key_7, p_value_7, p_key_8, p_value_8, p_key_9, p_value_9); 
 
-   end sp_log_error;
+   END sp_log_error;
 
-   procedure sp_log_fatal         (p_application           in varchar2,
+
+   --****************************************************************************************
+   PROCEDURE sp_log_fatal         (p_application           in varchar2,
                                    p_code_unit             in varchar2,
                                    p_function              in varchar2,
                                    p_short_msg             in varchar2,
@@ -339,16 +344,18 @@ package body mydb.pck_flex_log as
                                    p_value_8               in varchar2 default null,
                                    p_key_9                 in varchar2 default null,
                                    p_value_9               in varchar2 default null)
-   as
-   begin
+   AS
+   BEGIN
       
       mydb.pck_flex_log.sp_log('FATAL', UPPER(p_application), UPPER(p_code_unit), UPPER(p_function), p_short_msg, p_long_msg,
-         p_key_0, p_value_0, p_key_1, p_value_1, p_key_2, p_value_2, p_key_3, p_value_3, p_key_4, p_value_4,
-         p_key_5, p_value_5, p_key_6, p_value_6, p_key_7, p_value_7, p_key_8, p_value_8, p_key_9, p_value_9); 
+                                  p_key_0, p_value_0, p_key_1, p_value_1, p_key_2, p_value_2, p_key_3, p_value_3, p_key_4, p_value_4,
+                                  p_key_5, p_value_5, p_key_6, p_value_6, p_key_7, p_value_7, p_key_8, p_value_8, p_key_9, p_value_9); 
 
-   end sp_log_fatal;
+   END sp_log_fatal;
 
-   procedure sp_log               (p_type                  in varchar2,
+
+   --****************************************************************************************
+   PROCEDURE sp_log               (p_type                  in varchar2,
                                    p_application           in varchar2,
                                    p_code_unit             in varchar2,
                                    p_function              in varchar2,
@@ -375,35 +382,40 @@ package body mydb.pck_flex_log as
                                    p_value_8               in varchar2 default null,
                                    p_key_9                 in varchar2 default null,
                                    p_value_9               in varchar2 default null)
-   as
-      pragma autonomous_transaction;
+   AS
+      PRAGMA AUTONOMOUS_TRANSACTION;
 
-      v_enabled    int;
-      v_days       int;
-   begin
-      select flos_enabled, flos_days
-        into v_enabled, v_days
-        from userbase.flex_log_settings
-       where flos_type = p_type;
+      v_enabled    NUMBER(1);
+      v_days       NUMBER(3);
+  
+   BEGIN
+      
+      SELECT flos_enabled, flos_days
+        INTO v_enabled, v_days
+        FROM mydb.flex_log_settings
+       WHERE flos_type = p_type;
 
-      if v_enabled = 1 then
+      -- We delete logs older than 3 months
+      BEGIN
+         DELETE 
+           FROM mydb.flex_log 
+          WHERE flog_entry_date < SYSDATE - v_days;
+      
+      EXCEPTION 
+         WHEN OTHERS THEN NULL; -- Errors are ignored
+      END;
+      
+      IF v_enabled = 1 THEN
+         
+         INSERT INTO mydb.flex_log(flog_id, flog_entry_date, flos_type, flog_application, flog_code_unit, flog_function, flog_short_msg, flog_long_msg, flog_context, 
+                                       flog_key_0, flog_value_0, flog_key_1, flog_value_1, flog_key_2, flog_value_2, flog_key_3, flog_value_3, flog_key_4, flog_value_4,
+                                       flog_key_5, flog_value_5, flog_key_6, flog_value_6, flog_key_7, flog_value_7, flog_key_8, flog_value_8, flog_key_9, flog_value_9)
+                               VALUES (mydb.flex_log_seq.nextval, sysdate, UPPER(p_type), UPPER(p_application), p_code_unit, p_function, p_short_msg, p_long_msg, p_context,
+                                       p_key_0, p_value_0, p_key_1, p_value_1, p_key_2, p_value_2, p_key_3, p_value_3, p_key_4, p_value_4,
+                                       p_key_5, p_value_5, p_key_6, p_value_6, p_key_7, p_value_7, p_key_8, p_value_8, p_key_9, p_value_9); 
+         COMMIT;
+      END IF;
+   
+   END sp_log;
 
-         -- We delete logs older than 3 months
-         begin
-	         delete from mydb.flex_log where flog_entry_date < sysdate - v_days;
-	      exception when others then null; -- Errors are ignored
-	      end;
-
-         insert into mydb.flex_log("FLOG_ID", "FLOG_ENTRY_DATE", "FLOG_TYPE", "FLOG_APPLICATION", "FLOG_CODE_UNIT", "FLOG_FUNCTION", "FLOG_SHORT_MSG", "FLOG_LONG_MSG", "FLOG_CONTEXT", 
-                                   "FLOG_KEY_0", "FLOG_VALUE_0", "FLOG_KEY_1", "FLOG_VALUE_1", "FLOG_KEY_2", "FLOG_VALUE_2", "FLOG_KEY_3", "FLOG_VALUE_3", "FLOG_KEY_4", "FLOG_VALUE_4",
-                                   "FLOG_KEY_5", "FLOG_VALUE_5", "FLOG_KEY_6", "FLOG_VALUE_6", "FLOG_KEY_7", "FLOG_VALUE_7", "FLOG_KEY_8", "FLOG_VALUE_8", "FLOG_KEY_9", "FLOG_VALUE_9")
-         values (mydb.flex_log_seq.nextval, sysdate, UPPER(p_type), UPPER(p_application), p_code_unit, p_function, p_short_msg, p_long_msg, p_context,
-                 p_key_0, p_value_0, p_key_1, p_value_1, p_key_2, p_value_2, p_key_3, p_value_3, p_key_4, p_value_4,
-                 p_key_5, p_value_5, p_key_6, p_value_6, p_key_7, p_value_7, p_key_8, p_value_8, p_key_9, p_value_9); 
-
-         commit;
-
-      end if;
-   end sp_log;
-
-end pck_flex_log;
+END pck_flex_log;

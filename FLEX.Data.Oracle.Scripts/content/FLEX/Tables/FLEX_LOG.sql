@@ -1,83 +1,54 @@
 ﻿-- REPLACE 'mydb' WITH DB NAME
 
---------------------------------------------------------
---  DDL for Table FLEX_LOG
---------------------------------------------------------
-
-  CREATE TABLE "mydb"."FLEX_LOG" 
-   (	"FLOG_ID" NUMBER, 
-	"FLOG_ENTRY_DATE" DATE DEFAULT SYSDATE, 
-	"FLOG_TYPE" VARCHAR2(10 CHAR), 
-	"FLOG_APPLICATION" VARCHAR2(30 CHAR), 
-	"FLOG_CODE_UNIT" VARCHAR2(100 CHAR), 
-	"FLOG_FUNCTION" VARCHAR2(100 CHAR),
-	"FLOG_SHORT_MSG" VARCHAR2(400 CHAR), 
-	"FLOG_LONG_MSG" VARCHAR2(4000 CHAR),
-   "FLOG_CONTEXT" VARCHAR2(400 CHAR),
-	"FLOG_KEY_0" VARCHAR2(100 CHAR), 
-	"FLOG_VALUE_0" VARCHAR2(4000 CHAR), 
-	"FLOG_KEY_1" VARCHAR2(100 CHAR), 
-	"FLOG_VALUE_1" VARCHAR2(4000 CHAR), 
-	"FLOG_KEY_2" VARCHAR2(100 CHAR), 
-	"FLOG_VALUE_2" VARCHAR2(4000 CHAR), 
-	"FLOG_KEY_3" VARCHAR2(100 CHAR), 
-	"FLOG_VALUE_3" VARCHAR2(4000 CHAR), 
-	"FLOG_KEY_4" VARCHAR2(100 CHAR), 
-	"FLOG_VALUE_4" VARCHAR2(4000 CHAR), 
-	"FLOG_KEY_5" VARCHAR2(100 CHAR), 
-	"FLOG_VALUE_5" VARCHAR2(4000 CHAR), 
-	"FLOG_KEY_6" VARCHAR2(100 CHAR), 
-	"FLOG_VALUE_6" VARCHAR2(4000 CHAR), 
-	"FLOG_KEY_7" VARCHAR2(100 CHAR), 
-	"FLOG_VALUE_7" VARCHAR2(4000 CHAR), 
-	"FLOG_KEY_8" VARCHAR2(100 CHAR), 
-	"FLOG_VALUE_8" VARCHAR2(4000 CHAR), 
-	"FLOG_KEY_9" VARCHAR2(100 CHAR),
-	"FLOG_VALUE_9" VARCHAR2(4000 CHAR)
-   ) ;
+CREATE TABLE mydb.flex_log 
+   (  flog_id           NUMBER         NOT NULL
+    , flog_entry_date   DATE DEFAULT SYSDATE NOT NULL 
+    , flos_type         VARCHAR2(10)   NOT NULL
+    , flog_application  VARCHAR2(30)   NOT NULL
+    , flog_code_unit    VARCHAR2(100)  NOT NULL
+    , flog_function     VARCHAR2(100)  NOT NULL
+    , flog_short_msg    VARCHAR2(400)  NOT NULL
+    , flog_long_msg     VARCHAR2(400)
+    , flog_context      VARCHAR2(400)
+    , flog_key_0        VARCHAR2(100)
+    , flog_value_0      VARCHAR2(400)
+    , flog_key_1        VARCHAR2(100) 
+    , flog_value_1      VARCHAR2(400)
+    , flog_key_2        VARCHAR2(100) 
+    , flog_value_2      VARCHAR2(400)
+    , flog_key_3        VARCHAR2(100) 
+    , flog_value_3      VARCHAR2(400) 
+    , flog_key_4        VARCHAR2(100) 
+    , flog_value_4      VARCHAR2(400) 
+    , flog_key_5        VARCHAR2(100) 
+    , flog_value_5      VARCHAR2(400) 
+    , flog_key_6        VARCHAR2(100) 
+    , flog_value_6      VARCHAR2(400) 
+    , flog_key_7        VARCHAR2(100) 
+    , flog_value_7      VARCHAR2(400) 
+    , flog_key_8        VARCHAR2(100) 
+    , flog_value_8      VARCHAR2(400) 
+    , flog_key_9        VARCHAR2(100)
+    , flog_value_9      VARCHAR2(400)
+    , CONSTRAINT pk_flex_log PRIMARY KEY (flog_id) USING INDEX TABLESPACE dati_base_index ENABLE
+    , CONSTRAINT fk_flexlog_flexlogsettings FOREIGN KEY (flos_type) REFERENCES mydb.flex_log_settings (flos_type) ENABLE
+   )
+   TABLESPACE dati_base;
  
 
-   COMMENT ON COLUMN "mydb"."FLEX_LOG"."FLOG_CODE_UNIT" IS 'Package or fully qualified .NET type';
---------------------------------------------------------
---  DDL for Index FLEX_LOG_PK
---------------------------------------------------------
+   COMMENT ON TABLE mydb.flex_log IS 'Tabella di log per le applicazioni FINSA';
+   COMMENT ON COLUMN mydb.flex_log.flog_id IS 'Isentificativo riga, è una sequenza';
+   COMMENT ON COLUMN mydb.flex_log.flog_entry_date IS 'Data di inserimento della riga';
+   COMMENT ON COLUMN mydb.flex_log.flos_type IS 'Tipo di messaggio log, pò assumere i valori DEBUG, INFO, WARNING, ERROR, FATAL';
+   COMMENT ON COLUMN mydb.flex_log.flog_application IS 'Applicazione FINSA a cui si riferisce il log';
+   COMMENT ON COLUMN mydb.flex_log.flog_code_unit IS 'Package or fully qualified .NET type';
+   COMMENT ON COLUMN mydb.flex_log.flog_function IS 'Metodo o procedura';
+   COMMENT ON COLUMN mydb.flex_log.flog_short_msg IS 'Messaggio berve';
+   COMMENT ON COLUMN mydb.flex_log.flog_long_msg IS 'Messaggio verboso';
+   COMMENT ON COLUMN mydb.flex_log.flog_context IS 'Infomazione dettagliata del contesto in cui viene inserito il messaggio';
+   COMMENT ON COLUMN mydb.flex_log.flog_key_0 IS 'Nome del parametro opzionale, ad esempio AZI_ID';
+   COMMENT ON COLUMN mydb.flex_log.flog_value_0 IS 'Valore del parametro opzionale, ad esempio RS';
+   
 
-  CREATE UNIQUE INDEX "mydb"."FLEX_LOG_PK" ON "mydb"."FLEX_LOG" ("FLOG_ID") 
-  ;
---------------------------------------------------------
---  DDL for Index FLEX_LOG_DATE_INDEX
---------------------------------------------------------
-
-  CREATE INDEX "mydb"."FLEX_LOG_DATE_INDEX" ON "mydb"."FLEX_LOG" ("FLOG_ENTRY_DATE" DESC) 
-  ;
---------------------------------------------------------
---  DDL for Index FLEX_LOG_TYPE_INDEX
---------------------------------------------------------
-
-  CREATE INDEX "mydb"."FLEX_LOG_TYPE_INDEX" ON "mydb"."FLEX_LOG" ("FLOG_TYPE") 
-  ;
---------------------------------------------------------
---  Constraints for Table FLEX_LOG
---------------------------------------------------------
-
-  ALTER TABLE "mydb"."FLEX_LOG" ADD CONSTRAINT "FLEX_LOG_PK" PRIMARY KEY ("FLOG_ID") ENABLE;
- 
-  ALTER TABLE "mydb"."FLEX_LOG" MODIFY ("FLOG_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "mydb"."FLEX_LOG" MODIFY ("FLOG_ENTRY_DATE" NOT NULL ENABLE);
- 
-  ALTER TABLE "mydb"."FLEX_LOG" MODIFY ("FLOG_TYPE" NOT NULL ENABLE);
- 
-  ALTER TABLE "mydb"."FLEX_LOG" MODIFY ("FLOG_APPLICATION" NOT NULL ENABLE);
- 
-  ALTER TABLE "mydb"."FLEX_LOG" MODIFY ("FLOG_CODE_UNIT" NOT NULL ENABLE);
- 
-  ALTER TABLE "mydb"."FLEX_LOG" MODIFY ("FLOG_FUNCTION" NOT NULL ENABLE);
- 
-  ALTER TABLE "mydb"."FLEX_LOG" MODIFY ("FLOG_SHORT_MSG" NOT NULL ENABLE);
---------------------------------------------------------
---  Ref Constraints for Table FLEX_LOG
---------------------------------------------------------
-
-  ALTER TABLE "mydb"."FLEX_LOG" ADD CONSTRAINT "FLEX_LOG_SETTINGS_FK" FOREIGN KEY ("FLOG_TYPE")
-	  REFERENCES "mydb"."FLEX_LOG_SETTINGS" ("FLOS_TYPE") ENABLE;
+   CREATE INDEX mydb.idx_flex_log_date ON mydb.flex_log (flog_entry_date DESC);
+   CREATE INDEX mydb.idx_flex_los_type ON mydb.flex_log (flos_type) ;
