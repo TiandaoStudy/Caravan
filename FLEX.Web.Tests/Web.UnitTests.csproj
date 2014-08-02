@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4F1024FA-992F-442C-B32F-E4BE589D5EF4}</ProjectGuid>
+    <ProjectGuid>{3A48F406-2440-4E9B-9919-ED46BC3CD234}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FLEX.Common.Tests</RootNamespace>
-    <AssemblyName>FLEX.Common.Tests</AssemblyName>
+    <RootNamespace>FLEX.Web.Tests</RootNamespace>
+    <AssemblyName>FLEX.Web.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>
@@ -39,7 +39,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
+    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -50,15 +51,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicsTests.cs" />
-    <Compile Include="ConversionsTests.cs" />
+    <Compile Include="CacheManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FLEX.Common\FLEX.Common.csproj">
-      <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>
-      <Name>FLEX.Common</Name>
+    <ProjectReference Include="..\FLEX.Web\Web.csproj">
+      <Project>{407b5921-9039-4d0d-a40a-36a19c251cdc}</Project>
+      <Name>Web</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
