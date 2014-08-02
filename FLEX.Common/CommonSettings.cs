@@ -17,11 +17,6 @@ namespace FLEX.Common
          get { return AppSettings["AjaxLookup_TokenStart"]; }
       }
 
-      public static string QuickLogger_LogsPath
-      {
-         get { return AppSettings["FLEX.Common.DbLogger.LogsPath"]; }
-      }
-
       public static string Web_SecurityManagerInfo
       {
          get { return AppSettings["FLEX.Common.Web.SecurityManagerInfo"]; }

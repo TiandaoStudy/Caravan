@@ -52,5 +52,10 @@ namespace FLEX.Extensions.TestDataAccess
             }
          }
       }
+
+       public IDbConnection OpenConnection()
+       {
+           throw new System.NotImplementedException();
+       }
    }
 }

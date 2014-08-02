@@ -1,4 +1,5 @@
 ﻿Imports Armando
+Imports FLEX.Common.Data
 
 Namespace DAO
 
@@ -6,7 +7,7 @@ Namespace DAO
         Inherits DaoBase
 
         Public Overrides Function CreateContext() As IDbConnection
-            Throw New NotImplementedException()
+            Return QueryExecutor.Instance.OpenConnection()
         End Function
 
         Public Overrides Function CreateContext(ByVal connectionString As String) As IDbConnection

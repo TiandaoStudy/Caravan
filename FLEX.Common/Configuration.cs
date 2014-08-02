@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using KVLite;
 
 namespace FLEX.Common
 {
@@ -8,8 +9,11 @@ namespace FLEX.Common
    public sealed class Configuration : ConfigurationSection
    {
       private const string SectionName = "FlexCommonConfiguration";
+      private const string CachePartitionName = "FLEX.Common";
       private const string ApplicationNameKey = "ApplicationName";
+      private const string ConnectionStringKey = "ConnectionString";
       private const string DbLoggerTypeInfoKey = "DbLoggerTypeInfo";
+      private const string ErrorManagerTypeInfoKey = "ErrorManagerTypeInfo";
       private const string QueryExecutorTypeInfoKey = "QueryExecutorTypeInfo";
 
       private static readonly Configuration CachedInstance = ConfigurationManager.GetSection(SectionName) as Configuration;
@@ -34,10 +38,22 @@ namespace FLEX.Common
          get { return (string) this[DbLoggerTypeInfoKey]; }
       }
 
+      [ConfigurationProperty(ErrorManagerTypeInfoKey, IsRequired = true)]
+      public string ErrorManagerTypeInfo
+      {
+          get { return (string) this[ErrorManagerTypeInfoKey]; }
+      }
+
       [ConfigurationProperty(QueryExecutorTypeInfoKey, IsRequired = true)]
       public string QueryExecutorTypeInfo
       {
          get { return (string) this[QueryExecutorTypeInfoKey]; }
       }
+
+       public string ConnectionString
+       {
+           get { return (string) PersistentCache.DefaultInstance.Get(CachePartitionName, ConnectionStringKey); }
+           set { PersistentCache.DefaultInstance.AddPersistent(CachePartitionName, ConnectionStringKey, value); }
+       }
    }
 }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Web;
 using System.Xml;
 using FLEX.Common;
+using FLEX.Common.Data;
 using Thrower;
 
 // ReSharper disable CheckNamespace

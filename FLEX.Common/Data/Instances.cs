@@ -1,7 +1,8 @@
-﻿using FLEX.Common.Data;
-
-namespace FLEX.Common
+﻿namespace FLEX.Common.Data
 {
+   /// <summary>
+   /// 
+   /// </summary>
    public static class DbLogger
    {
       private static readonly IDbLogger CachedInstance = ServiceLocator.Load<IDbLogger>(Configuration.Instance.DbLoggerTypeInfo);
@@ -12,6 +13,9 @@ namespace FLEX.Common
       }
    }
 
+   /// <summary>
+   /// 
+   /// </summary>
    public static class QueryExecutor
    {
       private static readonly IQueryExecutor CachedInstance = ServiceLocator.Load<IQueryExecutor>(Configuration.Instance.QueryExecutorTypeInfo);

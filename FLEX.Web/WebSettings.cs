@@ -72,11 +72,6 @@ namespace FLEX.Web
          get { return Convert.ToInt32(AppSettings["FLEX.Web.CacheManager.DefaultMinutes"]); }
       }
 
-      public static string UserControls_Ajax_ErrorHandler_ErrorManagerInfo
-      {
-         get { return AppSettings["FLEX.Web.UserControls.Ajax.ErrorHandler.ErrorManagerInfo"]; }
-      }
-
       public static string UserControls_Ajax_ErrorHandler_ExceptionSessionKey
       {
          get { return AppSettings["FLEX.Web.UserControls.Ajax.ErrorHandler.ExceptionSessionKey"]; }

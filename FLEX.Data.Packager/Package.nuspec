@@ -23,6 +23,7 @@
      <dependencies>
         <dependency id="Dapper" />
         <dependency id="FLEX.Common" />
+        <dependency id="Glimpse.Ado" />
         <dependency id="Thrower" />
      </dependencies>
     <references></references>

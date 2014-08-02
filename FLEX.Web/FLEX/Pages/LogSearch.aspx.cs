@@ -1,5 +1,6 @@
 ﻿using System;
 using FLEX.Common;
+using FLEX.Common.Data;
 using FLEX.Web.UserControls.Ajax;
 
 // ReSharper disable CheckNamespace

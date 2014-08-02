@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web.UI.WebControls;
 using FLEX.Common;
+using FLEX.Common.Data;
 using FLEX.Web.Pages;
 
 namespace FLEX.Web.Pages

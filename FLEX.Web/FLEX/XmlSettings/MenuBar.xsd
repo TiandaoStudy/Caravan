@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
-           xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="FLEX.Extensions.Web.XmlSettings.MenuBar"
-           xmlns="FLEX.Extensions.Web.XmlSettings.MenuBar">
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="FLEX.Web.XmlSettings.MenuBar"
+           xmlns="FLEX.Web.XmlSettings.MenuBar">
   <xs:element name="Item">
     <xs:complexType mixed="true">
       <xs:sequence>

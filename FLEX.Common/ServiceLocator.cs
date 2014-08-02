@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Configuration;
 using System.Reflection;
+using FLEX.Common.Data;
 using Thrower;
 
 namespace FLEX.Common

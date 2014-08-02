@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
-           xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="FLEX.Extensions.Web.XmlSettings.Lookup"
-           xmlns="FLEX.Extensions.Web.XmlSettings.Lookup">
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="FLEX.Web.XmlSettings.Lookup"
+           xmlns="FLEX.Web.XmlSettings.Lookup">
   <xs:element name="LookupData">
     <xs:complexType>
       <xs:sequence>
