@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("FLEX.Data.Oracle")> 
+<Assembly: AssemblyTitle("FLEX.Data")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("Microsoft")> 
-<Assembly: AssemblyProduct("FLEX.Data.Oracle")> 
+<Assembly: AssemblyProduct("FLEX.Data")> 
 <Assembly: AssemblyCopyright("Copyright © Microsoft 2014")> 
 <Assembly: AssemblyTrademark("")> 
 

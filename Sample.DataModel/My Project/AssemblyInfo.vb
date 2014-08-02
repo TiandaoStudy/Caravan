@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("FLEX.Data.Scripts")> 
+<Assembly: AssemblyTitle("Sample.DataModel")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("FLEX.Data.Scripts")> 
+<Assembly: AssemblyProduct("Sample.DataModel")> 
 <Assembly: AssemblyCopyright("Copyright ©  2014")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("bb1c3929-3178-4d21-b21f-e8e86b7deb8e")> 
+<Assembly: Guid("6557629b-db28-45a4-8585-f6c5a75f4906")> 
 
 ' Version information for an assembly consists of the following four values:
 '
