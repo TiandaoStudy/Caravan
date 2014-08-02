@@ -4,7 +4,7 @@
 <ajax:UpdatePanel ID="datepickerPanel" runat="server">
    <ContentTemplate>
       <div class="input-group date">
-         <asp:TextBox ID="txtDate" runat="server" CssClass="form-control"></asp:TextBox>
+         <asp:TextBox ID="txtDate" runat="server" CssClass="form-control" OnTextChanged="txtDate_TextChanged" />
          <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
       </div>
 

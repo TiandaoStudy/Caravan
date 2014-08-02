@@ -1,5 +1,27 @@
-﻿namespace FLEX.Common
+﻿using System;
+using FLEX.Common.Web;
+
+namespace FLEX.Common
 {
+   public static class Basics
+   {
+      public static void TriggerEvent(Action<ISearchControl, SearchCriteriaSelectedArgs> eventHandler, ISearchControl sender, SearchCriteriaSelectedArgs args)
+      {
+         if (eventHandler != null)
+         {
+            eventHandler(sender, args);
+         }
+      }
+
+      public static void TriggerEvent(EventHandler eventHandler, object sender, EventArgs args)
+      {
+         if (eventHandler != null)
+         {
+            eventHandler(sender, args);
+         }
+      }
+   }
+
    public static class Constants
    {
       public const string XmlExtension = ".xml";

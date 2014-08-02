@@ -10,9 +10,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("FLEX.Web")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Finsa S.p.A.")]
+[assembly: AssemblyCompany("FINSA S.p.A.")]
 [assembly: AssemblyProduct("FLEX.Web")]
-[assembly: AssemblyCopyright("Copyright © Finsa S.p.A. 2014")]
+[assembly: AssemblyCopyright("Copyright © FINSA S.p.A. 2014-2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -37,8 +37,8 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("0.9.17")]
+[assembly: AssemblyFileVersion("0.9.17")]
 
 // Attributes added to allow safer development.
 

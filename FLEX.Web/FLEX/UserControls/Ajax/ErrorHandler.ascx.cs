@@ -24,7 +24,7 @@ namespace FLEX.Web.UserControls.Ajax
          }
          catch (Exception ex)
          {
-            QuickLogger.LogError<ErrorHandler>(ex);
+            DbLogger.Instance.LogError<ErrorHandler>("ErrorHandler()", ex);
             // It's better NOT to rethrow in static constructors, 
             // otherwise the application will silently die. 
          }
@@ -50,7 +50,7 @@ namespace FLEX.Web.UserControls.Ajax
          }
          catch (Exception inner)
          {
-            QuickLogger.LogError<ErrorHandler>(inner);
+            DbLogger.Instance.LogError<ErrorHandler>("CatchException(ex, location)", inner);
             throw;
          }
       }

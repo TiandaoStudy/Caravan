@@ -2,8 +2,10 @@
 
 namespace FLEX.Common.Data
 {
-    public interface IQueryExecutor
-    {
-        DataTable FillDataTableFromQuery(string query);
-    }
+   public interface IQueryExecutor
+   {
+      string ConnectionString { get; }
+
+      DataTable FillDataTableFromQuery(string query);
+   }
 }

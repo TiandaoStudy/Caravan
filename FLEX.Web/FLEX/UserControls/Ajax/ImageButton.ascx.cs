@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.UI;
+using FLEX.Common;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -9,20 +10,37 @@ namespace FLEX.Web.UserControls.Ajax
 {
    public partial class ImageButton : AjaxControlBase, IAjaxControl
    {
-      protected void Page_Load(object sender, EventArgs e)
-      {
-         btn.CssClass = String.IsNullOrEmpty(ButtonClass) ? String.Empty : ButtonClass;
-         btnIcon.Attributes["class"] = String.IsNullOrEmpty(IconClass) ? String.Empty : IconClass;
-         btnText.InnerText = String.IsNullOrEmpty(ButtonText) ? String.Empty : " " + ButtonText;
-      }
-
       #region Public Properties
 
-      public string ButtonClass { get; set; }
+      public string ButtonClass
+      {
+         get { return btn.CssClass; }
+         set { btn.CssClass = String.IsNullOrWhiteSpace(value) ? String.Empty : value; }
+      }
 
-      public string ButtonText { get; set; }
+      public string ButtonText
+      {
+         get { return btnText.InnerText; } 
+         set { btnText.InnerText = String.IsNullOrWhiteSpace(value) ? String.Empty : " " + value;}
+      }
 
-      public string IconClass { get; set; }
+      public bool CausesValidation
+      {
+         get { return btn.CausesValidation; }
+         set { btn.CausesValidation = value; }
+      }
+
+      public string IconClass
+      {
+         get { return btnIcon.Attributes["class"]; }
+         set { btnIcon.Attributes["class"] = String.IsNullOrWhiteSpace(value) ? String.Empty : value; }
+      }
+
+      public string OnClientClick
+      {
+         get { return btn.OnClientClick; }
+         set { btn.OnClientClick = String.IsNullOrWhiteSpace(value) ? String.Empty : value; }
+      }
 
       #endregion
 
@@ -51,7 +69,7 @@ namespace FLEX.Web.UserControls.Ajax
 
       protected void btn_Click(object sender, EventArgs args)
       {
-         Click(this, args);
+         Basics.TriggerEvent(Click, this, args);
       }
 
       #endregion

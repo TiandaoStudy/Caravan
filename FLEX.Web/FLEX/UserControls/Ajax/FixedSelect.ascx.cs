@@ -16,8 +16,9 @@ namespace FLEX.Web.UserControls.Ajax
 {
    public partial class FixedSelect : AjaxControlBase, IAjaxControl, ISearchControl
    {
-      protected void Page_Load(object sender, EventArgs e)
+      protected override void Page_Load(object sender, EventArgs e)
       {
+         base.Page_Load(sender, e);
          ddlSelect.SelectedIndexChanged += ddlSelect_OnSelectedIndexChanged;
          ddlSelect.AutoPostBack = DoPostBack;
          ddlSelect.Enabled = Enabled;

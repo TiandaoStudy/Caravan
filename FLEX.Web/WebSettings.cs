@@ -62,11 +62,6 @@ namespace FLEX.Web
          get { return CultureInfo.CreateSpecificCulture("it-IT"); }
       }
 
-      public static string QueryExecutors
-      {
-         get { return AppSettings["QueryExecutors"]; }
-      }
-
       public static string Templates_ImagesPath
       {
          get { return AppSettings["Templates_ImagesPath"]; }
@@ -75,11 +70,6 @@ namespace FLEX.Web
       public static int CacheManager_DefaultMinutes
       {
          get { return Convert.ToInt32(AppSettings["FLEX.Web.CacheManager.DefaultMinutes"]); }
-      }
-
-      public static string ProjectName
-      {
-         get { return AppSettings["FLEX.Web.ProjectName"]; }
       }
 
       public static string UserControls_Ajax_ErrorHandler_ErrorManagerInfo

@@ -9,7 +9,6 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using System.Xml;
 using FLEX.Common;
-using FLEX.Common.Data;
 using FLEX.Common.Text;
 using Thrower;
 
@@ -37,7 +36,7 @@ namespace FLEX.Web.Services
          }
          catch (Exception exc)
          {
-            QuickLogger.LogError<AjaxLookup>(exc);
+            DbLogger.Instance.LogError<AjaxLookup>("Lookup", exc);
             return new List<Result> {new Result("ERR", "Service Error", exc.Message)};
          }
       }
@@ -45,10 +44,8 @@ namespace FLEX.Web.Services
       public static List<Result> RetrieveData(string xmlLookup, string lookupBy, string userQuery, string queryFilter)
       {
          var lookupData = LoadAjaxLookupData(xmlLookup, lookupBy);
-         var assemblyInfo = WebSettings.QueryExecutors;
-         var queryExecutor = ServiceLocator.Load<IQueryExecutor>(assemblyInfo);
          var lookupQuery = ProcessQuery(lookupData, userQuery, queryFilter);
-         using (var resultData = queryExecutor.FillDataTableFromQuery(lookupQuery))
+         using (var resultData = QueryExecutor.Instance.FillDataTableFromQuery(lookupQuery))
          {
             return ProcessData(lookupData, resultData);
          }

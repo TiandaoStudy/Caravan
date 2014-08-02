@@ -11,8 +11,9 @@ namespace FLEX.Web.UserControls.Ajax
 {
    public partial class SearchButton : AjaxControlBase, IAjaxControl
    {
-      protected void Page_Load(object sender, EventArgs e)
+      protected override void Page_Load(object sender, EventArgs e)
       {
+         base.Page_Load(sender, e);
          btnSearch.Visible = Visible;
       }
 

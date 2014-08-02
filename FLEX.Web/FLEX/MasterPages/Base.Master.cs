@@ -32,6 +32,11 @@ namespace FLEX.Web.MasterPages
          get { return flexMenuBar; }
       }
 
+      public PageFooter PageFooter
+      {
+         get { return flexPageFooter; }
+      }
+
       public bool HasPageVisibleHandlers
       {
          get { return Page_Visible != null; }

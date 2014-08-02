@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Data;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Web.UI.WebControls;
 using FLEX.Web.WebControls.Templates;
@@ -81,6 +83,12 @@ namespace FLEX.Web.WebControls
 
       #region GridView Overrides
 
+      protected override void OnPagePreLoad(object sender, EventArgs e)
+      {
+         base.OnPagePreLoad(sender, e);
+         DataSource = ViewState[DataSrcViewStateTag];
+      }
+
       private void OnPageIndexChanging(object s, GridViewPageEventArgs e)
       {
          PageIndex = e.NewPageIndex;
@@ -153,8 +161,9 @@ namespace FLEX.Web.WebControls
       {
          // Reset pager
          PageIndex = 0;
-         // Cache data source
-         ViewState[DataSrcViewStateTag] = DataSource = dataSource;
+         // Cache and sort data source
+         ViewState[DataSrcViewStateTag] = dataSource;
+         DataSource = SortCachedDataSource();
          // Redraw grid
          DataBind();
       }
@@ -214,7 +223,7 @@ namespace FLEX.Web.WebControls
          if (dataView != null)
          {
             dataView.Sort = sortExp;
-            return dataView;
+            return dataView.Table;
          }
 
          var dataTable = dataSrc as DataTable;

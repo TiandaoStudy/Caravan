@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Data;
 using System.Linq;
+using FLEX.Web.UserControls.Ajax;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -13,13 +14,17 @@ namespace FLEX.Web.Pages
    {
       protected void Page_Load(object sender, EventArgs e)
       {
-         if (!IsPostBack)
+         try
          {
-            fdtgCache.UpdateDataSource();
+            if (!IsPostBack)
+            {
+               fdtgCache.UpdateDataSource();
+            }
          }
-         
-         btnRefresh.Click += (s, a) => fdtgCache.UpdateDataSource();
-         btnClear.Click += btnClear_Click;
+         catch (Exception ex)
+         {
+            ErrorHandler.CatchException(ex, ErrorLocation.PageEvent);
+         }
       }
 
       protected void btnClear_Click(object sender, EventArgs args)
@@ -31,12 +36,25 @@ namespace FLEX.Web.Pages
          }
          catch (Exception ex)
          {
-            Master.ErrorHandler.CatchException(ex);
+            ErrorHandler.CatchException(ex);
+         }
+      }
+
+      protected void btnRefresh_Click(object sender, EventArgs args)
+      {
+         try
+         {
+            fdtgCache.UpdateDataSource();
+         }
+         catch (Exception ex)
+         {
+            ErrorHandler.CatchException(ex);
          }
       }
 
       protected void fdtgCache_DataSourceUpdating(object sender, EventArgs args)
       {
+         // This should not catch any exception, others will do.
          var dt = new DataTable();
          dt.Columns.Add("KEY");
          dt.Columns.Add("VALUE");

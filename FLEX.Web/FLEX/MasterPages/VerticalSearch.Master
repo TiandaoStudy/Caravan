@@ -103,6 +103,10 @@
    <asp:ContentPlaceHolder ID="headContent" runat="server"></asp:ContentPlaceHolder>
 </asp:Content>
 
+<asp:Content ID="aspUpperContent" ContentPlaceHolderID="upperContent" runat="server">
+   <asp:ContentPlaceHolder ID="upperContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
 <asp:Content ID="aspMainContent" ContentPlaceHolderID="mainContent" runat="server">
    <!-- Start Search criteria -->
    <asp:Panel ID="divSearchCriteria" CssClass="col-xs-12 col-sm-4-5 col-md-3-5 col-lg-2-5" runat="server">
@@ -162,8 +166,13 @@
          </div>
          
          <div class="panel-footer clearfix">
-            <div class="pull-right btn-row">
-               <asp:ContentPlaceHolder ID="buttonsContent" runat="server"></asp:ContentPlaceHolder>
+            <div class="row">
+               <div class="text-left btn-row col-xs-6">
+                  <asp:ContentPlaceHolder ID="leftButtonsContent" runat="server"></asp:ContentPlaceHolder>
+               </div>
+               <div class="text-right btn-row col-xs-6">
+                  <asp:ContentPlaceHolder ID="rightButtonsContent" runat="server"></asp:ContentPlaceHolder>
+               </div>
             </div>
          </div>
       </div>
@@ -171,6 +180,10 @@
    </asp:Panel>
 </asp:Content>
 
-<asp:Content ID="aspFooterContent" ContentPlaceHolderID="footerContent" runat="server">
-   <asp:ContentPlaceHolder ID="footerContent" runat="server"></asp:ContentPlaceHolder>
+<asp:Content ID="aspLowerContent" ContentPlaceHolderID="lowerContent" runat="server">
+   <asp:ContentPlaceHolder ID="lowerContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="aspHiddenContent" ContentPlaceHolderID="hiddenContent" runat="server">
+   <asp:ContentPlaceHolder ID="hiddenContent" runat="server"></asp:ContentPlaceHolder>
 </asp:Content>

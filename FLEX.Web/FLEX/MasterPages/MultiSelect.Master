@@ -90,3 +90,7 @@
 <asp:Content ID="aspButtonsContent" ContentPlaceHolderID="buttonsContent" runat="server">
    <asp:ContentPlaceHolder ID="buttonsContent" runat="server"></asp:ContentPlaceHolder>
 </asp:Content>
+
+<asp:Content ID="aspHiddenContent" ContentPlaceHolderID="hiddenContent" runat="server">
+   <asp:ContentPlaceHolder ID="hiddenContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>

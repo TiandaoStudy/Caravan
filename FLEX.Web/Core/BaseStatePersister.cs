@@ -23,7 +23,7 @@ using System.Web.UI;
 
 namespace FLEX.Web.Core
 {
-   public abstract class BaseStatePersister : PageStatePersister
+   internal abstract class BaseStatePersister : PageStatePersister
    {
       public const string HiddenFieldName = "__VIEWSTATE_ID";
 
@@ -67,6 +67,5 @@ namespace FLEX.Web.Core
          ret.Replace("'", "");
          return ret.ToString();
       }
-
    }
 }

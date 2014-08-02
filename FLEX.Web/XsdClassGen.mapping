@@ -11,6 +11,6 @@
 #    <schema namespace>,<schema element name>,<code type name>
 #
 
-FLEX.Extensions.Web.XmlSettings.AjaxLookup,FLEX.Extensions.Web.XmlSettings.AjaxLookup
-FLEX.Extensions.Web.XmlSettings.Lookup,FLEX.Extensions.Web.XmlSettings.Lookup
-FLEX.Extensions.Web.XmlSettings.MenuBar,FLEX.Extensions.Web.XmlSettings.MenuBar
+FLEX.Web.XmlSettings.AjaxLookup,FLEX.Web.XmlSettings.AjaxLookup
+FLEX.Web.XmlSettings.Lookup,FLEX.Web.XmlSettings.Lookup
+FLEX.Web.XmlSettings.MenuBar,FLEX.Web.XmlSettings.MenuBar

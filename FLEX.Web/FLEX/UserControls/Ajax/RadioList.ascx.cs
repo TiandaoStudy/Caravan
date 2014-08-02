@@ -21,8 +21,9 @@ namespace FLEX.Web.UserControls.Ajax
          // Empty, for now...
       }
 
-      protected void Page_Load(object sender, EventArgs e)
+      protected override void Page_Load(object sender, EventArgs e)
       {
+         base.Page_Load(sender, e);
          rblData.RepeatDirection = RepeatDirection.Vertical;
          rblData.SelectedIndexChanged += RadioButtonListData_OnSelectedIndexChanged;
          rblData.AutoPostBack = DoPostBack;

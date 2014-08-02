@@ -1,3 +1,6 @@
+/*******************************************************************************
+  VARIABLES
+*******************************************************************************/
 body {
   margin: 0;
   padding: 0;
@@ -9,19 +12,35 @@ body {
 /*******************************************************************************
   MENU BAR
 *******************************************************************************/
-.navbar-default {
+nav .navbar-default {
   font-size: 14px;
   border-radius: 0px;
 }
-.navbar-default .navbar-brand {
+nav .navbar-default .navbar-brand {
   font-size: 20px;
   padding-top: 10px;
   padding-bottom: 5px;
 }
-.navbar-default .navbar-brand .logo {
+nav .navbar-default .navbar-brand .logo {
   margin-right: 5px;
   width: 24px;
   height: 24px;
+}
+footer .navbar-default {
+  min-height: 10px !important;
+}
+footer .navbar-default .navbar-brand {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  height: 10px !important;
+}
+footer .navbar-default .navbar-brand .logo-finsa {
+  margin-right: 5px;
+  height: 18px;
+}
+footer .navbar-default .navbar-nav > li > a {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
 }
 /*******************************************************************************
   MAIN FORM
@@ -653,6 +672,20 @@ body {
   cursor: pointer;
   margin-bottom: 0px;
   text-decoration: none;
+}
+/*******************************************************************************
+  NUMERIC SPINNER
+*******************************************************************************/
+.bootstrap-touchspin-up,
+.bootstrap-touchspin-down,
+.bootstrap-touchspin-prefix {
+  padding: 0px !important;
+  height: 24px;
+  width: 22px;
+}
+.numeric-spinner-apply {
+  padding: 0px !important;
+  height: 24px;
 }
 /*******************************************************************************
   ON OFF SWITCH
