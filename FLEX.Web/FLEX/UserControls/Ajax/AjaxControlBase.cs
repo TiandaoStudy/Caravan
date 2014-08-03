@@ -1,4 +1,5 @@
 ﻿using System;
+using FLEX.Common.Data;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -14,59 +15,72 @@ namespace FLEX.Web.UserControls.Ajax
       private const string DoPostBackViewStateKey = "AjaxControlBase.DoPostBack";
       private const string EnabledViewStateKey = "AjaxControlBase.Enabled";
 
-      private const bool DoPostBackDefaultValue = false;
-      private const bool EnabledDefaultValue = true;
+       private const bool DoPostBackDefaultValue = false;
+       private const bool EnabledDefaultValue = true;
+
+      protected void Page_Init(object sender, EventArgs e)
+      {
+          try
+          {
+              if (!IsPostBack)
+              {
+                  SetDefaultValues();
+              }
+          }
+          catch (Exception ex)
+          {
+              DbLogger.Instance.LogError<AjaxControlBase>("Page_PreInit", ex);
+              throw;
+          }
+      }
+
+      protected virtual void Page_Load(object sender, EventArgs e)
+      {
+      }
 
       #region Public Properties
 
       /// <summary>
       ///   TODO
       /// </summary>
-      public bool DoPostBack
+      public bool? DoPostBack
       {
          get
          {
-            if (ViewState[DoPostBackViewStateKey] == null)
-            {
-               ViewState[DoPostBackViewStateKey] = DoPostBackDefaultValue;
-            }
-            return (bool) ViewState[DoPostBackViewStateKey];
+            return (bool?) ViewState[DoPostBackViewStateKey];
          }
          set
          {
-            ViewState[DoPostBackViewStateKey] = value;
-            OnDoPostBackChanged(value);
+             var doPostBack = value ?? DoPostBackDefaultValue;
+            ViewState[DoPostBackViewStateKey] = doPostBack;
+            OnDoPostBackChanged(doPostBack);
          }
       }
 
       /// <summary>
       ///   TODO
       /// </summary>
-      public bool Enabled
+      public bool? Enabled
       {
          get
          {
-            if (ViewState[EnabledViewStateKey] == null)
-            {
-               ViewState[EnabledViewStateKey] = EnabledDefaultValue;
-            }
-            return (bool) ViewState[EnabledViewStateKey];
+            return (bool?) ViewState[EnabledViewStateKey];
          }
          set
          {
-            ViewState[EnabledViewStateKey] = value;
-            OnEnabledChanged(value);
+             var enabled = value ?? EnabledDefaultValue;
+            ViewState[EnabledViewStateKey] = enabled;
+            OnEnabledChanged(enabled);
          }
       }
 
       #endregion
 
-      protected virtual void Page_Load(object sender, EventArgs e)
-      {
-         // Automatically uses default values...
-         OnDoPostBackChanged(DoPostBack);
-         OnEnabledChanged(Enabled);
-      }
+       protected virtual void SetDefaultValues()
+       {
+           DoPostBack = DoPostBack ?? DoPostBackDefaultValue;
+           Enabled = Enabled ?? EnabledDefaultValue;
+       }
 
       protected virtual void OnDoPostBackChanged(bool doPostBack)
       {

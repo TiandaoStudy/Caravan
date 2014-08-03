@@ -20,8 +20,8 @@ namespace FLEX.Web.UserControls.Ajax
       {
          base.Page_Load(sender, e);
          ddlSelect.SelectedIndexChanged += ddlSelect_OnSelectedIndexChanged;
-         ddlSelect.AutoPostBack = DoPostBack;
-         ddlSelect.Enabled = Enabled;
+         ddlSelect.AutoPostBack = DoPostBack.Value;
+         ddlSelect.Enabled = Enabled.Value;
       }
 
       #region Public Properties

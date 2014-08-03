@@ -1,5 +1,4 @@
 ﻿Imports System.Data.Common
-Imports FLEX.Common
 Imports FLEX.Common.Data
 
 Namespace Oracle
@@ -7,12 +6,23 @@ Namespace Oracle
     Public NotInheritable Class OracleQueryExecutor
         Implements IQueryExecutor
 
+        Private Shared ReadOnly DbFactory As DbProviderFactory = DbProviderFactories.GetFactory("System.Data.OracleClient")
+
         Public Function FillDataTableFromQuery(query As String) As DataTable Implements IQueryExecutor.FillDataTableFromQuery
-            Throw New NotImplementedException()
+            Using connection = OpenConnection()
+                Dim command = TryCast(connection.CreateCommand(), DbCommand)
+                command.CommandText = query
+                command.CommandType = CommandType.Text
+                Dim table As New DataTable
+                Dim adapter = DbFactory.CreateDataAdapter()
+                adapter.SelectCommand = command
+                adapter.Fill(table)
+                Return table
+            End Using
         End Function
 
         Public Function OpenConnection() As IDbConnection Implements IQueryExecutor.OpenConnection
-            Dim connection = DbProviderFactories.GetFactory("System.Data.OracleClient").CreateConnection()
+            Dim connection = DbFactory.CreateConnection()
             connection.ConnectionString = Common.Configuration.Instance.ConnectionString
             connection.Open()
             Return connection

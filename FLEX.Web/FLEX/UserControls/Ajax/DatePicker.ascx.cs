@@ -14,6 +14,10 @@ using Thrower;
 namespace FLEX.Web.UserControls.Ajax
 // ReSharper restore CheckNamespace
 {
+    /// <summary>
+    /// 
+    /// </summary>
+   [ValidationProperty("Key")]
    public partial class DatePicker : AjaxControlBase, IAjaxControl, ISearchControl
    {
       private string _startDate;

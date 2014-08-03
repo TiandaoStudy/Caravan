@@ -43,6 +43,12 @@
     return this.replace(/\\n/g, "\\n").replace(/\\'/g, "\\'").replace(/\\"/g, '\\"').replace(/\\&/g, "\\&").replace(/\\r/g, "\\r").replace(/\\t/g, "\\t").replace(/\\b/g, "\\b").replace(/\\f/g, "\\f");
   };
 
+  root.setTextBoxValue = function(textBox, value) {
+    textBox.val(value);
+    textBox.attr("value", value);
+    return textBox.change();
+  };
+
   root.bootstrapifyControls = function() {
     $(".form-group input[type=text], .form-group textarea, .form-group select").addClass("form-control");
     return $('input[type=file]').bootstrapFileInput();

@@ -11,7 +11,7 @@ namespace FLEX.Common.Web
       /// <summary>
       ///   TODO
       /// </summary>
-      bool Enabled { get; }
+      bool? Enabled { get; }
 
       /// <summary>
       ///   TODO

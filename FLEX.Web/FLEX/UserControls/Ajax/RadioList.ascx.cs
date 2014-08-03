@@ -26,8 +26,8 @@ namespace FLEX.Web.UserControls.Ajax
          base.Page_Load(sender, e);
          rblData.RepeatDirection = RepeatDirection.Vertical;
          rblData.SelectedIndexChanged += RadioButtonListData_OnSelectedIndexChanged;
-         rblData.AutoPostBack = DoPostBack;
-         rblData.Enabled = Enabled;
+         rblData.AutoPostBack = DoPostBack.Value;
+         rblData.Enabled = Enabled.Value;
       }
 
       #region Public Properties

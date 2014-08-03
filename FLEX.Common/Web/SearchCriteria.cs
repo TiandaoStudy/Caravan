@@ -32,7 +32,7 @@ namespace FLEX.Common.Web
 
       public void ClearCriteria(object sender, EventArgs args)
       {
-         foreach (var ctrl in _observedControls.Values.Where(c => c.Enabled))
+         foreach (var ctrl in _observedControls.Values.Where(c => c.Enabled.HasValue && c.Enabled.Value))
          {
             ctrl.ClearContents();
          }
@@ -102,7 +102,7 @@ namespace FLEX.Common.Web
             _value = value;
          }
 
-         public bool Enabled
+         public bool? Enabled
          {
             get { return false; /* User does not access this control */ }
          }

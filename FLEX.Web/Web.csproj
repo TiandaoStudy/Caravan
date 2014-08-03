@@ -56,8 +56,9 @@
     <Reference Include="itextsharp">
       <HintPath>..\packages\iTextSharp.5.5.2\lib\itextsharp.dll</HintPath>
     </Reference>
-    <Reference Include="KVLite">
-      <HintPath>..\packages\PommaLabs.KVLite.0.1.7-alpha\lib\net40\KVLite.dll</HintPath>
+    <Reference Include="KVLite, Version=0.1.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PommaLabs.KVLite.0.1.8-alpha\lib\net40\KVLite.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.CSharp">
@@ -93,6 +94,11 @@
     </Compile>
     <Compile Include="Core\SimpleNotifyPropertyChangedBase.cs" />
     <Compile Include="Core\ViewStateStorageSettings.cs" />
+    <Compile Include="ErrorMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErrorMessages.resx</DependentUpon>
+    </Compile>
     <Compile Include="FLEX\MasterPages\CustomView.Master.cs">
       <DependentUpon>CustomView.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -178,6 +184,7 @@
     <Compile Include="FLEX\UserControls\Ajax\AjaxControlBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\IAjaxControl.cs" />
     <Compile Include="FLEX\UserControls\Ajax\ImageButton.ascx.cs">
       <DependentUpon>ImageButton.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -243,7 +250,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="FLEX\WebControls\DataGrid.cs" />
-    <Compile Include="Interfaces.cs" />
     <Compile Include="FLEX\MasterPages\Base.Master.cs">
       <DependentUpon>Base.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -707,7 +713,12 @@
       <SubType>ASPXCodeBehind</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="ErrorMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FLEX.Common\Common.csproj">
       <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>

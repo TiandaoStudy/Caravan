@@ -8,13 +8,6 @@
 </style>
     
 <script type="text/javascript">
-   function updateData_<%= ClientID %>() {
-      // Controlla se bisogna fare postback
-      if (!<%= DoPostBack.ToString().ToLower() %>) return;
-      // Se si, allora lo scatena nella riga seguente
-      $("#<%= txtKey.ClientID %>").change();
-   }
-
    function autoSuggestSource_<%= ClientID %>(request, response) {
       // Campi con i dati
       var txtKey = $("#<%= txtKey.ClientID %>");
@@ -26,8 +19,7 @@
       if (!searchText || searchText.length < <%= MinLengthForHint %>) {
          // Se è stata effettuata una ricerca precedente ed il campo e' vuoto
          if (txtKey.val() != "" && searchText == "") {
-            txtKey.val(""); // Resetto il codice
-            updateData_<%= ClientID %>(event); // Resetto la ricerca
+            setTextBoxValue(txtKey, ""); // Resetto il codice
          }
          response({}); // Resetto i dati dell'autocomplete
          return;
@@ -49,7 +41,7 @@
          },
          error: function(jqXhr, textStatus, errorThrown) {
             // Errore durante la connessione al web service
-            alert("Error during lookup: " + errorThrown);
+            bootbox.alert("Error during lookup: " + errorThrown);
          }
       });
    }
@@ -58,7 +50,7 @@
 
 <ajax:UpdatePanel ID="updPanel" runat="server">
    <ContentTemplate>       
-      <asp:TextBox ID="txtKey" CssClass="hidden" runat="server" AutoPostBack="true" />
+      <asp:TextBox ID="txtKey" CssClass="hidden" runat="server" OnTextChanged="txtKey_OnTextChanged" />
       <asp:TextBox ID="txtSuggestion" CssClass="ui-widget form-control" runat="server" />
         
       <script type="text/javascript">
@@ -68,9 +60,8 @@
             source: autoSuggestSource_<%= ClientID %>,
             minLength: 0,
             select: function(event, ui) {
-               $(this).val(ui.item.Label);
-               $("#<%= txtKey.ClientID %>").val(ui.item.Value);
-               updateData_<%= ClientID %>();
+                setTextBoxValue($(this), ui.item.Label);
+                setTextBoxValue($("#<%= txtKey.ClientID %>"), ui.item.Value);
                if (event) {
                   event.preventDefault();
                }

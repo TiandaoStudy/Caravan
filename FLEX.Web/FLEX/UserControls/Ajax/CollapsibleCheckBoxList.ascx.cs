@@ -28,13 +28,13 @@ namespace FLEX.Web.UserControls.Ajax
 
          VisibleCheckBoxList.RepeatDirection = RepeatDirection.Vertical;
          VisibleCheckBoxList.SelectedIndexChanged += CheckBoxListData_OnSelectedIndexChanged;
-         VisibleCheckBoxList.AutoPostBack = DoPostBack;
-         VisibleCheckBoxList.Enabled = Enabled;
+         VisibleCheckBoxList.AutoPostBack = DoPostBack.Value;
+         VisibleCheckBoxList.Enabled = Enabled.Value;
 
          HiddenCheckBoxList.RepeatDirection = RepeatDirection.Vertical;
          HiddenCheckBoxList.SelectedIndexChanged += CheckBoxListDataAltre_OnSelectedIndexChanged;
-         HiddenCheckBoxList.AutoPostBack = DoPostBack;
-         HiddenCheckBoxList.Enabled = Enabled;
+         HiddenCheckBoxList.AutoPostBack = DoPostBack.Value;
+         HiddenCheckBoxList.Enabled = Enabled.Value;
 
          altro.Attributes["onclick"] = String.Format("P('{0}', '{1}');", divToggle.ClientID, ic.ClientID);
          altro.Attributes["data-target"] = "#" + divToggle.ClientID;

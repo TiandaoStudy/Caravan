@@ -35,6 +35,11 @@ String.prototype.escapeSpecialChars = () ->
                .replace(/\\b/g, "\\b")
                .replace(/\\f/g, "\\f")
 
+root.setTextBoxValue = (textBox, value) ->
+    textBox.val(value)
+    textBox.attr("value", value)
+    textBox.change()
+
 root.bootstrapifyControls = () ->
    # Makes form elements prettier
    $(".form-group input[type=text], .form-group textarea, .form-group select").addClass("form-control")
