@@ -69,9 +69,9 @@
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.27\lib\net40\Dapper.dll</HintPath>
     </Reference>
-    <Reference Include="KVLite, Version=0.1.8.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="KVLite, Version=0.1.9.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.KVLite.0.1.8-alpha\lib\net40\KVLite.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.KVLite.0.1.10-alpha\lib\net40\KVLite.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.CSharp">

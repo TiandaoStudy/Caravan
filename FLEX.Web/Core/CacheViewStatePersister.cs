@@ -1,4 +1,7 @@
-﻿using System.Web.UI;
+﻿using System;
+using System.Web;
+using System.Web.UI;
+using KVLite;
 
 namespace FLEX.Web.Core
 {
@@ -7,6 +10,8 @@ namespace FLEX.Web.Core
    /// </summary>
    internal sealed class CacheViewStatePersister : BaseStatePersister
    {
+       private static readonly TimeSpan CacheInterval = TimeSpan.FromMinutes(HttpContext.Current.Session.Timeout + 1);
+
       //required constructor
       public CacheViewStatePersister(Page page) : base(page)
       {
@@ -44,15 +49,13 @@ namespace FLEX.Web.Core
 
       private static object GetViewState(string guid)
       {
-         object viewState;
-         CacheManager.TryRetrieveValueForKey(out viewState, HiddenFieldName, guid);
-         return viewState;
+          return PersistentCache.DefaultInstance.Get("FLEX.Web.ViewStates", HiddenFieldName + guid);
       }
 
       private void SetViewState(string guid)
       {
          object state = new Pair(ControlState, ViewState);
-         CacheManager.StoreSlidingValueForKey(state, HiddenFieldName, guid);
+          PersistentCache.DefaultInstance.AddSliding("FLEX.Web.ViewStates", HiddenFieldName + guid, state, CacheInterval);
       }
    }
 }
