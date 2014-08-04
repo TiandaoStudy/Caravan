@@ -25,17 +25,6 @@ namespace FLEX.Web.UserControls.Ajax
       protected override void Page_Load(object sender, EventArgs e)
       {
          base.Page_Load(sender, e);
-
-         VisibleCheckBoxList.RepeatDirection = RepeatDirection.Vertical;
-         VisibleCheckBoxList.SelectedIndexChanged += CheckBoxListData_OnSelectedIndexChanged;
-         VisibleCheckBoxList.AutoPostBack = DoPostBack.Value;
-         VisibleCheckBoxList.Enabled = Enabled.Value;
-
-         HiddenCheckBoxList.RepeatDirection = RepeatDirection.Vertical;
-         HiddenCheckBoxList.SelectedIndexChanged += CheckBoxListDataAltre_OnSelectedIndexChanged;
-         HiddenCheckBoxList.AutoPostBack = DoPostBack.Value;
-         HiddenCheckBoxList.Enabled = Enabled.Value;
-
          altro.Attributes["onclick"] = String.Format("P('{0}', '{1}');", divToggle.ClientID, ic.ClientID);
          altro.Attributes["data-target"] = "#" + divToggle.ClientID;
       }
@@ -247,6 +236,31 @@ namespace FLEX.Web.UserControls.Ajax
          {
             hiddenItems[i].Selected = otherHiddenItems[i].Selected;
          }
+      }
+
+      #endregion
+
+      #region AjaxControlBase Members
+
+      protected override void SetDefaultValues()
+      {
+         base.SetDefaultValues();
+         VisibleCheckBoxList.RepeatDirection = RepeatDirection.Vertical;
+         HiddenCheckBoxList.RepeatDirection = RepeatDirection.Vertical;
+      }
+
+      protected override void OnDoPostBackChanged(bool doPostBack)
+      {
+         base.OnDoPostBackChanged(doPostBack);
+         VisibleCheckBoxList.AutoPostBack = doPostBack;
+         HiddenCheckBoxList.AutoPostBack = doPostBack;
+      }
+
+      protected override void OnEnabledChanged(bool enabled)
+      {
+         base.OnEnabledChanged(enabled);
+         VisibleCheckBoxList.Enabled = enabled;
+         HiddenCheckBoxList.Enabled = enabled;
       }
 
       #endregion

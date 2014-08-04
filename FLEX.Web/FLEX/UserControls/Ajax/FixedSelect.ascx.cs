@@ -16,14 +16,6 @@ namespace FLEX.Web.UserControls.Ajax
 {
    public partial class FixedSelect : AjaxControlBase, IAjaxControl, ISearchControl
    {
-      protected override void Page_Load(object sender, EventArgs e)
-      {
-         base.Page_Load(sender, e);
-         ddlSelect.SelectedIndexChanged += ddlSelect_OnSelectedIndexChanged;
-         ddlSelect.AutoPostBack = DoPostBack.Value;
-         ddlSelect.Enabled = Enabled.Value;
-      }
-
       #region Public Properties
 
       public DropDownList Select
@@ -145,6 +137,22 @@ namespace FLEX.Web.UserControls.Ajax
       }
 
       #endregion
+
+      #region AjaxControlBase Members
+
+       protected override void OnDoPostBackChanged(bool doPostBack)
+       {
+           base.OnDoPostBackChanged(doPostBack);
+           ddlSelect.AutoPostBack = doPostBack;
+       }
+
+       protected override void OnEnabledChanged(bool enabled)
+       {
+           base.OnEnabledChanged(enabled);
+           ddlSelect.Enabled = enabled;
+       }
+
+       #endregion
 
       protected void ddlSelect_OnSelectedIndexChanged(object sender, EventArgs e)
       {

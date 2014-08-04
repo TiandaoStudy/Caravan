@@ -3,6 +3,6 @@
 
 <ajax:UpdatePanel ID="updPanel" runat="server">
    <ContentTemplate>      
-      <asp:DropDownList ID="ddlSelect" class="form-control" runat="server" />
+      <asp:DropDownList ID="ddlSelect" class="form-control" runat="server" OnSelectedIndexChanged="ddlSelect_OnSelectedIndexChanged" />
    </ContentTemplate>
 </ajax:UpdatePanel>

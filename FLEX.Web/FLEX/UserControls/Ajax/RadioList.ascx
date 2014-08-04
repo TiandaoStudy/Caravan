@@ -11,7 +11,7 @@
 <div id="divData" runat="server">
    <ajax:UpdatePanel ID="updPanel" runat="server">
       <ContentTemplate>
-         <asp:RadioButtonList AutoPostBack="true" ID="rblData"  CssClass="rbl" runat="server" />               
+         <asp:RadioButtonList AutoPostBack="true" ID="rblData"  CssClass="rbl" runat="server" OnSelectedIndexChanged="RadioButtonListData_OnSelectedIndexChanged" />               
       </ContentTemplate>
    </ajax:UpdatePanel>
 </div>

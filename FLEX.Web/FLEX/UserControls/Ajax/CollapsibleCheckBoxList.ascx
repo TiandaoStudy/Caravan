@@ -18,7 +18,7 @@
 <div id="divData" runat="server" class="input-group" style="margin-bottom: 0">
    <ajax:UpdatePanel ID="updPanel1" runat="server">
       <ContentTemplate>
-         <asp:CheckBoxList AutoPostBack="true" ID="chklVisible" runat="server" />               
+         <asp:CheckBoxList AutoPostBack="true" ID="chklVisible" runat="server" OnSelectedIndexChanged="CheckBoxListData_OnSelectedIndexChanged" />               
       </ContentTemplate>
    </ajax:UpdatePanel>
 </div>
@@ -29,7 +29,7 @@
   
       <ajax:UpdatePanel ID="updPanel2" runat="server">
          <ContentTemplate>
-            <asp:CheckBoxList AutoPostBack="true" ID="chklHidden" runat="server" />                    
+            <asp:CheckBoxList AutoPostBack="true" ID="chklHidden" runat="server" OnSelectedIndexChanged="CheckBoxListDataAltre_OnSelectedIndexChanged" />                    
          </ContentTemplate>
       </ajax:UpdatePanel>        
    </div>

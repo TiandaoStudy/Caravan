@@ -21,15 +21,6 @@ namespace FLEX.Web.UserControls.Ajax
          // Empty, for now...
       }
 
-      protected override void Page_Load(object sender, EventArgs e)
-      {
-         base.Page_Load(sender, e);
-         rblData.RepeatDirection = RepeatDirection.Vertical;
-         rblData.SelectedIndexChanged += RadioButtonListData_OnSelectedIndexChanged;
-         rblData.AutoPostBack = DoPostBack.Value;
-         rblData.Enabled = Enabled.Value;
-      }
-
       #region Public Properties
 
       public int RepeatColumn
@@ -147,6 +138,27 @@ namespace FLEX.Web.UserControls.Ajax
       }
 
       #endregion
+
+      #region AjaxControlBase Members
+
+       protected override void SetDefaultValues()
+       {
+          rblData.RepeatDirection = RepeatDirection.Vertical;
+       }
+
+       protected override void OnDoPostBackChanged(bool doPostBack)
+       {
+           base.OnDoPostBackChanged(doPostBack);
+           rblData.AutoPostBack = doPostBack;
+       }
+
+       protected override void OnEnabledChanged(bool enabled)
+       {
+           base.OnEnabledChanged(enabled);
+           rblData.Enabled = enabled;
+       }
+
+       #endregion
 
       #region Private Members
 
