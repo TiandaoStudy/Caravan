@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DatePicker.ascx.cs" Inherits="FLEX.Web.UserControls.Ajax.DatePicker" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DatePicker.ascx.cs" EnableViewState="true" Inherits="FLEX.Web.UserControls.Ajax.DatePicker" %>
 <%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
 
 <ajax:UpdatePanel ID="datepickerPanel" runat="server">

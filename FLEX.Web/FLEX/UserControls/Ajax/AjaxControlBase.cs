@@ -15,27 +15,23 @@ namespace FLEX.Web.UserControls.Ajax
       private const string DoPostBackViewStateKey = "AjaxControlBase.DoPostBack";
       private const string EnabledViewStateKey = "AjaxControlBase.Enabled";
 
-       private const bool DoPostBackDefaultValue = false;
-       private const bool EnabledDefaultValue = true;
-
-      protected void Page_Init(object sender, EventArgs e)
-      {
-          try
-          {
-              if (!IsPostBack)
-              {
-                  SetDefaultValues();
-              }
-          }
-          catch (Exception ex)
-          {
-              DbLogger.Instance.LogError<AjaxControlBase>("Page_PreInit", ex);
-              throw;
-          }
-      }
+      private const bool DoPostBackDefaultValue = false;
+      private const bool EnabledDefaultValue = true;
 
       protected virtual void Page_Load(object sender, EventArgs e)
       {
+         try
+         {
+            if (!IsPostBack)
+            {
+               SetDefaultValues();
+            }
+         }
+         catch (Exception ex)
+         {
+            DbLogger.Instance.LogError<AjaxControlBase>("Page_PreInit", ex);
+            throw;
+         }
       }
 
       #region Public Properties
@@ -45,13 +41,10 @@ namespace FLEX.Web.UserControls.Ajax
       /// </summary>
       public bool? DoPostBack
       {
-         get
-         {
-            return (bool?) ViewState[DoPostBackViewStateKey];
-         }
+         get { return (bool?) ViewState[DoPostBackViewStateKey]; }
          set
          {
-             var doPostBack = value ?? DoPostBackDefaultValue;
+            var doPostBack = value ?? DoPostBackDefaultValue;
             ViewState[DoPostBackViewStateKey] = doPostBack;
             OnDoPostBackChanged(doPostBack);
          }
@@ -62,13 +55,10 @@ namespace FLEX.Web.UserControls.Ajax
       /// </summary>
       public bool? Enabled
       {
-         get
-         {
-            return (bool?) ViewState[EnabledViewStateKey];
-         }
+         get { return (bool?) ViewState[EnabledViewStateKey]; }
          set
          {
-             var enabled = value ?? EnabledDefaultValue;
+            var enabled = value ?? EnabledDefaultValue;
             ViewState[EnabledViewStateKey] = enabled;
             OnEnabledChanged(enabled);
          }
@@ -76,11 +66,11 @@ namespace FLEX.Web.UserControls.Ajax
 
       #endregion
 
-       protected virtual void SetDefaultValues()
-       {
-           DoPostBack = DoPostBack ?? DoPostBackDefaultValue;
-           Enabled = Enabled ?? EnabledDefaultValue;
-       }
+      protected virtual void SetDefaultValues()
+      {
+         DoPostBack = DoPostBack ?? DoPostBackDefaultValue;
+         Enabled = Enabled ?? EnabledDefaultValue;
+      }
 
       protected virtual void OnDoPostBackChanged(bool doPostBack)
       {

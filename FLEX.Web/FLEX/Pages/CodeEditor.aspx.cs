@@ -88,26 +88,31 @@ namespace FLEX.Web.Pages
 
       protected void lbtnSave_Click(object sender, EventArgs e)
       {
-         divContenFiles.Visible = true;
-         Dictionary<string, string> _FilesPath = (Dictionary<string, string>)ViewState["dictFilesPath"];
-
-         var _name_files = TreeView1.SelectedNode.Text;
-
-         using (StreamWriter writer = new StreamWriter(_FilesPath[_name_files], false))
+         try
          {
-            writer.Write(txtContentFiles.Text);
+            divContenFiles.Visible = true;
+            Dictionary<string, string> _FilesPath = (Dictionary<string, string>) ViewState["dictFilesPath"];
+
+            var _name_files = TreeView1.SelectedNode.Text;
+
+            using (StreamWriter writer = new StreamWriter(_FilesPath[_name_files], false))
+            {
+               writer.Write(txtContentFiles.Text);
+            }
+
+            var logMsg = String.Format("Script {0} has been changed", _FilesPath[_name_files]);
+            DbLogger.Instance.LogWarning<CodeEditor>("lbtnSave_Click", logMsg);
+
+            string _extension = Path.GetExtension(_FilesPath[_name_files]);
+            if (_extension == ".cs")
+               System.Web.UI.ScriptManager.RegisterStartupScript(this, this.GetType(), "ChangeModeEditor", "ChangeModeEditor('cs');", true);
+            else if (_extension == ".xml")
+               System.Web.UI.ScriptManager.RegisterStartupScript(this, this.GetType(), "ChangeModeEditor", "ChangeModeEditor('xml');", true);
          }
-
-         var logMsg = String.Format("Data script {0} has been recompiled", _FilesPath[_name_files]);
-         DbLogger.Instance.LogWarning<CodeEditor>("lbtnSave_Click", logMsg);
-
-         string _extension = Path.GetExtension(_FilesPath[_name_files]);
-         if (_extension == ".cs")
-            System.Web.UI.ScriptManager.RegisterStartupScript(this, this.GetType(), "ChangeModeEditor", "ChangeModeEditor('cs');", true);
-         else if (_extension == ".xml")
-            System.Web.UI.ScriptManager.RegisterStartupScript(this, this.GetType(), "ChangeModeEditor", "ChangeModeEditor('xml');", true);
-
-
+         catch (Exception ex)
+         {
+            ErrorHandler.CatchException(ex);
+         }
       }
 
       protected void TreeView1_TreeNodeExpanded(object sender, TreeNodeEventArgs e)
