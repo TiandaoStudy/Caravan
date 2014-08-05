@@ -80,6 +80,7 @@
     <Compile Include="Conversions.cs" />
     <Compile Include="Data\IDbLogger.cs" />
     <Compile Include="Data\IQueryExecutor.cs" />
+    <Compile Include="IO\BufferedIO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Instances.cs" />
     <Compile Include="ServiceLocator.cs" />

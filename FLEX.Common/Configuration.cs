@@ -11,6 +11,8 @@ namespace FLEX.Common
       private const string SectionName = "FlexCommonConfiguration";
       private const string CachePartitionName = "FLEX.Common";
       private const string ApplicationNameKey = "ApplicationName";
+      private const string BufferPoolCountForBufferedIOKey = "BufferPoolCountForBufferedIO";
+      private const string BufferSizeInBytesForBufferedIOKey = "BufferSizeInBytesForBufferedIO";
       private const string ConnectionStringKey = "ConnectionString";
       private const string DbLoggerTypeInfoKey = "DbLoggerTypeInfo";
       private const string ErrorManagerTypeInfoKey = "ErrorManagerTypeInfo";
@@ -30,6 +32,18 @@ namespace FLEX.Common
       public string ApplicationName
       {
          get { return (string) this[ApplicationNameKey]; }
+      }
+
+      [ConfigurationProperty(BufferPoolCountForBufferedIOKey, IsRequired = false, DefaultValue = 16)]
+      public byte BufferPoolCountForBufferedIO
+      {
+         get { return (byte) this[BufferPoolCountForBufferedIOKey]; }
+      }
+
+      [ConfigurationProperty(BufferSizeInBytesForBufferedIOKey, IsRequired = false, DefaultValue = 512)]
+      public int BufferSizeInBytesForBufferedIO
+      {
+         get { return (int) this[BufferSizeInBytesForBufferedIOKey]; }
       }
 
       [ConfigurationProperty(DbLoggerTypeInfoKey, IsRequired = true)]

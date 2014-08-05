@@ -8,7 +8,7 @@ CREATE TABLE mydb.flex_log
     , flog_code_unit    VARCHAR2(100)  NOT NULL
     , flog_function     VARCHAR2(100)  NOT NULL
     , flog_short_msg    VARCHAR2(400)  NOT NULL
-    , flog_long_msg     VARCHAR2(400)
+    , flog_long_msg     VARCHAR2(4000)
     , flog_context      VARCHAR2(400)
     , flog_key_0        VARCHAR2(100)
     , flog_value_0      VARCHAR2(400)
