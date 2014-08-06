@@ -120,22 +120,23 @@ namespace FLEX.Web.UserControls
                PdfWriter.GetInstance(pdfDoc, HttpContext.Current.Response.OutputStream);
                var pdfTable = new PdfPTable(DataSource.Columns.Count) {WidthPercentage = 100};
 
-               var font = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
-
+               var headerFont = new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD);
                foreach (DataColumn c in DataSource.Columns)
                {
-                  pdfTable.AddCell(new Phrase(c.ColumnName, font));
+                  pdfTable.AddCell(new Phrase(c.ColumnName, headerFont));
                }
 
+               var bodyFont = new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.NORMAL);
                for (var row = 0; row < DataSource.Rows.Count; row++)
                {
                   for (var col = 0; col < DataSource.Columns.Count; col++)
                   {
-                     var pdfPCell = new PdfPCell(new Phrase(new Chunk(DataSource.Rows[row][col].ToString())));
-                     pdfPCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                     var cellValue = DataSource.Rows[row][col].ToString();
+                     var pdfPCell = new PdfPCell(new Phrase(cellValue, bodyFont)) {HorizontalAlignment = Element.ALIGN_LEFT};
                      pdfTable.AddCell(pdfPCell);
                   }
                }
+               
                pdfDoc.Open();
                pdfTable.SpacingBefore = 15.0F; //Give some space after the text or it may overlap the table            
                pdfDoc.Add(pdfTable); //add pdf table to the document   
