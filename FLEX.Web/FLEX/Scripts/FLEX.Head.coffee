@@ -110,7 +110,7 @@ root.triggerAsyncPostBack = (hiddenTriggerId) ->
 ################################################################################
 
 root.disableButtonsBeforePostBack = () ->
-   if root.common.disableButtonsBeforePostBack and (typeof Page_Is_Valid == "undefined" or Page_Is_Valid)
+   if root.common.disableButtonsBeforePostBack and (typeof Page_IsValid == "undefined" or Page_IsValid)
       buttons = $(".btn")
       buttons.addClass("disabled")
       # This line is needed for IE9, since "disabled" class is not enough...
