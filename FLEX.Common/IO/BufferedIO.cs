@@ -19,7 +19,7 @@ namespace FLEX.Common.IO
    {
       private readonly ConcurrentStack<byte[]> _pool = new ConcurrentStack<byte[]>();
       private readonly int _bufferSize = Configuration.Instance.BufferSizeInBytesForBufferedIO;
-      private readonly byte _maxPoolSize = Configuration.Instance.BufferPoolCountForBufferedIO;
+      private readonly int _maxPoolSize = Configuration.Instance.BufferPoolCountForBufferedIO;
 
       /// <summary>
       ///   Ritorna un buffer dal pool, se disponibile, o ne alloca uno nuovo.

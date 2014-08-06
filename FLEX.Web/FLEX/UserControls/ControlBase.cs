@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Globalization;
+using System.Text;
 using System.Web.UI;
 
 // ReSharper disable CheckNamespace
@@ -9,6 +11,26 @@ namespace FLEX.Web.UserControls
 {
    public abstract class ControlBase : UserControl
    {
+      protected static string EncodeJsNumber(decimal d)
+      {
+         return Convert.ToString(d, CultureInfo.InvariantCulture);
+      }
+
+      protected static string EncodeJsNumber(decimal? d)
+      {
+         return d.HasValue ? EncodeJsNumber(d.Value) : String.Empty;
+      }
+
+      protected static string EncodeJsNumber(int i)
+      {
+         return Convert.ToString(i, CultureInfo.InvariantCulture);
+      }
+
+      protected static string EncodeJsNumber(int? i)
+      {
+         return i.HasValue ? EncodeJsNumber(i.Value) : String.Empty;
+      }
+
       protected static string EncodeJsString(string s)
       {
          var sb = new StringBuilder();

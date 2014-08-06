@@ -323,13 +323,6 @@
     <Compile Include="FLEX\UserControls\Ajax\RadioList.ascx.designer.cs">
       <DependentUpon>RadioList.ascx</DependentUpon>
     </Compile>
-    <Compile Include="FLEX\UserControls\Ajax\MultiAutoSuggest.ascx.cs">
-      <DependentUpon>MultiAutoSuggest.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="FLEX\UserControls\Ajax\MultiAutoSuggest.ascx.designer.cs">
-      <DependentUpon>MultiAutoSuggest.ascx</DependentUpon>
-    </Compile>
     <Compile Include="FLEX\UserControls\Ajax\ClearButton.ascx.cs">
       <DependentUpon>ClearButton.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -695,9 +688,6 @@
     </Content>
     <Content Include="FLEX\Images\progress-circle.gif" />
     <Content Include="FLEX\UserControls\Ajax\CollapsibleCheckBoxList.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
-    <Content Include="FLEX\UserControls\Ajax\MultiAutoSuggest.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\UserControls\Ajax\ClearButton.ascx">

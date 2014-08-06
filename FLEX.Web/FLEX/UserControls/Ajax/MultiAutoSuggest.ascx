@@ -1,1 +1,0 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MultiAutoSuggest.ascx.cs" Inherits="FLEX.Web.UserControls.Ajax.MultiAutoSuggest" %>

@@ -35,9 +35,9 @@ namespace FLEX.Common
       }
 
       [ConfigurationProperty(BufferPoolCountForBufferedIOKey, IsRequired = false, DefaultValue = 16)]
-      public byte BufferPoolCountForBufferedIO
+      public int BufferPoolCountForBufferedIO
       {
-         get { return (byte) this[BufferPoolCountForBufferedIOKey]; }
+         get { return (int) this[BufferPoolCountForBufferedIOKey]; }
       }
 
       [ConfigurationProperty(BufferSizeInBytesForBufferedIOKey, IsRequired = false, DefaultValue = 512)]

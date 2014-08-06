@@ -133,7 +133,10 @@ namespace FLEX.Web.UserControls.Ajax
 
       public void CopySelectedValuesFrom(ISearchControl searchControl)
       {
-         throw new NotImplementedException("TODO");
+         Raise<ArgumentException>.IfIsNotInstanceOf<FixedSelect>(searchControl);
+
+         var otherFixedSelect = (FixedSelect) searchControl;
+         ddlSelect.SelectedIndex = otherFixedSelect.ddlSelect.SelectedIndex;
       }
 
       #endregion

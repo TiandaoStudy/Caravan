@@ -17,11 +17,6 @@ namespace FLEX.Web.UserControls.Ajax
 {
    public partial class CollapsibleCheckBoxList : AjaxControlBase, IAjaxControl, ISearchControl
    {
-      protected CollapsibleCheckBoxList()
-      {
-         // Empty, for now...
-      }
-
       protected override void Page_Load(object sender, EventArgs e)
       {
          base.Page_Load(sender, e);

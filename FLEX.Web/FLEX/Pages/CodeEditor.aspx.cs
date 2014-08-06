@@ -1,29 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Web;
 using System.Web.UI.WebControls;
-using FLEX.Common;
 using FLEX.Common.Data;
-using FLEX.Web.Pages;
+
+// ReSharper disable CheckNamespace
+// This is the correct namespace, despite the file physical position.
 
 namespace FLEX.Web.Pages
+// ReSharper restore CheckNamespace
 {
    public partial class CodeEditor : PageBase
    {
-      Dictionary<string, string> FilesPath = new Dictionary<string, string>();
+      readonly Dictionary<string, string> _filesPath = new Dictionary<string, string>();
+      
       protected void Page_Load(object sender, EventArgs e)
       {
          if (!Page.IsPostBack)
          {
-            ViewState["dictFilesPath"] = FilesPath;
+            ViewState["dictFilesPath"] = _filesPath;
             var scriptsPath = Armando.Configuration.Instance.ScriptsPath;
             var xmlPath = Server.MapPath(FLEX.Web.WebSettings.AjaxLookup_XmlPath);
             var menuPath = Server.MapPath(FLEX.Web.WebSettings.MenuBar_XmlPath);
-            Dictionary<string, string> _Files = new Dictionary<string, string>();
-            _Files.Add("Data Scritps", scriptsPath);
-            _Files.Add("Ajax Lookup", xmlPath);
-            _Files.Add("Menu", menuPath);
-            BuildTreeView(_Files);
+            var files = new Dictionary<string, string> {{"Data Scritps", scriptsPath}, {"Ajax Lookup", xmlPath}, {"Menu", menuPath}};
+            BuildTreeView(files);
          }
       }
 
@@ -73,14 +74,14 @@ namespace FLEX.Web.Pages
                for (int i = 0; i < files.Length; i++)
                {
                   TreeView1.Nodes[index].ChildNodes.Add(new TreeNode(Path.GetFileName(files[i])));
-                  FilesPath.Add(Path.GetFileName(files[i]), files[i]);
+                  _filesPath.Add(Path.GetFileName(files[i]), files[i]);
                }
                index++;
             }
             else
             {
                TreeView1.Nodes[index].ChildNodes.Add(new TreeNode(Path.GetFileName(item.Value)));
-               FilesPath.Add(Path.GetFileName(item.Value), item.Value);
+               _filesPath.Add(Path.GetFileName(item.Value), item.Value);
             }
          }
          TreeView1.DataBind();
@@ -91,22 +92,23 @@ namespace FLEX.Web.Pages
          try
          {
             divContenFiles.Visible = true;
-            Dictionary<string, string> _FilesPath = (Dictionary<string, string>) ViewState["dictFilesPath"];
+            var filesPath = (Dictionary<string, string>) ViewState["dictFilesPath"];
 
-            var _name_files = TreeView1.SelectedNode.Text;
+            var nameFiles = TreeView1.SelectedNode.Text;
 
-            using (StreamWriter writer = new StreamWriter(_FilesPath[_name_files], false))
+            using (var writer = new StreamWriter(filesPath[nameFiles], false))
             {
                writer.Write(txtContentFiles.Text);
             }
 
-            var logMsg = String.Format("Script {0} has been changed", _FilesPath[_name_files]);
+            // Indico nel log che qualcuno ha modificato il file
+            var logMsg = String.Format("Script {0} has been changed by {1}", filesPath[nameFiles], HttpContext.Current.User.Identity.Name);
             DbLogger.Instance.LogWarning<CodeEditor>("lbtnSave_Click", logMsg);
 
-            string _extension = Path.GetExtension(_FilesPath[_name_files]);
-            if (_extension == ".cs")
+            var extension = Path.GetExtension(filesPath[nameFiles]);
+            if (extension == ".cs")
                System.Web.UI.ScriptManager.RegisterStartupScript(this, this.GetType(), "ChangeModeEditor", "ChangeModeEditor('cs');", true);
-            else if (_extension == ".xml")
+            else if (extension == ".xml")
                System.Web.UI.ScriptManager.RegisterStartupScript(this, this.GetType(), "ChangeModeEditor", "ChangeModeEditor('xml');", true);
          }
          catch (Exception ex)
@@ -126,7 +128,5 @@ namespace FLEX.Web.Pages
          lbtnSave.Visible = false;
          divContenFiles.Visible = false;
       }
-
-
    }
 }

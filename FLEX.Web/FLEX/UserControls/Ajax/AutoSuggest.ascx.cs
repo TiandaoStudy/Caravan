@@ -19,16 +19,16 @@ namespace FLEX.Web.UserControls.Ajax
    [ValidationProperty("Key")]
    public partial class AutoSuggest : AjaxControlBase, IAjaxControl, ISearchControl
    {
-       private const string XmlLookupViewStateKey = "AutoSuggest.XmlLookup";
-       private const string LookupByViewStateKey = "AutoSuggest.LookupBy";
-       private const string QueryFilterViewStateKey = "AutoSuggest.QueryFilter";
-       private const string MinLengthForHintViewStateKey = "AutoSuggest.MinLengthForHint";
-       private const string MaxMenuHeightViewStateKey = "AutoSuggest.MaxMenuHeight";
+      private const string XmlLookupViewStateKey = "AutoSuggest.XmlLookup";
+      private const string LookupByViewStateKey = "AutoSuggest.LookupBy";
+      private const string QueryFilterViewStateKey = "AutoSuggest.QueryFilter";
+      private const string MinLengthForHintViewStateKey = "AutoSuggest.MinLengthForHint";
+      private const string MaxMenuHeightViewStateKey = "AutoSuggest.MaxMenuHeight";
 
-       private const string MaxMenuHeightDefaultValue = "250";
-       private const int MinLengthDefaultValue = 2;
-       private const string PlaceHolderDefaultValue = "...";
-       private const string QueryFilterDefaultValue = "''";
+      private const string MaxMenuHeightDefaultValue = "250";
+      private const int MinLengthDefaultValue = 2;
+      private const string PlaceHolderDefaultValue = "...";
+      private const string QueryFilterDefaultValue = "''";
 
       #region Public Properties
 
@@ -54,53 +54,53 @@ namespace FLEX.Web.UserControls.Ajax
          get { return txtSuggestion; }
       }
 
-       public string XmlLookup
-       {
-           get { return (string) ViewState[XmlLookupViewStateKey]; }
-           set
-           {
-               Raise<ArgumentException>.IfIsEmpty(value, ErrorMessages.UserControls_AutoSuggest_NullOrEmptyXmlLookup);
-               ViewState[XmlLookupViewStateKey] = value;
-           }
-       }
+      public string XmlLookup
+      {
+         get { return (string) ViewState[XmlLookupViewStateKey]; }
+         set
+         {
+            Raise<ArgumentException>.IfIsEmpty(value, ErrorMessages.UserControls_AutoSuggest_NullOrEmptyXmlLookup);
+            ViewState[XmlLookupViewStateKey] = value;
+         }
+      }
 
-       public string LookupBy
-       {
-           get { return (string) ViewState[LookupByViewStateKey]; }
-           set
-           {
-               Raise<ArgumentException>.IfIsEmpty(value, ErrorMessages.UserControls_AutoSuggest_NullOrEmptyLookupBy);
-               ViewState[LookupByViewStateKey] = value;
-           }
-       }
+      public string LookupBy
+      {
+         get { return (string) ViewState[LookupByViewStateKey]; }
+         set
+         {
+            Raise<ArgumentException>.IfIsEmpty(value, ErrorMessages.UserControls_AutoSuggest_NullOrEmptyLookupBy);
+            ViewState[LookupByViewStateKey] = value;
+         }
+      }
 
-       public string QueryFilter
-       {
-           get { return (string) ViewState[QueryFilterViewStateKey]; }
-           set { ViewState[QueryFilterViewStateKey] = value ?? QueryFilterDefaultValue; }
-       }
+      public string QueryFilter
+      {
+         get { return (string) ViewState[QueryFilterViewStateKey]; }
+         set { ViewState[QueryFilterViewStateKey] = value ?? QueryFilterDefaultValue; }
+      }
 
-       /// <summary>
-       ///   Minimum number of characters required for the auto suggest to trigger itself.
-       /// </summary>
-       public int? MinLengthForHint
-       {
-           get { return (int?) ViewState[MinLengthForHintViewStateKey]; }
-           set { ViewState[MinLengthForHintViewStateKey] = value ?? MinLengthDefaultValue; }
-       }
+      /// <summary>
+      ///   Minimum number of characters required for the auto suggest to trigger itself.
+      /// </summary>
+      public int? MinLengthForHint
+      {
+         get { return (int?) ViewState[MinLengthForHintViewStateKey]; }
+         set { ViewState[MinLengthForHintViewStateKey] = value ?? MinLengthDefaultValue; }
+      }
 
-       // Imposta un'altezza alla tendinda dei suggerimenti (def: 250px)
-       public string MaxMenuHeight
-       {
-           get { return (string) ViewState[MaxMenuHeightViewStateKey]; }
-           set { ViewState[MaxMenuHeightViewStateKey] = value ?? MaxMenuHeightDefaultValue; }
-       }
+      // Imposta un'altezza alla tendinda dei suggerimenti (def: 250px)
+      public string MaxMenuHeight
+      {
+         get { return (string) ViewState[MaxMenuHeightViewStateKey]; }
+         set { ViewState[MaxMenuHeightViewStateKey] = value ?? MaxMenuHeightDefaultValue; }
+      }
 
-       public string PlaceHolder
-       {
-           get { return txtSuggestion.Attributes["placeholder"]; }
-           set { txtSuggestion.Attributes["placeholder"] = value ?? PlaceHolderDefaultValue; }
-       }
+      public string PlaceHolder
+      {
+         get { return txtSuggestion.Attributes["placeholder"]; }
+         set { txtSuggestion.Attributes["placeholder"] = value ?? PlaceHolderDefaultValue; }
+      }
 
       #endregion
 
@@ -163,37 +163,37 @@ namespace FLEX.Web.UserControls.Ajax
 
       #region AjaxControlBase Members
 
-       protected override void SetDefaultValues()
-       {
-           base.SetDefaultValues();
-           MaxMenuHeight = MaxMenuHeight ?? MaxMenuHeightDefaultValue;
-           MinLengthForHint = MinLengthForHint ?? MinLengthDefaultValue;
-           PlaceHolder = PlaceHolder ?? PlaceHolderDefaultValue;
-           QueryFilter = QueryFilter ?? QueryFilterDefaultValue;
-       }
+      protected override void SetDefaultValues()
+      {
+         base.SetDefaultValues();
+         MaxMenuHeight = MaxMenuHeight ?? MaxMenuHeightDefaultValue;
+         MinLengthForHint = MinLengthForHint ?? MinLengthDefaultValue;
+         PlaceHolder = PlaceHolder ?? PlaceHolderDefaultValue;
+         QueryFilter = QueryFilter ?? QueryFilterDefaultValue;
+      }
 
-       protected override void OnDoPostBackChanged(bool doPostBack)
-       {
-           base.OnDoPostBackChanged(doPostBack);
-           txtKey.AutoPostBack = doPostBack;
-       }
+      protected override void OnDoPostBackChanged(bool doPostBack)
+      {
+         base.OnDoPostBackChanged(doPostBack);
+         txtKey.AutoPostBack = doPostBack;
+      }
 
-       protected override void OnEnabledChanged(bool enabled)
-       {
-           base.OnEnabledChanged(enabled);
-           txtKey.Enabled = enabled;
-           txtKey.ReadOnly = !enabled;
-           txtSuggestion.Enabled = enabled;
-           txtSuggestion.ReadOnly = !enabled;
-       }
+      protected override void OnEnabledChanged(bool enabled)
+      {
+         base.OnEnabledChanged(enabled);
+         txtKey.Enabled = enabled;
+         txtKey.ReadOnly = !enabled;
+         txtSuggestion.Enabled = enabled;
+         txtSuggestion.ReadOnly = !enabled;
+      }
 
-       #endregion
+      #endregion
 
       #region Private Members
 
       protected void txtKey_OnTextChanged(object sender, EventArgs e)
       {
-          Basics.TriggerEvent(ValueSelected, this, new SearchCriteriaSelectedArgs());
+         Basics.TriggerEvent(ValueSelected, this, new SearchCriteriaSelectedArgs());
       }
 
       #endregion

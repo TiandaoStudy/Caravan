@@ -17,39 +17,41 @@ namespace FLEX.Web.UserControls.Ajax
    /// </summary>
    public partial class NumericSpinner : AjaxControlBase, IAjaxControl, ISearchControl
    {
-      /// <summary>
-      /// 
-      /// </summary>
-      protected NumericSpinner()
-      {
-         // Default values
-         DecimalCount = 1;
-         MaxValue = 100M;
-         MinValue = 0M;
-         Step = 0.5M;
-      }
+      private const string DecimalCountViewStateKey = "NumericSpinner.DecimalCount";
+      private const string MaxValueViewStateKey = "NumericSpinner.MaxValue";
+      private const string MinValueViewStateKey = "NumericSpinner.MinValue";
+      private const string StepViewStateKey = "NumericSpinner.Step";
+
+      private const int DecimalCountDefaultValue = 1;
+      private const decimal MaxValueDefaultValue = 100M;
+      private const decimal MinValueDefaultValue = 0M;
+      private const decimal StepDefaultValue = 0.5M;
 
       #region Public Properties
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public int DecimalCount { get; set; }
+      public int? DecimalCount
+      {
+         get { return (int?) ViewState[DecimalCountViewStateKey]; }
+         set { ViewState[DecimalCountViewStateKey] = value ?? DecimalCountDefaultValue; }
+      }
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public decimal MaxValue { get; set; }
+      public decimal? MaxValue
+      {
+         get { return (decimal?) ViewState[MaxValueViewStateKey]; }
+         set { ViewState[MaxValueViewStateKey] = value ?? MaxValueDefaultValue; }
+      }
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public decimal MinValue { get; set; }
+      public decimal? MinValue
+      {
+         get { return (decimal?) ViewState[MinValueViewStateKey]; }
+         set { ViewState[MinValueViewStateKey] = value ?? MinValueDefaultValue; }
+      }
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public decimal Step { get; set; }
+      public decimal? Step
+      {
+         get { return (decimal?) ViewState[StepViewStateKey]; }
+         set { ViewState[StepViewStateKey] = value ?? StepDefaultValue; }
+      }
 
       #endregion
 
@@ -109,6 +111,15 @@ namespace FLEX.Web.UserControls.Ajax
       #endregion
 
       #region AjaxControlBase Members
+
+      protected override void SetDefaultValues()
+      {
+         base.SetDefaultValues();
+         DecimalCount = DecimalCount ?? DecimalCountDefaultValue;
+         MaxValue = MaxValue ?? MaxValueDefaultValue;
+         MinValue = MinValue ?? MinValueDefaultValue;
+         Step = Step ?? StepDefaultValue;
+      }
 
       protected override void OnEnabledChanged(bool enabled)
       {

@@ -16,11 +16,6 @@ namespace FLEX.Web.UserControls.Ajax
 {
    public partial class RadioList : AjaxControlBase, IAjaxControl, ISearchControl
    {
-      protected RadioList()
-      {
-         // Empty, for now...
-      }
-
       #region Public Properties
 
       public int RepeatColumn
@@ -134,7 +129,10 @@ namespace FLEX.Web.UserControls.Ajax
 
       public void CopySelectedValuesFrom(ISearchControl searchControl)
       {
-         // TODO
+         Raise<ArgumentException>.IfIsNotInstanceOf<RadioList>(searchControl);
+
+         var otherSwitch = (RadioList) searchControl;
+         rblData.SelectedIndex = otherSwitch.rblData.SelectedIndex;
       }
 
       #endregion

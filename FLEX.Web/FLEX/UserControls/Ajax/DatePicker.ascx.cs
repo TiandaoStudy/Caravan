@@ -14,36 +14,31 @@ using Thrower;
 namespace FLEX.Web.UserControls.Ajax
 // ReSharper restore CheckNamespace
 {
-    /// <summary>
-    /// 
-    /// </summary>
-   [ValidationProperty("Key")]
+   /// <summary>
+   /// 
+   /// </summary>
+   [ValidationProperty("SelectedDate")]
    public partial class DatePicker : AjaxControlBase, IAjaxControl, ISearchControl
    {
-      private string _startDate;
-      private string _endDate;
+      private const string DateFormatViewStateKey = "DatePicker.DateFormat";
+      private const string EndDateViewStateKey = "DatePicker.EndDate";
+      private const string MinViewViewStateKey = "DatePicker.MinView";
+      private const string StartDateViewStateKey = "DatePicker.StartDate";
+      private const string StartViewViewStateKey = "DatePicker.StartView";
 
-      protected DatePicker()
-      {
-         // Default values
-         DateFormat = "dd/mm/yyyy";
-         _startDate = "01/01/2000";
-         _endDate = "31/12/2999";
-         StartView = StartViewMode.Month;
-         MinView = MinViewMode.Days;
-      }
-
-      protected override void Page_Load(object sender, EventArgs e)
-      {
-         base.Page_Load(sender, e);
-
-         Raise<ArgumentException>.IfIsEmpty(StartDate);
-         Raise<ArgumentException>.IfIsEmpty(EndDate);
-      }
+      private const string DateFormatDefaultValue = "dd/mm/yyyy";
+      private const string EndDateDefaultValue = "31/12/2999";
+      private const MinViewMode MinViewDefaultValue = MinViewMode.Days;
+      private const string StartDateDefaultValue = "01/01/2000";
+      private const StartViewMode StartViewDefaultValue = StartViewMode.Month;
 
       #region Public Properties
 
-      public string DateFormat { get; set; }
+      public string DateFormat
+      {
+         get { return (string) ViewState[DateFormatViewStateKey]; }
+         set { ViewState[DateFormatViewStateKey] = value ?? DateFormatDefaultValue; }
+      }
 
       public TextBox DateField
       {
@@ -58,48 +53,39 @@ namespace FLEX.Web.UserControls.Ajax
             Raise<InvalidOperationException>.IfNot(DateIsValid(txtDate.Text));
             return DateTime.Parse(txtDate.Text, WebSettings.CurrentUserCulture, DateTimeStyles.AllowWhiteSpaces);
          }
-         set
-         {
-            txtDate.Text = value.ToString("d", WebSettings.CurrentUserCulture);
-         }
+         set { txtDate.Text = value.ToString("d", WebSettings.CurrentUserCulture); }
       }
 
       public string StartDate
       {
-         get { return _startDate; }
+         get { return (string) ViewState[StartDateViewStateKey]; }
          set
          {
             Raise<ArgumentException>.IfNot(DateIsValid(value));
-            _startDate = value;
+            ViewState[StartDateViewStateKey] = value ?? StartDateDefaultValue;
          }
       }
 
       public string EndDate
       {
-         get { return _endDate; }
+         get { return (string) ViewState[EndDateViewStateKey]; }
          set
          {
             Raise<ArgumentException>.IfNot(DateIsValid(value));
-            _endDate = value;
+            ViewState[EndDateViewStateKey] = value ?? EndDateDefaultValue;
          }
       }
 
-      public StartViewMode StartView { get; set; }
-
-      public MinViewMode MinView { get; set; }
-
-      public enum StartViewMode : byte
+      public StartViewMode? StartView
       {
-         Month = 0,
-         Year = 1,
-         Decade = 2
+         get { return (StartViewMode?) ViewState[StartViewViewStateKey]; }
+         set { ViewState[StartViewViewStateKey] = value ?? StartViewDefaultValue; }
       }
 
-      public enum MinViewMode : byte
+      public MinViewMode? MinView
       {
-         Days = 0,
-         Months = 1,
-         Years = 2
+         get { return (MinViewMode?) ViewState[MinViewViewStateKey]; }
+         set { ViewState[MinViewViewStateKey] = value ?? MinViewDefaultValue; }
       }
 
       #endregion
@@ -161,6 +147,16 @@ namespace FLEX.Web.UserControls.Ajax
 
       #region AjaxControlBase Members
 
+      protected override void SetDefaultValues()
+      {
+         base.SetDefaultValues();
+         DateFormat = DateFormat ?? DateFormatDefaultValue;
+         EndDate = EndDate ?? EndDateDefaultValue;
+         MinView = MinView ?? MinViewDefaultValue;
+         StartDate = StartDate ?? StartDateDefaultValue;
+         StartView = StartView ?? StartViewDefaultValue;
+      }
+
       protected override void OnDoPostBackChanged(bool doPostBack)
       {
          base.OnDoPostBackChanged(doPostBack);
@@ -190,5 +186,25 @@ namespace FLEX.Web.UserControls.Ajax
       }
 
       #endregion
+
+      /// <summary>
+      /// 
+      /// </summary>
+      public enum StartViewMode : byte
+      {
+         Month = 0,
+         Year = 1,
+         Decade = 2
+      }
+
+      /// <summary>
+      /// 
+      /// </summary>
+      public enum MinViewMode : byte
+      {
+         Days = 0,
+         Months = 1,
+         Years = 2
+      }
    }
 }

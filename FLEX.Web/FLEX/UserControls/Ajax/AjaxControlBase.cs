@@ -29,7 +29,7 @@ namespace FLEX.Web.UserControls.Ajax
          }
          catch (Exception ex)
          {
-            DbLogger.Instance.LogError<AjaxControlBase>("Page_PreInit", ex);
+            DbLogger.Instance.LogError<AjaxControlBase>("Page_Load", ex);
             throw;
          }
       }
