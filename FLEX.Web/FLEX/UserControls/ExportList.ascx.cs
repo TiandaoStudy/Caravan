@@ -3,14 +3,11 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ClosedXML.Excel;
-using FLEX.Common;
-using FLEX.Common.Collections;
-using FLEX.Common.Web;
-using Thrower;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Text;
@@ -22,7 +19,7 @@ using FLEX.Web.MasterPages;
 namespace FLEX.Web.UserControls
 // ReSharper restore CheckNamespace
 {
-   public partial class ExportList : UserControl
+   public partial class ExportList : ControlBase
    {
       protected ExportList()
       {
@@ -31,6 +28,9 @@ namespace FLEX.Web.UserControls
 
       protected void Page_Load(object sender, EventArgs e)
       {
+         Master.ScriptManager.RegisterPostBackControl(lnkbExcel);
+         Master.ScriptManager.RegisterPostBackControl(lnkbCSV);
+         Master.ScriptManager.RegisterPostBackControl(lnkbPDF);
       }
 
       #region Public Properties
@@ -80,7 +80,7 @@ namespace FLEX.Web.UserControls
             DataSourceNeeded(sender, e);
             if (DataSource != null)
             {
-               XLWorkbook wb = new XLWorkbook();
+               var wb = new XLWorkbook();
                wb.AddWorksheet(DataSource);
                //wb.Worksheets.Add(DataSource);
 
@@ -102,17 +102,10 @@ namespace FLEX.Web.UserControls
                response.End();
             }
          }
-
-         catch (System.Threading.ThreadAbortException)
-         {
-            throw;
-         }
-
          catch (Exception ex)
          {
-           (Page.Master as IPageBase).ErrorHandler.CatchException(ex);
+           Master.ErrorHandler.CatchException(ex);
          }
-
       }
 
       protected void ExportList_OnClickPdf(object sender, EventArgs e)
@@ -122,35 +115,30 @@ namespace FLEX.Web.UserControls
             DataSourceNeeded(sender, e);
             if (DataSource != null)
             {
-               Document pdfDoc = new Document(iTextSharp.text.PageSize.A4.Rotate(), 5, 10, 20, 20);
-               //pdfDoc.SetPageSize(PageSize.A4.Rotate());
+               var pdfDoc = new Document(PageSize.A4.Rotate(), 5, 10, 20, 20);
 
+               PdfWriter.GetInstance(pdfDoc, HttpContext.Current.Response.OutputStream);
+               var pdfTable = new PdfPTable(DataSource.Columns.Count) {WidthPercentage = 100};
 
-
-               PdfWriter.GetInstance(pdfDoc, System.Web.HttpContext.Current.Response.OutputStream);
-               PdfPTable PdfTable = new PdfPTable(DataSource.Columns.Count);
-               PdfTable.WidthPercentage = 100;
-
-               iTextSharp.text.Font font = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 14, Font.BOLD);
-               PdfPCell pdfPCell = null;
+               var font = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
 
                foreach (DataColumn c in DataSource.Columns)
                {
-                  PdfTable.AddCell(new Phrase(c.ColumnName, font));
+                  pdfTable.AddCell(new Phrase(c.ColumnName, font));
                }
 
-               for (int row = 0; row < DataSource.Rows.Count; row++)
+               for (var row = 0; row < DataSource.Rows.Count; row++)
                {
-                  for (int col = 0; col < DataSource.Columns.Count; col++)
+                  for (var col = 0; col < DataSource.Columns.Count; col++)
                   {
-                     pdfPCell = new PdfPCell(new Phrase(new Chunk(DataSource.Rows[row][col].ToString())));
-                     pdfPCell.HorizontalAlignment = iTextSharp.text.pdf.PdfPCell.ALIGN_CENTER;
-                     PdfTable.AddCell(pdfPCell);
+                     var pdfPCell = new PdfPCell(new Phrase(new Chunk(DataSource.Rows[row][col].ToString())));
+                     pdfPCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                     pdfTable.AddCell(pdfPCell);
                   }
                }
                pdfDoc.Open();
-               PdfTable.SpacingBefore = 15.0F; //Give some space after the text or it may overlap the table            
-               pdfDoc.Add(PdfTable); //add pdf table to the document   
+               pdfTable.SpacingBefore = 15.0F; //Give some space after the text or it may overlap the table            
+               pdfDoc.Add(pdfTable); //add pdf table to the document   
                pdfDoc.Close();
 
                var response = HttpContext.Current.Response;
@@ -162,14 +150,9 @@ namespace FLEX.Web.UserControls
                response.End();
             }
          }
-
-         catch (System.Threading.ThreadAbortException)
-         {
-            throw;
-         }
          catch (Exception ex)
          {
-            (Page.Master as IPageBase).ErrorHandler.CatchException(ex);
+            Master.ErrorHandler.CatchException(ex);
          }
       }
 
@@ -190,7 +173,7 @@ namespace FLEX.Web.UserControls
 
                using (var memoryStream = new MemoryStream())
                {
-                  StreamWriter csvWriter = new StreamWriter(memoryStream, Encoding.UTF8);
+                  var csvWriter = new StreamWriter(memoryStream, Encoding.UTF8);
                   WriteDataTable(DataSource, csvWriter, true);
                   memoryStream.WriteTo(response.OutputStream);
                }
@@ -199,15 +182,10 @@ namespace FLEX.Web.UserControls
                response.End();
             }
          }
-
-         catch (System.Threading.ThreadAbortException) 
-         {
-            throw;
-         }
          catch (Exception ex)
          {
 
-            (Page.Master as IPageBase).ErrorHandler.CatchException(ex);
+            Master.ErrorHandler.CatchException(ex);
          }
       }
 
@@ -217,7 +195,7 @@ namespace FLEX.Web.UserControls
          {
             if (includeHeaders)
             {
-               List<string> headerValues = new List<string>();
+               var headerValues = new List<string>();
                foreach (DataColumn column in DataSource.Columns)
                {
                   headerValues.Add(QuoteValue(column.ColumnName));
@@ -234,7 +212,7 @@ namespace FLEX.Web.UserControls
             writer.Flush();
          }
 
-         catch (System.Threading.ThreadAbortException)
+         catch (ThreadAbortException)
          {
             throw;
          }
@@ -244,7 +222,7 @@ namespace FLEX.Web.UserControls
          }
       }
 
-      private string QuoteValue(string value)
+      private static string QuoteValue(string value)
       {
           return string.Concat("\"", value.Replace("\"", "\"\""), "\"");
       }

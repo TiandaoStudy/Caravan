@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Threading;
 using System.Web.UI;
 using FLEX.Common.Data;
 using FLEX.Common.Web;
@@ -18,6 +19,12 @@ namespace FLEX.Web.UserControls.Ajax
          Raise<ArgumentNullException>.IfIsNull(ex);
          var locationByte = (byte) location;
          Raise<ArgumentException>.IfAreEqual(locationByte, 0);
+
+         if (ex is ThreadAbortException)
+         {
+            // Le eccezioni di questo tipo non vanno catturate, perché servono per il corretto funzionamento di ASP.
+            throw ex;
+         }
 
          try
          {

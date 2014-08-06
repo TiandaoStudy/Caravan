@@ -22,15 +22,6 @@ namespace FLEX.Web.UserControls {
         protected global::System.Web.UI.WebControls.Panel pnlExport;
         
         /// <summary>
-        /// btnExports control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnExports;
-        
-        /// <summary>
         /// btnCaret control.
         /// </summary>
         /// <remarks>
@@ -38,15 +29,6 @@ namespace FLEX.Web.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton btnCaret;
-        
-        /// <summary>
-        /// div_listExport control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_listExport;
         
         /// <summary>
         /// lnkbExcel control.
@@ -58,15 +40,6 @@ namespace FLEX.Web.UserControls {
         protected global::System.Web.UI.WebControls.LinkButton lnkbExcel;
         
         /// <summary>
-        /// lnkbPDF control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkbPDF;
-        
-        /// <summary>
         /// lnkbCSV control.
         /// </summary>
         /// <remarks>
@@ -74,5 +47,14 @@ namespace FLEX.Web.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lnkbCSV;
+        
+        /// <summary>
+        /// lnkbPDF control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkbPDF;
     }
 }

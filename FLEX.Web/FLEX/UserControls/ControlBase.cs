@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Text;
 using System.Web.UI;
+using FLEX.Web.MasterPages;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -11,6 +12,11 @@ namespace FLEX.Web.UserControls
 {
    public abstract class ControlBase : UserControl
    {
+      public IPageBase Master
+      {
+         get { return Page.Master as IPageBase; }
+      }
+
       protected static string EncodeJsNumber(decimal d)
       {
          return Convert.ToString(d, CultureInfo.InvariantCulture);
