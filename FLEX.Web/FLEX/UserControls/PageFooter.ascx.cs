@@ -19,6 +19,10 @@ namespace FLEX.Web.UserControls
 
          try
          {
+            // Footer extender
+            var ext = LoadControl(Configuration.Instance.ControlExtendersFolder + "/PageFooter.ascx");
+            footerExtender.Controls.Add(ext);
+            
             var pageManagerTypeInfo = Configuration.Instance.PageManagerTypeInfo;
             var pageManager = ServiceLocator.Load<IPageManager>(pageManagerTypeInfo);
             rptFooterInfo.DataSource = pageManager.GetFooterInfo();

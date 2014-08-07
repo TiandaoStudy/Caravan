@@ -23,7 +23,7 @@ namespace FLEX.Common
       /// <summary>
       ///   TODO
       /// </summary>
-      public static Configuration Instance 
+      public static Configuration Instance
       {
          get { return CachedInstance; }
       }
@@ -55,7 +55,7 @@ namespace FLEX.Common
       [ConfigurationProperty(ErrorManagerTypeInfoKey, IsRequired = true)]
       public string ErrorManagerTypeInfo
       {
-          get { return (string) this[ErrorManagerTypeInfoKey]; }
+         get { return (string) this[ErrorManagerTypeInfoKey]; }
       }
 
       [ConfigurationProperty(QueryExecutorTypeInfoKey, IsRequired = true)]
@@ -64,10 +64,10 @@ namespace FLEX.Common
          get { return (string) this[QueryExecutorTypeInfoKey]; }
       }
 
-       public string ConnectionString
-       {
-           get { return (string) PersistentCache.DefaultInstance.Get(CachePartitionName, ConnectionStringKey); }
-           set { PersistentCache.DefaultInstance.AddPersistent(CachePartitionName, ConnectionStringKey, value); }
-       }
+      public string ConnectionString
+      {
+         get { return (string) PersistentCache.DefaultInstance.Get(CachePartitionName, ConnectionStringKey); }
+         set { PersistentCache.DefaultInstance.AddPersistent(CachePartitionName, ConnectionStringKey, value); }
+      }
    }
 }

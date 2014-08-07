@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using FLEX.Common;
 
 namespace FLEX.Web
 {
@@ -9,6 +10,7 @@ namespace FLEX.Web
    {
       private const string SectionName = "FlexWebConfiguration";
       private const string CheckSecurityKey = "CheckSecurity";
+      private const string ControlExtendersFolderKey = "ControlExtendersFolder";
       private const string PageManagerTypeInfoKey = "PageManagerTypeInfo";
       private const string SessionExpiredPageUrlKey = "SessionExpiredPageUrl";
 
@@ -23,6 +25,12 @@ namespace FLEX.Web
       public bool CheckSecurity
       {
          get { return (bool) this[CheckSecurityKey]; }
+      }
+
+      [ConfigurationProperty(ControlExtendersFolderKey, IsRequired = true)]
+      public string ControlExtendersFolder
+      {
+         get { return (string) this[ControlExtendersFolderKey]; }
       }
 
       [ConfigurationProperty(PageManagerTypeInfoKey, IsRequired = true)]

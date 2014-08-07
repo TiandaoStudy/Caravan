@@ -102,7 +102,7 @@ namespace FLEX.Web.Pages
             }
 
             // Indico nel log che qualcuno ha modificato il file
-            var logMsg = String.Format("Script {0} has been changed by {1}", filesPath[nameFiles], HttpContext.Current.User.Identity.Name);
+            var logMsg = String.Format("File {0} has been changed by {1}", Path.GetFileName(filesPath[nameFiles]), HttpContext.Current.User.Identity.Name);
             DbLogger.Instance.LogWarning<CodeEditor>("lbtnSave_Click", logMsg);
 
             var extension = Path.GetExtension(filesPath[nameFiles]);
