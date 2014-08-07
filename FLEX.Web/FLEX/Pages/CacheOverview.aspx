@@ -23,6 +23,6 @@
 </asp:Content>
 
 <asp:Content runat="server" ID="aspButtonsContent" ContentPlaceHolderID="buttonsContent">
-   <flex:ImageButton runat="server" ID="btnRefresh" ButtonClass="btn btn-primary btn-sm" ButtonText="Refresh" IconClass="glyphicon glyphicon-refresh" />
-   <flex:ImageButton runat="server" ID="btnClear" ButtonClass="btn btn-warning btn-sm" ButtonText="Clear" IconClass="glyphicon glyphicon-trash" />
+   <flex:ImageButton runat="server" ID="btnRefresh" ButtonClass="btn btn-primary btn-sm" ButtonText="Refresh" IconClass="glyphicon glyphicon-refresh" OnClick="btnRefresh_Click" />
+   <flex:ImageButton runat="server" ID="btnClear" ButtonClass="btn btn-warning btn-sm" ButtonText="Clear" IconClass="glyphicon glyphicon-trash" OnClick="btnClear_Click" />
 </asp:Content>

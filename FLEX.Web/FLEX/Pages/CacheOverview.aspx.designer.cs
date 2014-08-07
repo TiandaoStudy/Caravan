@@ -13,7 +13,7 @@ namespace FLEX.Web.Pages {
     public partial class CacheOverview {
         
         /// <summary>
-        /// fdtgLogs control.
+        /// fdtgCache control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
