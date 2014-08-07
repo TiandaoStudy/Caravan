@@ -163,6 +163,16 @@
     <Compile Include="FLEX\Pages\PageBaseListAndSearch.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="FLEX\Pages\PopupBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\Templates\Popup.aspx.cs">
+      <DependentUpon>Popup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\Templates\Popup.aspx.designer.cs">
+      <DependentUpon>Popup.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FLEX\Pages\Templates\CustomView.aspx.cs">
       <DependentUpon>CustomView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -383,6 +393,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\Pages\ErrorHandler.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\Pages\Templates\Popup.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\Pages\Templates\CustomView.aspx">
@@ -741,8 +754,10 @@ copy $(ProjectDir)\FLEX\MasterPages\*.Master $(SolutionDir)\FLEX.Extensions.Test
 
 :: PAGES - Package
 copy $(ProjectDir)\FLEX\Pages\*.aspx $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Pages
+copy $(ProjectDir)\FLEX\Pages\Templates\*.aspx $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Pages\Templates
 :: PAGES - Test Web UI
 copy $(ProjectDir)\FLEX\Pages\*.aspx $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Pages
+copy $(ProjectDir)\FLEX\Pages\Templates\*.aspx $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Pages\Templates
 
 :: SERVICES - Package
 copy $(ProjectDir)\FLEX\Services\*.asmx $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Services
