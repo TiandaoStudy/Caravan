@@ -10,18 +10,18 @@ using FLEX.Common.Web;
 namespace FLEX.Web.UserControls
 // ReSharper restore CheckNamespace
 {
-   public partial class PageFooter : UserControl
+   public partial class PageFooter : ControlBase
    {
       protected void Page_Load(object sender, EventArgs e)
       {
-         // ...
-         if (IsPostBack) return;
-
          try
          {
             // Footer extender
             var ext = LoadControl(Configuration.Instance.ControlExtendersFolder + "/PageFooter.ascx");
             footerExtender.Controls.Add(ext);
+
+            // ...
+            if (IsPostBack) return;
             
             var pageManagerTypeInfo = Configuration.Instance.PageManagerTypeInfo;
             var pageManager = ServiceLocator.Load<IPageManager>(pageManagerTypeInfo);
