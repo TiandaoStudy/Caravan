@@ -10,7 +10,7 @@ namespace FLEX.Web.Core
    /// </summary>
    internal sealed class CacheViewStatePersister : BaseStatePersister
    {
-       private static readonly TimeSpan CacheInterval = TimeSpan.FromMinutes(HttpContext.Current.Session.Timeout + 1);
+      private static readonly TimeSpan CacheInterval = TimeSpan.FromMinutes(HttpContext.Current.Session.Timeout + 1);
 
       //required constructor
       public CacheViewStatePersister(Page page) : base(page)
@@ -49,13 +49,13 @@ namespace FLEX.Web.Core
 
       private static object GetViewState(string guid)
       {
-          return PersistentCache.DefaultInstance.Get("FLEX.Web.ViewStates", HiddenFieldName + guid);
+         return PersistentCache.DefaultInstance.Get("FLEX.Web.ViewStates", HiddenFieldName + guid);
       }
 
       private void SetViewState(string guid)
       {
          object state = new Pair(ControlState, ViewState);
-          PersistentCache.DefaultInstance.AddSliding("FLEX.Web.ViewStates", HiddenFieldName + guid, state, CacheInterval);
+         PersistentCache.DefaultInstance.AddSliding("FLEX.Web.ViewStates", HiddenFieldName + guid, state, CacheInterval);
       }
    }
 }

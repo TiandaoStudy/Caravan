@@ -22,9 +22,9 @@ A short description of the package. If specified, this shows up in the middle pa
       <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
       <copyright>Copyright FINSA 2014</copyright>
       <dependencies>
-         <dependency id="Newtonsoft.Json" />
-         <dependency id="PommaLabs.KVLite" />
-         <dependency id="Thrower" />
+         <dependency id="Newtonsoft.Json" version="" />
+         <dependency id="PommaLabs.KVLite" version="" />
+         <dependency id="Thrower" version="" />
       </dependencies>
       <references></references>
       <frameworkAssemblies>

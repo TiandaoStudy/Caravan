@@ -21,10 +21,10 @@
     <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
     <copyright>Copyright Microsoft 2014</copyright>
      <dependencies>
-        <dependency id="Dapper" />
-        <dependency id="FLEX.Common" />
-        <dependency id="Glimpse.Ado" />
-        <dependency id="Thrower" />
+        <dependency id="Dapper" version="" />
+        <dependency id="FLEX.Common" version="" />
+        <dependency id="Glimpse.Ado" version="" />
+        <dependency id="PommaLabs.Armando" version="" />
      </dependencies>
     <references></references>
      <frameworkAssemblies>

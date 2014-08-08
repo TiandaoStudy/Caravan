@@ -29,8 +29,7 @@ namespace FLEX.Web.Core
 
       private ViewStateStorageSettings _settings;
 
-      protected BaseStatePersister(Page page)
-         : base(page)
+      protected BaseStatePersister(Page page) : base(page)
       {
       }
 
