@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -26,7 +25,16 @@ namespace FLEX.Web.UserControls.Ajax
 
       public bool Visible { get; set; }
 
-      public void AttachToUpdatePanel(UpdatePanel updatePanel)
+      public void RegisterAsPostBackTrigger(UpdatePanel updatePanel)
+      {
+         var trigger = new PostBackTrigger
+         {
+            ControlID = btnSearch.UniqueID
+         };
+         updatePanel.Triggers.Add(trigger);
+      }
+
+      public void RegisterAsAsyncPostBackTrigger(UpdatePanel updatePanel)
       {
          var trigger = new AsyncPostBackTrigger
          {
@@ -43,13 +51,13 @@ namespace FLEX.Web.UserControls.Ajax
          get { return btnSearch; }
       }
 
-      public event EventHandler Clicked;
+      public event EventHandler Click;
 
       #region Private Members
 
       protected void btnSearch_Click(object sender, EventArgs args)
       {
-         Clicked(this, args);
+         Click(this, args);
       }
 
       #endregion

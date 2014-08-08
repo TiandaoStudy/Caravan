@@ -1,7 +1,7 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="VerticalSearch.master.cs" Inherits="FLEX.Web.MasterPages.VerticalSearch" MasterPageFile="~/FLEX/MasterPages/Base.Master" %>
 <%@ MasterType VirtualPath="~/FLEX/MasterPages/Base.Master"%>
 <%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
-<%@ Register TagPrefix="flex" TagName="ClearButton" Src="~/FLEX/UserControls/Ajax/ClearButton.ascx" %>
+<%@ Register TagPrefix="flex" TagName="ImageButton" Src="~/FLEX/UserControls/Ajax/ImageButton.ascx" %>
 <%@ Register TagPrefix="flex" TagName="SearchButton" Src="~/FLEX/UserControls/Ajax/SearchButton.ascx" %>
 
 <asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">
@@ -126,7 +126,10 @@
                <button id="btnCollapseSearchCriteria" type="button" class="btn btn-primary btn-sm">
                   <span id="spanCollapseSearchCriteria" class="glyphicon glyphicon-arrow-left"></span>&nbsp;Hide
                </button>
-               <flex:ClearButton ID="btnClear" runat="server" />
+               
+               <flex:ImageButton ID="btnClear" runat="server" ButtonText="Clear" ButtonClass="btn btn-primary btn-sm" IconClass="glyphicon glyphicon-trash" />
+               
+               <!-- E' importante che il bottone di ricerca funzioni anche facendo ENTER; pertanto, occorre usare un controllo dedicato. -->
                <flex:SearchButton ID="btnSearch" runat="server" />
             </div>
          </div>

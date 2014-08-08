@@ -4,6 +4,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using FLEX.Web.UserControls;
 using FLEX.Web.UserControls.Ajax;
+using ImageButton = FLEX.Web.UserControls.Ajax.ImageButton;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -20,7 +21,7 @@ namespace FLEX.Web.MasterPages
 
       #region Public Properties
 
-      public ClearButton ClearButton
+      public ImageButton ClearButton
       {
          get { return btnClear; }
       }

@@ -13,6 +13,8 @@ namespace FLEX.Web
 
       UpdatePanel UpdatePanel { get; }
 
-      void AttachToUpdatePanel(UpdatePanel updatePanel);
+      void RegisterAsPostBackTrigger(UpdatePanel updatePanel);
+
+      void RegisterAsAsyncPostBackTrigger(UpdatePanel updatePanel);
    }
 }

@@ -146,7 +146,23 @@ namespace FLEX.Web.UserControls.Ajax
          get { return updPanel1; }
       }
 
-      public void AttachToUpdatePanel(UpdatePanel updatePanel)
+      public void RegisterAsPostBackTrigger(UpdatePanel updatePanel)
+      {
+         // Primary check box list
+         var trigger = new PostBackTrigger
+         {
+            ControlID = VisibleCheckBoxList.UniqueID
+         };
+         updatePanel.Triggers.Add(trigger);
+         // Secondary check box list
+         trigger = new PostBackTrigger
+         {
+            ControlID = HiddenCheckBoxList.UniqueID
+         };
+         updatePanel.Triggers.Add(trigger);
+      }
+
+      public void RegisterAsAsyncPostBackTrigger(UpdatePanel updatePanel)
       {
          // Primary check box list
          var trigger = new AsyncPostBackTrigger

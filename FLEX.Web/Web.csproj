@@ -203,13 +203,6 @@
     <Compile Include="FLEX\UserControls\Ajax\ImageButton.ascx.designer.cs">
       <DependentUpon>ImageButton.ascx</DependentUpon>
     </Compile>
-    <Compile Include="FLEX\UserControls\Ajax\SearchButton.ascx.cs">
-      <DependentUpon>SearchButton.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="FLEX\UserControls\Ajax\SearchButton.ascx.designer.cs">
-      <DependentUpon>SearchButton.ascx</DependentUpon>
-    </Compile>
     <Compile Include="FLEX\UserControls\Ajax\DatePicker.ascx.cs">
       <DependentUpon>DatePicker.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -230,6 +223,13 @@
     </Compile>
     <Compile Include="FLEX\UserControls\Ajax\NumericSpinner.ascx.designer.cs">
       <DependentUpon>NumericSpinner.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\SearchButton.ascx.cs">
+      <DependentUpon>SearchButton.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Ajax\SearchButton.ascx.designer.cs">
+      <DependentUpon>SearchButton.ascx.cs</DependentUpon>
     </Compile>
     <Compile Include="FLEX\UserControls\ControlBase.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -333,13 +333,6 @@
     </Compile>
     <Compile Include="FLEX\UserControls\Ajax\RadioList.ascx.designer.cs">
       <DependentUpon>RadioList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="FLEX\UserControls\Ajax\ClearButton.ascx.cs">
-      <DependentUpon>ClearButton.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="FLEX\UserControls\Ajax\ClearButton.ascx.designer.cs">
-      <DependentUpon>ClearButton.ascx</DependentUpon>
     </Compile>
     <Compile Include="FLEX\UserControls\Ajax\FixedSelect.ascx.cs">
       <DependentUpon>FixedSelect.ascx</DependentUpon>
@@ -449,6 +442,9 @@
     <Content Include="FLEX\UserControls\Ajax\NumericSpinner.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Content Include="FLEX\UserControls\Ajax\SearchButton.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="FLEX\UserControls\LongTextContainer.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -509,9 +505,6 @@
       <DependentUpon>Ionicons.less</DependentUpon>
     </Content>
     <Content Include="FLEX\UserControls\Ajax\ImageButton.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
-    <Content Include="FLEX\UserControls\Ajax\SearchButton.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\UserControls\Ajax\DatePicker.ascx">
@@ -702,9 +695,6 @@
     </Content>
     <Content Include="FLEX\Images\progress-circle.gif" />
     <Content Include="FLEX\UserControls\Ajax\CollapsibleCheckBoxList.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
-    <Content Include="FLEX\UserControls\Ajax\ClearButton.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\UserControls\Ajax\FixedSelect.ascx">

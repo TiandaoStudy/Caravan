@@ -78,7 +78,21 @@ namespace FLEX.Web.UserControls.Ajax
          get { return updPanel; }
       }
 
-      public void AttachToUpdatePanel(UpdatePanel updatePanel)
+      public void RegisterAsPostBackTrigger(UpdatePanel updatePanel)
+      {
+         var trigger = new PostBackTrigger
+         {
+            ControlID = btnON.UniqueID
+         };
+         updatePanel.Triggers.Add(trigger);
+         trigger = new PostBackTrigger
+         {
+            ControlID = btnOFF.UniqueID
+         };
+         updatePanel.Triggers.Add(trigger);
+      }
+
+      public void RegisterAsAsyncPostBackTrigger(UpdatePanel updatePanel)
       {
          var trigger = new AsyncPostBackTrigger
          {
