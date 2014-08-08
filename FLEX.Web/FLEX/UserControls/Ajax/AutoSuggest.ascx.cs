@@ -111,6 +111,11 @@ namespace FLEX.Web.UserControls.Ajax
          get { return updPanel; }
       }
 
+      public void ActivatePostBack()
+      {
+         Master.ScriptManager.RegisterPostBackControl(txtKey);
+      }
+
       public void RegisterAsPostBackTrigger(UpdatePanel updatePanel)
       {
          var trigger = new PostBackTrigger

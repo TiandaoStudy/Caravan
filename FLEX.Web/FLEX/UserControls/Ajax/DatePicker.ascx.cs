@@ -97,6 +97,11 @@ namespace FLEX.Web.UserControls.Ajax
          get { return datepickerPanel; }
       }
 
+      public void ActivatePostBack()
+      {
+         Master.ScriptManager.RegisterPostBackControl(txtDate);
+      }
+
       public void RegisterAsPostBackTrigger(UpdatePanel updatePanel)
       {
          var trigger = new PostBackTrigger

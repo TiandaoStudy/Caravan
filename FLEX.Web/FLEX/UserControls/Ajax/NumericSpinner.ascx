@@ -6,7 +6,7 @@
       <div class="input-group">
          <asp:TextBox ID="txtNumber" runat="server" />
          <div class="input-group-btn">
-            <asp:LinkButton runat="server" ID="btnApply" CssClass="btn btn-default numeric-spinner-apply" Text="Apply" OnClick="btnApply_Click" />
+            <asp:LinkButton runat="server" ID="btnApply" CssClass="btn btn-default numeric-spinner-apply" ToolTip="Apply" Text="✓" OnClick="btnApply_Click" />
          </div>
       </div>
 

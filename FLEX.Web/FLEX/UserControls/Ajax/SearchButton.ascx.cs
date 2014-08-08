@@ -25,6 +25,11 @@ namespace FLEX.Web.UserControls.Ajax
 
       public bool Visible { get; set; }
 
+      public void ActivatePostBack()
+      {
+         Master.ScriptManager.RegisterPostBackControl(btnSearch);
+      }
+
       public void RegisterAsPostBackTrigger(UpdatePanel updatePanel)
       {
          var trigger = new PostBackTrigger

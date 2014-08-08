@@ -146,6 +146,12 @@ namespace FLEX.Web.UserControls.Ajax
          get { return updPanel1; }
       }
 
+      public void ActivatePostBack()
+      {
+         Master.ScriptManager.RegisterPostBackControl(VisibleCheckBoxList);
+         Master.ScriptManager.RegisterPostBackControl(HiddenCheckBoxList);
+      }
+
       public void RegisterAsPostBackTrigger(UpdatePanel updatePanel)
       {
          // Primary check box list
