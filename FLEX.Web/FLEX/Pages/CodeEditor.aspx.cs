@@ -44,16 +44,16 @@ namespace FLEX.Web.Pages
             divContenFiles.Visible = true;
             lbtnSave.Visible = true;
             txtContentFiles.Visible = true;
-            Dictionary<string, string> _FilesPath = (Dictionary<string, string>)ViewState["dictFilesPath"];
+            var filesPath = (Dictionary<string, string>) ViewState["dictFilesPath"];
 
             var _name_files = TreeView1.SelectedNode.Text;
             string _text;
-            using (StreamReader reader = new StreamReader(_FilesPath[_name_files]))
+            using (var reader = new StreamReader(filesPath[_name_files]))
             {
                _text = reader.ReadToEnd();
             }
             txtContentFiles.Text = _text;
-            string _extension = Path.GetExtension(_FilesPath[_name_files]);
+            string _extension = Path.GetExtension(filesPath[_name_files]);
             if (_extension == ".cs")
                System.Web.UI.ScriptManager.RegisterStartupScript(this, this.GetType(), "ChangeModeEditor", "ChangeModeEditor('cs');", true);
             else if (_extension == ".xml")

@@ -10,7 +10,7 @@ using FLEX.Web.UserControls.Ajax;
 namespace FLEX.Web.MasterPages
 // ReSharper restore CheckNamespace
 {
-   public partial class Base : MasterPage, IPageBase
+   public partial class Base : MasterPage, IPage
    {
       protected void Page_Init(object sender, EventArgs e)
       {

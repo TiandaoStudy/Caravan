@@ -107,8 +107,9 @@
     <Compile Include="FLEX\MasterPages\CustomView.Master.designer.cs">
       <DependentUpon>CustomView.Master</DependentUpon>
     </Compile>
-    <Compile Include="FLEX\MasterPages\IPopupBase.cs" />
-    <Compile Include="FLEX\MasterPages\IPageBase.cs" />
+    <Compile Include="FLEX\MasterPages\IHead.cs" />
+    <Compile Include="FLEX\MasterPages\IPopup.cs" />
+    <Compile Include="FLEX\MasterPages\IPage.cs" />
     <Compile Include="FLEX\Pages\AjaxLookup.aspx.cs">
       <DependentUpon>AjaxLookup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -129,6 +130,9 @@
     </Compile>
     <Compile Include="FLEX\Pages\CodeEditor.aspx.designer.cs">
       <DependentUpon>CodeEditor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\Pages\HeadBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="FLEX\Pages\LogSearch.aspx.cs">
       <DependentUpon>LogSearch.aspx</DependentUpon>
@@ -519,9 +523,7 @@
       <DependentUpon>bootstrap.js</DependentUpon>
     </Content>
     <Content Include="FLEX\Fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="FLEX\MasterPages\Base.Master">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="FLEX\MasterPages\Base.Master" />
     <Content Include="FLEX\Scripts\html5shiv.js" />
     <Content Include="FLEX\Scripts\html5shiv.min.js">
       <DependentUpon>html5shiv.js</DependentUpon>

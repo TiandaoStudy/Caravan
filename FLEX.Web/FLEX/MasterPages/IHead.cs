@@ -1,7 +1,5 @@
-﻿using System;
-using System.Web.UI;
+﻿using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using FLEX.Web.UserControls;
 using FLEX.Web.UserControls.Ajax;
 
 // ReSharper disable CheckNamespace
@@ -10,7 +8,7 @@ using FLEX.Web.UserControls.Ajax;
 namespace FLEX.Web.MasterPages
 // ReSharper restore CheckNamespace
 {
-   public interface IPageBase
+   public interface IHead
    {
       /// <summary>
       /// 
@@ -20,31 +18,11 @@ namespace FLEX.Web.MasterPages
       /// <summary>
       /// 
       /// </summary>
-      bool HasPageVisibleHandlers { get; }
-
-      /// <summary>
-      /// 
-      /// </summary>
-      HtmlForm MainForm { get; } 
-
-      /// <summary>
-      /// 
-      /// </summary>
-      MenuBar MenuBar { get; }
-
-      /// <summary>
-      /// 
-      /// </summary>
-      PageFooter PageFooter { get; }
+      HtmlForm MainForm { get; }
 
       /// <summary>
       /// 
       /// </summary>
       ScriptManager ScriptManager { get; }
-
-      /// <summary>
-      /// 
-      /// </summary>
-      event EventHandler Page_Visible;
    }
 }

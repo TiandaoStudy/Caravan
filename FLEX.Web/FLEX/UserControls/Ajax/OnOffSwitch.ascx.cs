@@ -78,13 +78,13 @@ namespace FLEX.Web.UserControls.Ajax
          get { return updPanel; }
       }
 
-      public void ActivatePostBack()
+      public void ActivateFullPostBack()
       {
          Master.ScriptManager.RegisterPostBackControl(btnON);
          Master.ScriptManager.RegisterPostBackControl(btnOFF);
       }
 
-      public void RegisterAsPostBackTrigger(UpdatePanel updatePanel)
+      public void RegisterAsFullPostBackTrigger(UpdatePanel updatePanel)
       {
          var trigger = new PostBackTrigger
          {

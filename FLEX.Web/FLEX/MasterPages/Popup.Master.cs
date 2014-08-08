@@ -9,9 +9,9 @@ using FLEX.Web.UserControls.Ajax;
 namespace FLEX.Web.MasterPages
 // ReSharper restore CheckNamespace
 {
-   public partial class Popup : MasterPage, IPopupBase
+   public partial class Popup : MasterPage, IPopup
    {
-      #region IPopupBase Members
+      #region IPopup Members
 
       public ErrorHandler ErrorHandler
       {
@@ -23,11 +23,17 @@ namespace FLEX.Web.MasterPages
          get { return Master.MainForm; }
       }
 
+      public ScriptManager ScriptManager
+      {
+         get { return Master.ScriptManager; }
+      }
+
       #endregion
 
       public void RegisterAlert(Page child, string message)
       {
-         // TODO
+         var script = String.Format("bootbox.alert('PROVA');", message);
+         ScriptManager.RegisterStartupScript(child, child.GetType(), "_Alert_", script, true);
       }
 
       public void RegisterCloseScript(Page child)
@@ -35,11 +41,6 @@ namespace FLEX.Web.MasterPages
          txtDoClose.Text = "CLOSE";
          var closeCallback = String.Format("document.getElementById('{0}').value = 'CLOSE'; checkClose();", txtDoClose.ClientID);
          RegisterStartupScript(Page, closeCallback, "_ReturnDataAndExit_");
-      }
-
-      public void RegisterMessage(Page child, string message)
-      {
-         // TODO
       }
 
       private static void RegisterStartupScript(Page child, string script, string scriptName)

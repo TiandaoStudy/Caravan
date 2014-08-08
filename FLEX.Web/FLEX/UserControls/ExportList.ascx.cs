@@ -219,7 +219,7 @@ namespace FLEX.Web.UserControls
          }
          catch (Exception ex)
          {
-            (Page.Master as IPageBase).ErrorHandler.CatchException(ex);
+            (Page.Master as IPage).ErrorHandler.CatchException(ex);
          }
       }
 

@@ -12,9 +12,9 @@ namespace FLEX.Web.UserControls
 {
    public abstract class ControlBase : UserControl
    {
-      public IPageBase Master
+      public IPage Master
       {
-         get { return Page.Master as IPageBase; }
+         get { return Page.Master as IPage; }
       }
 
       protected static string EncodeJsNumber(decimal d)

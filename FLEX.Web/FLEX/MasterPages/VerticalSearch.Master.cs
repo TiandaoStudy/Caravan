@@ -12,7 +12,7 @@ using ImageButton = FLEX.Web.UserControls.Ajax.ImageButton;
 namespace FLEX.Web.MasterPages
 // ReSharper restore CheckNamespace
 {
-   public partial class VerticalSearch : MasterPage, IPageBase
+   public partial class VerticalSearch : MasterPage, IPage
    {
       protected void Page_Init(object sender, EventArgs e)
       {
@@ -43,7 +43,7 @@ namespace FLEX.Web.MasterPages
 
       #endregion
 
-      #region IPageBase Members
+      #region IPage Members
 
       public ErrorHandler ErrorHandler
       {

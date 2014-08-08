@@ -9,7 +9,7 @@ using FLEX.Web.UserControls.Ajax;
 namespace FLEX.Web.MasterPages
 // ReSharper restore CheckNamespace
 {
-   public partial class MultiSelect : MasterPage, IPopupBase
+   public partial class MultiSelect : MasterPage, IPopup
    {
       #region Public Properties
 
@@ -45,7 +45,7 @@ namespace FLEX.Web.MasterPages
 
       #endregion
 
-      #region IPopupBase Members
+      #region IPopup Members
 
       public ErrorHandler ErrorHandler
       {
@@ -55,6 +55,16 @@ namespace FLEX.Web.MasterPages
       public HtmlForm MainForm
       {
          get { return Master.MainForm; }
+      }
+
+      public ScriptManager ScriptManager
+      {
+         get { return Master.ScriptManager; }
+      }
+
+      public void RegisterAlert(Page child, string message)
+      {
+         Master.RegisterAlert(child, message);
       }
 
       public void RegisterCloseScript(Page child)

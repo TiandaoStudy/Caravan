@@ -9,35 +9,30 @@ using FLEX.Web.MasterPages;
 namespace FLEX.Web.Pages
 // ReSharper restore CheckNamespace
 {
-   public abstract class PopupBase : Page, IPopupBase
+   public abstract class PopupBase : HeadBase, IPopup
    {
-      #region IPopupBase Members
+      #region IPopup Members
 
-      public UserControls.Ajax.ErrorHandler ErrorHandler
+      public void RegisterAlert(Page child, string message)
       {
-         get { return MasterPopup.ErrorHandler; }
+         MasterPopup.RegisterAlert(child, message);
       }
 
-      public HtmlForm MainForm
-      {
-         get { return MasterPopup.MainForm; }
-      }
-      
       public void RegisterCloseScript(Page child)
       {
-         MasterPopup.RegisterCloseScript(this);
+         MasterPopup.RegisterCloseScript(child);
       }
 
       #endregion
 
-      #region Private Members
+      #region Protected Members
 
-      private IPopupBase MasterPopup
+      protected IPopup MasterPopup
       {
          get
          {
-            Debug.Assert(Master is IPopupBase);
-            return Master as IPopupBase;
+            Debug.Assert(Master is IPopup);
+            return Master as IPopup;
          }
       }
 

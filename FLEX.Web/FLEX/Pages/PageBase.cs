@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Web;
 using System.Web.UI;
@@ -13,7 +14,7 @@ using FLEX.Web.UserControls;
 namespace FLEX.Web.Pages
 // ReSharper restore CheckNamespace
 {
-   public abstract class PageBase : Page, IPageBase
+   public abstract class PageBase : HeadBase, IPage
    {
       #region Constants
 
@@ -91,36 +92,36 @@ namespace FLEX.Web.Pages
 
       #endregion
 
-      #region IPageBase Members
+      #region IPage Members
 
       public UserControls.Ajax.ErrorHandler ErrorHandler
       {
-         get { return (Master as IPageBase).ErrorHandler; }
+         get { return MasterPage.ErrorHandler; }
       }
 
       public bool HasPageVisibleHandlers
       {
-         get { return (Master as IPageBase).HasPageVisibleHandlers; }
+         get { return MasterPage.HasPageVisibleHandlers; }
       }
 
       public HtmlForm MainForm
       {
-         get { return (Master as IPageBase).MainForm; }
+         get { return MasterPage.MainForm; }
       }
 
       public MenuBar MenuBar
       {
-         get { return (Master as IPageBase).MenuBar; }
+         get { return MasterPage.MenuBar; }
       }
 
       public PageFooter PageFooter
       {
-         get { return (Master as IPageBase).PageFooter; }
+         get { return MasterPage.PageFooter; }
       }
 
       public ScriptManager ScriptManager
       {
-         get { return (Master as IPageBase).ScriptManager; }
+         get { return MasterPage.ScriptManager; }
       }
 
       public event EventHandler Page_Visible;
@@ -149,6 +150,15 @@ namespace FLEX.Web.Pages
          // We generate a new ID, we store it in the view state and then we return.
          var newId = Random.Next(MinIdValue, MaxIdValue).ToString(CultureInfo.InvariantCulture);
          ViewState[IdViewStateKey] = newId;
+      }
+
+      protected IPage MasterPage
+      {
+         get
+         {
+            Debug.Assert(Master is IPopup);
+            return Master as IPage;
+         }
       }
 
       #endregion
