@@ -3,6 +3,9 @@ using System.Web.UI;
 
 namespace FLEX.Common.Web
 {
+   /// <summary>
+   ///   TODO
+   /// </summary>
    public interface IErrorManager
    {
       /// <summary>

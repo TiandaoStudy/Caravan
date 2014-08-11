@@ -1,34 +1,58 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using FLEX.Common.Collections;
 using Thrower;
 
 namespace FLEX.Common.Web
 {
-   public sealed class SearchCriteria
+   /// <summary>
+   ///   TODO
+   /// </summary>
+   [Serializable]
+   public sealed class SearchCriteria : IEnumerable<SearchCriteriaItem>
    {
-      private readonly Dictionary<string, ISearchControl> _observedControls;
+      private readonly Dictionary<string, ISearchControl> _observedControls = new Dictionary<string, ISearchControl>();
 
       public event Action<SearchCriteria, SearchCriteriaChangedArgs> CriteriaChanged;
 
       public event Action ClearingCriteria; 
 
-      public SearchCriteria()
+      #region Public Properties
+
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      public IEnumerable<string> Keys
       {
-         _observedControls = new Dictionary<string, ISearchControl>();
+         get { return _observedControls.Keys; }
       }
 
-      public IList<string> this[string searchTag]
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      public IEnumerable<IList<string>> Values
+      {
+         get { return _observedControls.Values.Select(v => v.SelectedValues); }
+      }
+
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="key"></param>
+      /// <returns></returns>
+      public IList<string> this[string key]
       {
          get
          {
-            searchTag = searchTag.ToLower();
-            Raise<ArgumentException>.IfIsNotContainedIn(searchTag, _observedControls);
-            return _observedControls[searchTag].SelectedValues;
+            key = key.ToLower();
+            Raise<ArgumentException>.IfIsNotContainedIn(key, _observedControls);
+            return _observedControls[key].SelectedValues;
          }
       }
+
+      #endregion
 
       public void ClearCriteria(object sender, EventArgs args)
       {
@@ -46,42 +70,66 @@ namespace FLEX.Common.Web
          }
       }
 
-      public void RegisterControl(ISearchControl searchControl, string searchTag)
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="control"></param>
+      /// <param name="key"></param>
+      public void RegisterControl(ISearchControl control, string key)
       {
-         Raise<ArgumentNullException>.IfIsNull(searchControl);
-         Raise<ArgumentException>.IfIsEmpty(searchTag);
+         Raise<ArgumentNullException>.IfIsNull(control);
+         Raise<ArgumentException>.IfIsEmpty(key);
          
-         searchTag = searchTag.ToLower();
-         if (_observedControls.ContainsKey(searchTag))
+         key = key.ToLower();
+         if (_observedControls.ContainsKey(key))
          {
             // Control is already observed, we need to update the references.
-            var ctrl = _observedControls[searchTag];
-            searchControl.CopySelectedValuesFrom(ctrl);
-            _observedControls[searchTag] = searchControl;
+            var ctrl = _observedControls[key];
+            control.CopySelectedValuesFrom(ctrl);
+            _observedControls[key] = control;
          }
          else
          {
-            _observedControls.Add(searchTag, searchControl);
+            _observedControls.Add(key, control);
          }
-         searchControl.ValueSelected += UpdateCriteria;
+         control.ValueSelected += UpdateCriteria;
       }
 
-      public void RegisterValue(string value, string searchTag)
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="value"></param>
+      /// <param name="key"></param>
+      public void RegisterValue(string value, string key)
       {
-         Raise<ArgumentException>.IfIsEmpty(searchTag);
+         Raise<ArgumentException>.IfIsEmpty(key);
          
          var searchControl = new FakeSearchControl(value);
-         searchTag = searchTag.ToLower();
-         if (_observedControls.ContainsKey(searchTag))
+         key = key.ToLower();
+         if (_observedControls.ContainsKey(key))
          {
             // Control is already observed, we need to update the references.
-            _observedControls[searchTag] = searchControl;
+            _observedControls[key] = searchControl;
          }
          else
          {
-            _observedControls.Add(searchTag, searchControl);
+            _observedControls.Add(key, searchControl);
          }
       }
+
+      #region IEnumerable Members
+
+      public IEnumerator<SearchCriteriaItem> GetEnumerator()
+      {
+         return _observedControls.Select(x => new SearchCriteriaItem {Key = x.Key, Values = x.Value.SelectedValues}).GetEnumerator();
+      }
+
+      IEnumerator IEnumerable.GetEnumerator()
+      {
+         return GetEnumerator();
+      }
+
+      #endregion
 
       private void UpdateCriteria(ISearchControl searchControl, SearchCriteriaSelectedArgs args)
       {
@@ -95,7 +143,7 @@ namespace FLEX.Common.Web
 
       private sealed class FakeSearchControl : ISearchControl
       {
-         private string _value;
+         private readonly string _value;
 
          public FakeSearchControl(string value)
          {
@@ -131,11 +179,20 @@ namespace FLEX.Common.Web
       }
    }
 
+   [Serializable]
+   public struct SearchCriteriaItem
+   {
+      public string Key { get; set; }
+      public IList<string> Values { get; set; }
+   }
+
+   [Serializable]
    public struct SearchCriteriaChangedArgs
    {
       // Empty, for now...
    }
 
+   [Serializable]
    public struct SearchCriteriaSelectedArgs
    {
       // Empty, for now...

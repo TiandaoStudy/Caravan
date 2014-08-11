@@ -390,7 +390,6 @@
     <Content Include="FLEX\Fonts\icomoon.svg" />
     <Content Include="FLEX\Fonts\ionicons.svg" />
     <Content Include="FLEX\Fonts\octicons.svg" />
-    <Content Include="FLEX\Images\bootstrap-checkbox.png" />
     <Content Include="FLEX\Images\logo-finsa.png" />
     <Content Include="FLEX\Images\pattern.png" />
     <Content Include="FLEX\Pages\CodeEditor.aspx">

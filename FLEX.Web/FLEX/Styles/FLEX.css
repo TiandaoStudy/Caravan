@@ -113,6 +113,17 @@ footer .navbar-default .navbar-nav > li > a {
 .vertical-search-criterium .input-group {
   margin-top: 0px;
 }
+#verticalSearchUpdateProgress {
+  background-image: url(../Images/progress-circle.gif);
+  background-repeat: no-repeat;
+  width: 200px;
+  height: 200px;
+  margin-top: 10%;
+}
+#btnCriteriaPlaceholder {
+  padding-top: 20%;
+  font-size: 18px;
+}
 /*******************************************************************************
   MODAL
 *******************************************************************************/

@@ -39,6 +39,7 @@ namespace FLEX.Common
       public const string XmlExtension = ".xml";
    }
 
+   [Serializable]
    public sealed class Pair<T1, T2>
    {
       internal Pair(T1 first, T2 second)

@@ -39,6 +39,9 @@
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/FLEX.Head.min.js<%=NoCacheTag%>"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/webLibrary.min.js<%=NoCacheTag%>"></script>
       
+      <!-- JavaScript defined in the user project; we may consider to include a whole folder in future releases -->
+      <script type="text/javascript" src="<%=MyFlexPath%>/Scripts/Common.min.js<%=NoCacheTag%>"></script>
+      
       <!-- JavaScript that must be put here in order to take advantage of the ASP.NET preprocessor -->
       <script type="text/javascript">
          // Session expiry management

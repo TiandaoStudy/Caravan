@@ -4,20 +4,7 @@
 <%@ Register TagPrefix="flex" TagName="ImageButton" Src="~/FLEX/UserControls/Ajax/ImageButton.ascx" %>
 <%@ Register TagPrefix="flex" TagName="SearchButton" Src="~/FLEX/UserControls/Ajax/SearchButton.ascx" %>
 
-<asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">
-
-   <style>
-      .fa-spin {
-         font-size: 10em;
-         margin-top: 5%;
-      }
-      
-      #btnCriteriaPlaceholder {
-         padding-top: 20%;
-         font-size: 18px;
-      }
-   </style>
-      
+<asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">     
    <script type="text/javascript">
       hasPageVisibleHandlers = <%= HasPageVisibleHandlers.ToString().ToLower() %>;
 
@@ -154,7 +141,7 @@
             <ajax:UpdateProgress ID="gridUpdateProgress" DisplayAfter="1" runat="server">
                <ProgressTemplate>
                   <div class="text-center">
-                     <i class="fa fa-spinner fa-spin"></i>
+                     <span id="verticalSearchUpdateProgress"></span>
                   </div>
                </ProgressTemplate>
             </ajax:UpdateProgress>

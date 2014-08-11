@@ -2,7 +2,7 @@
 
 <asp:Panel ID="pnlExport" CssClass="btn-group dropup" runat="server">
    <button class="btn btn-primary btn-sm"  data-toggle="dropdown" data-hover="dropdown" data-delay="300" id="btnExports" data-close-others="false">
-      Export <b class="caret"></b>
+      <b class="caret"></b>&nbsp;Export 
    </button>
    
    <ul class="dropdown-menu text-left" role="menu">
