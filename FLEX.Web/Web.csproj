@@ -405,6 +405,10 @@
     <Content Include="FLEX\Scripts\bootbox.min.js">
       <DependentUpon>bootbox.js</DependentUpon>
     </Content>
+    <Content Include="FLEX\Scripts\bootstrap-hover-dropdown.js" />
+    <Content Include="FLEX\Scripts\bootstrap-hover-dropdown.min.js">
+      <DependentUpon>bootstrap-hover-dropdown.js</DependentUpon>
+    </Content>
     <Content Include="FLEX\Scripts\bootstrap-touchspin.js" />
     <Content Include="FLEX\Scripts\bootstrap-touchspin.min.js">
       <DependentUpon>bootstrap-touchspin.js</DependentUpon>
@@ -631,6 +635,9 @@
     </None>
     <None Include="FLEX\Scripts\bootstrap-file-input.min.js.map">
       <DependentUpon>bootstrap-file-input.js</DependentUpon>
+    </None>
+    <None Include="FLEX\Scripts\bootstrap-hover-dropdown.min.js.map">
+      <DependentUpon>bootstrap-hover-dropdown.js</DependentUpon>
     </None>
     <None Include="FLEX\Scripts\bootstrap-switch.min.js.map">
       <DependentUpon>bootstrap-switch.js</DependentUpon>
