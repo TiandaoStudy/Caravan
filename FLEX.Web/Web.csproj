@@ -240,6 +240,13 @@
     <Compile Include="FLEX\UserControls\ControlBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="FLEX\UserControls\FileUpload.ascx.cs">
+      <DependentUpon>FileUpload.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\FileUpload.ascx.designer.cs">
+      <DependentUpon>FileUpload.ascx</DependentUpon>
+    </Compile>
     <Compile Include="FLEX\UserControls\LongTextContainer.ascx.cs">
       <DependentUpon>LongTextContainer.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -453,6 +460,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\UserControls\Ajax\SearchButton.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\UserControls\FileUpload.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\UserControls\LongTextContainer.ascx">

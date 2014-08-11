@@ -43,7 +43,6 @@ root.setTextBoxValue = (textBox, value) ->
 root.bootstrapifyControls = () ->
    # Makes form elements prettier
    $(".form-group input[type=text], .form-group textarea, .form-group select").addClass("form-control")
-   $('input[type=file]').bootstrapFileInput()
 
 root.randomQueryTag = (opts) ->
    defaults = {isFirst: false}

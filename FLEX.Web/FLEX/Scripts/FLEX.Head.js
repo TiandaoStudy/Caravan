@@ -50,8 +50,7 @@
   };
 
   root.bootstrapifyControls = function() {
-    $(".form-group input[type=text], .form-group textarea, .form-group select").addClass("form-control");
-    return $('input[type=file]').bootstrapFileInput();
+    return $(".form-group input[type=text], .form-group textarea, .form-group select").addClass("form-control");
   };
 
   root.randomQueryTag = function(opts) {

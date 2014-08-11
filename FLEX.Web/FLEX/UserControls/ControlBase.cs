@@ -17,6 +17,16 @@ namespace FLEX.Web.UserControls
          get { return Page.Master as IHead; }
       }
 
+      public string JQueryID()
+      {
+         return JQueryID(this);
+      }
+
+      public string JQueryID(Control control)
+      {
+         return String.Format("\"#{0}\"", control.ClientID);
+      }
+
       protected static string EncodeJsNumber(decimal d)
       {
          return Convert.ToString(d, CultureInfo.InvariantCulture);
