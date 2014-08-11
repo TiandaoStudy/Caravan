@@ -12,7 +12,7 @@ using FLEX.Web.UserControls.Ajax;
 namespace FLEX.Web.MasterPages
 // ReSharper restore CheckNamespace
 {
-   public partial class Head : MasterPage
+   public partial class Head : MasterPage, IHead
    {
       private static readonly string CachedRootPath;
       private static readonly string CachedFlexPath;

@@ -7,7 +7,7 @@ using System.Web.UI;
 namespace FLEX.Web.Pages
 // ReSharper restore CheckNamespace
 {
-    public partial class ErrorHandler : Page
+    public partial class ErrorHandler : PageBase
     {
         protected void Page_Load(object sender, EventArgs e)
         {

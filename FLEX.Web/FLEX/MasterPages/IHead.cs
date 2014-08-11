@@ -8,20 +8,23 @@ using FLEX.Web.UserControls.Ajax;
 namespace FLEX.Web.MasterPages
 // ReSharper restore CheckNamespace
 {
+   /// <summary>
+   ///   TODO
+   /// </summary>
    public interface IHead
    {
       /// <summary>
-      /// 
+      ///   TODO
       /// </summary>
       ErrorHandler ErrorHandler { get; }
 
       /// <summary>
-      /// 
+      ///   TODO
       /// </summary>
       HtmlForm MainForm { get; }
 
       /// <summary>
-      /// 
+      ///   TODO
       /// </summary>
       ScriptManager ScriptManager { get; }
    }

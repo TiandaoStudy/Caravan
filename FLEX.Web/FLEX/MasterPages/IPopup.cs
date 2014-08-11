@@ -6,10 +6,22 @@
 namespace FLEX.Web.MasterPages
 // ReSharper restore CheckNamespace
 {
-  public interface IPopup : IHead
-  {
-     void RegisterAlert(Page child, string message);
+   /// <summary>
+   ///   TODO
+   /// </summary>
+   public interface IPopup : IHead
+   {
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      /// <param name="child"></param>
+      /// <param name="message"></param>
+      void RegisterAlert(Page child, string message);
 
-     void RegisterCloseScript(Page child);
-  }
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      /// <param name="child"></param>
+      void RegisterCloseScript(Page child);
+   }
 }

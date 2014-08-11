@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using FLEX.Web.MasterPages;
 
 // ReSharper disable CheckNamespace

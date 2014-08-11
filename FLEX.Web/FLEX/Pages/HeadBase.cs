@@ -9,8 +9,30 @@ using FLEX.Web.MasterPages;
 namespace FLEX.Web.Pages
 // ReSharper restore CheckNamespace
 {
+   /// <summary>
+   ///   TODO
+   /// </summary>
    public abstract class HeadBase : Page, IHead
    {
+      #region IHead Members
+
+      public UserControls.Ajax.ErrorHandler ErrorHandler
+      {
+         get { return MasterHead.ErrorHandler; }
+      }
+
+      public HtmlForm MainForm
+      {
+         get { return MasterHead.MainForm; }
+      }
+
+      public ScriptManager ScriptManager
+      {
+         get { return MasterHead.ScriptManager; }
+      }
+
+      #endregion
+
       #region Private Members
 
       private IHead MasterHead
@@ -22,10 +44,6 @@ namespace FLEX.Web.Pages
          }
       }
 
-      #endregion
-
-      public UserControls.Ajax.ErrorHandler ErrorHandler { get; private set; }
-      public HtmlForm MainForm { get; private set; }
-      public ScriptManager ScriptManager { get; private set; }
+      #endregion      
    }
 }
