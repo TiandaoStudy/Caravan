@@ -42,6 +42,12 @@ namespace FLEX.Web.UserControls.Ajax
          set { btn.OnClientClick = String.IsNullOrWhiteSpace(value) ? String.Empty : value; }
       }
 
+      public string ValidationGroup
+      {
+         get { return btn.ValidationGroup; }
+         set { btn.ValidationGroup = value; }
+      }
+
       #endregion
 
       #region IAjaxControl Members
