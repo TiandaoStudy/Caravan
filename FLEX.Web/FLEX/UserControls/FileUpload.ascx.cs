@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.UI.HtmlControls;
 using FLEX.Common.Data;
 
 // ReSharper disable CheckNamespace
@@ -26,6 +27,14 @@ namespace FLEX.Web.UserControls
       }
 
       #region Public Properties
+
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      public HtmlInputFile Input
+      {
+         get { return inputFileUpload; }
+      }
 
       /// <summary>
       ///   TODO
