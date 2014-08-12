@@ -38,9 +38,9 @@
     <DocumentationFile>bin\Release\FLEX.Web.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Armando, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Armando, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.Armando.0.1.5-alpha\lib\net40\Armando.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.Armando.0.1.6\lib\net40\Armando.dll</HintPath>
     </Reference>
     <Reference Include="ClosedXML, Version=0.74.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -142,6 +142,13 @@
     </Compile>
     <Compile Include="FLEX\Pages\CodeEditor.aspx.designer.cs">
       <DependentUpon>CodeEditor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\Pages\ReportViewer.aspx.cs">
+      <DependentUpon>ReportViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\ReportViewer.aspx.designer.cs">
+      <DependentUpon>ReportViewer.aspx</DependentUpon>
     </Compile>
     <Compile Include="FLEX\Pages\HeadBase.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -326,6 +333,10 @@
     <Compile Include="FLEX\MasterPages\VerticalSearch.Master.designer.cs">
       <DependentUpon>VerticalSearch.Master</DependentUpon>
     </Compile>
+    <Compile Include="IErrorManager.cs" />
+    <Compile Include="Instances.cs" />
+    <Compile Include="IPageManager.cs" />
+    <Compile Include="ISecurityManager.cs" />
     <Compile Include="Item.Serialization.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
@@ -403,6 +414,9 @@
     <Content Include="FLEX\Images\logo-finsa.png" />
     <Content Include="FLEX\Images\pattern.png" />
     <Content Include="FLEX\Pages\CodeEditor.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\Pages\ReportViewer.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\Pages\LogSearch.aspx">

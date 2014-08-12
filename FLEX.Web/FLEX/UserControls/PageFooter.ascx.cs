@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Web.UI;
-using FLEX.Common;
 using FLEX.Common.Data;
-using FLEX.Common.Web;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -23,9 +20,7 @@ namespace FLEX.Web.UserControls
             // ...
             if (IsPostBack) return;
             
-            var pageManagerTypeInfo = Configuration.Instance.PageManagerTypeInfo;
-            var pageManager = ServiceLocator.Load<IPageManager>(pageManagerTypeInfo);
-            rptFooterInfo.DataSource = pageManager.GetFooterInfo();
+            rptFooterInfo.DataSource = PageManager.Instance.GetFooterInfo();
             rptFooterInfo.DataBind();
          }
          catch (Exception ex)

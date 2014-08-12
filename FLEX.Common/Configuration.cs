@@ -15,7 +15,6 @@ namespace FLEX.Common
       private const string BufferSizeInBytesForBufferedIOKey = "BufferSizeInBytesForBufferedIO";
       private const string ConnectionStringKey = "ConnectionString";
       private const string DbLoggerTypeInfoKey = "DbLoggerTypeInfo";
-      private const string ErrorManagerTypeInfoKey = "ErrorManagerTypeInfo";
       private const string QueryExecutorTypeInfoKey = "QueryExecutorTypeInfo";
 
       private static readonly Configuration CachedInstance = ConfigurationManager.GetSection(SectionName) as Configuration;
@@ -50,12 +49,6 @@ namespace FLEX.Common
       public string DbLoggerTypeInfo
       {
          get { return (string) this[DbLoggerTypeInfoKey]; }
-      }
-
-      [ConfigurationProperty(ErrorManagerTypeInfoKey, IsRequired = true)]
-      public string ErrorManagerTypeInfo
-      {
-         get { return (string) this[ErrorManagerTypeInfoKey]; }
       }
 
       [ConfigurationProperty(QueryExecutorTypeInfoKey, IsRequired = true)]

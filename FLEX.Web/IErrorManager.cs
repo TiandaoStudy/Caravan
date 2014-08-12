@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.UI;
 
-namespace FLEX.Common.Web
+namespace FLEX.Web
 {
    /// <summary>
    ///   TODO

@@ -1,7 +1,10 @@
 ﻿using System.Security.Principal;
 
-namespace FLEX.Common.Web
+namespace FLEX.Web
 {
+   /// <summary>
+   /// 
+   /// </summary>
    public interface ISecurityManager
    {
       /// <summary>

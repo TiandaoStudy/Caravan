@@ -87,11 +87,7 @@
     <Compile Include="ServiceLocator.cs" />
     <Compile Include="Testing\RandomDataTableGenerator.cs" />
     <Compile Include="Text\StringExtensions.cs" />
-    <Compile Include="Web\IErrorManager.cs" />
-    <Compile Include="Web\Instances.cs" />
-    <Compile Include="Web\IPageManager.cs" />
     <Compile Include="Web\ISearchControl.cs" />
-    <Compile Include="Web\ISecurityManager.cs" />
     <Compile Include="Web\SearchCriteria.cs" />
     <Compile Include="Text\FastReplacer.cs" />
   </ItemGroup>
