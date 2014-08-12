@@ -1,17 +1,15 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using ClosedXML.Excel;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using System.Text;
-using FLEX.Web.MasterPages;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -21,11 +19,6 @@ namespace FLEX.Web.UserControls
 {
    public partial class ExportList : ControlBase
    {
-      protected ExportList()
-      {
-         // Empty, for now...
-      }
-
       protected void Page_Load(object sender, EventArgs e)
       {
          Master.ScriptManager.RegisterPostBackControl(lnkbExcel);
@@ -68,7 +61,7 @@ namespace FLEX.Web.UserControls
       public DataTable DataSource { get; set; }
 
       public string ReportName { get; set; }
-    
+
       #endregion
 
       #region Public Methods
@@ -104,7 +97,7 @@ namespace FLEX.Web.UserControls
          }
          catch (Exception ex)
          {
-           Master.ErrorHandler.CatchException(ex);
+            Master.ErrorHandler.CatchException(ex);
          }
       }
 
@@ -120,13 +113,13 @@ namespace FLEX.Web.UserControls
                PdfWriter.GetInstance(pdfDoc, HttpContext.Current.Response.OutputStream);
                var pdfTable = new PdfPTable(DataSource.Columns.Count) {WidthPercentage = 100};
 
-               var headerFont = new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD);
+               var headerFont = new Font(Font.HELVETICA, 8, Font.BOLD);
                foreach (DataColumn c in DataSource.Columns)
                {
                   pdfTable.AddCell(new Phrase(c.ColumnName, headerFont));
                }
 
-               var bodyFont = new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.NORMAL);
+               var bodyFont = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL);
                for (var row = 0; row < DataSource.Rows.Count; row++)
                {
                   for (var col = 0; col < DataSource.Columns.Count; col++)
@@ -136,7 +129,7 @@ namespace FLEX.Web.UserControls
                      pdfTable.AddCell(pdfPCell);
                   }
                }
-               
+
                pdfDoc.Open();
                pdfTable.SpacingBefore = 15.0F; //Give some space after the text or it may overlap the table            
                pdfDoc.Add(pdfTable); //add pdf table to the document   
@@ -145,7 +138,7 @@ namespace FLEX.Web.UserControls
                var response = HttpContext.Current.Response;
                response.AddHeader("content-disposition", "attachment;filename=" + ReportName + "PDF.pdf");
                response.ContentType = "pdf/application";
-               
+
                response.Write(pdfDoc);
                response.OutputStream.Flush();
                response.End();
@@ -185,7 +178,6 @@ namespace FLEX.Web.UserControls
          }
          catch (Exception ex)
          {
-
             Master.ErrorHandler.CatchException(ex);
          }
       }
@@ -219,15 +211,15 @@ namespace FLEX.Web.UserControls
          }
          catch (Exception ex)
          {
-            (Page.Master as IPage).ErrorHandler.CatchException(ex);
+            Master.ErrorHandler.CatchException(ex);
          }
       }
 
       private static string QuoteValue(string value)
       {
-          return string.Concat("\"", value.Replace("\"", "\"\""), "\"");
+         return string.Concat("\"", value.Replace("\"", "\"\""), "\"");
       }
-  
+
       #endregion
 
       #region Public Members
