@@ -11,7 +11,7 @@ function openHelp () {
 	{return true}		
 }
 
-function openReportViewer(url) {
+function openOldReportViewer(url) {
 	window.open('ReportViewer.aspx?' + url,(new Date()).getTime().toString(),'height=' + (window.screen.availHeight - 60) + ', width=' + (window.screen.availWidth - 10) + ', top=0, left=0, menubar=0, location=0, resizable=1, status=0, scrollbars=0, toolbar=0');
 	return true;
 }

@@ -83,6 +83,16 @@ namespace FLEX.Web.UserControls.Ajax
 
       #endregion
 
+      #region AjaxControlBase Members
+
+      protected override void OnEnabledChanged(bool enabled)
+      {
+         base.OnEnabledChanged(enabled);
+         btn.Enabled = enabled;
+      }
+
+      #endregion
+
       public event EventHandler Click;
 
       #region Private Members

@@ -112,9 +112,9 @@
 
   root.openReportViewer = function(reportName, reportTitle) {
     openModal({
-      url: root.settings.flexPath + ("/Pages/ReportViewer?reportName=" + reportName) + randomQueryTag(),
-      width: "800px",
-      height: "500px",
+      url: root.settings.flexPath + ("/Pages/ReportViewer.aspx?reportName=" + reportName) + randomQueryTag(),
+      width: "1050px",
+      height: "620px",
       title: reportTitle,
       draggable: true
     });

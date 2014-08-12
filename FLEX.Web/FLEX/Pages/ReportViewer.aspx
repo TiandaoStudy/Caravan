@@ -5,14 +5,19 @@
 
 <asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">
    <title>Report Viewer</title>
+   <style>
+      #mainContainer {
+         padding: 0;
+      }
+   </style>
 </asp:Content>
 
 <asp:Content ID="aspMainContent" ContentPlaceHolderID="mainContent" runat="server">
-   <rsweb:ReportViewer ID="myReportViewer" runat="server" Width="700px"></rsweb:ReportViewer>
+   <rsweb:ReportViewer ID="myReportViewer" runat="server" Width="1000px" Height="500px"></rsweb:ReportViewer>
 </asp:Content>
 
 <asp:Content ID="aspRightButtonsContent" ContentPlaceHolderID="buttonsContent" runat="server">
-   <flex:ImageButton runat="server" ID="btnExit" DoPostBack="False" OnClientClick="closeWindow();" ButtonClass="btn btn-primary btn-sm" ButtonText="Exit" IconClass="glyphicon glyphicon-remove" />
+   <flex:ImageButton runat="server" ID="btnExit" OnClientClick="closeWindow(); return false;" ButtonClass="btn btn-primary btn-sm" ButtonText="Exit" IconClass="glyphicon glyphicon-remove" />
 </asp:Content>
 
 <asp:Content ID="aspHiddenContent" ContentPlaceHolderID="hiddenContent" runat="server">
