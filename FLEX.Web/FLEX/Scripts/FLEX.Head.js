@@ -15,6 +15,8 @@
 
     Settings.minFormOffset = 10;
 
+    Settings.flexPath = "";
+
     Settings.sessionTimeoutInMilliseconds = 0;
 
     Settings.sessionExpiredPageUrl = "";
@@ -98,7 +100,7 @@
   };
 
   root.displaySystemError = function() {
-    return window.open("FLEX/Pages/ErrorHandler.aspx", "SystemError", "menubar=no,location=yes,resizable=yes,scrollbars=yes,status=no,height=500,width=800");
+    return window.open(root.settings.flexPath + "/Pages/ErrorHandler.aspx", "SystemError", "menubar=no,location=yes,resizable=yes,scrollbars=yes,status=no,height=500,width=800");
   };
 
   root.triggerAsyncPostBack = function(hiddenTriggerId) {
@@ -106,6 +108,17 @@
     hiddenTrigger = $("#" + hiddenTriggerId);
     hiddenTrigger.val(Math.random());
     return hiddenTrigger.change();
+  };
+
+  root.openReportViewer = function(reportName, reportTitle) {
+    openModal({
+      url: root.settings.flexPath + ("/Pages/ReportViewer?reportName=" + reportName) + randomQueryTag(),
+      width: "800px",
+      height: "500px",
+      title: reportTitle,
+      draggable: true
+    });
+    return false;
   };
 
   root.disableButtonsBeforePostBack = function() {

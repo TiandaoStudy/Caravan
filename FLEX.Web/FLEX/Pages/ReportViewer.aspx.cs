@@ -10,6 +10,21 @@ namespace FLEX.Web.Pages
    {
       protected void Page_Load(object sender, EventArgs e)
       {
+         if (!IsPostBack)
+         {
+            var reportName = Request["reportName"];
+            var reportInit = PageManager.Instance.GetReportInitializer(reportName);
+            reportInit.InitializeReport(myReportViewer);
+         }      
       }
+
+      #region Public Properties
+
+      public Microsoft.Reporting.WebForms.ReportViewer Viewer
+      {
+         get { return myReportViewer; }
+      }
+
+      #endregion
    }
 }

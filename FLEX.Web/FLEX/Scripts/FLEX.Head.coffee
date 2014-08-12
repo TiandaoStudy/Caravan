@@ -10,6 +10,7 @@ class Settings
    @beginAjaxRequest: "beginAjaxRequest"
    @endAjaxRequest: "endAjaxRequest"
    @minFormOffset: 10
+   @flexPath: "" # This variable is set in Head.Master
    @sessionTimeoutInMilliseconds: 0 # This variable is set in Head.Master
    @sessionExpiredPageUrl: "" # This variable is set in Head.Master
    
@@ -92,7 +93,7 @@ root.fixDataGridPager = (tableId) ->
 ################################################################################
 
 root.displaySystemError = () ->
-   window.open("FLEX/Pages/ErrorHandler.aspx", "SystemError",
+   window.open(root.settings.flexPath + "/Pages/ErrorHandler.aspx", "SystemError",
                "menubar=no,location=yes,resizable=yes,scrollbars=yes,status=no,height=500,width=800")
 
 ################################################################################
@@ -103,6 +104,20 @@ root.triggerAsyncPostBack = (hiddenTriggerId) ->
    hiddenTrigger = $("##{hiddenTriggerId}")
    hiddenTrigger.val(Math.random())
    hiddenTrigger.change()
+   
+################################################################################
+# ReportViewer
+################################################################################
+
+root.openReportViewer = (reportName, reportTitle) ->
+   openModal(
+      url: root.settings.flexPath + "/Pages/ReportViewer?reportName=#{reportName}" + randomQueryTag(),
+      width: "800px",
+      height: "500px"
+      title: reportTitle
+      draggable: true
+   )
+   return false
    
 ################################################################################
 # PostBack Management

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using FLEX.Common;
-using Microsoft.Reporting.WebForms;
 
 namespace FLEX.Web
 {
@@ -32,6 +31,6 @@ namespace FLEX.Web
       /// 
       /// </summary>
       /// <param name="reportViewer"></param>
-      void InitializeReport(ReportViewer reportViewer);
+      void InitializeReport(Microsoft.Reporting.WebForms.ReportViewer reportViewer);
    }
 }

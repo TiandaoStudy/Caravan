@@ -44,6 +44,7 @@
       
       <!-- JavaScript that must be put here in order to take advantage of the ASP.NET preprocessor -->
       <script type="text/javascript">
+         settings.flexPath = "<%= FlexPath %>";
          // Session expiry management
          settings.sessionTimeoutInMilliseconds = <%= (Session.Timeout - 1) * 60 * 1000 %>;
          settings.sessionExpiredPageUrl = "<%= RootPath + FLEX.Web.Configuration.Instance.SessionExpiredPageUrl %>";
