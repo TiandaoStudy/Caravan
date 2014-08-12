@@ -113,10 +113,10 @@ footer .navbar-default .navbar-nav > li > a {
 .vertical-search-criterium .input-group {
   margin-top: 0px;
 }
-#verticalSearchUpdateProgress {
-  width: 200px;
-  height: 200px;
-  margin-top: 10%;
+.vertical-search-update-progress {
+  width: 15%;
+  height: 15%;
+  margin-top: 5%;
 }
 #btnCriteriaPlaceholder {
   padding-top: 20%;
