@@ -114,8 +114,6 @@ footer .navbar-default .navbar-nav > li > a {
   margin-top: 0px;
 }
 #verticalSearchUpdateProgress {
-  background-image: url(../Images/progress-circle.gif);
-  background-repeat: no-repeat;
   width: 200px;
   height: 200px;
   margin-top: 10%;
@@ -575,7 +573,8 @@ footer .navbar-default .navbar-nav > li > a {
   AUTO SUGGEST
 *******************************************************************************/
 .ui-autocomplete-loading {
-  background: #ffffff url('../Images/progress-circle.gif') right center no-repeat;
+  background: #ffffff url('../Images/progress-circle.gif') right 1% center no-repeat;
+  background-size: 5% auto;
 }
 .ui-autocomplete {
   overflow-y: auto;
