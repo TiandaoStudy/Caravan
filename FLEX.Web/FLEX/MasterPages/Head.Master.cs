@@ -1,10 +1,9 @@
 ﻿using System;
-using System.IO;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using FLEX.Web.UserControls.Ajax;
+using WebMarkupMin.WebForms.MasterPages;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -12,7 +11,7 @@ using FLEX.Web.UserControls.Ajax;
 namespace FLEX.Web.MasterPages
 // ReSharper restore CheckNamespace
 {
-   public partial class Head : MasterPage, IHead
+   public partial class Head : MinifiedAndCompressedHtmlMasterPage, IHead
    {
       private static readonly string CachedRootPath;
       private static readonly string CachedFlexPath;
@@ -24,6 +23,12 @@ namespace FLEX.Web.MasterPages
          CachedRootPath = FullyQualifiedApplicationPath;
          CachedFlexPath = CachedRootPath + "FLEX";
          CachedMyFlexPath = CachedRootPath + "MyFLEX";
+      }
+
+      protected Head()
+      {
+         EnableCompression = true;
+         EnableMinification = true;
       }
 
       #region Public Properties
@@ -70,28 +75,6 @@ namespace FLEX.Web.MasterPages
             return String.Format(tagFmt, randInt);
          }
       }
-
-      #region Whitespace Remover
-
-      private static readonly Regex RegexBetweenTags = new Regex(@">(?! )\s+", RegexOptions.Compiled);
-      private static readonly Regex RegexLineBreaks = new Regex(@"([\n\s])+?(?<= {2,})<", RegexOptions.Compiled);
-
-      protected override void Render(HtmlTextWriter writer)
-      {
-         using (var htmlwriter = new HtmlTextWriter(new StringWriter()))
-         {
-            base.Render(htmlwriter);
-            var html = htmlwriter.InnerWriter.ToString();
-
-            // Trim the whitespace from the 'html' variable
-            html = RegexBetweenTags.Replace(html, ">");
-            html = RegexLineBreaks.Replace(html, "<");
-
-            writer.Write(html.Trim());
-         }
-      }
-
-      #endregion
 
       /// <summary>
       ///   Taken here: http://devio.wordpress.com/2009/10/19/get-absolut-url-of-asp-net-application/

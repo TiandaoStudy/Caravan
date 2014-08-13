@@ -112,7 +112,7 @@ root.triggerAsyncPostBack = (hiddenTriggerId) ->
 root.openReportViewer = (reportName, reportTitle) ->
    openModal(
       url: root.settings.flexPath + "/Pages/ReportViewer.aspx?reportName=#{reportName}" + randomQueryTag(),
-      width: "1050px",
+      width: "1000px", # One pixel more than the width specified in Pages/ReportViewer.aspx
       height: "620px"
       title: reportTitle
       draggable: true

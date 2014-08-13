@@ -7,13 +7,16 @@
    <title>Report Viewer</title>
    <style>
       #mainContainer {
-         padding: 0;
+         padding-left: 8px;
+         padding-right: 8px;
+         padding-top: 0;
       }
    </style>
 </asp:Content>
 
 <asp:Content ID="aspMainContent" ContentPlaceHolderID="mainContent" runat="server">
-   <rsweb:ReportViewer ID="myReportViewer" runat="server" Width="1000px" Height="500px"></rsweb:ReportViewer>
+   <!-- Width should be one pixel less than the one specified in Scripts/FLEX.Head.Coffee -> openReportViewer(...) -->
+   <rsweb:ReportViewer ID="myReportViewer" runat="server" Width="999px" Height="500px"></rsweb:ReportViewer>
 </asp:Content>
 
 <asp:Content ID="aspRightButtonsContent" ContentPlaceHolderID="buttonsContent" runat="server">
