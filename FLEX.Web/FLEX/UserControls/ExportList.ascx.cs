@@ -79,7 +79,7 @@ namespace FLEX.Web.UserControls
 
                var response = HttpContext.Current.Response;
 
-               response.AddHeader("content-disposition", "attachment;filename=" + ReportName + "Excel.xlsx");
+               response.AddHeader("content-disposition", "attachment;filename=" + ReportName + ".xlsx");
                response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
                using (var memoryStream = new MemoryStream())
@@ -132,7 +132,7 @@ namespace FLEX.Web.UserControls
                pdfDoc.Close();
 
                var response = HttpContext.Current.Response;
-               response.AddHeader("content-disposition", "attachment;filename=" + ReportName + "PDF.pdf");
+               response.AddHeader("content-disposition", "attachment;filename=" + ReportName + ".pdf");
                response.ContentType = "pdf/application";
 
                response.Write(pdfDoc);
@@ -155,7 +155,7 @@ namespace FLEX.Web.UserControls
             {
                var response = HttpContext.Current.Response;
 
-               response.AddHeader("content-disposition", "attachment;filename=" + ReportName + "CSV.csv");
+               response.AddHeader("content-disposition", "attachment;filename=" + ReportName + ".csv");
                response.ContentType = "application/csv";
 
                using (var memoryStream = new MemoryStream())

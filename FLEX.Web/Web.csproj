@@ -111,9 +111,6 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Core\BaseStatePersister.cs" />
     <Compile Include="Core\CacheViewStatePersister.cs" />
-    <Compile Include="Core\GridPager.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Core\SimpleNotifyPropertyChangedBase.cs" />
     <Compile Include="Core\ViewStateStorageSettings.cs" />
     <Compile Include="ErrorMessages.Designer.cs">
