@@ -79,10 +79,6 @@ namespace FLEX.Web.UserControls
 
                var response = HttpContext.Current.Response;
 
-               response.Clear();
-               response.ClearContent();
-               response.ClearHeaders();
-
                response.AddHeader("content-disposition", "attachment;filename=" + ReportName + "Excel.xlsx");
                response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
@@ -158,9 +154,6 @@ namespace FLEX.Web.UserControls
             if (DataSource != null)
             {
                var response = HttpContext.Current.Response;
-               response.Clear();
-               response.ClearContent();
-               response.ClearHeaders();
 
                response.AddHeader("content-disposition", "attachment;filename=" + ReportName + "CSV.csv");
                response.ContentType = "application/csv";
