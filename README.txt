@@ -4,3 +4,4 @@ Mappa versioni:
 *.0 -> Common
 *.1 -> Web
 *.2 -> Data
+*.3 -> Web.CodeEditor
