@@ -27,8 +27,8 @@ namespace FLEX.Web.MasterPages
 
       protected Head()
       {
-         EnableCompression = true;
-         EnableMinification = true;
+         EnableCompression = Configuration.Instance.EnableOutputCompression;
+         EnableMinification = Configuration.Instance.EnableOutputMinification;
       }
 
       #region Public Properties

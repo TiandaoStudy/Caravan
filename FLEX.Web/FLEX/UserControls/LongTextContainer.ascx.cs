@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web.UI;
 using Thrower;
 
 // ReSharper disable CheckNamespace
@@ -10,7 +9,7 @@ namespace FLEX.Web.UserControls
 {
    public partial class LongTextContainer : ControlBase
    {
-      private string _text = String.Empty;
+      private const string AAAAA = "LongTextContainer.Text";
 
       #region Public Properties
 
@@ -22,7 +21,7 @@ namespace FLEX.Web.UserControls
 
       public string Text
       {
-         get { return _text; }
+         get { return (string) (ViewState[AAAAA] ?? ""); }
          set
          {
             Raise<ArgumentNullException>.IfIsNull(value, "Text property cannot be null");           
@@ -35,7 +34,7 @@ namespace FLEX.Web.UserControls
             {
                ShortenedText = value.Substring(0, MaxTextLength).Replace(Environment.NewLine, "") + "...";
             }
-            _text = value.Replace(Environment.NewLine, "<br/>"); // Text should not have normal line breaks (it is HTML).
+            ViewState[AAAAA] = value.Replace(Environment.NewLine, "<br/>"); // Text should not have normal line breaks (it is HTML).
          }
       }
 

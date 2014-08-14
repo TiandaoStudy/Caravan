@@ -11,6 +11,8 @@ namespace FLEX.Web
       private const string SectionName = "FlexWebConfiguration";
       private const string CheckSecurityKey = "CheckSecurity";
       private const string ControlExtendersFolderKey = "ControlExtendersFolder";
+      private const string EnableOutputCompressionKey = "EnableOutputCompression";
+      private const string EnableOutputMinificationKey = "EnableOutputMinification";
       private const string ErrorManagerTypeInfoKey = "ErrorManagerTypeInfo";
       private const string PageManagerTypeInfoKey = "PageManagerTypeInfo";
       private const string SecurityManagerTypeInfoKey = "SecurityManagerTypeInfo";
@@ -27,6 +29,18 @@ namespace FLEX.Web
       public bool CheckSecurity
       {
          get { return (bool) this[CheckSecurityKey]; }
+      }
+
+      [ConfigurationProperty(EnableOutputCompressionKey, IsRequired = false, DefaultValue = true)]
+      public bool EnableOutputCompression
+      {
+         get { return (bool) this[EnableOutputCompressionKey]; }
+      }
+
+      [ConfigurationProperty(EnableOutputMinificationKey, IsRequired = false, DefaultValue = true)]
+      public bool EnableOutputMinification
+      {
+         get { return (bool) this[EnableOutputMinificationKey]; }
       }
 
       [ConfigurationProperty(ControlExtendersFolderKey, IsRequired = true)]
