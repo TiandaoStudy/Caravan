@@ -84,6 +84,7 @@ namespace FLEX.Web.UserControls
       {
          base.OnPagePreLoad(sender, e);
          DataSource = ViewState[DataSrcViewStateTag];
+         DataBind();
       }
 
       private void OnPageIndexChanging(object s, GridViewPageEventArgs e)
