@@ -2,7 +2,11 @@
 using System.Diagnostics;
 using System.Web.UI;
 
+// ReSharper disable CheckNamespace
+// This is the correct namespace, despite the file physical position.
+
 namespace FLEX.Web.WebControls.Templates
+// ReSharper restore CheckNamespace
 {
    internal class ControlTemplate<TControl> : ITemplate where TControl : Control, new()
    {

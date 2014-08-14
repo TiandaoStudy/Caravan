@@ -293,9 +293,7 @@
     </Compile>
     <Compile Include="FLEX\WebControls\Templates\ControlTemplate.cs" />
     <Compile Include="FLEX\WebControls\Templates\DataGridEmpty.cs" />
-    <Compile Include="FLEX\WebControls\Templates\DataGridPager.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="FLEX\WebControls\Templates\DataGridPager.cs" />
     <Compile Include="FLEX\WebControls\DataGrid.cs" />
     <Compile Include="FLEX\MasterPages\Base.Master.cs">
       <DependentUpon>Base.Master</DependentUpon>
