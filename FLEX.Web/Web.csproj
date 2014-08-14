@@ -339,6 +339,7 @@
     <Compile Include="FLEX\MasterPages\VerticalSearch.Master.designer.cs">
       <DependentUpon>VerticalSearch.Master</DependentUpon>
     </Compile>
+    <Compile Include="GlobalHelper.cs" />
     <Compile Include="IErrorManager.cs" />
     <Compile Include="Instances.cs" />
     <Compile Include="IPageManager.cs" />

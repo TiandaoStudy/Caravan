@@ -1,6 +1,5 @@
 ﻿Imports System.Data.Common
 Imports FLEX.Common.Data
-Imports Glimpse.Ado.AlternateType
 
 Namespace SqlServerCe
 

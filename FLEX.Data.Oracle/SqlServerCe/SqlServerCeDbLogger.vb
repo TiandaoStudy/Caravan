@@ -1,3 +1,8 @@
-﻿Public Class SqlServerCeDbLogger
+﻿Namespace SqlServerCe
 
-End Class
+   Public Class SqlServerCeDbLogger
+      Inherits DbLoggerBase
+
+   End Class
+
+End Namespace
