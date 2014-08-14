@@ -65,6 +65,74 @@ namespace FLEX.Web.UserControls
       #endregion
 
       #region Public Methods
+      public void SetDataSource(GridView gridview, string nameDataTable)
+      {
+         DataTable dtU = new DataTable();
+
+         if (gridview.HeaderRow != null)
+         {
+            for (int i = 0; i < gridview.HeaderRow.Cells.Count; i++)
+            {
+               dtU.Columns.Add(gridview.Columns[i].HeaderText);
+            }
+         }
+
+         foreach (GridViewRow row in gridview.Rows)
+         {
+            DataRow dr = dtU.NewRow();
+
+            for (int i = 0; i < row.Cells.Count; i++)
+            {
+               //Colonna BounField 
+               if(row.Cells[i].Controls.Count == 0)
+                  dr[i] = row.Cells[i].Text;
+               else //Colonna TemplateField
+               {
+                  dr[i] = "";
+                  for (int j = 0; j < row.Cells[i].Controls.Count; j++)
+                  {
+                   
+                    if(row.Cells[i].Controls[j] is System.Web.UI.WebControls.CheckBox)
+                    {
+                       CheckBox _chckb=(System.Web.UI.WebControls.CheckBox)row.Cells[i].Controls[j];
+                       if (_chckb.Checked)
+                       { 
+                          dr[i] += _chckb.Text + " "; 
+                       }
+                    }
+
+                    else if(row.Cells[i].Controls[j] is System.Web.UI.WebControls.CheckBoxList)
+                    {
+                       CheckBoxList _chckbList = (System.Web.UI.WebControls.CheckBoxList)row.Cells[i].Controls[j];
+                       for (int index = 0; index < _chckbList.Items.Count; index++)
+			               {
+                           if (_chckbList.Items[index].Selected)
+                           {
+                              dr[i] += _chckbList.Items[index].Text + " ";
+                           }
+			               } 
+                      
+                    }
+
+                    else if (row.Cells[i].Controls[j] is LongTextContainer)
+                    {
+                          dr[i] += ((LongTextContainer)row.Cells[i].Controls[j]).Text + " ";
+                    }
+
+                    else if (row.Cells[i].Controls[j] is System.Web.UI.WebControls.Label)
+                    {
+                          dr[i] += ((Label)row.Cells[i].Controls[j]).Text + " "; 
+                    }
+                  }
+                  
+               }
+            }
+            dtU.Rows.Add(dr);
+         }
+         dtU.TableName = nameDataTable;
+         DataSource = dtU;
+      }
+
 
       protected void ExportList_OnClickExcel(object sender, EventArgs e)
       {
