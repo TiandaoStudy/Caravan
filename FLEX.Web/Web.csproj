@@ -291,10 +291,14 @@
     <Compile Include="FLEX\UserControls\ExportList.ascx.designer.cs">
       <DependentUpon>ExportList.ascx</DependentUpon>
     </Compile>
-    <Compile Include="FLEX\WebControls\Templates\ControlTemplate.cs" />
-    <Compile Include="FLEX\WebControls\Templates\DataGridEmpty.cs" />
-    <Compile Include="FLEX\WebControls\Templates\DataGridPager.cs" />
-    <Compile Include="FLEX\WebControls\DataGrid.cs" />
+    <Compile Include="FLEX\UserControls\Templates\ControlTemplate.cs" />
+    <Compile Include="FLEX\UserControls\Templates\DataGridEmpty.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\Templates\DataGridPager.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\DataGrid.cs" />
     <Compile Include="FLEX\MasterPages\Base.Master.cs">
       <DependentUpon>Base.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -5,11 +5,11 @@ using System.Web.UI.WebControls;
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
 
-namespace FLEX.Web.WebControls.Templates
+namespace FLEX.Web.UserControls.Templates
 // ReSharper restore CheckNamespace
 {
    [ToolboxData(@"<{0}:DataGridEmpty runat=""server""></{0}:DataGridEmpty>")]
-   internal sealed class DataGridEmpty : WebControl
+   internal sealed class DataGridEmpty : UserControl
    {
       protected override void OnLoad(EventArgs args)
       {

@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="LogSearch.aspx.cs" Inherits="FLEX.Web.Pages.LogSearch" MasterPageFile="~/FLEX/MasterPages/DataView.Master" %>
 <%@ MasterType VirtualPath="~/FLEX/MasterPages/DataView.Master"%>
-<%@ Register TagPrefix="flex" Namespace="FLEX.Web.WebControls" Assembly="FLEX.Web" %>
+<%@ Register TagPrefix="flex" Namespace="FLEX.Web.UserControls" Assembly="FLEX.Web" %>
 <%@ Register TagPrefix="flex" TagName="ImageButton" Src="~/FLEX/UserControls/Ajax/ImageButton.ascx" %>
 <%@ Register TagPrefix="flex" TagName="LongTextContainer" Src="~/FLEX/UserControls/LongTextContainer.ascx" %>
 

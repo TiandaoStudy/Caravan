@@ -7,11 +7,11 @@ using System.Web.UI.WebControls;
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
 
-namespace FLEX.Web.WebControls.Templates
+namespace FLEX.Web.UserControls.Templates
 // ReSharper restore CheckNamespace
 {
    [ToolboxData(@"<{0}:DataGridPager runat=""server"" PersistentDataSource=true></{0}:DataGridPager>")]
-   internal sealed class DataGridPager : WebControl
+   internal sealed class DataGridPager : UserControl
    {
       #region Properties
 
@@ -73,14 +73,14 @@ namespace FLEX.Web.WebControls.Templates
       /// <value> The last text. </value>
       public string LastText { get; set; }
 
-      public GridView TheGrid { get; private set; }
+      public DataGrid TheGrid { get; private set; }
 
       #endregion
 
       /// <summary>
       ///     Handles the Load event of the Page control.
       /// </summary>
-      /// <param name="e">
+      /// <param name="args">
       ///     The <see cref="System.EventArgs" /> instance containing the event data.
       /// </param>
       protected override void OnLoad(EventArgs args)
@@ -92,7 +92,7 @@ namespace FLEX.Web.WebControls.Templates
          var control = Parent;
          while (control != null)
          {
-            var view = control as GridView;
+            var view = control as DataGrid;
             if (view != null)
             {
                TheGrid = view;

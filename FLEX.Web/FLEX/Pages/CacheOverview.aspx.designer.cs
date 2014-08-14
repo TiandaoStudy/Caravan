@@ -19,7 +19,7 @@ namespace FLEX.Web.Pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.WebControls.DataGrid fdtgCache;
+        protected global::FLEX.Web.UserControls.DataGrid fdtgCache;
         
         /// <summary>
         /// btnRefresh control.
