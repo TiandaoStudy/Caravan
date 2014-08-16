@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using Thrower;
 
-namespace FLEX.Extensions.Common.Testing
+namespace FLEX.Common.Testing
 {
     public sealed class RandomDataTableGenerator
     {
