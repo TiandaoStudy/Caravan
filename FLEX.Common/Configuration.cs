@@ -60,7 +60,7 @@ namespace FLEX.Common
       public string ConnectionString
       {
          get { return (string) PersistentCache.DefaultInstance.Get(CachePartitionName, ConnectionStringKey); }
-         set { PersistentCache.DefaultInstance.AddPersistent(CachePartitionName, ConnectionStringKey, value); }
+         set { PersistentCache.DefaultInstance.AddStatic(CachePartitionName, ConnectionStringKey, value); }
       }
    }
 }

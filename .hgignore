@@ -156,3 +156,8 @@ $RECYCLE.BIN/
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+## KVLite Ignores
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal

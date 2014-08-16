@@ -46,6 +46,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\ClosedXML.0.74.0\lib\net40-client\ClosedXML.dll</HintPath>
     </Reference>
+    <Reference Include="Crc32C.NET">
+      <HintPath>..\packages\Crc32C.NET.1.0.5.0\lib\net20\Crc32C.NET.dll</HintPath>
+    </Reference>
     <Reference Include="CSScriptLibrary">
       <HintPath>..\packages\CS-Script.3.8.3.0\lib\net40\CSScriptLibrary.dll</HintPath>
     </Reference>
@@ -60,9 +63,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\iTextSharp-LGPL.4.1.6\lib\iTextSharp.dll</HintPath>
     </Reference>
-    <Reference Include="KVLite, Version=0.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="KVLite, Version=0.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.KVLite.0.2.1\lib\net40\KVLite.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.KVLite.0.3.2\lib\net40\KVLite.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
@@ -77,15 +80,14 @@
     <Reference Include="Mono.CSharp">
       <HintPath>..\packages\CS-Script.3.8.3.0\lib\net40\Mono.CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Snappy.NET">
+      <HintPath>..\packages\Snappy.NET.1.1.1.8\lib\net20\Snappy.NET.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.93.0\lib\net40\System.Data.SQLite.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -102,12 +104,6 @@
     <Reference Include="WebMarkupMin.Core, Version=0.8.21.0, Culture=neutral, PublicKeyToken=99472178d266584b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WebMarkupMin.Core.0.8.21\lib\net40\WebMarkupMin.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="WebMarkupMin.Web">
-      <HintPath>..\packages\WebMarkupMin.Web.0.8.18\lib\net40\WebMarkupMin.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="WebMarkupMin.WebForms">
-      <HintPath>..\packages\WebMarkupMin.WebForms.0.8.18\lib\net40\WebMarkupMin.WebForms.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -859,11 +855,7 @@ if $(ConfigurationName) == Release (
     copy "$(TargetDir)FLEX.Web.dll" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
     copy "$(TargetDir)FLEX.Web.xml" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
 )
-
-    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
-    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
-    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
-    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

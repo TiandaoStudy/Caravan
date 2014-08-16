@@ -64,6 +64,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\PommaLabs.Armando.0.1.6\lib\net40\Armando.dll</HintPath>
     </Reference>
+    <Reference Include="Crc32C.NET">
+      <HintPath>..\packages\Crc32C.NET.1.0.5.0\lib\net20\Crc32C.NET.dll</HintPath>
+    </Reference>
     <Reference Include="CSScriptLibrary">
       <HintPath>..\packages\CS-Script.3.8.3.0\lib\net40\CSScriptLibrary.dll</HintPath>
     </Reference>
@@ -71,20 +74,22 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Dapper.1.30\lib\net40\Dapper.dll</HintPath>
     </Reference>
-    <Reference Include="KVLite, Version=0.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="KVLite, Version=0.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.KVLite.0.2.1\lib\net40\KVLite.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.KVLite.0.3.2\lib\net40\KVLite.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.CSharp">
       <HintPath>..\packages\CS-Script.3.8.3.0\lib\net40\Mono.CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Snappy.NET">
+      <HintPath>..\packages\Snappy.NET.1.1.1.8\lib\net20\Snappy.NET.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.93.0\lib\net40\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
@@ -150,6 +155,12 @@
     <Content Include="Northwind.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -194,10 +205,7 @@
   </Target>
   <PropertyGroup>
     <PostBuildEvent>
-    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
-    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
-    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
-    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

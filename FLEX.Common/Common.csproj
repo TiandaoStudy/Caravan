@@ -38,17 +38,23 @@
     <DocumentationFile>bin\Release\FLEX.Common.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Crc32C.NET">
+      <HintPath>..\packages\Crc32C.NET.1.0.5.0\lib\net20\Crc32C.NET.dll</HintPath>
+    </Reference>
     <Reference Include="Dapper, Version=1.30.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Dapper.1.30\lib\net40\Dapper.dll</HintPath>
     </Reference>
-    <Reference Include="KVLite, Version=0.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="KVLite, Version=0.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.KVLite.0.2.1\lib\net40\KVLite.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.KVLite.0.3.2\lib\net40\KVLite.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Snappy.NET">
+      <HintPath>..\packages\Snappy.NET.1.1.1.8\lib\net20\Snappy.NET.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -57,10 +63,6 @@
     <Reference Include="System.Data.SQLite">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.93.0\lib\net40\System.Data.SQLite.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
@@ -105,11 +107,7 @@
     if not exist "%25dir%25" mkdir "%25dir%25"
     copy "$(TargetDir)FLEX.Common.dll" "$(SolutionDir)FLEX.Common.Packager/lib/net40"
     copy "$(TargetDir)FLEX.Common.xml" "$(SolutionDir)FLEX.Common.Packager/lib/net40"
-)
-    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
-    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
-    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
-    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+)</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

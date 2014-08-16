@@ -36,7 +36,7 @@ namespace FLEX.Web.Pages
          {
             CacheManager.ClearCache();
             // Applico una pulizia sicura della cache, per evitare che le voci importanti vadano perse.
-            PersistentCache.DefaultInstance.Clear(CacheClearMode.ConsiderExpirationDate);
+            PersistentCache.DefaultInstance.Clear(CacheReadMode.ConsiderExpirationDate);
             // Aggiorno la fonte dati sottostante la griglia.
             fdtgCache.UpdateDataSource();
          }
@@ -66,18 +66,18 @@ namespace FLEX.Web.Pages
 
       #region Private Methods
 
-      private static IEnumerable<ItemInfo> GetVolatileCacheItems()
+      private static IEnumerable<CacheItem> GetVolatileCacheItems()
       {
-         return HttpRuntime.Cache.Cast<DictionaryEntry>().Select(x => new ItemInfo {Partition = "HttpRuntime.Cache", Key = (string) x.Key, Value = x.Value.ToString(), UtcCreation = DateTime.Today});
+         return HttpRuntime.Cache.Cast<DictionaryEntry>().Select(x => new CacheItem {Partition = "HttpRuntime.Cache", Key = (string) x.Key, Value = x.Value.ToString(), UtcCreation = DateTime.Today});
       }
 
-      private static IEnumerable<ItemInfo> GetPersistentCacheItems()
+      private static IEnumerable<CacheItem> GetPersistentCacheItems()
       {
          return
-            PersistentCache.DefaultInstance.GetItems()
+            PersistentCache.DefaultInstance.GetAllItems()
                .Select(
                   x =>
-                     new ItemInfo
+                     new CacheItem
                      {
                         Partition = x.Partition,
                         Key = x.Key,

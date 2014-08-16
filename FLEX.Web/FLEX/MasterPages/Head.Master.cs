@@ -3,7 +3,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using FLEX.Web.UserControls.Ajax;
-using WebMarkupMin.WebForms.MasterPages;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -11,7 +10,7 @@ using WebMarkupMin.WebForms.MasterPages;
 namespace FLEX.Web.MasterPages
 // ReSharper restore CheckNamespace
 {
-   public partial class Head : MinifiedAndCompressedHtmlMasterPage, IHead
+   public partial class Head : MasterPage, IHead
    {
       private static readonly string CachedRootPath;
       private static readonly string CachedFlexPath;
@@ -27,8 +26,8 @@ namespace FLEX.Web.MasterPages
 
       protected Head()
       {
-         EnableCompression = Configuration.Instance.EnableOutputCompression;
-         EnableMinification = Configuration.Instance.EnableOutputMinification;
+         //EnableCompression = Configuration.Instance.EnableOutputCompression;
+         //EnableMinification = Configuration.Instance.EnableOutputMinification;
       }
 
       #region Public Properties
