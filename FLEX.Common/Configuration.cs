@@ -1,5 +1,5 @@
 ﻿using System.Configuration;
-using KVLite;
+using PommaLabs.KVLite;
 
 namespace FLEX.Common
 {

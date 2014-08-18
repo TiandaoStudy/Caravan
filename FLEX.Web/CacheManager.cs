@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Caching;
-using FLEX.Web.Core;
+using PommaLabs.KVLite.Web;
 using Thrower;
 
 namespace FLEX.Web

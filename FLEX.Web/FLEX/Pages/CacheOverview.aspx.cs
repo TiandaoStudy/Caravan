@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using FLEX.Common;
 using FLEX.Web.UserControls.Ajax;
-using KVLite;
+using PommaLabs.KVLite;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

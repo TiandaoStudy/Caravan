@@ -4,9 +4,9 @@ using System.Globalization;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using FLEX.Web.Core;
 using FLEX.Web.MasterPages;
 using FLEX.Web.UserControls;
+using PommaLabs.KVLite.Web;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -61,7 +61,7 @@ namespace FLEX.Web.Pages
 
       protected override sealed PageStatePersister PageStatePersister
       {
-         get { return new CacheViewStatePersister(this); }
+         get { return new PersistentViewStatePersister(this); }
       }
 
       #region Public Properties
@@ -156,7 +156,7 @@ namespace FLEX.Web.Pages
       {
          get
          {
-            Debug.Assert(Master is IPopup);
+            Debug.Assert(Master is IPage);
             return Master as IPage;
          }
       }
