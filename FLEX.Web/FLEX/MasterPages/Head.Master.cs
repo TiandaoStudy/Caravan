@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO.Compression;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -61,6 +62,60 @@ namespace FLEX.Web.MasterPages
       {
          get { return scriptManager; }
       }
+
+      #endregion
+
+      #region Page Events
+
+      protected override void OnLoad(EventArgs e)
+      {
+          base.OnLoad(e);
+
+          // Conditionally compresses page output.
+          GZipEncodePage();
+      }
+
+      #endregion
+
+      #region Page Compression
+
+      /// <summary>
+        /// Determines if GZip is supported
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsGZipSupported()
+        {
+            var acceptEncoding = HttpContext.Current.Request.Headers["Accept-Encoding"];
+           return !string.IsNullOrEmpty(acceptEncoding) && acceptEncoding.Contains("gzip") || acceptEncoding.Contains("deflate");
+        }
+
+       /// <summary>
+        ///   Sets up the current page or handler to use GZip through a Response.Filter.
+        ///   IMPORTANT:  
+        ///   You have to call this method before any output is generated!
+        /// </summary>
+        public static void GZipEncodePage()
+        {
+            var response = HttpContext.Current.Response;
+
+            if (Configuration.Instance.EnableOutputCompression && IsGZipSupported())
+            {
+                var acceptEncoding = HttpContext.Current.Request.Headers["Accept-Encoding"];
+                if (acceptEncoding.Contains("deflate"))
+                {
+                    response.Filter = new DeflateStream(response.Filter, CompressionMode.Compress);
+                    response.AppendHeader("Content-Encoding", "deflate");
+                }
+                else
+                {
+                    response.Filter = new GZipStream(response.Filter, CompressionMode.Compress);
+                    response.AppendHeader("Content-Encoding", "gzip");                    
+                }
+            }
+
+            // Allows proxy servers to cache encoded and unencoded versions separately.
+            response.AppendHeader("Vary", "Content-Encoding");
+        }
 
       #endregion
 
