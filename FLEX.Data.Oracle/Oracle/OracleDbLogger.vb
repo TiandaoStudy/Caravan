@@ -1,4 +1,5 @@
-﻿Imports FLEX.Common
+﻿Imports System.Runtime.CompilerServices
+Imports FLEX.Common
 Imports Dapper
 Imports FLEX.Common.Data
 Imports Thrower
@@ -44,50 +45,50 @@ Namespace Oracle
 
 #Region "Logging Methods"
 
-      Sub LogDebug(Of TCodeUnit)([function] As String, shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing) _
+        Sub LogDebug(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
          Implements IDbLogger.LogDebug
-         Log(Of TCodeUnit)("DEBUG", [function], shortMessage, longMessage, context, args)
-      End Sub
+            Log(Of TCodeUnit)("DEBUG", [function], shortMessage, longMessage, context, args)
+        End Sub
 
-      Sub LogInfo(Of TCodeUnit)([function] As String, shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing) _
+        Sub LogInfo(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
          Implements IDbLogger.LogInfo
-         Log(Of TCodeUnit)("INFO", [function], shortMessage, longMessage, context, args)
-      End Sub
+            Log(Of TCodeUnit)("INFO", [function], shortMessage, longMessage, context, args)
+        End Sub
 
-      Sub LogWarning(Of TCodeUnit)([function] As String, shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing) _
+        Sub LogWarning(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
          Implements IDbLogger.LogWarning
-         Log(Of TCodeUnit)("WARNING", [function], shortMessage, longMessage, context, args)
-      End Sub
+            Log(Of TCodeUnit)("WARNING", [function], shortMessage, longMessage, context, args)
+        End Sub
 
-      Sub LogError(Of TCodeUnit)([function] As String, shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing) _
+        Sub LogError(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
          Implements IDbLogger.LogError
-         Log(Of TCodeUnit)("ERROR", [function], shortMessage, longMessage, context, args)
-      End Sub
+            Log(Of TCodeUnit)("ERROR", [function], shortMessage, longMessage, context, args)
+        End Sub
 
-      Sub LogFatal(Of TCodeUnit)([function] As String, shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing) _
+        Sub LogFatal(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
          Implements IDbLogger.LogFatal
-         Log(Of TCodeUnit)("FATAL", [function], shortMessage, longMessage, context, args)
-      End Sub
+            Log(Of TCodeUnit)("FATAL", [function], shortMessage, longMessage, context, args)
+        End Sub
 
-      Sub LogDebug(Of TCodeUnit)([function] As String, exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing) Implements IDbLogger.LogDebug
-         Log(Of TCodeUnit)("DEBUG", [function], exception, context, args)
-      End Sub
+        Sub LogDebug(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) Implements IDbLogger.LogDebug
+            Log(Of TCodeUnit)("DEBUG", [function], exception, context, args)
+        End Sub
 
-      Sub LogInfo(Of TCodeUnit)([function] As String, exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing) Implements IDbLogger.LogInfo
-         Log(Of TCodeUnit)("INFO", [function], exception, context, args)
-      End Sub
+        Sub LogInfo(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) Implements IDbLogger.LogInfo
+            Log(Of TCodeUnit)("INFO", [function], exception, context, args)
+        End Sub
 
-      Sub LogWarning(Of TCodeUnit)([function] As String, exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing) Implements IDbLogger.LogWarning
-         Log(Of TCodeUnit)("WARNING", [function], exception, context, args)
-      End Sub
+        Sub LogWarning(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) Implements IDbLogger.LogWarning
+            Log(Of TCodeUnit)("WARNING", [function], exception, context, args)
+        End Sub
 
-      Sub LogError(Of TCodeUnit)([function] As String, exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing) Implements IDbLogger.LogError
-         Log(Of TCodeUnit)("ERROR", [function], exception, context, args)
-      End Sub
+        Sub LogError(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) Implements IDbLogger.LogError
+            Log(Of TCodeUnit)("ERROR", [function], exception, context, args)
+        End Sub
 
-      Sub LogFatal(Of TCodeUnit)([function] As String, exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing) Implements IDbLogger.LogFatal
-         Log(Of TCodeUnit)("FATAL", [function], exception, context, args)
-      End Sub
+        Sub LogFatal(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) Implements IDbLogger.LogFatal
+            Log(Of TCodeUnit)("FATAL", [function], exception, context, args)
+        End Sub
 
 #End Region
 

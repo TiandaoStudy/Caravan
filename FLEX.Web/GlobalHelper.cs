@@ -28,7 +28,7 @@ namespace FLEX.Web
          HttpContext.Current.Response.Filter = null;
 
          // Logs the error into the DB.
-         DbLogger.Instance.LogFatal<GlobalHelper>("Application_Error", HttpContext.Current.Server.GetLastError());
+         DbLogger.Instance.LogFatal<GlobalHelper>(HttpContext.Current.Server.GetLastError());
       }
    }
 }

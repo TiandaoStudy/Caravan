@@ -19,7 +19,7 @@ namespace FLEX.Common
          }
          catch (Exception ex)
          {
-            DbLogger.Instance.LogError<ServiceLocator>("ServiceLocator()", ex);
+            DbLogger.Instance.LogError<ServiceLocator>(ex);
             // It's better NOT to rethrow in static constructors, 
             // otherwise the application will silently die. 
          }
@@ -60,7 +60,7 @@ namespace FLEX.Common
          }
          catch (Exception ex)
          {
-            DbLogger.Instance.LogError<ServiceLocator>("Load<T>()", ex);
+            DbLogger.Instance.LogError<ServiceLocator>(ex);
             throw;
          }
       }

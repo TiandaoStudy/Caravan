@@ -21,7 +21,7 @@ namespace FLEX.Web.UserControls
          }
          catch (Exception ex)
          {
-            DbLogger.Instance.LogError<FileUpload>("Page_Load", ex);
+            DbLogger.Instance.LogError<FileUpload>(ex);
             throw;
          }
       }

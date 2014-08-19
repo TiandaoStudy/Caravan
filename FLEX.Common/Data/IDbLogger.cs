@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Runtime.CompilerServices;
 
 namespace FLEX.Common.Data
 {
@@ -16,17 +17,17 @@ namespace FLEX.Common.Data
       bool IsErrorEnabled { get; }
       bool IsFatalEnabled { get; }
 
-      void LogDebug<TCodeUnit>(string function, object shortMessage, object longMessage = null, string context = null, IDictionary<string, object> args = null);
-      void LogInfo<TCodeUnit>(string function, object shortMessage, object longMessage = null, string context = null, IDictionary<string, object> args = null);
-      void LogWarning<TCodeUnit>(string function, object shortMessage, object longMessage = null, string context = null, IDictionary<string, object> args = null);
-      void LogError<TCodeUnit>(string function, object shortMessage, object longMessage = null, string context = null, IDictionary<string, object> args = null);
-      void LogFatal<TCodeUnit>(string function, object shortMessage, object longMessage = null, string context = null, IDictionary<string, object> args = null);
+      void LogDebug<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogInfo<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogWarning<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogError<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogFatal<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
 
-      void LogDebug<TCodeUnit>(string function, Exception exception, string context = null, IDictionary<string, object> args = null);
-      void LogInfo<TCodeUnit>(string function, Exception exception, string context = null, IDictionary<string, object> args = null);
-      void LogWarning<TCodeUnit>(string function, Exception exception, string context = null, IDictionary<string, object> args = null);
-      void LogError<TCodeUnit>(string function, Exception exception, string context = null, IDictionary<string, object> args = null);
-      void LogFatal<TCodeUnit>(string function, Exception exception, string context = null, IDictionary<string, object> args = null);
+      void LogDebug<TCodeUnit>(Exception exception, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogInfo<TCodeUnit>(Exception exception, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogWarning<TCodeUnit>(Exception exception, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogError<TCodeUnit>(Exception exception, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogFatal<TCodeUnit>(Exception exception, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
 
       IEnumerable<DbLog> RetrieveAllLogs();
       IEnumerable<DbLog> RetrieveCurrentApplicationLogs();
@@ -38,6 +39,8 @@ namespace FLEX.Common.Data
    [Serializable]
    public sealed class DbLog
    {
+       public const string AutoFilledParameter = "Automatically filled parameter, please do not specify a value!";
+
       public DateTime EntryDate { get; set; }
       public string Type { get; set; }
       public string Application { get; set; }

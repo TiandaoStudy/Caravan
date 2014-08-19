@@ -24,6 +24,7 @@
         <dependency id="Dapper" version="" />
         <dependency id="FLEX.Common" version="" />
         <dependency id="Glimpse.Ado" version="" />
+        <dependency id="Microsoft.Bcl" version="" />
         <dependency id="PommaLabs.Armando" version="" />
      </dependencies>
     <references></references>

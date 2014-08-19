@@ -35,7 +35,7 @@ namespace FLEX.Web.UserControls.Ajax
          }
          catch (Exception inner)
          {
-            DbLogger.Instance.LogError<ErrorHandler>("CatchException", inner);
+            DbLogger.Instance.LogError<ErrorHandler>(inner);
             throw;
          }
       }
