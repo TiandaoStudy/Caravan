@@ -19,15 +19,11 @@ namespace FLEX.Web.Pages
 
       #endregion
 
-      protected PageBaseListAndSearch()
-      {
-         Load += Page_Load;
-      }
-
-      private void Page_Load(object sender, EventArgs e)
+      protected override void OnLoad(EventArgs args)
       {
          try
          {
+            base.OnLoad(args);
             LoadSearchCriteria();
          }
          catch (Exception ex)

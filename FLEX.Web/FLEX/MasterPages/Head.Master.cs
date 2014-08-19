@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.IO.Compression;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using FLEX.Web.UserControls.Ajax;
+using WebMarkupMin.Core;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -23,12 +25,6 @@ namespace FLEX.Web.MasterPages
          CachedRootPath = FullyQualifiedApplicationPath;
          CachedFlexPath = CachedRootPath + "FLEX";
          CachedMyFlexPath = CachedRootPath + "MyFLEX";
-      }
-
-      protected Head()
-      {
-         //EnableCompression = Configuration.Instance.EnableOutputCompression;
-         //EnableMinification = Configuration.Instance.EnableOutputMinification;
       }
 
       #region Public Properties
@@ -73,6 +69,34 @@ namespace FLEX.Web.MasterPages
 
           // Conditionally compresses page output.
           GZipEncodePage();
+
+         // If user is not authenticated, then we redirect her to the session expired page.
+         if (Configuration.Instance.CheckSecurity && !HttpContext.Current.User.Identity.IsAuthenticated)
+         {
+            Response.Redirect(Configuration.Instance.SessionExpiredPageUrl, endResponse: true);
+         }
+
+         // Browser cache management...
+         Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+         Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+         Response.AppendHeader("Expires", "0"); // Proxies.
+      }
+
+      protected override void Render(HtmlTextWriter writer)
+      {     
+          using (var htmlTextWriter = new HtmlTextWriter(new StringWriter()))
+          {
+            base.Render(htmlTextWriter);
+            var html = htmlTextWriter.InnerWriter.ToString();
+            
+              if (Configuration.Instance.EnableOutputMinification) {
+              // Minify content of the 'html' variable
+            var htmlMinifier = WebMarkupMinContext.Current.Markup.CreateHtmlMinifierInstance();
+            html = htmlMinifier.Minify(html).MinifiedContent;
+          }
+
+            writer.Write(html);
+          }
       }
 
       #endregion

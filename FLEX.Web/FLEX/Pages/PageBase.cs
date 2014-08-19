@@ -35,29 +35,11 @@ namespace FLEX.Web.Pages
 
       #endregion
 
-      /// <summary>
-      /// 
-      /// </summary>
-      protected PageBase()
-      {
-         Load += Page_Load;
-      }
-
-      private void Page_Load(object sender, EventArgs e)
-      {
-         InitID();
-
-         // If user is not authenticated, then we redirect her to the session expired page.
-         if (Configuration.Instance.CheckSecurity && !HttpContext.Current.User.Identity.IsAuthenticated)
-         {
-            Response.Redirect(Configuration.Instance.SessionExpiredPageUrl, endResponse: true);
-         }
-
-         // Browser cache management
-         Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-         Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
-         Response.AppendHeader("Expires", "0"); // Proxies.
-      }
+      protected override void OnLoad(EventArgs e)
+        {
+ 	        base.OnLoad(e);
+            InitID();
+        }
 
       protected override sealed PageStatePersister PageStatePersister
       {
