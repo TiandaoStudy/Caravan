@@ -511,7 +511,9 @@
     <Content Include="FLEX\UserControls\FileUpload.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\UserControls\LongTextContainer.ascx" />
+    <Content Include="FLEX\UserControls\LongTextContainer.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="FLEX\UserControls\PageFooter.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>

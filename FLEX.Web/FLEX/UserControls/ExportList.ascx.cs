@@ -65,15 +65,15 @@ namespace FLEX.Web.UserControls
       #endregion
 
       #region Public Methods
-      public void SetDataSource(GridView gridview, string nameDataTable)
+      public void SetDataSource(GridView gridview, string nameDataTable, int[] arrColumn)
       {
          DataTable dtU = new DataTable();
 
          if (gridview.HeaderRow != null)
          {
-            for (int i = 0; i < gridview.HeaderRow.Cells.Count; i++)
+            for (int i = 0; i < arrColumn.Length; i++)
             {
-               dtU.Columns.Add(gridview.Columns[i].HeaderText);
+               dtU.Columns.Add(gridview.Columns[arrColumn[i]].HeaderText);
             }
          }
 
@@ -81,29 +81,29 @@ namespace FLEX.Web.UserControls
          {
             DataRow dr = dtU.NewRow();
 
-            for (int i = 0; i < row.Cells.Count; i++)
+            for (int i = 0; i < arrColumn.Length; i++)
             {
                //Colonna BounField 
-               if(row.Cells[i].Controls.Count == 0)
-                  dr[i] = row.Cells[i].Text;
+               if (row.Cells[arrColumn[i]].Controls.Count == 0)
+                  dr[i] = row.Cells[arrColumn[i]].Text;
                else //Colonna TemplateField
                {
                   dr[i] = "";
-                  for (int j = 0; j < row.Cells[i].Controls.Count; j++)
+                  for (int j = 0; j < row.Cells[arrColumn[i]].Controls.Count; j++)
                   {
-                   
-                    if(row.Cells[i].Controls[j] is System.Web.UI.WebControls.CheckBox)
+
+                     if (row.Cells[arrColumn[i]].Controls[j] is System.Web.UI.WebControls.CheckBox)
                     {
-                       CheckBox _chckb=(System.Web.UI.WebControls.CheckBox)row.Cells[i].Controls[j];
+                       CheckBox _chckb = (System.Web.UI.WebControls.CheckBox)row.Cells[arrColumn[i]].Controls[j];
                        if (_chckb.Checked)
                        { 
                           dr[i] += _chckb.Text + " "; 
                        }
                     }
 
-                    else if(row.Cells[i].Controls[j] is System.Web.UI.WebControls.CheckBoxList)
+                     else if (row.Cells[arrColumn[i]].Controls[j] is System.Web.UI.WebControls.CheckBoxList)
                     {
-                       CheckBoxList _chckbList = (System.Web.UI.WebControls.CheckBoxList)row.Cells[i].Controls[j];
+                       CheckBoxList _chckbList = (System.Web.UI.WebControls.CheckBoxList)row.Cells[arrColumn[i]].Controls[j];
                        for (int index = 0; index < _chckbList.Items.Count; index++)
 			               {
                            if (_chckbList.Items[index].Selected)
@@ -114,15 +114,22 @@ namespace FLEX.Web.UserControls
                       
                     }
 
-                    else if (row.Cells[i].Controls[j] is LongTextContainer)
+                     else if (row.Cells[arrColumn[i]].Controls[j] is LongTextContainer)
                     {
-                          dr[i] += ((LongTextContainer)row.Cells[i].Controls[j]).Text + " ";
+                       dr[i] += ((LongTextContainer)row.Cells[arrColumn[i]].Controls[j]).Text + " ";
                     }
 
-                    else if (row.Cells[i].Controls[j] is System.Web.UI.WebControls.Label)
+                     else if (row.Cells[arrColumn[i]].Controls[j] is System.Web.UI.WebControls.Label)
                     {
-                          dr[i] += ((Label)row.Cells[i].Controls[j]).Text + " "; 
+                       dr[i] += ((Label)row.Cells[arrColumn[i]].Controls[j]).Text + " "; 
                     }
+
+                     else if (row.Cells[arrColumn[i]].Controls[j] is System.Web.UI.WebControls.LinkButton)
+                     {
+                        string _text = ((LinkButton)row.Cells[arrColumn[i]].Controls[j]).Text;
+                        if (!_text.Contains("<span"))
+                         dr[i] +=  _text + " ";
+                     }
                   }
                   
                }
