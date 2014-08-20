@@ -277,6 +277,13 @@
     <Compile Include="FLEX\UserControls\ControlBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="FLEX\UserControls\PopupExitButton.ascx.cs">
+      <DependentUpon>PopupExitButton.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\PopupExitButton.ascx.designer.cs">
+      <DependentUpon>PopupExitButton.ascx</DependentUpon>
+    </Compile>
     <Compile Include="FLEX\UserControls\FileUpload.ascx.cs">
       <DependentUpon>FileUpload.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -506,6 +513,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\UserControls\Ajax\SearchButton.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\UserControls\PopupExitButton.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\UserControls\FileUpload.ascx">

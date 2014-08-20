@@ -12,9 +12,16 @@ namespace FLEX.Web.MasterPages
 {
    public partial class Base : MasterPage, IPage
    {
-      protected void Page_Init(object sender, EventArgs e)
+      protected override void OnInit(EventArgs args)
       {
+         base.OnInit(args);
          flexHiddenTrigger.Triggered += flexHiddenTrigger_Triggered;
+      }
+
+      protected override void OnLoad(EventArgs e)
+      {
+         base.OnLoad(e);
+         Master.RedirectIfNotAuthenticated();
       }
 
       public ErrorHandler ErrorHandler

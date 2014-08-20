@@ -13,12 +13,12 @@ namespace FLEX.Web.UserControls {
     public partial class LongTextContainer {
         
         /// <summary>
-        /// shortenedText control.
+        /// lblText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl shortenedText;
+        protected global::System.Web.UI.WebControls.Label lblText;
     }
 }

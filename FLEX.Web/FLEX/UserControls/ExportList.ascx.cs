@@ -65,23 +65,25 @@ namespace FLEX.Web.UserControls
       #endregion
 
       #region Public Methods
-      public void SetDataSource(GridView gridview, string nameDataTable, int[] arrColumn)
+
+      public void SetDataSource(GridView gridview, string nameDataTable, int[] arrColumn = null)
       {
-         DataTable dtU = new DataTable();
+         arrColumn = arrColumn ?? new int[0];
+         var dtU = new DataTable();
 
          if (gridview.HeaderRow != null)
          {
-            for (int i = 0; i < arrColumn.Length; i++)
+            foreach (var t in arrColumn)
             {
-               dtU.Columns.Add(gridview.Columns[arrColumn[i]].HeaderText);
+               dtU.Columns.Add(gridview.Columns[t].HeaderText);
             }
          }
 
          foreach (GridViewRow row in gridview.Rows)
          {
-            DataRow dr = dtU.NewRow();
+            var dr = dtU.NewRow();
 
-            for (int i = 0; i < arrColumn.Length; i++)
+            for (var i = 0; i < arrColumn.Length; i++)
             {
                //Colonna BounField 
                if (row.Cells[arrColumn[i]].Controls.Count == 0)
@@ -89,49 +91,57 @@ namespace FLEX.Web.UserControls
                else //Colonna TemplateField
                {
                   dr[i] = "";
-                  for (int j = 0; j < row.Cells[arrColumn[i]].Controls.Count; j++)
+                  for (var j = 0; j < row.Cells[arrColumn[i]].Controls.Count; j++)
                   {
+                     var control = row.Cells[arrColumn[i]].Controls[j];
 
-                     if (row.Cells[arrColumn[i]].Controls[j] is System.Web.UI.WebControls.CheckBox)
-                    {
-                       CheckBox _chckb = (System.Web.UI.WebControls.CheckBox)row.Cells[arrColumn[i]].Controls[j];
-                       if (_chckb.Checked)
-                       { 
-                          dr[i] += _chckb.Text + " "; 
-                       }
-                    }
+                     var checkBox = control as CheckBox;
+                     if (checkBox != null)
+                     {
+                        var _chckb = checkBox;
+                        if (_chckb.Checked)
+                        {
+                           dr[i] += _chckb.Text + " ";
+                        }
+                        continue;
+                     }
 
-                     else if (row.Cells[arrColumn[i]].Controls[j] is System.Web.UI.WebControls.CheckBoxList)
-                    {
-                       CheckBoxList _chckbList = (System.Web.UI.WebControls.CheckBoxList)row.Cells[arrColumn[i]].Controls[j];
-                       for (int index = 0; index < _chckbList.Items.Count; index++)
-			               {
+                     var checkBoxList = control as CheckBoxList;
+                     if (checkBoxList != null)
+                     {
+                        var _chckbList = checkBoxList;
+                        for (var index = 0; index < _chckbList.Items.Count; index++)
+                        {
                            if (_chckbList.Items[index].Selected)
                            {
                               dr[i] += _chckbList.Items[index].Text + " ";
                            }
-			               } 
-                      
-                    }
+                        }
+                        continue;
+                     }
 
-                     else if (row.Cells[arrColumn[i]].Controls[j] is LongTextContainer)
-                    {
-                       dr[i] += ((LongTextContainer)row.Cells[arrColumn[i]].Controls[j]).Text + " ";
-                    }
-
-                     else if (row.Cells[arrColumn[i]].Controls[j] is System.Web.UI.WebControls.Label)
-                    {
-                       dr[i] += ((Label)row.Cells[arrColumn[i]].Controls[j]).Text + " "; 
-                    }
-
-                     else if (row.Cells[arrColumn[i]].Controls[j] is System.Web.UI.WebControls.LinkButton)
+                     var longTextContainer = control as LongTextContainer;
+                     if (longTextContainer != null)
                      {
-                        string _text = ((LinkButton)row.Cells[arrColumn[i]].Controls[j]).Text;
-                        if (!_text.Contains("<span"))
-                         dr[i] +=  _text + " ";
+                        dr[i] += longTextContainer.Text + " ";
+                        continue;
+                     }
+
+                     var label = control as Label;
+                     if (label != null)
+                     {
+                        dr[i] += label.Text + " ";
+                        continue;
+                     }
+
+                     var linkButton = control as LinkButton;
+                     if (linkButton != null)
+                     {
+                        var text = linkButton.Text;
+                        if (!text.Contains("<span"))
+                           dr[i] += text + " ";
                      }
                   }
-                  
                }
             }
             dtU.Rows.Add(dr);
@@ -140,6 +150,100 @@ namespace FLEX.Web.UserControls
          DataSource = dtU;
       }
 
+      public void SetDataSource(GridView gridview, string nameDataTable, params ColumnData[] columnData)
+      {
+         columnData = columnData ?? new ColumnData[0];
+         var dtU = new DataTable();
+
+         if (gridview.HeaderRow != null)
+         {
+            foreach (var c in columnData)
+            {
+               dtU.Columns.Add(c.Name);
+            }
+         }
+
+         int di = 0;
+         foreach (GridViewRow row in gridview.Rows)
+         {
+            var dr = dtU.NewRow();
+            
+            foreach (var c in columnData)
+            {
+               switch (c.Type)
+               {
+                  case ColumnType.DataKey:
+                     dr[di] = gridview.DataKeys[di].Values[c.Index];
+                     break;
+
+                  case ColumnType.Column:
+                     //Colonna BounField 
+                     if (row.Cells[c.Index].Controls.Count == 0)
+                        dr[di] = row.Cells[c.Index].Text;
+                     else //Colonna TemplateField
+                     {
+                        dr[di] = "";
+                        for (var j = 0; j < row.Cells[c.Index].Controls.Count; j++)
+                        {
+                           var control = row.Cells[c.Index].Controls[j];
+
+                           var checkBox = control as CheckBox;
+                           if (checkBox != null)
+                           {
+                              if (checkBox.Checked)
+                              {
+                                 dr[di] += checkBox.Text + " ";
+                              }
+                              continue;
+                           }
+
+                           var checkBoxList = control as CheckBoxList;
+                           if (checkBoxList != null)
+                           {
+                              for (var index = 0; index < checkBoxList.Items.Count; index++)
+                              {
+                                 if (checkBoxList.Items[index].Selected)
+                                 {
+                                    dr[di] += checkBoxList.Items[index].Text + " ";
+                                 }
+                              }
+                              continue;
+                           }
+
+                           var longTextContainer = control as LongTextContainer;
+                           if (longTextContainer != null)
+                           {
+                              dr[di] += longTextContainer.Text + " ";
+                              continue;
+                           }
+
+                           var label = control as Label;
+                           if (label != null)
+                           {
+                              dr[di] += label.Text + " ";
+                              continue;
+                           }
+
+                           var linkButton = control as LinkButton;
+                           if (linkButton != null)
+                           {
+                              var text = linkButton.Text;
+                              if (!text.Contains("<span"))
+                                 dr[di] += text + " ";
+                           }
+                        }
+                     }
+                     break;
+               }
+            }
+
+            dtU.Rows.Add(dr);
+            di++;
+         }
+
+         dtU.TableName = nameDataTable;
+         DataSource = dtU;
+      }
 
       protected void ExportList_OnClickExcel(object sender, EventArgs e)
       {
@@ -295,5 +399,18 @@ namespace FLEX.Web.UserControls
       public event EventHandler DataSourceNeeded;
 
       #endregion
+
+      public struct ColumnData
+      {
+         public string Name { get; set; }
+         public int Index { get; set; }
+         public ColumnType Type { get; set; }
+      }
+
+      public enum ColumnType
+      {
+         Column,
+         DataKey
+      }
    }
 }

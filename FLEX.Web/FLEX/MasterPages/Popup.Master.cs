@@ -11,6 +11,12 @@ namespace FLEX.Web.MasterPages
 {
    public partial class Popup : MasterPage, IPopup
    {
+      protected override void OnLoad(EventArgs e)
+      {
+         base.OnLoad(e);
+         Master.RedirectIfNotAuthenticated();
+      }
+
       #region IPopup Members
 
       public ErrorHandler ErrorHandler

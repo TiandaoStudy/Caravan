@@ -65,16 +65,10 @@ namespace FLEX.Web.MasterPages
 
       protected override void OnLoad(EventArgs e)
       {
-          base.OnLoad(e);
+         base.OnLoad(e);
 
-          // Conditionally compresses page output.
-          GZipEncodePage();
-
-         // If user is not authenticated, then we redirect her to the session expired page.
-         if (Configuration.Instance.CheckSecurity && !HttpContext.Current.User.Identity.IsAuthenticated)
-         {
-            Response.Redirect(Configuration.Instance.SessionExpiredPageUrl, endResponse: true);
-         }
+         // Conditionally compresses page output.
+         GZipEncodePage();
 
          // Browser cache management...
          Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
@@ -83,20 +77,21 @@ namespace FLEX.Web.MasterPages
       }
 
       protected override void Render(HtmlTextWriter writer)
-      {     
-          using (var htmlTextWriter = new HtmlTextWriter(new StringWriter()))
-          {
+      {
+         using (var htmlTextWriter = new HtmlTextWriter(new StringWriter()))
+         {
             base.Render(htmlTextWriter);
             var html = htmlTextWriter.InnerWriter.ToString();
-            
-              if (Configuration.Instance.EnableOutputMinification) {
-              // Minify content of the 'html' variable
-            var htmlMinifier = WebMarkupMinContext.Current.Markup.CreateHtmlMinifierInstance();
-            html = htmlMinifier.Minify(html).MinifiedContent;
-          }
+
+            if (Configuration.Instance.EnableOutputMinification)
+            {
+               // Minify content of the 'html' variable
+               var htmlMinifier = WebMarkupMinContext.Current.Markup.CreateHtmlMinifierInstance();
+               html = htmlMinifier.Minify(html).MinifiedContent;
+            }
 
             writer.Write(html);
-          }
+         }
       }
 
       #endregion
@@ -104,44 +99,53 @@ namespace FLEX.Web.MasterPages
       #region Page Compression
 
       /// <summary>
-        /// Determines if GZip is supported
-        /// </summary>
-        /// <returns></returns>
-        public static bool IsGZipSupported()
-        {
+      /// Determines if GZip is supported
+      /// </summary>
+      /// <returns></returns>
+      public static bool IsGZipSupported()
+      {
+         var acceptEncoding = HttpContext.Current.Request.Headers["Accept-Encoding"];
+         return !string.IsNullOrEmpty(acceptEncoding) && acceptEncoding.Contains("gzip") || acceptEncoding.Contains("deflate");
+      }
+
+      /// <summary>
+      ///   Sets up the current page or handler to use GZip through a Response.Filter.
+      ///   IMPORTANT:  
+      ///   You have to call this method before any output is generated!
+      /// </summary>
+      public static void GZipEncodePage()
+      {
+         var response = HttpContext.Current.Response;
+
+         if (Configuration.Instance.EnableOutputCompression && IsGZipSupported())
+         {
             var acceptEncoding = HttpContext.Current.Request.Headers["Accept-Encoding"];
-           return !string.IsNullOrEmpty(acceptEncoding) && acceptEncoding.Contains("gzip") || acceptEncoding.Contains("deflate");
-        }
-
-       /// <summary>
-        ///   Sets up the current page or handler to use GZip through a Response.Filter.
-        ///   IMPORTANT:  
-        ///   You have to call this method before any output is generated!
-        /// </summary>
-        public static void GZipEncodePage()
-        {
-            var response = HttpContext.Current.Response;
-
-            if (Configuration.Instance.EnableOutputCompression && IsGZipSupported())
+            if (acceptEncoding.Contains("deflate"))
             {
-                var acceptEncoding = HttpContext.Current.Request.Headers["Accept-Encoding"];
-                if (acceptEncoding.Contains("deflate"))
-                {
-                    response.Filter = new DeflateStream(response.Filter, CompressionMode.Compress);
-                    response.AppendHeader("Content-Encoding", "deflate");
-                }
-                else
-                {
-                    response.Filter = new GZipStream(response.Filter, CompressionMode.Compress);
-                    response.AppendHeader("Content-Encoding", "gzip");                    
-                }
+               response.Filter = new DeflateStream(response.Filter, CompressionMode.Compress);
+               response.AppendHeader("Content-Encoding", "deflate");
             }
+            else
+            {
+               response.Filter = new GZipStream(response.Filter, CompressionMode.Compress);
+               response.AppendHeader("Content-Encoding", "gzip");
+            }
+         }
 
-            // Allows proxy servers to cache encoded and unencoded versions separately.
-            response.AppendHeader("Vary", "Content-Encoding");
-        }
+         // Allows proxy servers to cache encoded and unencoded versions separately.
+         response.AppendHeader("Vary", "Content-Encoding");
+      }
 
       #endregion
+
+      public void RedirectIfNotAuthenticated()
+      {
+         // If user is not authenticated, then we redirect her to the session expired page.
+         if (Configuration.Instance.CheckSecurity && !HttpContext.Current.User.Identity.IsAuthenticated)
+         {
+            Response.Redirect(Configuration.Instance.SessionExpiredPageUrl, true);
+         }
+      }
 
       protected string NoCacheTag
       {
