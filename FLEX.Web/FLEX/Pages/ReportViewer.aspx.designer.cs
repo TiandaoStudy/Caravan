@@ -28,7 +28,7 @@ namespace FLEX.Web.Pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.ImageButton btnExit;
+        protected global::FLEX.Web.UserControls.PopupExitButton btnExit;
         
         /// <summary>
         /// Master property.
