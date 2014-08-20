@@ -124,15 +124,19 @@ root.openReportViewer = (reportName, reportTitle) ->
 ################################################################################
 
 root.disableButtonsBeforePostBack = () ->
+   # First trigger page validation. If page is not valid, then we do not disable buttons.
+   Page_ClientValidate()
+
    if root.common.disableButtonsBeforePostBack and (typeof Page_IsValid == "undefined" or Page_IsValid)
       buttons = $(".btn")
       buttons.addClass("disabled")
       # This line is needed for IE9, since "disabled" class is not enough...
       buttons.prop("disabled", true)
-   # We do not need to cleanup that value, because the post back will.
+   
+   # We do not need to cleanup "common.disableButtonsBeforePostBack", because the post back will.
    # Therefore, on next run, disableButtonsBeforePostBack will be correctly true.
    
-   # Required, otherwise browser shows a quit message
+   # Required, otherwise browser shows a quit message.
    return 
 
 root.enableButtonsAfterPostBack = () ->
