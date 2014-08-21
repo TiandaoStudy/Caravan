@@ -113,7 +113,9 @@
   root.openReportViewer = function(reportName, reportTitle, reportParameters) {
     var encodedParameters;
     if (!reportParameters) {
-      reportParameters = {};
+      reportParameters = {
+        dummyParameter: "dummyParameter"
+      };
     }
     encodedParameters = Base64.encode64(JSON.stringify(reportParameters));
     openModal({

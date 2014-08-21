@@ -110,7 +110,7 @@ root.triggerAsyncPostBack = (hiddenTriggerId) ->
 ################################################################################
 
 root.openReportViewer = (reportName, reportTitle, reportParameters) ->
-   unless reportParameters then reportParameters = {}
+   unless reportParameters then reportParameters = {dummyParameter: "dummyParameter"}
    encodedParameters = Base64.encode64(JSON.stringify(reportParameters))
    openModal(
       url: root.settings.flexPath + "/Pages/ReportViewer.aspx?reportName=#{reportName}&encodedParameters=#{encodedParameters}" + randomQueryTag(),

@@ -19,8 +19,8 @@ namespace FLEX.Web.Pages
             if (!IsPostBack)
             {
                var reportName = Request["reportName"];
-               var decodedParameters = Encoding.UTF8.GetString(Convert.FromBase64String(Request["reportParameters"]));
-               var reportParameters = JsonConvert.DeserializeObject<Dictionary<string, string>>(decodedParameters);
+               var decodedParameters = Encoding.UTF8.GetString(Convert.FromBase64String(Request["encodedParameters"]));
+               var reportParameters = JsonConvert.DeserializeObject<Dictionary<string, object>>(decodedParameters);
                var reportInit = PageManager.Instance.GetReportInitializer(reportName);
                reportInit.InitializeReport(myReportViewer, reportParameters);
             } 
