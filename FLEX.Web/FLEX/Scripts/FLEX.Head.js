@@ -130,9 +130,6 @@
 
   root.disableButtonsBeforePostBack = function() {
     var buttons;
-    if (typeof Page_ClientValidate !== "undefined") {
-      Page_ClientValidate();
-    }
     if (root.common.disableButtonsBeforePostBack && (typeof Page_IsValid === "undefined" || Page_IsValid)) {
       buttons = $(".btn");
       buttons.addClass("disabled");

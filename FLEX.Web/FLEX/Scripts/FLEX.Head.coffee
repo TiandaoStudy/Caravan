@@ -126,9 +126,7 @@ root.openReportViewer = (reportName, reportTitle, reportParameters) ->
 ################################################################################
 
 root.disableButtonsBeforePostBack = () ->
-   # First trigger page validation. If page is not valid, then we do not disable buttons.
-   if typeof Page_ClientValidate != "undefined" then Page_ClientValidate()
-
+   # If page is not valid, then we do not disable buttons.
    if root.common.disableButtonsBeforePostBack and (typeof Page_IsValid == "undefined" or Page_IsValid)
       buttons = $(".btn")
       buttons.addClass("disabled")
