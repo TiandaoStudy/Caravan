@@ -35,6 +35,7 @@
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-switch.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-touchspin.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootbox.min.js"></script>
+      <script type="text/javascript" src="<%=FlexPath%>/Scripts/base64.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/popupHandler.min.js<%=NoCacheTag%>"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/FLEX.Head.min.js<%=NoCacheTag%>"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/webLibrary.min.js<%=NoCacheTag%>"></script>

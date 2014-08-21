@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using FLEX.Web.UserControls.Ajax;
+using Newtonsoft.Json;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -16,8 +19,10 @@ namespace FLEX.Web.Pages
             if (!IsPostBack)
             {
                var reportName = Request["reportName"];
+               var decodedParameters = Encoding.UTF8.GetString(Convert.FromBase64String(Request["reportParameters"]));
+               var reportParameters = JsonConvert.DeserializeObject<Dictionary<string, string>>(decodedParameters);
                var reportInit = PageManager.Instance.GetReportInitializer(reportName);
-               reportInit.InitializeReport(myReportViewer);
+               reportInit.InitializeReport(myReportViewer, reportParameters);
             } 
          }
          catch (Exception ex)

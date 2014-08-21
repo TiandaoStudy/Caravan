@@ -31,6 +31,7 @@ namespace FLEX.Web
       /// 
       /// </summary>
       /// <param name="reportViewer"></param>
-      void InitializeReport(Microsoft.Reporting.WebForms.ReportViewer reportViewer);
+      /// <param name="reportParameters"></param>
+      void InitializeReport(Microsoft.Reporting.WebForms.ReportViewer reportViewer, IDictionary<string, string> reportParameters);
    }
 }

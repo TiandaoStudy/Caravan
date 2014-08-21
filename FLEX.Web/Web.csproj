@@ -455,6 +455,12 @@
     <Content Include="FLEX\Pages\Templates\CustomView.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Content Include="FLEX\Scripts\base64.js">
+      <DependentUpon>base64.coffee</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Scripts\base64.min.js">
+      <DependentUpon>base64.coffee</DependentUpon>
+    </Content>
     <Content Include="FLEX\Scripts\bootbox.js" />
     <Content Include="FLEX\Scripts\bootbox.min.js">
       <DependentUpon>bootbox.js</DependentUpon>
@@ -688,6 +694,7 @@
     <Content Include="FLEX\MasterPages\CustomView.Master">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <None Include="FLEX\Scripts\base64.coffee" />
     <None Include="FLEX\Scripts\bootbox.min.js.map">
       <DependentUpon>bootbox.js</DependentUpon>
     </None>

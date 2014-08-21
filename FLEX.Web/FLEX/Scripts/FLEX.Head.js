@@ -110,9 +110,14 @@
     return hiddenTrigger.change();
   };
 
-  root.openReportViewer = function(reportName, reportTitle) {
+  root.openReportViewer = function(reportName, reportTitle, reportParameters) {
+    var encodedParameters;
+    if (!reportParameters) {
+      reportParameters = {};
+    }
+    encodedParameters = Base64.encode64(JSON.stringify(reportParameters));
     openModal({
-      url: root.settings.flexPath + ("/Pages/ReportViewer.aspx?reportName=" + reportName) + randomQueryTag(),
+      url: root.settings.flexPath + ("/Pages/ReportViewer.aspx?reportName=" + reportName + "&encodedParameters=" + encodedParameters) + randomQueryTag(),
       width: "1000px",
       height: "620px",
       title: reportTitle,

@@ -109,9 +109,11 @@ root.triggerAsyncPostBack = (hiddenTriggerId) ->
 # ReportViewer
 ################################################################################
 
-root.openReportViewer = (reportName, reportTitle) ->
+root.openReportViewer = (reportName, reportTitle, reportParameters) ->
+   unless reportParameters then reportParameters = {}
+   encodedParameters = Base64.encode64(JSON.stringify(reportParameters))
    openModal(
-      url: root.settings.flexPath + "/Pages/ReportViewer.aspx?reportName=#{reportName}" + randomQueryTag(),
+      url: root.settings.flexPath + "/Pages/ReportViewer.aspx?reportName=#{reportName}&encodedParameters=#{encodedParameters}" + randomQueryTag(),
       width: "1000px", # One pixel more than the width specified in Pages/ReportViewer.aspx
       height: "620px"
       title: reportTitle
