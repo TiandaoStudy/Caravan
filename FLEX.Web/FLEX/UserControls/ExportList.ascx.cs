@@ -152,6 +152,10 @@ namespace FLEX.Web.UserControls
 
       public void SetDataSource(GridView gridview, string nameDataTable, params ColumnData[] columnData)
       {
+         var oldPageSize = gridview.PageSize;
+         gridview.PageSize = (gridview.DataSource as DataTable).Rows.Count;
+         gridview.DataBind();
+
          columnData = columnData ?? new ColumnData[0];
          var dtU = new DataTable();
 
@@ -245,6 +249,9 @@ namespace FLEX.Web.UserControls
 
          dtU.TableName = nameDataTable;
          DataSource = dtU;
+
+         gridview.PageSize = oldPageSize;
+         gridview.DataBind();
       }
 
       protected void ExportList_OnClickExcel(object sender, EventArgs e)
