@@ -235,10 +235,11 @@ namespace FLEX.Web.UserControls
                      }
                      break;
                }
+               di++;
             }
 
             dtU.Rows.Add(dr);
-            di++;
+           
          }
 
          dtU.TableName = nameDataTable;
