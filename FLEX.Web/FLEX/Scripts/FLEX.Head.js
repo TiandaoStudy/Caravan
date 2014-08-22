@@ -144,7 +144,7 @@
     buttons.removeClass("disabled");
   };
 
-  window.onbeforeunload = disableButtonsBeforePostBack;
+  window.onstop = disableButtonsBeforePostBack;
 
   root.setSessionJsTimeout = function() {
     if (common.sessionJsTimeout) {

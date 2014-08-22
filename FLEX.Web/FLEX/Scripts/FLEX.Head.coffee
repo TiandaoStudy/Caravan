@@ -146,7 +146,7 @@ root.enableButtonsAfterPostBack = () ->
    # Required, otherwise browser shows a quit message
    return 
 
-window.onbeforeunload = disableButtonsBeforePostBack;
+window.onstop = disableButtonsBeforePostBack;
 
 ################################################################################
 # Page Management
