@@ -426,7 +426,6 @@
     <Compile Include="FLEX\UserControls\Ajax\ErrorHandler.ascx.designer.cs">
       <DependentUpon>ErrorHandler.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Scripting.cs" />
     <Compile Include="WebSettings.cs" />
     <Compile Include="XsdClassGen.cs">
       <AutoGen>True</AutoGen>
@@ -540,7 +539,6 @@
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
-    <None Include="app.config" />
     <None Include="FLEX\Fonts\octicons.eot" />
     <None Include="FLEX\Fonts\octicons.ttf" />
     <None Include="FLEX\Fonts\octicons.woff" />

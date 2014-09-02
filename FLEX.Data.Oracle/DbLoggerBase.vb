@@ -5,6 +5,7 @@
    Protected Const MaxFunctionLength As Integer = 100
    Protected Const MaxShortMessageLength As Integer = 400
    Protected Const MaxLongMessageLength As Integer = 4000
+   Protected Const MaxContextLength As Integer = 400
 
    ''' <summary>
    ''' 

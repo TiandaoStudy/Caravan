@@ -413,9 +413,11 @@ CREATE OR REPLACE PACKAGE body mydb.pck_flex_log AS
                                VALUES (mydb.flex_log_seq.nextval, sysdate, UPPER(p_type), UPPER(p_application), p_code_unit, p_function, p_short_msg, p_long_msg, p_context,
                                        p_key_0, p_value_0, p_key_1, p_value_1, p_key_2, p_value_2, p_key_3, p_value_3, p_key_4, p_value_4,
                                        p_key_5, p_value_5, p_key_6, p_value_6, p_key_7, p_value_7, p_key_8, p_value_8, p_key_9, p_value_9); 
-         COMMIT;
+         
       END IF;
-   
+      
+      -- Leave at the end of procedure
+      COMMIT;
    END sp_log;
 
 END pck_flex_log;
