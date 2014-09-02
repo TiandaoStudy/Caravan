@@ -26,6 +26,7 @@ var Modal = (function () {
           modalHeaderTitle = document.createElement('strong'),
           modalContent = document.createElement('div'),
           modalClose = document.createElement('div'),
+          modalCloseTrigger = document.createElement('div'),
 
           centerModal,
 
@@ -73,6 +74,9 @@ var Modal = (function () {
     modalContainer.style.width = settings.width;
     modalContainer.style.height = settings.height;
 
+     // The close trigger should not be visible.
+     modalCloseTrigger.style.display = 'none';
+
     if (settings.lock || settings.hideClose) {
       modalClose.style.display = 'none';
     }
@@ -97,7 +101,7 @@ var Modal = (function () {
     }
     };*/
 
-    modalClose.onclick = function () {
+    modalCloseTrigger.onclick = function () {
       if (!settings.hideClose) {
         method.close();
       } else {
@@ -292,8 +296,10 @@ var Modal = (function () {
   modalContent.setAttribute('id', 'modal-content');
   modalHeaderTitle.setAttribute('id', 'modal-header-title');
   modalClose.setAttribute('id', 'modal-close');
+  modalCloseTrigger.setAttribute('id', 'modal-close-trigger');
   modalHeader.appendChild(modalHeaderTitle);
   modalHeader.appendChild(modalClose);
+  modalHeader.appendChild(modalCloseTrigger);
   modalContainer.appendChild(modalHeader);
   modalContainer.appendChild(modalContent);
 
@@ -553,17 +559,19 @@ function openModal(options) {
     draggable: false,
     openCallback: openVoidCallback,
     closeCallback: closeVoidCallback,
-    title: "TITLE"
+    title: "TITLE",
+    closeFunction: "closeWindow();"
   };
 
-  var settings = {}
-  settings.url = options.url || defaultOptions.url;
-  settings.width = options.width || defaultOptions.width;
-  settings.height = options.height || defaultOptions.height;
-  settings.draggable = options.draggable || defaultOptions.draggable;
-  settings.openCallback = options.openCallback || defaultOptions.openCallback;
-  settings.closeCallback = options.closeCallback || defaultOptions.closeCallback;
-  settings.title = options.title || defaultOptions.title;
+   var settings = {}
+   settings.url = options.url || defaultOptions.url;
+   settings.width = options.width || defaultOptions.width;
+   settings.height = options.height || defaultOptions.height;
+   settings.draggable = options.draggable || defaultOptions.draggable;
+   settings.openCallback = options.openCallback || defaultOptions.openCallback;
+   settings.closeCallback = options.closeCallback || defaultOptions.closeCallback;
+   settings.title = options.title || defaultOptions.title;
+   settings.closeFunction = options.closeFunction || defaultOptions.closeFunction;
 
   Modal.open({
     content: '<iframe id="modalWindowFrame" src="' + settings.url + '"></iframe>',
@@ -575,27 +583,28 @@ function openModal(options) {
     closeCallback: settings.closeCallback
   });
 
-  window.setTimeout(function () {
-      // Impostazione dimensioni frame
-      var modalFrame = $("#modalWindowFrame");
-      modalFrame.width(settings.width);
-      modalFrame.height(settings.height);
-      // Aggiustamento larghezza intestazione
-      var modalHeader = $("#modal-header");
-      modalHeader.width(modalFrame.outerWidth());
-      // Aggiustamento altezza finestra
-      $("#modal-container").height($("#modal-container").outerHeight());
-      // Impostazione del titolo
-      $("#modal-header-title").html(settings.title);
-      // Impostazione del bottone di chiusura
-      var modalClose = $("#modal-close");
-      modalClose.html('<a href="#" class="close">x</a>');
-      modalClose.addClass('modal-close');
-      // Rimozione click dall'overlay
-      document.getElementById("modal-overlay").onclick = null;
-    },
-    100
-  );
+   window.setTimeout(function () {
+         // Impostazione dimensioni frame
+         var modalFrame = $("#modalWindowFrame");
+         modalFrame.width(settings.width);
+         modalFrame.height(settings.height);
+         // Aggiustamento larghezza intestazione
+         var modalHeader = $("#modal-header");
+         modalHeader.width(modalFrame.outerWidth());
+         // Aggiustamento altezza finestra
+         $("#modal-container").height($("#modal-container").outerHeight());
+         // Impostazione del titolo
+         $("#modal-header-title").html(settings.title);
+         // Impostazione del bottone di chiusura
+         var modalClose = $("#modal-close");
+         modalClose.html('<a href="#" class="close">x</a>');
+         modalClose.addClass('modal-close');
+         modalClose.click(function() { eval(settings.closeFunction); });
+         // Rimozione click dall'overlay
+         document.getElementById("modal-overlay").onclick = null;
+      },
+      100
+   );
 }
 
 function fireClick(node) {
@@ -614,13 +623,13 @@ function fireClick(node) {
 
 // chiude la popup modale
 function closeWindow() {
-  var closeBtn;
-  if (window.parent.document.getElementById('modal-close') != null)
-    closeBtn = window.parent.document.getElementById('modal-close');
-  else
-    closeBtn = window.parent.parent.document.getElementById('modal-close');
-  if (closeBtn != null)
-    fireClick(closeBtn);
+   var closeBtnTrigger = window.parent.document.getElementById('modal-close-trigger');
+   if (closeBtnTrigger == null) {
+      closeBtnTrigger = window.parent.parent.document.getElementById('modal-close-trigger');
+   }
+   if (closeBtnTrigger != null) {
+      fireClick(closeBtnTrigger);
+   }
 }
 
 // devo chiamare l'evento click lato server al ritorno dalla finestra modale

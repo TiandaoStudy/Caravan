@@ -36,6 +36,7 @@
             if (onPopupClose) {
                onPopupClose(top.returnValue);
             }
+            // Timeout is used to avoid issues with IE9
             setTimeout(function () {
                closeWindow();
             }, 100);

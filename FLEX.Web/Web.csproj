@@ -688,7 +688,9 @@
     <Content Include="FLEX\MasterPages\Popup.Master">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\MasterPages\Head.Master" />
+    <Content Include="FLEX\MasterPages\Head.Master">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="FLEX\MasterPages\MultiSelect.Master">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
