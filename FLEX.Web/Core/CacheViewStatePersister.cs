@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Web.UI;
-using KVLite;
+using PommaLabs.KVLite;
 
 namespace FLEX.Web.Core
 {
