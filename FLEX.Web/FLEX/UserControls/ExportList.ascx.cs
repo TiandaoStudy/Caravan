@@ -178,13 +178,13 @@ namespace FLEX.Web.UserControls
                switch (c.Type)
                {
                   case ColumnType.DataKey:
-                     dr[di] = gridview.DataKeys[row.RowIndex].Values[c.Index];
+                     dr[di] = (gridview.DataKeys[row.RowIndex].Values[c.Index].ToString() == "&nbsp;" ? " " : gridview.DataKeys[row.RowIndex].Values[c.Index].ToString()).Replace("<br/>", Environment.NewLine);
                      break;
 
                   case ColumnType.Column:
                      //Colonna BounField 
                      if (row.Cells[c.Index].Controls.Count == 0)
-                        dr[di] = row.Cells[c.Index].Text;
+                        dr[di] = (row.Cells[c.Index].Text == "&nbsp;" ? " " : row.Cells[c.Index].Text).Replace("<br/>", Environment.NewLine);
                      else //Colonna TemplateField
                      {
                         dr[di] = "";
@@ -197,7 +197,7 @@ namespace FLEX.Web.UserControls
                            {
                               if (checkBox.Checked)
                               {
-                                 dr[di] += checkBox.Text + " ";
+                                 dr[di] += (checkBox.Text == "&nbsp;" ? " " : checkBox.Text).Replace("<br/>", Environment.NewLine) + " ";
                               }
                               continue;
                            }
@@ -209,7 +209,7 @@ namespace FLEX.Web.UserControls
                               {
                                  if (checkBoxList.Items[index].Selected)
                                  {
-                                    dr[di] += checkBoxList.Items[index].Text + " ";
+                                    dr[di] += (checkBoxList.Items[index].Text == "&nbsp;" ? " " : checkBoxList.Items[index].Text).Replace("<br/>", Environment.NewLine) + " ";
                                  }
                               }
                               continue;
@@ -218,14 +218,14 @@ namespace FLEX.Web.UserControls
                            var longTextContainer = control as LongTextContainer;
                            if (longTextContainer != null)
                            {
-                              dr[di] += longTextContainer.Text + " ";
+                              dr[di] += (longTextContainer.Text == "&nbsp;" ? " " : longTextContainer.Text).Replace("<br/>", Environment.NewLine) + " ";
                               continue;
                            }
 
                            var label = control as Label;
                            if (label != null)
                            {
-                              dr[di] += label.Text + " ";
+                              dr[di] += (label.Text == "&nbsp;" ? " " : label.Text).Replace("<br/>", Environment.NewLine) + " ";
                               continue;
                            }
 
@@ -234,7 +234,7 @@ namespace FLEX.Web.UserControls
                            {
                               var text = linkButton.Text;
                               if (!text.Contains("<span"))
-                                 dr[di] += text + " ";
+                                 dr[di] += (text == "&nbsp;" ? " " : text).Replace("<br/>", Environment.NewLine) + " ";
                            }
                         }
                      }
