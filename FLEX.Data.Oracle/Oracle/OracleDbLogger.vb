@@ -155,12 +155,12 @@ Namespace Oracle
          Using connection = QueryExecutor.Instance.OpenConnection()
             Dim params = New With {
                .p_type = type,
-               .p_application = Configuration.Instance.ApplicationName,
-               .p_code_unit = GetType(TCodeUnit).FullName,
-               .p_function = [function],
-               .p_short_msg = shortMessage.ToString().Substring(0, MaxShortMessageLength),
-               .p_long_msg = If(longMessage Is Nothing, Nothing, longMessage.ToString().Substring(0, MaxLongMessageLength)),
-               .p_context = context
+               .p_application = Truncate(Configuration.Instance.ApplicationName, MaxApplicationNameLength),
+               .p_code_unit = Truncate(GetType(TCodeUnit).FullName, MaxCodeUnitLength),
+               .p_function = Truncate([function], MaxFunctionLength),
+               .p_short_msg = If(shortMessage Is Nothing, Nothing, Truncate(shortMessage.ToString(), MaxShortMessageLength)),
+               .p_long_msg = If(longMessage Is Nothing, Nothing, Truncate(longMessage.ToString(), MaxLongMessageLength)),
+               .p_context = Truncate(context, MaxContextLength)
             }
             connection.Execute("pck_flex_log.sp_log", params, commandType:=CommandType.StoredProcedure)
          End Using
