@@ -17,6 +17,11 @@ namespace FLEX.Web.UserControls.Ajax
    /// </summary>
    public partial class OnOffSwitch : AjaxControlBase, IAjaxControl, ISearchControl
    {
+      private const string ActiveOnClass = "btn btn-sm btn-on btn-primary switch-active";
+      private const string ActiveOffClass = "btn btn-sm btn-off btn-primary switch-active";
+      private const string InactiveOnClass = "btn btn-sm btn-on btn-default switch-inactive";
+      private const string InactiveOffClass = "btn btn-sm btn-off btn-default switch-inactive";
+
       protected override void Page_Load(object sender, EventArgs e)
       {
          base.Page_Load(sender, e);
@@ -57,16 +62,6 @@ namespace FLEX.Web.UserControls.Ajax
             txtSwitched.Text = value ? OnValue : OffValue;
             OnSwitchedChanged(value);
          }
-      }
-
-      public string ActiveClass
-      {
-         get { return "btn btn-sm btn-on-off btn-primary switch-active"; }
-      }
-
-      public string InactiveClass
-      {
-         get { return "btn btn-sm btn-on-off btn-default switch-inactive"; }
       }
 
       #endregion
@@ -171,8 +166,8 @@ namespace FLEX.Web.UserControls.Ajax
 
       private void OnSwitchedChanged(bool switched)
       {
-         btnON.CssClass = switched ? ActiveClass : InactiveClass;
-         btnOFF.CssClass = switched ? InactiveClass : ActiveClass;
+         btnON.CssClass = switched ? ActiveOnClass : InactiveOnClass;
+         btnOFF.CssClass = switched ? InactiveOffClass : ActiveOffClass;
       }
 
       #endregion

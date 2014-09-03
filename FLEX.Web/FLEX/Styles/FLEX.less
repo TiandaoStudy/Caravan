@@ -7,6 +7,7 @@
 
 @footer-padding: 5px;
 @footer-min-height: 10px;
+@on-off-width: 48px;
 
 body {
   margin: 0;
@@ -698,6 +699,11 @@ footer {
   ON OFF SWITCH
 *******************************************************************************/
 
-.btn-on-off {
-   width: 48px;
+.btn-on {
+   width: @on-off-width;
+}
+
+.btn-off {
+   width: @on-off-width;
+   margin-right: 0px;
 }
