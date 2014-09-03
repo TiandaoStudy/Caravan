@@ -45,49 +45,59 @@ Namespace Oracle
 
 #Region "Logging Methods"
 
-      Sub LogDebug(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
-       Implements IDbLogger.LogDebug
-         Log(Of TCodeUnit)("DEBUG", [function], shortMessage, longMessage, context, args)
+      Sub LogDebug (Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing,
+                                  <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
+         Implements IDbLogger.LogDebug
+         Log (Of TCodeUnit)("DEBUG", [function], shortMessage, longMessage, context, args)
       End Sub
 
-      Sub LogInfo(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
-       Implements IDbLogger.LogInfo
-         Log(Of TCodeUnit)("INFO", [function], shortMessage, longMessage, context, args)
+      Sub LogInfo (Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing,
+                                 <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
+         Implements IDbLogger.LogInfo
+         Log (Of TCodeUnit)("INFO", [function], shortMessage, longMessage, context, args)
       End Sub
 
-      Sub LogWarning(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
-       Implements IDbLogger.LogWarning
-         Log(Of TCodeUnit)("WARNING", [function], shortMessage, longMessage, context, args)
+      Sub LogWarning (Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing,
+                                    <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
+         Implements IDbLogger.LogWarning
+         Log (Of TCodeUnit)("WARNING", [function], shortMessage, longMessage, context, args)
       End Sub
 
-      Sub LogError(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
-       Implements IDbLogger.LogError
-         Log(Of TCodeUnit)("ERROR", [function], shortMessage, longMessage, context, args)
+      Sub LogError (Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing,
+                                  <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
+         Implements IDbLogger.LogError
+         Log (Of TCodeUnit)("ERROR", [function], shortMessage, longMessage, context, args)
       End Sub
 
-      Sub LogFatal(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
-       Implements IDbLogger.LogFatal
-         Log(Of TCodeUnit)("FATAL", [function], shortMessage, longMessage, context, args)
+      Sub LogFatal (Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing,
+                                  <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
+         Implements IDbLogger.LogFatal
+         Log (Of TCodeUnit)("FATAL", [function], shortMessage, longMessage, context, args)
       End Sub
 
-      Sub LogDebug(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) Implements IDbLogger.LogDebug
-         Log(Of TCodeUnit)("DEBUG", [function], exception, context, args)
+      Sub LogDebug (Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
+         Implements IDbLogger.LogDebug
+         Log (Of TCodeUnit)("DEBUG", [function], exception, context, args)
       End Sub
 
-      Sub LogInfo(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) Implements IDbLogger.LogInfo
-         Log(Of TCodeUnit)("INFO", [function], exception, context, args)
+      Sub LogInfo (Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
+         Implements IDbLogger.LogInfo
+         Log (Of TCodeUnit)("INFO", [function], exception, context, args)
       End Sub
 
-      Sub LogWarning(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) Implements IDbLogger.LogWarning
-         Log(Of TCodeUnit)("WARNING", [function], exception, context, args)
+      Sub LogWarning (Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
+         Implements IDbLogger.LogWarning
+         Log (Of TCodeUnit)("WARNING", [function], exception, context, args)
       End Sub
 
-      Sub LogError(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) Implements IDbLogger.LogError
-         Log(Of TCodeUnit)("ERROR", [function], exception, context, args)
+      Sub LogError (Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
+         Implements IDbLogger.LogError
+         Log (Of TCodeUnit)("ERROR", [function], exception, context, args)
       End Sub
 
-      Sub LogFatal(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) Implements IDbLogger.LogFatal
-         Log(Of TCodeUnit)("FATAL", [function], exception, context, args)
+      Sub LogFatal (Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IDictionary(Of String, Object) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
+         Implements IDbLogger.LogFatal
+         Log (Of TCodeUnit)("FATAL", [function], exception, context, args)
       End Sub
 
 #End Region
@@ -103,11 +113,12 @@ Namespace Oracle
                   flog_key_3 as Key3, flog_value_3 as Value3, flog_key_4 as Key4, flog_value_4 as Value4, flog_key_5 as Key5, flog_value_5 as Value5,
                   flog_key_6 as Key6, flog_value_6 as Value6, flog_key_7 as Key7, flog_value_7 as Value7, flog_key_8 as Key8, flog_value_8 as Value8,
                   flog_key_9 as Key9, flog_value_9 as Value9
-             from flex_log
+             from {0}flex_log
         ]]> _
                 .Value
+         query = String.Format(query, Configuration.Instance.OracleRunner)
          Using connection = QueryExecutor.Instance.OpenConnection()
-            Return connection.Query(Of DbLog)(query)
+            Return connection.Query (Of DbLog)(query)
          End Using
       End Function
 
@@ -120,12 +131,13 @@ Namespace Oracle
                   flog_key_3 as Key3, flog_value_3 as Value3, flog_key_4 as Key4, flog_value_4 as Value4, flog_key_5 as Key5, flog_value_5 as Value5,
                   flog_key_6 as Key6, flog_value_6 as Value6, flog_key_7 as Key7, flog_value_7 as Value7, flog_key_8 as Key8, flog_value_8 as Value8,
                   flog_key_9 as Key9, flog_value_9 as Value9
-             from flex_log
+             from {0}flex_log
             where upper(flog_application) = upper(:ApplicationName)
         ]]> _
                 .Value
+         query = String.Format(query, Configuration.Instance.OracleRunner)
          Using connection = QueryExecutor.Instance.OpenConnection()
-            Return connection.Query(Of DbLog)(query, New With {Configuration.Instance.ApplicationName})
+            Return connection.Query(Of DbLog)(query, New With {Common.Configuration.Instance.ApplicationName})
          End Using
       End Function
 
@@ -144,31 +156,33 @@ Namespace Oracle
       Private Shared Function IsLevelEnabled(type As String) As Boolean
          type = type.ToUpper()
          Using connection = QueryExecutor.Instance.OpenConnection()
-            Dim enabled = connection.Query(Of Integer)("select flos_enabled from flex_log_settings where flos_type = :type", New With {type}).First()
+            Dim query = String.Format("select flos_enabled from {0}flex_log_settings where flos_type = :type", Configuration.Instance.OracleRunner)
+            Dim enabled = connection.Query(Of Integer)(query, New With {type}).First()
             Return enabled = 0
          End Using
       End Function
 
-      Private Shared Sub Log(Of TCodeUnit)(type As String, [function] As String, shortMessage As Object, longMessage As Object, context As String, args As IDictionary(Of String, Object))
-         Raise(Of ArgumentNullException).IfIsNull(shortMessage)
+      Private Shared Sub Log (Of TCodeUnit)(type As String, [function] As String, shortMessage As Object, longMessage As Object, context As String, args As IDictionary(Of String, Object))
+         Raise (Of ArgumentNullException).IfIsNull(shortMessage)
 
          Using connection = QueryExecutor.Instance.OpenConnection()
             Dim params = New With {
-               .p_type = type,
-               .p_application = Truncate(Configuration.Instance.ApplicationName, MaxApplicationNameLength),
-               .p_code_unit = Truncate(GetType(TCodeUnit).FullName, MaxCodeUnitLength),
-               .p_function = Truncate([function], MaxFunctionLength),
-               .p_short_msg = If(shortMessage Is Nothing, Nothing, Truncate(shortMessage.ToString(), MaxShortMessageLength)),
-               .p_long_msg = If(longMessage Is Nothing, Nothing, Truncate(longMessage.ToString(), MaxLongMessageLength)),
-               .p_context = Truncate(context, MaxContextLength)
-            }
-            connection.Execute("pck_flex_log.sp_log", params, commandType:=CommandType.StoredProcedure)
+                   .p_type = type,
+                   .p_application = Truncate(Common.Configuration.Instance.ApplicationName, MaxApplicationNameLength),
+                   .p_code_unit = Truncate(GetType(TCodeUnit).FullName, MaxCodeUnitLength),
+                   .p_function = Truncate([function], MaxFunctionLength),
+                   .p_short_msg = If(shortMessage Is Nothing, Nothing, Truncate(shortMessage.ToString(), MaxShortMessageLength)),
+                   .p_long_msg = If(longMessage Is Nothing, Nothing, Truncate(longMessage.ToString(), MaxLongMessageLength)),
+                   .p_context = Truncate(context, MaxContextLength)
+                   }
+            Dim procedure = String.Format("{0}pck_flex_log.sp_log", Configuration.Instance.OracleRunner)
+            connection.Execute(procedure, params, commandType:=CommandType.StoredProcedure)
          End Using
       End Sub
 
-      Private Shared Sub Log(Of TCodeUnit)(type As String, [function] As String, exception As Exception, context As String, args As IDictionary(Of String, Object))
+      Private Shared Sub Log (Of TCodeUnit)(type As String, [function] As String, exception As Exception, context As String, args As IDictionary(Of String, Object))
          exception = FindInnermostException(exception)
-         Log(Of TCodeUnit)(type, [function], exception.Message, exception.StackTrace, context, args)
+         Log (Of TCodeUnit)(type, [function], exception.Message, exception.StackTrace, context, args)
       End Sub
 
 #End Region
