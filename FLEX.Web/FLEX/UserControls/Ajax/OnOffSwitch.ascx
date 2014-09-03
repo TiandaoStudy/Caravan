@@ -8,10 +8,8 @@
 
       var checked = !btnON.hasClass("switch-active");     
 
-      var activeClass = "<%= ActiveClass %>";
-      var inactiveClass = "<%= InactiveClass %>";
-      btnON.attr("class", checked ? activeClass : inactiveClass);
-      btnOFF.attr("class", checked ? inactiveClass : activeClass);
+      btnON.attr("class", checked ? "<%= ActiveOnClass %>" : "<%= InactiveOnClass %>");
+      btnOFF.attr("class", checked ? "<%= InactiveOffClass %>" : "<%= ActiveOffClass %>");
 
       var onValue = <%= EncodeJsString(OnValue) %>;
       var offValue = <%= EncodeJsString(OffValue) %>;

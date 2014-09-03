@@ -4,6 +4,7 @@ using System.IO;
 using System.Web;
 using System.Web.UI.WebControls;
 using FLEX.Common.Data;
+using FLEX.Common.Text;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -96,14 +97,18 @@ namespace FLEX.Web.Pages
 
             var nameFiles = TreeView1.SelectedNode.Text;
 
+            var oldFile = File.ReadAllText(filesPath[nameFiles]);
+            var newFile = txtContentFiles.Text;
             using (var writer = new StreamWriter(filesPath[nameFiles], false))
             {
-               writer.Write(txtContentFiles.Text);
+               writer.Write(newFile);
             }
 
             // Indico nel log che qualcuno ha modificato il file
             var logMsg = String.Format("File {0} has been changed by {1}", Path.GetFileName(filesPath[nameFiles]), HttpContext.Current.User.Identity.Name);
-            DbLogger.Instance.LogWarning<CodeEditor>(logMsg);
+            var diff = new diff_match_patch();
+            var diffList = diff.diff_main(oldFile, newFile);
+            DbLogger.Instance.LogWarning<CodeEditor>(logMsg, diff.diff_prettyHtml(diffList));
 
             var extension = Path.GetExtension(filesPath[nameFiles]);
             if (extension == ".cs")

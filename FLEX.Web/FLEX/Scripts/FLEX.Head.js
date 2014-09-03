@@ -52,7 +52,7 @@
   };
 
   root.bootstrapifyControls = function() {
-    return $(".form-group input[type=text], .form-group textarea, .form-group select").addClass("form-control");
+    return $(".form-group input[type=text], .form-group input:not([type]), .form-group textarea, .form-group select").addClass("form-control");
   };
 
   root.randomQueryTag = function(opts) {

@@ -3,7 +3,8 @@
 
 <ajax:UpdatePanel ID="updPanel" runat="server">
    <ContentTemplate>      
-      <button id="btnSearch" class="btn btn-success btn-sm" runat="server" OnServerClick="btnSearch_Click">
+      <!-- IMPORTANT: Type must be "button", in order to avoid a double postback -->
+      <button id="btnSearch" class="btn btn-success btn-sm" runat="server" OnServerClick="btnSearch_Click" type="button">
          <span id="btnSearchIcon" class="glyphicon glyphicon-search"></span>&nbsp;Search
       </button>
    </ContentTemplate>

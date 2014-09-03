@@ -43,7 +43,7 @@ root.setTextBoxValue = (textBox, value) ->
 
 root.bootstrapifyControls = () ->
    # Makes form elements prettier
-   $(".form-group input[type=text], .form-group textarea, .form-group select").addClass("form-control")
+   $(".form-group input[type=text], .form-group input:not([type]), .form-group textarea, .form-group select").addClass("form-control")
 
 root.randomQueryTag = (opts) ->
    defaults = {isFirst: false}
