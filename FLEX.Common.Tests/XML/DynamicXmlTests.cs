@@ -47,5 +47,21 @@ namespace FLEX.Common.UnitTests.XML
          dynamic obj = DynamicXml.Parse(xml);
          Assert.AreEqual("1", obj.Elems.Value);
       }
+
+      [Test]
+      public void Parse_SimpleXml_TwoAttributes()
+      {
+         const string xml = @"
+            <UnitTest>
+               <Elems Value=""1"" AnotherValue=""2"">
+                  <Elem>1</Elem>
+                  <Elem>2</Elem>
+               </Elems> 
+            </UnitTest>
+         ";
+         dynamic obj = DynamicXml.Parse(xml);
+         Assert.AreEqual("1", obj.Elems.Value);
+         Assert.AreEqual("2", obj.Elems.AnotherValue);
+      }
    }
 }
