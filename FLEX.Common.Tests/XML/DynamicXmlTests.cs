@@ -13,7 +13,7 @@ namespace FLEX.Common.UnitTests.XML
                <Elem>1</Elem>
             </UnitTest>
          ";
-         dynamic obj = DynamicXml._getExpandoFromXmlScript(xml);
+         dynamic obj = DynamicXml.Parse(xml);
          Assert.AreEqual("1", obj.Elem);
       }
 
@@ -28,9 +28,24 @@ namespace FLEX.Common.UnitTests.XML
                </Elems> 
             </UnitTest>
          ";
-         dynamic obj = DynamicXml._getExpandoFromXmlScript(xml);
-         Assert.AreEqual("1", obj.Elems[0]);
-         Assert.AreEqual("2", obj.Elems[1]);
+         dynamic obj = DynamicXml.Parse(xml);
+         Assert.AreEqual("1", obj.Elems.Elem[0].Value);
+         Assert.AreEqual("2", obj.Elems.Elem[1].Value);
+      }
+
+      [Test]
+      public void Parse_SimpleXml_OneAttribute()
+      {
+         const string xml = @"
+            <UnitTest>
+               <Elems Value=""1"">
+                  <Elem>1</Elem>
+                  <Elem>2</Elem>
+               </Elems> 
+            </UnitTest>
+         ";
+         dynamic obj = DynamicXml.Parse(xml);
+         Assert.AreEqual("1", obj.Elems.Value);
       }
    }
 }
