@@ -224,6 +224,13 @@
     <Compile Include="FLEX\Pages\Templates\CustomView.aspx.designer.cs">
       <DependentUpon>CustomView.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FLEX\Pages\DynamicReportViewer.aspx.cs">
+      <DependentUpon>DynamicReportViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\DynamicReportViewer.aspx.designer.cs">
+      <DependentUpon>DynamicReportViewer.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FLEX\Services\AjaxLookup.asmx.cs">
       <DependentUpon>AjaxLookup.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -460,6 +467,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\Pages\Templates\CustomView.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\Pages\DynamicReportViewer.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\Scripts\base64.js">

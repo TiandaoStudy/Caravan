@@ -11,6 +11,7 @@ namespace FLEX.Web
       private const string SectionName = "FlexWebConfiguration";
       private const string CheckSecurityKey = "CheckSecurity";
       private const string ControlExtendersFolderKey = "ControlExtendersFolder";
+      private const string DynamicReportsFolderKey = "DynamicReportsFolder";
       private const string EnableOutputCompressionKey = "EnableOutputCompression";
       private const string EnableOutputMinificationKey = "EnableOutputMinification";
       private const string ErrorManagerTypeInfoKey = "ErrorManagerTypeInfo";
@@ -47,6 +48,12 @@ namespace FLEX.Web
       public string ControlExtendersFolder
       {
          get { return (string) this[ControlExtendersFolderKey]; }
+      }
+
+      [ConfigurationProperty(DynamicReportsFolderKey, IsRequired = true)]
+      public string DynamicReportsFolder
+      {
+         get { return (string) this[DynamicReportsFolderKey]; }
       }
 
       [ConfigurationProperty(ErrorManagerTypeInfoKey, IsRequired = true)]
