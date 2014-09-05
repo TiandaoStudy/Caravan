@@ -32,7 +32,7 @@
     "bootbox": "~4.2.0",
     "bootstrap-touchspin": "~3.0.1",
     "backbone": "~1.1.2",
-    "octicons": "~2.1.0",
+    "octicons": "~2.1.2",
     "bootstrap-hover-dropdown": "~2.0.11"
   }
 }
