@@ -20,10 +20,4 @@
       Return exception
    End Function
 
-   Protected Shared Function Truncate(str As String, maxLength As Integer) As String
-      If String.IsNullOrEmpty(str) Then Return str
-      maxLength = Math.Max(maxLength, 0) ' To avoid negative lengths...
-      Return If(str.Length <= maxLength, str, str.Substring(0, maxLength))
-   End Function
-
 End Class

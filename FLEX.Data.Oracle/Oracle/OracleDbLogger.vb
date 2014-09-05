@@ -107,13 +107,13 @@ Namespace Oracle
       Public Function RetrieveAllLogs() As IEnumerable(Of DbLog) Implements IDbLogger.RetrieveAllLogs
          Dim query As String =
                 <![CDATA[
-           select flog_entry_date as EntryDate, flos_type as Type, flog_Application as Application, flog_code_unit as CodeUnit,
+            select flog_entry_date as EntryDate, flos_type as Type, flog_Application as Application, flog_code_unit as CodeUnit,
                   flog_function as Function, flog_short_msg as ShortMessage, flog_long_msg as LongMessage, flog_context as Context,
                   flog_key_0 as Key0, flog_value_0 as Value0, flog_key_1 as Key1, flog_value_1 as Value1, flog_key_2 as Key2, flog_value_2 as Value2,
                   flog_key_3 as Key3, flog_value_3 as Value3, flog_key_4 as Key4, flog_value_4 as Value4, flog_key_5 as Key5, flog_value_5 as Value5,
                   flog_key_6 as Key6, flog_value_6 as Value6, flog_key_7 as Key7, flog_value_7 as Value7, flog_key_8 as Key8, flog_value_8 as Value8,
                   flog_key_9 as Key9, flog_value_9 as Value9
-             from {0}flex_log
+               from {0}flex_log
         ]]> _
                 .Value
          query = String.Format(query, Configuration.Instance.OracleRunner)
@@ -125,13 +125,13 @@ Namespace Oracle
       Public Function RetrieveCurrentApplicationLogs() As IEnumerable(Of DbLog) Implements IDbLogger.RetrieveCurrentApplicationLogs
          Dim query As String =
                 <![CDATA[
-           select flog_entry_date as EntryDate, flos_type as Type, flog_Application as Application, flog_code_unit as CodeUnit,
+            select flog_entry_date as EntryDate, flos_type as Type, flog_Application as Application, flog_code_unit as CodeUnit,
                   flog_function as Function, flog_short_msg as ShortMessage, flog_long_msg as LongMessage, flog_context as Context,
                   flog_key_0 as Key0, flog_value_0 as Value0, flog_key_1 as Key1, flog_value_1 as Value1, flog_key_2 as Key2, flog_value_2 as Value2,
                   flog_key_3 as Key3, flog_value_3 as Value3, flog_key_4 as Key4, flog_value_4 as Value4, flog_key_5 as Key5, flog_value_5 as Value5,
                   flog_key_6 as Key6, flog_value_6 as Value6, flog_key_7 as Key7, flog_value_7 as Value7, flog_key_8 as Key8, flog_value_8 as Value8,
                   flog_key_9 as Key9, flog_value_9 as Value9
-             from {0}flex_log
+               from {0}flex_log
             where upper(flog_application) = upper(:ApplicationName)
         ]]> _
                 .Value
@@ -167,14 +167,14 @@ Namespace Oracle
 
          Using connection = QueryExecutor.Instance.OpenConnection()
             Dim params = New With {
-                   .p_type = type,
-                   .p_application = Truncate(Common.Configuration.Instance.ApplicationName, MaxApplicationNameLength),
-                   .p_code_unit = Truncate(GetType(TCodeUnit).FullName, MaxCodeUnitLength),
-                   .p_function = Truncate([function], MaxFunctionLength),
-                   .p_short_msg = If(shortMessage Is Nothing, Nothing, Truncate(shortMessage.ToString(), MaxShortMessageLength)),
-                   .p_long_msg = If(longMessage Is Nothing, Nothing, Truncate(longMessage.ToString(), MaxLongMessageLength)),
-                   .p_context = Truncate(context, MaxContextLength)
-                   }
+               .p_type = type,
+               .p_application = Common.Configuration.Instance.ApplicationName.Truncate(MaxApplicationNameLength),
+               .p_code_unit = GetType(TCodeUnit).FullName.Truncate(MaxCodeUnitLength),
+               .p_function = [function].Truncate(MaxFunctionLength),
+               .p_short_msg = If(shortMessage Is Nothing, Nothing, shortMessage.ToString().Truncate(MaxShortMessageLength)),
+               .p_long_msg = If(longMessage Is Nothing, Nothing, longMessage.ToString().Truncate(MaxLongMessageLength)),
+               .p_context = context.Truncate(MaxContextLength)
+               }
             Dim procedure = String.Format("{0}pck_flex_log.sp_log", Configuration.Instance.OracleRunner)
             connection.Execute(procedure, params, commandType:=CommandType.StoredProcedure)
          End Using
