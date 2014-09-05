@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using FLEX.Common.Collections;
-using FLEX.Common.Web;
 using NUnit.Framework;
 
-namespace FLEX.Common.Web.Tests
+namespace FLEX.Common.UnitTests
 {
     public sealed class BasicsTests : TestBase
     {
@@ -25,8 +21,7 @@ namespace FLEX.Common.Web.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void OneItemList_Add()
         {
-            var l = new OneItemList<int>(1);
-            l.Add(2);
+            var l = new OneItemList<int>(1) {2};
         }
     }
 }

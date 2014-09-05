@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace FLEX.Common.Web.Tests
+namespace FLEX.Common.UnitTests
 {
     [TestFixture]
     public abstract class TestBase

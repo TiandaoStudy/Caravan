@@ -58,6 +58,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Data.SQLite, Version=1.0.93.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Data.SQLite.Core.MSIL.1.0.93.0\lib\net40\System.Data.SQLite.dll</HintPath>
@@ -73,6 +74,7 @@
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="Thrower, Version=0.12.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thrower.0.12.0\lib\net40-client\Thrower.dll</HintPath>
@@ -96,6 +98,7 @@
     <Compile Include="Web\ISearchControl.cs" />
     <Compile Include="Web\SearchCriteria.cs" />
     <Compile Include="Text\FastReplacer.cs" />
+    <Compile Include="XML\DynamicXml.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

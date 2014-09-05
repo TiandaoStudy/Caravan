@@ -2,7 +2,7 @@
 using System.Data;
 using System.Globalization;
 
-namespace FLEX.Common.Web.Tests
+namespace FLEX.Common.UnitTests
 {
     public sealed class ConversionsTests : TestBase
     {
