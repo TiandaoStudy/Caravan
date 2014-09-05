@@ -438,6 +438,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FLEX\Fonts\fontawesome-webfont.svg" />
+    <Content Include="FLEX\Fonts\foundation-icons.svg" />
     <Content Include="FLEX\Fonts\icomoon.svg" />
     <Content Include="FLEX\Fonts\ionicons.svg" />
     <Content Include="FLEX\Fonts\octicons.svg" />
@@ -509,6 +510,12 @@
     <Content Include="FLEX\Styles\Bootstrap-touchspin.min.css">
       <DependentUpon>Bootstrap-touchspin.less</DependentUpon>
     </Content>
+    <Content Include="FLEX\Styles\Foundation-icon-fonts.css">
+      <DependentUpon>Foundation-icon-fonts.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Foundation-icon-fonts.min.css">
+      <DependentUpon>Foundation-icon-fonts.less</DependentUpon>
+    </Content>
     <Content Include="FLEX\Styles\Octicons.css">
       <DependentUpon>Octicons.less</DependentUpon>
     </Content>
@@ -539,6 +546,9 @@
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
+    <None Include="FLEX\Fonts\foundation-icons.eot" />
+    <None Include="FLEX\Fonts\foundation-icons.ttf" />
+    <None Include="FLEX\Fonts\foundation-icons.woff" />
     <None Include="FLEX\Fonts\octicons.eot" />
     <None Include="FLEX\Fonts\octicons.ttf" />
     <None Include="FLEX\Fonts\octicons.woff" />
@@ -733,6 +743,7 @@
     <None Include="FLEX\Styles\Bootstrap-touchspin.less" />
     <None Include="FLEX\Styles\Bootstrap-variables.less" />
     <None Include="FLEX\Styles\Fonts.less" />
+    <None Include="FLEX\Styles\Foundation-icon-fonts.less" />
     <None Include="FLEX\Styles\IcoMoon.less" />
     <None Include="FLEX\Styles\Ionicons.less" />
     <None Include="FLEX\Styles\Octicons.less" />
