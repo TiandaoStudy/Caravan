@@ -7,7 +7,11 @@
 </asp:Content>
 
 <asp:Content ID="aspSearchContent" ContentPlaceHolderID="searchContent" runat="server">
-   
+   <asp:Repeater ID="repSearchCriteria" runat="server" OnItemDataBound="repSearchCriteria_OnItemDataBound">
+      <ItemTemplate>
+         <asp:PlaceHolder ID="plhSearchCriterium" runat="server"></asp:PlaceHolder>
+      </ItemTemplate>
+   </asp:Repeater>
 </asp:Content>
 
 <asp:Content ID="aspUpperContent" ContentPlaceHolderID="upperContent" runat="server">

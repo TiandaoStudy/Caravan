@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Web.UI.WebControls;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using FLEX.Common.XML;
+using FLEX.Web.UserControls;
 using DataTable = System.Data.DataTable;
 
 // ReSharper disable CheckNamespace
@@ -50,6 +52,9 @@ namespace FLEX.Web.Pages
          var reportXmlPath = Server.MapPath(Path.Combine(Configuration.Instance.DynamicReportsFolder, "SampleReport.xml"));
          dynamic reportXml = DynamicXml.Load(reportXmlPath);
 
+         repSearchCriteria.DataSource = new List<int> {1, 2, 3};
+         repSearchCriteria.DataBind();
+
          BuildDataGrid(fdtgReport, reportXml.Columns);
       }
 
@@ -76,7 +81,8 @@ namespace FLEX.Web.Pages
          var boundField = new BoundField
          {
             DataField = columnSpec.DataField,
-            HeaderText = columnSpec.HeaderText ?? String.Empty
+            HeaderText = columnSpec.HeaderText ?? String.Empty,
+            SortExpression = columnSpec.SortExpression ?? String.Empty
          };
          dataGrid.Columns.Add(boundField);
       }
@@ -87,5 +93,19 @@ namespace FLEX.Web.Pages
       }
 
       #endregion
+
+      protected void repSearchCriteria_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+      {
+         if (e.Item.ItemType != ListItemType.Item)
+         {
+            return;
+         }
+         var ctrl = LoadControl("~/FLEX/UserControls/LongTextContainer.ascx") as LongTextContainer;
+         ctrl.Text = "PROVA";
+         ctrl.MaxTextLength = 4;
+         ctrl.ContainerTitle = "UFFA";
+         var placeHolder = e.Item.FindControl("plhSearchCriterium") as PlaceHolder;
+         placeHolder.Controls.Add(ctrl);
+      }
    }
 }
