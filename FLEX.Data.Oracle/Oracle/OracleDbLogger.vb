@@ -2,6 +2,7 @@
 Imports FLEX.Common
 Imports Dapper
 Imports FLEX.Common.Data
+Imports PommaLabs.GRAMPA.Extensions
 Imports Thrower
 
 Namespace Oracle

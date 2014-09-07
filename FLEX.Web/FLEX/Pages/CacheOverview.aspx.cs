@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using FLEX.Common;
 using FLEX.Web.UserControls.Ajax;
+using PommaLabs.GRAMPA.Extensions;
 using PommaLabs.KVLite;
 
 // ReSharper disable CheckNamespace

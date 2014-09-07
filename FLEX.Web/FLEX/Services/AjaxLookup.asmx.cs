@@ -10,7 +10,7 @@ using System.Web.Services;
 using System.Xml;
 using FLEX.Common;
 using FLEX.Common.Data;
-using FLEX.Common.Text;
+using PommaLabs.GRAMPA.Text;
 using Thrower;
 
 // ReSharper disable CheckNamespace

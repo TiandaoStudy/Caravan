@@ -4,7 +4,7 @@ using System.IO;
 using System.Web;
 using System.Web.UI.WebControls;
 using FLEX.Common.Data;
-using FLEX.Common.Text;
+using PommaLabs.GRAMPA.Text;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
