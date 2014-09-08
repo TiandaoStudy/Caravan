@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>FLEX.Data</id>
-    <version>0.9.22.1</version>
+    <version>0.10.0.2</version>
     <title>FLEX.Data</title>
     <authors>alessiop</authors>
     <owners>Microsoft</owners>
@@ -27,6 +27,7 @@
         <dependency id="Microsoft.Bcl" version="" />
         <dependency id="Newtonsoft.Json" version="" />
         <dependency id="PommaLabs.Armando" version="" />
+        <dependency id="PommaLabs.GRAMPA" version="" />
      </dependencies>
     <references></references>
      <frameworkAssemblies>

@@ -32,15 +32,47 @@ namespace FLEX.Web.UserControls.Ajax
       }
 
       #region Public Properties
-
+      
+      /// <summary>
+      ///   TODO
+      /// </summary>
       public static string OnValue
       {
          get { return "1"; }
       }
-
+      
+      /// <summary>
+      ///   TODO
+      /// </summary>
       public static string OffValue
       {
          get { return "0"; }
+      }
+      
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      public string OnLabel
+      {
+         get { return btnON.Text; }
+         set
+         {
+            Raise<ArgumentException>.IfIsEmpty(value);
+            btnON.Text = value;
+         }
+      }
+      
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      public string OffLabel
+      {
+         get { return btnOFF.Text; }
+         set
+         {
+            Raise<ArgumentException>.IfIsEmpty(value);
+            btnOFF.Text = value;
+         }
       }
 
       /// <summary>
