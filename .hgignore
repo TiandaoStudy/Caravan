@@ -131,12 +131,6 @@ Backup*/
 UpgradeLog*.XML
 UpgradeLog*.htm
 
-## NuGet
-packages/
-*.nupkg
-*.nupkg.bak
-*Packager*/lib
-
 ## Miscellaneous Ignores
 
 sql/
@@ -157,7 +151,14 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
+## NuGet
+
+*Packager*/*.nupkg
+*Packager*/*.nupkg.bak
+*Packager*/lib
+
 ## KVLite Ignores
+
 *.sqlite
 *.sqlite-shm
 *.sqlite-wal
