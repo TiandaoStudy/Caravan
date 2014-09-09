@@ -31,6 +31,8 @@ $(document).on(root.settings.beginAjaxRequest, (ev, sender, args) ->
    if document.activeElement and document.activeElement.id
       root.lastActiveElement = document.activeElement.id
    
+   root.disableButtonsBeforePostBack()
+   
    # Required to avoid strange CoffeeScript behaviour
    return
 )

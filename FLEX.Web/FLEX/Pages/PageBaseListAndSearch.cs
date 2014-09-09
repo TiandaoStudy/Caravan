@@ -19,6 +19,12 @@ namespace FLEX.Web.Pages
 
       #endregion
 
+      #region Instance Fields
+
+      private SearchCriteria _searchCriteria;
+
+      #endregion
+
       protected override void OnLoad(EventArgs args)
       {
          try
@@ -33,11 +39,17 @@ namespace FLEX.Web.Pages
       }
 
       #region Search Criteria
-      
+
       /// <summary>
       /// 
       /// </summary>
-      protected SearchCriteria SearchCriteria { get; private set; }
+      protected SearchCriteria SearchCriteria
+      {
+         get
+         {
+            return _searchCriteria ?? LoadSearchCriteria();
+         }
+      }
 
       /// <summary>
       /// 
@@ -65,8 +77,14 @@ namespace FLEX.Web.Pages
 
       #region Private Methods
 
-      private void LoadSearchCriteria()
+      private SearchCriteria LoadSearchCriteria()
       {
+         // Do not initialize criteria again, if they are ready.
+         if (_searchCriteria != null)
+         {
+            return _searchCriteria;
+         }
+
          // Locally cached for performance reasons.
          var flexID = FlexID;
          
@@ -86,11 +104,11 @@ namespace FLEX.Web.Pages
 
          if (storeSearchCriteria == SearchCriteriaStorage.Discard || searchCriteriaObj == null)
          {
-            SearchCriteria = new SearchCriteria();
+            _searchCriteria = new SearchCriteria();
          }
          else
          {
-            SearchCriteria = (SearchCriteria) searchCriteriaObj;
+            _searchCriteria = (SearchCriteria) searchCriteriaObj;
             Session[StoreSearchCriteriaTag + flexID] = SearchCriteriaStorage.Discard;
          }
 
@@ -102,6 +120,8 @@ namespace FLEX.Web.Pages
             FillSearchCriteria();
          }
          RegisterSearchCriteria(SearchCriteria);
+
+         return _searchCriteria;
       }
 
       #endregion

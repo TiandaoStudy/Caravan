@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using FLEX.Web.MasterPages;
@@ -36,10 +35,10 @@ namespace FLEX.Web.Pages
       #endregion
 
       protected override void OnLoad(EventArgs e)
-        {
- 	        base.OnLoad(e);
-            InitID();
-        }
+      {
+         base.OnLoad(e);
+         InitID();
+      }
 
       protected override sealed PageStatePersister PageStatePersister
       {
@@ -113,7 +112,7 @@ namespace FLEX.Web.Pages
       #region Private Methods
 
       private void InitID()
-      {        
+      {
          var storedId = ViewState[IdViewStateKey];
          if (storedId != null)
          {

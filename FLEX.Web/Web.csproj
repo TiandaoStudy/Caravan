@@ -32,7 +32,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;USETHROWER</DefineConstants>
+    <DefineConstants>USETHROWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\FLEX.Web.xml</DocumentationFile>
@@ -898,6 +898,7 @@ if $(ConfigurationName) == Release (
     set dir="$(SolutionDir)FLEX.Web.Packager/lib/net40"
     if not exist "%25dir%25" mkdir "%25dir%25"
     copy "$(TargetDir)FLEX.Web.dll" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
+    copy "$(TargetDir)FLEX.Web.pdb" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
     copy "$(TargetDir)FLEX.Web.xml" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
 )
 </PostBuildEvent>

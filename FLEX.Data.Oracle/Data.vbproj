@@ -28,7 +28,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
+    <DefineTrace>false</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>FLEX.Data.xml</DocumentationFile>
@@ -143,6 +143,7 @@
     set dir="$(SolutionDir)FLEX.Data.Packager/lib/net40"
     if not exist "%25dir%25" mkdir "%25dir%25"
     copy "$(TargetDir)FLEX.Data.dll" "$(SolutionDir)FLEX.Data.Packager/lib/net40"
+    copy "$(TargetDir)FLEX.Data.pdb" "$(SolutionDir)FLEX.Data.Packager/lib/net40"
     copy "$(TargetDir)FLEX.Data.xml" "$(SolutionDir)FLEX.Data.Packager/lib/net40"
 )</PostBuildEvent>
   </PropertyGroup>

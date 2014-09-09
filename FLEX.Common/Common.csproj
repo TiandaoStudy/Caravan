@@ -108,6 +108,7 @@
     set dir="$(SolutionDir)FLEX.Common.Packager/lib/net40"
     if not exist "%25dir%25" mkdir "%25dir%25"
     copy "$(TargetDir)FLEX.Common.dll" "$(SolutionDir)FLEX.Common.Packager/lib/net40"
+    copy "$(TargetDir)FLEX.Common.pdb" "$(SolutionDir)FLEX.Common.Packager/lib/net40"
     copy "$(TargetDir)FLEX.Common.xml" "$(SolutionDir)FLEX.Common.Packager/lib/net40"
 )</PostBuildEvent>
   </PropertyGroup>

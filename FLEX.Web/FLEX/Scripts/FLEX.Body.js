@@ -29,6 +29,7 @@
     if (document.activeElement && document.activeElement.id) {
       root.lastActiveElement = document.activeElement.id;
     }
+    root.disableButtonsBeforePostBack();
   });
 
   $(document).on(root.settings.endAjaxRequest, function(ev, sender, args) {
