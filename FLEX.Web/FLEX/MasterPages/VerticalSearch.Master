@@ -141,7 +141,7 @@
             <ajax:UpdateProgress ID="gridUpdateProgress" DisplayAfter="1" runat="server">
                <ProgressTemplate>
                   <div class="text-center">
-                     <img id="opdateProgress" alt="Please wait..." src="~/FLEX/Images/progress-circle.gif" class="vertical-search-update-progress" runat="server" />
+                     <img id="updateProgress" alt="Please wait..." src="~/FLEX/Images/progress-circle.gif" class="vertical-search-update-progress" runat="server" />
                   </div>
                </ProgressTemplate>
             </ajax:UpdateProgress>

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using FLEX.Web.UserControls;
+using FLEX.Web.UserControls.Ajax;
 using PommaLabs.GRAMPA.XML;
 using DataTable = System.Data.DataTable;
 
@@ -14,6 +16,25 @@ namespace FLEX.Web.Pages
 {
    public partial class DynamicReportViewer : PageBase
    {
+      #region Class Fields
+
+      private static readonly Dictionary<string, Func<dynamic, DataControlField>> ColumnBuilders = new Dictionary<string, Func<dynamic, DataControlField>>
+      {
+         {"Bound", BuildDataGrid_BoundColumn}
+      };
+
+      private static readonly Dictionary<string, Func<Page, dynamic, Control>> ControlBuilders = new Dictionary<string, Func<Page, dynamic, Control>>
+      {
+         {"AutoSuggest", BuildSearchCriteria_AutoSuggest},
+         {"CheckBoxList", BuildSearchCriteria_CheckBoxList}
+      }; 
+
+      #endregion
+
+      #region Instance Fields
+
+      #endregion
+
       protected void Page_Load(object sender, EventArgs e)
       {
          try
@@ -23,12 +44,11 @@ namespace FLEX.Web.Pages
             {
                BuildPage();
             }
-
             fdtgReport.UpdateDataSource();
          }
-         catch (Exception)
+         catch (Exception ex)
          {
-            throw;
+            ErrorHandler.CatchException(ex, ErrorLocation.PageEvent);
          }
       }
 
@@ -51,11 +71,53 @@ namespace FLEX.Web.Pages
          var reportXmlPath = Server.MapPath(Path.Combine(Configuration.Instance.DynamicReportsFolder, "SampleReport.xml"));
          dynamic reportXml = DynamicXml.Load(reportXmlPath);
 
-         repSearchCriteria.DataSource = new List<int> {1, 2, 3};
-         repSearchCriteria.DataBind();
-
+         BuildSearchCriteria(repSearchCriteria, reportXml.Parameters);
          BuildDataGrid(fdtgReport, reportXml.Columns);
       }
+
+      #region Search Criteria building from XML
+
+      private static void BuildSearchCriteria(Repeater searchCriteria, dynamic paramsSpec)
+      {
+         var paramsList = new List<dynamic>();
+         foreach (var paramSpec in paramsSpec.Parameter)
+         {
+            paramsList.Add(paramSpec);
+         }
+         searchCriteria.DataSource = paramsList;
+         searchCriteria.DataBind();
+      }
+
+      protected void repSearchCriteria_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+      {
+         if (e.Item.ItemType != ListItemType.Item)
+         {
+            return;
+         }
+
+         dynamic paramSpec = e.Item.DataItem;
+
+         var label = e.Item.FindControl("lblSearchCriterium") as Label;
+         label.Text = paramSpec.Label;
+
+         var placeHolder = e.Item.FindControl("plhSearchCriterium") as PlaceHolder;
+         placeHolder.Controls.Add(ControlBuilders[paramSpec.ControlType](this, paramSpec));
+      }
+
+      private static Control BuildSearchCriteria_AutoSuggest(Page page, dynamic paramSpec)
+      {
+         var autoSuggest = page.LoadControl(typeof (AutoSuggest), null) as AutoSuggest;
+         autoSuggest.XmlLookup = paramSpec.XmlLookup;
+         return autoSuggest;
+      }
+
+      private static Control BuildSearchCriteria_CheckBoxList(Page page, dynamic paramSpec)
+      {
+         var checkBoxList = page.LoadControl(typeof (CollapsibleCheckBoxList), null) as CollapsibleCheckBoxList;
+         return checkBoxList;
+      }
+
+      #endregion
 
       #region Grid Building from XML
 
@@ -66,24 +128,18 @@ namespace FLEX.Web.Pages
 
          foreach (var columnSpec in columnsSpec.Column)
          {
-            switch ((string) columnSpec.Type)
-            {
-               case "Bound":
-                  BuildDataGrid_BoundColumn(dataGrid, columnSpec);
-                  break;
-            }
+            dataGrid.Columns.Add(ColumnBuilders[columnSpec.Type]());
          }
       }
 
-      private static void BuildDataGrid_BoundColumn(UserControls.DataGrid dataGrid, dynamic columnSpec)
+      private static DataControlField BuildDataGrid_BoundColumn(dynamic columnSpec)
       {
-         var boundField = new BoundField
+         return new BoundField
          {
             DataField = columnSpec.DataField,
             HeaderText = columnSpec.HeaderText ?? String.Empty,
             SortExpression = columnSpec.SortExpression ?? String.Empty
          };
-         dataGrid.Columns.Add(boundField);
       }
 
       private static SortDirection ParseSortDirection(string sortDirection)
@@ -92,19 +148,5 @@ namespace FLEX.Web.Pages
       }
 
       #endregion
-
-      protected void repSearchCriteria_OnItemDataBound(object sender, RepeaterItemEventArgs e)
-      {
-         if (e.Item.ItemType != ListItemType.Item)
-         {
-            return;
-         }
-         var ctrl = LoadControl("~/FLEX/UserControls/LongTextContainer.ascx") as LongTextContainer;
-         ctrl.Text = "PROVA";
-         ctrl.MaxTextLength = 4;
-         ctrl.ContainerTitle = "UFFA";
-         var placeHolder = e.Item.FindControl("plhSearchCriterium") as PlaceHolder;
-         placeHolder.Controls.Add(ctrl);
-      }
    }
 }

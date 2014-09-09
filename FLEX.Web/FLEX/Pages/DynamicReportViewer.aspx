@@ -9,7 +9,12 @@
 <asp:Content ID="aspSearchContent" ContentPlaceHolderID="searchContent" runat="server">
    <asp:Repeater ID="repSearchCriteria" runat="server" OnItemDataBound="repSearchCriteria_OnItemDataBound">
       <ItemTemplate>
-         <asp:PlaceHolder ID="plhSearchCriterium" runat="server"></asp:PlaceHolder>
+         <div class="vertical-search-label">
+            <asp:Label ID="lblSearchCriterium" runat="server"></asp:Label>
+         </div>
+         <div class="vertical-search-control">
+            <asp:PlaceHolder ID="plhSearchCriterium" runat="server"></asp:PlaceHolder>
+         </div>
       </ItemTemplate>
    </asp:Repeater>
 </asp:Content>
