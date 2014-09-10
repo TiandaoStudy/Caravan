@@ -15,8 +15,8 @@ namespace FLEX.Web.UserControls.Ajax
       private const string DoPostBackViewStateKey = "AjaxControlBase.DoPostBack";
       private const string EnabledViewStateKey = "AjaxControlBase.Enabled";
 
-      private const bool DoPostBackDefaultValue = false;
-      private const bool EnabledDefaultValue = true;
+      internal const bool DoPostBackDefaultValue = false;
+      internal const bool EnabledDefaultValue = true;
 
       protected virtual void Page_Load(object sender, EventArgs e)
       {

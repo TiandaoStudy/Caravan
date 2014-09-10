@@ -26,7 +26,7 @@ namespace FLEX.Web.UserControls.Ajax
       private const string MaxMenuHeightViewStateKey = "AutoSuggest.MaxMenuHeight";
 
       private const string MaxMenuHeightDefaultValue = "250";
-      private const int MinLengthDefaultValue = 2;
+      internal const int MinLengthForHintDefaultValue = 2;
       private const string PlaceHolderDefaultValue = "...";
       private const string QueryFilterDefaultValue = "''";
 
@@ -86,7 +86,7 @@ namespace FLEX.Web.UserControls.Ajax
       public int? MinLengthForHint
       {
          get { return (int?) ViewState[MinLengthForHintViewStateKey]; }
-         set { ViewState[MinLengthForHintViewStateKey] = value ?? MinLengthDefaultValue; }
+         set { ViewState[MinLengthForHintViewStateKey] = value ?? MinLengthForHintDefaultValue; }
       }
 
       // Imposta un'altezza alla tendinda dei suggerimenti (def: 250px)
@@ -181,7 +181,7 @@ namespace FLEX.Web.UserControls.Ajax
       {
          base.SetDefaultValues();
          MaxMenuHeight = MaxMenuHeight ?? MaxMenuHeightDefaultValue;
-         MinLengthForHint = MinLengthForHint ?? MinLengthDefaultValue;
+         MinLengthForHint = MinLengthForHint ?? MinLengthForHintDefaultValue;
          PlaceHolder = PlaceHolder ?? PlaceHolderDefaultValue;
          QueryFilter = QueryFilter ?? QueryFilterDefaultValue;
       }
