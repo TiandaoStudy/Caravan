@@ -58,6 +58,13 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PommaLabs.GRAMPA, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PommaLabs.GRAMPA.0.3.0\lib\net40\PommaLabs.GRAMPA.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
@@ -110,9 +117,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FLEX.Common\Common.csproj">
+    <ProjectReference Include="..\FLEX.Common\FLEX.Common.csproj">
       <Project>{11904ED0-33D2-4005-8766-B1E393A32EA7}</Project>
-      <Name>Common</Name>
+      <Name>FLEX.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

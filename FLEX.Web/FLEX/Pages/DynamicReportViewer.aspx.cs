@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using FLEX.Web.UserControls;
 using FLEX.Web.UserControls.Ajax;
+using Newtonsoft.Json;
 using PommaLabs.GRAMPA.XML;
 using DataTable = System.Data.DataTable;
+using StringPair = PommaLabs.GRAMPA.Pair<string, string>;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -90,7 +92,7 @@ namespace FLEX.Web.Pages
 
       protected void repSearchCriteria_OnItemDataBound(object sender, RepeaterItemEventArgs e)
       {
-         if (e.Item.ItemType != ListItemType.Item)
+         if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem)
          {
             return;
          }
@@ -107,13 +109,26 @@ namespace FLEX.Web.Pages
       private static Control BuildSearchCriteria_AutoSuggest(Page page, dynamic paramSpec)
       {
          var autoSuggest = page.LoadControl(typeof (AutoSuggest), null) as AutoSuggest;
+         Debug.Assert(autoSuggest != null);
          autoSuggest.XmlLookup = paramSpec.XmlLookup;
+         autoSuggest.LookupBy = paramSpec.LookupBy;
          return autoSuggest;
       }
 
       private static Control BuildSearchCriteria_CheckBoxList(Page page, dynamic paramSpec)
       {
          var checkBoxList = page.LoadControl(typeof (CollapsibleCheckBoxList), null) as CollapsibleCheckBoxList;
+         Debug.Assert(checkBoxList != null);
+         switch ((string) paramSpec.DataSourceType)
+         {
+            case "JSON":
+               var list = JsonConvert.DeserializeObject<IList<StringPair>>(paramSpec.DataSource);
+               checkBoxList.SetDataSource(list);
+               break;
+            case "SQL":
+
+               break;
+         }
          return checkBoxList;
       }
 
@@ -138,7 +153,8 @@ namespace FLEX.Web.Pages
          {
             DataField = columnSpec.DataField,
             HeaderText = columnSpec.HeaderText ?? String.Empty,
-            SortExpression = columnSpec.SortExpression ?? String.Empty
+            SortExpression = columnSpec.SortExpression ?? String.Empty,
+            Visible = (columnSpec.Visible != null) ? Boolean.Parse(columnSpec.Visible.ToLower()) : true
          };
       }
 

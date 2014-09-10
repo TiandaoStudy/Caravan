@@ -65,9 +65,9 @@
     <Folder Include="lib\net40\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FLEX.Common\Common.csproj">
+    <ProjectReference Include="..\FLEX.Common\FLEX.Common.csproj">
       <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>
-      <Name>Common</Name>
+      <Name>FLEX.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

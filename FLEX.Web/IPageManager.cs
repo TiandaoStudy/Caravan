@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using FLEX.Common;
+using PommaLabs.GRAMPA;
 
 namespace FLEX.Web
 {

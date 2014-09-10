@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Web", "FLEX.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataAccess", "FLEX.TestDataAccess\Sample.DataAccess.csproj", "{9F1BAA6D-7E1E-43CC-94CE-0B0AF04C753F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "FLEX.Common\Common.csproj", "{11904ED0-33D2-4005-8766-B1E393A32EA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.Common", "FLEX.Common\FLEX.Common.csproj", "{11904ED0-33D2-4005-8766-B1E393A32EA7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.UnitTests", "FLEX.Web.Tests\Web.UnitTests.csproj", "{3A48F406-2440-4E9B-9919-ED46BC3CD234}"
 EndProject
@@ -56,7 +56,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{349512
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Data", "FLEX.Data.Oracle\Data.vbproj", "{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FLEX.Data", "FLEX.Data.Oracle\FLEX.Data.vbproj", "{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Data", "FLEX.Data.Packager\NuGetPackager.Data.csproj", "{BD471427-A76A-4764-94C1-08C8C3BC1379}"
 EndProject
