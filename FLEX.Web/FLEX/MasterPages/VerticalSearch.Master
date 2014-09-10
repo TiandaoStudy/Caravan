@@ -26,18 +26,78 @@
          // Adjusting search criteria
          $(".vertical-search-criterium").addClass("form-group");
 
+         //Retrieve all you have in the localStorage of the current page
          var panelList = $('#divShownSearchCriteria');
+         var _nomePage = "<%= this.Page.GetType().FullName%>";
+         var _statusControl = JSON.parse(localStorage.getItem( "VerticalSearch_" + _nomePage));
+
+         if(_statusControl != null){
+            //Update the order the tag <li> (SearchCriteria) the actual page
+            var _elemt= _.find( _statusControl, function(i)  {return i.index == -1;});
+            if(_elemt == null) {
+               var _list_li = [];
+               var _list_statusControl =_.sortBy(_statusControl, function(i){ return i.index;});
+              
+               $(_list_statusControl).each(function(index, elem){
+                  _list_li.push(  $("#li" + elem.id));
+               });
+               //Sort the tag <li> (SearchCriteria) the actual page
+               panelList.empty().html(_list_li);
+            }
+
+            $(_statusControl).each(function(index, elem){
+               if (elem.chiuso == false) {
+                  $("#icr" + elem.id).removeClass('glyphicon-chevron-down');
+                  $("#icr" + elem.id).addClass('glyphicon-chevron-up');
+
+                  $("#icr" + elem.id).parent().removeClass('control-label collapsed');
+                  $("#icr" + elem.id).parent().addClass('control-label');
+
+                  $("#icr" + elem.id).parent().next().removeClass('collapse-content collapse');
+                  $("#icr" + elem.id).parent().next().addClass('collapse-content collapse in');
+               }
+               else{ 
+                  $("#icr" + elem.id).removeClass('glyphicon-chevron-up');
+                  $("#icr" + elem.id).addClass('glyphicon-chevron-down');
+
+                  $("#icr" + elem.id).parent().removeClass('control-label');
+                  $("#icr" + elem.id).parent().addClass('control-label collapsed');
+
+                  $("#icr" + elem.id).parent().next().removeClass('collapse-content collapse in');
+                  $("#icr" + elem.id).parent().next().addClass('collapse-content collapse');
+               }
+            });
+         }
 
          panelList.sortable({
-            // Only make the .panel-heading child elements support dragging.
-            // Omit this to make then entire <li>...</li> draggable.
             handle: '.control-label',
             update: function() {
-               $('.panel', panelList).each(function(index, elem) {
+               var _nomePage = "<%= this.Page.GetType().FullName%>";
+               var _statusControl = JSON.parse(localStorage.getItem( "VerticalSearch_" + _nomePage));
+
+               //If no exists _statusControl, create the array _statusControl
+               if (_statusControl == null) {
+                  _statusControl = [];
+               }
+
+               $('.vertical-search-criterium' ,panelList).each(function(index, elem) {
                   var $listItem = $(elem),
-                     newIndex = $listItem.index();
-                  // Persist the new indices.
+                         newIndex = $listItem.index();
+                  var id= elem.id.replace("li", "");
+                  var _elemt= _.find( _statusControl, function(i)  {return i.id == id;});
+                  if (_elemt == null){
+                     // Persist the new index.
+                     _statusControl.push({id: id, chiuso : false, index: newIndex});
+                  } 
+                  else{
+                     // Persist the new index.
+                     _elemt.index = newIndex;
+                  }
+                 
                });
+
+               //Save in the localStorage array _statusControl
+               localStorage.setItem( "VerticalSearch_" + _nomePage, JSON.stringify(_statusControl));
             }
          });
 
@@ -77,13 +137,39 @@
       });
 
       function R(id) {
+         var _nomePage = "<%= this.Page.GetType().FullName%>";
+         var _statusControl = JSON.parse(localStorage.getItem( "VerticalSearch_" + _nomePage));
+         
+         //If no exists _statusControl, create the array _statusControl
+         if (_statusControl == null) {
+            _statusControl = [];
+         } 
+
          if ($("#icr" + id).attr('class') == 'glyphicon glyphicon-chevron-down') {
             $("#icr" + id).removeClass('glyphicon-chevron-down');
             $("#icr" + id).addClass('glyphicon-chevron-up');
+            var _elemt= _.find( _statusControl, function(i)  {return i.id == id;});
+            if (_elemt == null){
+               _statusControl.push({id: id, chiuso : false , index: -1});
+            } 
+            else{
+               _elemt.chiuso = false;
+            } 
+
          } else if ($("#icr" + id).attr('class') == 'glyphicon glyphicon-chevron-up') {
             $("#icr" + id).removeClass('glyphicon-chevron-up');
             $("#icr" + id).addClass('glyphicon-chevron-down');
-         }
+            var _elemt= _.find( _statusControl, function(i){return i.id == id;});
+            if (_elemt == null){
+               _statusControl.push({id: id, chiuso : true , index: -1});
+            } 
+            else{
+               _elemt.chiuso = true;
+            } 
+         } 
+         
+         //Save in the localStorage array _statusControl
+         localStorage.setItem( "VerticalSearch_" + _nomePage, JSON.stringify(_statusControl));
       }
    </script>
     
@@ -141,7 +227,7 @@
             <ajax:UpdateProgress ID="gridUpdateProgress" DisplayAfter="1" runat="server">
                <ProgressTemplate>
                   <div class="text-center">
-                     <img id="updateProgress" alt="Please wait..." src="~/FLEX/Images/progress-circle.gif" class="vertical-search-update-progress" runat="server" />
+                     <img id="opdateProgress" alt="Please wait..." src="~/FLEX/Images/progress-circle.gif" class="vertical-search-update-progress" runat="server" />
                   </div>
                </ProgressTemplate>
             </ajax:UpdateProgress>
