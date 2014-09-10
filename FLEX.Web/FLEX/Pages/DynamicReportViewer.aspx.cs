@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using FLEX.Common.Data;
 using FLEX.Web.UserControls.Ajax;
 using Newtonsoft.Json;
 using PommaLabs.GRAMPA.XML;
@@ -108,7 +109,7 @@ namespace FLEX.Web.Pages
 
       private static Control BuildSearchCriteria_AutoSuggest(Page page, dynamic paramSpec)
       {
-         var autoSuggest = page.LoadControl(typeof (AutoSuggest), null) as AutoSuggest;
+         var autoSuggest = page.LoadControl("~/FLEX/UserControls/Ajax/AutoSuggest.ascx") as AutoSuggest;
          Debug.Assert(autoSuggest != null);
          autoSuggest.XmlLookup = paramSpec.XmlLookup;
          autoSuggest.LookupBy = paramSpec.LookupBy;
@@ -117,7 +118,7 @@ namespace FLEX.Web.Pages
 
       private static Control BuildSearchCriteria_CheckBoxList(Page page, dynamic paramSpec)
       {
-         var checkBoxList = page.LoadControl(typeof (CollapsibleCheckBoxList), null) as CollapsibleCheckBoxList;
+         var checkBoxList = page.LoadControl("~/FLEX/UserControls/Ajax/CollapsibleCheckBoxList.ascx") as CollapsibleCheckBoxList;
          Debug.Assert(checkBoxList != null);
          switch ((string) paramSpec.DataSourceType)
          {
@@ -126,7 +127,8 @@ namespace FLEX.Web.Pages
                checkBoxList.SetDataSource(list);
                break;
             case "SQL":
-
+               var dataTable = QueryExecutor.Instance.FillDataTableFromQuery(paramSpec.DataSource);
+               checkBoxList.SetDataSource(dataTable, paramSpec.ValueColumn, paramSpec.LabelColumn);
                break;
          }
          return checkBoxList;
@@ -143,7 +145,7 @@ namespace FLEX.Web.Pages
 
          foreach (var columnSpec in columnsSpec.Column)
          {
-            dataGrid.Columns.Add(ColumnBuilders[columnSpec.Type]());
+            dataGrid.Columns.Add(ColumnBuilders[columnSpec.Type](columnSpec));
          }
       }
 
