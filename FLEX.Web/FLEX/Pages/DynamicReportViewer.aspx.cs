@@ -111,8 +111,12 @@ namespace FLEX.Web.Pages
       {
          var autoSuggest = page.LoadControl("~/FLEX/UserControls/Ajax/AutoSuggest.ascx") as AutoSuggest;
          Debug.Assert(autoSuggest != null);
+         // AutoSuggest properties
          autoSuggest.XmlLookup = paramSpec.XmlLookup;
          autoSuggest.LookupBy = paramSpec.LookupBy;
+         // IAjaxControl properties
+         autoSuggest.Enabled = paramSpec.Enabled;
+         autoSuggest.Visible = paramSpec.Visible;
          return autoSuggest;
       }
 
@@ -120,6 +124,7 @@ namespace FLEX.Web.Pages
       {
          var checkBoxList = page.LoadControl("~/FLEX/UserControls/Ajax/CollapsibleCheckBoxList.ascx") as CollapsibleCheckBoxList;
          Debug.Assert(checkBoxList != null);
+         // CheckBoxList properties
          switch ((string) paramSpec.DataSourceType)
          {
             case "JSON":
@@ -131,6 +136,9 @@ namespace FLEX.Web.Pages
                checkBoxList.SetDataSource(dataTable, paramSpec.ValueColumn, paramSpec.LabelColumn);
                break;
          }
+         // IAjaxControl properties
+         checkBoxList.Enabled = paramSpec.Enabled;
+         checkBoxList.Visible = paramSpec.Visible;
          return checkBoxList;
       }
 
