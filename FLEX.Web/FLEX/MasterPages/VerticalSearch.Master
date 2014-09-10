@@ -1,0 +1,268 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="VerticalSearch.master.cs" Inherits="FLEX.Web.MasterPages.VerticalSearch" MasterPageFile="~/FLEX/MasterPages/Base.Master" %>
+<%@ MasterType VirtualPath="~/FLEX/MasterPages/Base.Master"%>
+<%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
+<%@ Register TagPrefix="flex" TagName="ImageButton" Src="~/FLEX/UserControls/Ajax/ImageButton.ascx" %>
+<%@ Register TagPrefix="flex" TagName="SearchButton" Src="~/FLEX/UserControls/Ajax/SearchButton.ascx" %>
+
+<asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">     
+   <script type="text/javascript">
+      hasPageVisibleHandlers = <%= HasPageVisibleHandlers.ToString().ToLower() %>;
+
+      $(document).ready(function() {
+
+         $(this).on(settings.beginAjaxRequest, function(ev, sender, args) {
+            $("#gridContainer").hide();
+         });
+
+         $(this).on(settings.endAjaxRequest, function(ev, sender, args) {
+            $("#gridContainer").show();
+         });
+
+         // Fixing main panels headers
+         $("#pageTitle").html(document.title);
+         $("#btnClearIcon").parent().parent().addClass('btn-group');
+         $("#btnSearchIcon").parent().parent().addClass('btn-group');
+
+         // Adjusting search criteria
+         $(".vertical-search-criterium").addClass("form-group");
+
+         //Retrieve all you have in the localStorage of the current page
+         var panelList = $('#divShownSearchCriteria');
+         var _nomePage = "<%= this.Page.GetType().FullName%>";
+         var _statusControl = JSON.parse(localStorage.getItem( "VerticalSearch_" + _nomePage));
+
+         if(_statusControl != null){
+            //Update the order the tag <li> (SearchCriteria) the actual page
+            var _elemt= _.find( _statusControl, function(i)  {return i.index == -1;});
+
+            var _count_li = $('#divShownSearchCriteria li').length;
+            
+            if(_elemt == null && _statusControl.length == _count_li ) {
+               var _list_li = [];
+               var _list_statusControl =_.sortBy(_statusControl, function(i){ return i.index;});
+              
+               $(_list_statusControl).each(function(index, elem){
+                  _list_li.push(  $("#li" + elem.id));
+               });
+               //Sort the tag <li> (SearchCriteria) the actual page
+               panelList.empty().html(_list_li);
+            }
+
+            $(_statusControl).each(function(index, elem){
+               if (elem.chiuso == false) {
+                  $("#icr" + elem.id).removeClass('glyphicon-chevron-down');
+                  $("#icr" + elem.id).addClass('glyphicon-chevron-up');
+
+                  $("#icr" + elem.id).parent().removeClass('control-label collapsed');
+                  $("#icr" + elem.id).parent().addClass('control-label');
+
+                  $("#icr" + elem.id).parent().next().removeClass('collapse-content collapse');
+                  $("#icr" + elem.id).parent().next().addClass('collapse-content collapse in');
+               }
+               else{ 
+                  $("#icr" + elem.id).removeClass('glyphicon-chevron-up');
+                  $("#icr" + elem.id).addClass('glyphicon-chevron-down');
+
+                  $("#icr" + elem.id).parent().removeClass('control-label');
+                  $("#icr" + elem.id).parent().addClass('control-label collapsed');
+
+                  $("#icr" + elem.id).parent().next().removeClass('collapse-content collapse in');
+                  $("#icr" + elem.id).parent().next().addClass('collapse-content collapse');
+               }
+            });
+         }
+
+         panelList.sortable({
+            handle: '.control-label',
+            update: function() {
+               var _nomePage = "<%= this.Page.GetType().FullName%>";
+               var _statusControl = JSON.parse(localStorage.getItem( "VerticalSearch_" + _nomePage));
+
+               //If no exists _statusControl, create the array _statusControl
+               if (_statusControl == null) {
+                  _statusControl = [];
+               }
+
+               $('.vertical-search-criterium' ,panelList).each(function(index, elem) {
+                  var $listItem = $(elem),
+                         newIndex = $listItem.index();
+                  var id= elem.id.replace("li", "");
+                  var _elemt= _.find( _statusControl, function(i)  {return i.id == id;});
+                  if (_elemt == null){
+                     // Persist the new index.
+                     _statusControl.push({id: id, chiuso : false, index: newIndex});
+                  } 
+                  else{
+                     // Persist the new index.
+                     _elemt.index = newIndex;
+                  }
+                 
+               });
+
+               //Save in the localStorage array _statusControl
+               localStorage.setItem( "VerticalSearch_" + _nomePage, JSON.stringify(_statusControl));
+            }
+         });
+
+         $("#btnCollapseSearchCriteria").click(function() {
+            var divSearchCriteria = $("#<%= divSearchCriteria.ClientID %>");
+            var btnCriteriaPlaceholder = $("#btnCriteriaPlaceholder");
+            var divDataGrid = $("#<%= divDataGrid.ClientID %>");
+
+            if (!divSearchCriteria.hasClass('hidden')) {
+               // Collapse Search criteria and expand Data grid
+               divSearchCriteria.addClass("hidden");
+               btnCriteriaPlaceholder.removeClass("hidden");
+               var plHeight = divDataGrid.children().outerHeight();
+               btnCriteriaPlaceholder.css({ height: plHeight + "px", paddingTop: plHeight/2 + "px" });
+               divDataGrid.removeClass("col-xs-12 col-sm-7-5 col-md-8-5 col-lg-9-5").addClass("col-xs-11-5");
+            }
+            
+            // Do not postback
+            return false;
+         });
+
+         $("#btnCriteriaPlaceholder").click(function() {
+            var divSearchCriteria = $("#<%= divSearchCriteria.ClientID %>");
+            var btnCriteriaPlaceholder = $("#btnCriteriaPlaceholder");
+            var divDataGrid = $("#<%= divDataGrid.ClientID %>");
+
+            if (divSearchCriteria.hasClass('hidden')) {
+               // Collapse Data Grid and expand Search Criteria
+               divDataGrid.removeClass("col-xs-11-5").addClass("col-xs-12 col-sm-7-5 col-md-8-5 col-lg-9-5");
+               btnCriteriaPlaceholder.addClass("hidden");
+               divSearchCriteria.removeClass("hidden");
+            }
+            
+            // Do not postback
+            return false;
+         });
+      });
+
+      function R(id) {
+         var _nomePage = "<%= this.Page.GetType().FullName%>";
+         var _statusControl = JSON.parse(localStorage.getItem( "VerticalSearch_" + _nomePage));
+         
+         //If no exists _statusControl, create the array _statusControl
+         if (_statusControl == null) {
+            _statusControl = [];
+         } 
+
+         if ($("#icr" + id).attr('class') == 'glyphicon glyphicon-chevron-down') {
+            $("#icr" + id).removeClass('glyphicon-chevron-down');
+            $("#icr" + id).addClass('glyphicon-chevron-up');
+            var _elemt= _.find( _statusControl, function(i)  {return i.id == id;});
+            if (_elemt == null){
+               _statusControl.push({id: id, chiuso : false , index: -1});
+            } 
+            else{
+               _elemt.chiuso = false;
+            } 
+
+         } else if ($("#icr" + id).attr('class') == 'glyphicon glyphicon-chevron-up') {
+            $("#icr" + id).removeClass('glyphicon-chevron-up');
+            $("#icr" + id).addClass('glyphicon-chevron-down');
+            var _elemt= _.find( _statusControl, function(i){return i.id == id;});
+            if (_elemt == null){
+               _statusControl.push({id: id, chiuso : true , index: -1});
+            } 
+            else{
+               _elemt.chiuso = true;
+            } 
+         } 
+         
+         //Save in the localStorage array _statusControl
+         localStorage.setItem( "VerticalSearch_" + _nomePage, JSON.stringify(_statusControl));
+      }
+   </script>
+    
+   <asp:ContentPlaceHolder ID="headContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="aspUpperContent" ContentPlaceHolderID="upperContent" runat="server">
+   <asp:ContentPlaceHolder ID="upperContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="aspMainContent" ContentPlaceHolderID="mainContent" runat="server">
+   <!-- Start Search criteria -->
+   <asp:Panel ID="divSearchCriteria" CssClass="col-xs-12 col-sm-4-5 col-md-3-5 col-lg-2-5" runat="server">
+      <div class="panel panel-primary">
+         <div class="panel-heading">
+            <strong id="searchCriteriaHead" class="panel-title">Search Criteria</strong>
+         </div>
+
+         <div class="panel-body workingArea">
+            <ul id="divShownSearchCriteria" class="panel-group list-unstyled">
+               <asp:ContentPlaceHolder ID="searchContent" runat="server"></asp:ContentPlaceHolder>       
+            </ul>
+         </div>
+         
+         <div class="panel-footer clearfix">
+            <div class="pull-right btn-row">
+               <button id="btnCollapseSearchCriteria" type="button" class="btn btn-primary btn-sm">
+                  <span id="spanCollapseSearchCriteria" class="glyphicon glyphicon-arrow-left"></span>&nbsp;Hide
+               </button>
+               
+               <flex:ImageButton ID="btnClear" runat="server" ButtonText="Clear" ButtonClass="btn btn-primary btn-sm" IconClass="glyphicon glyphicon-trash" />
+               
+               <!-- E' importante che il bottone di ricerca funzioni anche facendo ENTER; pertanto, occorre usare un controllo dedicato. -->
+               <flex:SearchButton ID="btnSearch" runat="server" />
+            </div>
+         </div>
+      </div>
+   </asp:Panel>
+   <!-- End Search criteria -->
+   
+   <!-- Start Search criteria placeholder -->
+   <a id="btnCriteriaPlaceholder" class="hidden col-xs-0-5 btn btn-primary">
+      <span class="glyphicon glyphicon-arrow-right" style=""></span>
+   </a>
+   <!-- End Search criteria placeholder -->
+              
+   <!-- Start Data Grid -->
+   <asp:Panel ID="divDataGrid" CssClass="col-xs-12 col-sm-7-5 col-md-8-5 col-lg-9-5" runat="server">
+      <div class="panel panel-primary">
+         <div class="panel-heading">
+            <strong id="pageTitle" class="panel-title"></strong>
+         </div>
+         
+         <div class="workingArea">
+            <ajax:UpdateProgress ID="gridUpdateProgress" DisplayAfter="1" runat="server">
+               <ProgressTemplate>
+                  <div class="text-center">
+                     <img id="opdateProgress" alt="Please wait..." src="~/FLEX/Images/progress-circle.gif" class="vertical-search-update-progress" runat="server" />
+                  </div>
+               </ProgressTemplate>
+            </ajax:UpdateProgress>
+
+            <ajax:UpdatePanel ID="gridUpdatePanel" runat="server">
+               <ContentTemplate>
+                  <div id="gridContainer">
+                     <asp:ContentPlaceHolder ID="gridContent" runat="server"></asp:ContentPlaceHolder>
+                  </div>
+               </ContentTemplate>
+            </ajax:UpdatePanel>
+         </div>
+         
+         <div class="panel-footer clearfix">
+            <div class="row">
+               <div class="text-left btn-row col-xs-6">
+                  <asp:ContentPlaceHolder ID="leftButtonsContent" runat="server"></asp:ContentPlaceHolder>
+               </div>
+               <div class="text-right btn-row col-xs-6">
+                  <asp:ContentPlaceHolder ID="rightButtonsContent" runat="server"></asp:ContentPlaceHolder>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- End Data Grid -->
+   </asp:Panel>
+</asp:Content>
+
+<asp:Content ID="aspLowerContent" ContentPlaceHolderID="lowerContent" runat="server">
+   <asp:ContentPlaceHolder ID="lowerContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="aspHiddenContent" ContentPlaceHolderID="hiddenContent" runat="server">
+   <asp:ContentPlaceHolder ID="hiddenContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
