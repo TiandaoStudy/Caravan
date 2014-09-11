@@ -32,18 +32,6 @@ namespace FLEX.Web
          get { return (bool) this[CheckSecurityKey]; }
       }
 
-      [ConfigurationProperty(EnableOutputCompressionKey, IsRequired = false, DefaultValue = true)]
-      public bool EnableOutputCompression
-      {
-         get { return (bool) this[EnableOutputCompressionKey]; }
-      }
-
-      [ConfigurationProperty(EnableOutputMinificationKey, IsRequired = false, DefaultValue = true)]
-      public bool EnableOutputMinification
-      {
-         get { return (bool) this[EnableOutputMinificationKey]; }
-      }
-
       [ConfigurationProperty(ControlExtendersFolderKey, IsRequired = true)]
       public string ControlExtendersFolder
       {
@@ -54,6 +42,18 @@ namespace FLEX.Web
       public string DynamicReportsFolder
       {
          get { return (string) this[DynamicReportsFolderKey]; }
+      }
+
+      [ConfigurationProperty(EnableOutputCompressionKey, IsRequired = false, DefaultValue = true)]
+      public bool EnableOutputCompression
+      {
+         get { return (bool) this[EnableOutputCompressionKey]; }
+      }
+
+      [ConfigurationProperty(EnableOutputMinificationKey, IsRequired = false, DefaultValue = true)]
+      public bool EnableOutputMinification
+      {
+         get { return (bool) this[EnableOutputMinificationKey]; }
       }
 
       [ConfigurationProperty(ErrorManagerTypeInfoKey, IsRequired = true)]

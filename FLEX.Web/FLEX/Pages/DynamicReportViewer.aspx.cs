@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using FLEX.Common;
 using FLEX.Common.Data;
 using FLEX.Common.Web;
 using FLEX.Web.UserControls.Ajax;
@@ -11,6 +13,7 @@ using Newtonsoft.Json;
 using PommaLabs.GRAMPA;
 using PommaLabs.GRAMPA.Extensions;
 using PommaLabs.GRAMPA.XML;
+using Thrower;
 using DataTable = System.Data.DataTable;
 using Pair = PommaLabs.GRAMPA.Pair;
 
@@ -23,6 +26,8 @@ namespace FLEX.Web.Pages
    public partial class DynamicReportViewer : PageBaseListAndSearch
    {
       #region Class Fields
+
+      private const string ReportNameRequestKey = "reportName";
 
       private static readonly Dictionary<string, Func<dynamic, DataControlField>> ColumnBuilders = new Dictionary<string, Func<dynamic, DataControlField>>
       {
@@ -39,7 +44,8 @@ namespace FLEX.Web.Pages
 
       #region Instance Fields
 
-      private readonly List<Pair<ISearchControl, string>> _searchControls = new List<Pair<ISearchControl, string>>(); 
+      private readonly List<Pair<ISearchControl, string>> _searchControls = new List<Pair<ISearchControl, string>>();
+      private Pair<string, CommandType> _queryInfo; 
 
       #endregion
 
@@ -47,11 +53,15 @@ namespace FLEX.Web.Pages
       {
          try
          {
+            // Report name is mandatory.
+            Raise<InvalidOperationException>.IfIsEmpty(Request[ReportNameRequestKey], WebErrorMessages.Pages_DynamicReportViewer_MissingReportName);
+
+            // Configuration for the VerticalSearch search button.
             Master.SearchButton.Visible = true;
             Master.SearchButton.Click += SearchButton_Click;
 
             // Page is built starting from the XML specification.
-            BuildPage();
+            BuildPage(Request[ReportNameRequestKey]);
 
             // There should not be an initial update of the data grid,
             // since we are using a search button.
@@ -67,26 +77,31 @@ namespace FLEX.Web.Pages
 
       protected void fdtgReport_OnDataSourceUpdating(object sender, EventArgs e)
       {
-         var dt = new DataTable();
-         dt.Columns.Add("First");
-         dt.Columns.Add("Second");
-         dt.Rows.Add(1, 4);
-         dt.Rows.Add(2, 5);
-         fdtgReport.DataSource = dt;
+         switch (_queryInfo.Second)
+         {
+            case CommandType.Text:
+               var dataTable = QueryExecutor.Instance.FillDataTableFromQuery(_queryInfo.First);
+               fdtgReport.DataSource = dataTable;
+               break;
+            case CommandType.StoredProcedure:
+               break;
+         }
       }
 
       #endregion
 
-      private void BuildPage()
+      private void BuildPage(string reportName)
       {
-         var reportXmlPath = Server.MapPath(Path.Combine(Configuration.Instance.DynamicReportsFolder, "SampleReport.xml"));
+         var reportXmlPath = Server.MapPath(Path.Combine(Configuration.Instance.DynamicReportsFolder, reportName + Constants.XmlExtension));
          dynamic reportXml = DynamicXml.Load(reportXmlPath);
+
+         _queryInfo = RetrieveQueryInfo(reportXml.Query);
 
          BuildSearchCriteria(repSearchCriteria, reportXml.Parameters);
          
          if (!IsPostBack)
          {
-            // We need to build data grid only once?
+            // We need to build data grid only once, at page load.
             BuildDataGrid(fdtgReport, reportXml.Columns);
          }
       }
@@ -127,6 +142,16 @@ namespace FLEX.Web.Pages
             ErrorHandler.CatchException(ex);
          }
       }
+
+      #region Query Handling
+
+      private static Pair<string, CommandType> RetrieveQueryInfo(dynamic querySpec)
+      {
+         var commandType = StringExtensions.ToEnumOrDefault(querySpec.Type, CommandType.Text);
+         return Pair.Create(querySpec.Code, commandType);
+      }
+
+      #endregion
 
       #region Search Criteria building from XML
 
