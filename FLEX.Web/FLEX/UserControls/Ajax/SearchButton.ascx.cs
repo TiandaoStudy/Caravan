@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using FLEX.Common;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -62,7 +63,7 @@ namespace FLEX.Web.UserControls.Ajax
 
       protected void btnSearch_Click(object sender, EventArgs args)
       {
-         Click(this, args);
+         Basics.TriggerEvent(Click, this, args);
       }
 
       #endregion

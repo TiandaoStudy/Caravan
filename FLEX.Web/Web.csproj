@@ -82,9 +82,9 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.GRAMPA, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PommaLabs.GRAMPA, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.GRAMPA.0.3.0\lib\net40\PommaLabs.GRAMPA.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.GRAMPA.0.5.0\lib\net40\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
     <Reference Include="PommaLabs.KVLite">
       <HintPath>..\packages\PommaLabs.KVLite.0.4.0\lib\net40\PommaLabs.KVLite.dll</HintPath>
@@ -128,6 +128,7 @@
     </Compile>
     <Compile Include="CacheManager.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="Core\DynamicReportParser.cs" />
     <Compile Include="Core\SimpleNotifyPropertyChangedBase.cs" />
     <Compile Include="ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -371,6 +372,13 @@
     <Compile Include="FLEX\MasterPages\VerticalSearch.Master.designer.cs">
       <DependentUpon>VerticalSearch.Master</DependentUpon>
     </Compile>
+    <Compile Include="FLEX\UserControls\VerticalSearchPlaceHolder.ascx.cs">
+      <DependentUpon>VerticalSearchPlaceHolder.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\VerticalSearchPlaceHolder.ascx.designer.cs">
+      <DependentUpon>VerticalSearchPlaceHolder.ascx</DependentUpon>
+    </Compile>
     <Compile Include="GlobalHelper.cs" />
     <Compile Include="IErrorManager.cs" />
     <Compile Include="Instances.cs" />
@@ -553,6 +561,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\UserControls\ExportList.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\UserControls\VerticalSearchPlaceHolder.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <None Include=".bin\bower.cmd" />
