@@ -47,12 +47,15 @@ namespace FLEX.Web.Pages
       {
          try
          {
-            // Page must be built from XML only once.
-            if (!IsPostBack)
-            {
-               BuildPage();
-            }
-            fdtgReport.UpdateDataSource();
+            Master.SearchButton.Visible = true;
+            Master.SearchButton.Click += SearchButton_Click;
+
+            // Page is built starting from the XML specification.
+            BuildPage();
+
+            // There should not be an initial update of the data grid,
+            // since we are using a search button.
+            // NO --> fdtgReport.UpdateDataSource(); <-- NO
          }
          catch (Exception ex)
          {
@@ -80,7 +83,12 @@ namespace FLEX.Web.Pages
          dynamic reportXml = DynamicXml.Load(reportXmlPath);
 
          BuildSearchCriteria(repSearchCriteria, reportXml.Parameters);
-         BuildDataGrid(fdtgReport, reportXml.Columns);
+         
+         if (!IsPostBack)
+         {
+            // We need to build data grid only once?
+            BuildDataGrid(fdtgReport, reportXml.Columns);
+         }
       }
 
       protected override void FillSearchCriteria()
@@ -92,6 +100,31 @@ namespace FLEX.Web.Pages
          foreach (var control in _searchControls)
          {
             criteria.RegisterControl(control.First, control.Second);
+         }
+         criteria.CriteriaChanged += SearchCriteria_CriteriaChanged;
+      }
+
+      private void SearchCriteria_CriteriaChanged(SearchCriteria criteria, SearchCriteriaChangedArgs args)
+      {
+         try
+         {
+            fdtgReport.UpdateDataSource();
+         }
+         catch (Exception ex)
+         {
+            ErrorHandler.CatchException(ex);
+         }
+      }
+
+      private void SearchButton_Click(object sender, EventArgs args)
+      {
+         try
+         {
+            SearchCriteria_CriteriaChanged(SearchCriteria, new SearchCriteriaChangedArgs());
+         }
+         catch (Exception ex)
+         {
+            ErrorHandler.CatchException(ex);
          }
       }
 

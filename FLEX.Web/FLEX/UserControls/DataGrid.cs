@@ -14,6 +14,9 @@ namespace FLEX.Web.UserControls
       // Blanks are needed to quickly build the sort expression
       private const string Ascending = " ASC";
       private const string Descending = " DESC";
+      
+      private const string DefaultSortExpressionViewStateKey = "DataGrid.DefaultSortExpression";
+      private const string DefaultSortDirectionViewStateKey = "DataGrid.DefaultSortDirection";
 
       private const string DataSrcViewStateTag = "__DATAGRID_DATASOURCE__";
       private const string SortDirViewStateTag = "__DATAGRID_SORTDIRECTION__";
@@ -44,9 +47,17 @@ namespace FLEX.Web.UserControls
 
       #region Public Properties
 
-      public string DefaultSortExpression { get; set; }
+      public string DefaultSortExpression
+      {
+         get { return (string) ViewState[DefaultSortExpressionViewStateKey]; }
+         set { ViewState[DefaultSortExpressionViewStateKey] = value; }
+      }
 
-      public SortDirection DefaultSortDirection { get; set; }
+      public SortDirection DefaultSortDirection
+      {
+         get { return (SortDirection) ViewState[DefaultSortDirectionViewStateKey]; }
+         set { ViewState[DefaultSortDirectionViewStateKey] = value; }
+      }
 
       public event EventHandler DataSourceUpdating;
 

@@ -1,5 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Popup.Master.cs" Inherits="FLEX.Web.MasterPages.Popup" MasterPageFile="~/FLEX/MasterPages/Head.Master" %>
-<%@ MasterType VirtualPath="~/FLEX/MasterPages/Head.Master"%>
+<%@ MasterType VirtualPath="~/FLEX/MasterPages/Head.Master" %>
 <%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
 
 <asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">
