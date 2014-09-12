@@ -90,6 +90,19 @@ namespace FLEX.Web.UserControls.Ajax
 
       #region ISearchControl Members
 
+      public dynamic DynamicSelectedValues
+      {
+         get
+         {
+            decimal result;
+            if (HasValues && Decimal.TryParse(txtNumber.Text, out result))
+            {
+               return result;
+            }
+            return null;
+         }
+      }
+
       public bool HasValues
       {
          get { return !String.IsNullOrEmpty(txtNumber.Text); }

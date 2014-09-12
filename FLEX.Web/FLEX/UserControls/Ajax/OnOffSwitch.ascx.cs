@@ -145,6 +145,11 @@ namespace FLEX.Web.UserControls.Ajax
 
       #region ISearchControl Members
 
+      public dynamic DynamicSelectedValues
+      {
+         get { return Switched; }
+      }
+
       public bool HasValues
       {
          get { return true; }

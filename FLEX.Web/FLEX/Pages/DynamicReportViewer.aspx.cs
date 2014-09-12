@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Dapper;
 using FLEX.Common;
 using FLEX.Common.Data;
 using FLEX.Common.Web;
@@ -14,7 +15,6 @@ using PommaLabs.GRAMPA;
 using PommaLabs.GRAMPA.Extensions;
 using PommaLabs.GRAMPA.XML;
 using Thrower;
-using DataTable = System.Data.DataTable;
 using Pair = PommaLabs.GRAMPA.Pair;
 
 // ReSharper disable CheckNamespace
@@ -77,6 +77,13 @@ namespace FLEX.Web.Pages
 
       protected void fdtgReport_OnDataSourceUpdating(object sender, EventArgs e)
       {
+         // Parameters construction
+         var parameters = new DynamicParameters();
+         foreach (var searchControl in _searchControls)
+         {
+            parameters.Add(searchControl.Second, searchControl.First.DynamicSelectedValues);
+         }
+
          switch (_queryInfo.Second)
          {
             case CommandType.Text:

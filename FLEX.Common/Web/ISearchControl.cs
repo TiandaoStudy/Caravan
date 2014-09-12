@@ -11,6 +11,11 @@ namespace FLEX.Common.Web
       /// <summary>
       ///   TODO
       /// </summary>
+      dynamic DynamicSelectedValues { get; }
+
+      /// <summary>
+      ///   TODO
+      /// </summary>
       bool? Enabled { get; }
 
       /// <summary>

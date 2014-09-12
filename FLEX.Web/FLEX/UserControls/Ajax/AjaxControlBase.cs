@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FLEX.Common.Data;
 
 // ReSharper disable CheckNamespace

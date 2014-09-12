@@ -51,9 +51,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.GRAMPA, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PommaLabs.GRAMPA, Version=0.10.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.GRAMPA.0.6.0\lib\net40\PommaLabs.GRAMPA.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.GRAMPA.0.10.0\lib\net40\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
     <Reference Include="PommaLabs.KVLite, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.WebUI", "FLEX.Extensions.TestWebUI\Sample.WebUI.csproj", "{B3C22B2A-06D3-454F-BF86-0CCE7C744AE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "FLEX.Web\Web.csproj", "{407B5921-9039-4D0D-A40A-36A19C251CDC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.Web", "FLEX.Web\FLEX.Web.csproj", "{407B5921-9039-4D0D-A40A-36A19C251CDC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{BF4277FD-24C4-45AC-B871-98E1FEEDC623}"
 	ProjectSection(SolutionItems) = preProject

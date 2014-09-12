@@ -150,6 +150,11 @@ namespace FLEX.Common.Web
             _value = value;
          }
 
+         public dynamic DynamicSelectedValues
+         {
+            get { return _value; }
+         }
+
          public bool? Enabled
          {
             get { return false; /* User does not access this control */ }

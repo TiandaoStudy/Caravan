@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using FLEX.Common.Data;
 using FLEX.Common.Web;
 
 namespace FLEX.Extensions.TestDataAccess
@@ -12,7 +13,7 @@ namespace FLEX.Extensions.TestDataAccess
       public static DataTable RetrieveAll()
       {
          var sql = new StringBuilder("select c.Cand_Id, c.Cand_Name, c.Cand_Surname, c.Cand_Email, s.Schl_Description from Candidate c, School s, CandidateAttended ca where c.Cand_Id = ca.Cand_Id and s.Schl_Id = ca.Schl_Id");
-         return new QueryExecutor().FillDataTableFromQuery(sql.ToString());
+         return QueryExecutor.Instance.FillDataTableFromQuery(sql.ToString());
       }
 
       public static DataTable RetrieveByCriteria(SearchCriteria criteria)
@@ -52,7 +53,7 @@ namespace FLEX.Extensions.TestDataAccess
          {
             sql.AppendFormat(" and c.Cand_Id = '{0}' ", candId[0]);
          }
-         var _results = new QueryExecutor().FillDataTableFromQuery(sql.ToString());
+         var _results = QueryExecutor.Instance.FillDataTableFromQuery(sql.ToString());
          _results.TableName = "Candidates";
          return _results;
       }

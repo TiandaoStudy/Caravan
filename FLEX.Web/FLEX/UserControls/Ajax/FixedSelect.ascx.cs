@@ -128,6 +128,11 @@ namespace FLEX.Web.UserControls.Ajax
 
       #region ISearchControl Members
 
+      public dynamic DynamicSelectedValues
+      {
+         get { return HasValues ? ddlSelect.SelectedValue : null; }
+      }
+
       public bool HasValues
       {
          get { return ddlSelect.SelectedIndex >= 0; }

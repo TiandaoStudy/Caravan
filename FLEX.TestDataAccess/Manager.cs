@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using FLEX.Common;
-using FLEX.Common.Web;
+using FLEX.Common.Data;
 using PommaLabs.GRAMPA;
 
 namespace FLEX.Extensions.TestDataAccess
@@ -25,7 +23,7 @@ namespace FLEX.Extensions.TestDataAccess
 
         public static void ResetDatabase()
         {
-            new QueryExecutor().ExecuteStoredProcedure("ResetDatabase");
+            //QueryExecutor.Instance.ExecuteStoredProcedure("ResetDatabase");
         }
 
         private static School[] TestSchools()

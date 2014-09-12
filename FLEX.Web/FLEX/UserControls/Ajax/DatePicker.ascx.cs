@@ -125,6 +125,19 @@ namespace FLEX.Web.UserControls.Ajax
 
       #region ISearchControl Members
 
+      public dynamic DynamicSelectedValues
+      {
+         get
+         {
+            DateTime result;
+            if (HasValues && DateTime.TryParse(txtDate.Text, WebSettings.CurrentUserCulture, DateTimeStyles.AllowWhiteSpaces, out result))
+            {
+               return result;
+            }
+            return null;
+         }
+      }
+
       public bool HasValues
       {
          get { return !String.IsNullOrEmpty(txtDate.Text); }

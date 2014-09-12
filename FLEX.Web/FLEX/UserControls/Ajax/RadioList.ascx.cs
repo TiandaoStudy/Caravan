@@ -126,6 +126,11 @@ namespace FLEX.Web.UserControls.Ajax
 
       #region ISearchControl
 
+      public dynamic DynamicSelectedValues
+      {
+         get { return HasValues ? GetSelectedValues() : null; }
+      }
+
       public bool HasValues
       {
          get { return VisibleRadioButtonList.SelectedIndex >= 0; }

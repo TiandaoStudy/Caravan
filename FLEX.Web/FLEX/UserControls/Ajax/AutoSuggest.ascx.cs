@@ -139,12 +139,17 @@ namespace FLEX.Web.UserControls.Ajax
 
       #region ISearchControl Members
 
+      public dynamic DynamicSelectedValues
+      {
+         get { return HasValues ? txtKey.Text : null; }
+      }
+
       public bool HasValues
       {
          get { return !String.IsNullOrEmpty(txtKey.Text); }
       }
 
-      public IList<string> SelectedValues // Valore attualmente selezionato
+      public IList<string> SelectedValues
       {
          get
          {
