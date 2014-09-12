@@ -87,7 +87,7 @@ namespace FLEX.Web.Pages
          switch (_queryInfo.Second)
          {
             case CommandType.Text:
-               var dataTable = QueryExecutor.Instance.FillDataTableFromQuery(_queryInfo.First);
+               var dataTable = QueryExecutor.Instance.FillDataTableFromQuery(_queryInfo.First, parameters);
                fdtgReport.DataSource = dataTable;
                break;
             case CommandType.StoredProcedure:

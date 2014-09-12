@@ -1,10 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AutoSuggest.ascx.cs" Inherits="FLEX.Web.UserControls.Ajax.AutoSuggest" %>
+<%@ Import Namespace="FLEX.Web.MasterPages" %>
 <%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
 
 <style type="text/css">
-   .<%= ClientID %>-sugg-size {
-      max-height: <%= MaxMenuHeight %>px;
-   }
+   .<%= ClientID %>-sugg-size { max-height: <%= MaxMenuHeight %>px; }
 </style>
     
 <script type="text/javascript">
@@ -31,7 +30,7 @@
 
       $.ajax({
          type: "POST",
-         url: "FLEX/Services/AjaxLookup.asmx/Lookup",
+         url: "<%= Head.FlexPath %>/Services/AjaxLookup.asmx/Lookup",
          data: json,
          contentType: "application/json; charset=utf-8",
          dataType: "json",
@@ -45,7 +44,6 @@
          }
       });
    }
-
 </script>
 
 <ajax:UpdatePanel ID="updPanel" runat="server">
@@ -60,8 +58,8 @@
             source: autoSuggestSource_<%= ClientID %>,
             minLength: 0,
             select: function(event, ui) {
-                setTextBoxValue($(this), ui.item.Label);
-                setTextBoxValue($("#<%= txtKey.ClientID %>"), ui.item.Value);
+               setTextBoxValue($(this), ui.item.Label);
+               setTextBoxValue($("#<%= txtKey.ClientID %>"), ui.item.Value);
                if (event) {
                   event.preventDefault();
                }
