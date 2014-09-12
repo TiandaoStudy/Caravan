@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Reflection;
 using FLEX.Common.Data;
 using PommaLabs.GRAMPA;
-using Thrower;
+using PommaLabs.GRAMPA.Diagnostics;
 
 namespace FLEX.Common
 {

@@ -26,7 +26,6 @@ A short description of the package. If specified, this shows up in the middle pa
          <dependency id="Newtonsoft.Json" version="" />
          <dependency id="PommaLabs.GRAMPA" version="" />
          <dependency id="PommaLabs.KVLite" version="" />
-         <dependency id="Thrower" version="" />
       </dependencies>
       <references></references>
       <frameworkAssemblies>

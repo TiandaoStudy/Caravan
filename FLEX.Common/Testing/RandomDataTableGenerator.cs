@@ -2,7 +2,7 @@
 using System.Data;
 using System.Globalization;
 using System.Linq;
-using Thrower;
+using PommaLabs.GRAMPA.Diagnostics;
 
 namespace FLEX.Common.Testing
 {
