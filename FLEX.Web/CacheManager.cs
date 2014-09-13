@@ -5,7 +5,7 @@ using System.Text;
 using System.Web;
 using System.Web.Caching;
 using PommaLabs.KVLite.Web;
-using Thrower;
+using PommaLabs.GRAMPA.Diagnostics;
 
 namespace FLEX.Web
 {

@@ -11,7 +11,7 @@ using System.Xml;
 using FLEX.Common;
 using FLEX.Common.Data;
 using PommaLabs.GRAMPA.Text;
-using Thrower;
+using PommaLabs.GRAMPA.Diagnostics;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

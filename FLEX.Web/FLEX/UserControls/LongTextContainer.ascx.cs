@@ -1,5 +1,5 @@
 ﻿using System;
-using Thrower;
+using PommaLabs.GRAMPA.Diagnostics;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

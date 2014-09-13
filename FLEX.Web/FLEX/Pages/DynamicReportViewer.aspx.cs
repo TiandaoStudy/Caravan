@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 using PommaLabs.GRAMPA;
 using PommaLabs.GRAMPA.Extensions;
 using PommaLabs.GRAMPA.XML;
-using Thrower;
+using PommaLabs.GRAMPA.Diagnostics;
 using Pair = PommaLabs.GRAMPA.Pair;
 
 // ReSharper disable CheckNamespace

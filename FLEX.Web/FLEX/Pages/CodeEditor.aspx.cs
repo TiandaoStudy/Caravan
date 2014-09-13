@@ -21,7 +21,7 @@ namespace FLEX.Web.Pages
          if (!Page.IsPostBack)
          {
             ViewState["dictFilesPath"] = _filesPath;
-            var scriptsPath = Armando.Configuration.Instance.ScriptsPath;
+            var scriptsPath = PommaLabs.Armando.Configuration.Instance.ScriptsPath;
             var xmlPath = Server.MapPath(FLEX.Web.WebSettings.AjaxLookup_XmlPath);
             var menuPath = Server.MapPath(FLEX.Web.WebSettings.MenuBar_XmlPath);
             var files = new Dictionary<string, string> {{"Data Scritps", scriptsPath}, {"Ajax Lookup", xmlPath}, {"Menu", menuPath}};
@@ -32,7 +32,7 @@ namespace FLEX.Web.Pages
 
       protected void TreeView1_SelectedNodeChanged(object sender, EventArgs e)
       {
-         if (TreeView1.SelectedNode.Text == "Data Scritps" || TreeView1.SelectedNode.Text == "Ajax Lookup" || TreeView1.SelectedNode.Text == "Menu")
+         if (TreeView1.SelectedNode.Text == "Data Scripts" || TreeView1.SelectedNode.Text == "Ajax Lookup" || TreeView1.SelectedNode.Text == "Menu")
          {
             txtContentFiles.Text = "";
             lbtnSave.Visible = false;

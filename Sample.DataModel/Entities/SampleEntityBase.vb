@@ -1,4 +1,4 @@
-﻿Imports Armando
+﻿Imports PommaLabs.Armando
 
 Namespace Entities
 
