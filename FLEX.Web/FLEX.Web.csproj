@@ -468,7 +468,7 @@
     <Content Include="FLEX\Images\JQueryUI\ui-icons_d9534f_256x240.png" />
     <Content Include="FLEX\Images\JQueryUI\ui-icons_fff_256x240.png" />
     <Content Include="FLEX\Images\logo-finsa.png" />
-    <Content Include="FLEX\Images\pattern.png" />
+    <Content Include="FLEX\Images\ZenBG.png" />
     <Content Include="FLEX\Pages\CodeEditor.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -794,7 +794,6 @@
     </None>
     <None Include="FLEX\Styles\Bootstrap-plugins.less" />
     <None Include="FLEX\Styles\Bootstrap-touchspin.less" />
-    <None Include="FLEX\Styles\Bootstrap-variables.less" />
     <None Include="FLEX\Styles\Bootstrap\alerts.less" />
     <None Include="FLEX\Styles\Bootstrap\badges.less" />
     <None Include="FLEX\Styles\Bootstrap\bootstrap.less" />

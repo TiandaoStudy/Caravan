@@ -1,5 +1,5 @@
-﻿@import "Bootstrap.css";
-@import "Bootstrap-plugins.css";
+﻿@import (less) "Bootstrap.css";
+@import (less) "Bootstrap-plugins.css";
 
 /*******************************************************************************
   VARIABLES
@@ -12,10 +12,8 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #008cba;
-    background-image: url(../Images/pattern.png);
-    background-position: initial initial;
-    background-repeat: initial initial;
+    background: ##999999;
+    background-image: url("../Images/zenbg.png");
 }
 
 /*******************************************************************************
@@ -125,11 +123,6 @@ footer {
     overflow-y: auto;
 }
 
-.panel {
-    border-left: 0px;
-    border-right: 0px;
-}
-
 .panel-heading {
     padding: 5px 10px;
 }
@@ -164,130 +157,6 @@ footer {
             margin-left: 3px;
         }
     }
-
-.bootstrap-checkbox > button.btn {
-    padding-top: 0px;
-    padding-bottom: 0px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
-
-/*******************************************************************************
-  VERTICAL SEARCH
-*******************************************************************************/
-
-.vertical-search-criterium {
-}
-
-    .vertical-search-criterium .control-label {
-        .label;
-        .label-primary;
-        cursor: pointer;
-        font-size: 100%;
-        margin-bottom: 3px;
-    }
-
-    .vertical-search-criterium .collapse {
-        margin-top: 7px;
-    }
-
-    .vertical-search-criterium .input-group {
-        margin-top: 0px;
-    }
-
-.vertical-search-update-progress {
-    width: 15%;
-    height: 15%;
-    margin-top: 5%;
-}
-
-#btnCriteriaPlaceholder {
-    padding-top: 20%;
-    font-size: 18px;
-}
-
-/*******************************************************************************
-  MODAL
-*******************************************************************************/
-
-@modal-radius: 3px;
-
-#modal-overlay {
-    background: #000;
-    height: 100%;
-    left: 0;
-    -moz-opacity: 0.30;
-    -webkit-opacity: 0.30;
-    -ms-filter: alpha(opacity=30);
-    filter: alpha(opacity=30);
-    opacity: 0.30;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 1489; // Less than modal-container
-    overflow: hidden;
-}
-
-#modal-container {
-    background: #fff;
-    border: 0px;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
-    height: auto;
-    position: absolute;
-    z-index: 1490;
-    border-radius: @modal-radius;
-}
-
-    #modal-container iframe {
-        border-bottom-left-radius: @modal-radius;
-        border-bottom-right-radius: @modal-radius;
-    }
-
-#modal-header {
-    background-color: #158cba;
-    height: 32px;
-    padding-top: 5px;
-    overflow: hidden;
-    clear: both;
-    border-top-left-radius: @modal-radius;
-    border-top-right-radius: @modal-radius;
-}
-
-    #modal-header .close {
-        .close;
-        color: white;
-        opacity: 0.75;
-        text-decoration: none;
-    }
-
-#modal-header-title {
-    .text-left;
-    color: white;
-    font-size: 15px;
-    margin-left: 10px;
-    float: left;
-}
-
-.modal-close {
-    .text-right;
-    color: white;
-    font-size: 15px;
-    float: right;
-    display: normal;
-    visibility: visible;
-    margin-right: 10px;
-}
-
-#modal-content {
-    display: block;
-    z-index: 1491; // More than modal-container
-    border-bottom-left-radius: @modal-radius;
-    border-bottom-right-radius: @modal-radius;
-}
-
-#modalWindowFrame {
-    border: none;
-}
 
 /*******************************************************************************
   HALF COLUMNS
@@ -538,6 +407,125 @@ footer {
         width: 11.5*100/12%;
     }
 }
+
+/*******************************************************************************
+  VERTICAL SEARCH
+*******************************************************************************/
+
+.vertical-search-criterium {
+}
+
+    .vertical-search-criterium .control-label {
+        .label;
+        .label-primary;
+        cursor: pointer;
+        font-size: 100%;
+        margin-bottom: 3px;
+    }
+
+    .vertical-search-criterium .collapse {
+        margin-top: 7px;
+    }
+
+    .vertical-search-criterium .input-group {
+        margin-top: 0px;
+    }
+
+.vertical-search-update-progress {
+    width: 15%;
+    height: 15%;
+    margin-top: 5%;
+}
+
+#btnCriteriaPlaceholder {
+    padding-top: 20%;
+    font-size: 18px;
+}
+
+/*******************************************************************************
+  MODAL
+*******************************************************************************/
+
+@modal-radius: 3px;
+
+#modal-overlay {
+    background: #000;
+    height: 100%;
+    left: 0;
+    -moz-opacity: 0.30;
+    -webkit-opacity: 0.30;
+    -ms-filter: alpha(opacity=30);
+    filter: alpha(opacity=30);
+    opacity: 0.30;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1489; // Less than modal-container
+    overflow: hidden;
+}
+
+#modal-container {
+    background: #fff;
+    border: 0px;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+    height: auto;
+    position: absolute;
+    z-index: 1490;
+    border-radius: @modal-radius;
+}
+
+    #modal-container iframe {
+        border-bottom-left-radius: @modal-radius;
+        border-bottom-right-radius: @modal-radius;
+    }
+
+#modal-header {
+    background-color: #158cba;
+    height: 32px;
+    padding-top: 5px;
+    overflow: hidden;
+    clear: both;
+    border-top-left-radius: @modal-radius;
+    border-top-right-radius: @modal-radius;
+}
+
+    #modal-header .close {
+        .close;
+        color: white;
+        opacity: 0.75;
+        text-decoration: none;
+    }
+
+#modal-header-title {
+    .text-left;
+    color: white;
+    font-size: 15px;
+    margin-left: 10px;
+    float: left;
+}
+
+.modal-close {
+    .text-right;
+    color: white;
+    font-size: 15px;
+    float: right;
+    display: normal;
+    visibility: visible;
+    margin-right: 10px;
+}
+
+#modal-content {
+    display: block;
+    z-index: 1491; // More than modal-container
+    border-bottom-left-radius: @modal-radius;
+    border-bottom-right-radius: @modal-radius;
+}
+
+#modalWindowFrame {
+    border: none;
+}
+
+
 
 /*******************************************************************************
   AUTO SUGGEST

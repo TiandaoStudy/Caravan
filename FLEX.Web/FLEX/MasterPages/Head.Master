@@ -14,8 +14,6 @@
       <!-- CSS for Bootstrap, respond.js must be AFTER this CSS; "NoCacheTag" is needed to avoid issues with IE9 -->
       <link href="<%=FlexPath%>/Styles/Fonts.min.css<%=NoCacheTag%>" rel="stylesheet" media="screen" />
       <link href="<%=FlexPath%>/Styles/JQueryUI.min.css<%=NoCacheTag%>" rel="stylesheet" media="screen" />
-      <link href="<%=FlexPath%>/Styles/Bootstrap.min.css<%=NoCacheTag%>" rel="stylesheet" media="screen" />
-      <%--<link href="<%=FlexPath%>/Styles/Bootstrap-plugins.min.css<%=NoCacheTag%>" rel="stylesheet" media="screen" />--%>
       <link href="<%=FlexPath%>/Styles/FLEX.min.css<%=NoCacheTag%>" rel="stylesheet" media="screen" />
       <!--[if lt IE 9]>  
          <script src="<%=FlexPath%>/Scripts/html5shiv.min.js"></script>
