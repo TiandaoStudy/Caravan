@@ -44,6 +44,7 @@ namespace FLEX.Web
       public static void Application_Error(object sender, EventArgs args)
       {
          // Removes any special filtering, especially GZip filtering.
+          var dummy = HttpContext.Current.Response.Filter;
          HttpContext.Current.Response.Filter = null;
 
          // Logs the error into the DB.
