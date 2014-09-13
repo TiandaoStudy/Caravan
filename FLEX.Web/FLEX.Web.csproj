@@ -468,7 +468,6 @@
     <Content Include="FLEX\Images\JQueryUI\ui-icons_d9534f_256x240.png" />
     <Content Include="FLEX\Images\JQueryUI\ui-icons_fff_256x240.png" />
     <Content Include="FLEX\Images\logo-finsa.png" />
-    <Content Include="FLEX\Images\ZenBG.png" />
     <Content Include="FLEX\Pages\CodeEditor.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -586,6 +585,7 @@
     <Content Include="FLEX\UserControls\VerticalSearchPlaceHolder.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Content Include="FLEX\Images\ZenBG.png" />
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
