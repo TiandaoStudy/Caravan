@@ -538,6 +538,12 @@
     <Content Include="FLEX\Styles\Bootstrap-touchspin.min.css">
       <DependentUpon>Bootstrap-touchspin.less</DependentUpon>
     </Content>
+    <Content Include="FLEX\Styles\Bootstrap\variables.css">
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\Bootstrap\variables.min.css">
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
     <Content Include="FLEX\Styles\Foundation-icon-fonts.css">
       <DependentUpon>Foundation-icon-fonts.less</DependentUpon>
     </Content>
@@ -748,6 +754,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <None Include="FLEX\Scripts\base64.coffee" />
+    <None Include="FLEX\Scripts\base64.min.js.map">
+      <DependentUpon>base64.js</DependentUpon>
+    </None>
     <None Include="FLEX\Scripts\bootbox.min.js.map">
       <DependentUpon>bootbox.js</DependentUpon>
     </None>
@@ -770,10 +779,16 @@
       <DependentUpon>bootstrap.js</DependentUpon>
     </None>
     <None Include="FLEX\Scripts\FLEX.Body.coffee" />
+    <None Include="FLEX\Scripts\FLEX.Body.min.js.map">
+      <DependentUpon>FLEX.Body.js</DependentUpon>
+    </None>
     <None Include="FLEX\Scripts\FLEX.Head.coffee" />
     <None Include="FLEX\Fonts\glyphicons-halflings-regular.eot" />
     <None Include="FLEX\Fonts\glyphicons-halflings-regular.ttf" />
     <None Include="FLEX\Fonts\glyphicons-halflings-regular.woff" />
+    <None Include="FLEX\Scripts\FLEX.Head.min.js.map">
+      <DependentUpon>FLEX.Head.js</DependentUpon>
+    </None>
     <None Include="FLEX\Scripts\webLibrary.min.js.map">
       <DependentUpon>webLibrary.js</DependentUpon>
     </None>
@@ -962,11 +977,9 @@ copy $(ProjectDir)\FLEX\Services\*.asmx $(SolutionDir)\FLEX.Web.Packager\content
 copy $(ProjectDir)\FLEX\Services\*.asmx $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Services
 
 :: SCRIPTS - Package
-copy $(ProjectDir)\FLEX\Scripts\*.js $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Scripts
-copy $(ProjectDir)\FLEX\Scripts\*.map $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Scripts
+copy $(ProjectDir)\FLEX\Scripts\*.js.* $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Scripts
 :: SCRIPTS - Test Web UI
-copy $(ProjectDir)\FLEX\Scripts\*.js $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Scripts
-copy $(ProjectDir)\FLEX\Scripts\*.map $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Scripts
+copy $(ProjectDir)\FLEX\Scripts\*.js.* $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Scripts
 
 :: STYLES - Package
 copy $(ProjectDir)\FLEX\Styles\*.css $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Styles\*.css

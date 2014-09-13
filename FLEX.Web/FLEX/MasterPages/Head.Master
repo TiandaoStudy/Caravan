@@ -26,6 +26,7 @@
       <link rel="shortcut icon" href="<%=MyFlexPath%>/Images/favicon.png" />
         
       <!-- JavaScript used throughout the website, "NoCacheTag" is needed to avoid issues with IE9 -->
+      <script type="text/javascript" src="<%=FlexPath%>/Scripts/base64.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/jquery.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/jquery-ui.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/underscore.min.js"></script>
@@ -36,7 +37,6 @@
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-switch.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-touchspin.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootbox.min.js"></script>
-      <script type="text/javascript" src="<%=FlexPath%>/Scripts/base64.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/popupHandler.min.js<%=NoCacheTag%>"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/FLEX.Head.min.js<%=NoCacheTag%>"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/webLibrary.min.js<%=NoCacheTag%>"></script>
