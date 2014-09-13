@@ -460,6 +460,18 @@
     <Content Include="FLEX\Fonts\icomoon.svg" />
     <Content Include="FLEX\Fonts\ionicons.svg" />
     <Content Include="FLEX\Fonts\octicons.svg" />
+    <Content Include="FLEX\Images\JQueryUI\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-bg_flat_75_428bca_40x100.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-icons_222222_256x240.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-icons_2e83ff_256x240.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-icons_454545_256x240.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-icons_d9534f_256x240.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-icons_fff_256x240.png" />
     <Content Include="FLEX\Images\logo-finsa.png" />
     <Content Include="FLEX\Images\pattern.png" />
     <Content Include="FLEX\Pages\CodeEditor.aspx">
@@ -536,6 +548,12 @@
     </Content>
     <Content Include="FLEX\Styles\Foundation-icon-fonts.min.css">
       <DependentUpon>Foundation-icon-fonts.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\JQueryUI.css">
+      <DependentUpon>JQueryUI.less</DependentUpon>
+    </Content>
+    <Content Include="FLEX\Styles\JQueryUI.min.css">
+      <DependentUpon>JQueryUI.less</DependentUpon>
     </Content>
     <Content Include="FLEX\Styles\Octicons.css">
       <DependentUpon>Octicons.less</DependentUpon>
@@ -767,10 +785,81 @@
     <None Include="FLEX\Styles\Bootstrap-plugins.less" />
     <None Include="FLEX\Styles\Bootstrap-touchspin.less" />
     <None Include="FLEX\Styles\Bootstrap-variables.less" />
+    <None Include="FLEX\Styles\Bootstrap\alerts.less" />
+    <None Include="FLEX\Styles\Bootstrap\badges.less" />
+    <None Include="FLEX\Styles\Bootstrap\bootstrap.less" />
+    <None Include="FLEX\Styles\Bootstrap\breadcrumbs.less" />
+    <None Include="FLEX\Styles\Bootstrap\button-groups.less" />
+    <None Include="FLEX\Styles\Bootstrap\buttons.less" />
+    <None Include="FLEX\Styles\Bootstrap\carousel.less" />
+    <None Include="FLEX\Styles\Bootstrap\close.less" />
+    <None Include="FLEX\Styles\Bootstrap\code.less" />
+    <None Include="FLEX\Styles\Bootstrap\component-animations.less" />
+    <None Include="FLEX\Styles\Bootstrap\dropdowns.less" />
+    <None Include="FLEX\Styles\Bootstrap\forms.less" />
+    <None Include="FLEX\Styles\Bootstrap\glyphicons.less" />
+    <None Include="FLEX\Styles\Bootstrap\grid.less" />
+    <None Include="FLEX\Styles\Bootstrap\input-groups.less" />
+    <None Include="FLEX\Styles\Bootstrap\jumbotron.less" />
+    <None Include="FLEX\Styles\Bootstrap\labels.less" />
+    <None Include="FLEX\Styles\Bootstrap\list-group.less" />
+    <None Include="FLEX\Styles\Bootstrap\media.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\alerts.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\background-variant.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\border-radius.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\buttons.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\center-block.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\clearfix.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\forms.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\gradients.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\grid-framework.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\grid.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\hide-text.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\image.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\labels.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\list-group.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\nav-divider.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\nav-vertical-align.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\opacity.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\pagination.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\panels.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\progress-bar.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\reset-filter.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\resize.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\responsive-visibility.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\size.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\tab-focus.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\table-row.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\text-emphasis.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\text-overflow.less" />
+    <None Include="FLEX\Styles\Bootstrap\mixins\vendor-prefixes.less" />
+    <None Include="FLEX\Styles\Bootstrap\modals.less" />
+    <None Include="FLEX\Styles\Bootstrap\navbar.less" />
+    <None Include="FLEX\Styles\Bootstrap\navs.less" />
+    <None Include="FLEX\Styles\Bootstrap\normalize.less" />
+    <None Include="FLEX\Styles\Bootstrap\pager.less" />
+    <None Include="FLEX\Styles\Bootstrap\pagination.less" />
+    <None Include="FLEX\Styles\Bootstrap\panels.less" />
+    <None Include="FLEX\Styles\Bootstrap\popovers.less" />
+    <None Include="FLEX\Styles\Bootstrap\print.less" />
+    <None Include="FLEX\Styles\Bootstrap\progress-bars.less" />
+    <None Include="FLEX\Styles\Bootstrap\responsive-embed.less" />
+    <None Include="FLEX\Styles\Bootstrap\responsive-utilities.less" />
+    <None Include="FLEX\Styles\Bootstrap\scaffolding.less" />
+    <None Include="FLEX\Styles\Bootstrap\tables.less" />
+    <None Include="FLEX\Styles\Bootstrap\theme.less" />
+    <None Include="FLEX\Styles\Bootstrap\thumbnails.less" />
+    <None Include="FLEX\Styles\Bootstrap\tooltip.less" />
+    <None Include="FLEX\Styles\Bootstrap\type.less" />
+    <None Include="FLEX\Styles\Bootstrap\utilities.less" />
+    <None Include="FLEX\Styles\Bootstrap\variables.less" />
+    <None Include="FLEX\Styles\Bootstrap\wells.less" />
     <None Include="FLEX\Styles\Fonts.less" />
     <None Include="FLEX\Styles\Foundation-icon-fonts.less" />
     <None Include="FLEX\Styles\IcoMoon.less" />
     <None Include="FLEX\Styles\Ionicons.less" />
+    <None Include="FLEX\Styles\JQueryUI.less" />
     <None Include="FLEX\Styles\Octicons.less" />
     <None Include="FLEX\XmlSettings\AjaxLookups\AjaxLookup.xsd">
       <SubType>Designer</SubType>
@@ -854,14 +943,11 @@ copy $(ProjectDir)\FLEX\Fonts\*.* $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\
 :: IMAGES - Package
 del $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Images
 copy $(ProjectDir)\FLEX\Images\*.* $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Images
+copy $(ProjectDir)\FLEX\Images\JQueryUI\*.* $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Images\JQueryUI
 :: IMAGES - Test Web UI
 del $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Images
 copy $(ProjectDir)\FLEX\Images\*.* $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Images
-
-:: LOGS - Package
-copy $(ProjectDir)\FLEX\Logs\*.log $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Logs
-:: LOGS - Test Web UI
-copy $(ProjectDir)\FLEX\Logs\*.log $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Logs
+copy $(ProjectDir)\FLEX\Images\JQueryUI\*.* $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Images\JQueryUI
 
 :: MASTER PAGES - Package
 copy $(ProjectDir)\FLEX\MasterPages\*.Master $(SolutionDir)\FLEX.Web.Packager\content\FLEX\MasterPages

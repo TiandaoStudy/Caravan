@@ -13,8 +13,9 @@
     
       <!-- CSS for Bootstrap, respond.js must be AFTER this CSS; "NoCacheTag" is needed to avoid issues with IE9 -->
       <link href="<%=FlexPath%>/Styles/Fonts.min.css<%=NoCacheTag%>" rel="stylesheet" media="screen" />
+      <link href="<%=FlexPath%>/Styles/JQueryUI.min.css<%=NoCacheTag%>" rel="stylesheet" media="screen" />
       <link href="<%=FlexPath%>/Styles/Bootstrap.min.css<%=NoCacheTag%>" rel="stylesheet" media="screen" />
-      <link href="<%=FlexPath%>/Styles/Bootstrap-plugins.min.css<%=NoCacheTag%>" rel="stylesheet" media="screen" />
+      <%--<link href="<%=FlexPath%>/Styles/Bootstrap-plugins.min.css<%=NoCacheTag%>" rel="stylesheet" media="screen" />--%>
       <link href="<%=FlexPath%>/Styles/FLEX.min.css<%=NoCacheTag%>" rel="stylesheet" media="screen" />
       <!--[if lt IE 9]>  
          <script src="<%=FlexPath%>/Scripts/html5shiv.min.js"></script>
@@ -29,7 +30,7 @@
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/jquery-ui.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/underscore.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap.min.js"></script>
-      <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-datepicker.min.js"></script>
+      <%--<script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-datepicker.min.js"></script>--%>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-file-input.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-hover-dropdown.min.js"></script>
       <script type="text/javascript" src="<%=FlexPath%>/Scripts/bootstrap-switch.min.js"></script>
