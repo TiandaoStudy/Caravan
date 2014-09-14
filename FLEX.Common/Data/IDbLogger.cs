@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Runtime.CompilerServices;
+using PommaLabs.GRAMPA;
 
 namespace FLEX.Common.Data
 {
@@ -17,17 +18,17 @@ namespace FLEX.Common.Data
       bool IsErrorEnabled { get; }
       bool IsFatalEnabled { get; }
 
-      void LogDebug<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
-      void LogInfo<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
-      void LogWarning<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
-      void LogError<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
-      void LogFatal<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogDebug<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IList<GPair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogInfo<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IList<GPair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogWarning<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IList<GPair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogError<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IList<GPair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogFatal<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IList<GPair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
 
-      void LogDebug<TCodeUnit>(Exception exception, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
-      void LogInfo<TCodeUnit>(Exception exception, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
-      void LogWarning<TCodeUnit>(Exception exception, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
-      void LogError<TCodeUnit>(Exception exception, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
-      void LogFatal<TCodeUnit>(Exception exception, string context = null, IDictionary<string, object> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogDebug<TCodeUnit>(Exception exception, string context = null, IList<GPair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogInfo<TCodeUnit>(Exception exception, string context = null, IList<GPair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogWarning<TCodeUnit>(Exception exception, string context = null, IList<GPair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogError<TCodeUnit>(Exception exception, string context = null, IList<GPair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogFatal<TCodeUnit>(Exception exception, string context = null, IList<GPair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
 
       IEnumerable<DbLog> RetrieveAllLogs();
       IEnumerable<DbLog> RetrieveCurrentApplicationLogs();
