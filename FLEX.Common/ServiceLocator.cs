@@ -66,13 +66,13 @@ namespace FLEX.Common
          }
       }
 
-      private static Pair<string, string> FindConfigurationInfo(string configurationEntry)
+      private static GPair<string, string> FindConfigurationInfo(string configurationEntry)
       {
          Raise<ConfigurationException>.IfIsEmpty(configurationEntry);
          var split = configurationEntry.Split(';');
          Raise<ConfigurationException>.IfIsEmpty(split[0]);
          Raise<ConfigurationException>.IfIsEmpty(split[1]);
-         return Pair.Create(split[0], split[1]);
+         return GPair.Create(split[0], split[1]);
       }
    }
 }

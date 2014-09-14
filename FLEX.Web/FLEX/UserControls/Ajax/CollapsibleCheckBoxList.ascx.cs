@@ -99,7 +99,7 @@ namespace FLEX.Web.UserControls.Ajax
       ///   A list of values that will be used to fill the checkbox list.
       ///   First item will be used as label, while second item will be used as value.
       /// </param>
-      public void SetDataSource(IList<Pair<string, string>> values)
+      public void SetDataSource(IList<GPair<string, string>> values)
       {
          Raise<ArgumentNullException>.IfIsNull(values);
 
