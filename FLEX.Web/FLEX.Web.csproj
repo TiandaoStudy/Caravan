@@ -78,9 +78,6 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.Armando">
-      <HintPath>..\packages\PommaLabs.Armando.0.3.0\lib\net40\PommaLabs.Armando.dll</HintPath>
-    </Reference>
     <Reference Include="PommaLabs.GRAMPA, Version=0.12.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\PommaLabs.GRAMPA.0.12.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
