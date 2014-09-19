@@ -23,10 +23,8 @@
      <dependencies>
         <dependency id="Dapper" version="" />
         <dependency id="FLEX.Common" version="" />
-        <dependency id="Glimpse.Ado" version="" />
         <dependency id="Microsoft.Bcl" version="" />
         <dependency id="Newtonsoft.Json" version="" />
-        <dependency id="PommaLabs.Armando" version="" />
         <dependency id="PommaLabs.GRAMPA" version="" />
      </dependencies>
     <references></references>

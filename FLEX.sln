@@ -56,13 +56,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{349512
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FLEX.Data", "FLEX.Data.Oracle\FLEX.Data.vbproj", "{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FLEX.Data.Dapper", "FLEX.Data.Oracle\FLEX.Data.Dapper.vbproj", "{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Data", "FLEX.Data.Packager\NuGetPackager.Data.csproj", "{BD471427-A76A-4764-94C1-08C8C3BC1379}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Data.Dapper", "FLEX.Data.Packager\NuGetPackager.Data.Dapper.csproj", "{BD471427-A76A-4764-94C1-08C8C3BC1379}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Sample.DataModel", "Sample.DataModel\Sample.DataModel.vbproj", "{0F27FAFA-5916-45D4-BAA5-735462C8BD02}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Web.CodeEditor", "NuGetPackager.Web.CodeEditor\NuGetPackager.Web.CodeEditor.csproj", "{01F957B7-5B84-4792-A781-87E82257618D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.Data.Model", "FLEX.Data.Model\FLEX.Data.Model.csproj", "{068BD865-FC02-4D2A-9B4B-E1F9E5AD0DCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -110,6 +112,10 @@ Global
 		{0F27FAFA-5916-45D4-BAA5-735462C8BD02}.Release|Any CPU.Build.0 = Release|Any CPU
 		{01F957B7-5B84-4792-A781-87E82257618D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{01F957B7-5B84-4792-A781-87E82257618D}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{068BD865-FC02-4D2A-9B4B-E1F9E5AD0DCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{068BD865-FC02-4D2A-9B4B-E1F9E5AD0DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{068BD865-FC02-4D2A-9B4B-E1F9E5AD0DCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{068BD865-FC02-4D2A-9B4B-E1F9E5AD0DCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
