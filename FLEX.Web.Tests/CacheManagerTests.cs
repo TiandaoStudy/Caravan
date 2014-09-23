@@ -1,7 +1,6 @@
-﻿using FLEX.Web;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace FLEX.Extensions.Web.Tests
+namespace FLEX.Web.Tests
 {
     public sealed class CacheManagerTests : TestBase
     {
