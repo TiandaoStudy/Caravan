@@ -7,8 +7,8 @@
     <ProjectGuid>{4F1024FA-992F-442C-B32F-E4BE589D5EF4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FLEX.Common.UnitTests</RootNamespace>
-    <AssemblyName>FLEX.Common.UnitTests</AssemblyName>
+    <RootNamespace>UnitTests.Common</RootNamespace>
+    <AssemblyName>UnitTests.Common</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>

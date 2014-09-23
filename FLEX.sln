@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Web", "FLEX.Web.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Common", "FLEX.Common.Tests\UnitTests.Common.csproj", "{4F1024FA-992F-442C-B32F-E4BE589D5EF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Common", "FLEX.Common.Packager\NuGetPackager.Common.csproj", "{BBCDDB1C-8127-4623-B40B-5109DE5A63EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Common", "NuGetPackager.Common\NuGetPackager.Common.csproj", "{BBCDDB1C-8127-4623-B40B-5109DE5A63EF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{816548D1-F582-4AC1-B4F3-E3997F2B4C14}"
 EndProject

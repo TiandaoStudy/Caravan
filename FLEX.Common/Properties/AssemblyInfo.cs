@@ -37,12 +37,12 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("0.10.0.0")]
-[assembly: AssemblyFileVersion("0.10.0.0")]
+[assembly: AssemblyVersion("0.11.0.0")]
+[assembly: AssemblyFileVersion("0.11.0.0")]
 
 // Attributes added to allow stronger development.
 
 [assembly: CLSCompliant(true)]
-[assembly: InternalsVisibleTo("FLEX.Common.Tests")]
-[assembly: InternalsVisibleTo("FLEX.Data")]
-[assembly: InternalsVisibleTo("FLEX.Web")]
+[assembly: InternalsVisibleTo("FLEX.Data.Dapper")]
+[assembly: InternalsVisibleTo("FLEX.Web.WebForms")]
+[assembly: InternalsVisibleTo("UnitTests.Common")]
