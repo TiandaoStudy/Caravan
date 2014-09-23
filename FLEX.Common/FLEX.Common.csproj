@@ -100,11 +100,11 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (
-    set dir="$(SolutionDir)FLEX.Common.Packager/lib/net40"
+    set dir="$(SolutionDir)NuGetPackager.Common/lib/net40"
     if not exist "%25dir%25" mkdir "%25dir%25"
-    copy "$(TargetDir)FLEX.Common.dll" "$(SolutionDir)FLEX.Common.Packager/lib/net40"
-    copy "$(TargetDir)FLEX.Common.pdb" "$(SolutionDir)FLEX.Common.Packager/lib/net40"
-    copy "$(TargetDir)FLEX.Common.xml" "$(SolutionDir)FLEX.Common.Packager/lib/net40"
+    copy "$(TargetDir)FLEX.Common.dll" "$(SolutionDir)NuGetPackager.Common/lib/net40"
+    copy "$(TargetDir)FLEX.Common.pdb" "$(SolutionDir)NuGetPackager.Common/lib/net40"
+    copy "$(TargetDir)FLEX.Common.xml" "$(SolutionDir)NuGetPackager.Common/lib/net40"
 )</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

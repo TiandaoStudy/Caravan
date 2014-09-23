@@ -100,7 +100,7 @@
   };
 
   root.displaySystemError = function() {
-    return window.open(root.settings.flexPath + "/Pages/ErrorHandler.aspx", "SystemError", "menubar=no,location=yes,resizable=yes,scrollbars=yes,status=no,height=500,width=800");
+    return window.open(root.settings.flexPath + "/Pages/ErrorHandler.aspx", "SystemError", "menubar=no,location=yes,resizable=yes,scrollbars=yes,status=no,height=500,width=800,modal=yes'");
   };
 
   root.triggerAsyncPostBack = function(hiddenTriggerId) {
