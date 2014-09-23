@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MultipleSelect.ascx.cs" Inherits="FLEX.Web.UserControls.Ajax.MultipleSelect" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MultiSelect.ascx.cs" Inherits="FLEX.Web.UserControls.Ajax.MultiSelect" %>
 <%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
 <%@ Register TagPrefix="flex" Namespace="FLEX.Web.UserControls" Assembly="FLEX.Web" %>
 

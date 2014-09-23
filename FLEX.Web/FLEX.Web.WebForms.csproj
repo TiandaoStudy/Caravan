@@ -257,12 +257,12 @@
     <Compile Include="FLEX\UserControls\Ajax\DatePicker.ascx.designer.cs">
       <DependentUpon>DatePicker.ascx</DependentUpon>
     </Compile>
-    <Compile Include="FLEX\UserControls\Ajax\MultipleSelect.ascx.cs">
-      <DependentUpon>MultipleSelect.ascx</DependentUpon>
+    <Compile Include="FLEX\UserControls\Ajax\MultiSelect.ascx.cs">
+      <DependentUpon>MultiSelect.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="FLEX\UserControls\Ajax\MultipleSelect.ascx.designer.cs">
-      <DependentUpon>MultipleSelect.ascx.cs</DependentUpon>
+    <Compile Include="FLEX\UserControls\Ajax\MultiSelect.ascx.designer.cs">
+      <DependentUpon>MultiSelect.ascx.cs</DependentUpon>
     </Compile>
     <Compile Include="FLEX\UserControls\Ajax\OnOffSwitch.ascx.cs">
       <DependentUpon>OnOffSwitch.ascx</DependentUpon>
@@ -567,7 +567,7 @@
     <Content Include="FLEX\Styles\Octicons.min.css">
       <DependentUpon>Octicons.less</DependentUpon>
     </Content>
-    <Content Include="FLEX\UserControls\Ajax\MultipleSelect.ascx">
+    <Content Include="FLEX\UserControls\Ajax\MultiSelect.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\UserControls\Ajax\NumericSpinner.ascx">

@@ -10,7 +10,7 @@
 namespace FLEX.Web.UserControls.Ajax {
     
     
-    public partial class MultipleSelect {
+    public partial class MultiSelect {
         
         /// <summary>
         /// leftUpdatePanel control.
