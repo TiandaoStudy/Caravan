@@ -43,7 +43,7 @@ namespace FLEX.Web.Pages
 
       #region Instance Fields
 
-      private readonly List<GPair<ISearchControl, string>> _searchControls = new List<GPair<ISearchControl, string>>();
+      private readonly List<GKeyValuePair<ISearchControl, string>> _searchControls = new List<GKeyValuePair<ISearchControl, string>>();
       private GPair<string, CommandType> _queryInfo; 
 
       #endregion
@@ -80,7 +80,7 @@ namespace FLEX.Web.Pages
          var parameters = new DynamicParameters();
          foreach (var searchControl in _searchControls)
          {
-            parameters.Add(searchControl.Second, searchControl.First.DynamicSelectedValues);
+            parameters.Add(searchControl.Value, searchControl.Key.DynamicSelectedValues);
          }
 
          switch (_queryInfo.Second)
@@ -120,7 +120,7 @@ namespace FLEX.Web.Pages
       {
          foreach (var control in _searchControls)
          {
-            criteria.RegisterControl(control.First, control.Second);
+            criteria.RegisterControl(control.Key, control.Value);
          }
          criteria.CriteriaChanged += SearchCriteria_CriteriaChanged;
       }

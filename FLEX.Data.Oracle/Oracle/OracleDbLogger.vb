@@ -46,60 +46,60 @@ Namespace Oracle
 
 #Region "Logging Methods"
 
-        Sub LogDebug(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IList(Of GPair(Of String, Object)) = Nothing,
+      Sub LogDebug(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IList(Of GKeyValuePair(Of String, Object)) = Nothing,
                                     <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
            Implements IDbLogger.LogDebug
-            Log(Of TCodeUnit)("DEBUG", [function], shortMessage, longMessage, context, args)
-        End Sub
+         Log(Of TCodeUnit)("DEBUG", [function], shortMessage, longMessage, context, args)
+      End Sub
 
-        Sub LogInfo(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IList(Of GPair(Of String, Object)) = Nothing,
+      Sub LogInfo(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IList(Of GKeyValuePair(Of String, Object)) = Nothing,
                                    <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
            Implements IDbLogger.LogInfo
-            Log(Of TCodeUnit)("INFO", [function], shortMessage, longMessage, context, args)
-        End Sub
+         Log(Of TCodeUnit)("INFO", [function], shortMessage, longMessage, context, args)
+      End Sub
 
-        Sub LogWarning(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IList(Of GPair(Of String, Object)) = Nothing,
+      Sub LogWarning(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IList(Of GKeyValuePair(Of String, Object)) = Nothing,
                                       <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
            Implements IDbLogger.LogWarning
-            Log(Of TCodeUnit)("WARNING", [function], shortMessage, longMessage, context, args)
-        End Sub
+         Log(Of TCodeUnit)("WARNING", [function], shortMessage, longMessage, context, args)
+      End Sub
 
-        Sub LogError(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IList(Of GPair(Of String, Object)) = Nothing,
+      Sub LogError(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IList(Of GKeyValuePair(Of String, Object)) = Nothing,
                                     <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
            Implements IDbLogger.LogError
-            Log(Of TCodeUnit)("ERROR", [function], shortMessage, longMessage, context, args)
-        End Sub
+         Log(Of TCodeUnit)("ERROR", [function], shortMessage, longMessage, context, args)
+      End Sub
 
-        Sub LogFatal(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IList(Of GPair(Of String, Object)) = Nothing,
+      Sub LogFatal(Of TCodeUnit)(shortMessage As Object, Optional longMessage As Object = Nothing, Optional context As String = Nothing, Optional args As IList(Of GKeyValuePair(Of String, Object)) = Nothing,
                                     <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
            Implements IDbLogger.LogFatal
-            Log(Of TCodeUnit)("FATAL", [function], shortMessage, longMessage, context, args)
-        End Sub
+         Log(Of TCodeUnit)("FATAL", [function], shortMessage, longMessage, context, args)
+      End Sub
 
-        Sub LogDebug(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IList(Of GPair(Of String, Object)) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
+      Sub LogDebug(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IList(Of GKeyValuePair(Of String, Object)) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
            Implements IDbLogger.LogDebug
-            Log(Of TCodeUnit)("DEBUG", [function], exception, context, args)
-        End Sub
+         Log(Of TCodeUnit)("DEBUG", [function], exception, context, args)
+      End Sub
 
-        Sub LogInfo(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IList(Of GPair(Of String, Object)) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
+      Sub LogInfo(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IList(Of GKeyValuePair(Of String, Object)) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
            Implements IDbLogger.LogInfo
-            Log(Of TCodeUnit)("INFO", [function], exception, context, args)
-        End Sub
+         Log(Of TCodeUnit)("INFO", [function], exception, context, args)
+      End Sub
 
-        Sub LogWarning(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IList(Of GPair(Of String, Object)) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
+      Sub LogWarning(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IList(Of GKeyValuePair(Of String, Object)) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
            Implements IDbLogger.LogWarning
-            Log(Of TCodeUnit)("WARNING", [function], exception, context, args)
-        End Sub
+         Log(Of TCodeUnit)("WARNING", [function], exception, context, args)
+      End Sub
 
-        Sub LogError(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IList(Of GPair(Of String, Object)) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
+      Sub LogError(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IList(Of GKeyValuePair(Of String, Object)) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
            Implements IDbLogger.LogError
-            Log(Of TCodeUnit)("ERROR", [function], exception, context, args)
-        End Sub
+         Log(Of TCodeUnit)("ERROR", [function], exception, context, args)
+      End Sub
 
-        Sub LogFatal(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IList(Of GPair(Of String, Object)) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
+      Sub LogFatal(Of TCodeUnit)(exception As Exception, Optional context As String = Nothing, Optional args As IList(Of GKeyValuePair(Of String, Object)) = Nothing, <CallerMemberName> Optional [function] As String = DbLog.AutoFilledParameter) _
            Implements IDbLogger.LogFatal
-            Log(Of TCodeUnit)("FATAL", [function], exception, context, args)
-        End Sub
+         Log(Of TCodeUnit)("FATAL", [function], exception, context, args)
+      End Sub
 
 #End Region
 
@@ -163,35 +163,35 @@ Namespace Oracle
             End Using
         End Function
 
-        Private Shared Sub Log(Of TCodeUnit)(type As String, [function] As String, shortMessage As Object, longMessage As Object, context As String, args As IList(Of GPair(Of String, Object)))
-            Raise(Of ArgumentNullException).IfIsNull(shortMessage)
-            Raise(Of ArgumentOutOfRangeException).If(args IsNot Nothing AndAlso args.Count > MaxArgumentCount)
+      Private Shared Sub Log(Of TCodeUnit)(type As String, [function] As String, shortMessage As Object, longMessage As Object, context As String, args As IList(Of GKeyValuePair(Of String, Object)))
+         Raise(Of ArgumentNullException).IfIsNull(shortMessage)
+         Raise(Of ArgumentOutOfRangeException).If(args IsNot Nothing AndAlso args.Count > MaxArgumentCount)
 
-            Using connection = QueryExecutor.Instance.OpenConnection()
-                Dim params = New DynamicParameters()
-                params.Add("p_type", type)
-                params.Add("p_application", Common.Configuration.Instance.ApplicationName.Truncate(MaxApplicationNameLength))
-                params.Add("p_code_unit", GetType(TCodeUnit).FullName.Truncate(MaxCodeUnitLength))
-                params.Add("p_function", [function].Truncate(MaxFunctionLength))
-                params.Add("p_short_msg", If(shortMessage Is Nothing, String.Empty, shortMessage.ToString().Truncate(MaxShortMessageLength)))
-                params.Add("p_long_msg", If(longMessage Is Nothing, String.Empty, longMessage.ToString().Truncate(MaxLongMessageLength)))
-                params.Add("p_context", context.Truncate(MaxContextLength))
-                If args IsNot Nothing Then
-                    For i = 0 To args.Count
-                        Dim arg = args(i)
-                        params.Add(String.Format("p_key_{0}", i), arg.First.Truncate(MaxKeyLength))
-                        params.Add(String.Format("p_value_{0}", i), If(arg.Second Is Nothing, Nothing, arg.Second.ToString().Truncate(MaxValueLength)))
-                    Next
-                End If
-                Dim procedure = String.Format("{0}pck_flex_log.sp_log", Configuration.Instance.OracleRunner)
-                connection.Execute(procedure, params, commandType:=CommandType.StoredProcedure)
-            End Using
-        End Sub
+         Using connection = QueryExecutor.Instance.OpenConnection()
+            Dim params = New DynamicParameters()
+            params.Add("p_type", type)
+            params.Add("p_application", Common.Configuration.Instance.ApplicationName.Truncate(MaxApplicationNameLength))
+            params.Add("p_code_unit", GetType(TCodeUnit).FullName.Truncate(MaxCodeUnitLength))
+            params.Add("p_function", [function].Truncate(MaxFunctionLength))
+            params.Add("p_short_msg", If(shortMessage Is Nothing, String.Empty, shortMessage.ToString().Truncate(MaxShortMessageLength)))
+            params.Add("p_long_msg", If(longMessage Is Nothing, String.Empty, longMessage.ToString().Truncate(MaxLongMessageLength)))
+            params.Add("p_context", context.Truncate(MaxContextLength))
+            If args IsNot Nothing Then
+               For i = 0 To args.Count
+                  Dim arg = args(i)
+                  params.Add(String.Format("p_key_{0}", i), arg.Key.Truncate(MaxKeyLength))
+                  params.Add(String.Format("p_value_{0}", i), If(arg.Value Is Nothing, Nothing, arg.Value.ToString().Truncate(MaxValueLength)))
+               Next
+            End If
+            Dim procedure = String.Format("{0}pck_flex_log.sp_log", Configuration.Instance.OracleRunner)
+            connection.Execute(procedure, params, commandType:=CommandType.StoredProcedure)
+         End Using
+      End Sub
 
-        Private Shared Sub Log(Of TCodeUnit)(type As String, [function] As String, exception As Exception, context As String, args As IList(Of GPair(Of String, Object)))
-            exception = FindInnermostException(exception)
-            Log(Of TCodeUnit)(type, [function], exception.Message, exception.StackTrace, context, args)
-        End Sub
+      Private Shared Sub Log(Of TCodeUnit)(type As String, [function] As String, exception As Exception, context As String, args As IList(Of GKeyValuePair(Of String, Object)))
+         exception = FindInnermostException(exception)
+         Log(Of TCodeUnit)(type, [function], exception.Message, exception.StackTrace, context, args)
+      End Sub
 
 #End Region
     End Class

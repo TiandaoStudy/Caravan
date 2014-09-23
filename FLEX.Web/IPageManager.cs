@@ -12,7 +12,7 @@ namespace FLEX.Web
       /// 
       /// </summary>
       /// <returns></returns>
-      IList<GPair<string, string>> GetFooterInfo();
+      IList<GKeyValuePair<string, string>> GetFooterInfo();
 
       /// <summary>
       /// 

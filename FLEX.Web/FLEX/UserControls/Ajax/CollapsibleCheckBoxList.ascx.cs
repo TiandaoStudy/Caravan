@@ -99,7 +99,7 @@ namespace FLEX.Web.UserControls.Ajax
       ///   A list of values that will be used to fill the checkbox list.
       ///   First item will be used as label, while second item will be used as value.
       /// </param>
-      public void SetDataSource(IList<GPair<string, string>> values)
+      public void SetDataSource(IList<GKeyValuePair<string, string>> values)
       {
          Raise<ArgumentNullException>.IfIsNull(values);
 
@@ -107,12 +107,12 @@ namespace FLEX.Web.UserControls.Ajax
          for (var i = 0; i < visibleItemCount; i++)
          {
             var pair = values[i];
-            chklVisible.Items.Add(new ListItem(pair.First, pair.Second));
+            chklVisible.Items.Add(new ListItem(pair.Key, pair.Value));
          }
          for (var i = visibleItemCount; i < values.Count; i++)
          {
             var pair = values[i];
-            chklHidden.Items.Add(new ListItem(pair.First, pair.Second));
+            chklHidden.Items.Add(new ListItem(pair.Key, pair.Value));
          }
          HideExpanderIfNecessary();
       }
