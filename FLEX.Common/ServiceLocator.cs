@@ -47,7 +47,7 @@ namespace FLEX.Common
             var assemblyPath = String.Format("bin/{0}.dll", info.First);
 
             // And then we make it absolute to our server.
-            assemblyPath = CommonSettings.MapPath(assemblyPath);
+            assemblyPath = Configuration.MapPath(assemblyPath);
             var assembly = Assembly.LoadFrom(assemblyPath);
 
             // We load the class and we make sure it implements T.

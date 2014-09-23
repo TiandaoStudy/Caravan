@@ -83,7 +83,6 @@
     <Compile Include="Basics.cs" />
     <Compile Include="Collections\OneItemList.cs" />
     <Compile Include="Configuration.cs" />
-    <Compile Include="CommonSettings.cs" />
     <Compile Include="Data\IDbLogger.cs" />
     <Compile Include="Data\IQueryExecutor.cs" />
     <Compile Include="IO\BufferedIO.cs" />

@@ -187,7 +187,7 @@ namespace FLEX.Web.UserControls.Ajax
          {
             return new OneItemList<string>(rblData.SelectedValue);
          }
-         return CommonSettings.EmptyStringList;
+         return Common.Configuration.EmptyStringList;
       }
 
       protected void RadioButtonListData_OnSelectedIndexChanged(object sender, EventArgs e)

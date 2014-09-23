@@ -114,7 +114,7 @@ namespace FLEX.Web.UserControls.Ajax
          {
             if (!HasValues)
             {
-               return CommonSettings.EmptyStringList;
+               return Common.Configuration.EmptyStringList;
             }
             return new OneItemList<string>(txtNumber.Text);
          }

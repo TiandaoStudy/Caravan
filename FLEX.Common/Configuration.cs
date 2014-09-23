@@ -1,4 +1,8 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Linq;
 using PommaLabs.KVLite;
 
 namespace FLEX.Common
@@ -62,5 +66,21 @@ namespace FLEX.Common
          get { return (string) PersistentCache.DefaultInstance.Get(CachePartitionName, ConnectionStringKey); }
          set { PersistentCache.DefaultInstance.AddStatic(CachePartitionName, ConnectionStringKey, value); }
       }
+
+      #region Utilities
+
+      private static readonly List<string> EmptyStringListInstance = new List<string>();
+
+      public static List<string> EmptyStringList
+      {
+         get { return EmptyStringListInstance; }
+      }
+
+      public static string MapPath(params string[] hints)
+      {
+         return hints.Aggregate(AppDomain.CurrentDomain.BaseDirectory, Path.Combine);
+      }
+
+      #endregion
    }
 }
