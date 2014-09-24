@@ -86,15 +86,45 @@
       <DependentUpon>AutoComplete.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ValueHolders\AutoCompleteOptions.cs" />
+    <Compile Include="Controls\ValueHolders\DatePicker.generated.cs">
+      <DependentUpon>DatePicker.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\ValueHolders\DatePickerOptions.cs" />
     <Compile Include="FlexHtmlHelper.cs" />
+    <Compile Include="Layouts\Common.generated.cs">
+      <DependentUpon>Common.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Layouts\Pages\Page.generated.cs">
+      <DependentUpon>Page.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Layouts\Popups\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Controls\ValueHolders\AutoComplete.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>AutoComplete.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Controls\ValueHolders\DatePicker.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>DatePicker.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Layouts\Common.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Common.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Layouts\Pages\Page.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Page.generated.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

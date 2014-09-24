@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FLEX.Web.MVC.Controls.ValueHolders
+namespace FLEX.Web.MVC.Layouts
 {
     using System;
     using System.Collections.Generic;
@@ -27,43 +27,36 @@ namespace FLEX.Web.MVC.Controls.ValueHolders
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 4 "..\..\Controls\ValueHolders\AutoComplete.cshtml"
-    using FLEX.Web.MVC.Controls.ValueHolders;
-    
-    #line default
-    #line hidden
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    public static class AutoComplete
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Layouts/Common.cshtml")]
+    public partial class Common : System.Web.Mvc.WebViewPage<dynamic>
     {
-
-public static System.Web.WebPages.HelperResult Create(AutoCompleteOptions options) {
-return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
-
-
-
-#line 6 "..\..\Controls\ValueHolders\AutoComplete.cshtml"
-                                             
+        public Common()
+        {
+        }
+        public override void Execute()
+        {
 
 
-#line default
-#line hidden
-
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "    <span></span>\r\n");
+WriteLiteral("\r\n");
 
 
 
-#line 9 "..\..\Controls\ValueHolders\AutoComplete.cshtml"
+WriteLiteral("\r\n\r\n<!DOCTYPE html>\r\n\r\n<html>\r\n   <head>\r\n   \r\n   </head>\r\n   \r\n   <body>\r\n      " +
+"COMMON\r\n      ");
 
 
-#line default
-#line hidden
+            
+            #line 13 "..\..\Layouts\Common.cshtml"
+ Write(RenderBody());
 
-});
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n   </body>\r\n\r\n</html>");
 
-}
 
-
+        }
     }
 }
 #pragma warning restore 1591

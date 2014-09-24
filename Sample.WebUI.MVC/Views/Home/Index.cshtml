@@ -3,18 +3,14 @@
 @model dynamic
 
 @{
-   Layout = null;
+   Layout = "~/Layouts/Pages/Page.cshtml";
 }
 
-<!DOCTYPE html>
 
-<html>
-   <head>
-      <title>title</title>
-   </head>
-   <body>
-      <div>
-         @AutoComplete.Create("prova")
-      </div>
-   </body>
-</html>
+<div>
+   HOME
+   @AutoComplete.Create(new AutoCompleteOptions
+   {
+      Delay = 500
+   })
+</div>
