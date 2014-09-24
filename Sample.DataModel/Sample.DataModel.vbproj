@@ -63,9 +63,9 @@
     <Reference Include="CodeProject.ObjectPool, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CodeProject.ObjectPool.1.0.6\lib\net40\CodeProject.ObjectPool.dll</HintPath>
     </Reference>
-    <Reference Include="CSScriptLibrary, Version=3.8.6.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
+    <Reference Include="CSScriptLibrary, Version=3.8.8.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CS-Script.3.8.6.0\lib\net40\CSScriptLibrary.dll</HintPath>
+      <HintPath>..\packages\CS-Script.3.8.8.0\lib\net40\CSScriptLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Dapper, Version=1.34.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -74,7 +74,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CS-Script.3.8.6.0\lib\net40\Mono.CSharp.dll</HintPath>
+      <HintPath>..\packages\CS-Script.3.8.8.0\lib\net40\Mono.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
