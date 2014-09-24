@@ -27,23 +27,17 @@ namespace FLEX.Web.MVC.Controls.ValueHolders
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 4 "..\..\Controls\ValueHolders\AutoComplete.cshtml"
-    using FLEX.Web.MVC;
-    
-    #line default
-    #line hidden
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     public static class AutoComplete
     {
 
-public static System.Web.WebPages.HelperResult WriteSpan(this FlexHtmlHelper helper, string text) {
+public static System.Web.WebPages.HelperResult Create(string text) {
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 
 
-#line 6 "..\..\Controls\ValueHolders\AutoComplete.cshtml"
-                                                            
+#line 4 "..\..\Controls\ValueHolders\AutoComplete.cshtml"
+                             
 
 
 #line default
@@ -53,7 +47,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "    <span>");
 
 
 
-#line 8 "..\..\Controls\ValueHolders\AutoComplete.cshtml"
+#line 6 "..\..\Controls\ValueHolders\AutoComplete.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, text);
 
 #line default
@@ -63,7 +57,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "</span>\r\n");
 
 
 
-#line 9 "..\..\Controls\ValueHolders\AutoComplete.cshtml"
+#line 7 "..\..\Controls\ValueHolders\AutoComplete.cshtml"
 
 
 #line default

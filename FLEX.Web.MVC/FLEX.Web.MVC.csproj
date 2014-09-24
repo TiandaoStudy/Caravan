@@ -85,6 +85,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AutoComplete.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ValueHolders\AutoCompleteOptions.cs" />
     <Compile Include="FlexHtmlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
