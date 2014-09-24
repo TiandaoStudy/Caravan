@@ -20,7 +20,7 @@ namespace FLEX.Web.MVC.Controls.ValueHolders
     using System.Web;
     using System.Web.Helpers;
     
-    #line 4 "..\..\Controls\ValueHolders\DatePicker.cshtml"
+    #line 4 "..\..\Controls\ValueHolders\AutoComplete_.cshtml"
     using System.Web.Mvc;
     
     #line default
@@ -32,23 +32,23 @@ namespace FLEX.Web.MVC.Controls.ValueHolders
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 5 "..\..\Controls\ValueHolders\DatePicker.cshtml"
+    #line 5 "..\..\Controls\ValueHolders\AutoComplete_.cshtml"
     using FLEX.Web.MVC.Controls.ValueHolders;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    public static class DatePicker
+    public static class AutoComplete_
     {
 
-public static System.Web.WebPages.HelperResult Create(this HtmlHelper htmlHelper, DatePickerOptions options) {
+public static System.Web.WebPages.HelperResult AutoComplete(this HtmlHelper htmlHelper, AutoCompleteOptions options) {
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 
 
-#line 7 "..\..\Controls\ValueHolders\DatePicker.cshtml"
-                                                                       
+#line 7 "..\..\Controls\ValueHolders\AutoComplete_.cshtml"
+                                                                               
 
 
 #line default
@@ -58,7 +58,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "    <span></span>\r\n");
 
 
 
-#line 10 "..\..\Controls\ValueHolders\DatePicker.cshtml"
+#line 10 "..\..\Controls\ValueHolders\AutoComplete_.cshtml"
 
 
 #line default

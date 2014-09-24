@@ -27,11 +27,17 @@ namespace FLEX.Web.MVC.Layouts
     using System.Web.UI;
     using System.Web.WebPages;
     
+    #line 4 "..\..\Layouts\Common_.cshtml"
+    using FLEX.Web.MVC.Layouts;
+    
+    #line default
+    #line hidden
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Layouts/Common.cshtml")]
-    public partial class Common : System.Web.Mvc.WebViewPage<dynamic>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Layouts/Common_.cshtml")]
+    public partial class Common_ : System.Web.Mvc.WebViewPage<dynamic>
     {
-        public Common()
+        public Common_()
         {
         }
         public override void Execute()
@@ -42,12 +48,35 @@ WriteLiteral("\r\n");
 
 
 
-WriteLiteral("\r\n\r\n<!DOCTYPE html>\r\n\r\n<html>\r\n   <head>\r\n   \r\n   </head>\r\n   \r\n   <body>\r\n      " +
-"COMMON\r\n      ");
+WriteLiteral("\r\n\r\n");
+
+
+WriteLiteral("\r\n<!DOCTYPE html>\r\n\r\n<html>\r\n   <head>\r\n   \r\n      <script type=\"text/javascript\"" +
+" src=\"");
 
 
             
-            #line 13 "..\..\Layouts\Common.cshtml"
+            #line 11 "..\..\Layouts\Common_.cshtml"
+                                      Write(Common.FlexPath);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("/Scripts/popupHandler.min.js");
+
+
+            
+            #line 11 "..\..\Layouts\Common_.cshtml"
+                                                                                    Write(Common.NoCacheTag);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"></script>\r\n   </head>\r\n   \r\n   <body>\r\n      COMMON\r\n      ");
+
+
+            
+            #line 16 "..\..\Layouts\Common_.cshtml"
  Write(RenderBody());
 
             

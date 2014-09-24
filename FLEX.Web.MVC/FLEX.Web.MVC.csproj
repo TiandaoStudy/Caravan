@@ -80,52 +80,89 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
-    <Compile Include="Controls\ValueHolders\AutoComplete.generated.cs">
+    <Compile Include="Controls\PageElements\Footer_.generated.cs">
+      <DependentUpon>Footer_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AutoComplete.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PageElements\MenuBar_.generated.cs">
+      <DependentUpon>MenuBar_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\ValueHolders\AutoComplete_.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AutoComplete_.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ValueHolders\AutoCompleteOptions.cs" />
-    <Compile Include="Controls\ValueHolders\DatePicker.generated.cs">
-      <DependentUpon>DatePicker.cshtml</DependentUpon>
+    <Compile Include="Controls\ValueHolders\DatePicker_.generated.cs">
+      <DependentUpon>DatePicker_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Controls\ValueHolders\DatePickerOptions.cs" />
-    <Compile Include="Layouts\Common.generated.cs">
-      <DependentUpon>Common.cshtml</DependentUpon>
+    <Compile Include="Layouts\Common_.generated.cs">
+      <DependentUpon>Common_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Layouts\Common.cs" />
     <Compile Include="Layouts\Pages\Page.generated.cs">
       <DependentUpon>Page.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Layouts\Popups\Popup.generated.cs">
+      <DependentUpon>Popup.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Layouts\Popups\" />
+    <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\jquery.min.js">
+      <DependentUpon>jquery.js</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include=".bin\bower.cmd" />
+    <None Include=".bin\git.cmd" />
+    <None Include=".bin\node.cmd" />
     <None Include="app.config" />
-    <None Include="Controls\ValueHolders\AutoComplete.cshtml">
+    <None Include="Controls\PageElements\Footer_.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>AutoComplete.generated.cs</LastGenOutput>
+      <LastGenOutput>Footer_.generated.cs</LastGenOutput>
     </None>
-    <None Include="Controls\ValueHolders\DatePicker.cshtml">
+    <None Include="Controls\PageElements\MenuBar_.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>DatePicker.generated.cs</LastGenOutput>
+      <LastGenOutput>MenuBar_.generated.cs</LastGenOutput>
     </None>
-    <None Include="Layouts\Common.cshtml">
+    <None Include="Controls\ValueHolders\AutoComplete_.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Common.generated.cs</LastGenOutput>
+      <LastGenOutput>AutoComplete_.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Controls\ValueHolders\DatePicker_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>DatePicker_.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Layouts\Common_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Common_.generated.cs</LastGenOutput>
     </None>
     <None Include="Layouts\Pages\Page.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Page.generated.cs</LastGenOutput>
     </None>
+    <None Include="Layouts\Popups\Popup.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Popup.generated.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
+    <None Include="Scripts\jquery.min.js.map">
+      <DependentUpon>jquery.js</DependentUpon>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

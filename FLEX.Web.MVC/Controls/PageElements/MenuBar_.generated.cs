@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FLEX.Web.MVC.Controls.ValueHolders
+namespace FLEX.Web.MVC.Controls.PageElements
 {
     using System;
     using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace FLEX.Web.MVC.Controls.ValueHolders
     using System.Web;
     using System.Web.Helpers;
     
-    #line 5 "..\..\Controls\ValueHolders\AutoComplete.cshtml"
+    #line 4 "..\..\Controls\PageElements\MenuBar_.cshtml"
     using System.Web.Mvc;
     
     #line default
@@ -32,23 +32,17 @@ namespace FLEX.Web.MVC.Controls.ValueHolders
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 6 "..\..\Controls\ValueHolders\AutoComplete.cshtml"
-    using FLEX.Web.MVC.Controls.ValueHolders;
-    
-    #line default
-    #line hidden
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    public static class AutoComplete
+    public static class MenuBar_
     {
 
-public static System.Web.WebPages.HelperResult AutoSuggest(this HtmlHelper htmlHelper, AutoCompleteOptions options) {
+public static System.Web.WebPages.HelperResult MenuBar(this HtmlHelper htmlHelper) {
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 
 
-#line 8 "..\..\Controls\ValueHolders\AutoComplete.cshtml"
-                                                                              
+#line 6 "..\..\Controls\PageElements\MenuBar_.cshtml"
+                                             
 
 
 #line default
@@ -58,7 +52,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "    <span></span>\r\n");
 
 
 
-#line 11 "..\..\Controls\ValueHolders\AutoComplete.cshtml"
+#line 9 "..\..\Controls\PageElements\MenuBar_.cshtml"
 
 
 #line default

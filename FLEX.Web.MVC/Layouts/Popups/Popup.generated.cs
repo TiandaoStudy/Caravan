@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FLEX.Web.MVC.Layouts.Pages
+namespace FLEX.Web.MVC.Layouts.Popups
 {
     using System;
     using System.Collections.Generic;
@@ -27,17 +27,11 @@ namespace FLEX.Web.MVC.Layouts.Pages
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 4 "..\..\Layouts\Pages\Page.cshtml"
-    using FLEX.Web.MVC.Controls.PageElements;
-    
-    #line default
-    #line hidden
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Layouts/Pages/Page.cshtml")]
-    public partial class Page : System.Web.Mvc.WebViewPage<dynamic>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Layouts/Popups/Popup.cshtml")]
+    public partial class Popup : System.Web.Mvc.WebViewPage<dynamic>
     {
-        public Page()
+        public Popup()
         {
         }
         public override void Execute()
@@ -51,11 +45,8 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
 
-WriteLiteral("\r\n");
-
-
             
-            #line 6 "..\..\Layouts\Pages\Page.cshtml"
+            #line 4 "..\..\Layouts\Popups\Popup.cshtml"
   
    Layout = "~/Layouts/Common_.cshtml";
 
@@ -63,32 +54,12 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n<div class=\"container-fluid\">\r\n   PAGE\r\n   \r\n   ");
+WriteLiteral("\r\n<div class=\"container-fluid\">\r\n   POPUP\r\n   ");
 
 
             
-            #line 13 "..\..\Layouts\Pages\Page.cshtml"
-Write(Html.MenuBar());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n\r\n   ");
-
-
-            
-            #line 15 "..\..\Layouts\Pages\Page.cshtml"
+            #line 10 "..\..\Layouts\Popups\Popup.cshtml"
 Write(RenderBody());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n   \r\n   ");
-
-
-            
-            #line 17 "..\..\Layouts\Pages\Page.cshtml"
-Write(Html.Footer());
 
             
             #line default
