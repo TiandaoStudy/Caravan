@@ -93,8 +93,13 @@ root.fixDataGridPager = (tableId) ->
 ################################################################################
 
 root.displaySystemError = () ->
-   window.open(root.settings.flexPath + "/Pages/ErrorHandler.aspx", "SystemError",
-               "menubar=no,location=yes,resizable=yes,scrollbars=yes,status=no,height=500,width=800,modal=yes'")
+   modal = window.open(root.settings.flexPath + "/Pages/ErrorHandler.aspx", "SystemError",
+                       "menubar=no,location=yes,resizable=yes,scrollbars=yes,status=no,height=500,width=800,modal=yes'")
+   # Focus to bring it to front... Necessary for IE, as usual.
+   modal.focus()
+   doFocus = () -> modal.focus()
+   window.setTimeout(doFocus, 100)
+   return
 
 ################################################################################
 # HiddenTrigger

@@ -100,7 +100,13 @@
   };
 
   root.displaySystemError = function() {
-    return window.open(root.settings.flexPath + "/Pages/ErrorHandler.aspx", "SystemError", "menubar=no,location=yes,resizable=yes,scrollbars=yes,status=no,height=500,width=800,modal=yes'");
+    var doFocus, modal;
+    modal = window.open(root.settings.flexPath + "/Pages/ErrorHandler.aspx", "SystemError", "menubar=no,location=yes,resizable=yes,scrollbars=yes,status=no,height=500,width=800,modal=yes'");
+    modal.focus();
+    doFocus = function() {
+      return modal.focus();
+    };
+    window.setTimeout(doFocus, 100);
   };
 
   root.triggerAsyncPostBack = function(hiddenTriggerId) {

@@ -11,6 +11,13 @@
          margin-top: 15%;
       }
 
+      #leftPanel {
+         overflow-x: auto;
+      }
+
+      #rightPanel {
+         overflow-x: auto;
+      }
    </style>
 
    <div class="row" style="margin-top: 3%;">
@@ -28,7 +35,7 @@
                   </div>
                   <div class="workingArea">
                         <!-- Custom content, like a grid view -->
-                        <flex:DataGrid ID="fdtgLeft" runat="server"  OnDataSourceUpdating="fdtgLeft_DataSourceUpdating" OnRowDataBound="fdtgLeft_RowDataBound" OnRowCommand="fdtgLeft_RowCommand" AutoGenerateColumns="true" >
+                        <flex:DataGrid ID="fdtgLeft" runat="server" OnDataSourceUpdating="fdtgLeft_DataSourceUpdating" OnRowDataBound="fdtgLeft_RowDataBound" OnRowCommand="fdtgLeft_RowCommand" AutoGenerateColumns="true" AllowPaging="False">
                            <Columns>
                                  <asp:TemplateField HeaderText="">
                                     <ItemTemplate>
@@ -86,7 +93,7 @@
                    </div>
                   <div class="workingArea">
                         <!-- Custom content, like a grid view -->
-                        <flex:DataGrid ID="fdtgRight" runat="server" OnDataSourceUpdating="fdtgRight_DataSourceUpdating"  OnRowDataBound="fdtgRight_RowDataBound"  OnRowCommand="fdtgRight_RowCommand" AutoGenerateColumns="true" >
+                        <flex:DataGrid ID="fdtgRight" runat="server" OnDataSourceUpdating="fdtgRight_DataSourceUpdating"  OnRowDataBound="fdtgRight_RowDataBound"  OnRowCommand="fdtgRight_RowCommand" AutoGenerateColumns="true" AllowPaging="False">
                            <Columns>
                                  <asp:TemplateField HeaderText="">
                                     <ItemTemplate>

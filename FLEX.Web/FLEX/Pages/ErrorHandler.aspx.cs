@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web.UI;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -65,10 +64,7 @@ namespace FLEX.Web.Pages
                //prima la svuoto e poi la valorizzo con i dati del messaggio d'errore 
                Session["STAMPA_ERRORE"] = null;
                Session["STAMPA_ERRORE"] = ErrorArray;
-
            }
-
-     
         }
     }
 }

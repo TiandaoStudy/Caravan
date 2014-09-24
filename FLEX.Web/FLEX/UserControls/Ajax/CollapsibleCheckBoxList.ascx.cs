@@ -17,6 +17,8 @@ namespace FLEX.Web.UserControls.Ajax
 {
    public partial class CollapsibleCheckBoxList : AjaxControlBase, IAjaxControl, ISearchControl
    {
+      private const string MaxVisibleItemCountViewStateKey = "CollapsibleCheckBoxList.MaxVisibleItemCount";
+
       protected override void Page_Load(object sender, EventArgs e)
       {
          base.Page_Load(sender, e);
@@ -26,7 +28,15 @@ namespace FLEX.Web.UserControls.Ajax
 
       #region Public Properties
 
-      public int MaxVisibleItemCount { get; set; }
+      public int MaxVisibleItemCount
+      {
+         get { return (int) ViewState[MaxVisibleItemCountViewStateKey]; }
+         set
+         {
+            ViewState[MaxVisibleItemCountViewStateKey] = value;
+            HideExpanderIfNecessary();
+         }
+      }
 
       public CheckBoxList VisibleCheckBoxList
       {
@@ -289,19 +299,19 @@ namespace FLEX.Web.UserControls.Ajax
 
       #region Private Members
 
-      private IList<string> GetSelectedValues()
-      {
-         var result = (from ListItem item in chklVisible.Items where item.Selected select item.Value);
-         result = result.Union(from ListItem item in chklHidden.Items where item.Selected select item.Value);
-         return result.ToList();
-      }
-
       private void HideExpanderIfNecessary()
       {
          if (MaxVisibleItemCount >= chklVisible.Items.Count + chklHidden.Items.Count)
          {
             divAltre.Visible = false;
          }
+      }
+
+      private IList<string> GetSelectedValues()
+      {
+         var result = (from ListItem item in chklVisible.Items where item.Selected select item.Value);
+         result = result.Union(from ListItem item in chklHidden.Items where item.Selected select item.Value);
+         return result.ToList();
       }
 
       protected void CheckBoxListData_OnSelectedIndexChanged(object sender, EventArgs e)
