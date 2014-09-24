@@ -92,7 +92,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Controls\ValueHolders\DatePickerOptions.cs" />
-    <Compile Include="FlexHtmlHelper.cs" />
     <Compile Include="Layouts\Common.generated.cs">
       <DependentUpon>Common.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>

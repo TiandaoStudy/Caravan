@@ -1,6 +1,6 @@
 ﻿@using FLEX.Web.MVC.Controls.ValueHolders
 
-@model dynamic
+@model Sample.WebUI.MVC.Models.Student
 
 @{
    Layout = "~/Layouts/Pages/Page.cshtml";
@@ -9,7 +9,7 @@
 
 <div>
    HOME
-   @AutoComplete.Create(new AutoCompleteOptions
+   @Html.AutoSuggest(new AutoCompleteOptions
    {
       Delay = 500
    })
