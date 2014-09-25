@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Coding Standards", "Coding 
 		FLEX.Docs\Coding Standards\CSharp.pdf = FLEX.Docs\Coding Standards\CSharp.pdf
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Web", "FLEX.Web.Packager\NuGetPackager.Web.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Web.WebForms", "FLEX.Web.Packager\NuGetPackager.Web.WebForms.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataAccess", "FLEX.TestDataAccess\Sample.DataAccess.csproj", "{9F1BAA6D-7E1E-43CC-94CE-0B0AF04C753F}"
 EndProject
