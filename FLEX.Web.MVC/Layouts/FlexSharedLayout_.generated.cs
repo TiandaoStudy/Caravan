@@ -165,11 +165,11 @@ WriteLiteral("/Scripts/bootstrap.min.js\"></script>\r\n      \r\n      ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n   </head>\r\n   \r\n   <body>\r\n      COMMON\r\n      ");
+WriteLiteral("\r\n   </head>\r\n   \r\n   <body>\r\n      ");
 
 
             
-            #line 33 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 32 "..\..\Layouts\FlexSharedLayout_.cshtml"
  Write(RenderSection("BodySection"));
 
             

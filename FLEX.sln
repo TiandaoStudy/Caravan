@@ -72,6 +72,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.Web.MVC", "FLEX.Web.MV
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.WebUI.MVC", "Sample.WebUI.MVC\Sample.WebUI.MVC.csproj", "{A65D507D-03A2-49BE-A056-72AE6964140A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.RestService", "FLEX.RestService\FLEX.RestService.csproj", "{B4F9C525-5C56-440E-B4C2-972A33D7C8CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -134,6 +136,10 @@ Global
 		{A65D507D-03A2-49BE-A056-72AE6964140A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A65D507D-03A2-49BE-A056-72AE6964140A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A65D507D-03A2-49BE-A056-72AE6964140A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4F9C525-5C56-440E-B4C2-972A33D7C8CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4F9C525-5C56-440E-B4C2-972A33D7C8CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4F9C525-5C56-440E-B4C2-972A33D7C8CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4F9C525-5C56-440E-B4C2-972A33D7C8CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
