@@ -143,6 +143,10 @@
     <Content Include="Scripts\bootstrap.min.js">
       <DependentUpon>bootstrap.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\bootstrap3-typeahead.js" />
+    <Content Include="Scripts\bootstrap3-typeahead.min.js">
+      <DependentUpon>bootstrap3-typeahead.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\html5shiv.js" />
     <Content Include="Scripts\html5shiv.min.js">
       <DependentUpon>html5shiv.js</DependentUpon>
@@ -235,6 +239,9 @@
     </None>
     <None Include="Scripts\bootstrap.min.js.map">
       <DependentUpon>bootstrap.js</DependentUpon>
+    </None>
+    <None Include="Scripts\bootstrap3-typeahead.min.js.map">
+      <DependentUpon>bootstrap3-typeahead.js</DependentUpon>
     </None>
     <None Include="Scripts\html5shiv.min.js.map">
       <DependentUpon>html5shiv.js</DependentUpon>

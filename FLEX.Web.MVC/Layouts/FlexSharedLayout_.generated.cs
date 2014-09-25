@@ -185,11 +185,22 @@ WriteLiteral("/Scripts/bootstrap.min.js\"></script>\r\n      <script type=\"text
             
             #line default
             #line hidden
-WriteLiteral("/Scripts/bootstrap-hover-dropdown.min.js\"></script>\r\n      \r\n      ");
+WriteLiteral("/Scripts/bootstrap-hover-dropdown.min.js\"></script>\r\n      <script type=\"text/jav" +
+"ascript\" src=\"");
 
 
             
-            #line 30 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 29 "..\..\Layouts\FlexSharedLayout_.cshtml"
+                                      Write(FlexSharedLayout.FlexPath);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("/Scripts/bootstrap3-typeahead.min.js\"></script>\r\n      \r\n      ");
+
+
+            
+            #line 31 "..\..\Layouts\FlexSharedLayout_.cshtml"
  Write(RenderSection("HeadSection"));
 
             
@@ -199,7 +210,7 @@ WriteLiteral("\r\n   </head>\r\n   \r\n   <body>\r\n      ");
 
 
             
-            #line 34 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 35 "..\..\Layouts\FlexSharedLayout_.cshtml"
  Write(RenderSection("BodySection"));
 
             
