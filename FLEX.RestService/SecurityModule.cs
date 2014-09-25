@@ -16,7 +16,7 @@ namespace FLEX.RestService
             {
                Menu.DeserializeFrom(stream);
             }
-            return Response.AsXml(xml);
+            return xml;
          };
       }
    }
