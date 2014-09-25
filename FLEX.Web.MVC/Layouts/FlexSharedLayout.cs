@@ -39,11 +39,7 @@ namespace FLEX.Web.MVC.Layouts
          get { return "HeadSection"; }
       }
 
-      #endregion
-
-      #region Internal Properties
-
-      internal static string DoNotCacheTag
+      public static string DoNotCacheTag
       {
          get
          {
@@ -53,6 +49,10 @@ namespace FLEX.Web.MVC.Layouts
             return String.Format(tagFmt, randInt);
          }
       }
+
+      #endregion
+
+      #region Internal Properties
 
       /// <summary>
       ///   Taken here: http://devio.wordpress.com/2009/10/19/get-absolut-url-of-asp-net-application/

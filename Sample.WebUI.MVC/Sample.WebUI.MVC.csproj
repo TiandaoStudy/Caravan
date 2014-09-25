@@ -15,7 +15,7 @@
     <AssemblyName>Sample.WebUI.MVC</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -128,6 +128,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OverviewController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -138,6 +139,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="FLEX.MVC\Fonts\fontawesome-webfont.svg" />
+    <Content Include="FLEX.MVC\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="FLEX.MVC\Scripts\backbone.js" />
     <Content Include="FLEX.MVC\Scripts\backbone.min.js" />
     <Content Include="FLEX.MVC\Scripts\bootstrap.js" />
@@ -152,8 +155,12 @@
     <Content Include="FLEX.MVC\Scripts\respond.min.js" />
     <Content Include="FLEX.MVC\Scripts\underscore.js" />
     <Content Include="FLEX.MVC\Scripts\underscore.min.js" />
+    <Content Include="FLEX.MVC\Styles\bootstrap.css" />
+    <Content Include="FLEX.MVC\Styles\bootstrap.min.css" />
     <Content Include="FLEX.MVC\Styles\font-awesome.css" />
     <Content Include="FLEX.MVC\Styles\font-awesome.min.css" />
+    <Content Include="FLEX.MVC\Styles\Fonts.css" />
+    <Content Include="FLEX.MVC\Styles\Fonts.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -190,6 +197,22 @@
     <Content Include="FLEX.MVC\Scripts\respond.min.js.map" />
     <Content Include="FLEX.MVC\Scripts\underscore.min.js.map" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="FLEX.MVC\Fonts\fontawesome-webfont.eot" />
+    <Content Include="FLEX.MVC\Fonts\fontawesome-webfont.ttf" />
+    <Content Include="FLEX.MVC\Fonts\fontawesome-webfont.woff" />
+    <Content Include="FLEX.MVC\Fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="FLEX.MVC\Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="FLEX.MVC\Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="FLEX.MVC\Fonts\_tMhxyW6i8lbI7YsUdFlGA.eot" />
+    <Content Include="FLEX.MVC\Fonts\_xyN3apAT_yRRDeqB3sPRg.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Overview\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Overview\Style.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -206,9 +229,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>58608</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:53955/</IISUrl>
+          <IISUrl>http://localhost/FLEX.Sample.MVC</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

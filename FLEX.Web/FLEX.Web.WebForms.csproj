@@ -740,7 +740,6 @@
     <None Include="FLEX\Fonts\fontawesome-webfont.eot" />
     <None Include="FLEX\Fonts\fontawesome-webfont.ttf" />
     <None Include="FLEX\Fonts\fontawesome-webfont.woff" />
-    <None Include="FLEX\Fonts\FontAwesome.otf" />
     <None Include="FLEX\Fonts\icomoon.eot" />
     <None Include="FLEX\Fonts\icomoon.ttf" />
     <None Include="FLEX\Fonts\icomoon.woff" />

@@ -164,9 +164,21 @@
     <Content Include="Styles\bootstrap.min.css">
       <DependentUpon>bootstrap.less</DependentUpon>
     </Content>
+    <Content Include="Styles\Bootstrap\variables.css">
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\Bootstrap\variables.min.css">
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
     <Content Include="Styles\font-awesome.css" />
     <Content Include="Styles\font-awesome.min.css">
       <DependentUpon>font-awesome.css</DependentUpon>
+    </Content>
+    <Content Include="Styles\Fonts.css">
+      <DependentUpon>fonts.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\Fonts.min.css">
+      <DependentUpon>fonts.less</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +207,8 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>JQueryDatePicker_.generated.cs</LastGenOutput>
     </None>
+    <None Include="Fonts\_tMhxyW6i8lbI7YsUdFlGA.eot" />
+    <None Include="Fonts\_xyN3apAT_yRRDeqB3sPRg.woff" />
     <None Include="Layouts\FlexSharedLayout_.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>FlexSharedLayout_.generated.cs</LastGenOutput>
@@ -230,10 +244,79 @@
       <DependentUpon>underscore.js</DependentUpon>
     </None>
     <None Include="Styles\bootstrap.less" />
+    <None Include="Styles\Bootstrap\alerts.less" />
+    <None Include="Styles\Bootstrap\badges.less" />
+    <None Include="Styles\Bootstrap\bootstrap.less" />
+    <None Include="Styles\Bootstrap\breadcrumbs.less" />
+    <None Include="Styles\Bootstrap\button-groups.less" />
+    <None Include="Styles\Bootstrap\buttons.less" />
+    <None Include="Styles\Bootstrap\carousel.less" />
+    <None Include="Styles\Bootstrap\close.less" />
+    <None Include="Styles\Bootstrap\code.less" />
+    <None Include="Styles\Bootstrap\component-animations.less" />
+    <None Include="Styles\Bootstrap\dropdowns.less" />
+    <None Include="Styles\Bootstrap\forms.less" />
+    <None Include="Styles\Bootstrap\glyphicons.less" />
+    <None Include="Styles\Bootstrap\grid.less" />
+    <None Include="Styles\Bootstrap\input-groups.less" />
+    <None Include="Styles\Bootstrap\jumbotron.less" />
+    <None Include="Styles\Bootstrap\labels.less" />
+    <None Include="Styles\Bootstrap\list-group.less" />
+    <None Include="Styles\Bootstrap\media.less" />
+    <None Include="Styles\Bootstrap\mixins.less" />
+    <None Include="Styles\Bootstrap\mixins\alerts.less" />
+    <None Include="Styles\Bootstrap\mixins\background-variant.less" />
+    <None Include="Styles\Bootstrap\mixins\border-radius.less" />
+    <None Include="Styles\Bootstrap\mixins\buttons.less" />
+    <None Include="Styles\Bootstrap\mixins\center-block.less" />
+    <None Include="Styles\Bootstrap\mixins\clearfix.less" />
+    <None Include="Styles\Bootstrap\mixins\forms.less" />
+    <None Include="Styles\Bootstrap\mixins\gradients.less" />
+    <None Include="Styles\Bootstrap\mixins\grid-framework.less" />
+    <None Include="Styles\Bootstrap\mixins\grid.less" />
+    <None Include="Styles\Bootstrap\mixins\hide-text.less" />
+    <None Include="Styles\Bootstrap\mixins\image.less" />
+    <None Include="Styles\Bootstrap\mixins\labels.less" />
+    <None Include="Styles\Bootstrap\mixins\list-group.less" />
+    <None Include="Styles\Bootstrap\mixins\nav-divider.less" />
+    <None Include="Styles\Bootstrap\mixins\nav-vertical-align.less" />
+    <None Include="Styles\Bootstrap\mixins\opacity.less" />
+    <None Include="Styles\Bootstrap\mixins\pagination.less" />
+    <None Include="Styles\Bootstrap\mixins\panels.less" />
+    <None Include="Styles\Bootstrap\mixins\progress-bar.less" />
+    <None Include="Styles\Bootstrap\mixins\reset-filter.less" />
+    <None Include="Styles\Bootstrap\mixins\resize.less" />
+    <None Include="Styles\Bootstrap\mixins\responsive-visibility.less" />
+    <None Include="Styles\Bootstrap\mixins\size.less" />
+    <None Include="Styles\Bootstrap\mixins\tab-focus.less" />
+    <None Include="Styles\Bootstrap\mixins\table-row.less" />
+    <None Include="Styles\Bootstrap\mixins\text-emphasis.less" />
+    <None Include="Styles\Bootstrap\mixins\text-overflow.less" />
+    <None Include="Styles\Bootstrap\mixins\vendor-prefixes.less" />
+    <None Include="Styles\Bootstrap\modals.less" />
+    <None Include="Styles\Bootstrap\navbar.less" />
+    <None Include="Styles\Bootstrap\navs.less" />
+    <None Include="Styles\Bootstrap\normalize.less" />
+    <None Include="Styles\Bootstrap\pager.less" />
+    <None Include="Styles\Bootstrap\pagination.less" />
+    <None Include="Styles\Bootstrap\panels.less" />
+    <None Include="Styles\Bootstrap\popovers.less" />
+    <None Include="Styles\Bootstrap\print.less" />
+    <None Include="Styles\Bootstrap\progress-bars.less" />
+    <None Include="Styles\Bootstrap\responsive-embed.less" />
+    <None Include="Styles\Bootstrap\responsive-utilities.less" />
+    <None Include="Styles\Bootstrap\scaffolding.less" />
+    <None Include="Styles\Bootstrap\tables.less" />
+    <None Include="Styles\Bootstrap\theme.less" />
+    <None Include="Styles\Bootstrap\thumbnails.less" />
+    <None Include="Styles\Bootstrap\tooltip.less" />
+    <None Include="Styles\Bootstrap\type.less" />
+    <None Include="Styles\Bootstrap\utilities.less" />
+    <None Include="Styles\Bootstrap\variables.less" />
+    <None Include="Styles\Bootstrap\wells.less" />
+    <None Include="Styles\fonts.less" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Fonts\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\FLEX.RestService.Core\FLEX.RestService.Core.csproj">
       <Project>{d75a2c45-a9ea-4b0f-9018-177a5f0d5959}</Project>
@@ -249,7 +332,11 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>:: SCRIPTS - NuGet Packager
+    <PostBuildEvent>:: FONTS - NuGet Packager
+:: FONTS - Sample Web UI
+copy $(ProjectDir)\Fonts\*.* $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Fonts
+
+:: SCRIPTS - NuGet Packager
 :: SCRIPTS - Sample Web UI
 copy $(ProjectDir)\Scripts\*.js $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Scripts
 copy $(ProjectDir)\Scripts\*.map $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Scripts
