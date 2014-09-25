@@ -153,7 +153,7 @@ namespace FLEX.Web.UserControls
       public void SetDataSource(GridView gridview, string nameDataTable, params ColumnData[] columnData)
       {
          var oldPageSize = gridview.PageSize;
-         gridview.PageSize = (gridview.DataSource as DataTable).Rows.Count;
+         gridview.PageSize = (gridview.DataSource as DataTable).Rows.Count == 0 ? gridview.PageSize : (gridview.DataSource as DataTable).Rows.Count;
          gridview.DataBind();
 
          columnData = columnData ?? new ColumnData[0];
