@@ -7,7 +7,7 @@
     <ProjectGuid>{407B5921-9039-4D0D-A40A-36A19C251CDC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FLEX.Web</RootNamespace>
+    <RootNamespace>FLEX.Web.WebForms</RootNamespace>
     <AssemblyName>FLEX.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -444,6 +444,9 @@
       <DependentUpon>ErrorHandler.ascx</DependentUpon>
     </Compile>
     <Compile Include="WebErrorMessages.cs" />
+    <Compile Include="webMarkupMin.Serialization.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
     <Compile Include="WebSettings.cs" />
     <Compile Include="XsdClassGen.cs">
       <AutoGen>True</AutoGen>
@@ -983,10 +986,12 @@ copy $(ProjectDir)\FLEX\Services\*.asmx $(SolutionDir)\FLEX.Web.Packager\content
 :: SERVICES - Test Web UI
 copy $(ProjectDir)\FLEX\Services\*.asmx $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Services
 
-:: SCRIPTS - Package
-copy $(ProjectDir)\FLEX\Scripts\*.js.* $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Scripts
-:: SCRIPTS - Test Web UI
-copy $(ProjectDir)\FLEX\Scripts\*.js.* $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Scripts
+:: SCRIPTS - NuGet Packager
+copy $(ProjectDir)\FLEX\Scripts\*.js $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Scripts
+copy $(ProjectDir)\FLEX\Scripts\*.map $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Scripts
+:: SCRIPTS - Sample Web UI
+copy $(ProjectDir)\FLEX\Scripts\*.js $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Scripts
+copy $(ProjectDir)\FLEX\Scripts\*.map $(SolutionDir)\FLEX.Extensions.TestWebUI\FLEX\Scripts
 
 :: STYLES - Package
 copy $(ProjectDir)\FLEX\Styles\*.css $(SolutionDir)\FLEX.Web.Packager\content\FLEX\Styles\*.css

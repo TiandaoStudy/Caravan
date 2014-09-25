@@ -1,6 +1,11 @@
 {
   "name": "FLEX.Web.MVC",
   "version": "0.1.0",
+  "authors": [
+    "Alessio Parma <alessio.parma@finsa.it>",
+    "Diana Martinez Gonzalez <diana.martinezgonzalez@finsa.it>"
+  ],
+  "description": "FINSA S.p.A.",
   "license": "MIT",
   "homepage": "http://www.finsa.it",
   "ignore": [
@@ -11,6 +16,13 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.1.1"
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.2.0",
+    "jquery-ui": "~1.11.1",
+    "respond": "~1.4.2",
+    "html5shiv": "~3.7.2",
+    "underscore": "~1.7.0",
+    "backbone": "~1.1.2",
+    "fontawesome": "~4.2.0"
   }
 }

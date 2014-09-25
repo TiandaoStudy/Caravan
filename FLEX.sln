@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.WebUI", "FLEX.Extensions.TestWebUI\Sample.WebUI.csproj", "{B3C22B2A-06D3-454F-BF86-0CCE7C744AE4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.WebUI.WebForms", "FLEX.Extensions.TestWebUI\Sample.WebUI.WebForms.csproj", "{B3C22B2A-06D3-454F-BF86-0CCE7C744AE4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.Web.WebForms", "FLEX.Web\FLEX.Web.WebForms.csproj", "{407B5921-9039-4D0D-A40A-36A19C251CDC}"
 EndProject

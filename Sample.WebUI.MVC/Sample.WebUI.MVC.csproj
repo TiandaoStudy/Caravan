@@ -138,6 +138,22 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="FLEX.MVC\Scripts\backbone.js" />
+    <Content Include="FLEX.MVC\Scripts\backbone.min.js" />
+    <Content Include="FLEX.MVC\Scripts\bootstrap.js" />
+    <Content Include="FLEX.MVC\Scripts\bootstrap.min.js" />
+    <Content Include="FLEX.MVC\Scripts\html5shiv.js" />
+    <Content Include="FLEX.MVC\Scripts\html5shiv.min.js" />
+    <Content Include="FLEX.MVC\Scripts\jquery-ui.js" />
+    <Content Include="FLEX.MVC\Scripts\jquery-ui.min.js" />
+    <Content Include="FLEX.MVC\Scripts\jquery.js" />
+    <Content Include="FLEX.MVC\Scripts\jquery.min.js" />
+    <Content Include="FLEX.MVC\Scripts\respond.js" />
+    <Content Include="FLEX.MVC\Scripts\respond.min.js" />
+    <Content Include="FLEX.MVC\Scripts\underscore.js" />
+    <Content Include="FLEX.MVC\Scripts\underscore.min.js" />
+    <Content Include="FLEX.MVC\Styles\font-awesome.css" />
+    <Content Include="FLEX.MVC\Styles\font-awesome.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -164,6 +180,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FLEX.MVC\Scripts\backbone.min.js.map" />
+    <Content Include="FLEX.MVC\Scripts\bootstrap.min.js.map" />
+    <Content Include="FLEX.MVC\Scripts\html5shiv.min.js.map" />
+    <Content Include="FLEX.MVC\Scripts\jquery-ui.min.js.map" />
+    <Content Include="FLEX.MVC\Scripts\jquery.min.js.map" />
+    <Content Include="FLEX.MVC\Scripts\respond.min.js.map" />
+    <Content Include="FLEX.MVC\Scripts\underscore.min.js.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

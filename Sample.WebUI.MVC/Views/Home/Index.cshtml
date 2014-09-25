@@ -3,14 +3,13 @@
 @model Sample.WebUI.MVC.Models.Student
 
 @{
-   Layout = "~/Layouts/Pages/Page.cshtml";
+   Layout = "~/Layouts/Pages/FlexPageLayout_.cshtml";
 }
 
+@section HeadSection {
+   <title>Home</title>
+}
 
-<div>
-   HOME
-   @Html.AutoComplete(new AutoCompleteOptions
-   {
-      Delay = 500
-   })
-</div>
+@section BodySection {
+   <button class="btn btn-primary">PROVA</button>
+}

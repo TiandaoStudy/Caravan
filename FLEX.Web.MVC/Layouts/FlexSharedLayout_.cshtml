@@ -1,0 +1,36 @@
+﻿@* Generator: MvcView *@
+@* Namespace: FLEX.Web.MVC.Layouts *@
+
+@using FLEX.Web.MVC.Layouts
+
+<!DOCTYPE html>
+
+<html>
+   <head>
+      <!-- Required for IE compatibility -->
+      <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=EDGE" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <!-- CSS for Bootstrap, respond.js must be AFTER this CSS; "DoNotCacheTag" is needed to avoid issues with IE9 -->
+      <link href="@(FlexSharedLayout.FlexPath)/Styles/bootstrap.min.css@(FlexSharedLayout.DoNotCacheTag)" rel="stylesheet" media="screen" />
+      <!--[if lt IE 9]>  
+         <script src="@(FlexSharedLayout.FlexPath)/Scripts/html5shiv.min.js"></script>
+         <script src="@(FlexSharedLayout.FlexPath)/Scripts/respond.min.js"></script>
+      <![endif]-->
+      
+      <script type="text/javascript" src="@(FlexSharedLayout.FlexPath)/Scripts/jquery.min.js"></script>
+      <script type="text/javascript" src="@(FlexSharedLayout.FlexPath)/Scripts/jquery-ui.min.js"></script>
+      <script type="text/javascript" src="@(FlexSharedLayout.FlexPath)/Scripts/underscore.min.js"></script>
+      <script type="text/javascript" src="@(FlexSharedLayout.FlexPath)/Scripts/backbone.min.js"></script>
+      <script type="text/javascript" src="@(FlexSharedLayout.FlexPath)/Scripts/bootstrap.min.js"></script>
+      
+      @RenderSection("HeadSection")
+   </head>
+   
+   <body>
+      COMMON
+      @RenderSection("BodySection")
+   </body>
+
+</html>
