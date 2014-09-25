@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
+    <Compile Include="Controls\PageElements\FlexMenuBarHelper.cs" />
     <Compile Include="Controls\PageElements\FlexPageHeader_.generated.cs">
       <DependentUpon>FlexPageHeader_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -232,6 +233,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Fonts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FLEX.RestService.Core\FLEX.RestService.Core.csproj">
+      <Project>{d75a2c45-a9ea-4b0f-9018-177a5f0d5959}</Project>
+      <Name>FLEX.RestService.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

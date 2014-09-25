@@ -2,9 +2,11 @@
 @* Namespace: FLEX.Web.MVC.Controls.PageElements *@
 
 @using System.Web.Mvc
+@using FLEX.Web.MVC.Controls.PageElements
 
 @helper FlexMenuBar(this HtmlHelper htmlHelper) {
-
+   
+   @FlexMenuBarHelper.GetMenuFromService()
     <span></span>
 
 }

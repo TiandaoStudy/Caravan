@@ -32,6 +32,12 @@ namespace FLEX.Web.MVC.Controls.PageElements
     using System.Web.UI;
     using System.Web.WebPages;
     
+    #line 5 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+    using FLEX.Web.MVC.Controls.PageElements;
+    
+    #line default
+    #line hidden
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     public static class FlexMenuBar_
     {
@@ -41,9 +47,23 @@ return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 
 
-#line 6 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+#line 7 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
                                                  
+   
+   
+#line default
+#line hidden
 
+
+#line 9 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+WebViewPage.WriteTo(@__razor_helper_writer, FlexMenuBarHelper.GetMenuFromService());
+
+#line default
+#line hidden
+
+
+#line 9 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+                                          
 
 #line default
 #line hidden
@@ -52,7 +72,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "    <span></span>\r\n");
 
 
 
-#line 9 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+#line 11 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
 
 
 #line default
