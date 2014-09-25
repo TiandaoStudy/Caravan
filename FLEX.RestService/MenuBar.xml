@@ -28,24 +28,24 @@
          </Item>
          <Item ID="Item59" Caption="Security">
             <Group>
-               <Item ID="Item60"  ItemWidth="100px" Caption="User" ClientCall="FLEX_RunFromMenu('SecUtenteListaInit.aspx?INIT=SRC')" />
+               <Item ID="Item60" Caption="User" ClientCall="FLEX_RunFromMenu('SecUtenteListaInit.aspx?INIT=SRC')" />
                <Item ID="Item61" Caption="Group" ClientCall="FLEX_RunFromMenu('SecGruppoLista.aspx?INIT=SRC')" />
                <Item ID="Item62" Caption="Menu" ClientCall="FLEX_RunFromMenu('SecMenu.aspx?INIT=SRC')" />
                <Item ID="Item63" Caption="Functions" ClientCall="FLEX_RunFromMenu('SecFunctions.aspx?INIT=SRC')" />
-               <Item ID="Item64" Caption="Reports" ItemWidth="100px">
-                  <Group Layout="Vertical" OffsetX="-1" OffsetY="-1" Filter="DropShadow" Filter_DropShadow_Color="#dddddd" Filter_DropShadow_OffsetX="3" Filter_DropShadow_OffsetY="3" Transition="None">
+               <Item ID="Item64" Caption="Reports">
+                  <Group Layout="Vertical">
                      <Item ID="Item65" Caption="Users List"  ClientCall="FLEX_OWFromMenu('ReportViewer.aspx?REPORT=SecurityByUser');" />
                      <Item ID="Item66" Caption="Groups List"  ClientCall="FLEX_OWFromMenu('ReportViewer.aspx?REPORT=SecurityByGroup');" />
                      <Item ID="Item67" Caption="Objects List" ClientCall="FLEX_OWFromMenu('ReportViewer.aspx?REPORT=Security');" />
                      <Item ID="Item68" Caption="Menu List"  ClientCall="FLEX_OWFromMenu('ReportViewer.aspx?REPORT=SecurityM');" />
-                     <Item ID="Item69" Caption="Functions Menu"  ClientCall="FLEX_OWFromMenu('ReportViewer.aspx?REPORT=SecurityB');" ItemWidth="100px" />
+                     <Item ID="Item69" Caption="Functions Menu"  ClientCall="FLEX_OWFromMenu('ReportViewer.aspx?REPORT=SecurityB');" />
                   </Group>
                </Item>
             </Group>
          </Item>
          <Item ID="Item110" Caption="Report">
             <Group Layout="Vertical">
-               <Item ID="Item111" Caption="Auditor" ClientCall="FLEX_RunFromMenu('QualificheAuditor.aspx?INIT=SRC')" ItemWidth="100px" />
+               <Item ID="Item111" Caption="Auditor" ClientCall="FLEX_RunFromMenu('QualificheAuditor.aspx?INIT=SRC')" />
             </Group>
          </Item>
          <Item ID="Item80" Caption="Tools">
