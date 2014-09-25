@@ -45,6 +45,7 @@
       <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -325,6 +326,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\FLEX.Common\FLEX.Common.csproj">
+      <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>
+      <Name>FLEX.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FLEX.RestService.Core\FLEX.RestService.Core.csproj">
       <Project>{d75a2c45-a9ea-4b0f-9018-177a5f0d5959}</Project>
       <Name>FLEX.RestService.Core</Name>
