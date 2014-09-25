@@ -175,11 +175,21 @@ WriteLiteral("/Scripts/backbone.min.js\"></script>\r\n      <script type=\"text/
             
             #line default
             #line hidden
-WriteLiteral("/Scripts/bootstrap.min.js\"></script>\r\n      \r\n      ");
+WriteLiteral("/Scripts/bootstrap.min.js\"></script>\r\n      <script type=\"text/javascript\" src=\"");
 
 
             
-            #line 29 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 28 "..\..\Layouts\FlexSharedLayout_.cshtml"
+                                      Write(FlexSharedLayout.FlexPath);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("/Scripts/bootstrap-hover-dropdown.min.js\"></script>\r\n      \r\n      ");
+
+
+            
+            #line 30 "..\..\Layouts\FlexSharedLayout_.cshtml"
  Write(RenderSection("HeadSection"));
 
             
@@ -189,7 +199,7 @@ WriteLiteral("\r\n   </head>\r\n   \r\n   <body>\r\n      ");
 
 
             
-            #line 33 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 34 "..\..\Layouts\FlexSharedLayout_.cshtml"
  Write(RenderSection("BodySection"));
 
             
