@@ -38,6 +38,15 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PommaLabs.GRAMPA, Version=0.14.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PommaLabs.GRAMPA.0.14.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+    </Reference>
     <Reference Include="RazorGenerator.Mvc">
       <HintPath>..\packages\RazorGenerator.Mvc.2.2.3\lib\net40\RazorGenerator.Mvc.dll</HintPath>
     </Reference>
@@ -100,6 +109,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Controls\ValueHolders\BootstrapSwitch_.generated.cs">
+      <DependentUpon>BootstrapSwitch_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\ValueHolders\BootstrapSwitchOptions.cs" />
     <Compile Include="Controls\ValueHolders\JQueryAutoComplete_.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -131,6 +146,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\select2-spinner.gif" />
+    <Content Include="Images\select2.png" />
+    <Content Include="Images\select2x2.png" />
     <Content Include="Scripts\backbone.js" />
     <Content Include="Scripts\backbone.min.js">
       <DependentUpon>backbone.js</DependentUpon>
@@ -138,6 +156,10 @@
     <Content Include="Scripts\bootstrap-hover-dropdown.js" />
     <Content Include="Scripts\bootstrap-hover-dropdown.min.js">
       <DependentUpon>bootstrap-hover-dropdown.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap-switch.js" />
+    <Content Include="Scripts\bootstrap-switch.min.js">
+      <DependentUpon>bootstrap-switch.js</DependentUpon>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js">
@@ -163,9 +185,17 @@
     <Content Include="Scripts\respond.min.js">
       <DependentUpon>respond.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\select2.js" />
+    <Content Include="Scripts\select2.min.js">
+      <DependentUpon>select2.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js">
       <DependentUpon>underscore.js</DependentUpon>
+    </Content>
+    <Content Include="Styles\bootstrap-switch.css" />
+    <Content Include="Styles\bootstrap-switch.min.css">
+      <DependentUpon>bootstrap-switch.css</DependentUpon>
     </Content>
     <Content Include="Styles\bootstrap.css">
       <DependentUpon>bootstrap.less</DependentUpon>
@@ -179,6 +209,12 @@
     <Content Include="Styles\Bootstrap\variables.min.css">
       <DependentUpon>variables.less</DependentUpon>
     </Content>
+    <Content Include="Styles\flex.css">
+      <DependentUpon>flex.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\flex.min.css">
+      <DependentUpon>flex.less</DependentUpon>
+    </Content>
     <Content Include="Styles\font-awesome.css" />
     <Content Include="Styles\font-awesome.min.css">
       <DependentUpon>font-awesome.css</DependentUpon>
@@ -188,6 +224,20 @@
     </Content>
     <Content Include="Styles\Fonts.min.css">
       <DependentUpon>fonts.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\jquery-ui.css">
+      <DependentUpon>jquery-ui.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\jquery-ui.min.css">
+      <DependentUpon>jquery-ui.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\select2-bootstrap.css" />
+    <Content Include="Styles\select2-bootstrap.min.css">
+      <DependentUpon>select2-bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="Styles\select2.css" />
+    <Content Include="Styles\select2.min.css">
+      <DependentUpon>select2.css</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +257,10 @@
     <None Include="Controls\PageElements\FlexMenuBar_.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>FlexMenuBar_.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Controls\ValueHolders\BootstrapSwitch_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BootstrapSwitch_.generated.cs</LastGenOutput>
     </None>
     <None Include="Controls\ValueHolders\JQueryAutoComplete_.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -237,6 +291,9 @@
     <None Include="Scripts\bootstrap-hover-dropdown.min.js.map">
       <DependentUpon>bootstrap-hover-dropdown.js</DependentUpon>
     </None>
+    <None Include="Scripts\bootstrap-switch.min.js.map">
+      <DependentUpon>bootstrap-switch.js</DependentUpon>
+    </None>
     <None Include="Scripts\bootstrap.min.js.map">
       <DependentUpon>bootstrap.js</DependentUpon>
     </None>
@@ -254,6 +311,9 @@
     </None>
     <None Include="Scripts\respond.min.js.map">
       <DependentUpon>respond.js</DependentUpon>
+    </None>
+    <None Include="Scripts\select2.min.js.map">
+      <DependentUpon>select2.js</DependentUpon>
     </None>
     <None Include="Scripts\underscore.min.js.map">
       <DependentUpon>underscore.js</DependentUpon>
@@ -329,7 +389,9 @@
     <None Include="Styles\Bootstrap\utilities.less" />
     <None Include="Styles\Bootstrap\variables.less" />
     <None Include="Styles\Bootstrap\wells.less" />
+    <None Include="Styles\flex.less" />
     <None Include="Styles\fonts.less" />
+    <None Include="Styles\jquery-ui.less" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -354,6 +416,10 @@
     <PostBuildEvent>:: FONTS - NuGet Packager
 :: FONTS - Sample Web UI
 copy $(ProjectDir)\Fonts\*.* $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Fonts
+
+:: IMAGES - NuGet Packager
+:: IMAGES - Sample Web UI
+copy $(ProjectDir)\Images\*.* $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Images
 
 :: SCRIPTS - NuGet Packager
 :: SCRIPTS - Sample Web UI

@@ -61,8 +61,17 @@ WriteLiteral(@"
       <meta http-equiv=""Content-Type"" content=""text/html; charset=utf-8"" />
       <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"" />
 
-      <!-- CSS for Bootstrap, respond.js must be AFTER this CSS; ""DoNotCacheTag"" is needed to avoid issues with IE9 -->
       <link href=""");
+
+
+            
+            #line 15 "..\..\Layouts\FlexSharedLayout_.cshtml"
+              Write(FlexSharedLayout.FlexPath);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("/Styles/fonts.min.css\" rel=\"stylesheet\" media=\"screen\" />\r\n      <link href=\"");
 
 
             
@@ -72,21 +81,12 @@ WriteLiteral(@"
             
             #line default
             #line hidden
-WriteLiteral("/Styles/fonts.min.css");
+WriteLiteral("/Styles/jquery-ui.min.css\" rel=\"stylesheet\" media=\"screen\" />\r\n      \r\n      <!--" +
+" \"DoNotCacheTag\" is needed to avoid issues with IE9 -->\r\n      <link href=\"");
 
 
             
-            #line 16 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                                               Write(FlexSharedLayout.DoNotCacheTag);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\" rel=\"stylesheet\" media=\"screen\" />\r\n      <link href=\"");
-
-
-            
-            #line 17 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 19 "..\..\Layouts\FlexSharedLayout_.cshtml"
               Write(FlexSharedLayout.FlexPath);
 
             
@@ -96,18 +96,71 @@ WriteLiteral("/Styles/bootstrap.min.css");
 
 
             
-            #line 17 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 19 "..\..\Layouts\FlexSharedLayout_.cshtml"
                                                                    Write(FlexSharedLayout.DoNotCacheTag);
 
             
             #line default
             #line hidden
-WriteLiteral("\" rel=\"stylesheet\" media=\"screen\" />\r\n      <!--[if lt IE 9]>  \r\n         <script" +
-" src=\"");
+WriteLiteral("\" rel=\"stylesheet\" media=\"screen\" />\r\n      <link href=\"");
 
 
             
-            #line 19 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 20 "..\..\Layouts\FlexSharedLayout_.cshtml"
+              Write(FlexSharedLayout.FlexPath);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("/Styles/bootstrap-switch.min.css\" rel=\"stylesheet\" media=\"screen\" />\r\n      \r\n   " +
+"   <link href=\"");
+
+
+            
+            #line 22 "..\..\Layouts\FlexSharedLayout_.cshtml"
+              Write(FlexSharedLayout.FlexPath);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("/Styles/flex.min.css\" rel=\"stylesheet\" media=\"screen\" />\r\n      \r\n      <link hre" +
+"f=\"");
+
+
+            
+            #line 24 "..\..\Layouts\FlexSharedLayout_.cshtml"
+              Write(FlexSharedLayout.FlexPath);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("/Styles/select2.min.css");
+
+
+            
+            #line 24 "..\..\Layouts\FlexSharedLayout_.cshtml"
+                                                                 Write(FlexSharedLayout.DoNotCacheTag);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\" rel=\"stylesheet\" media=\"screen\" />\r\n      <link href=\"");
+
+
+            
+            #line 25 "..\..\Layouts\FlexSharedLayout_.cshtml"
+              Write(FlexSharedLayout.FlexPath);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("/Styles/select2-bootstrap.min.css\" rel=\"stylesheet\" media=\"screen\" />\r\n\r\n      <!" +
+"-- respond and html5shiv must be put AFTER CSS for Bootstrap -->\r\n      <!--[if " +
+"lt IE 9]>  \r\n         <script src=\"");
+
+
+            
+            #line 29 "..\..\Layouts\FlexSharedLayout_.cshtml"
                   Write(FlexSharedLayout.FlexPath);
 
             
@@ -117,7 +170,7 @@ WriteLiteral("/Scripts/html5shiv.min.js\"></script>\r\n         <script src=\"")
 
 
             
-            #line 20 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 30 "..\..\Layouts\FlexSharedLayout_.cshtml"
                   Write(FlexSharedLayout.FlexPath);
 
             
@@ -128,7 +181,7 @@ WriteLiteral("/Scripts/respond.min.js\"></script>\r\n      <![endif]-->\r\n     
 
 
             
-            #line 23 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 33 "..\..\Layouts\FlexSharedLayout_.cshtml"
                                       Write(FlexSharedLayout.FlexPath);
 
             
@@ -138,7 +191,7 @@ WriteLiteral("/Scripts/jquery.min.js\"></script>\r\n      <script type=\"text/ja
 
 
             
-            #line 24 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 34 "..\..\Layouts\FlexSharedLayout_.cshtml"
                                       Write(FlexSharedLayout.FlexPath);
 
             
@@ -148,7 +201,7 @@ WriteLiteral("/Scripts/jquery-ui.min.js\"></script>\r\n      <script type=\"text
 
 
             
-            #line 25 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 35 "..\..\Layouts\FlexSharedLayout_.cshtml"
                                       Write(FlexSharedLayout.FlexPath);
 
             
@@ -159,17 +212,18 @@ WriteLiteral("/Scripts/underscore.min.js\"></script>\r\n      <script type=\"tex
 
 
             
-            #line 26 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 36 "..\..\Layouts\FlexSharedLayout_.cshtml"
                                       Write(FlexSharedLayout.FlexPath);
 
             
             #line default
             #line hidden
-WriteLiteral("/Scripts/backbone.min.js\"></script>\r\n      <script type=\"text/javascript\" src=\"");
+WriteLiteral("/Scripts/backbone.min.js\"></script>\r\n\r\n      <script type=\"text/javascript\" src=\"" +
+"");
 
 
             
-            #line 27 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 38 "..\..\Layouts\FlexSharedLayout_.cshtml"
                                       Write(FlexSharedLayout.FlexPath);
 
             
@@ -179,7 +233,7 @@ WriteLiteral("/Scripts/bootstrap.min.js\"></script>\r\n      <script type=\"text
 
 
             
-            #line 28 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 39 "..\..\Layouts\FlexSharedLayout_.cshtml"
                                       Write(FlexSharedLayout.FlexPath);
 
             
@@ -190,17 +244,28 @@ WriteLiteral("/Scripts/bootstrap-hover-dropdown.min.js\"></script>\r\n      <scr
 
 
             
-            #line 29 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 40 "..\..\Layouts\FlexSharedLayout_.cshtml"
                                       Write(FlexSharedLayout.FlexPath);
 
             
             #line default
             #line hidden
-WriteLiteral("/Scripts/bootstrap3-typeahead.min.js\"></script>\r\n      \r\n      ");
+WriteLiteral("/Scripts/bootstrap-switch.min.js\"></script>\r\n\r\n      <script type=\"text/javascrip" +
+"t\" src=\"");
 
 
             
-            #line 31 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 42 "..\..\Layouts\FlexSharedLayout_.cshtml"
+                                      Write(FlexSharedLayout.FlexPath);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("/Scripts/select2.min.js\"></script>\r\n      \r\n      ");
+
+
+            
+            #line 44 "..\..\Layouts\FlexSharedLayout_.cshtml"
  Write(RenderSection("HeadSection"));
 
             
@@ -210,7 +275,7 @@ WriteLiteral("\r\n   </head>\r\n   \r\n   <body>\r\n      ");
 
 
             
-            #line 35 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 48 "..\..\Layouts\FlexSharedLayout_.cshtml"
  Write(RenderSection("BodySection"));
 
             

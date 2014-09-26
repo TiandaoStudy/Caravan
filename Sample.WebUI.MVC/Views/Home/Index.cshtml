@@ -11,5 +11,28 @@
 }
 
 @section BodySection {
-   <button class="btn btn-primary">PROVA</button>
+   <div style="margin-top: 200px">
+      <button class="btn btn-primary">PROVA</button>
+   
+      <select id="e1">
+         <option value="AL">Alabama</option>
+         <option value="PR">Prova</option>
+         <option value="WY">Wyoming</option>
+      </select>
+
+      <input type="hidden" class="bigdrop" id="e7" style="width: 600px"/>
+
+      <script>
+         $(document).ready(function() {
+            $.getJSON("http://localhost/testrestservice/employees", function(data) {
+               data = _.map(data, function (x) { return { "id": x.EmployeeID, "text": x.LastName }; });
+               $("#e7").select2({
+                  data: data
+               });
+            });
+         });
+      </script>
+
+   </div>
+   
 }

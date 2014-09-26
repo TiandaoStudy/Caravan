@@ -7422,6 +7422,9 @@ footer .navbar-default .navbar-nav > li > a {
   margin-top: 8px;
   margin-bottom: 8px;
 }
+td .label {
+  font-weight: normal;
+}
 .btn-row .btn {
   margin-left: 3px;
 }

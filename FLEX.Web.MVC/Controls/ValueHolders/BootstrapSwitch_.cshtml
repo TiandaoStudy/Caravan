@@ -1,0 +1,17 @@
+﻿@* Generator: MvcHelper *@
+@* Namespace: FLEX.Web.MVC.Controls.ValueHolders *@
+
+@using System.Web.Mvc
+@using FLEX.Web.MVC.Controls.ValueHolders
+@using PommaLabs.GRAMPA.Extensions
+
+@helper BootstrapSwitch(this HtmlHelper htmlHelper, BootstrapSwitchOptions options) {
+
+   <input id="@options.ID" type="checkbox" />
+
+   <script type="text/javascript">
+      @*$(@options.ID.ToJQueryID()).bootstrapSwitch({
+         checked: @options.Checked.ToJavaScriptBoolean()
+      });*@
+   </script>
+}
