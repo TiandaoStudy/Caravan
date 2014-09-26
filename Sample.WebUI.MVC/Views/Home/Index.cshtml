@@ -24,12 +24,42 @@
 
       <script>
          $(document).ready(function() {
-            $.getJSON("http://localhost/testrestservice/employees", function(data) {
-               data = _.map(data, function (x) { return { "id": x.EmployeeID, "text": x.LastName }; });
-               $("#e7").select2({
-                  data: data
-               });
+            //$.getJSON("http://localhost/testrestservice/employees", function(data) {
+               
+            //   $("#e7").select2({
+            //      data: data
+            //   });
+            //});
+
+            window.dataSelect = null;
+
+            $("#e7").select2({
+               minimumInputLength: 1,
+               //data: [],
+               query: function (query) {
+                  if (window.dataSelect == null) {
+                     $.getJSON("http://localhost/testrestservice/employees", function(d) {
+                        window.dataSelect = d;
+                        d = _.map(d, function(x) { return { "id": x.EmployeeID, "text": x.LastName }; });
+                        d = _.filter(d, function(x) { return x.text.indexOf(query.term) > -1; });
+                        //callback({ "id": "PROVA", "text": "PROVA" });
+                        query.callback({ results: d });
+                     });
+                  } else {
+                     d = window.dataSelect;
+                     d = _.map(d, function (x) { return { "id": x.EmployeeID, "text": x.LastName }; });
+                     d = _.filter(d, function (x) { return x.text.indexOf(query.term) > -1; });
+                     //callback({ "id": "PROVA", "text": "PROVA" });
+                     query.callback({ results: d });
+                  }
+                  
+                  
+               }
             });
+
+            
+
+            
          });
       </script>
 

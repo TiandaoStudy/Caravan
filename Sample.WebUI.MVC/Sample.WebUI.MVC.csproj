@@ -143,6 +143,10 @@
     <Content Include="FLEX.MVC\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="FLEX.MVC\Scripts\backbone.js" />
     <Content Include="FLEX.MVC\Scripts\backbone.min.js" />
+    <Content Include="FLEX.MVC\Scripts\bootstrap-hover-dropdown.js" />
+    <Content Include="FLEX.MVC\Scripts\bootstrap-hover-dropdown.min.js" />
+    <Content Include="FLEX.MVC\Scripts\bootstrap-switch.js" />
+    <Content Include="FLEX.MVC\Scripts\bootstrap-switch.min.js" />
     <Content Include="FLEX.MVC\Scripts\bootstrap.js" />
     <Content Include="FLEX.MVC\Scripts\bootstrap.min.js" />
     <Content Include="FLEX.MVC\Scripts\html5shiv.js" />
@@ -153,6 +157,8 @@
     <Content Include="FLEX.MVC\Scripts\jquery.min.js" />
     <Content Include="FLEX.MVC\Scripts\respond.js" />
     <Content Include="FLEX.MVC\Scripts\respond.min.js" />
+    <Content Include="FLEX.MVC\Scripts\select2.js" />
+    <Content Include="FLEX.MVC\Scripts\select2.min.js" />
     <Content Include="FLEX.MVC\Scripts\underscore.js" />
     <Content Include="FLEX.MVC\Scripts\underscore.min.js" />
     <Content Include="FLEX.MVC\Styles\bootstrap.css" />
@@ -214,6 +220,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Overview\Style.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FLEX.MVC\Scripts\select2.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FLEX.MVC\Scripts\bootstrap-hover-dropdown.min.js.map" />
+    <Content Include="FLEX.MVC\Scripts\bootstrap-switch.min.js.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
