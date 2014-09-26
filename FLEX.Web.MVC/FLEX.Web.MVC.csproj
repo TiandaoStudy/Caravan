@@ -177,6 +177,10 @@
     <Content Include="Scripts\jquery-ui.min.js">
       <DependentUpon>jquery-ui.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\jquery.dataTables.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js">
+      <DependentUpon>jquery.dataTables.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\jquery.min.js">
       <DependentUpon>jquery.js</DependentUpon>
@@ -305,6 +309,9 @@
     </None>
     <None Include="Scripts\jquery-ui.min.js.map">
       <DependentUpon>jquery-ui.js</DependentUpon>
+    </None>
+    <None Include="Scripts\jquery.dataTables.min.js.map">
+      <DependentUpon>jquery.dataTables.js</DependentUpon>
     </None>
     <None Include="Scripts\jquery.min.js.map">
       <DependentUpon>jquery.js</DependentUpon>

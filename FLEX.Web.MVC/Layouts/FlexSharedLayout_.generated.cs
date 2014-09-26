@@ -197,22 +197,12 @@ WriteLiteral("/Scripts/jquery.min.js\"></script>\r\n      <script type=\"text/ja
             
             #line default
             #line hidden
-WriteLiteral("/Scripts/jquery-ui.min.js\"></script>\r\n      <script type=\"text/javascript\" src=\"");
-
-
-            
-            #line 35 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexSharedLayout.FlexPath);
-
-            
-            #line default
-            #line hidden
 WriteLiteral("/Scripts/underscore.min.js\"></script>\r\n      <script type=\"text/javascript\" src=\"" +
 "");
 
 
             
-            #line 36 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 35 "..\..\Layouts\FlexSharedLayout_.cshtml"
                                       Write(FlexSharedLayout.FlexPath);
 
             
@@ -223,7 +213,7 @@ WriteLiteral("/Scripts/backbone.min.js\"></script>\r\n\r\n      <script type=\"t
 
 
             
-            #line 38 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 37 "..\..\Layouts\FlexSharedLayout_.cshtml"
                                       Write(FlexSharedLayout.FlexPath);
 
             
@@ -234,7 +224,18 @@ WriteLiteral("/Scripts/cache-provider.min.js\"></script>\r\n\r\n      <script ty
 
 
             
-            #line 40 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 39 "..\..\Layouts\FlexSharedLayout_.cshtml"
+                                      Write(FlexSharedLayout.FlexPath);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("/Scripts/jquery-ui.min.js\"></script>\r\n\r\n      <script type=\"text/javascript\" src=" +
+"\"");
+
+
+            
+            #line 41 "..\..\Layouts\FlexSharedLayout_.cshtml"
                                       Write(FlexSharedLayout.FlexPath);
 
             
@@ -244,7 +245,7 @@ WriteLiteral("/Scripts/bootstrap.min.js\"></script>\r\n      <script type=\"text
 
 
             
-            #line 41 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 42 "..\..\Layouts\FlexSharedLayout_.cshtml"
                                       Write(FlexSharedLayout.FlexPath);
 
             
@@ -255,7 +256,7 @@ WriteLiteral("/Scripts/bootstrap-hover-dropdown.min.js\"></script>\r\n      <scr
 
 
             
-            #line 42 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 43 "..\..\Layouts\FlexSharedLayout_.cshtml"
                                       Write(FlexSharedLayout.FlexPath);
 
             
@@ -266,7 +267,7 @@ WriteLiteral("/Scripts/bootstrap-switch.min.js\"></script>\r\n\r\n      <script 
 
 
             
-            #line 44 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 45 "..\..\Layouts\FlexSharedLayout_.cshtml"
                                       Write(FlexSharedLayout.FlexPath);
 
             
@@ -278,7 +279,7 @@ WriteLiteral("/Scripts/select2.min.js\"></script>\r\n      \r\n      <script typ
 
 
             
-            #line 51 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 52 "..\..\Layouts\FlexSharedLayout_.cshtml"
  Write(RenderSection("HeadSection"));
 
             
@@ -288,7 +289,7 @@ WriteLiteral("\r\n   </head>\r\n   \r\n   <body>\r\n      ");
 
 
             
-            #line 55 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 56 "..\..\Layouts\FlexSharedLayout_.cshtml"
  Write(RenderSection("BodySection"));
 
             
