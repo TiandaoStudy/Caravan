@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LongTextContainer.ascx.cs" Inherits="FLEX.Web.UserControls.LongTextContainer" %>
+<%@ Import Namespace="PommaLabs.GRAMPA.Extensions" %>
 
 <label id="shortenedText" class="long-text-ctn-label" runat="server"><%= ShortenedText %></label>
 
@@ -8,7 +9,7 @@
       placement: "auto",
       html: true,
       trigger: "hover",
-      content: <%= EncodeJsString(Text) %>,
-      title: <%= EncodeJsString(ContainerTitle) %>
+      content: <%= Text.ToJavaScriptString() %>,
+      title: <%= ContainerTitle.ToJavaScriptString() %>
    });
 </script>
