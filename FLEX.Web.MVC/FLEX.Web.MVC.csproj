@@ -154,6 +154,12 @@
     <Content Include="Scripts\backbone.min.js">
       <DependentUpon>backbone.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\base64.js">
+      <DependentUpon>base64.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\base64.min.js">
+      <DependentUpon>base64.coffee</DependentUpon>
+    </Content>
     <Content Include="Scripts\bootstrap-hover-dropdown.js" />
     <Content Include="Scripts\bootstrap-hover-dropdown.min.js">
       <DependentUpon>bootstrap-hover-dropdown.js</DependentUpon>
@@ -292,6 +298,10 @@
     <None Include="packages.config" />
     <None Include="Scripts\backbone.min.js.map">
       <DependentUpon>backbone.js</DependentUpon>
+    </None>
+    <None Include="Scripts\base64.coffee" />
+    <None Include="Scripts\base64.min.js.map">
+      <DependentUpon>base64.js</DependentUpon>
     </None>
     <None Include="Scripts\bootstrap-hover-dropdown.min.js.map">
       <DependentUpon>bootstrap-hover-dropdown.js</DependentUpon>
