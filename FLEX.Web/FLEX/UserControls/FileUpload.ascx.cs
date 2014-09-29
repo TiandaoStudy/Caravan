@@ -28,6 +28,22 @@ namespace FLEX.Web.UserControls
 
       #region Public Properties
 
+      public bool AllowMultiple
+      {
+         get { return inputFileUpload.Attributes["multiple"] == "multiple"; }
+         set
+         {
+            if (value)
+            {
+               inputFileUpload.Attributes["multiple"] = "multiple";
+            }
+            else
+            {
+               inputFileUpload.Attributes.Remove("multiple");
+            }
+         }
+      }
+
       /// <summary>
       ///   TODO
       /// </summary>
