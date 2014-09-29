@@ -49,6 +49,7 @@
          // Session expiry management
          settings.sessionTimeoutInMilliseconds = <%= (Session.Timeout - 1) * 60 * 1000 %>;
          settings.sessionExpiredPageUrl = "<%= RootPath + FLEX.Web.Configuration.Instance.SessionExpiredPageUrl %>";
+         settings.rootPath = "<%= RootPath %>";
       </script>
 
       <!-- Place holder for head contents -->

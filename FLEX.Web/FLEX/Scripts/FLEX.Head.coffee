@@ -13,6 +13,7 @@ class Settings
    @flexPath: "" # This variable is set in Head.Master
    @sessionTimeoutInMilliseconds: 0 # This variable is set in Head.Master
    @sessionExpiredPageUrl: "" # This variable is set in Head.Master
+   @rootPath: "" # This variable is set in Head.Master
    
 root.settings = Settings
 

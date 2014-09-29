@@ -21,6 +21,8 @@
 
     Settings.sessionExpiredPageUrl = "";
 
+    Settings.rootPath = "";
+
     return Settings;
 
   })();
