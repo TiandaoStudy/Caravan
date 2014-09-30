@@ -7,7 +7,43 @@
    Layout = "~/Layouts/Pages/FlexPageLayout_.cshtml";
 }
 
-@section HeadSection {  
+@section HeadSection {
+   <script type="text/javascript">
+      function R(id) {
+         var pageName = "@VirtualPath";
+         var userName = "@HttpContext.Current.User.Identity.Name";
+         var key = userName + "_VerticalSearch_" + pageName;
+         var controlStatus = JSON.parse(localStorage.getItem(key));
+
+         // If no exists _statusControl, create the array _statusControl
+         if (controlStatus == null) {
+            controlStatus = [];
+         }
+
+         if ($("#icr" + id).hasClass('glyphicon-chevron-down')) {
+            $("#icr" + id).switchClass('glyphicon-chevron-down', 'glyphicon-chevron-up');
+            var elemt = _.find(controlStatus, function (i) { return i.id == id; });
+            if (elemt == null) {
+               controlStatus.push({ id: id, closed: false, index: -1 });
+            } else {
+               elemt.closed = false;
+            }
+
+         } else if ($("#icr" + id).hasClass('glyphicon-chevron-up')) {
+            $("#icr" + id).switchClass('glyphicon-chevron-up', 'glyphicon-chevron-down');
+            var elemt = _.find(controlStatus, function (i) { return i.id == id; });
+            if (elemt == null) {
+               controlStatus.push({ id: id, closed: true, index: -1 });
+            } else {
+               elemt.closed = true;
+            }
+         }
+
+         // Save in the localStorage the controlStatus array.
+         localStorage.setItem(key, JSON.stringify(controlStatus));
+      }
+   </script>
+
    @RenderSection("HeadSection")
 }
 
@@ -20,7 +56,7 @@
             <h3 class="panel-title">Search Criteria</h3>
          </div>
          
-         <div class="page-working-area">
+         <div class="panel-body page-working-area">
             @RenderSection("SearchCriteriaSection")
          </div>
          
@@ -45,6 +81,12 @@
    </div>
    <!-- Search Criteria (END) -->
    
+   <!-- Search Criteria Placeholder (START) -->
+   <button type="button" id="btn-criteria-placeholder" class="hidden col-xs-0-5 btn btn-primary">
+      <span class="glyphicon glyphicon-arrow-right"></span>
+   </button>
+   <!-- Search Criteria Placeholder (END) -->
+
    <!-- Data Grid (START) -->
    <div class="col-xs-9">
       <div id="data-grid-panel" class="panel panel-primary">

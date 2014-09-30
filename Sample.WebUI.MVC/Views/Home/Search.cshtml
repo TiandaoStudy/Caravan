@@ -1,4 +1,6 @@
-﻿@model dynamic
+﻿@using System.Text
+@using FLEX.Web.MVC.Controls.PageElements
+@model dynamic
 
 @{
    ViewBag.Title = "title";
@@ -11,7 +13,17 @@
 
 @section SearchCriteriaSection {
 
-<h2>title</h2>
+   @Html.FlexVerticalSearchCriteria(new List<FlexVerticalSearchCriteriaOptions>
+   {
+      new FlexVerticalSearchCriteriaOptions
+      {
+         Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true)
+      },
+      new FlexVerticalSearchCriteriaOptions
+      {
+         Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true)
+      }
+   })
 }
 
 @section DataGridSection {

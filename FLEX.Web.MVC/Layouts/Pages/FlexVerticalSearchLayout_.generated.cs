@@ -68,11 +68,65 @@ WriteLiteral("\r\n");
 
 DefineSection("HeadSection", () => {
 
-WriteLiteral("  \r\n   ");
+WriteLiteral("\r\n   <script type=\"text/javascript\">\r\n      function R(id) {\r\n         var pageNa" +
+"me = \"");
 
 
             
-            #line 11 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+            #line 13 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+                    Write(VirtualPath);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\";\r\n         var userName = \"");
+
+
+            
+            #line 14 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+                    Write(HttpContext.Current.User.Identity.Name);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@""";
+         var key = userName + ""_VerticalSearch_"" + pageName;
+         var controlStatus = JSON.parse(localStorage.getItem(key));
+
+         // If no exists _statusControl, create the array _statusControl
+         if (controlStatus == null) {
+            controlStatus = [];
+         }
+
+         if ($(""#icr"" + id).hasClass('glyphicon-chevron-down')) {
+            $(""#icr"" + id).switchClass('glyphicon-chevron-down', 'glyphicon-chevron-up');
+            var elemt = _.find(controlStatus, function (i) { return i.id == id; });
+            if (elemt == null) {
+               controlStatus.push({ id: id, closed: false, index: -1 });
+            } else {
+               elemt.closed = false;
+            }
+
+         } else if ($(""#icr"" + id).hasClass('glyphicon-chevron-up')) {
+            $(""#icr"" + id).switchClass('glyphicon-chevron-up', 'glyphicon-chevron-down');
+            var elemt = _.find(controlStatus, function (i) { return i.id == id; });
+            if (elemt == null) {
+               controlStatus.push({ id: id, closed: true, index: -1 });
+            } else {
+               elemt.closed = true;
+            }
+         }
+
+         // Save in the localStorage the controlStatus array.
+         localStorage.setItem(key, JSON.stringify(controlStatus));
+      }
+   </script>
+
+   ");
+
+
+            
+            #line 47 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
 Write(RenderSection("HeadSection"));
 
             
@@ -97,12 +151,12 @@ WriteLiteral(@"
             <h3 class=""panel-title"">Search Criteria</h3>
          </div>
          
-         <div class=""page-working-area"">
+         <div class=""panel-body page-working-area"">
             ");
 
 
             
-            #line 24 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+            #line 60 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
        Write(RenderSection("SearchCriteriaSection"));
 
             
@@ -132,6 +186,12 @@ WriteLiteral(@"
    </div>
    <!-- Search Criteria (END) -->
    
+   <!-- Search Criteria Placeholder (START) -->
+   <button type=""button"" id=""btn-criteria-placeholder"" class=""hidden col-xs-0-5 btn btn-primary"">
+      <span class=""glyphicon glyphicon-arrow-right""></span>
+   </button>
+   <!-- Search Criteria Placeholder (END) -->
+
    <!-- Data Grid (START) -->
    <div class=""col-xs-9"">
       <div id=""data-grid-panel"" class=""panel panel-primary"">
@@ -144,7 +204,7 @@ WriteLiteral(@"
 
 
             
-            #line 56 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+            #line 98 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
        Write(RenderSection("DataGridSection"));
 
             
