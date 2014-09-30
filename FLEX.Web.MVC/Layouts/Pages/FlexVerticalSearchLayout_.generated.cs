@@ -58,6 +58,9 @@ WriteLiteral("\r\n");
             #line 6 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
   
    Layout = "~/Layouts/Pages/FlexPageLayout_.cshtml";
+   ViewBag.SearchCriteriaPanelCssClass = "col-xs-12 col-sm-4-5 col-md-3-5 col-lg-2-5";
+   ViewBag.DataGridPanelCssClass = "col-xs-12 col-sm-7-5 col-md-8-5 col-lg-9-5";
+   ViewBag.ExpandedDataGridPanelCssClass = "col-xs-11-5";
 
 
             
@@ -68,12 +71,81 @@ WriteLiteral("\r\n");
 
 DefineSection("HeadSection", () => {
 
-WriteLiteral("\r\n   <script type=\"text/javascript\">\r\n      function R(id) {\r\n         var pageNa" +
-"me = \"");
+WriteLiteral(@"
+   <script type=""text/javascript"">
+
+      $(document).ready(function() {
+
+         $(""#btn-hide-search-criteria"").click(function () {
+            var searchCriteriaPanel = $(""#search-criteria-panel"");
+            var btnCriteriaPlaceholder = $(""#btn-criteria-placeholder"");
+            var dataGridPanel = $(""#data-grid-panel"");
+
+            if (!searchCriteriaPanel.hasClass('hidden')) {
+               // Collapse Search criteria and expand Data grid
+               searchCriteriaPanel.addClass(""hidden"");
+               btnCriteriaPlaceholder.removeClass(""hidden"");
+               var plHeight = dataGridPanel.children().outerHeight();
+               btnCriteriaPlaceholder.css({ height: plHeight + ""px"", paddingTop: plHeight / 2 + ""px"" });
+               dataGridPanel.switchClass(""");
 
 
             
-            #line 13 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+            #line 29 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+                                     Write(ViewBag.DataGridPanelCssClass);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\", \"");
+
+
+            
+            #line 29 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+                                                                       Write(ViewBag.ExpandedDataGridPanelCssClass);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@""", 0);
+            }
+         });
+
+         $(""#btn-criteria-placeholder"").click(function () {
+            var searchCriteriaPanel = $(""#search-criteria-panel"");
+            var btnCriteriaPlaceholder = $(""#btn-criteria-placeholder"");
+            var dataGridPanel = $(""#data-grid-panel"");
+
+            if (searchCriteriaPanel.hasClass('hidden')) {
+               // Collapse Data Grid and expand Search Criteria
+               dataGridPanel.switchClass(""");
+
+
+            
+            #line 40 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+                                     Write(ViewBag.ExpandedDataGridPanelCssClass);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\", \"");
+
+
+            
+            #line 40 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+                                                                               Write(ViewBag.DataGridPanelCssClass);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\", 0);\r\n               btnCriteriaPlaceholder.addClass(\"hidden\");\r\n              " +
+" searchCriteriaPanel.removeClass(\"hidden\");\r\n            }\r\n         });\r\n      " +
+"});\r\n\r\n      function onSearchCriteriumCollapsing(id) {\r\n         var pageName =" +
+" \"");
+
+
+            
+            #line 48 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
                     Write(VirtualPath);
 
             
@@ -83,7 +155,7 @@ WriteLiteral("\";\r\n         var userName = \"");
 
 
             
-            #line 14 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+            #line 49 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
                     Write(HttpContext.Current.User.Identity.Name);
 
             
@@ -126,7 +198,7 @@ WriteLiteral(@""";
 
 
             
-            #line 47 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+            #line 82 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
 Write(RenderSection("HeadSection"));
 
             
@@ -142,21 +214,24 @@ WriteLiteral("\r\n\r\n");
 
 DefineSection("BodySection", () => {
 
-WriteLiteral(@"
-   
-   <!-- Search Criteria (START) -->
-   <div class=""col-xs-3"">
-      <div id=""search-criteria-panel"" class=""panel panel-primary"">
-         <div class=""panel-heading"">
-            <h3 class=""panel-title"">Search Criteria</h3>
-         </div>
-         
-         <div class=""panel-body page-working-area"">
-            ");
+WriteLiteral("\r\n   \r\n   <!-- Search Criteria (START) -->\r\n   <div id=\"search-criteria-panel\" cl" +
+"ass=\"");
 
 
             
-            #line 60 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+            #line 88 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+                                     Write(ViewBag.SearchCriteriaPanelCssClass);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\">\r\n      <div class=\"panel panel-primary\">\r\n         <div class=\"panel-heading\">" +
+"\r\n            <h3 class=\"panel-title\">Search Criteria</h3>\r\n         </div>\r\n   " +
+"      \r\n         <div class=\"panel-body page-working-area\">\r\n            ");
+
+
+            
+            #line 95 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
        Write(RenderSection("SearchCriteriaSection"));
 
             
@@ -193,18 +268,23 @@ WriteLiteral(@"
    <!-- Search Criteria Placeholder (END) -->
 
    <!-- Data Grid (START) -->
-   <div class=""col-xs-9"">
-      <div id=""data-grid-panel"" class=""panel panel-primary"">
-         <div class=""panel-heading"">
-            <h3 class=""panel-title"">TITLE</h3>
-         </div>
-         
-         <div class=""page-working-area"">
-            ");
+   <div id=""data-grid-panel"" class=""");
 
 
             
-            #line 98 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+            #line 126 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+                               Write(ViewBag.DataGridPanelCssClass);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\">\r\n      <div class=\"panel panel-primary\">\r\n         <div class=\"panel-heading\">" +
+"\r\n            <h3 class=\"panel-title\">TITLE</h3>\r\n         </div>\r\n         \r\n  " +
+"       <div class=\"page-working-area\">\r\n            ");
+
+
+            
+            #line 133 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
        Write(RenderSection("DataGridSection"));
 
             

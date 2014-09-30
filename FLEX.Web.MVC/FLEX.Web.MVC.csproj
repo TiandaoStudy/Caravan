@@ -219,6 +219,12 @@
     <Content Include="Scripts\underscore.min.js">
       <DependentUpon>underscore.js</DependentUpon>
     </Content>
+    <Content Include="Styles\bootstrap-reference.css">
+      <DependentUpon>bootstrap-reference.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\bootstrap-reference.min.css">
+      <DependentUpon>bootstrap-reference.less</DependentUpon>
+    </Content>
     <Content Include="Styles\bootstrap-switch.css" />
     <Content Include="Styles\bootstrap-switch.min.css">
       <DependentUpon>bootstrap-switch.css</DependentUpon>
@@ -357,6 +363,7 @@
     <None Include="Scripts\underscore.min.js.map">
       <DependentUpon>underscore.js</DependentUpon>
     </None>
+    <None Include="Styles\bootstrap-reference.less" />
     <None Include="Styles\bootstrap.less" />
     <None Include="Styles\Bootstrap\alerts.less" />
     <None Include="Styles\Bootstrap\badges.less" />

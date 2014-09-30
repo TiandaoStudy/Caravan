@@ -5,11 +5,46 @@
 
 @{
    Layout = "~/Layouts/Pages/FlexPageLayout_.cshtml";
+   ViewBag.SearchCriteriaPanelCssClass = "col-xs-12 col-sm-4-5 col-md-3-5 col-lg-2-5";
+   ViewBag.DataGridPanelCssClass = "col-xs-12 col-sm-7-5 col-md-8-5 col-lg-9-5";
+   ViewBag.ExpandedDataGridPanelCssClass = "col-xs-11-5";
 }
 
 @section HeadSection {
    <script type="text/javascript">
-      function R(id) {
+
+      $(document).ready(function() {
+
+         $("#btn-hide-search-criteria").click(function () {
+            var searchCriteriaPanel = $("#search-criteria-panel");
+            var btnCriteriaPlaceholder = $("#btn-criteria-placeholder");
+            var dataGridPanel = $("#data-grid-panel");
+
+            if (!searchCriteriaPanel.hasClass('hidden')) {
+               // Collapse Search criteria and expand Data grid
+               searchCriteriaPanel.addClass("hidden");
+               btnCriteriaPlaceholder.removeClass("hidden");
+               var plHeight = dataGridPanel.children().outerHeight();
+               btnCriteriaPlaceholder.css({ height: plHeight + "px", paddingTop: plHeight / 2 + "px" });
+               dataGridPanel.switchClass("@ViewBag.DataGridPanelCssClass", "@ViewBag.ExpandedDataGridPanelCssClass", 0);
+            }
+         });
+
+         $("#btn-criteria-placeholder").click(function () {
+            var searchCriteriaPanel = $("#search-criteria-panel");
+            var btnCriteriaPlaceholder = $("#btn-criteria-placeholder");
+            var dataGridPanel = $("#data-grid-panel");
+
+            if (searchCriteriaPanel.hasClass('hidden')) {
+               // Collapse Data Grid and expand Search Criteria
+               dataGridPanel.switchClass("@ViewBag.ExpandedDataGridPanelCssClass", "@ViewBag.DataGridPanelCssClass", 0);
+               btnCriteriaPlaceholder.addClass("hidden");
+               searchCriteriaPanel.removeClass("hidden");
+            }
+         });
+      });
+
+      function onSearchCriteriumCollapsing(id) {
          var pageName = "@VirtualPath";
          var userName = "@HttpContext.Current.User.Identity.Name";
          var key = userName + "_VerticalSearch_" + pageName;
@@ -50,8 +85,8 @@
 @section BodySection {
    
    <!-- Search Criteria (START) -->
-   <div class="col-xs-3">
-      <div id="search-criteria-panel" class="panel panel-primary">
+   <div id="search-criteria-panel" class="@ViewBag.SearchCriteriaPanelCssClass">
+      <div class="panel panel-primary">
          <div class="panel-heading">
             <h3 class="panel-title">Search Criteria</h3>
          </div>
@@ -88,8 +123,8 @@
    <!-- Search Criteria Placeholder (END) -->
 
    <!-- Data Grid (START) -->
-   <div class="col-xs-9">
-      <div id="data-grid-panel" class="panel panel-primary">
+   <div id="data-grid-panel" class="@ViewBag.DataGridPanelCssClass">
+      <div class="panel panel-primary">
          <div class="panel-heading">
             <h3 class="panel-title">TITLE</h3>
          </div>

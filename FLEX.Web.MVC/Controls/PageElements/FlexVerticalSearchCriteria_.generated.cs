@@ -68,12 +68,12 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "      <label class=\"control
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" onclick=\"R(");
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" onclick=\"onSearchCriteriumCollapsing(");
 
 
 
 #line 12 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
-                                                             WebViewPage.WriteTo(@__razor_helper_writer, i);
+                                                                                       WebViewPage.WriteTo(@__razor_helper_writer, i);
 
 #line default
 #line hidden
