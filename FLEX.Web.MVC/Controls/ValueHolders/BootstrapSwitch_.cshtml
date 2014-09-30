@@ -10,8 +10,8 @@
    <input id="@options.ID" type="checkbox" />
 
    <script type="text/javascript">
-      $(@options.ID.ToJQueryID()).bootstrapSwitch({
-         checked: @options.Checked.ToJavaScriptBoolean()
+      $("#@options.ID").bootstrapSwitch({
+         state: @options.State.ToJavaScriptBoolean()
       });
    </script>
 }

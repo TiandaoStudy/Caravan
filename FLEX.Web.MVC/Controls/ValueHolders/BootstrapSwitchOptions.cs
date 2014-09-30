@@ -8,6 +8,6 @@
 
       public string ID { get; set; }
 
-      public bool Checked { get; set; }
+      public bool State { get; set; }
    }
 }

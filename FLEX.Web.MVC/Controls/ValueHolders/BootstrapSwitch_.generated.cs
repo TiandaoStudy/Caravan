@@ -80,11 +80,27 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" type=\"checkbox\" />\r\n"
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "   <script type=\"text/javascript\">\r\n      ");
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "   <script type=\"text/javascript\">\r\n      $(\"#");
 
 
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n   </script>\r\n");
+#line 13 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+WebViewPage.WriteTo(@__razor_helper_writer, options.ID);
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\").bootstrapSwitch({\r\n         state: ");
+
+
+
+#line 14 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+WebViewPage.WriteTo(@__razor_helper_writer, options.State.ToJavaScriptBoolean());
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n      });\r\n   </script>\r\n");
 
 
 
