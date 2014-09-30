@@ -43,6 +43,12 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="PommaLabs.GRAMPA, Version=0.12.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\PommaLabs.GRAMPA.0.15.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
@@ -95,7 +101,18 @@
   <ItemGroup>
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="Controllers\FlexController.cs" />
-    <Compile Include="Controls\PageElements\FlexVerticalSearchCriteriaOptions.cs" />
+    <Compile Include="Controls\ControlOptionsBase.cs" />
+    <Compile Include="Controls\DataVisualization\FlexDataGridOptions.cs" />
+    <Compile Include="Controls\DataVisualization\FlexDataGrid_.generated.cs">
+      <DependentUpon>FlexDataGrid_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\Dummy_.generated.cs">
+      <DependentUpon>Dummy_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Controls\PageElements\FlexVerticalSearchCriteria_.generated.cs">
       <DependentUpon>FlexVerticalSearchCriteria_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -117,6 +134,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Controls\PageElements\FlexVerticalSearchCriteriaOptions.cs" />
     <Compile Include="Controls\ValueHolders\BootstrapSwitch_.generated.cs">
       <DependentUpon>BootstrapSwitch_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -159,6 +177,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\PagedList.css" />
     <Content Include="Images\pattern.png" />
     <Content Include="Images\select2-spinner.gif" />
     <Content Include="Images\select2.png" />
@@ -280,6 +299,14 @@
     <None Include=".bin\node.cmd" />
     <None Include="app.config" />
     <None Include="bower.json" />
+    <None Include="Controls\DataVisualization\FlexDataGrid_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>FlexDataGrid_.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Controls\Dummy_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Dummy_.generated.cs</LastGenOutput>
+    </None>
     <None Include="Controls\PageElements\FlexVerticalSearchCriteria_.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>FlexVerticalSearchCriteria_.generated.cs</LastGenOutput>

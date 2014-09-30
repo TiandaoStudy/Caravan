@@ -42,7 +42,7 @@ namespace FLEX.Web.MVC.Controls.PageElements
     public static class FlexVerticalSearchCriteria_
     {
 
-public static System.Web.WebPages.HelperResult FlexVerticalSearchCriteria(this HtmlHelper htmlHelper, IEnumerable<FlexVerticalSearchCriteriaOptions> spec)
+public static System.Web.WebPages.HelperResult FlexVerticalSearchCriteria(this HtmlHelper htmlHelper, IEnumerable<FlexVerticalSearchCriteriumOptions> spec)
 {
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 

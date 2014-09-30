@@ -1,6 +1,8 @@
-﻿@using System.Text
+﻿@using FLEX.Web.MVC.Controls.DataVisualization
 @using FLEX.Web.MVC.Controls.PageElements
 @using FLEX.Web.MVC.Controls.ValueHolders
+@using PagedList
+
 @model dynamic
 
 @{
@@ -14,17 +16,17 @@
 
 @section SearchCriteriaSection {
 
-   @Html.FlexVerticalSearchCriteria(new List<FlexVerticalSearchCriteriaOptions>
+   @Html.FlexVerticalSearchCriteria(new List<FlexVerticalSearchCriteriumOptions>
    {
-      new FlexVerticalSearchCriteriaOptions
+      new FlexVerticalSearchCriteriumOptions
       {
          Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true)
       },
-      new FlexVerticalSearchCriteriaOptions
+      new FlexVerticalSearchCriteriumOptions
       {
          Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true)
       },
-      new FlexVerticalSearchCriteriaOptions
+      new FlexVerticalSearchCriteriumOptions
       {
          Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true})
       }
@@ -32,6 +34,16 @@
 }
 
 @section DataGridSection {
+   
+   @Html.FlexDataGrid(new FlexDataGridOptions
+   {
+      PagedItems = (new List<Tuple<int, int>> {Tuple.Create(1, 2), Tuple.Create(2, 3)}).ToPagedList(1, 1),
+      Columns = new List<FlexDataGridColumnOptions>
+      {
+         new FlexDataGridColumnOptions {Header = "PROVA1"},
+         new FlexDataGridColumnOptions {Header = "PROVA2"},
+         new FlexDataGridColumnOptions {Header = "PROVA3"}
+      }
+   })   
 
-<h2>title</h2>
 }
