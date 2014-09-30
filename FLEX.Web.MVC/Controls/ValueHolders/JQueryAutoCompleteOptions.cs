@@ -4,6 +4,7 @@
    {
       public JQueryAutoCompleteOptions()
       {
+         // Default values
          AutoFocus = false;
          Delay = 300;
       }

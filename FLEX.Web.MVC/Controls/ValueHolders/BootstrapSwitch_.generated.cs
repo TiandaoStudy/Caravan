@@ -100,11 +100,21 @@ WebViewPage.WriteTo(@__razor_helper_writer, options.State.ToJavaScriptBoolean())
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n      });\r\n   </script>\r\n");
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, ",\r\n         size: \"");
 
 
 
-#line 17 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+#line 15 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+WebViewPage.WriteTo(@__razor_helper_writer, options.SizeString);
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\"\r\n      });\r\n   </script>\r\n");
+
+
+
+#line 18 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
 
 #line default
 #line hidden

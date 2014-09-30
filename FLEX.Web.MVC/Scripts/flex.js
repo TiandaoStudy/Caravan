@@ -25,4 +25,32 @@
 
   root.settings = Settings;
 
+  root.showSpinnerOn = function(targetId) {
+    var opts, target;
+    target = document.getElementById(targetId);
+    opts = {
+      lines: 13,
+      length: 20,
+      width: 10,
+      radius: 30,
+      corners: 1,
+      rotate: 0,
+      direction: 1,
+      color: '#000',
+      speed: 1,
+      trail: 60,
+      shadow: false,
+      hwaccel: false,
+      className: 'spinner',
+      zIndex: 2e9,
+      top: '50%',
+      left: '50%'
+    };
+    return new Spinner(opts).spin(target);
+  };
+
+  root.hideSpinner = function(spinner) {
+    return spinner.stop();
+  };
+
 }).call(this);
