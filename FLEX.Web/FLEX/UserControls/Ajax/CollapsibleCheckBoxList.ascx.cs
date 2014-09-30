@@ -301,10 +301,7 @@ namespace FLEX.Web.UserControls.Ajax
 
       private void HideExpanderIfNecessary()
       {
-         if (MaxVisibleItemCount >= chklVisible.Items.Count + chklHidden.Items.Count)
-         {
-            divAltre.Visible = false;
-         }
+         divAltre.Visible = (MaxVisibleItemCount < chklVisible.Items.Count + chklHidden.Items.Count);
       }
 
       private IList<string> GetSelectedValues()
