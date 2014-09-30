@@ -36,6 +36,6 @@
 </div>
    
 <!-- Trigger HTML -->
-<div id="divAltre" class="collapse-group" runat="server" >
+<div id="divAltre" class="collapse-group" runat="server">
    <a id="altro" class="textbox" runat="server" data-toggle="collapse">Others <i id="ic" class="glyphicon glyphicon-chevron-down" runat="server"></i></a>
 </div>

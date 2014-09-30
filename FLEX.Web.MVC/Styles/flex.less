@@ -1,7 +1,27 @@
-﻿@brand-font-size: 20px;
+﻿/*******************************************************************************
+  VARIABLES
+*******************************************************************************/
+
+@import "Bootstrap/variables.less";
+
+@brand-font-size: 20px;
 @brand-logo-size: 24px;
 
 @image-margin: 5px;
+@top-margin: @navbar-height + 15px;
+
+/*******************************************************************************
+  TOP LEVEL
+*******************************************************************************/
+
+body {
+   margin: 0;
+   padding: 0;
+   background-color: @gray-light;
+   background-image: url(../Images/pattern.png);
+   background-position: initial initial;
+   background-repeat: initial initial;
+}
 
 nav {
    .navbar-default {
@@ -16,3 +36,23 @@ nav {
       }
    }
 }
+
+.padded-icon {
+   margin-right: @image-margin;
+}
+
+/*******************************************************************************
+  PAGE STYLES
+*******************************************************************************/
+
+#main-page-container {
+   margin-top: @top-margin;
+}
+
+.page-working-area {
+   min-height: @navbar-height * 10;
+}
+
+/*******************************************************************************
+  POPUP STYLES
+*******************************************************************************/

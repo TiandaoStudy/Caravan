@@ -1,0 +1,66 @@
+﻿@* Generator: MvcView *@
+@* Namespace: FLEX.Web.MVC.Layouts.Pages *@
+
+@using FLEX.Web.MVC.Controls.PageElements
+
+@{
+   Layout = "~/Layouts/Pages/FlexPageLayout_.cshtml";
+}
+
+@section HeadSection {  
+   @RenderSection("HeadSection")
+}
+
+@section BodySection {
+   
+   <!-- Search Criteria (START) -->
+   <div class="col-xs-3">
+      <div id="search-criteria-panel" class="panel panel-primary">
+         <div class="panel-heading">
+            <h3 class="panel-title">Search Criteria</h3>
+         </div>
+         
+         <div class="page-working-area">
+            @RenderSection("SearchCriteriaSection")
+         </div>
+         
+         <div class="panel-footer">
+            <div class="row">
+               <div class="col-xs-4 text-left">
+                  <button type="button" id="btn-hide-search-criteria" class="btn btn-info">
+                     <span id="icon-hide-search-criteria" class="glyphicon glyphicon-arrow-left padded-icon"></span>Hide
+                  </button>
+               </div>
+               <div class="col-xs-4 text-center">
+                  
+               </div>
+               <div class="col-xs-4 text-right">
+                  <button type="button" id="btn-clear-search-criteria" class="btn btn-primary">
+                     <span id="icon-clear-search-criteria" class="glyphicon glyphicon-trash padded-icon"></span>Clear
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- Search Criteria (END) -->
+   
+   <!-- Data Grid (START) -->
+   <div class="col-xs-9">
+      <div id="data-grid-panel" class="panel panel-primary">
+         <div class="panel-heading">
+            <h3 class="panel-title">TITLE</h3>
+         </div>
+         
+         <div class="page-working-area">
+            @RenderSection("DataGridSection")
+         </div>
+         
+         <div class="panel-footer">
+            
+         </div>
+      </div>
+   </div>
+   <!-- Data Grid (END) -->
+
+}

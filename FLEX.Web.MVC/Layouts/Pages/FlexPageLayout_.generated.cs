@@ -88,7 +88,7 @@ WriteLiteral("\r\n\r\n");
 
 DefineSection("BodySection", () => {
 
-WriteLiteral("\r\n\r\n   <div class=\"container-fluid\">\r\n      ");
+WriteLiteral("\r\n\r\n   <div id=\"main-page-container\" class=\"container-fluid\">\r\n      ");
 
 
             
@@ -108,21 +108,21 @@ WriteLiteral("\r\n\r\n      ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n      ");
+WriteLiteral("\r\n      \r\n      <div class=\"row\">\r\n         ");
 
 
             
-            #line 22 "..\..\Layouts\Pages\FlexPageLayout_.cshtml"
- Write(RenderSection("BodySection"));
+            #line 23 "..\..\Layouts\Pages\FlexPageLayout_.cshtml"
+    Write(RenderSection("BodySection"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n   \r\n      ");
+WriteLiteral("\r\n      </div>\r\n   \r\n      ");
 
 
             
-            #line 24 "..\..\Layouts\Pages\FlexPageLayout_.cshtml"
+            #line 26 "..\..\Layouts\Pages\FlexPageLayout_.cshtml"
  Write(Html.FlexPageFooter());
 
             

@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
+    <Compile Include="Controllers\FlexController.cs" />
     <Compile Include="Controls\PageElements\FlexMenuBarHelper.cs" />
     <Compile Include="Controls\PageElements\FlexPageHeader_.generated.cs">
       <DependentUpon>FlexPageHeader_.cshtml</DependentUpon>
@@ -133,7 +134,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Layouts\FlexSharedLayout.cs" />
+    <Compile Include="Layouts\FlexCoreLayout.cs" />
+    <Compile Include="Layouts\Pages\FlexVerticalSearchLayout_.generated.cs">
+      <DependentUpon>FlexVerticalSearchLayout_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Layouts\Pages\FlexPageLayout_.generated.cs">
       <DependentUpon>FlexPageLayout_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -147,6 +153,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\pattern.png" />
     <Content Include="Images\select2-spinner.gif" />
     <Content Include="Images\select2.png" />
     <Content Include="Images\select2x2.png" />
@@ -172,9 +179,11 @@
     <Content Include="Scripts\bootstrap.min.js">
       <DependentUpon>bootstrap.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\cache-provider.js" />
-    <Content Include="Scripts\cache-provider.min.js">
-      <DependentUpon>cache-provider.js</DependentUpon>
+    <Content Include="Scripts\flex.js">
+      <DependentUpon>flex.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\flex.min.js">
+      <DependentUpon>flex.coffee</DependentUpon>
     </Content>
     <Content Include="Scripts\html5shiv.js" />
     <Content Include="Scripts\html5shiv.min.js">
@@ -287,6 +296,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>FlexSharedLayout_.generated.cs</LastGenOutput>
     </None>
+    <None Include="Layouts\Pages\FlexVerticalSearchLayout_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>FlexVerticalSearchLayout_.generated.cs</LastGenOutput>
+    </None>
     <None Include="Layouts\Pages\FlexPageLayout_.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>FlexPageLayout_.generated.cs</LastGenOutput>
@@ -312,9 +325,7 @@
     <None Include="Scripts\bootstrap.min.js.map">
       <DependentUpon>bootstrap.js</DependentUpon>
     </None>
-    <None Include="Scripts\cache-provider.min.js.map">
-      <DependentUpon>cache-provider.js</DependentUpon>
-    </None>
+    <None Include="Scripts\flex.coffee" />
     <None Include="Scripts\html5shiv.min.js.map">
       <DependentUpon>html5shiv.js</DependentUpon>
     </None>

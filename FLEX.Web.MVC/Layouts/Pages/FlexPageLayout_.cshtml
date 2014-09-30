@@ -14,12 +14,14 @@
 
 @section BodySection {
 
-   <div class="container-fluid">
+   <div id="main-page-container" class="container-fluid">
       @Html.FlexPageHeader()
 
       @Html.FlexMenuBar()
-
-      @RenderSection("BodySection")
+      
+      <div class="row">
+         @RenderSection("BodySection")
+      </div>
    
       @Html.FlexPageFooter()
    </div>

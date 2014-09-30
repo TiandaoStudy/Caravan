@@ -2,6 +2,7 @@
 @* Namespace: FLEX.Web.MVC.Layouts *@
 
 @using FLEX.Web.MVC.Layouts
+@using PommaLabs.GRAMPA.Extensions
 
 <!DOCTYPE html>
 
@@ -12,41 +13,46 @@
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      <link href="@(FlexSharedLayout.FlexPath)/Styles/fonts.min.css" rel="stylesheet" media="screen" />
-      <link href="@(FlexSharedLayout.FlexPath)/Styles/jquery-ui.min.css" rel="stylesheet" media="screen" />
+      <link href="@(FlexCoreLayout.FlexPath)/Styles/fonts.min.css" rel="stylesheet" media="screen" />
+      <link href="@(FlexCoreLayout.FlexPath)/Styles/jquery-ui.min.css" rel="stylesheet" media="screen" />
       
       <!-- "DoNotCacheTag" is needed to avoid issues with IE9 -->
-      <link href="@(FlexSharedLayout.FlexPath)/Styles/bootstrap.min.css@(FlexSharedLayout.DoNotCacheTag)" rel="stylesheet" media="screen" />
-      <link href="@(FlexSharedLayout.FlexPath)/Styles/bootstrap-switch.min.css" rel="stylesheet" media="screen" />
+      <link href="@(FlexCoreLayout.FlexPath)/Styles/bootstrap.min.css@(FlexCoreLayout.DoNotCacheTag)" rel="stylesheet" media="screen" />
+      <link href="@(FlexCoreLayout.FlexPath)/Styles/bootstrap-switch.min.css" rel="stylesheet" media="screen" />
       
-      <link href="@(FlexSharedLayout.FlexPath)/Styles/flex.min.css" rel="stylesheet" media="screen" />
+      <link href="@(FlexCoreLayout.FlexPath)/Styles/flex.min.css" rel="stylesheet" media="screen" />
       
-      <link href="@(FlexSharedLayout.FlexPath)/Styles/select2.min.css@(FlexSharedLayout.DoNotCacheTag)" rel="stylesheet" media="screen" />
-      <link href="@(FlexSharedLayout.FlexPath)/Styles/select2-bootstrap.min.css" rel="stylesheet" media="screen" />
+      <link href="@(FlexCoreLayout.FlexPath)/Styles/select2.min.css@(FlexCoreLayout.DoNotCacheTag)" rel="stylesheet" media="screen" />
+      <link href="@(FlexCoreLayout.FlexPath)/Styles/select2-bootstrap.min.css" rel="stylesheet" media="screen" />
 
-      <!-- respond and html5shiv must be put AFTER CSS for Bootstrap -->
+      <!-- Respond.js and html5shiv must be put AFTER CSS for Bootstrap -->
       <!--[if lt IE 9]>  
-         <script src="@(FlexSharedLayout.FlexPath)/Scripts/html5shiv.min.js"></script>
-         <script src="@(FlexSharedLayout.FlexPath)/Scripts/respond.min.js"></script>
+         <script src="@(FlexCoreLayout.FlexPath)/Scripts/html5shiv.min.js"></script>
+         <script src="@(FlexCoreLayout.FlexPath)/Scripts/respond.min.js"></script>
       <![endif]-->
       
-      <script type="text/javascript" src="@(FlexSharedLayout.FlexPath)/Scripts/jquery.min.js"></script>
-      <script type="text/javascript" src="@(FlexSharedLayout.FlexPath)/Scripts/underscore.min.js"></script>
-      <script type="text/javascript" src="@(FlexSharedLayout.FlexPath)/Scripts/backbone.min.js"></script>
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/base64.min.js"></script>
 
-      <script type="text/javascript" src="@(FlexSharedLayout.FlexPath)/Scripts/cache-provider.min.js"></script>
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/jquery.min.js"></script>
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/underscore.min.js"></script>
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/backbone.min.js"></script>
 
-      <script type="text/javascript" src="@(FlexSharedLayout.FlexPath)/Scripts/jquery-ui.min.js"></script>
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/jquery-ui.min.js"></script>
 
-      <script type="text/javascript" src="@(FlexSharedLayout.FlexPath)/Scripts/bootstrap.min.js"></script>
-      <script type="text/javascript" src="@(FlexSharedLayout.FlexPath)/Scripts/bootstrap-hover-dropdown.min.js"></script>
-      <script type="text/javascript" src="@(FlexSharedLayout.FlexPath)/Scripts/bootstrap-switch.min.js"></script>
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/bootstrap.min.js"></script>
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/bootstrap-hover-dropdown.min.js"></script>
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/bootstrap-switch.min.js"></script>
 
-      <script type="text/javascript" src="@(FlexSharedLayout.FlexPath)/Scripts/select2.min.js"></script>
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/select2.min.js"></script>
+      
+      <!-- Custom scripts, use DoNotCacheTag to allow emergency updates! -->
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/flex.min.js@(FlexCoreLayout.DoNotCacheTag)"></script>
       
       <script type="text/javascript">
-         // Globals
-         var _cacheProvider = new CacheProvider();
+         // JS settings
+         settings.rootPath = "@FlexCoreLayout.RootPath";
+         settings.flexPath = "@FlexCoreLayout.FlexPath";
+         settings.myFlexPath = "@FlexCoreLayout.MyFlexPath";
       </script>
       
       @RenderSection("HeadSection")

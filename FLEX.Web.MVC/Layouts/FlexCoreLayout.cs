@@ -3,14 +3,14 @@ using System.Web;
 
 namespace FLEX.Web.MVC.Layouts
 {
-   public static class FlexSharedLayout
+   public static class FlexCoreLayout
    {
       private static readonly string CachedRootPath;
       private static readonly string CachedFlexPath;
       private static readonly string CachedMyFlexPath;
       private static readonly Random Random = new Random();
 
-      static FlexSharedLayout()
+      static FlexCoreLayout()
       {
          CachedRootPath = FullyQualifiedApplicationPath;
          CachedFlexPath = CachedRootPath + "FLEX.MVC";

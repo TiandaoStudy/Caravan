@@ -137,7 +137,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, @"   <nav>
 
 
 #line 101 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
-WebViewPage.WriteTo(@__razor_helper_writer, FlexSharedLayout.MyFlexPath);
+WebViewPage.WriteTo(@__razor_helper_writer, FlexCoreLayout.MyFlexPath);
 
 #line default
 #line hidden

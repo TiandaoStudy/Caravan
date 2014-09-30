@@ -228,6 +228,9 @@
     <Content Include="FLEX.MVC\Scripts\bootstrap-hover-dropdown.min.js.map" />
     <Content Include="FLEX.MVC\Scripts\bootstrap-switch.min.js.map" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Search.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
