@@ -1,12 +1,20 @@
 ﻿@* Generator: MvcView *@
 @* Namespace: FLEX.Web.MVC.Controls.DataVisualization *@
 
+@using System.Web.Mvc.Ajax
 @using FLEX.Web.MVC.Controls.DataVisualization
 @using PagedList.Mvc
 
 @model FlexDataGridOptions
 
 <div id="@Model.ID-container">
+   @Ajax.ActionLink("update-grid", "InitializeSearchGrid", new {searchCriteriaJson = "", pageIndex = 1}, new AjaxOptions
+   {
+      HttpMethod = "GET",
+      InsertionMode = InsertionMode.Replace,
+      UpdateTargetId = @Model.ID + "-container"
+   }, new {id = "update-grid", @class="hidden"})
+
    <table id="@Model.ID" class="table table-striped table-bordered table-condensed table-hover">
       <thead>
          @foreach (var column in Model.Columns)
@@ -17,18 +25,18 @@
       
       <tbody>
 
-       @for (int indexItem = 0; indexItem < Model.PagedItems.Count; indexItem++ )
-       {
-           <tr>
+         @foreach (var item in Model.PagedItems)
+         {
+            <tr>
                 
-            @foreach (var column in Model.Columns)
-            {
-               <td>
-                  @column.Control(Model.PagedItems[indexItem])
-               </td>
-            }
+               @foreach (var column in Model.Columns)
+               {
+                  <td>
+                     @column.Control(item)
+                  </td>
+               }
             </tr>
-       }
+         }
                  
       </tbody>
    </table>

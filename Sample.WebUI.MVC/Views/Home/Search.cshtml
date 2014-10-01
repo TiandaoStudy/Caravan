@@ -20,6 +20,13 @@
 
     
 </script>
+   
+   <script type="text/javascript">
+      function onSwitchChanged(event, state) {
+         var criteria = searchCriteria.get("criteria");
+         searchCriteria.set({criteria: [{id: "onoff", value: state}]});
+      }
+   </script>
 
    @Html.FlexVerticalSearchCriteria(new List<FlexVerticalSearchCriteriumOptions>
    {
@@ -33,13 +40,13 @@
       },
       new FlexVerticalSearchCriteriumOptions
       {
-         Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true})
+         Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true, OnChange = "onSwitchChanged"})
       }
    })
 }
 
 @section DataGridSection {
 
-   @{Html.RenderAction("InitializeSearchGrid", "Home"); }
+   @{Html.RenderAction("InitializeSearchGrid", "Home", new {searchCriteriaJson = ""}); }
 
 }
