@@ -16,7 +16,20 @@
       </thead>
       
       <tbody>
-         
+
+       @for (int indexItem = 0; indexItem < Model.PagedItems.Count; indexItem++ )
+       {
+           <tr>
+                
+            @foreach (var column in Model.Columns)
+            {
+               <td>
+                  @column.Control(Model.PagedItems[indexItem])
+               </td>
+            }
+            </tr>
+       }
+                 
       </tbody>
    </table>
    

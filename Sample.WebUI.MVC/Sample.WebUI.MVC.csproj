@@ -210,6 +210,10 @@
       <Project>{811b51a4-669e-463e-897a-b593824d6d75}</Project>
       <Name>FLEX.Web.MVC</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sample.DataModel\Sample.DataModel.csproj">
+      <Project>{33a9cd5a-87c6-4bb3-b304-4dc6411bef4f}</Project>
+      <Name>Sample.DataModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />

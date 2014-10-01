@@ -11,5 +11,11 @@ namespace Sample.DataModel.Entities
 
       [Column("Last Name")]
       public string LastName { get; set; }
+
+      [Column("First Name")]
+      public string FirstName { get; set; }
+
+      [Column("Title")]
+      public string Title { get; set; }
    }
 }

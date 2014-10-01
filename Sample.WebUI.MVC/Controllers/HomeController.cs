@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using FLEX.Web.MVC.Controllers;
 using FLEX.Web.MVC.Controls.DataVisualization;
+using Newtonsoft.Json;
 using PagedList;
+using RestSharp;
+using Sample.DataModel.Entities;
 
 namespace Sample.WebUI.MVC.Controllers
 {
@@ -22,16 +25,23 @@ namespace Sample.WebUI.MVC.Controllers
       public PartialViewResult InitializeSearchGrid(int? pageIndex)
       {
          // QUERY
+         var client = new RestClient("http://localhost/testrestservice");
+         var request = new RestRequest("employees", Method.GET);
+
+         IRestResponse response = client.Execute(request);
+         var content = response.Content; // raw content as string
+         var employees = JsonConvert.DeserializeObject<IEnumerable<Employee>>(content);
+
          return PartialView("~/Controls/DataVisualization/FlexDataGrid_.cshtml", new FlexDataGridOptions
          {
             ID = "fdtg-customers",
-            PagedItems = (new List<Tuple<int, int>> {Tuple.Create(1, 2), Tuple.Create(2, 3)}).ToPagedList(pageIndex ?? 1, 1),
+            PagedItems = (employees).ToPagedList(pageIndex ?? 1, 5),
             PagerAction = page => Url.Action("InitializeSearchGrid", new {pageIndex = page}),
             Columns = new List<FlexDataGridColumnOptions>
             {
-               new FlexDataGridColumnOptions {Header = "PROVA1"},
-               new FlexDataGridColumnOptions {Header = "PROVA2"},
-               new FlexDataGridColumnOptions {Header = "PROVA3"}
+               new FlexDataGridColumnOptions {Header = "LastName", Control = (r) => r.LastName},
+               new FlexDataGridColumnOptions {Header = "FirstName", Control = (r) => r.FirstName},
+               new FlexDataGridColumnOptions {Header = "Title", Control = (r) => r.Title}
             }
          });
       }

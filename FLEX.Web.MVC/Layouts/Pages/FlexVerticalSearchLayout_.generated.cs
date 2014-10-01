@@ -203,9 +203,8 @@ WriteLiteral(@""";
             #line default
             #line hidden
 WriteLiteral("\">\r\n      <div class=\"panel panel-primary\">\r\n         <div class=\"panel-heading\">" +
-"\r\n            <h3 class=\"panel-title\">Search Criteria pppppppppppppppp</h3>\r\n   " +
-"      </div>\r\n         \r\n         <div class=\"panel-body page-working-area\">\r\n  " +
-"          ");
+"\r\n            <h3 class=\"panel-title\">Search Criteria</h3>\r\n         </div>\r\n   " +
+"      \r\n         <div class=\"panel-body page-working-area\">\r\n            ");
 
 
             
