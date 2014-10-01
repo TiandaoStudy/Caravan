@@ -103,23 +103,23 @@ WriteLiteral("\r\n\r\n   <table id=\"");
             #line default
             #line hidden
 WriteLiteral("\" class=\"table table-striped table-bordered table-condensed table-hover\">\r\n      " +
-"<thead>\r\n");
+"<thead>\r\n         <tr>\r\n");
 
 
             
-            #line 20 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
-          foreach (var column in Model.Columns)
-         {
+            #line 21 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+             foreach (var column in Model.Columns)
+            {
 
             
             #line default
             #line hidden
-WriteLiteral("            <th>");
+WriteLiteral("               <th>");
 
 
             
-            #line 22 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
-           Write(column.Header);
+            #line 23 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+              Write(column.Header);
 
             
             #line default
@@ -128,24 +128,24 @@ WriteLiteral("</th>\r\n");
 
 
             
-            #line 23 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
-         }
+            #line 24 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+            }
 
             
             #line default
             #line hidden
-WriteLiteral("      </thead>\r\n      \r\n      <tbody>\r\n\r\n");
+WriteLiteral("         </tr>\r\n      </thead>\r\n      \r\n      <tbody>\r\n");
 
 
             
-            #line 28 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+            #line 29 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
           foreach (var item in Model.PagedItems)
          {
 
             
             #line default
             #line hidden
-WriteLiteral("            <tr>\r\n                \r\n");
+WriteLiteral("            <tr>\r\n");
 
 
             
@@ -186,13 +186,38 @@ WriteLiteral("            </tr>\r\n");
             
             #line default
             #line hidden
-WriteLiteral(@"                 
-      </tbody>
-   </table>
-   
-   <div class=""row"">
-      <div class=""col-xs-4 text-left"">
-         Count
+WriteLiteral("      </tbody>\r\n   </table>\r\n   \r\n   <div class=\"row\">\r\n      <div class=\"col-xs-" +
+"4 text-left\">\r\n         <em>Showing ");
+
+
+            
+            #line 45 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+                 Write(Model.PagedItems.PageSize * (Model.PagedItems.PageNumber - 1) + 1);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" to ");
+
+
+            
+            #line 45 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+                                                                                         Write(Model.PagedItems.PageSize * Model.PagedItems.PageNumber);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" of ");
+
+
+            
+            #line 45 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+                                                                                                                                                      Write(Model.PagedItems.TotalItemCount);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@" entries</em>
       </div>
       <div class=""col-xs-4 text-center"">
          ???
@@ -203,7 +228,7 @@ WriteLiteral(@"
 
 
             
-            #line 53 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+            #line 52 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
     Write(Html.PagedListPager(Model.PagedItems, Model.PagerAction));
 
             
@@ -213,7 +238,7 @@ WriteLiteral("\r\n         <script type=\"text/javascript\">\r\n            var 
 
 
             
-            #line 55 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+            #line 54 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
                            Write(Model.ID);
 
             
@@ -226,7 +251,7 @@ WriteLiteral("-container .pagination a\");\r\n            pageLinks.attr(\"data-
 
 
             
-            #line 59 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+            #line 58 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
                                             Write(Model.ID);
 
             
