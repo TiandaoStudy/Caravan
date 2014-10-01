@@ -1,6 +1,8 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using FLEX.WebAPI;
+using LinqToQuerystring;
 using Sample.DataAccess.EntityFramework;
 
 namespace RestService.Controllers
@@ -15,6 +17,11 @@ namespace RestService.Controllers
       public JsonNetResult GetById(string customerId)
       {
          return JsonNetResult.For(CustomersDao.RetrieveById(customerId));
+      }
+
+      public JsonNetResult Query(string q)
+      {
+         return JsonNetResult.For(CustomersDao.RetrieveAll().AsQueryable().LinqToQuerystring(q));
       }
 
       public ActionResult Delete(string customerId)

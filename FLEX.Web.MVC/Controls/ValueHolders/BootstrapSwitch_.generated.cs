@@ -110,11 +110,31 @@ WebViewPage.WriteTo(@__razor_helper_writer, options.SizeString);
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\"\r\n      });\r\n   </script>\r\n");
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\"\r\n      });\r\n\r\n      $(\"#");
 
 
 
 #line 18 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+WebViewPage.WriteTo(@__razor_helper_writer, options.ID);
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\").on(\'switchChange.bootstrapSwitch\', function(event, state) {\r\n         ");
+
+
+
+#line 19 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+WebViewPage.WriteTo(@__razor_helper_writer, options.OnChange);
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "(event, state);\r\n      });\r\n   </script>\r\n");
+
+
+
+#line 22 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
 
 #line default
 #line hidden

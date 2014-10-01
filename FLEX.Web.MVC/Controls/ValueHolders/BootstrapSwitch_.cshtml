@@ -14,5 +14,9 @@
          state: @options.State.ToJavaScriptBoolean(),
          size: "@options.SizeString"
       });
+
+      $("#@options.ID").on('switchChange.bootstrapSwitch', function(event, state) {
+         @(options.OnChange)(event, state);
+      });
    </script>
 }

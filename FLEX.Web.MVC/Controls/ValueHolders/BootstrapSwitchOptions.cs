@@ -17,6 +17,8 @@ namespace FLEX.Web.MVC.Controls.ValueHolders
 
       public SwitchSize Size { get; set; }
 
+      public string OnChange { get; set; }
+
       internal string SizeString 
       {
          get
