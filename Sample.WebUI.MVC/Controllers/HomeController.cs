@@ -25,12 +25,20 @@ namespace Sample.WebUI.MVC.Controllers
 
       public PartialViewResult InitializeSearchGrid(string searchCriteriaJson, int? pageIndex)
       {
-         searchCriteriaJson = Encoding.Default.GetString(Convert.FromBase64String(searchCriteriaJson));
-         var searchCriteria = JsonConvert.DeserializeObject<dynamic>(searchCriteriaJson ?? "");
+         searchCriteriaJson = Encoding.Default.GetString(Convert.FromBase64String(searchCriteriaJson ?? ""));
+         var searchCriteria = JsonConvert.DeserializeObject<dynamic>(searchCriteriaJson);
 
          // QUERY
-         var client = new RestClient("http://localhost/testrestservice");
-         var request = new RestRequest("employees", Method.GET);
+         var client = new RestClient("http://localhost/testrestservice/employees");
+         var request = new RestRequest("query", Method.GET);
+         if (searchCriteria != null && searchCriteria.Count > 0)
+         {
+            request.AddParameter("q", String.Format("$filter=EmployeeID eq {0}", searchCriteria[0].employeeId));
+         }
+         else
+         {
+            request.AddParameter("q", String.Empty);
+         }
 
          IRestResponse response = client.Execute(request);
          var content = response.Content; // raw content as string

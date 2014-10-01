@@ -85,7 +85,6 @@
    window.searchCriteria = new SearchCriteria();
 
    searchCriteria.on('change:criteria', function (model, criteria) {
-      alert(JSON.stringify(criteria));
       $("#update-grid").attr("href", $("#update-grid").attr("href") + "&searchCriteriaJson=" + Base64.encode64(JSON.stringify(criteria)));
       $("#update-grid").click();
    });

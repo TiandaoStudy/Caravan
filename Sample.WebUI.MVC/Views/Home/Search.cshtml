@@ -17,13 +17,37 @@
          var criteria = searchCriteria.get("criteria");
          searchCriteria.set({criteria: [{id: "onoff", value: state}]});
       }
+
+      $(document).ready(function () {
+         $("#e7").select2({
+            minimumInputLength: 1,
+            allowClear: true,
+            placeholder: "Last Name",
+            query: function (query) {
+               $.getJSON("http://localhost/testrestservice/employees", function (d) {
+                  window.dataSelect = d;
+                  d = _.map(d, function (x) { return { "id": x.EmployeeID, "text": x.LastName }; });
+                  d = _.filter(d, function (x) { return x.text.indexOf(query.term) > -1; });
+                  query.callback({ results: d });
+               });
+            }
+         });
+
+         $("#e7").on("change", function (e) {
+            if (e.val !== "undefined" && e.val != null && e.val != "") {
+               searchCriteria.set({ criteria: [{ "employeeId": e.val }] });
+            } else {
+               searchCriteria.set({ criteria: [] });
+            }
+         });
+      });
    </script>
 
    @Html.FlexVerticalSearchCriteria(new List<FlexVerticalSearchCriteriumOptions>
    {
       new FlexVerticalSearchCriteriumOptions
       {
-         Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true)
+         Label = "Employee", Control = () => Html.Raw("<input type='hidden' class='bigdrop' id='e7' style='width: 100%'/>")
       },
       new FlexVerticalSearchCriteriumOptions
       {

@@ -178,16 +178,16 @@ WriteLiteral("\";\r\n      var key = userName + \"_VerticalSearch_\" + pageName;
 "ocalStorage the controlStatus array.\r\n      localStorage.setItem(key, JSON.strin" +
 "gify(controlStatus));\r\n   }\r\n\r\n   var SearchCriteria = Backbone.Model.extend({\r\n" +
 "      // Empty?\r\n   });\r\n\r\n   window.searchCriteria = new SearchCriteria();\r\n\r\n " +
-"  searchCriteria.on(\'change:criteria\', function (model, criteria) {\r\n      alert" +
-"(JSON.stringify(criteria));\r\n      $(\"#update-grid\").attr(\"href\", $(\"#update-gri" +
-"d\").attr(\"href\") + \"&searchCriteriaJson=\" + Base64.encode64(JSON.stringify(crite" +
-"ria)));\r\n      $(\"#update-grid\").click();\r\n   });\r\n\r\n   $(document).ready(functi" +
-"on() {\r\n      searchCriteria.set({ criteria: [] });\r\n   });\r\n</script>\r\n\r\n<!-- S" +
-"earch Criteria (START) -->\r\n<div id=\"search-criteria-panel\" class=\"");
+"  searchCriteria.on(\'change:criteria\', function (model, criteria) {\r\n      $(\"#u" +
+"pdate-grid\").attr(\"href\", $(\"#update-grid\").attr(\"href\") + \"&searchCriteriaJson=" +
+"\" + Base64.encode64(JSON.stringify(criteria)));\r\n      $(\"#update-grid\").click()" +
+";\r\n   });\r\n\r\n   $(document).ready(function() {\r\n      searchCriteria.set({ crite" +
+"ria: [] });\r\n   });\r\n</script>\r\n\r\n<!-- Search Criteria (START) -->\r\n<div id=\"sea" +
+"rch-criteria-panel\" class=\"");
 
 
             
-            #line 99 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+            #line 98 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
                                   Write(ViewBag.SearchCriteriaPanelCssClass);
 
             
@@ -199,7 +199,7 @@ WriteLiteral("\">\r\n   <div class=\"panel panel-primary\">\r\n      <div class=
 
 
             
-            #line 106 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+            #line 105 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
     Write(RenderSection("SearchCriteriaSection"));
 
             
@@ -240,7 +240,7 @@ WriteLiteral(@"
 
 
             
-            #line 137 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+            #line 136 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
                             Write(ViewBag.DataGridPanelCssClass);
 
             
@@ -252,7 +252,7 @@ WriteLiteral("\">\r\n   <div class=\"panel panel-primary\">\r\n      <div class=
 
 
             
-            #line 144 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
+            #line 143 "..\..\Layouts\Pages\FlexVerticalSearchLayout_.cshtml"
     Write(RenderSection("DataGridSection"));
 
             
