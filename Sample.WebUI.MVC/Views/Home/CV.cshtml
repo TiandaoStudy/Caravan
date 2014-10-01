@@ -1,0 +1,33 @@
+﻿@using System.Text
+@using FLEX.Web.MVC.Controls.PageElements
+@using FLEX.Web.MVC.Controls.ValueHolders
+@model dynamic
+
+@{
+   ViewBag.Title = "title";
+   Layout = "~/Layouts/Pages/FlexVerticalSearchLayout_.cshtml";
+}
+
+@section SearchCriteriaSection {
+
+   @Html.FlexVerticalSearchCriteria(new List<FlexVerticalSearchCriteriaOptions>
+   {
+      new FlexVerticalSearchCriteriaOptions
+      {
+         Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true)
+      },
+      new FlexVerticalSearchCriteriaOptions
+      {
+         Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true)
+      },
+      new FlexVerticalSearchCriteriaOptions
+      {
+         Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true})
+      }
+   })
+}
+
+@section DataGridSection {
+
+<h2>title</h2>
+}
