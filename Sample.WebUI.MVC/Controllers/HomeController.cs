@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Web.Mvc;
 using FLEX.Web.MVC.Controllers;
 using FLEX.Web.MVC.Controls.DataVisualization;
@@ -22,8 +23,11 @@ namespace Sample.WebUI.MVC.Controllers
          return PartialView();
       }
 
-      public PartialViewResult InitializeSearchGrid(int? pageIndex)
+      public PartialViewResult InitializeSearchGrid(string searchCriteriaJson, int? pageIndex)
       {
+         searchCriteriaJson = Encoding.Default.GetString(Convert.FromBase64String(searchCriteriaJson));
+         var searchCriteria = JsonConvert.DeserializeObject<dynamic>(searchCriteriaJson ?? "");
+
          // QUERY
          var client = new RestClient("http://localhost/testrestservice");
          var request = new RestRequest("employees", Method.GET);
