@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
+using System.Web.Mvc.Ajax;
 using FLEX.RestService.Core;
 using RestSharp;
 
@@ -12,7 +14,7 @@ namespace FLEX.Web.MVC.Controls.PageElements
 {
    public static class FlexMenuBarHelper
    {
-      public static string GetMenuFromService()
+      public static string GetMenuFromService(AjaxHelper ajaxHelper)
       {
          var client = new RestClient("http://localhost/FLEX.RestService");
          var request = new RestRequest("security/menu", Method.GET);
@@ -25,12 +27,13 @@ namespace FLEX.Web.MVC.Controls.PageElements
             menu= FLEX.RestService.Core.Menu.DeserializeFrom(stream);
          }
 
-        return  menu.Group.Aggregate("", (current, item) => current + Recursivo(item, true));
+         return menu.Group.Aggregate("", (current, item) => current + Recursivo(item, true, ajaxHelper));
 
       }
 
-      private static string Recursivo(Item item, bool firstLevel)
+      private static string Recursivo(Item item, bool firstLevel, AjaxHelper ajaxHelper)
       {
+         
          var menu = firstLevel ? "-menu" : "";
          if (item.Group == null)
          {
@@ -41,8 +44,8 @@ namespace FLEX.Web.MVC.Controls.PageElements
             if (caption != "Separator")
             {
                if (url != null)
-                  return "<li class=\"dropdown\"> <a runat=\"server\"  href=\"" + sApplicationUrl + url + "\">" + item.Caption + "</a></li>";
-               return "<li><a onclick=\"" + clientCall + "\"" + "href=\"#\">" + caption + "</a></li>";
+                return  "<li>"+ ajaxHelper.ActionLink(caption, url, new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "main-page-container" }) +"</li>";
+               return "<li><a onclick=\"" + item.ClientCall+ "\"" + "href=\"#\">" + caption + "</a></li>";
             }
             return "<li class=\"divider\"></li>";
          }
@@ -54,7 +57,7 @@ namespace FLEX.Web.MVC.Controls.PageElements
          else
             result = "<li class=\"dropdown-submenu\"><a href=\"#\">" + item.Caption + "</a><ul class=\"dropdown-menu\">";
 
-         result = item.Group.Item.Aggregate(result, (current, item1) => current + Recursivo(item1, false));
+         result = item.Group.Item.Aggregate(result, (current, item1) => current + Recursivo(item1, false, ajaxHelper));
          return result + "</ul></li>";
       }
    }

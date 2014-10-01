@@ -14,5 +14,15 @@ namespace Sample.WebUI.MVC.Controllers
       {
          return View();
       }
+
+      public PartialViewResult CV()
+      {
+         return PartialView();
+      }
+
+      public PartialViewResult PQLista()
+      {
+         return PartialView();
+      }
    }
 }

@@ -6,7 +6,7 @@
 @using FLEX.Web.MVC.Controls.PageElements
 @using FLEX.Web.MVC.Layouts
 
-@helper FlexMenuBar(this HtmlHelper htmlHelper)
+@helper FlexMenuBar(this HtmlHelper htmlHelper, AjaxHelper ajaxHelper)
 {
    <style>
       @@media (min-width: 768px) {
@@ -86,6 +86,8 @@
       $(document).ready(function() {
          $('#menuBar ul.navbar-nav li').addClass('hovernav');
       });
+
+
    </script>
 
    <nav>
@@ -103,7 +105,10 @@
             </div>
             <div id="menuBar-collapse" class="navbar-collapse collapse">
                <ul class="nav navbar-nav" id="ul_menu" runat="server">
-                  @(new HtmlString(FlexMenuBarHelper.GetMenuFromService()))
+                  @(new HtmlString(FlexMenuBarHelper.GetMenuFromService(ajaxHelper)))
+
+
+                
                </ul>
                <ul class="nav navbar-nav navbar-right">
                   <li>

@@ -4,13 +4,12 @@
 @using FLEX.Web.MVC.Controls.PageElements
 
 @{
-   Layout = "~/Layouts/Pages/FlexPageLayout_.cshtml";
    ViewBag.SearchCriteriaPanelCssClass = "col-xs-12 col-sm-4-5 col-md-3-5 col-lg-2-5";
    ViewBag.DataGridPanelCssClass = "col-xs-12 col-sm-7-5 col-md-8-5 col-lg-9-5";
    ViewBag.ExpandedDataGridPanelCssClass = "col-xs-11-5";
 }
 
-@section HeadSection {
+
    <script type="text/javascript">
 
       $(document).ready(function() {
@@ -79,16 +78,13 @@
       }
    </script>
 
-   @RenderSection("HeadSection")
-}
 
-@section BodySection {
-   
+
    <!-- Search Criteria (START) -->
    <div id="search-criteria-panel" class="@ViewBag.SearchCriteriaPanelCssClass">
       <div class="panel panel-primary">
          <div class="panel-heading">
-            <h3 class="panel-title">Search Criteria</h3>
+            <h3 class="panel-title">Search Criteria pppppppppppppppp</h3>
          </div>
          
          <div class="panel-body page-working-area">
@@ -140,4 +136,3 @@
    </div>
    <!-- Data Grid (END) -->
 
-}
