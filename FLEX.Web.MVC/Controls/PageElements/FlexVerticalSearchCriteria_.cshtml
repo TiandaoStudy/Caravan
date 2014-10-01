@@ -1,0 +1,20 @@
+﻿@* Generator: MvcHelper *@
+@* Namespace: FLEX.Web.MVC.Controls.PageElements *@
+
+@using System.Web.Mvc
+@using FLEX.Web.MVC.Controls.PageElements
+
+@helper FlexVerticalSearchCriteria(this HtmlHelper htmlHelper, IEnumerable<FlexVerticalSearchCriteriumOptions> spec)
+{
+   var i = 0;
+   foreach (var s in spec)
+   {
+      <label class="control-label" data-toggle="collapse" data-target="#search-criterium-@i" onclick="onSearchCriteriumCollapsing(@i);">
+         <i id="icr@(i)" class="glyphicon glyphicon-chevron-up padded-icon"></i>@s.Label
+      </label>
+      <div id="search-criterium-@i" class="collapse in">
+         @s.Control()
+      </div>
+      ++i;
+   }
+}

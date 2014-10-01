@@ -1,0 +1,45 @@
+﻿@using FLEX.Web.MVC.Controls.DataVisualization
+@using FLEX.Web.MVC.Controls.PageElements
+@using FLEX.Web.MVC.Controls.ValueHolders
+@using PagedList
+
+@model dynamic
+
+@{
+   ViewBag.Title = "title";
+   Layout = "~/Layouts/Pages/FlexVerticalSearchLayout_.cshtml";
+}
+
+
+
+@section SearchCriteriaSection {
+<script type="text/javascript">
+    function p() {
+        alert("Sucess ");
+    }
+
+    
+</script>
+
+   @Html.FlexVerticalSearchCriteria(new List<FlexVerticalSearchCriteriumOptions>
+   {
+      new FlexVerticalSearchCriteriumOptions
+      {
+         Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true, new{ onchange="p();"})
+      },
+      new FlexVerticalSearchCriteriumOptions
+      {
+         Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true)
+      },
+      new FlexVerticalSearchCriteriumOptions
+      {
+         Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true})
+      }
+   })
+}
+
+@section DataGridSection {
+
+   @{Html.RenderAction("InitializeSearchGrid", "Home"); }
+
+}
