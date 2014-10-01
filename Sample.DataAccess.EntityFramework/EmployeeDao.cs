@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using LinqToQuerystring;
 using Sample.DataModel.Entities;
 
 namespace Sample.DataAccess.EntityFramework
@@ -19,6 +20,14 @@ namespace Sample.DataAccess.EntityFramework
          using (var ctx = NorthwindDbContext.Instance(ConnectionString))
          {
             return ctx.Employees.FirstOrDefault(e => e.EmployeeID == employeeId);
+         }
+      }
+
+      public static IList<Employee> Query(string queryString)
+      {
+         using (var ctx = NorthwindDbContext.Instance(ConnectionString))
+         {
+            return ctx.Employees.LinqToQuerystring(queryString).ToList();
          }
       }
 

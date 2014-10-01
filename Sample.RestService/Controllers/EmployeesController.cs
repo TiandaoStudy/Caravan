@@ -17,6 +17,11 @@ namespace RestService.Controllers
          return JsonNetResult.For(EmployeeDao.RetrieveById(employeeId));
       }
 
+      public JsonNetResult Query(string q)
+      {
+         return JsonNetResult.For(EmployeeDao.Query(q));
+      }
+
       public ActionResult Delete(int employeeId)
       {
          EmployeeDao.Delete(employeeId);

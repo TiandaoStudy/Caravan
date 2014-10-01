@@ -36,7 +36,7 @@
       corners: 1,
       rotate: 0,
       direction: 1,
-      color: '#000',
+      color: '#AAA',
       speed: 1,
       trail: 60,
       shadow: false,
@@ -51,6 +51,14 @@
 
   root.hideSpinner = function(spinner) {
     return spinner.stop();
+  };
+
+  root.showMenuBarSpinner = function() {
+    return root.menuBarSpinner = root.showSpinnerOn("main-page-container");
+  };
+
+  root.hideMenuBarSpinner = function() {
+    return hideSpinner(root.menuBarSpinner);
   };
 
 }).call(this);

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
@@ -19,21 +15,19 @@ namespace FLEX.Web.MVC.Controls.PageElements
          var client = new RestClient("http://localhost/FLEX.RestService");
          var request = new RestRequest("security/menu", Method.GET);
 
-         FLEX.RestService.Core.Menu menu;
-         IRestResponse response = client.Execute(request);
+         Menu menu;
+         var response = client.Execute(request);
          var content = response.Content; // raw content as string
          using (var stream = new StringReader(HttpUtility.HtmlDecode(content)))
          {
-            menu= FLEX.RestService.Core.Menu.DeserializeFrom(stream);
+            menu = Menu.DeserializeFrom(stream);
          }
 
          return menu.Group.Aggregate("", (current, item) => current + Recursivo(item, true, ajaxHelper));
-
       }
 
       private static string Recursivo(Item item, bool firstLevel, AjaxHelper ajaxHelper)
       {
-         
          var menu = firstLevel ? "-menu" : "";
          if (item.Group == null)
          {
@@ -44,8 +38,17 @@ namespace FLEX.Web.MVC.Controls.PageElements
             if (caption != "Separator")
             {
                if (url != null)
-                return  "<li>"+ ajaxHelper.ActionLink(caption, url, new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "main-page-container" }) +"</li>";
-               return "<li><a onclick=\"" + item.ClientCall+ "\"" + "href=\"#\">" + caption + "</a></li>";
+               {
+                  return "<li>" + ajaxHelper.ActionLink(caption, url, new AjaxOptions
+                  {
+                     HttpMethod = "GET", 
+                     InsertionMode = InsertionMode.Replace, 
+                     UpdateTargetId = "main-page-container",
+                     OnBegin = "showMenuBarSpinner",
+                     OnSuccess = "hideMenuBarSpinner"
+                  }) + "</li>";
+               }
+               return "<li><a onclick=\"" + item.ClientCall + "\"" + "href=\"#\">" + caption + "</a></li>";
             }
             return "<li class=\"divider\"></li>";
          }
