@@ -1,15 +1,15 @@
-﻿@* Generator: MvcHelper *@
+﻿@* Generator: MvcView *@
 @* Namespace: FLEX.Web.MVC.Controls.DataVisualization *@
 
-@using System.Web.Mvc;
 @using FLEX.Web.MVC.Controls.DataVisualization
 @using PagedList.Mvc
 
-@helper FlexDataGrid(this System.Web.Mvc.HtmlHelper htmlHelper, FlexDataGridOptions options) {
+@model FlexDataGridOptions
 
-   <table id="@options.ID" class="table table-striped table-bordered table-condensed table-hover">
+<div id="@Model.ID-container">
+   <table id="@Model.ID" class="table table-striped table-bordered table-condensed table-hover">
       <thead>
-         @foreach (var column in options.Columns)
+         @foreach (var column in Model.Columns)
          {
             <th>@column.Header</th>
          }
@@ -29,7 +29,14 @@
       </div>
       <div class="col-xs-4 text-right">
          <!-- Outputs a paging control that lets the user navigation to the previous page, next page, etc -->
-         @htmlHelper.PagedListPager(@options.PagedItems, page => "")
+         @Html.PagedListPager(Model.PagedItems, Model.PagerAction)
+         <script type="text/javascript">
+            var pageLinks = $("#@Model.ID-container .pagination a");
+            pageLinks.attr("data-ajax", "true");
+            pageLinks.attr("data-ajax-method", "GET");
+            pageLinks.attr("data-ajax-mode", "replace");
+            pageLinks.attr("data-ajax-update", "#@Model.ID-container");
+         </script>
       </div>
    </div>
-}
+</div>

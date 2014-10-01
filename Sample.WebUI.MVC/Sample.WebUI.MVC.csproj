@@ -47,8 +47,20 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="RazorGenerator.Mvc">
       <HintPath>..\packages\RazorGenerator.Mvc.2.2.3\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -139,22 +151,28 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="FLEX.MVC\Fonts\fontawesome-webfont.svg" />
     <Content Include="FLEX.MVC\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="FLEX.MVC\Scripts\backbone.js" />
     <Content Include="FLEX.MVC\Scripts\backbone.min.js" />
+    <Content Include="FLEX.MVC\Scripts\base64.js" />
+    <Content Include="FLEX.MVC\Scripts\base64.min.js" />
     <Content Include="FLEX.MVC\Scripts\bootstrap-hover-dropdown.js" />
     <Content Include="FLEX.MVC\Scripts\bootstrap-hover-dropdown.min.js" />
     <Content Include="FLEX.MVC\Scripts\bootstrap-switch.js" />
     <Content Include="FLEX.MVC\Scripts\bootstrap-switch.min.js" />
     <Content Include="FLEX.MVC\Scripts\bootstrap.js" />
     <Content Include="FLEX.MVC\Scripts\bootstrap.min.js" />
+    <Content Include="FLEX.MVC\Scripts\flex.js" />
+    <Content Include="FLEX.MVC\Scripts\flex.min.js" />
     <Content Include="FLEX.MVC\Scripts\html5shiv.js" />
     <Content Include="FLEX.MVC\Scripts\html5shiv.min.js" />
+    <None Include="FLEX.MVC\Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="FLEX.MVC\Scripts\jquery-2.1.1.js" />
+    <Content Include="FLEX.MVC\Scripts\jquery-2.1.1.min.js" />
     <Content Include="FLEX.MVC\Scripts\jquery-ui.js" />
     <Content Include="FLEX.MVC\Scripts\jquery-ui.min.js" />
-    <Content Include="FLEX.MVC\Scripts\jquery.js" />
-    <Content Include="FLEX.MVC\Scripts\jquery.min.js" />
     <Content Include="FLEX.MVC\Scripts\respond.js" />
     <Content Include="FLEX.MVC\Scripts\respond.min.js" />
     <Content Include="FLEX.MVC\Scripts\select2.js" />
@@ -201,7 +219,6 @@
     <Content Include="FLEX.MVC\Scripts\bootstrap.min.js.map" />
     <Content Include="FLEX.MVC\Scripts\html5shiv.min.js.map" />
     <Content Include="FLEX.MVC\Scripts\jquery-ui.min.js.map" />
-    <Content Include="FLEX.MVC\Scripts\jquery.min.js.map" />
     <Content Include="FLEX.MVC\Scripts\respond.min.js.map" />
     <Content Include="FLEX.MVC\Scripts\underscore.min.js.map" />
   </ItemGroup>
@@ -236,6 +253,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\PQLista.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FLEX.MVC\Scripts\base64.min.js.map" />
+    <Content Include="FLEX.MVC\Scripts\jquery-2.1.1.min.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

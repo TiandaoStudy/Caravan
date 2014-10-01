@@ -19,12 +19,7 @@ namespace FLEX.Web.MVC.Controls.DataVisualization
     using System.Text;
     using System.Web;
     using System.Web.Helpers;
-    
-    #line 4 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
     using System.Web.Mvc;
-    
-    #line default
-    #line hidden
     using System.Web.Mvc.Ajax;
     using System.Web.Mvc.Html;
     using System.Web.Routing;
@@ -32,87 +27,100 @@ namespace FLEX.Web.MVC.Controls.DataVisualization
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 5 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+    #line 4 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
     using FLEX.Web.MVC.Controls.DataVisualization;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+    #line 5 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
     using PagedList.Mvc;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    public static class FlexDataGrid_
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Controls/DataVisualization/FlexDataGrid_.cshtml")]
+    public partial class FlexDataGrid_ : System.Web.Mvc.WebViewPage<FlexDataGridOptions>
     {
-
-public static System.Web.WebPages.HelperResult FlexDataGrid(this System.Web.Mvc.HtmlHelper htmlHelper, FlexDataGridOptions options) {
-return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
-
-
-
-#line 8 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
-                                                                                              
+        public FlexDataGrid_()
+        {
+        }
+        public override void Execute()
+        {
 
 
-#line default
-#line hidden
-
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "   <table id=\"");
+WriteLiteral("\r\n");
 
 
 
-#line 10 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
-WebViewPage.WriteTo(@__razor_helper_writer, options.ID);
+WriteLiteral("\r\n\r\n");
 
-#line default
-#line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" class=\"table table-striped table-bordered table-condensed table-hover\">\r\n      " +
+
+WriteLiteral("\r\n");
+
+
+WriteLiteral("\r\n<div id=\"");
+
+
+            
+            #line 9 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+    Write(Model.ID);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("-container\">\r\n   <table id=\"");
+
+
+            
+            #line 10 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+         Write(Model.ID);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\" class=\"table table-striped table-bordered table-condensed table-hover\">\r\n      " +
 "<thead>\r\n");
 
 
-
-#line 12 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
-          foreach (var column in options.Columns)
+            
+            #line 12 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+          foreach (var column in Model.Columns)
          {
 
-#line default
-#line hidden
-
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "            <th>");
-
-
-
-#line 14 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
-WebViewPage.WriteTo(@__razor_helper_writer, column.Header);
-
-#line default
-#line hidden
-
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "</th>\r\n");
+            
+            #line default
+            #line hidden
+WriteLiteral("            <th>");
 
 
+            
+            #line 14 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+           Write(column.Header);
 
-#line 15 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+            
+            #line default
+            #line hidden
+WriteLiteral("</th>\r\n");
+
+
+            
+            #line 15 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
          }
 
-#line default
-#line hidden
-
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "      </thead>\r\n      \r\n      <tbody>\r\n         \r\n      </tbody>\r\n   </table>\r\n");
-
-
-
-#line 22 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+            
+            #line default
+            #line hidden
+WriteLiteral(@"      </thead>
+      
+      <tbody>
+         
+      </tbody>
+   </table>
    
-
-#line default
-#line hidden
-
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, @"   <div class=""row"">
+   <div class=""row"">
       <div class=""col-xs-4 text-left"">
          Count
       </div>
@@ -124,27 +132,40 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, @"   <div class=""row"">
          ");
 
 
+            
+            #line 32 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+    Write(Html.PagedListPager(Model.PagedItems, Model.PagerAction));
 
-#line 32 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
-WebViewPage.WriteTo(@__razor_helper_writer, htmlHelper.PagedListPager(@options.PagedItems, page => ""));
-
-#line default
-#line hidden
-
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n      </div>\r\n   </div>\r\n");
-
-
-
-#line 35 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
-
-#line default
-#line hidden
-
-});
-
-}
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n         <script type=\"text/javascript\">\r\n            var pageLinks = $(\"#");
 
 
+            
+            #line 34 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+                           Write(Model.ID);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("-container .pagination a\");\r\n            pageLinks.attr(\"data-ajax\", \"true\");\r\n  " +
+"          pageLinks.attr(\"data-ajax-method\", \"GET\");\r\n            pageLinks.attr" +
+"(\"data-ajax-mode\", \"replace\");\r\n            pageLinks.attr(\"data-ajax-update\", \"" +
+"#");
+
+
+            
+            #line 38 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+                                            Write(Model.ID);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("-container\");\r\n         </script>\r\n      </div>\r\n   </div>\r\n</div>\r\n");
+
+
+        }
     }
 }
 #pragma warning restore 1591

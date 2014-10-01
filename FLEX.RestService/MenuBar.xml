@@ -1,61 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <Menu xmlns="FLEX.RestService.Core.XmlSchemas.MenuEntries" Layout="Horizontal" OpenOnClick="False">
-      <Group>
-         <Item ID="Item1" Caption="Functions" Enabled="True">
-            <Group Layout="Vertical">
-               <Item ID="Item2" Caption="Curriculum Vitae" ClientCall="FLEX_RunFromMenu('CVListaInit.aspx?INIT=SRC')" />
-               <Item ID="Item3" Caption="Curriculum Vitae 7" ClientCall="FLEX_RunFromMenu('CVLista7.aspx?INIT=SRC')" URL="CV" />
-               <Item ID="Item5" Caption="Qualification Proposal List" ClientCall="FLEX_RunFromMenu('PQLista.aspx?INIT=SRC')" />
-               <Item ID="Item5" Caption="Controls Overview" ClientCall="FLEX_RunFromMenu('ControlsOverview.aspx')" />
-            </Group>
-         </Item>
-         <Item ID="Item3" Caption="Regole" Enabled="True">
-            <Group>
-               <Item ID="Item90" Caption="Procedure Regole" ClientCall="FLEX_RunFromMenu('REG_PROC.aspx?INIT=SRC')" />
-               <Item ID="Item99" Caption="Separator" Type="Separator" />
-               <Item ID="Item91" Caption="Reg. Ass. Qual/Norma" ClientCall="FLEX_RunFromMenu('REG_A_QNORMA.aspx?INIT=SRC')" />
-               <Item ID="Item92" Caption="Reg. Ass. Q/N Frasi" ClientCall="FLEX_RunFromMenu('REG_A_QNORMA_F.aspx?INIT=SRC')" />
-               <Item ID="Item93" Caption="Reg. Ass. Q/N Proc." ClientCall="FLEX_RunFromMenu('REG_A_QNORMA_P.aspx?INIT=SRC')" />
-               <Item ID="Item94" Caption="Reg. Ass. EAC" ClientCall="FLEX_RunFromMenu('REG_A_EA.aspx?INIT=SRC')" />
-               <Item ID="Item95" Caption="Reg. Ass. EAC Proc" ClientCall="FLEX_RunFromMenu('REG_A_EA_PROC.aspx?INIT=SRC')" />
-               <Item ID="Item100" Caption="Separator" Type="Separator" />
-               <Item ID="Item101" Caption="Reg. Mant. Qual/Norma" ClientCall="FLEX_RunFromMenu('REG_M_QNORMA.aspx?INIT=SRC')" />
-               <Item ID="Item103" Caption="Reg. Mant. Q/N Proc." ClientCall="FLEX_RunFromMenu('REG_M_QNORMA_P.aspx?INIT=SRC')" />
-               <Item ID="Item104" Caption="Reg. Mant. EAC" ClientCall="FLEX_RunFromMenu('REG_M_EA.aspx?INIT=SRC')" />
-               <Item ID="Item105" Caption="Reg. Mant. EAC Proc" ClientCall="FLEX_RunFromMenu('REG_M_EA_P.aspx?INIT=SRC')" />
-            </Group>
-         </Item>
-         <Item ID="Item59" Caption="Security">
-            <Group>
-               <Item ID="Item60" Caption="User" ClientCall="FLEX_RunFromMenu('SecUtenteListaInit.aspx?INIT=SRC')" />
-               <Item ID="Item61" Caption="Group" ClientCall="FLEX_RunFromMenu('SecGruppoLista.aspx?INIT=SRC')" />
-               <Item ID="Item62" Caption="Menu" ClientCall="FLEX_RunFromMenu('SecMenu.aspx?INIT=SRC')" />
-               <Item ID="Item63" Caption="Functions" ClientCall="FLEX_RunFromMenu('SecFunctions.aspx?INIT=SRC')" />
-               <Item ID="Item64" Caption="Reports">
-                  <Group Layout="Vertical">
-                     <Item ID="Item65" Caption="Users List"  ClientCall="FLEX_OWFromMenu('ReportViewer.aspx?REPORT=SecurityByUser');" />
-                     <Item ID="Item66" Caption="Groups List"  ClientCall="FLEX_OWFromMenu('ReportViewer.aspx?REPORT=SecurityByGroup');" />
-                     <Item ID="Item67" Caption="Objects List" ClientCall="FLEX_OWFromMenu('ReportViewer.aspx?REPORT=Security');" />
-                     <Item ID="Item68" Caption="Menu List"  ClientCall="FLEX_OWFromMenu('ReportViewer.aspx?REPORT=SecurityM');" />
-                     <Item ID="Item69" Caption="Functions Menu"  ClientCall="FLEX_OWFromMenu('ReportViewer.aspx?REPORT=SecurityB');" />
-                  </Group>
-               </Item>
-            </Group>
-         </Item>
-         <Item ID="Item110" Caption="Report">
-            <Group Layout="Vertical">
-               <Item ID="Item111" Caption="Auditor" ClientCall="FLEX_RunFromMenu('QualificheAuditor.aspx?INIT=SRC')" />
-            </Group>
-         </Item>
-         <Item ID="Item80" Caption="Tools">
-            <Group Layout="Vertical">
-               <Item ID="Item83" Caption="Code Editor" ClientCall="FLEX_RunFromMenu('FLEX/Pages/CodeEditor.aspx')" />
-               <Item ID="Item84" Caption="Log Search" ClientCall="FLEX_RunFromMenu('FLEX/Pages/LogSearch.aspx')" />
-               <Item ID="Item85" Caption="Cache Overview" URL="FLEX/Pages/CacheOverview.aspx" />
-            </Group>
-         </Item>
-         <Item ID="Item70" Caption="My Profile" URL="MyProfile.aspx"  />
-         <Item ID="Item112" Caption="Manual" URL="DocViewer.aspx?INIT=SRC" />
-      </Group>
-   </Menu>
+   <Group>
+      <Item ID="Item1" Caption="Functions" Enabled="True">
+         <Group Layout="Vertical">
+            <Item ID="Item2" Caption="Customers List" URL="Search" />
+            <Item ID="Item3" Caption="Employee List" URL="CV" />
+         </Group>
+      </Item>
+      <Item ID="Item80" Caption="Tools">
+         <Group Layout="Vertical">
+            <Item ID="Item83" Caption="Code Editor" URL="FLEX/Pages/CodeEditor.aspx" />
+            <Item ID="Item84" Caption="Log Search" URL="FLEX/Pages/LogSearch.aspx" />
+            <Item ID="Item85" Caption="Cache Overview" URL="FLEX/Pages/CacheOverview.aspx" />
+         </Group>
+      </Item>
+      <Item ID="Item112" Caption="Manual" ClientCall="window.open('http://www.bing.it/')" />
+   </Group>
+</Menu>

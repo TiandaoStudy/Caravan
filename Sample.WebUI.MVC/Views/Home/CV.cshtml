@@ -1,5 +1,4 @@
-﻿@using System.Text
-@using FLEX.Web.MVC.Controls.PageElements
+﻿@using FLEX.Web.MVC.Controls.PageElements
 @using FLEX.Web.MVC.Controls.ValueHolders
 @model dynamic
 
@@ -10,17 +9,17 @@
 
 @section SearchCriteriaSection {
 
-   @Html.FlexVerticalSearchCriteria(new List<FlexVerticalSearchCriteriaOptions>
+   @Html.FlexVerticalSearchCriteria(new List<FlexVerticalSearchCriteriumOptions>
    {
-      new FlexVerticalSearchCriteriaOptions
+      new FlexVerticalSearchCriteriumOptions
       {
          Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true)
       },
-      new FlexVerticalSearchCriteriaOptions
+      new FlexVerticalSearchCriteriumOptions
       {
          Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true)
       },
-      new FlexVerticalSearchCriteriaOptions
+      new FlexVerticalSearchCriteriumOptions
       {
          Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true})
       }

@@ -204,7 +204,8 @@ WriteLiteral("/Scripts/base64.min.js\"></script>\r\n\r\n      <script type=\"tex
             
             #line default
             #line hidden
-WriteLiteral("/Scripts/jquery.min.js\"></script>\r\n      <script type=\"text/javascript\" src=\"");
+WriteLiteral("/Scripts/jquery-2.1.1.min.js\"></script>\r\n      <script type=\"text/javascript\" src" +
+"=\"");
 
 
             
@@ -236,17 +237,19 @@ WriteLiteral("/Scripts/backbone.min.js\"></script>\r\n\r\n      <script type=\"t
             
             #line default
             #line hidden
-WriteLiteral("/Scripts/jquery-ui.min.js\"></script>\r\n      <script type=\"text/javascript\" src=\"");
+WriteLiteral("/Scripts/jquery-ui.min.js\"></script>\r\n        <script type=\"text/javascript\" src=" +
+"\"");
 
 
             
             #line 41 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.FlexPath);
+                                        Write(FlexCoreLayout.FlexPath);
 
             
             #line default
             #line hidden
-WriteLiteral("/Scripts/spin.min.js\"></script>\r\n\r\n      <script type=\"text/javascript\" src=\"");
+WriteLiteral("/Scripts/jquery.unobtrusive-ajax.min.js\"></script>\r\n\r\n      <script type=\"text/ja" +
+"vascript\" src=\"");
 
 
             

@@ -43,7 +43,8 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PagedList">
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
     <Reference Include="PagedList.Mvc">
@@ -225,10 +226,6 @@
     <Content Include="Scripts\jquery.dataTables.min.js">
       <DependentUpon>jquery.dataTables.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\jquery.js" />
-    <Content Include="Scripts\jquery.min.js">
-      <DependentUpon>jquery.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\respond.js" />
@@ -385,9 +382,6 @@
     </None>
     <None Include="Scripts\jquery.dataTables.min.js.map">
       <DependentUpon>jquery.dataTables.js</DependentUpon>
-    </None>
-    <None Include="Scripts\jquery.min.js.map">
-      <DependentUpon>jquery.js</DependentUpon>
     </None>
     <None Include="Scripts\respond.min.js.map">
       <DependentUpon>respond.js</DependentUpon>
