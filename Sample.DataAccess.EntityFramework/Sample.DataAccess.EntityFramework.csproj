@@ -42,6 +42,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="LinqToQuerystring">
+      <HintPath>..\packages\LinqToQuerystring.0.7.0.8\lib\net35\LinqToQuerystring.dll</HintPath>
+    </Reference>
     <Reference Include="LinqToQuerystring.EntityFramework">
       <HintPath>..\packages\LinqToQuerystring.EntityFramework.1.2\lib\net40\LinqToQuerystring.EntityFramework.dll</HintPath>
     </Reference>

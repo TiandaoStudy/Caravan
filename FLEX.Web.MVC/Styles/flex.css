@@ -404,3 +404,29 @@ nav .navbar-default .navbar-brand .logo {
     width: 95.83333333%;
   }
 }
+/*******************************************************************************
+  VERTICAL SEARCH
+*******************************************************************************/
+.vertical-search-criterium {
+  margin-bottom: 10px;
+}
+.vertical-search-criterium .control-label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: bold;
+  line-height: 1;
+  color: #ffffff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+  background-color: #428bca;
+  cursor: pointer;
+  font-size: 100%;
+  font-weight: normal !important;
+  margin-bottom: 6.25px;
+}
+.vertical-search-criterium .collapse {
+  margin-top: 5px;
+}

@@ -57,32 +57,33 @@ return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "      <label class=\"control-label\" data-toggle=\"collapse\" data-target=\"#search-cr" +
-"iterium-");
-
-
-
-#line 12 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
-                                              WebViewPage.WriteTo(@__razor_helper_writer, i);
-
-#line default
-#line hidden
-
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" onclick=\"onSearchCriteriumCollapsing(");
-
-
-
-#line 12 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
-                                                                                       WebViewPage.WriteTo(@__razor_helper_writer, i);
-
-#line default
-#line hidden
-
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, ");\">\r\n         <i id=\"icr");
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "      <li class=\"vertical-search-criterium form-group\" id=\"search-criterium-1\">\r\n" +
+"         <label class=\"control-label\" data-toggle=\"collapse\" data-target=\"#searc" +
+"h-criterium-collapse-");
 
 
 
 #line 13 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
+                                                          WebViewPage.WriteTo(@__razor_helper_writer, i);
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" onclick=\" onSearchCriteriumCollapsing(");
+
+
+
+#line 13 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
+                                                                                                    WebViewPage.WriteTo(@__razor_helper_writer, i);
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "); \">\r\n            <i id=\"icr");
+
+
+
+#line 14 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, i);
 
 #line default
@@ -92,41 +93,37 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" class=\"glyphicon glyphic
 
 
 
-#line 13 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
-                                     WebViewPage.WriteTo(@__razor_helper_writer, s.Label);
+#line 14 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
+                                        WebViewPage.WriteTo(@__razor_helper_writer, s.Label);
 
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n      </label>\r\n");
-
-
-
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "      <div id=\"search-criterium-");
-
-
-
-#line 15 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
-WebViewPage.WriteTo(@__razor_helper_writer, i);
-
-#line default
-#line hidden
-
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" class=\"collapse in\">\r\n         ");
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n         </label>\r\n         <div id=\"search-criterium-collapse-");
 
 
 
 #line 16 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
+ WebViewPage.WriteTo(@__razor_helper_writer, i);
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" class=\"collapse in\">\r\n            ");
+
+
+
+#line 17 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, s.Control());
 
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n      </div>\r\n");
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n         </div>\r\n      </li>\r\n");
 
 
 
-#line 18 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
+#line 20 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
       ++i;
    }
 

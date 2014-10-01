@@ -10,10 +10,41 @@
    ViewBag.ExpandedDataGridPanelCssClass = "col-xs-11-5";
 }
 
-
 <script type="text/javascript">
 
    $(document).ready(function() {
+
+      var panelList = $("#search-criteria-list");
+      panelList.sortable({
+         handle: '.control-label',
+         update: function () {
+            var pageName = "@VirtualPath";
+            var userName = "@HttpContext.Current.User.Identity.Name";
+            var key = userName + "_VerticalSearch_" + pageName;
+            var controlStatus = JSON.parse(localStorage.getItem(key));
+
+            // If no exists _statusControl, create the array _statusControl
+            if (controlStatus == null) {
+               controlStatus = [];
+            }
+
+            $('.vertical-search-criterium', panelList).each(function (index, elem) {
+               var $listItem = $(elem), newIndex = $listItem.index();
+               var id = elem.id.replace("li", "");
+               var elemt = _.find(controlStatus, function (i) { return i.id == id; });
+               if (elemt == null) {
+                  // Persist the new index.
+                  controlStatus.push({ id: id, closed: false, index: newIndex });
+               } else {
+                  // Persist the new index.
+                  elemt.index = newIndex;
+               }
+            });
+
+            //Save in the localStorage array _statusControl
+            localStorage.setItem(key, JSON.stringify(controlStatus));
+         }
+      });
 
       $("#btn-hide-search-criteria").click(function () {
          var searchCriteriaPanel = $("#search-criteria-panel");
@@ -102,7 +133,9 @@
       </div>
          
       <div class="panel-body page-working-area">
-         @RenderSection("SearchCriteriaSection")
+         <ul id="search-criteria-list" class="panel-group list-unstyled">
+            @RenderSection("SearchCriteriaSection")
+         </ul>
       </div>
          
       <div class="panel-footer">
