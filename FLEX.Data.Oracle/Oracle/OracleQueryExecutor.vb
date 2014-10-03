@@ -19,7 +19,7 @@ Namespace Oracle
 
          'Connection Pooling
          If Not lowerConnString.Contains("pooling") Then
-            connectionString &= "Pooling=true"
+            connectionString &= "Pooling=true;"
          End If
 
          'Statement Cache

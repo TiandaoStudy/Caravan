@@ -12,8 +12,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("FINSA S.p.A.")]
 [assembly: AssemblyProduct("FLEX.Common")]
-[assembly: AssemblyCopyright("Copyright © FINSA S.p.A. 2014-2015")]
-[assembly: AssemblyTrademark("FINSA S.p.A.")]
+[assembly: AssemblyCopyright("Copyright © Finsa S.p.A. 2014-2024")]
+[assembly: AssemblyTrademark("Finsa S.p.A.")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -37,8 +37,8 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("0.11.0.0")]
-[assembly: AssemblyFileVersion("0.11.0.0")]
+[assembly: AssemblyVersion("0.12.0.0")]
+[assembly: AssemblyFileVersion("0.12.0.0")]
 
 // Attributes added to allow stronger development.
 
