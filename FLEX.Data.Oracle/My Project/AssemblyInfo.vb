@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("FLEX.Data")> 
+<Assembly: AssemblyTitle("FLEX.Data.Dapper")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("Microsoft")> 
-<Assembly: AssemblyProduct("FLEX.Data")> 
-<Assembly: AssemblyCopyright("Copyright © Microsoft 2014")> 
+<Assembly: AssemblyCompany("Finsa S.p.A.")> 
+<Assembly: AssemblyProduct("FLEX.Data.Dapper")> 
+<Assembly: AssemblyCopyright("Copyright © Finsa S.p.A. 2014-2024")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>

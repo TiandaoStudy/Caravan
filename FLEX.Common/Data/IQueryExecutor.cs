@@ -25,6 +25,12 @@ namespace FLEX.Common.Data
       /// <summary>
       /// 
       /// </summary>
+      /// <param name="connectionString"></param>
+      void ElaborateConnectionString(ref string connectionString);
+
+      /// <summary>
+      /// 
+      /// </summary>
       /// <returns></returns>
       IDbConnection OpenConnection();
    }

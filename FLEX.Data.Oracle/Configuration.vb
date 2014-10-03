@@ -5,6 +5,7 @@ Public NotInheritable Class Configuration
 
    Private Const SectionName As String = "FlexDataConfiguration"
    Private Const OracleRunnerKey As String = "OracleRunner"
+   Private Const OracleStatementCacheSizeKey As String = "OracleStatementCacheSize"
 
    Private Shared ReadOnly CachedInstance As Configuration = TryCast(ConfigurationManager.GetSection(SectionName), Configuration)
 
@@ -19,6 +20,13 @@ Public NotInheritable Class Configuration
       Get
          Dim runner = TryCast(Me(OracleRunnerKey), String)
          Return If(String.IsNullOrWhiteSpace(runner), runner, runner & ".")
+      End Get
+   End Property
+
+   <ConfigurationProperty(OracleStatementCacheSizeKey, IsRequired:=False, DefaultValue:=10)>
+   Public ReadOnly Property OracleStatementCacheSize() As Integer
+      Get
+         Return CType(Me(OracleStatementCacheSizeKey), Integer)
       End Get
    End Property
 End Class

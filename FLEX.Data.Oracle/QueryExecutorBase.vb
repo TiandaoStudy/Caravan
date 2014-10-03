@@ -17,5 +17,7 @@ Public MustInherit Class QueryExecutorBase
       End Using
    End Function
 
+   Public MustOverride Sub ElaborateConnectionString(ByRef connectionString As String) Implements IQueryExecutor.ElaborateConnectionString
+
    Public MustOverride Function OpenConnection() As IDbConnection Implements IQueryExecutor.OpenConnection
 End Class

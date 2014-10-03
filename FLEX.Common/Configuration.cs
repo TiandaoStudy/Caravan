@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using FLEX.Common.Data;
 using PommaLabs.KVLite;
 
 namespace FLEX.Common
@@ -64,7 +65,11 @@ namespace FLEX.Common
       public string ConnectionString
       {
          get { return (string) PersistentCache.DefaultInstance.Get(CachePartitionName, ConnectionStringKey); }
-         set { PersistentCache.DefaultInstance.AddStatic(CachePartitionName, ConnectionStringKey, value); }
+         set
+         {
+            QueryExecutor.Instance.ElaborateConnectionString(ref value);
+            PersistentCache.DefaultInstance.AddStatic(CachePartitionName, ConnectionStringKey, value);
+         }
       }
 
       #region Utilities
