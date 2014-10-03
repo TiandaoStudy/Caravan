@@ -2,6 +2,9 @@
 
 namespace FLEX.Web.MVC.Controls.ValueHolders
 {
+   /// <summary>
+   ///   http://bootstrap-datepicker.readthedocs.org/en/release/options.html
+   /// </summary>
    public sealed class BootstrapDatePickerOptions
    {
       public BootstrapDatePickerOptions()
