@@ -10,44 +10,47 @@ namespace FLEX.Web.MVC.Controls.ValueHolders
       public BootstrapDatePickerOptions()
       {
          // Default values
-         State = false;
-         Size = SwitchSize.Normal;
+         Autoclose = false;
+         DateFormat = "dd/mm/yyyy";
+         MinView = MinViewMode.Days;
+         StartView = StartViewMode.Month;
+         StartDate = "01/01/2000";
+         EndDate = "31/12/2999";
+         
       }
 
       public string ID { get; set; }
 
-      public bool State { get; set; }
+      public bool Autoclose { get; set; }
 
-      public SwitchSize Size { get; set; }
+      public bool ClearBtn { get; set; }
 
-      public string OnChange { get; set; }
+      public string DateFormat { get; set; }
 
-      internal string SizeString 
+      public string StartDate { get; set; }
+
+      public string EndDate { get; set; }
+
+      public StartViewMode? StartView{ get; set; }
+   
+      public MinViewMode? MinView{ get; set; }
+
+      public enum StartViewMode : byte
       {
-         get
-         {
-            switch (Size)
-            {
-               case SwitchSize.Mini:
-                  return "mini";
-               case SwitchSize.Small:
-                  return "small";
-               case SwitchSize.Normal:
-                  return "normal";
-               case SwitchSize.Large:
-                  return "large";
-               default:
-                  throw new InvalidOperationException();
-            }
-         }
+         Month = 0,
+         Year = 1,
+         Decade = 2
       }
 
-      public enum SwitchSize : byte
+      public enum MinViewMode : byte
       {
-         Mini,
-         Small,
-         Normal,
-         Large
+         Days = 0,
+         Months = 1,
+         Years = 2
       }
+
+      public DateTime SelectedDate { get; set; }
+
+      public string ChangeDate { get; set; }
    }
 }

@@ -22,6 +22,11 @@
     
 </script>
 
+      function onChangedDate(event) {
+         alert(event.date);
+         var criteria = searchCriteria.get("criteria");
+         searchCriteria.set({ criteria: [{ id: "datepicker", value: event.date }] });
+      }
    @Html.FlexVerticalSearchCriteria(new List<FlexVerticalSearchCriteriumOptions>
    {
       new FlexVerticalSearchCriteriumOptions
@@ -43,6 +48,10 @@
       new FlexVerticalSearchCriteriumOptions
       {
          Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true})
+      },
+      new FlexVerticalSearchCriteriumOptions
+      {
+         Label = "Date", Control = () => Html.BootstrapDatePicker(new BootstrapDatePickerOptions {ID="datepicker",   MinView = BootstrapDatePickerOptions.MinViewMode.Days, StartView=BootstrapDatePickerOptions.StartViewMode.Month, ChangeDate="onChangedDate"})
       }
    })
 }
