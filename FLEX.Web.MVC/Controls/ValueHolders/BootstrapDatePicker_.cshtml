@@ -5,18 +5,27 @@
 @using FLEX.Web.MVC.Controls.ValueHolders
 @using PommaLabs.GRAMPA.Extensions
 
-@helper BootstrapDatePicker(this HtmlHelper htmlHelper, BootstrapSwitchOptions options) {
+@helper BootstrapDatePicker(this HtmlHelper htmlHelper, BootstrapDatePickerOptions options) {
 
-   <input id="@options.ID" type="checkbox" />
-
-   <script type="text/javascript">
-      $("#@options.ID").bootstrapSwitch({
-         state: @options.State.ToJavaScriptBoolean(),
-         size: "@options.SizeString"
-      });
-
-      $("#@options.ID").on('switchChange.bootstrapSwitch', function(event, state) {
-         @(options.OnChange)(event, state);
-      });
-   </script>
+     <div ID="@options.ID-container" class="input-group date">
+         <input ID="@options.ID" type="text" runat="server" class="form-control" />
+         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+      </div>
+   
+   
+    <script type="text/javascript">
+       $('#@(options.ID)-container').datepicker({
+          format:  "@options.DateFormat",
+          weekStart: 1,
+          startView: @Convert.ToByte(options.StartView),
+          minViewMode:@Convert.ToByte(options.MinView),
+          todayBtn: "linked",
+          autoclose: true,
+          todayHighlight: true
+       });
+      
+       $("#@options.ID").on('changeDate.datepicker', function(event) {
+          @(options.ChangeDate)(event);
+             });
+      </script> 
 }

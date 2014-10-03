@@ -65,6 +65,10 @@
       new FlexVerticalSearchCriteriumOptions
       {
          Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true, OnChange = "onSwitchChanged"})
+      },
+      new FlexVerticalSearchCriteriumOptions
+      {
+         Label = "Date", Control = () => Html.BootstrapDatePicker(new BootstrapDatePickerOptions {ID="datepicker",   MinView = BootstrapDatePickerOptions.MinViewMode.Years, StartView=BootstrapDatePickerOptions.StartViewMode.Decade})
       }
    })
 }
