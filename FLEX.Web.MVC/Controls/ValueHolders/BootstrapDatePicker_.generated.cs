@@ -133,21 +133,11 @@ WebViewPage.WriteTo(@__razor_helper_writer, Convert.ToByte(options.MinView));
 #line hidden
 
 WebViewPage.WriteLiteralTo(@__razor_helper_writer, ",\r\n          todayBtn: \"linked\",\r\n          autoclose: true,\r\n          todayHigh" +
-"light: true\r\n       });\r\n      \r\n       $(\"#");
+"light: true\r\n       }).on(\'changeDate\', function(event) {\r\n          ");
 
 
 
-#line 27 "..\..\Controls\ValueHolders\BootstrapDatePicker_.cshtml"
-WebViewPage.WriteTo(@__razor_helper_writer, options.ID);
-
-#line default
-#line hidden
-
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\").on(\'changeDate.datepicker\', function(event) {\r\n          ");
-
-
-
-#line 28 "..\..\Controls\ValueHolders\BootstrapDatePicker_.cshtml"
+#line 26 "..\..\Controls\ValueHolders\BootstrapDatePicker_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.ChangeDate);
 
 #line default
@@ -157,7 +147,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "(event);\r\n             });
 
 
 
-#line 31 "..\..\Controls\ValueHolders\BootstrapDatePicker_.cshtml"
+#line 29 "..\..\Controls\ValueHolders\BootstrapDatePicker_.cshtml"
 
 #line default
 #line hidden

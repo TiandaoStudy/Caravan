@@ -27,6 +27,12 @@
          searchCriteria.set({criteria: [{id: "onoff", value: state}]});
       }
 
+      function onChangedDate(event) {
+         alert(event.date);
+         var criteria = searchCriteria.get("criteria");
+         searchCriteria.set({ criteria: [{ id: "datepicker", value: event.date }] });
+      }
+
       $(document).ready(function () {
          $("#e7").select2({
             minimumInputLength: 1,
@@ -68,7 +74,7 @@
       },
       new FlexVerticalSearchCriteriumOptions
       {
-         Label = "Date", Control = () => Html.BootstrapDatePicker(new BootstrapDatePickerOptions {ID="datepicker",   MinView = BootstrapDatePickerOptions.MinViewMode.Years, StartView=BootstrapDatePickerOptions.StartViewMode.Decade})
+         Label = "Date", Control = () => Html.BootstrapDatePicker(new BootstrapDatePickerOptions {ID="datepicker",   MinView = BootstrapDatePickerOptions.MinViewMode.Days, StartView=BootstrapDatePickerOptions.StartViewMode.Month, ChangeDate="onChangedDate"})
       }
    })
 }
