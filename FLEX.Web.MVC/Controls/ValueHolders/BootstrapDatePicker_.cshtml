@@ -1,0 +1,22 @@
+﻿@* Generator: MvcHelper *@
+@* Namespace: FLEX.Web.MVC.Controls.ValueHolders *@
+
+@using System.Web.Mvc
+@using FLEX.Web.MVC.Controls.ValueHolders
+@using PommaLabs.GRAMPA.Extensions
+
+@helper BootstrapDatePicker(this HtmlHelper htmlHelper, BootstrapSwitchOptions options) {
+
+   <input id="@options.ID" type="checkbox" />
+
+   <script type="text/javascript">
+      $("#@options.ID").bootstrapSwitch({
+         state: @options.State.ToJavaScriptBoolean(),
+         size: "@options.SizeString"
+      });
+
+      $("#@options.ID").on('switchChange.bootstrapSwitch', function(event, state) {
+         @(options.OnChange)(event, state);
+      });
+   </script>
+}
