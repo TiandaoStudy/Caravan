@@ -1,10 +1,11 @@
 ﻿Imports System.Data.Common
+Imports Oracle.ManagedDataAccess.Client
 
 Namespace Oracle
    Public NotInheritable Class OracleQueryExecutor
       Inherits QueryExecutorBase
 
-      Private Shared ReadOnly DbFactory As DbProviderFactory = DbProviderFactories.GetFactory("System.Data.OracleClient")
+      Private Shared ReadOnly DbFactory As DbProviderFactory = New OracleClientFactory()
 
       Public Overrides Function OpenConnection() As IDbConnection
          Dim connection = DbFactory.CreateConnection()

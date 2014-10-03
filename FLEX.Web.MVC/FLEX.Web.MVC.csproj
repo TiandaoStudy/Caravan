@@ -142,6 +142,12 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Controls\ValueHolders\BootstrapSwitchOptions.cs" />
+    <Compile Include="Controls\ValueHolders\BootstrapDatePicker_.generated.cs">
+      <DependentUpon>BootstrapDatePicker_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\ValueHolders\BootstrapDatePickerOptions.cs" />
     <Compile Include="Controls\ValueHolders\JQueryAutoComplete_.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -193,6 +199,10 @@
     <Content Include="Scripts\base64.min.js">
       <DependentUpon>base64.coffee</DependentUpon>
     </Content>
+    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap-datepicker.min.js">
+      <DependentUpon>bootstrap-datepicker.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\bootstrap-hover-dropdown.js" />
     <Content Include="Scripts\bootstrap-hover-dropdown.min.js">
       <DependentUpon>bootstrap-hover-dropdown.js</DependentUpon>
@@ -241,6 +251,10 @@
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js">
       <DependentUpon>underscore.js</DependentUpon>
+    </Content>
+    <Content Include="Styles\bootstrap-datepicker3.css" />
+    <Content Include="Styles\bootstrap-datepicker3.min.css">
+      <DependentUpon>bootstrap-datepicker3.css</DependentUpon>
     </Content>
     <Content Include="Styles\bootstrap-reference.css">
       <DependentUpon>bootstrap-reference.less</DependentUpon>
@@ -329,6 +343,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>BootstrapSwitch_.generated.cs</LastGenOutput>
     </None>
+    <None Include="Controls\ValueHolders\BootstrapDatePicker_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BootstrapDatePicker_.generated.cs</LastGenOutput>
+    </None>
     <None Include="Controls\ValueHolders\JQueryAutoComplete_.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>JQueryAutoComplete_.generated.cs</LastGenOutput>
@@ -362,6 +380,9 @@
     <None Include="Scripts\base64.coffee" />
     <None Include="Scripts\base64.min.js.map">
       <DependentUpon>base64.js</DependentUpon>
+    </None>
+    <None Include="Scripts\bootstrap-datepicker.min.js.map">
+      <DependentUpon>bootstrap-datepicker.js</DependentUpon>
     </None>
     <None Include="Scripts\bootstrap-hover-dropdown.min.js.map">
       <DependentUpon>bootstrap-hover-dropdown.js</DependentUpon>
