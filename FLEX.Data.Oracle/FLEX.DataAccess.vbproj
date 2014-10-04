@@ -114,10 +114,6 @@
       <Project>{11904ED0-33D2-4005-8766-B1E393A32EA7}</Project>
       <Name>FLEX.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FLEX.Data.Model\FLEX.Data.Model.csproj">
-      <Project>{068bd865-fc02-4d2a-9b4b-e1f9e5ad0dcf}</Project>
-      <Name>FLEX.Data.Model</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Oracle\Scripts\Packages\PCK_FLEX_LOG.sql" />

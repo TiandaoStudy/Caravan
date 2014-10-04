@@ -86,16 +86,39 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Data\IDbLogger.cs" />
     <Compile Include="Data\IQueryExecutor.cs" />
+    <Compile Include="FLEX.Common.XmlSchemas.MenuEntries.Item.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX.Common.XmlSchemas.MenuEntries.Menu.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
     <Compile Include="IO\BufferedIO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Instances.cs" />
     <Compile Include="Web\ISearchControl.cs" />
     <Compile Include="Web\SearchCriteria.cs" />
+    <Compile Include="XsdClassGen.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XmlSchemas\MenuEntries.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XsdClassGen.mapping" />
+    <None Include="XsdClassGen.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>XsdClassGen.cs</LastGenOutput>
+    </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (

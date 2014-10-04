@@ -57,9 +57,6 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="XmlSchemas\MenuEntries.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="XsdClassGen.mapping" />
     <None Include="XsdClassGen.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
