@@ -77,9 +77,8 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.GRAMPA, Version=0.15.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.GRAMPA.0.15.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+    <Reference Include="PommaLabs.GRAMPA">
+      <HintPath>..\packages\PommaLabs.GRAMPA.0.16.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
     <Reference Include="PommaLabs.KVLite">
       <HintPath>..\packages\PommaLabs.KVLite.0.4.0\lib\net40\PommaLabs.KVLite.dll</HintPath>
@@ -132,9 +131,9 @@
       <Project>{396d8f01-e785-4c04-9fc3-cfae3be932a2}</Project>
       <Name>FLEX.Data.Dapper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FLEX.RestService.Core\FLEX.RestService.Core.csproj">
+    <ProjectReference Include="..\FLEX.RestService.Core\FLEX.RestService.Model.csproj">
       <Project>{d75a2c45-a9ea-4b0f-9018-177a5f0d5959}</Project>
-      <Name>FLEX.RestService.Core</Name>
+      <Name>FLEX.RestService.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

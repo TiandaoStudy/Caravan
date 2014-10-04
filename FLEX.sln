@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Coding Standards", "Coding 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Web.WebForms", "FLEX.Web.Packager\NuGetPackager.Web.WebForms.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataAccess", "FLEX.TestDataAccess\Sample.DataAccess.csproj", "{9F1BAA6D-7E1E-43CC-94CE-0B0AF04C753F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataAccess.Dapper", "FLEX.TestDataAccess\Sample.DataAccess.Dapper.csproj", "{9F1BAA6D-7E1E-43CC-94CE-0B0AF04C753F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.Common", "FLEX.Common\FLEX.Common.csproj", "{11904ED0-33D2-4005-8766-B1E393A32EA7}"
 EndProject
@@ -70,7 +70,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.WebUI.MVC", "Sample.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.RestService", "FLEX.RestService\FLEX.RestService.csproj", "{B4F9C525-5C56-440E-B4C2-972A33D7C8CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.RestService.Core", "FLEX.RestService.Core\FLEX.RestService.Core.csproj", "{D75A2C45-A9EA-4B0F-9018-177A5F0D5959}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.RestService.Model", "FLEX.RestService.Core\FLEX.RestService.Model.csproj", "{D75A2C45-A9EA-4B0F-9018-177A5F0D5959}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.RestService", "Sample.RestService\Sample.RestService.csproj", "{1687CDFF-4C23-4DD7-86C1-E277CCFA1D8A}"
 EndProject

@@ -62,9 +62,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\odp.net.managed.121.1.2\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.GRAMPA, Version=0.15.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PommaLabs.GRAMPA, Version=0.16.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.GRAMPA.0.15.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.GRAMPA.0.16.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
