@@ -50,10 +50,9 @@
     <Reference Include="PagedList.Mvc">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.GRAMPA, Version=0.12.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PommaLabs.GRAMPA, Version=0.16.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.GRAMPA.0.15.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\PommaLabs.GRAMPA.0.16.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
     <Reference Include="RazorGenerator.Mvc">
       <HintPath>..\packages\RazorGenerator.Mvc.2.2.3\lib\net40\RazorGenerator.Mvc.dll</HintPath>
@@ -505,10 +504,6 @@
     <ProjectReference Include="..\FLEX.Common\FLEX.Common.csproj">
       <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>
       <Name>FLEX.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FLEX.RestService.Core\FLEX.RestService.Core.csproj">
-      <Project>{d75a2c45-a9ea-4b0f-9018-177a5f0d5959}</Project>
-      <Name>FLEX.RestService.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

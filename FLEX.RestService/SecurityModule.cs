@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Web;
-using FLEX.RestService.Core;
+using FLEX.Common.XmlSchemas.MenuEntries;
 using Nancy;
 
 namespace FLEX.RestService

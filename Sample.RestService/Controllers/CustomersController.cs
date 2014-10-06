@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using FLEX.WebAPI;
+using FLEX.Web.WebAPI.Results;
 using LinqToQuerystring;
 using Sample.DataAccess.EntityFramework;
 

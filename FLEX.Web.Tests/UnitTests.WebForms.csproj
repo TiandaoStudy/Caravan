@@ -65,9 +65,9 @@
     <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FLEX.Web\FLEX.Web.WebForms.csproj">
+    <ProjectReference Include="..\FLEX.Web\FLEX.WebForms.csproj">
       <Project>{407b5921-9039-4d0d-a40a-36a19c251cdc}</Project>
-      <Name>FLEX.Web.WebForms</Name>
+      <Name>FLEX.WebForms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

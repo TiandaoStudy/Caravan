@@ -3,7 +3,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
-using FLEX.RestService.Core;
+using FLEX.Common.XmlSchemas.MenuEntries;
 using RestSharp;
 
 namespace FLEX.Web.MVC.Controls.PageElements
@@ -31,15 +31,12 @@ namespace FLEX.Web.MVC.Controls.PageElements
          var menu = firstLevel ? "-menu" : "";
          if (item.Group == null)
          {
-            const string sApplicationUrl = "http://localhost/FLEX.Extensions.TestWebUI/";
-            var url = item.URL;
-            var clientCall = item.ClientCall;
             var caption = item.Caption;
             if (caption != "Separator")
             {
-               if (url != null)
+               if (item.URL != null)
                {
-                  return "<li>" + ajaxHelper.ActionLink(caption, url, new AjaxOptions
+                  return "<li>" + ajaxHelper.ActionLink(caption, item.URL, new AjaxOptions
                   {
                      HttpMethod = "GET", 
                      InsertionMode = InsertionMode.Replace, 
