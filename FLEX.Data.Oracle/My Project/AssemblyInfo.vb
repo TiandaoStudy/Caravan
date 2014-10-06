@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("FLEX.Data.Dapper")> 
+<Assembly: AssemblyTitle("FLEX.DataAccess")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("Finsa S.p.A.")> 
-<Assembly: AssemblyProduct("FLEX.Data.Dapper")> 
+<Assembly: AssemblyProduct("FLEX.DataAccess")> 
 <Assembly: AssemblyCopyright("Copyright © Finsa S.p.A. 2014-2024")> 
 <Assembly: AssemblyTrademark("")> 
 
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("0.12.0.2")> 
-<Assembly: AssemblyFileVersion("0.12.0.2")> 
+<Assembly: AssemblyVersion("0.13.0.2")> 
+<Assembly: AssemblyFileVersion("0.13.0.2")> 

@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>FLEX.Data.Dapper</RootNamespace>
-    <AssemblyName>FLEX.Data.Dapper</AssemblyName>
+    <RootNamespace>FLEX.DataAccess</RootNamespace>
+    <AssemblyName>FLEX.DataAccess</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -20,7 +20,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>FLEX.Data.Dapper.xml</DocumentationFile>
+    <DocumentationFile>FLEX.DataAccess.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
@@ -31,7 +31,7 @@
     <DefineTrace>false</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>FLEX.Data.Dapper.xml</DocumentationFile>
+    <DocumentationFile>FLEX.DataAccess.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
@@ -62,9 +62,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\odp.net.managed.121.1.2\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.GRAMPA, Version=0.16.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PommaLabs.GRAMPA, Version=0.17.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.GRAMPA.0.16.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.GRAMPA.0.17.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -134,9 +134,9 @@
     <PostBuildEvent>if $(ConfigurationName) == Release (
     set dir="$(SolutionDir)FLEX.Data.Packager/lib/net40"
     if not exist "%25dir%25" mkdir "%25dir%25"
-    copy "$(TargetDir)FLEX.Data.Dapper.dll" "$(SolutionDir)FLEX.Data.Packager/lib/net40"
-    copy "$(TargetDir)FLEX.Data.Dapper.pdb" "$(SolutionDir)FLEX.Data.Packager/lib/net40"
-    copy "$(TargetDir)FLEX.Data.Dapper.xml" "$(SolutionDir)FLEX.Data.Packager/lib/net40"
+    copy "$(TargetDir)FLEX.DataAccess.dll" "$(SolutionDir)FLEX.Data.Packager/lib/net40"
+    copy "$(TargetDir)FLEX.DataAccess.pdb" "$(SolutionDir)FLEX.Data.Packager/lib/net40"
+    copy "$(TargetDir)FLEX.DataAccess.xml" "$(SolutionDir)FLEX.Data.Packager/lib/net40"
 )</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
