@@ -1,0 +1,49 @@
+﻿@* Generator: MvcHelper *@
+@* Namespace: FLEX.Web.MVC.Controls.ValueHolders *@
+
+@using System.Web.Mvc
+@using FLEX.Web.MVC.Controls.ValueHolders
+@using PommaLabs.GRAMPA.Extensions
+
+@helper JQuerySelect2(this HtmlHelper htmlHelper, JQuerySelect2Options options) {
+
+   <input id="@options.ID" type="hidden" class="bigdrop" style="width: 100%" />
+   
+   <script type="text/javascript">
+      $(document).ready(function () {
+         $("#@options.ID").select2({
+            allowClear: @options.AllowClear.ToJavaScriptBoolean(),
+            minimumInputLength: @options.MinimumInputLength,
+            placeholder: "@options.PlaceHolder",
+            query: function (query) {
+               $.ajax("@options.DataSourceUrl", {
+                  dataType: "json",
+                  type: "POST",
+                  data: {q: @(options.QueryBuilder)(query.term) },
+                  success: function(data, textStatus, jqXhr) {
+                     data = _.map(data, @options.DataMapper);
+                     query.callback({ more: false, results: data });
+                  }
+               });
+            }
+         });
+
+         $("#@options.ID").on("change", function (e) {
+            // Custom handlers BUG FIXME
+            // TODO
+            
+            // Search criteria handling
+            var searchCriteria = getSearchCriteria("@options.SearchCriteriaID");
+            if (searchCriteria !== undefined) {
+               var criteria = searchCriteria.get("criteria");
+               if (e.val !== "undefined" && e.val != null && e.val != "") {
+                  criteria["@options.SafeID"] = e.val;
+               } else {
+                  delete criteria["@options.SafeID"];
+               }
+               searchCriteria.set({ criteria: criteria });
+            }
+         });
+      });
+   </script>
+}

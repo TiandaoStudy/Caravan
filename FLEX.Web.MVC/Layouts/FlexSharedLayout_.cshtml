@@ -1,0 +1,71 @@
+﻿@* Generator: MvcView *@
+@* Namespace: FLEX.Web.MVC.Layouts *@
+
+@using FLEX.Web.MVC.Layouts
+@using PommaLabs.GRAMPA.Extensions
+
+<!DOCTYPE html>
+
+<html>
+   <head>
+      <!-- Required for IE compatibility -->
+      <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=EDGE" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <link href="@(FlexCoreLayout.FlexPath)/Styles/fonts.min.css" rel="stylesheet" media="screen" />
+      <link href="@(FlexCoreLayout.FlexPath)/Styles/jquery-ui.min.css" rel="stylesheet" media="screen" />
+      
+      <!-- "DoNotCacheTag" is needed to avoid issues with IE9 -->
+      <link href="@(FlexCoreLayout.FlexPath)/Styles/bootstrap.min.css@(FlexCoreLayout.DoNotCacheTag)" rel="stylesheet" media="screen" />
+      <link href="@(FlexCoreLayout.FlexPath)/Styles/bootstrap-datepicker3.min.css" rel="stylesheet" media="screen" />
+      <link href="@(FlexCoreLayout.FlexPath)/Styles/bootstrap-switch.min.css" rel="stylesheet" media="screen" />
+      
+      <link href="@(FlexCoreLayout.FlexPath)/Styles/flex.min.css" rel="stylesheet" media="screen" />
+      
+      <link href="@(FlexCoreLayout.FlexPath)/Styles/select2.min.css@(FlexCoreLayout.DoNotCacheTag)" rel="stylesheet" media="screen" />
+      <link href="@(FlexCoreLayout.FlexPath)/Styles/select2-bootstrap.min.css" rel="stylesheet" media="screen" />
+
+      <!-- Respond.js and html5shiv must be put AFTER CSS for Bootstrap -->
+      <!--[if lt IE 9]>  
+         <script src="@(FlexCoreLayout.FlexPath)/Scripts/html5shiv.min.js"></script>
+         <script src="@(FlexCoreLayout.FlexPath)/Scripts/respond.min.js"></script>
+      <![endif]-->
+      
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/base64.min.js"></script>
+
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/underscore.min.js"></script>
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/backbone.min.js"></script>
+
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/jquery-ui.min.js"></script>
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/spin.min.js"></script>
+
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/bootstrap.min.js"></script>
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/bootstrap-hover-dropdown.min.js"></script>
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/bootstrap-datepicker.min.js"></script>
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/bootstrap-switch.min.js"></script>
+
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/select2.min.js"></script>
+      
+      <!-- Custom scripts, use DoNotCacheTag to allow emergency updates! -->
+      <script type="text/javascript" src="@(FlexCoreLayout.FlexPath)/Scripts/flex.min.js@(FlexCoreLayout.DoNotCacheTag)"></script>
+
+      <script type="text/javascript" src="@(FlexCoreLayout.MyFlexPath)/Scripts/autocompletes.min.js@(FlexCoreLayout.DoNotCacheTag)"></script>
+      
+      <script type="text/javascript">
+         // JS settings
+         settings.rootPath = "@FlexCoreLayout.RootPath";
+         settings.flexPath = "@FlexCoreLayout.FlexPath";
+         settings.myFlexPath = "@FlexCoreLayout.MyFlexPath";
+      </script>
+      
+      @RenderSection("HeadSection")
+   </head>
+   
+   <body>
+      @RenderSection("BodySection")
+   </body>
+
+</html>

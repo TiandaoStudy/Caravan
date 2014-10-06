@@ -1,0 +1,65 @@
+﻿@using FLEX.Web.MVC.Controls.DataVisualization
+@using FLEX.Web.MVC.Controls.PageElements
+@using FLEX.Web.MVC.Controls.ValueHolders
+
+@model dynamic
+
+@{
+   ViewBag.Title = "title";
+   Layout = "~/Layouts/Pages/FlexVerticalSearchLayout_.cshtml";
+}
+
+@section ScriptSection {
+   
+}
+
+@section SearchCriteriaSection {
+<script type="text/javascript">
+    function p() {
+        alert("Sucess ");
+    }
+
+    
+</script>
+
+      function onChangedDate(event) {
+         alert(event.date);
+         var criteria = searchCriteria.get("criteria");
+         searchCriteria.set({ criteria: [{ id: "datepicker", value: event.date }] });
+      }
+   </script>
+
+   @Html.FlexVerticalSearchCriteria(new List<FlexVerticalSearchCriteriumOptions>
+   {
+      new FlexVerticalSearchCriteriumOptions
+      {
+         Label = "Employee", Control = () => Html.JQuerySelect2(new JQuerySelect2Options
+         {
+            ID = "employee_id",
+            DataSourceUrl = "http://localhost/testrestservice/employees/query",
+            PlaceHolder = "Name or ID",
+            QueryBuilder = "getEmployeesByNameOrID",
+            DataMapper = "mapEmployeeForSelect2",
+            AllowClear = true
+         })
+      },
+      new FlexVerticalSearchCriteriumOptions
+      {
+         Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true)
+      },
+      new FlexVerticalSearchCriteriumOptions
+      {
+         Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true})
+      },
+      new FlexVerticalSearchCriteriumOptions
+      {
+         Label = "Date", Control = () => Html.BootstrapDatePicker(new BootstrapDatePickerOptions {ID="datepicker",   MinView = BootstrapDatePickerOptions.MinViewMode.Days, StartView=BootstrapDatePickerOptions.StartViewMode.Month, ChangeDate="onChangedDate"})
+      }
+   })
+}
+
+@section DataGridSection {
+
+   @{Html.RenderAction("InitializeSearchGrid", "Home", new {searchCriteriaJson = ""}); }
+
+}
