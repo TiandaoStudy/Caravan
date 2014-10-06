@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Menu xmlns="FLEX.RestService.Core.XmlSchemas.MenuEntries" Layout="Horizontal" OpenOnClick="False">
+   <Group>
+      <Item ID="Item1" Caption="Functions" Enabled="True">
+         <Group Layout="Vertical">
+            <Item ID="Item2" Caption="Customers List" URL="Search" />
+            <Item ID="Item3" Caption="Employee List" URL="CV" />
+         </Group>
+      </Item>
+      <Item ID="Item80" Caption="Tools">
+         <Group Layout="Vertical">
+            <Item ID="Item83" Caption="Code Editor" URL="FLEX/Pages/CodeEditor.aspx" />
+            <Item ID="Item84" Caption="Log Search" URL="FLEX/Pages/LogSearch.aspx" />
+            <Item ID="Item85" Caption="Cache Overview" URL="FLEX/Pages/CacheOverview.aspx" />
+         </Group>
+      </Item>
+      <Item ID="Item112" Caption="Manual" ClientCall="window.open('http://www.bing.it/')" />
+   </Group>
+</Menu>

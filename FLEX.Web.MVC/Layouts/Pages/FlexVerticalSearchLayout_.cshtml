@@ -1,0 +1,178 @@
+﻿@* Generator: MvcView *@
+@* Namespace: FLEX.Web.MVC.Layouts.Pages *@
+
+@using System.Web.Mvc.Ajax
+@using FLEX.Web.MVC.Controls.PageElements
+
+@{
+   ViewBag.SearchCriteriaPanelCssClass = "col-xs-12 col-sm-4-5 col-md-3-5 col-lg-2-5";
+   ViewBag.DataGridPanelCssClass = "col-xs-12 col-sm-7-5 col-md-8-5 col-lg-9-5";
+   ViewBag.ExpandedDataGridPanelCssClass = "col-xs-11-5";
+}
+
+<script type="text/javascript">
+
+   $(document).ready(function () {
+      var searchCriteria = addSearchCriteria("default");
+      searchCriteria.on('change:criteria', function (model, criteria) {
+         $("#update-grid").attr("href", $("#update-grid").attr("href") + "&searchCriteriaJson=" + Base64.encode64(JSON.stringify(criteria)));
+         $("#update-grid").click();
+      });
+      initSearchCriteria(searchCriteria.get("id"));
+
+      // Movable panels
+      var panelList = $("#search-criteria-list");
+      panelList.sortable({
+         handle: '.control-label',
+         update: function () {
+            var pageName = "@VirtualPath";
+            var userName = "@HttpContext.Current.User.Identity.Name";
+            var key = userName + "_VerticalSearch_" + pageName;
+            var controlStatus = JSON.parse(localStorage.getItem(key));
+
+            // If no exists _statusControl, create the array _statusControl
+            if (controlStatus == null) {
+               controlStatus = [];
+            }
+
+            $('.vertical-search-criterium', panelList).each(function (index, elem) {
+               var $listItem = $(elem), newIndex = $listItem.index();
+               var id = elem.id.replace("li", "");
+               var elemt = _.find(controlStatus, function (i) { return i.id == id; });
+               if (elemt == null) {
+                  // Persist the new index.
+                  controlStatus.push({ id: id, closed: false, index: newIndex });
+               } else {
+                  // Persist the new index.
+                  elemt.index = newIndex;
+               }
+            });
+
+            //Save in the localStorage array _statusControl
+            localStorage.setItem(key, JSON.stringify(controlStatus));
+         }
+      });
+
+      $("#btn-hide-search-criteria").click(function () {
+         var searchCriteriaPanel = $("#search-criteria-panel");
+         var btnCriteriaPlaceholder = $("#btn-criteria-placeholder");
+         var dataGridPanel = $("#data-grid-panel");
+
+         if (!searchCriteriaPanel.hasClass('hidden')) {
+            // Collapse Search criteria and expand Data grid
+            searchCriteriaPanel.addClass("hidden");
+            btnCriteriaPlaceholder.removeClass("hidden");
+            var plHeight = dataGridPanel.children().outerHeight();
+            btnCriteriaPlaceholder.css({ height: plHeight + "px", paddingTop: plHeight / 2 + "px" });
+            dataGridPanel.switchClass("@ViewBag.DataGridPanelCssClass", "@ViewBag.ExpandedDataGridPanelCssClass", 0);
+         }
+      });
+
+      $("#btn-criteria-placeholder").click(function () {
+         var searchCriteriaPanel = $("#search-criteria-panel");
+         var btnCriteriaPlaceholder = $("#btn-criteria-placeholder");
+         var dataGridPanel = $("#data-grid-panel");
+
+         if (searchCriteriaPanel.hasClass('hidden')) {
+            // Collapse Data Grid and expand Search Criteria
+            dataGridPanel.switchClass("@ViewBag.ExpandedDataGridPanelCssClass", "@ViewBag.DataGridPanelCssClass", 0);
+            btnCriteriaPlaceholder.addClass("hidden");
+            searchCriteriaPanel.removeClass("hidden");
+         }
+      });
+   });
+
+   function onSearchCriteriumCollapsing(id) {
+      var pageName = "@VirtualPath";
+      var userName = "@HttpContext.Current.User.Identity.Name";
+      var key = userName + "_VerticalSearch_" + pageName;
+      var controlStatus = JSON.parse(localStorage.getItem(key));
+
+      // If no exists _statusControl, create the array _statusControl
+      if (controlStatus == null) {
+         controlStatus = [];
+      }
+
+      if ($("#icr" + id).hasClass('glyphicon-chevron-down')) {
+         $("#icr" + id).switchClass('glyphicon-chevron-down', 'glyphicon-chevron-up');
+         var elemt = _.find(controlStatus, function (i) { return i.id == id; });
+         if (elemt == null) {
+            controlStatus.push({ id: id, closed: false, index: -1 });
+         } else {
+            elemt.closed = false;
+         }
+
+      } else if ($("#icr" + id).hasClass('glyphicon-chevron-up')) {
+         $("#icr" + id).switchClass('glyphicon-chevron-up', 'glyphicon-chevron-down');
+         var elemt = _.find(controlStatus, function (i) { return i.id == id; });
+         if (elemt == null) {
+            controlStatus.push({ id: id, closed: true, index: -1 });
+         } else {
+            elemt.closed = true;
+         }
+      }
+
+      // Save in the localStorage the controlStatus array.
+      localStorage.setItem(key, JSON.stringify(controlStatus));
+   }
+
+   @RenderSection("ScriptSection", true)
+</script>
+
+<!-- Search Criteria (START) -->
+<div id="search-criteria-panel" class="@ViewBag.SearchCriteriaPanelCssClass">
+   <div class="panel panel-primary">
+      <div class="panel-heading">
+         <h3 class="panel-title">Search Criteria</h3>
+      </div>
+         
+      <div class="panel-body page-working-area">
+         <ul id="search-criteria-list" class="panel-group list-unstyled">
+            @RenderSection("SearchCriteriaSection", true)
+         </ul>
+      </div>
+         
+      <div class="panel-footer">
+         <div class="row">
+            <div class="col-xs-4 text-left">
+               <button type="button" id="btn-hide-search-criteria" class="btn btn-info">
+                  <span id="icon-hide-search-criteria" class="glyphicon glyphicon-arrow-left padded-icon"></span>Hide
+               </button>
+            </div>
+            <div class="col-xs-4 text-center">
+                  
+            </div>
+            <div class="col-xs-4 text-right">
+               <button type="button" id="btn-clear-search-criteria" class="btn btn-primary">
+                  <span id="icon-clear-search-criteria" class="glyphicon glyphicon-trash padded-icon"></span>Clear
+               </button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- Search Criteria (END) -->
+   
+<!-- Search Criteria Placeholder (START) -->
+<button type="button" id="btn-criteria-placeholder" class="hidden col-xs-0-5 btn btn-primary">
+   <span class="glyphicon glyphicon-arrow-right"></span>
+</button>
+<!-- Search Criteria Placeholder (END) -->
+
+<!-- Data Grid (START) -->
+<div id="data-grid-panel" class="@ViewBag.DataGridPanelCssClass">
+   <div class="panel panel-primary">
+      <div class="panel-heading">
+         <h3 class="panel-title">TITLE</h3>
+      </div>
+         
+      <div class="page-working-area">
+         @RenderSection("DataGridSection", true)
+      </div>
+         
+      <div class="panel-footer">
+            
+      </div>
+   </div>
+</div>
+<!-- Data Grid (END) -->
