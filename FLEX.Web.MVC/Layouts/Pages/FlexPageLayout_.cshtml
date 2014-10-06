@@ -1,0 +1,29 @@
+﻿@* Generator: MvcView *@
+@* Namespace: FLEX.Web.MVC.Layouts.Pages *@
+
+@using FLEX.Web.MVC.Controls.PageElements
+
+@{
+   Layout = "~/Layouts/FlexSharedLayout_.cshtml";
+}
+
+@section HeadSection {
+   
+   @RenderSection("HeadSection")
+}
+
+@section BodySection {
+
+   <div  class="container-fluid">
+      @Html.FlexPageHeader()
+
+      @Html.FlexMenuBar(Ajax)
+      
+     <div class="row" id="main-page-container" >  
+         @RenderSection("BodySection")
+      </div>
+   
+      @Html.FlexPageFooter()
+   </div>
+
+}

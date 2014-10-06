@@ -1,0 +1,102 @@
+﻿@using FLEX.Web.MVC.Controls.DataVisualization
+@using FLEX.Web.MVC.Controls.PageElements
+@using FLEX.Web.MVC.Controls.ValueHolders
+
+@model dynamic
+
+@{
+   ViewBag.Title = "title";
+   Layout = "~/Layouts/Pages/FlexVerticalSearchLayout_.cshtml";
+}
+
+@section ScriptSection {
+   
+}
+
+@section SearchCriteriaSection {
+<script type="text/javascript">
+    function p() {
+        alert("Sucess ");
+    }
+
+    
+</script>
+<<<<<<< local
+   
+   <script type="text/javascript">
+      function onSwitchChanged(event, state) {
+         var criteria = searchCriteria.get("criteria");
+         searchCriteria.set({criteria: [{id: "onoff", value: state}]});
+      }
+
+      function onChangedDate(event) {
+         alert(event.date);
+         var criteria = searchCriteria.get("criteria");
+         searchCriteria.set({ criteria: [{ id: "datepicker", value: event.date }] });
+      }
+
+      $(document).ready(function () {
+         $("#e7").select2({
+            minimumInputLength: 1,
+            allowClear: true,
+            placeholder: "Last Name",
+            query: function (query) {
+               $.getJSON("http://localhost/testrestservice/employees", function (d) {
+                  window.dataSelect = d;
+                  d = _.map(d, function (x) { return { "id": x.EmployeeID, "text": x.LastName }; });
+                  d = _.filter(d, function (x) { return x.text.indexOf(query.term) > -1; });
+                  query.callback({ results: d });
+               });
+            }
+         });
+
+         $("#e7").on("change", function (e) {
+            if (e.val !== "undefined" && e.val != null && e.val != "") {
+               searchCriteria.set({ criteria: [{ "employeeId": e.val }] });
+            } else {
+               searchCriteria.set({ criteria: [] });
+            }
+         });
+      });
+   </script>
+=======
+>>>>>>> other
+
+   @Html.FlexVerticalSearchCriteria(new List<FlexVerticalSearchCriteriumOptions>
+   {
+      new FlexVerticalSearchCriteriumOptions
+      {
+         Label = "Employee", Control = () => Html.JQuerySelect2(new JQuerySelect2Options
+         {
+            ID = "employee_id",
+            DataSourceUrl = "http://localhost/testrestservice/employees/query",
+            PlaceHolder = "Name or ID",
+            QueryBuilder = "getEmployeesByNameOrID",
+            DataMapper = "mapEmployeeForSelect2",
+            AllowClear = true
+         })
+      },
+      new FlexVerticalSearchCriteriumOptions
+      {
+         Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true)
+      },
+      new FlexVerticalSearchCriteriumOptions
+      {
+<<<<<<< local
+         Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true, OnChange = "onSwitchChanged"})
+      },
+      new FlexVerticalSearchCriteriumOptions
+      {
+         Label = "Date", Control = () => Html.BootstrapDatePicker(new BootstrapDatePickerOptions {ID="datepicker",   MinView = BootstrapDatePickerOptions.MinViewMode.Days, StartView=BootstrapDatePickerOptions.StartViewMode.Month, ChangeDate="onChangedDate"})
+=======
+         Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true})
+>>>>>>> other
+      }
+   })
+}
+
+@section DataGridSection {
+
+   @{Html.RenderAction("InitializeSearchGrid", "Home", new {searchCriteriaJson = ""}); }
+
+}

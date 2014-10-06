@@ -1,0 +1,33 @@
+﻿@* Generator: MvcHelper *@
+@* Namespace: FLEX.Web.MVC.Controls.ValueHolders *@
+
+@using System.Web.Mvc
+@using FLEX.Web.MVC.Controls.ValueHolders
+@using PommaLabs.GRAMPA.Extensions
+
+@helper BootstrapSwitch(this HtmlHelper htmlHelper, BootstrapSwitchOptions options) {
+
+   <input id="@options.ID" type="checkbox" />
+
+   <script type="text/javascript">
+      $(document).ready(function() {
+         $("#@options.ID").bootstrapSwitch({
+            state: @options.State.ToJavaScriptBoolean(),
+            size: "@options.SizeString"
+         });
+
+         $("#@options.ID").on('switchChange.bootstrapSwitch', function(event, state) {
+            // Custom handlers
+            @(options.OnChange)(event, state);
+         
+            // Search criteria handling
+            var searchCriteria = getSearchCriteria("@options.SearchCriteriaID");
+            if (searchCriteria !== undefined) {
+               var criteria = searchCriteria.get("criteria");
+               criteria["@options.SafeID"] = state;
+               searchCriteria.set({ criteria: criteria });
+            }
+         });
+      });
+   </script>
+}
