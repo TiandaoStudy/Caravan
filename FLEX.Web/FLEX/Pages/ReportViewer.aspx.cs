@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using FLEX.Web.UserControls.Ajax;
+using FLEX.Web.WebForms;
 using Newtonsoft.Json;
 
 // ReSharper disable CheckNamespace

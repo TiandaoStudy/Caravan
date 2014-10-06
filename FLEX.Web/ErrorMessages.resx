@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Pages_DynamicReportViewer_MissingReportName" xml:space="preserve">
+    <value>No report name has been specified in the GET parameters.</value>
+  </data>
+  <data name="TopLevel_ErrorManager_ErrorLoadingType" xml:space="preserve">
+    <value>Could not load the IErrorManager implementation. See inner exception for more details.</value>
+  </data>
+  <data name="TopLevel_PageManager_ErrorLoadingType" xml:space="preserve">
+    <value>Could not load the IPageManager implementation. See inner exception for more details.</value>
+  </data>
+  <data name="TopLevel_SecurityManager_ErrorLoadingType" xml:space="preserve">
+    <value>Could not load the ISecurityManager implementation. See inner exception for more details.</value>
+  </data>
   <data name="UserControls_AutoSuggest_NullOrEmptyLookupBy" xml:space="preserve">
     <value>The specified XML lookup field must not be neither null nor empty.</value>
   </data>

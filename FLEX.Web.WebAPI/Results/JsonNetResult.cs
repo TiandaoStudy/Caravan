@@ -1,13 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
-namespace FLEX.WebAPI
+namespace FLEX.Web.WebAPI.Results
 {
     public sealed class JsonNetResult : ActionResult
     {
@@ -42,8 +39,8 @@ namespace FLEX.WebAPI
             HttpResponseBase response = context.HttpContext.Response;
 
             response.ContentType = !string.IsNullOrWhiteSpace(ContentType)
-              ? ContentType
-              : "application/json";
+                ? ContentType
+                : "application/json";
 
             if (ContentEncoding != null)
                 response.ContentEncoding = ContentEncoding;
