@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace FLEX.Data.Model
+namespace FLEX.Web.WebAPI.Results
 {
-    public class Class1
+    class BsonNetResult
     {
     }
 }

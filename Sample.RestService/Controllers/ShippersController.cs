@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using FLEX.WebAPI;
+using FLEX.Web.WebAPI.Results;
 using Sample.DataAccess.EntityFramework;
 
 namespace RestService.Controllers

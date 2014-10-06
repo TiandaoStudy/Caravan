@@ -53,7 +53,7 @@ namespace FLEX.Web.Pages
          try
          {
             // Report name is mandatory.
-            Raise<InvalidOperationException>.IfIsEmpty(Request[ReportNameRequestKey], WebErrorMessages.Pages_DynamicReportViewer_MissingReportName);
+            Raise<InvalidOperationException>.IfIsEmpty(Request[ReportNameRequestKey], WebForms.ErrorMessages.Pages_DynamicReportViewer_MissingReportName);
 
             // Configuration for the VerticalSearch search button.
             Master.SearchButton.Visible = true;

@@ -21,12 +21,29 @@
 
     
 </script>
+<<<<<<< local
+=======
+<<<<<<< local
+   
+   <script type="text/javascript">
+      function onSwitchChanged(event, state) {
+         var criteria = searchCriteria.get("criteria");
+         searchCriteria.set({criteria: [{id: "onoff", value: state}]});
+      }
+>>>>>>> other
 
       function onChangedDate(event) {
          alert(event.date);
          var criteria = searchCriteria.get("criteria");
          searchCriteria.set({ criteria: [{ id: "datepicker", value: event.date }] });
       }
+<<<<<<< local
+=======
+   </script>
+=======
+>>>>>>> other
+
+>>>>>>> other
    @Html.FlexVerticalSearchCriteria(new List<FlexVerticalSearchCriteriumOptions>
    {
       new FlexVerticalSearchCriteriumOptions
@@ -47,11 +64,19 @@
       },
       new FlexVerticalSearchCriteriumOptions
       {
+<<<<<<< local
          Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true})
+=======
+<<<<<<< local
+         Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true, OnChange = "onSwitchChanged"})
+>>>>>>> other
       },
       new FlexVerticalSearchCriteriumOptions
       {
          Label = "Date", Control = () => Html.BootstrapDatePicker(new BootstrapDatePickerOptions {ID="datepicker",   MinView = BootstrapDatePickerOptions.MinViewMode.Days, StartView=BootstrapDatePickerOptions.StartViewMode.Month, ChangeDate="onChangedDate"})
+=======
+         Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true})
+>>>>>>> other
       }
    })
 }
