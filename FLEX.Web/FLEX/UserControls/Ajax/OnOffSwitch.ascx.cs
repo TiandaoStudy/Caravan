@@ -17,10 +17,10 @@ namespace FLEX.Web.UserControls.Ajax
    /// </summary>
    public partial class OnOffSwitch : AjaxControlBase, IAjaxControl, ISearchControl
    {
-      protected const string ActiveOnClass = "btn btn-sm btn-on btn-primary switch-active";
-      protected const string ActiveOffClass = "btn btn-sm btn-off btn-primary switch-active";
-      protected const string InactiveOnClass = "btn btn-sm btn-on btn-default switch-inactive";
-      protected const string InactiveOffClass = "btn btn-sm btn-off btn-default switch-inactive";
+      protected const string ActiveOnClass = "btn btn-on btn-primary switch-active";
+      protected const string ActiveOffClass = "btn btn-off btn-primary switch-active";
+      protected const string InactiveOnClass = "btn btn-on btn-default switch-inactive";
+      protected const string InactiveOffClass = "btn btn-off btn-default switch-inactive";
 
       protected override void Page_Load(object sender, EventArgs e)
       {

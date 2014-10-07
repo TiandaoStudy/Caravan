@@ -462,17 +462,16 @@
     <Content Include="FLEX\Fonts\ionicons.svg" />
     <Content Include="FLEX\Fonts\octicons.svg" />
     <Content Include="FLEX\Images\JQueryUI\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="FLEX\Images\JQueryUI\ui-bg_flat_75_428bca_40x100.png" />
-    <Content Include="FLEX\Images\JQueryUI\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="FLEX\Images\JQueryUI\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="FLEX\Images\JQueryUI\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="FLEX\Images\JQueryUI\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="FLEX\Images\JQueryUI\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-bg_flat_100_3071A9_40x100.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-bg_flat_100_428bca_40x100.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-bg_flat_100_f2dede_40x100.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-bg_flat_100_fcf8e3_40x100.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-bg_flat_100_ffffff_40x100.png" />
     <Content Include="FLEX\Images\JQueryUI\ui-icons_222222_256x240.png" />
-    <Content Include="FLEX\Images\JQueryUI\ui-icons_2e83ff_256x240.png" />
     <Content Include="FLEX\Images\JQueryUI\ui-icons_454545_256x240.png" />
-    <Content Include="FLEX\Images\JQueryUI\ui-icons_d9534f_256x240.png" />
-    <Content Include="FLEX\Images\JQueryUI\ui-icons_fff_256x240.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-icons_8a6d3b_256x240.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-icons_a94442_256x240.png" />
+    <Content Include="FLEX\Images\JQueryUI\ui-icons_FFF_256x240.png" />
     <Content Include="FLEX\Images\logo-finsa.png" />
     <Content Include="FLEX\Images\pattern.png" />
     <Content Include="FLEX\Pages\CodeEditor.aspx">
@@ -950,6 +949,7 @@
       <Name>FLEX.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>:: FONTS - Package
