@@ -5,7 +5,7 @@ using System.Web;
 using System.Xml;
 using FLEX.Common;
 using FLEX.Common.Data;
-using FLEX.Web.WebForms;
+using FLEX.Web.XmlSettings.Lookup;
 using FLEX.WebForms;
 using PommaLabs.GRAMPA.Diagnostics;
 

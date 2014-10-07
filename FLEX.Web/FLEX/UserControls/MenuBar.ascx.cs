@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml;
 using FLEX.Common.Data;
 using FLEX.Web.WebForms;
+using FLEX.Web.XmlSettings.MenuBar;
 using FLEX.WebForms;
 
 // ReSharper disable CheckNamespace

@@ -115,9 +115,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AjaxLookupData.Serialization.cs">
-      <DependentUpon>XsdClassGen.tt</DependentUpon>
-    </Compile>
     <Compile Include="CacheManager.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Core\DynamicReportParser.cs" />
@@ -126,6 +123,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ErrorMessages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX.Web.XmlSettings.AjaxLookup.AjaxLookupData.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX.Web.XmlSettings.Lookup.LookupData.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX.Web.XmlSettings.MenuBar.Item.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX.Web.XmlSettings.MenuBar.Menu.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX.WebForms.webMarkupMin.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
     <Compile Include="FLEX\MasterPages\CustomView.Master.cs">
       <DependentUpon>CustomView.Master</DependentUpon>
@@ -383,15 +395,6 @@
     <Compile Include="Instances.cs" />
     <Compile Include="IPageManager.cs" />
     <Compile Include="ISecurityManager.cs" />
-    <Compile Include="Item.Serialization.cs">
-      <DependentUpon>XsdClassGen.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LookupData.Serialization.cs">
-      <DependentUpon>XsdClassGen.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Menu.Serialization.cs">
-      <DependentUpon>XsdClassGen.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FLEX\UserControls\Ajax\AutoSuggest.ascx.cs">
       <DependentUpon>AutoSuggest.ascx</DependentUpon>
@@ -441,9 +444,6 @@
     </Compile>
     <Compile Include="FLEX\UserControls\Ajax\ErrorHandler.ascx.designer.cs">
       <DependentUpon>ErrorHandler.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="webMarkupMin.Serialization.cs">
-      <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
     <Compile Include="WebSettings.cs" />
     <Compile Include="XsdClassGen.cs">
