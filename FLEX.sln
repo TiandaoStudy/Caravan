@@ -16,6 +16,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Coding Standards", "Coding 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.WebForms", "FLEX.Web.Packager\NuGetPackager.WebForms.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
+	ProjectSection(ProjectDependencies) = postProject
+		{407B5921-9039-4D0D-A40A-36A19C251CDC} = {407B5921-9039-4D0D-A40A-36A19C251CDC}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataAccess.Dapper", "FLEX.TestDataAccess\Sample.DataAccess.Dapper.csproj", "{9F1BAA6D-7E1E-43CC-94CE-0B0AF04C753F}"
 EndProject
@@ -59,6 +62,9 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FLEX.DataAccess", "FLEX.Data.Oracle\FLEX.DataAccess.vbproj", "{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.DataAccess", "FLEX.Data.Packager\NuGetPackager.DataAccess.csproj", "{BD471427-A76A-4764-94C1-08C8C3BC1379}"
+	ProjectSection(ProjectDependencies) = postProject
+		{396D8F01-E785-4C04-9FC3-CFAE3BE932A2} = {396D8F01-E785-4C04-9FC3-CFAE3BE932A2}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Web.CodeEditor", "NuGetPackager.Web.CodeEditor\NuGetPackager.Web.CodeEditor.csproj", "{01F957B7-5B84-4792-A781-87E82257618D}"
 EndProject
