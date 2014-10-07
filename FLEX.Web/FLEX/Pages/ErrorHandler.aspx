@@ -60,7 +60,7 @@
 
                   <div class="row form-group">
                      <div class="col-xs-2" style="text-align: right;">
-                        <input class="btn btn-default btn-sm" id="btnDetail" onclick=" detailError(); "
+                        <input class="btn btn-default" id="btnDetail" onclick=" detailError(); "
                                type="button" value="Detail >>" name="btnDetail">
                      </div>
                      <div class="col-xs-10" id="TDError" style="visibility: hidden"><asp:textbox id="txtDetail" runat="server" ForeColor="Black" BorderStyle="None" ReadOnly="True" TextMode="MultiLine" ></asp:textbox></div>
@@ -76,6 +76,6 @@
 </asp:Content>
 
 <asp:Content ID="Content2" runat="server" ContentPlaceHolderID="buttonsContent">
-   <asp:Button ID="btnEsci"  class="btn btn-primary btn-sm" Text="Exit" runat="server"  CausesValidation="false" OnClientClick=" onCancel(); return false; "/>
-   <asp:Button id="btnPrint" runat="server" class="btn btn-primary btn-sm" Text="Print" Width="80px"></asp:Button>
+   <asp:Button ID="btnEsci"  class="btn btn-primary" Text="Exit" runat="server"  CausesValidation="false" OnClientClick=" onCancel(); return false; "/>
+   <asp:Button id="btnPrint" runat="server" class="btn btn-primary" Text="Print" Width="80px"></asp:Button>
 </asp:Content>

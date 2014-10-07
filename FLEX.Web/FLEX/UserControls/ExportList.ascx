@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ExportList.ascx.cs" Inherits="FLEX.Web.UserControls.ExportList" %>
 
 <asp:Panel ID="pnlExport" CssClass="btn-group dropup" runat="server">
-   <button class="btn btn-primary btn-sm"  data-toggle="dropdown" data-hover="dropdown" data-delay="300" id="btnExports" data-close-others="false">
+   <button class="btn btn-primary"  data-toggle="dropdown" data-hover="dropdown" data-delay="300" id="btnExports" data-close-others="false">
       <b class="caret"></b>&nbsp;Export 
    </button>
    

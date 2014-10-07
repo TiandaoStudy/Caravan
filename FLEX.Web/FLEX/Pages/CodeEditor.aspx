@@ -74,7 +74,7 @@
    <!-- Il bottone deve stare in un UpdatePanel, perché appare e scompare a seconda che i file siano selezionati o meno -->
    <ajax:UpdatePanel runat="server">
       <ContentTemplate>
-         <asp:LinkButton class="btn btn-success btn-sm" ID="lbtnSave" Visible="false"  runat="server" OnClick="lbtnSave_Click" OnClientClick=" Save(); "><span class="glyphicon glyphicon-floppy-disk"></span>&nbsp;Save</asp:LinkButton>         
+         <asp:LinkButton class="btn btn-success" ID="lbtnSave" Visible="false"  runat="server" OnClick="lbtnSave_Click" OnClientClick=" Save(); "><span class="glyphicon glyphicon-floppy-disk"></span>&nbsp;Save</asp:LinkButton>         
       </ContentTemplate>
    </ajax:UpdatePanel>
 </asp:Content>

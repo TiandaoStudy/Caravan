@@ -85,24 +85,6 @@ namespace FLEX.Web.UserControls.Ajax {
         protected global::FLEX.WebForms.UserControls.DataGrid fdtgLeft;
         
         /// <summary>
-        /// lkbMoveRight control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lkbMoveRight;
-        
-        /// <summary>
-        /// chkSelectLeft control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkSelectLeft;
-        
-        /// <summary>
         /// btnMoveRight control.
         /// </summary>
         /// <remarks>
@@ -209,23 +191,5 @@ namespace FLEX.Web.UserControls.Ajax {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::FLEX.WebForms.UserControls.DataGrid fdtgRight;
-        
-        /// <summary>
-        /// lkbMoveLeft control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lkbMoveLeft;
-        
-        /// <summary>
-        /// chkSelectRight control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkSelectRight;
     }
 }

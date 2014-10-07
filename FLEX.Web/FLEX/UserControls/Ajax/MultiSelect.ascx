@@ -62,16 +62,16 @@
       <ajax:UpdatePanel runat="server">
          <contenttemplate>
             <div id="buttons" class="col-xs-1 btn-group-vertical">
-               <asp:LinkButton ID="btnMoveRight" runat="server" CssClass="btn btn-success btn-sm" OnClick="btnMoveRight_Click" ToolTip="Move Elements Right">
+               <asp:LinkButton ID="btnMoveRight" runat="server" CssClass="btn btn-success" OnClick="btnMoveRight_Click" ToolTip="Move Elements Right">
                   <span class="glyphicon glyphicon-chevron-right"></span>
                </asp:LinkButton>
-               <asp:LinkButton ID="btnMoveAllRight" runat="server" CssClass="btn btn-success btn-sm" OnClick="btnMoveAllRight_Click" ToolTip="Move All Elements Right">
+               <asp:LinkButton ID="btnMoveAllRight" runat="server" CssClass="btn btn-success" OnClick="btnMoveAllRight_Click" ToolTip="Move All Elements Right">
                   <span class="glyphicon glyphicon-forward"></span>
                </asp:LinkButton>
-               <asp:LinkButton ID="btnMoveAllLeft" runat="server" CssClass="btn btn-danger btn-sm" OnClick="btnMoveAllLeft_Click" ToolTip="Move All Elements Left">
+               <asp:LinkButton ID="btnMoveAllLeft" runat="server" CssClass="btn btn-danger" OnClick="btnMoveAllLeft_Click" ToolTip="Move All Elements Left">
                   <span class="glyphicon glyphicon-backward"></span>
                </asp:LinkButton>
-               <asp:LinkButton ID="btnMoveLeft" runat="server" CssClass="btn btn-danger btn-sm" OnClick="btnMoveLeft_Click" ToolTip="Move Elements Left">
+               <asp:LinkButton ID="btnMoveLeft" runat="server" CssClass="btn btn-danger" OnClick="btnMoveLeft_Click" ToolTip="Move Elements Left">
                   <span class="glyphicon glyphicon-chevron-left"></span>
                </asp:LinkButton>
             </div>

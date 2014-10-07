@@ -26,5 +26,5 @@
 </asp:Content>
 
 <asp:Content runat="server" ID="aspButtonsContent" ContentPlaceHolderID="buttonsContent">
-   <flex:ImageButton runat="server" ID="btnRefresh" ButtonClass="btn btn-primary btn-sm" ButtonText="Refresh" IconClass="glyphicon glyphicon-refresh" OnClick="btnRefresh_Click" />
+   <flex:ImageButton runat="server" ID="btnRefresh" ButtonClass="btn btn-primary" ButtonText="Refresh" IconClass="glyphicon glyphicon-refresh" OnClick="btnRefresh_Click" />
 </asp:Content>
