@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<Menu xmlns="FLEX.RestService.Core.XmlSchemas.MenuEntries" Layout="Horizontal" OpenOnClick="False">
+<Menu xmlns="FLEX.Common.XmlSchemas.MenuEntries" Layout="Horizontal" OpenOnClick="False">
    <Group>
       <Item ID="Item1" Caption="Functions" Enabled="True">
          <Group Layout="Vertical">

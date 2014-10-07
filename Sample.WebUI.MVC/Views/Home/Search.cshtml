@@ -1,12 +1,17 @@
-﻿@using FLEX.Web.MVC.Controls.DataVisualization
+﻿@using System.Data
+@using FLEX.Web.MVC.Controls.DataVisualization
 @using FLEX.Web.MVC.Controls.PageElements
 @using FLEX.Web.MVC.Controls.ValueHolders
+@using PommaLabs.GRAMPA.Testing
 
 @model dynamic
 
 @{
    ViewBag.Title = "title";
    Layout = "~/Layouts/Pages/FlexVerticalSearchLayout_.cshtml";
+   ViewBag.DataColumns = new [] {"A", "B", "C", "D", "E", "F", "G"};
+   var gen = new RandomDataTableGenerator(ViewBag.DataColumns);
+   ViewBag.DataSource = gen.GenerateDataTable(10000);
 }
 
 @section ScriptSection {
@@ -18,32 +23,28 @@
     function p() {
         alert("Sucess ");
     }
-
-    
-</script>
-<<<<<<< local
-=======
-<<<<<<< local
    
-   <script type="text/javascript">
       function onSwitchChanged(event, state) {
          var criteria = searchCriteria.get("criteria");
          searchCriteria.set({criteria: [{id: "onoff", value: state}]});
       }
->>>>>>> other
 
       function onChangedDate(event) {
          alert(event.date);
          var criteria = searchCriteria.get("criteria");
          searchCriteria.set({ criteria: [{ id: "datepicker", value: event.date }] });
       }
-<<<<<<< local
-=======
-   </script>
-=======
->>>>>>> other
 
->>>>>>> other
+      $(document).ready(function () {
+         $('#myTable').DataTable({
+            "deferRender": true,
+            "processing": true,
+            "scrollY": "200px",
+            "dom": "provaS"
+         });
+      });
+   </script>
+
    @Html.FlexVerticalSearchCriteria(new List<FlexVerticalSearchCriteriumOptions>
    {
       new FlexVerticalSearchCriteriumOptions
@@ -64,27 +65,44 @@
       },
       new FlexVerticalSearchCriteriumOptions
       {
-<<<<<<< local
-         Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true})
-=======
-<<<<<<< local
          Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true, OnChange = "onSwitchChanged"})
->>>>>>> other
       },
       new FlexVerticalSearchCriteriumOptions
       {
          Label = "Date", Control = () => Html.BootstrapDatePicker(new BootstrapDatePickerOptions {ID="datepicker",   MinView = BootstrapDatePickerOptions.MinViewMode.Days, StartView=BootstrapDatePickerOptions.StartViewMode.Month, ChangeDate="onChangedDate"})
-=======
-         Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true})
->>>>>>> other
       }
    })
 }
 
 @section DataGridSection {
 
-   @{Html.RenderAction("InitializeSearchGrid", "Home", new {searchCriteriaJson = ""}); }
+   @*@{Html.RenderAction("InitializeSearchGrid", "Home", new {searchCriteriaJson = ""}); }
    
 
-   @Html.FlexCheckBoxList(null)
+   @Html.FlexCheckBoxList(null)*@
+
+   <div id="prova">
+   <table id="myTable" class="table table-striped">
+      <thead>
+         <tr>
+            @foreach (var col in ViewBag.DataColumns)
+            {
+               <td>@col</td>
+            }
+         </tr>
+      </thead>
+
+      <tbody>
+         @foreach (DataRow row in ViewBag.DataSource.Rows)
+         {
+            <tr>
+               @foreach (var col in ViewBag.DataColumns)
+               {
+                  <td>@row[col]</td>
+               }
+            </tr>
+         }
+      </tbody>
+   </table>
+   </div>
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using FLEX.Common.Data;
 using FLEX.Web.WebForms;
+using FLEX.WebForms;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

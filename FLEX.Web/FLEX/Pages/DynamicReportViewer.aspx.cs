@@ -9,6 +9,7 @@ using Dapper;
 using FLEX.Common;
 using FLEX.Common.Data;
 using FLEX.Common.Web;
+using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 using Newtonsoft.Json;
 using PommaLabs.GRAMPA;
@@ -19,7 +20,7 @@ using PommaLabs.GRAMPA.Diagnostics;
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
 
-namespace FLEX.Web.Pages
+namespace FLEX.WebForms.Pages
 // ReSharper restore CheckNamespace
 {
    public partial class DynamicReportViewer : PageBaseListAndSearch
@@ -53,7 +54,7 @@ namespace FLEX.Web.Pages
          try
          {
             // Report name is mandatory.
-            Raise<InvalidOperationException>.IfIsEmpty(Request[ReportNameRequestKey], WebForms.ErrorMessages.Pages_DynamicReportViewer_MissingReportName);
+            Raise<InvalidOperationException>.IfIsEmpty(Request[ReportNameRequestKey], ErrorMessages.Pages_DynamicReportViewer_MissingReportName);
 
             // Configuration for the VerticalSearch search button.
             Master.SearchButton.Visible = true;

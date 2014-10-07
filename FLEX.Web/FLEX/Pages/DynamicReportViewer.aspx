@@ -1,6 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DynamicReportViewer.aspx.cs" Inherits="FLEX.Web.Pages.DynamicReportViewer" MasterPageFile="~/FLEX/MasterPages/VerticalSearch.Master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DynamicReportViewer.aspx.cs" Inherits="FLEX.WebForms.Pages.DynamicReportViewer" MasterPageFile="~/FLEX/MasterPages/VerticalSearch.Master" %>
 <%@ MasterType VirtualPath="~/FLEX/MasterPages/VerticalSearch.Master"%>
-<%@ Register TagPrefix="flex" Namespace="FLEX.Web.UserControls" Assembly="FLEX.Web" %>
+<%@ Register TagPrefix="flex" Namespace="FLEX.WebForms.UserControls" Assembly="FLEX.WebForms" %>
 
 <asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">
    <title>Dynamic Report Viewer</title>

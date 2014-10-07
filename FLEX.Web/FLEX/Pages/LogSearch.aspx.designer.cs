@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FLEX.Web.Pages {
+namespace FLEX.WebForms.Pages {
     
     
     public partial class LogSearch {
@@ -19,7 +19,7 @@ namespace FLEX.Web.Pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.UserControls.DataGrid fdtgLogs;
+        protected global::FLEX.WebForms.UserControls.DataGrid fdtgLogs;
         
         /// <summary>
         /// flexLongMsg control.

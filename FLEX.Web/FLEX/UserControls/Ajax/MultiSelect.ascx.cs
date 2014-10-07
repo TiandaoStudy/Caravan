@@ -260,7 +260,7 @@ namespace FLEX.Web.UserControls.Ajax
          {
             foreach (GridViewRow grLeft in fdtgLeft.Rows)
             {
-               var _chkSel = (CheckBox) grLeft.Cells[1].FindControl("chkSelect");
+               var _chkSel = (CheckBox) grLeft.Cells[1].FindControl("chkSelectLeft");
                if (_chkSel.Checked)
                {
                   moveToRight(grLeft);
@@ -358,7 +358,7 @@ namespace FLEX.Web.UserControls.Ajax
          {
             foreach (GridViewRow grRight in fdtgRight.Rows)
             {
-               var _chkSel = (CheckBox) grRight.Cells[1].FindControl("chkSelect");
+               var _chkSel = (CheckBox) grRight.Cells[1].FindControl("chkSelectRight");
                if (_chkSel.Checked)
                {
                   moveToLeft(grRight);

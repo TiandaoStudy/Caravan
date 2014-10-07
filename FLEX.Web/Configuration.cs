@@ -1,7 +1,6 @@
 ﻿using System.Configuration;
-using FLEX.Common;
 
-namespace FLEX.Web
+namespace FLEX.WebForms
 {
    /// <summary>
    /// 

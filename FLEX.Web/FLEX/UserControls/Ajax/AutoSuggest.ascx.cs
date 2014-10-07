@@ -6,6 +6,7 @@ using FLEX.Common;
 using FLEX.Common.Collections;
 using FLEX.Common.Web;
 using FLEX.Web.WebForms;
+using FLEX.WebForms;
 using PommaLabs.GRAMPA.Diagnostics;
 
 // ReSharper disable CheckNamespace

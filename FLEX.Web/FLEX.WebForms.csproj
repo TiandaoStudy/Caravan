@@ -7,8 +7,8 @@
     <ProjectGuid>{407B5921-9039-4D0D-A40A-36A19C251CDC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FLEX.Web.WebForms</RootNamespace>
-    <AssemblyName>FLEX.Web</AssemblyName>
+    <RootNamespace>FLEX.WebForms</RootNamespace>
+    <AssemblyName>FLEX.WebForms</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -35,7 +35,7 @@
     <DefineConstants>USETHROWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\FLEX.Web.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\FLEX.WebForms.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClosedXML, Version=0.75.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
@@ -1014,9 +1014,9 @@ copy $(ProjectDir)\FLEX\XmlSettings\Lookups\*.xsd $(SolutionDir)\FLEX.Extensions
 if $(ConfigurationName) == Release (
     set dir="$(SolutionDir)FLEX.Web.Packager/lib/net40"
     if not exist "%25dir%25" mkdir "%25dir%25"
-    copy "$(TargetDir)FLEX.Web.dll" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
-    copy "$(TargetDir)FLEX.Web.pdb" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
-    copy "$(TargetDir)FLEX.Web.xml" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
+    copy "$(TargetDir)FLEX.WebForms.dll" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
+    copy "$(TargetDir)FLEX.WebForms.pdb" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
+    copy "$(TargetDir)FLEX.WebForms.xml" "$(SolutionDir)FLEX.Web.Packager/lib/net40"
 )
 </PostBuildEvent>
   </PropertyGroup>

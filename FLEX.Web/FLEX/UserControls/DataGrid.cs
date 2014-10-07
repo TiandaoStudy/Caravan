@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Data;
 using System.Web.UI.WebControls;
-using FLEX.Web.UserControls.Templates;
+using FLEX.WebForms.UserControls.Templates;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
 
-namespace FLEX.Web.UserControls
+namespace FLEX.WebForms.UserControls
 // ReSharper restore CheckNamespace
 {
    public sealed class DataGrid : GridView

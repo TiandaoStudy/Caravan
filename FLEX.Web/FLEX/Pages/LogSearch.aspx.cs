@@ -1,12 +1,12 @@
 ﻿using System;
-using FLEX.Common;
 using FLEX.Common.Data;
+using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
 
-namespace FLEX.Web.Pages
+namespace FLEX.WebForms.Pages
 // ReSharper restore CheckNamespace
 {
    public partial class LogSearch : PageBase

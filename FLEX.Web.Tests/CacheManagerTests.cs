@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using FLEX.WebForms;
+using NUnit.Framework;
 
 namespace FLEX.Web.Tests
 {

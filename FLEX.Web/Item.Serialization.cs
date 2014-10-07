@@ -11,7 +11,7 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace FLEX.Web.WebForms
+namespace FLEX.WebForms
 {
 	public partial class Item
 	{

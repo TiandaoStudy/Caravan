@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 using PommaLabs.GRAMPA.Extensions;
 using PommaLabs.KVLite;
@@ -10,7 +11,7 @@ using PommaLabs.KVLite;
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
 
-namespace FLEX.Web.Pages
+namespace FLEX.WebForms.Pages
 // ReSharper restore CheckNamespace
 {
    public partial class CacheOverview : PageBase

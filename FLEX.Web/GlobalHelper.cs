@@ -4,7 +4,7 @@ using System.Web;
 using FLEX.Common.Data;
 using PommaLabs.KVLite;
 
-namespace FLEX.Web
+namespace FLEX.WebForms
 {
    public sealed class GlobalHelper
    {
@@ -44,10 +44,10 @@ namespace FLEX.Web
       public static void Application_Error(object sender, EventArgs args)
       {
          // Removes any special filtering, especially GZip filtering.
-          // Assigning the response filter to a dummy variable is required
-          // in order to avoid a .NET issue which is triggered by setting
-          // the Filter property, without reading it first.
-          var dummy = HttpContext.Current.Response.Filter;
+         // Assigning the response filter to a dummy variable is required
+         // in order to avoid a .NET issue which is triggered by setting
+         // the Filter property, without reading it first.
+         var dummy = HttpContext.Current.Response.Filter;
          HttpContext.Current.Response.Filter = null;
 
          // Logs the error into the DB.

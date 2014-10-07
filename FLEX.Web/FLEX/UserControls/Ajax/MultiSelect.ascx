@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MultiSelect.ascx.cs" Inherits="FLEX.Web.UserControls.Ajax.MultiSelect" %>
 <%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
-<%@ Register TagPrefix="flex" Namespace="FLEX.Web.UserControls" Assembly="FLEX.Web" %>
+<%@ Register TagPrefix="flex" Namespace="FLEX.WebForms.UserControls" Assembly="FLEX.WebForms" %>
 
    <style type="text/css">
       .workingArea {
@@ -45,7 +45,7 @@
                                  <asp:TemplateField HeaderText="">
                                     <ItemTemplate>
                                        <div>
-                                          <asp:CheckBox ID="chkSelect" runat="server" Enabled="true" Checked="false"></asp:CheckBox>
+                                          <asp:CheckBox ID="chkSelectLeft" runat="server" Enabled="true" Checked="false"></asp:CheckBox>
                                        </div>
                                     </ItemTemplate>
                                  </asp:TemplateField>
@@ -105,7 +105,7 @@
                                     <ItemStyle Width="50px" Wrap="True"></ItemStyle>
                                     <ItemTemplate>
                                        <div>
-                                          <asp:CheckBox ID="chkSelect" runat="server" Enabled="true" Checked="false"></asp:CheckBox>
+                                          <asp:CheckBox ID="chkSelectRight" runat="server" Enabled="true" Checked="false"></asp:CheckBox>
                                        </div>
                                     </ItemTemplate>
                                  </asp:TemplateField>

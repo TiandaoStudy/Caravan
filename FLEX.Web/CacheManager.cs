@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Caching;
-using PommaLabs.KVLite.Web;
+using FLEX.Web;
 using PommaLabs.GRAMPA.Diagnostics;
+using PommaLabs.KVLite.Web;
 
-namespace FLEX.Web
+namespace FLEX.WebForms
 {
    public static class CacheManager
    {

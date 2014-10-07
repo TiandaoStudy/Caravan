@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Configuration;
 using FLEX.Common.Data;
+using FLEX.WebForms;
 using PommaLabs.GRAMPA.Reflection;
+using Configuration = FLEX.WebForms.Configuration;
 
 namespace FLEX.Web.WebForms
 {

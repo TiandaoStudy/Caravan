@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FLEX.Web.WebForms {
+namespace FLEX.WebForms {
     
     
     /// <remarks/>
@@ -2009,7 +2009,7 @@ namespace FLEX.Web.WebForms {
         }
     }
 }
-namespace FLEX.Web.WebForms {
+namespace FLEX.WebForms {
     
     
     /// <remarks/>
@@ -2104,7 +2104,7 @@ namespace FLEX.Web.WebForms {
         }
     }
 }
-namespace FLEX.Web.WebForms {
+namespace FLEX.WebForms {
     
     
     /// <remarks/>
@@ -2300,7 +2300,7 @@ namespace FLEX.Web.WebForms {
         }
     }
 }
-namespace FLEX.Web.WebForms {
+namespace FLEX.WebForms {
     
     
     /// <remarks/>
