@@ -18,21 +18,21 @@ namespace FLEX.Common.Data
       bool IsErrorEnabled { get; }
       bool IsFatalEnabled { get; }
 
-      void LogDebug<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IList<GKeyValuePair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
-      void LogInfo<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IList<GKeyValuePair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
-      void LogWarning<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IList<GKeyValuePair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
-      void LogError<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IList<GKeyValuePair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
-      void LogFatal<TCodeUnit>(object shortMessage, object longMessage = null, string context = null, IList<GKeyValuePair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogDebug<TCodeUnit>(string shortMessage, string longMessage = DbLog.NotSpecified, string context = DbLog.NotSpecified, ICollection<GKeyValuePair<string, string>> args = null, [CallerMemberName] string function = DbLog.AutomaticallyFilled);
+      void LogInfo<TCodeUnit>(string shortMessage, string longMessage = DbLog.NotSpecified, string context = DbLog.NotSpecified, ICollection<GKeyValuePair<string, string>> args = null, [CallerMemberName] string function = DbLog.AutomaticallyFilled);
+      void LogWarning<TCodeUnit>(string shortMessage, string longMessage = DbLog.NotSpecified, string context = DbLog.NotSpecified, ICollection<GKeyValuePair<string, string>> args = null, [CallerMemberName] string function = DbLog.AutomaticallyFilled);
+      void LogError<TCodeUnit>(string shortMessage, string longMessage = DbLog.NotSpecified, string context = DbLog.NotSpecified, ICollection<GKeyValuePair<string, string>> args = null, [CallerMemberName] string function = DbLog.AutomaticallyFilled);
+      void LogFatal<TCodeUnit>(string shortMessage, string longMessage = DbLog.NotSpecified, string context = DbLog.NotSpecified, ICollection<GKeyValuePair<string, string>> args = null, [CallerMemberName] string function = DbLog.AutomaticallyFilled);
 
-      void LogDebug<TCodeUnit>(Exception exception, string context = null, IList<GKeyValuePair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
-      void LogInfo<TCodeUnit>(Exception exception, string context = null, IList<GKeyValuePair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
-      void LogWarning<TCodeUnit>(Exception exception, string context = null, IList<GKeyValuePair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
-      void LogError<TCodeUnit>(Exception exception, string context = null, IList<GKeyValuePair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
-      void LogFatal<TCodeUnit>(Exception exception, string context = null, IList<GKeyValuePair<string, object>> args = null, [CallerMemberName] string function = DbLog.AutoFilledParameter);
+      void LogDebug<TCodeUnit>(Exception exception, string context = DbLog.NotSpecified, ICollection<GKeyValuePair<string, string>> args = null, [CallerMemberName] string function = DbLog.AutomaticallyFilled);
+      void LogInfo<TCodeUnit>(Exception exception, string context = DbLog.NotSpecified, ICollection<GKeyValuePair<string, string>> args = null, [CallerMemberName] string function = DbLog.AutomaticallyFilled);
+      void LogWarning<TCodeUnit>(Exception exception, string context = DbLog.NotSpecified, ICollection<GKeyValuePair<string, string>> args = null, [CallerMemberName] string function = DbLog.AutomaticallyFilled);
+      void LogError<TCodeUnit>(Exception exception, string context = DbLog.NotSpecified, ICollection<GKeyValuePair<string, string>> args = null, [CallerMemberName] string function = DbLog.AutomaticallyFilled);
+      void LogFatal<TCodeUnit>(Exception exception, string context = DbLog.NotSpecified, ICollection<GKeyValuePair<string, string>> args = null, [CallerMemberName] string function = DbLog.AutomaticallyFilled);
 
       IEnumerable<DbLog> RetrieveAllLogs();
       IEnumerable<DbLog> RetrieveCurrentApplicationLogs();
-      
+
       DataTable RetrieveAllLogsTable();
       DataTable RetrieveCurrentApplicationLogsTable();
    }
@@ -40,7 +40,8 @@ namespace FLEX.Common.Data
    [Serializable]
    public sealed class DbLog
    {
-       public const string AutoFilledParameter = "Automatically filled parameter, please do not specify a value!";
+      public const string AutomaticallyFilled = "Automatically filled parameter, please do not specify a value!";
+      public const string NotSpecified = "...";
 
       public DateTime EntryDate { get; set; }
       public string Type { get; set; }
