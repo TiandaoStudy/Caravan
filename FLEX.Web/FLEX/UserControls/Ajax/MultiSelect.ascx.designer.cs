@@ -40,15 +40,6 @@ namespace FLEX.Web.UserControls.Ajax {
         protected global::System.Web.UI.WebControls.Label lbTitlePanelLeft;
         
         /// <summary>
-        /// lbCountDataLeft control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbCountDataLeft;
-        
-        /// <summary>
         /// txtApplyLeft control.
         /// </summary>
         /// <remarks>
@@ -74,6 +65,15 @@ namespace FLEX.Web.UserControls.Ajax {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lkbtnClearLeft;
+        
+        /// <summary>
+        /// lbCountDataLeft control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbCountDataLeft;
         
         /// <summary>
         /// fdtgLeft control.
@@ -148,15 +148,6 @@ namespace FLEX.Web.UserControls.Ajax {
         protected global::System.Web.UI.WebControls.Label lbTitlePanelRight;
         
         /// <summary>
-        /// lbCountDataRight control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbCountDataRight;
-        
-        /// <summary>
         /// txtApplyRight control.
         /// </summary>
         /// <remarks>
@@ -182,6 +173,15 @@ namespace FLEX.Web.UserControls.Ajax {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lkbtnClearRight;
+        
+        /// <summary>
+        /// lbCountDataRight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbCountDataRight;
         
         /// <summary>
         /// fdtgRight control.
