@@ -45,16 +45,16 @@
       <ajax:UpdatePanel runat="server">
          <contenttemplate>
             <div id="buttons" class="col-xs-1 btn-group-vertical">
-               <asp:LinkButton ID="btnMoveRight" runat="server" CssClass="btn btn-success btn-sm">
+               <asp:LinkButton ID="btnMoveRight" runat="server" CssClass="btn btn-success">
                   <span class="glyphicon glyphicon-chevron-right"></span>
                </asp:LinkButton>
-               <asp:LinkButton ID="btnMoveAllRight" runat="server" CssClass="btn btn-success btn-sm">
+               <asp:LinkButton ID="btnMoveAllRight" runat="server" CssClass="btn btn-success">
                   <span class="glyphicon glyphicon-forward"></span>
                </asp:LinkButton>
-               <asp:LinkButton ID="btnMoveAllLeft" runat="server" CssClass="btn btn-danger btn-sm">
+               <asp:LinkButton ID="btnMoveAllLeft" runat="server" CssClass="btn btn-danger">
                   <span class="glyphicon glyphicon-backward"></span>
                </asp:LinkButton>
-               <asp:LinkButton ID="btnMoveLeft" runat="server" CssClass="btn btn-danger btn-sm">
+               <asp:LinkButton ID="btnMoveLeft" runat="server" CssClass="btn btn-danger">
                   <span class="glyphicon glyphicon-chevron-left"></span>
                </asp:LinkButton>
             </div>

@@ -3,10 +3,10 @@
 <package>
    <metadata>
       <id>FLEX.Data</id>
-      <version>0.14.0.2</version>
-      <title>FLEX.Data</title>
-      <authors>alessiop</authors>
-      <owners>Microsoft</owners>
+      <version>0.15.0.2</version>
+      <title>FLEX.DataAccess</title>
+      <authors>Finsa S.p.A.</authors>
+      <owners>Finsa S.p.A.</owners>
       <description>
 A long description of the package. This shows up in the right pane of the Add Package Dialog as well as in the Package Manager Console when listing packages using the Get-Package command.
       </description>
@@ -23,7 +23,7 @@ A short description of the package. If specified, this shows up in the middle pa
       <copyright>Copyright Microsoft 2014</copyright>
       <dependencies>
          <dependency id="Dapper" version="1.35" />
-         <dependency id="FLEX.Common" version="0.14.0.0" />
+         <dependency id="FLEX.Common" version="0.15.0.0" />
          <dependency id="Microsoft.Bcl" version="1.1.9" />
          <dependency id="Newtonsoft.Json" version="6.0.5" />
          <dependency id="PommaLabs.GRAMPA" version="0.17.0" />

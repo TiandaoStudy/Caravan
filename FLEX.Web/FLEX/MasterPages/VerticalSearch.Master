@@ -200,11 +200,11 @@
          
          <div class="panel-footer clearfix">
             <div class="pull-right btn-row">
-               <button id="btnCollapseSearchCriteria" type="button" class="btn btn-primary btn-sm">
+               <button id="btnCollapseSearchCriteria" type="button" class="btn btn-primary">
                   <span id="spanCollapseSearchCriteria" class="glyphicon glyphicon-arrow-left"></span>&nbsp;Hide
                </button>
                
-               <flex:ImageButton ID="btnClear" runat="server" ButtonText="Clear" ButtonClass="btn btn-primary btn-sm" IconClass="glyphicon glyphicon-trash" />
+               <flex:ImageButton ID="btnClear" runat="server" ButtonText="Clear" ButtonClass="btn btn-primary" IconClass="glyphicon glyphicon-trash" />
                
                <!-- E' importante che il bottone di ricerca funzioni anche facendo ENTER; pertanto, occorre usare un controllo dedicato. -->
                <flex:SearchButton ID="btnSearch" runat="server" />
