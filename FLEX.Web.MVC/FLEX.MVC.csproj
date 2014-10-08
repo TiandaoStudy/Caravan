@@ -196,6 +196,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\PagedList.css" />
+    <Content Include="Images\jquery-ui\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Images\jquery-ui\ui-bg_flat_100_3071A9_40x100.png" />
+    <Content Include="Images\jquery-ui\ui-bg_flat_100_428bca_40x100.png" />
+    <Content Include="Images\jquery-ui\ui-bg_flat_100_f2dede_40x100.png" />
+    <Content Include="Images\jquery-ui\ui-bg_flat_100_fcf8e3_40x100.png" />
+    <Content Include="Images\jquery-ui\ui-bg_flat_100_ffffff_40x100.png" />
+    <Content Include="Images\jquery-ui\ui-icons_222222_256x240.png" />
+    <Content Include="Images\jquery-ui\ui-icons_454545_256x240.png" />
+    <Content Include="Images\jquery-ui\ui-icons_8a6d3b_256x240.png" />
+    <Content Include="Images\jquery-ui\ui-icons_a94442_256x240.png" />
+    <Content Include="Images\jquery-ui\ui-icons_FFF_256x240.png" />
     <Content Include="Images\pattern.png" />
     <Content Include="Images\select2-spinner.gif" />
     <Content Include="Images\select2.png" />
@@ -508,7 +519,9 @@
     <None Include="Styles\fonts.less" />
     <None Include="Styles\jquery-ui.less" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Images\select2\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FLEX.Common\FLEX.Common.csproj">
       <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>
