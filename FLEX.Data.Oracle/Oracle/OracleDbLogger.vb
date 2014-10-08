@@ -1,12 +1,12 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Dapper
-Imports PommaLabs.GRAMPA.Diagnostics
-Imports PommaLabs.GRAMPA.Extensions
 Imports FLEX.Common.Data
 Imports PommaLabs.GRAMPA
+Imports PommaLabs.GRAMPA.Diagnostics
+Imports PommaLabs.GRAMPA.Extensions
 
 Namespace Oracle
-   NotInheritable Class OracleDbLogger
+   Public NotInheritable Class OracleDbLogger
       Inherits DbLoggerBase
       Implements IDbLogger
 
@@ -46,12 +46,12 @@ Namespace Oracle
 
 #Region "Logging Methods"
 
-      Sub LogDebug (Of TCodeUnit)(shortMessage As String, Optional longMessage As String = DbLog.NotSpecified,
+      Sub LogDebug(Of TCodeUnit)(shortMessage As String, Optional longMessage As String = DbLog.NotSpecified,
                                   Optional context As String = DbLog.NotSpecified,
                                   Optional args As ICollection(Of GKeyValuePair(Of String, String)) = Nothing,
                                   <CallerMemberName> Optional [function] As String = DbLog.AutomaticallyFilled) _
          Implements IDbLogger.LogDebug
-         Log (Of TCodeUnit)("DEBUG", [function], shortMessage, longMessage, context, args)
+         Log(Of TCodeUnit)("DEBUG", [function], shortMessage, longMessage, context, args)
       End Sub
 
       Sub LogInfo(Of TCodeUnit)(shortMessage As String, Optional longMessage As String = DbLog.NotSpecified,
@@ -138,7 +138,7 @@ Namespace Oracle
            ]]>.Value
          query = String.Format(query, Configuration.Instance.OracleRunner)
          Using connection = QueryExecutor.Instance.OpenConnection()
-            Return connection.Query (Of DbLog)(query)
+            Return connection.Query(Of DbLog)(query)
          End Using
       End Function
 
@@ -156,7 +156,7 @@ Namespace Oracle
            ]]>.Value
          query = String.Format(query, Configuration.Instance.OracleRunner)
          Using connection = QueryExecutor.Instance.OpenConnection()
-            Return connection.Query (Of DbLog)(query, New With {Common.Configuration.Instance.ApplicationName})
+            Return connection.Query(Of DbLog)(query, New With {Common.Configuration.Instance.ApplicationName})
          End Using
       End Function
 
@@ -177,7 +177,7 @@ Namespace Oracle
          Using connection = QueryExecutor.Instance.OpenConnection()
             Dim query = String.Format("select flos_enabled from {0}flex_log_settings where flos_type = :type",
                                       Configuration.Instance.OracleRunner)
-            Dim enabled = connection.Query (Of Integer)(query, New With {type}).First()
+            Dim enabled = connection.Query(Of Integer)(query, New With {type}).First()
             Return enabled = 0
          End Using
       End Function

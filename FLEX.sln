@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.WebUI.WebForms", "FL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.WebForms", "FLEX.Web\FLEX.WebForms.csproj", "{407B5921-9039-4D0D-A40A-36A19C251CDC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{BF4277FD-24C4-45AC-B871-98E1FEEDC623}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{BF4277FD-24C4-45AC-B871-98E1FEEDC623}"
 	ProjectSection(SolutionItems) = preProject
 		README.txt = README.txt
 	EndProjectSection
@@ -83,6 +83,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataModel", "Sample.DataModel\Sample.DataModel.csproj", "{33A9CD5A-87C6-4BB3-B304-4DC6411BEF4F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataAccess.EntityFramework", "Sample.DataAccess.EntityFramework\Sample.DataAccess.EntityFramework.csproj", "{0A3419EA-CD95-4262-B84A-B963C87ECCDF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External Libraries", "External Libraries", "{EEB0F070-8283-4D00-8129-64D81E908DCE}"
+	ProjectSection(SolutionItems) = preProject
+		External Libraries\Oracle.ManagedDataAccess.dll = External Libraries\Oracle.ManagedDataAccess.dll
+		External Libraries\Oracle.ManagedDataAccess.EntityFramework.dll = External Libraries\Oracle.ManagedDataAccess.EntityFramework.dll
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

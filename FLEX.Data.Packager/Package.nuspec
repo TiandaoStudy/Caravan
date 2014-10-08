@@ -3,7 +3,7 @@
 <package>
    <metadata>
       <id>FLEX.Data</id>
-      <version>0.13.0.2</version>
+      <version>0.14.0.2</version>
       <title>FLEX.Data</title>
       <authors>alessiop</authors>
       <owners>Microsoft</owners>
@@ -23,7 +23,7 @@ A short description of the package. If specified, this shows up in the middle pa
       <copyright>Copyright Microsoft 2014</copyright>
       <dependencies>
          <dependency id="Dapper" version="1.35" />
-         <dependency id="FLEX.Common" version="0.13.0.0" />
+         <dependency id="FLEX.Common" version="0.14.0.0" />
          <dependency id="Microsoft.Bcl" version="1.1.9" />
          <dependency id="Newtonsoft.Json" version="6.0.5" />
          <dependency id="PommaLabs.GRAMPA" version="0.17.0" />

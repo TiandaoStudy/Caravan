@@ -6,9 +6,9 @@
    Protected Const MaxShortMessageLength As Integer = 400
    Protected Const MaxLongMessageLength As Integer = 4000
    Protected Const MaxContextLength As Integer = 400
-    Protected Const MaxKeyLength As Integer = 100
-    Protected Const MaxValueLength As Integer = 400
-    Protected Const MaxArgumentCount As Integer = 10
+   Protected Const MaxKeyLength As Integer = 100
+   Protected Const MaxValueLength As Integer = 400
+   Protected Const MaxArgumentCount As Integer = 10
 
    ''' <summary>
    ''' 
