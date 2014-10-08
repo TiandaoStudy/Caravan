@@ -7288,79 +7288,27 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 /*******************************************************************************
   VARIABLES
 *******************************************************************************/
+/*******************************************************************************
+  TOP LEVEL
+*******************************************************************************/
 body {
   margin: 0;
   padding: 0;
-  background-color: #008cba;
+  background-color: #ffffff;
   background-image: url(../Images/pattern.png);
-  background-position: initial initial;
-  background-repeat: initial initial;
 }
-/*==================================================
- * Effect 7
- * ===============================================*/
-.effect7 {
-  position: relative;
-  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+.padded-icon {
+  margin-right: 5px;
 }
-.effect7:before,
-.effect7:after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-  -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-  top: 0;
-  bottom: 0;
-  left: 10px;
-  right: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
+/*******************************************************************************
+  BOOTSTRAP TUNING
+*******************************************************************************/
+input[type='checkbox'],
+input[type='radio'] {
+  margin-right: 5px;
 }
-.effect7:after {
-  right: 10px;
-  left: auto;
-  -webkit-transform: skew(8deg) rotate(3deg);
-  -moz-transform: skew(8deg) rotate(3deg);
-  -ms-transform: skew(8deg) rotate(3deg);
-  -o-transform: skew(8deg) rotate(3deg);
-  transform: skew(8deg) rotate(3deg);
-}
-/*==================================================
- * Effect 8
- * ===============================================*/
-.effect8 {
-  position: relative;
-  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-}
-.effect8:before,
-.effect8:after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-  -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-  top: 10px;
-  bottom: 10px;
-  left: 0;
-  right: 0;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-}
-.effect8:after {
-  right: 10px;
-  left: auto;
-  -webkit-transform: skew(8deg) rotate(3deg);
-  -moz-transform: skew(8deg) rotate(3deg);
-  -ms-transform: skew(8deg) rotate(3deg);
-  -o-transform: skew(8deg) rotate(3deg);
-  transform: skew(8deg) rotate(3deg);
+td label {
+  font-weight: normal !important;
 }
 /*******************************************************************************
   MENU BAR
@@ -7415,15 +7363,9 @@ footer .navbar-default .navbar-nav > li > a {
 .checkbox {
   margin-bottom: 3px;
 }
-.padded-icon {
-  margin-right: 5px;
-}
 .pagination {
   margin-top: 8px;
   margin-bottom: 8px;
-}
-td .label {
-  font-weight: normal;
 }
 .btn-row .btn {
   margin-left: 3px;
@@ -7866,7 +7808,7 @@ td .label {
   border-bottom-right-radius: 3px;
 }
 #modal-header {
-  background-color: #158cba;
+  background-color: #ffffff;
   height: 32px;
   padding-top: 5px;
   overflow: hidden;

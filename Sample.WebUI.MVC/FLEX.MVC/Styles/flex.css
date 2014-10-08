@@ -7,10 +7,8 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #777777;
+  background-color: #ffffff;
   background-image: url(../Images/pattern.png);
-  background-position: initial initial;
-  background-repeat: initial initial;
 }
 nav .navbar-default .navbar-brand {
   font-size: 20px;
@@ -22,6 +20,12 @@ nav .navbar-default .navbar-brand .logo {
 }
 .padded-icon {
   margin-right: 5px;
+}
+/*******************************************************************************
+  BOOTSTRAP TUNING
+*******************************************************************************/
+td label {
+  font-weight: normal !important;
 }
 /*******************************************************************************
   PAGE STYLES

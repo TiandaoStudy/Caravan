@@ -547,12 +547,12 @@ copy $(ProjectDir)\Images\*.* $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Images
 
 :: SCRIPTS - NuGet Packager
 :: SCRIPTS - Sample Web UI
-copy $(ProjectDir)\Scripts\*.js $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Scripts
+copy $(ProjectDir)\Scripts\*.min.js $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Scripts
 copy $(ProjectDir)\Scripts\*.map $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Scripts
 
 :: STYLES - NuGet Packager
 :: STYLES - Sample Web UI
-copy $(ProjectDir)\Styles\*.css $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Styles</PostBuildEvent>
+copy $(ProjectDir)\Styles\*.min.css $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Styles</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

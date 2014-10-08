@@ -84,6 +84,8 @@
     <Compile Include="Basics.cs" />
     <Compile Include="Collections\OneItemList.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="DataModel\LogEntry.cs" />
+    <Compile Include="DataModel\LogResult.cs" />
     <Compile Include="Data\IDbLogger.cs" />
     <Compile Include="Data\IQueryExecutor.cs" />
     <Compile Include="FLEX.Common.XmlSchemas.MenuEntries.Item.cs">

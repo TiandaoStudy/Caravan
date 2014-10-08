@@ -18,10 +18,8 @@
 body {
    margin: 0;
    padding: 0;
-   background-color: @gray-light;
+   background-color: @btn-primary-color;
    background-image: url(../Images/pattern.png);
-   background-position: initial initial;
-   background-repeat: initial initial;
 }
 
 nav {
@@ -40,6 +38,19 @@ nav {
 
 .padded-icon {
    margin-right: @image-margin;
+}
+
+/*******************************************************************************
+  BOOTSTRAP TUNING
+*******************************************************************************/
+
+input[type='checkbox'], input[type='radio'] {
+   margin-right: @image-margin;
+}
+
+// Labels inside checkbox lists and tables
+td label {
+   font-weight: normal !important;
 }
 
 /*******************************************************************************

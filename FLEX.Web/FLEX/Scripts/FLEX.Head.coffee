@@ -84,7 +84,7 @@ root.fixAllDataGrids = () ->
 root.fixDataGridPager = (tableId) ->   
    # Pagination should neither hover, nor have an alternating background
    row = $("##{tableId} .datagrid-pager").parent()
-   row.css({backgroundColor: "white"; borderBottom: "0px"})
+   row.css({backgroundColor: "white"; borderBottom: "0px !important"})
    
    # Required to avoid strange CoffeeScript behaviour
    return
