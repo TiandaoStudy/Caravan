@@ -5,7 +5,6 @@ using System.Web.Mvc;
 using FLEX.Web.MVC.Controllers;
 using FLEX.Web.MVC.Controls.DataVisualization;
 using Newtonsoft.Json;
-using PagedList;
 using RestSharp;
 using Sample.DataModel.Entities;
 
@@ -47,7 +46,7 @@ namespace Sample.WebUI.MVC.Controllers
          return PartialView("~/Controls/DataVisualization/FlexDataGrid_.cshtml", new FlexDataGridOptions
          {
             ID = "fdtg-customers",
-            PagedItems = (employees).ToPagedList(pageIndex ?? 1, 5),
+            //PagedItems = (employees).ToPagedList(pageIndex ?? 1, 5),
             PagerAction = page => Url.Action("InitializeSearchGrid", new {pageIndex = page}),
             Columns = new List<FlexDataGridColumnOptions>
             {

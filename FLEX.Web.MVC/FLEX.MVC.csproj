@@ -43,13 +43,6 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
-    </Reference>
-    <Reference Include="PagedList.Mvc">
-      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="PommaLabs.GRAMPA, Version=0.17.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\PommaLabs.GRAMPA.0.17.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
@@ -195,7 +188,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\PagedList.css" />
     <Content Include="Images\jquery-ui\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Images\jquery-ui\ui-bg_flat_100_3071A9_40x100.png" />
     <Content Include="Images\jquery-ui\ui-bg_flat_100_428bca_40x100.png" />
@@ -233,6 +225,10 @@
     <Content Include="Scripts\bootstrap-switch.min.js">
       <DependentUpon>bootstrap-switch.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\bootstrap-table.js" />
+    <Content Include="Scripts\bootstrap-table.min.js">
+      <DependentUpon>bootstrap-table.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js">
       <DependentUpon>bootstrap.js</DependentUpon>
@@ -253,10 +249,6 @@
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery-ui.min.js">
       <DependentUpon>jquery-ui.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\jquery.dataTables.js" />
-    <Content Include="Scripts\jquery.dataTables.min.js">
-      <DependentUpon>jquery.dataTables.js</DependentUpon>
     </Content>
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
@@ -287,6 +279,10 @@
     <Content Include="Styles\bootstrap-switch.css" />
     <Content Include="Styles\bootstrap-switch.min.css">
       <DependentUpon>bootstrap-switch.css</DependentUpon>
+    </Content>
+    <Content Include="Styles\bootstrap-table.css" />
+    <Content Include="Styles\bootstrap-table.min.css">
+      <DependentUpon>bootstrap-table.css</DependentUpon>
     </Content>
     <Content Include="Styles\bootstrap.css">
       <DependentUpon>bootstrap.less</DependentUpon>
@@ -420,6 +416,9 @@
     <None Include="Scripts\bootstrap-switch.min.js.map">
       <DependentUpon>bootstrap-switch.js</DependentUpon>
     </None>
+    <None Include="Scripts\bootstrap-table.min.js.map">
+      <DependentUpon>bootstrap-table.js</DependentUpon>
+    </None>
     <None Include="Scripts\bootstrap.min.js.map">
       <DependentUpon>bootstrap.js</DependentUpon>
     </None>
@@ -430,9 +429,6 @@
     <None Include="Scripts\jquery-2.1.1.min.map" />
     <None Include="Scripts\jquery-ui.min.js.map">
       <DependentUpon>jquery-ui.js</DependentUpon>
-    </None>
-    <None Include="Scripts\jquery.dataTables.min.js.map">
-      <DependentUpon>jquery.dataTables.js</DependentUpon>
     </None>
     <None Include="Scripts\respond.min.js.map">
       <DependentUpon>respond.js</DependentUpon>

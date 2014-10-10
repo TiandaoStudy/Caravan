@@ -152,8 +152,8 @@ WriteLiteral("/Styles/flex.min.css\" rel=\"stylesheet\" media=\"screen\" />\r\n 
             
             #line default
             #line hidden
-WriteLiteral("/Styles/jquery.dataTables.min.css\" rel=\"stylesheet\" media=\"screen\" />\r\n      <lin" +
-"k href=\"");
+WriteLiteral("/Styles/bootstrap-table.min.css\" rel=\"stylesheet\" media=\"screen\" />\r\n      <link " +
+"href=\"");
 
 
             
@@ -333,8 +333,8 @@ WriteLiteral("/Scripts/bootstrap-switch.min.js\"></script>\r\n\r\n      <script 
             
             #line default
             #line hidden
-WriteLiteral("/Scripts/jquery.dataTables.min.js\"></script>\r\n      <script type=\"text/javascript" +
-"\" src=\"");
+WriteLiteral("/Scripts/bootstrap-table.min.js\"></script>\r\n      <script type=\"text/javascript\" " +
+"src=\"");
 
 
             

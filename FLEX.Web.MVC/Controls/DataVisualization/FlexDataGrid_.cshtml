@@ -3,7 +3,6 @@
 
 @using System.Web.Mvc.Ajax
 @using FLEX.Web.MVC.Controls.DataVisualization
-@using PagedList.Mvc
 
 @model FlexDataGridOptions
 
@@ -26,7 +25,7 @@
       </thead>
       
       <tbody>
-         @foreach (var item in Model.PagedItems)
+         @*@foreach (var item in Model.PagedItems)
          {
             <tr>
                @foreach (var column in Model.Columns)
@@ -36,27 +35,7 @@
                   </td>
                }
             </tr>
-         }
+         }*@
       </tbody>
    </table>
-   
-   <div class="row">
-      <div class="col-xs-4 text-left">
-         <em>Showing @(Model.PagedItems.PageSize * (Model.PagedItems.PageNumber - 1) + 1) to @(Model.PagedItems.PageSize * Model.PagedItems.PageNumber) of @Model.PagedItems.TotalItemCount entries</em>
-      </div>
-      <div class="col-xs-4 text-center">
-         ???
-      </div>
-      <div class="col-xs-4 text-right">
-         <!-- Outputs a paging control that lets the user navigation to the previous page, next page, etc -->
-         @Html.PagedListPager(Model.PagedItems, Model.PagerAction)
-         <script type="text/javascript">
-            var pageLinks = $("#@Model.ID-container .pagination a");
-            pageLinks.attr("data-ajax", "true");
-            pageLinks.attr("data-ajax-method", "GET");
-            pageLinks.attr("data-ajax-mode", "replace");
-            pageLinks.attr("data-ajax-update", "#@Model.ID-container");
-         </script>
-      </div>
-   </div>
 </div>

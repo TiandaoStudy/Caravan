@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using PagedList;
 
 namespace FLEX.Web.MVC.Controls.DataVisualization
 {
    public sealed class FlexDataGridOptions : ControlOptionsBase
    {
-      public IPagedList<object> PagedItems { get; set; }
+      //public IPagedList<object> PagedItems { get; set; }
       public Func<int, string> PagerAction { get; set; }
       public ICollection<FlexDataGridColumnOptions> Columns { get; set; }
    }
