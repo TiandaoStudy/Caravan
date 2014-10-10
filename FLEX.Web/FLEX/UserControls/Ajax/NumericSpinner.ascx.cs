@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.UI;
+using Finsa.Caravan.Collections;
 using FLEX.Common;
-using FLEX.Common.Collections;
 using FLEX.Common.Web;
 using PommaLabs.GRAMPA.Diagnostics;
 
@@ -114,9 +114,9 @@ namespace FLEX.Web.UserControls.Ajax
          {
             if (!HasValues)
             {
-               return Common.Configuration.EmptyStringList;
+                return ReadOnlyList.Empty<string>();
             }
-            return new OneItemList<string>(txtNumber.Text);
+            return ReadOnlyList.Create(txtNumber.Text);
          }
       }
 

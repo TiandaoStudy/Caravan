@@ -74,13 +74,6 @@ namespace FLEX.Common
 
       #region Utilities
 
-      private static readonly List<string> EmptyStringListInstance = new List<string>();
-
-      public static List<string> EmptyStringList
-      {
-         get { return EmptyStringListInstance; }
-      }
-
       public static string MapPath(params string[] hints)
       {
          return hints.Aggregate(AppDomain.CurrentDomain.BaseDirectory, Path.Combine);

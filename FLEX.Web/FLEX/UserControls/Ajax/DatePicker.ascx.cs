@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Finsa.Caravan.Collections;
 using FLEX.Common;
-using FLEX.Common.Collections;
 using FLEX.Common.Web;
 using PommaLabs.GRAMPA.Diagnostics;
 
@@ -149,9 +149,9 @@ namespace FLEX.Web.UserControls.Ajax
          {
             if (!HasValues)
             {
-               return Common.Configuration.EmptyStringList;
+                return ReadOnlyList.Empty<string>();
             }
-            return new OneItemList<string>(txtDate.Text);
+            return ReadOnlyList.Create(txtDate.Text);
          }
       }
 

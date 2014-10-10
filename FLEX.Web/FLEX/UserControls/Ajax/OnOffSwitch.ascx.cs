@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.UI;
+using Finsa.Caravan.Collections;
 using FLEX.Common;
-using FLEX.Common.Collections;
 using FLEX.Common.Web;
 using PommaLabs.GRAMPA.Diagnostics;
 
@@ -157,7 +157,7 @@ namespace FLEX.Web.UserControls.Ajax
 
       public IList<string> SelectedValues // Valore attualmente selezionato
       {
-         get { return new OneItemList<string>(Switched ? OnValue : OffValue); }
+          get { return ReadOnlyList.Create(Switched ? OnValue : OffValue); }
       }
 
       public event Action<ISearchControl, SearchCriteriaSelectedArgs> ValueSelected;

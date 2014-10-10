@@ -1,8 +1,8 @@
 ﻿using System;
-using FLEX.Common.Collections;
+using Finsa.Caravan.Collections;
 using NUnit.Framework;
 
-namespace FLEX.Common.UnitTests
+namespace UnitTests.Common
 {
     public sealed class BasicsTests : TestBase
     {
@@ -10,7 +10,7 @@ namespace FLEX.Common.UnitTests
         [TestCase("PROVA")]
         public void OneItemList_Create(object obj)
         {
-            var l = new OneItemList<object>(obj);
+            var l = ReadOnlyList.Create(obj);
             Assert.AreEqual(1, l.Count);
             Assert.True(l.Contains(obj));
             Assert.AreEqual(obj, l[0]);
@@ -21,7 +21,8 @@ namespace FLEX.Common.UnitTests
         [ExpectedException(typeof(InvalidOperationException))]
         public void OneItemList_Add()
         {
-            var l = new OneItemList<int>(1) {2};
+            var l = ReadOnlyList.Create(1);
+            l.Add(2);
         }
     }
 }

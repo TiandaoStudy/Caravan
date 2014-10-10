@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using FLEX.Common;
-using FLEX.Common.Collections;
+using Finsa.Caravan.Collections;
 using FLEX.Common.Web;
 using PommaLabs.GRAMPA;
 using PommaLabs.GRAMPA.Diagnostics;
@@ -185,9 +184,9 @@ namespace FLEX.Web.UserControls.Ajax
       {
          if (rblData.SelectedValue != null)
          {
-            return new OneItemList<string>(rblData.SelectedValue);
+             return ReadOnlyList.Create(rblData.SelectedValue);
          }
-         return Common.Configuration.EmptyStringList;
+         return ReadOnlyList.Empty<string>();
       }
 
       protected void RadioButtonListData_OnSelectedIndexChanged(object sender, EventArgs e)

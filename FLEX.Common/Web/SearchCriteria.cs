@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using FLEX.Common.Collections;
+using Finsa.Caravan.Collections;
 using PommaLabs.GRAMPA.Diagnostics;
 
 namespace FLEX.Common.Web
@@ -167,7 +167,7 @@ namespace FLEX.Common.Web
 
          public IList<string> SelectedValues
          {
-            get { return new OneItemList<string>(_value); }
+            get { return ReadOnlyList.Create(_value); }
          }
          
          public event Action<ISearchControl, SearchCriteriaSelectedArgs> ValueSelected;
