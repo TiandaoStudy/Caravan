@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Runtime.CompilerServices;
 using Finsa.Caravan;
+using Finsa.Caravan.Helpers;
 using FLEX.Common.DataModel;
 
 namespace FLEX.Common.Data

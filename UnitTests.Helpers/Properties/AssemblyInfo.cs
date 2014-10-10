@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Finsa.Caravan.Helpers")]
+[assembly: AssemblyTitle("UnitTests.Helpers")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Finsa.Caravan.Helpers")]
+[assembly: AssemblyProduct("UnitTests.Helpers")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("bd832fd7-26b4-48ba-8b06-8b5ff680a725")]
+[assembly: Guid("bdd0e67e-f556-469c-9da4-699df2a4a28a")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -1,5 +1,5 @@
 ﻿//
-// DataTableExtensions.cs
+// ConcurrentList.cs
 // 
 // Author(s):
 //     Alessio Parma <alessio.parma@gmail.com>
@@ -26,44 +26,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using Finsa.Caravan.Helpers;
-using Newtonsoft.Json;
+using Finsa.Caravan.Threading;
 
-namespace Finsa.Caravan.Extensions
+namespace UnitTests.Helpers.Threading
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public static class DataTableExtensions
+    public sealed class ConcurrentList<T>
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="dataTable"></param>
-        /// <returns></returns>
-        public static string ToJson(this DataTable dataTable)
+        private readonly List<T> _list = new List<T>();
+        private readonly ConcurrentWorkQueue _workQueue = ConcurrentWorkQueue.Create();
+
+        public int Count
         {
-            Contract.Requires<ArgumentNullException>(dataTable != null, ErrorMessages.Extensions_DataTableExtensions_NullDataTable);
-            Contract.Ensures(Contract.Result<string>() != null);
-
-            var columns = new GPair<DataColumn, string>[dataTable.Columns.Count];
-            var idx = 0;
-            foreach (DataColumn col in dataTable.Columns) {
-                columns[idx++] = GPair.Create(col, col.ColumnName.Trim());
+            get
+            {
+                return _workQueue.EnqueueReadFunc(() => _list.Count);
             }
+        }
 
-            var rows = new Dictionary<string, object>[dataTable.Rows.Count];
-            idx = 0;
-            foreach (DataRow dr in dataTable.Rows) {
-                rows[idx++] = columns.ToDictionary(col => col.Second, col => dr[col.First]);
-            }
+        public void Add(T item)
+        {
+            _workQueue.EnqueueWriteAction(_list.Add, item);
+        }
 
-            return JsonConvert.SerializeObject(rows);
+        public bool Contains(T item)
+        {
+            return _workQueue.EnqueueReadFunc(_list.Contains, item);
+        }
+
+        public bool Remove(T item)
+        {
+            return _workQueue.EnqueueWriteFunc(_list.Remove, item);
         }
     }
 }

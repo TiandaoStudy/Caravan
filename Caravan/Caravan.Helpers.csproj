@@ -7,8 +7,8 @@
     <ProjectGuid>{CEFF687B-7817-4326-9310-AB655407B610}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Finsa.Caravan</RootNamespace>
-    <AssemblyName>Finsa.Caravan</AssemblyName>
+    <RootNamespace>Finsa.Caravan.Helpers</RootNamespace>
+    <AssemblyName>Finsa.Caravan.Helpers</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -30,7 +30,7 @@
     <DefineConstants>USETHROWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Finsa.Caravan.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Finsa.Caravan.Helpers.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

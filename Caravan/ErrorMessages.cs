@@ -26,7 +26,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Finsa.Caravan
+namespace Finsa.Caravan.Helpers
 {
     public static class ErrorMessages
     {

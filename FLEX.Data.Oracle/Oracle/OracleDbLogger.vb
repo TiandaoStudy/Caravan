@@ -5,6 +5,7 @@ Imports Finsa.Caravan
 Imports Dapper
 Imports FLEX.Common.DataModel
 Imports FLEX.Common.Data
+Imports Finsa.Caravan.Helpers
 
 Namespace Oracle
     Public NotInheritable Class OracleDbLogger
