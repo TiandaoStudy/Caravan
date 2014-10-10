@@ -92,6 +92,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External Libraries", "Exter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan", "Caravan\Caravan.csproj", "{CEFF687B-7817-4326-9310-AB655407B610}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Helpers", "NuGetPackager.Helpers\NuGetPackager.Helpers.csproj", "{860A7A25-C159-487F-BAC5-C46857FC7A40}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CEFF687B-7817-4326-9310-AB655407B610} = {CEFF687B-7817-4326-9310-AB655407B610}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -170,6 +175,8 @@ Global
 		{CEFF687B-7817-4326-9310-AB655407B610}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEFF687B-7817-4326-9310-AB655407B610}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEFF687B-7817-4326-9310-AB655407B610}.Release|Any CPU.Build.0 = Release|Any CPU
+		{860A7A25-C159-487F-BAC5-C46857FC7A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{860A7A25-C159-487F-BAC5-C46857FC7A40}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
