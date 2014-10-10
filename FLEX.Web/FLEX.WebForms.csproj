@@ -598,6 +598,7 @@
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
     <None Include="app.config" />
+    <None Include="CHANGELOG.md" />
     <None Include="FLEX\Fonts\foundation-icons.eot" />
     <None Include="FLEX\Fonts\foundation-icons.ttf" />
     <None Include="FLEX\Fonts\foundation-icons.woff" />
