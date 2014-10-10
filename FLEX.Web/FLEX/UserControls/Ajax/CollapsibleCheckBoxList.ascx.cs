@@ -5,9 +5,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Finsa.Caravan;
+using Finsa.Caravan.Diagnostics;
 using FLEX.Common.Web;
-using PommaLabs.GRAMPA;
-using PommaLabs.GRAMPA.Diagnostics;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

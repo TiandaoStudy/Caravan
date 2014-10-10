@@ -62,10 +62,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\External Libraries\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.GRAMPA, Version=0.17.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.GRAMPA.0.17.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -114,9 +110,9 @@
       <Project>{ceff687b-7817-4326-9310-ab655407b610}</Project>
       <Name>Caravan</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FLEX.Common\FLEX.Common.csproj">
+    <ProjectReference Include="..\FLEX.Common\Caravan.Common.csproj">
       <Project>{11904ED0-33D2-4005-8766-B1E393A32EA7}</Project>
-      <Name>FLEX.Common</Name>
+      <Name>Caravan.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

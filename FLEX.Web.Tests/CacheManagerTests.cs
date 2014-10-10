@@ -1,7 +1,8 @@
-﻿using FLEX.WebForms;
+﻿using FLEX.Web.Tests;
+using FLEX.WebForms;
 using NUnit.Framework;
 
-namespace FLEX.Web.Tests
+namespace UnitTests.WebForms
 {
     public sealed class CacheManagerTests : TestBase
     {

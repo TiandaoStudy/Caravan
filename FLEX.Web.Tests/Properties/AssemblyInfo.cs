@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("FLEX.Web.Tests")]
+[assembly: AssemblyTitle("UnitTests.WebForms")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("FINSA S.p.A.")]
-[assembly: AssemblyProduct("FLEX.Web.Tests")]
+[assembly: AssemblyProduct("UnitTests.WebForms")]
 [assembly: AssemblyCopyright("Copyright ©FINSA S.p.A. 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

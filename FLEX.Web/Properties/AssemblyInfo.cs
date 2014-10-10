@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -40,7 +39,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("0.15.0.1")]
 [assembly: AssemblyFileVersion("0.15.0.1")]
 
-// Attributes added to allow safer development.
-
-[assembly: CLSCompliant(true)]
-[assembly: InternalsVisibleTo("FLEX.Web.Tests")]
+[assembly: InternalsVisibleTo("UnitTests.WebForms")]

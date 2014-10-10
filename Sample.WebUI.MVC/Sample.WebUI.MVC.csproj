@@ -199,9 +199,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FLEX.Web.MVC\FLEX.MVC.csproj">
+    <ProjectReference Include="..\FLEX.Web.MVC\Caravan.MVC.csproj">
       <Project>{811b51a4-669e-463e-897a-b593824d6d75}</Project>
-      <Name>FLEX.MVC</Name>
+      <Name>Caravan.MVC</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sample.DataModel\Sample.DataModel.csproj">
       <Project>{33a9cd5a-87c6-4bb3-b304-4dc6411bef4f}</Project>

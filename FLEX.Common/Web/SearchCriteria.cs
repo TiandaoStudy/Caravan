@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Finsa.Caravan.Collections;
-using PommaLabs.GRAMPA.Diagnostics;
+using Finsa.Caravan.Diagnostics;
 
 namespace FLEX.Common.Web
 {

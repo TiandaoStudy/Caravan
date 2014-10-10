@@ -30,6 +30,18 @@ namespace Finsa.Caravan
 {
     public static class ErrorMessages
     {
+        public const string TopLevel_Pair_NotFullCollection = "GPair is not (and cannot be) a full collection, therefore some IList methods are not implemented.";
+        public const string TopLevel_Triple_NotFullCollection = "GTriple is not (and cannot be) a full collection, therefore some IList methods are not implemented.";
+        public const string TopLevel_Tuple_NotFullCollection = "GTuple is not (and cannot be) a full collection, therefore some IList methods are not implemented.";
+
         public const string Collections_ReadOnlyList_Immutable = "List is immutable and it cannot be modified.";
+        public const string Collections_ReadOnlyList_NullItems = "Given items cannot be null, or Nothing in VB.NET.";
+
+        public const string Extensions_DataTableExtensions_NullDataTable = "Given data table cannot be null, or Nothing in VB.NET.";
+
+        public const string Reflection_ServiceLocator_ErrorOnLoading = "An error occurred while loading specified type. See inner exception for more details.";
+        public const string Reflection_ServiceLocator_InterfaceNotImplemented = "Specified type does not implement given interfaces.";
+
+        public const string Threading_ConcurrentWorkQueue_NullAction = "Given action cannot be null, or Nothing in VB.NET.";
     }
 }

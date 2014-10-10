@@ -78,9 +78,9 @@
       <Project>{ceff687b-7817-4326-9310-ab655407b610}</Project>
       <Name>Caravan</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FLEX.Common\FLEX.Common.csproj">
+    <ProjectReference Include="..\FLEX.Common\Caravan.Common.csproj">
       <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>
-      <Name>FLEX.Common</Name>
+      <Name>Caravan.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

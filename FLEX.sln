@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.WebUI.WebForms", "FLEX.Extensions.TestWebUI\Sample.WebUI.WebForms.csproj", "{B3C22B2A-06D3-454F-BF86-0CCE7C744AE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.WebForms", "FLEX.Web\FLEX.WebForms.csproj", "{407B5921-9039-4D0D-A40A-36A19C251CDC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebForms", "FLEX.Web\Caravan.WebForms.csproj", "{407B5921-9039-4D0D-A40A-36A19C251CDC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{BF4277FD-24C4-45AC-B871-98E1FEEDC623}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.WebForms", "F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataAccess.Dapper", "FLEX.TestDataAccess\Sample.DataAccess.Dapper.csproj", "{9F1BAA6D-7E1E-43CC-94CE-0B0AF04C753F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.Common", "FLEX.Common\FLEX.Common.csproj", "{11904ED0-33D2-4005-8766-B1E393A32EA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Common", "FLEX.Common\Caravan.Common.csproj", "{11904ED0-33D2-4005-8766-B1E393A32EA7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.WebForms", "FLEX.Web.Tests\UnitTests.WebForms.csproj", "{3A48F406-2440-4E9B-9919-ED46BC3CD234}"
 EndProject
@@ -59,7 +59,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{349512
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FLEX.DataAccess", "FLEX.Data.Oracle\FLEX.DataAccess.vbproj", "{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Caravan.DataAccess", "FLEX.Data.Oracle\Caravan.DataAccess.vbproj", "{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.DataAccess", "FLEX.Data.Packager\NuGetPackager.DataAccess.csproj", "{BD471427-A76A-4764-94C1-08C8C3BC1379}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -68,17 +68,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.DataAccess", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Web.CodeEditor", "NuGetPackager.Web.CodeEditor\NuGetPackager.Web.CodeEditor.csproj", "{01F957B7-5B84-4792-A781-87E82257618D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.MVC", "FLEX.Web.MVC\FLEX.MVC.csproj", "{811B51A4-669E-463E-897A-B593824D6D75}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.MVC", "FLEX.Web.MVC\Caravan.MVC.csproj", "{811B51A4-669E-463E-897A-B593824D6D75}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.WebUI.MVC", "Sample.WebUI.MVC\Sample.WebUI.MVC.csproj", "{A65D507D-03A2-49BE-A056-72AE6964140A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.RestService", "FLEX.RestService\FLEX.RestService.csproj", "{B4F9C525-5C56-440E-B4C2-972A33D7C8CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.RestService", "FLEX.RestService\Caravan.RestService.csproj", "{B4F9C525-5C56-440E-B4C2-972A33D7C8CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.RestService", "Sample.RestService\Sample.RestService.csproj", "{1687CDFF-4C23-4DD7-86C1-E277CCFA1D8A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Database", "Sample.Database\Sample.Database.csproj", "{956E7461-AC0F-4E81-B57D-F84689D1BE9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLEX.WebAPI", "FLEX.Web.WebAPI\FLEX.WebAPI.csproj", "{27D82597-28B1-4441-8C42-0A220C38C4D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebAPI", "FLEX.Web.WebAPI\Caravan.WebAPI.csproj", "{27D82597-28B1-4441-8C42-0A220C38C4D8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataModel", "Sample.DataModel\Sample.DataModel.csproj", "{33A9CD5A-87C6-4BB3-B304-4DC6411BEF4F}"
 EndProject

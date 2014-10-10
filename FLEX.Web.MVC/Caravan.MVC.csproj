@@ -43,10 +43,6 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PommaLabs.GRAMPA, Version=0.17.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.GRAMPA.0.17.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
-    </Reference>
     <Reference Include="RazorGenerator.Mvc">
       <HintPath>..\packages\RazorGenerator.Mvc.2.2.3\lib\net40\RazorGenerator.Mvc.dll</HintPath>
     </Reference>
@@ -523,13 +519,13 @@
       <Project>{ceff687b-7817-4326-9310-ab655407b610}</Project>
       <Name>Caravan</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FLEX.Common\FLEX.Common.csproj">
+    <ProjectReference Include="..\FLEX.Common\Caravan.Common.csproj">
       <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>
-      <Name>FLEX.Common</Name>
+      <Name>Caravan.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FLEX.Web.WebAPI\FLEX.WebAPI.csproj">
+    <ProjectReference Include="..\FLEX.Web.WebAPI\Caravan.WebAPI.csproj">
       <Project>{27d82597-28b1-4441-8c42-0a220c38c4d8}</Project>
-      <Name>FLEX.WebAPI</Name>
+      <Name>Caravan.WebAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

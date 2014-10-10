@@ -30,6 +30,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Finsa.Caravan.Diagnostics;
 
 namespace Finsa.Caravan.Collections
 {
@@ -37,11 +38,13 @@ namespace Finsa.Caravan.Collections
     {
         public static ReadOnlyList<T> Create<T>(IEnumerable<T> items)
         {
+            Raise<ArgumentNullException>.IfIsNull(items, ErrorMessages.Collections_ReadOnlyList_NullItems);
             return Create(items.ToArray());
         }
 
         public static ReadOnlyList<T> Create<T>(params T[] items)
         {
+            Raise<ArgumentNullException>.IfIsNull(items, ErrorMessages.Collections_ReadOnlyList_NullItems);
             return (items.Length == 0) ? Empty<T>() : new ReadOnlyList<T>(items);
         }
 

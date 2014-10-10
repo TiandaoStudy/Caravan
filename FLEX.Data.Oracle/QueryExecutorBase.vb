@@ -1,6 +1,6 @@
 ﻿Imports Dapper
+Imports Finsa.Caravan.Extensions
 Imports FLEX.Common.Data
-Imports PommaLabs.GRAMPA.Extensions
 
 Public MustInherit Class QueryExecutorBase
    Implements IQueryExecutor

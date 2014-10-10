@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Caching;
+using Finsa.Caravan.Diagnostics;
 using FLEX.Web;
-using PommaLabs.GRAMPA.Diagnostics;
 using PommaLabs.KVLite.Web;
 
 namespace FLEX.WebForms

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Configuration;
-using PommaLabs.GRAMPA.Reflection;
+using Finsa.Caravan.Reflection;
 
 namespace FLEX.Common.Data
 {

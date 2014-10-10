@@ -7,8 +7,8 @@
     <ProjectGuid>{3A48F406-2440-4E9B-9919-ED46BC3CD234}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FLEX.Web.Tests</RootNamespace>
-    <AssemblyName>FLEX.Web.Tests</AssemblyName>
+    <RootNamespace>UnitTests.WebForms</RootNamespace>
+    <AssemblyName>UnitTests.WebForms</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>
@@ -65,9 +65,9 @@
     <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FLEX.Web\FLEX.WebForms.csproj">
+    <ProjectReference Include="..\FLEX.Web\Caravan.WebForms.csproj">
       <Project>{407b5921-9039-4d0d-a40a-36a19c251cdc}</Project>
-      <Name>FLEX.WebForms</Name>
+      <Name>Caravan.WebForms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
