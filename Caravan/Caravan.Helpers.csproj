@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Collections\ReadOnlyDictionary.cs" />
     <Compile Include="Collections\ReadOnlyList.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Diagnostics\Raise.cs" />
     <Compile Include="ErrorMessages.cs" />
     <Compile Include="Extensions\BooleanExtensions.cs" />

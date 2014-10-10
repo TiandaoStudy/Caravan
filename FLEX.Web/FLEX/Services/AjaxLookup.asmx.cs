@@ -8,12 +8,12 @@ using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Xml;
-using FLEX.Common;
+using Finsa.Caravan.Diagnostics;
+using Finsa.Caravan.Helpers;
+using Finsa.Caravan.Text;
 using FLEX.Common.Data;
 using FLEX.Web.XmlSettings.AjaxLookup;
 using FLEX.WebForms;
-using PommaLabs.GRAMPA.Text;
-using PommaLabs.GRAMPA.Diagnostics;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

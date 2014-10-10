@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Configuration;
+using Finsa.Caravan.Reflection;
 using FLEX.Common.Data;
-using FLEX.WebForms;
-using PommaLabs.GRAMPA.Reflection;
-using Configuration = FLEX.WebForms.Configuration;
+using FLEX.Web;
 
-namespace FLEX.Web.WebForms
+namespace FLEX.WebForms
 {
     /// <summary>
     /// 

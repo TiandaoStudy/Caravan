@@ -33,9 +33,4 @@ namespace FLEX.Common
          return mappedPath.EndsWith("\\") ? mappedPath : mappedPath + "\\";
       }
    }
-
-   public static class Constants
-   {
-      public const string XmlExtension = ".xml";
-   }
 }
