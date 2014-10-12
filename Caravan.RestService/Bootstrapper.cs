@@ -1,8 +1,8 @@
-﻿namespace FLEX.RestService
-{
-   using Nancy;
+﻿using Nancy;
 
-   public class Bootstrapper : DefaultNancyBootstrapper
+namespace Finsa.Caravan.RestService
+{
+    public class Bootstrapper : DefaultNancyBootstrapper
    {
       // The bootstrapper enables you to reconfigure the composition of the framework,
       // by overriding the various methods and properties.

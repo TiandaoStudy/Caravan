@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Finsa.Caravan;
 using LinqToQuerystring.Nancy;
 using Nancy;
 
-namespace FLEX.RestService
+namespace Finsa.Caravan.RestService
 {
    public sealed class IndexModule : NancyModule
    {

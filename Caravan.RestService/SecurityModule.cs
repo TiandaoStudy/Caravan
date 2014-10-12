@@ -3,7 +3,7 @@ using System.Web;
 using FLEX.Common.XmlSchemas.MenuEntries;
 using Nancy;
 
-namespace FLEX.RestService
+namespace Finsa.Caravan.RestService
 {
    public sealed class SecurityModule : NancyModule
    {
