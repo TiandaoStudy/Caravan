@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Coding Standards", "Coding Standards", "{C79157DB-09C9-401F-B4BD-4D6A193790D0}"
 	ProjectSection(SolutionItems) = preProject
-		FLEX.Docs\Coding Standards\CSharp.pdf = FLEX.Docs\Coding Standards\CSharp.pdf
+		Documentation\Coding Standards\CSharp.pdf = Documentation\Coding Standards\CSharp.pdf
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.WebForms", "FLEX.Web.Packager\NuGetPackager.WebForms.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
@@ -22,11 +22,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.WebForms", "F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataAccess.Dapper", "FLEX.TestDataAccess\Sample.DataAccess.Dapper.csproj", "{9F1BAA6D-7E1E-43CC-94CE-0B0AF04C753F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Common", "FLEX.Common\Caravan.Common.csproj", "{11904ED0-33D2-4005-8766-B1E393A32EA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Common", "Caravan.Common\Caravan.Common.csproj", "{11904ED0-33D2-4005-8766-B1E393A32EA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.WebForms", "FLEX.Web.Tests\UnitTests.WebForms.csproj", "{3A48F406-2440-4E9B-9919-ED46BC3CD234}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.WebForms", "UnitTests.WebForms\UnitTests.WebForms.csproj", "{3A48F406-2440-4E9B-9919-ED46BC3CD234}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Common", "FLEX.Common.Tests\UnitTests.Common.csproj", "{4F1024FA-992F-442C-B32F-E4BE589D5EF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Common", "UnitTests.Common\UnitTests.Common.csproj", "{4F1024FA-992F-442C-B32F-E4BE589D5EF4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Common", "NuGetPackager.Common\NuGetPackager.Common.csproj", "{BBCDDB1C-8127-4623-B40B-5109DE5A63EF}"
 EndProject
@@ -34,22 +34,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{816548D1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bootstrap", "Bootstrap", "{BA4644BC-0508-43EE-BF18-CA5725108E59}"
 	ProjectSection(SolutionItems) = preProject
-		FLEX.Docs\Tools\Bootstrap\Bootstrap, jQuery UI and sortable.oxps = FLEX.Docs\Tools\Bootstrap\Bootstrap, jQuery UI and sortable.oxps
-		FLEX.Docs\Tools\Bootstrap\DataTables and Bootstrap 3.png = FLEX.Docs\Tools\Bootstrap\DataTables and Bootstrap 3.png
-		FLEX.Docs\Tools\Bootstrap\IE8 issues with Bootstrap.oxps = FLEX.Docs\Tools\Bootstrap\IE8 issues with Bootstrap.oxps
+		Documentation\Tools\Bootstrap\Bootstrap, jQuery UI and sortable.oxps = Documentation\Tools\Bootstrap\Bootstrap, jQuery UI and sortable.oxps
+		Documentation\Tools\Bootstrap\DataTables and Bootstrap 3.png = Documentation\Tools\Bootstrap\DataTables and Bootstrap 3.png
+		Documentation\Tools\Bootstrap\IE8 issues with Bootstrap.oxps = Documentation\Tools\Bootstrap\IE8 issues with Bootstrap.oxps
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "jQuery UI", "jQuery UI", "{404C846A-E6C5-41ED-84E7-476EA90CF12C}"
 	ProjectSection(SolutionItems) = preProject
-		FLEX.Docs\Tools\jQuery UI\CSS for Autocomplete.xps = FLEX.Docs\Tools\jQuery UI\CSS for Autocomplete.xps
+		Documentation\Tools\jQuery UI\CSS for Autocomplete.xps = Documentation\Tools\jQuery UI\CSS for Autocomplete.xps
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Issues and Solutions", "Issues and Solutions", "{2BAED882-BB9A-41E8-9DC6-07823A9BC60F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASP.NET", "ASP.NET", "{D2B116DB-FC08-49C0-B409-375C74CA3BA4}"
 	ProjectSection(SolutionItems) = preProject
-		FLEX.Docs\Issues and Solutions\ASP.NET\ASP.NET 3.5 and Validators in IE9.pdf = FLEX.Docs\Issues and Solutions\ASP.NET\ASP.NET 3.5 and Validators in IE9.pdf
-		FLEX.Docs\Issues and Solutions\ASP.NET\Closing JavaScript Modals on IE9.pdf = FLEX.Docs\Issues and Solutions\ASP.NET\Closing JavaScript Modals on IE9.pdf
+		Documentation\Issues and Solutions\ASP.NET\ASP.NET 3.5 and Validators in IE9.pdf = Documentation\Issues and Solutions\ASP.NET\ASP.NET 3.5 and Validators in IE9.pdf
+		Documentation\Issues and Solutions\ASP.NET\Closing JavaScript Modals on IE9.pdf = Documentation\Issues and Solutions\ASP.NET\Closing JavaScript Modals on IE9.pdf
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3495129D-5A6D-47A5-9121-317E6EE3CBB4}"
@@ -59,11 +59,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{349512
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess", "Caravan.DataAccess\Caravan.DataAccess.csproj", "{418B2D91-D53E-49BF-98FC-66DA9490DC37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess", "Caravan.DataAccess\Caravan.DataAccess.csproj", "{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.DataAccess", "FLEX.Data.Packager\NuGetPackager.DataAccess.csproj", "{BD471427-A76A-4764-94C1-08C8C3BC1379}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.DataAccess", "NuGetPackager.DataAccess\NuGetPackager.DataAccess.csproj", "{BD471427-A76A-4764-94C1-08C8C3BC1379}"
 	ProjectSection(ProjectDependencies) = postProject
-		{418B2D91-D53E-49BF-98FC-66DA9490DC37} = {418B2D91-D53E-49BF-98FC-66DA9490DC37}
+		{396D8F01-E785-4C04-9FC3-CFAE3BE932A2} = {396D8F01-E785-4C04-9FC3-CFAE3BE932A2}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Web.CodeEditor", "NuGetPackager.Web.CodeEditor\NuGetPackager.Web.CodeEditor.csproj", "{01F957B7-5B84-4792-A781-87E82257618D}"
@@ -78,7 +78,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.RestService", "Sampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Database", "Sample.Database\Sample.Database.csproj", "{956E7461-AC0F-4E81-B57D-F84689D1BE9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebAPI", "FLEX.Web.WebAPI\Caravan.WebAPI.csproj", "{27D82597-28B1-4441-8C42-0A220C38C4D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebAPI", "Caravan.WebAPI\Caravan.WebAPI.csproj", "{27D82597-28B1-4441-8C42-0A220C38C4D8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataModel", "Sample.DataModel\Sample.DataModel.csproj", "{33A9CD5A-87C6-4BB3-B304-4DC6411BEF4F}"
 EndProject
@@ -90,7 +90,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External Libraries", "Exter
 		External Libraries\Oracle.ManagedDataAccess.EntityFramework.dll = External Libraries\Oracle.ManagedDataAccess.EntityFramework.dll
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Helpers", "Caravan\Caravan.Helpers.csproj", "{CEFF687B-7817-4326-9310-AB655407B610}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Helpers", "Caravan.Helpers\Caravan.Helpers.csproj", "{CEFF687B-7817-4326-9310-AB655407B610}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Helpers", "NuGetPackager.Helpers\NuGetPackager.Helpers.csproj", "{860A7A25-C159-487F-BAC5-C46857FC7A40}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -133,10 +133,10 @@ Global
 		{4F1024FA-992F-442C-B32F-E4BE589D5EF4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BBCDDB1C-8127-4623-B40B-5109DE5A63EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BBCDDB1C-8127-4623-B40B-5109DE5A63EF}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{418B2D91-D53E-49BF-98FC-66DA9490DC37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{418B2D91-D53E-49BF-98FC-66DA9490DC37}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{418B2D91-D53E-49BF-98FC-66DA9490DC37}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{418B2D91-D53E-49BF-98FC-66DA9490DC37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{396D8F01-E785-4C04-9FC3-CFAE3BE932A2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BD471427-A76A-4764-94C1-08C8C3BC1379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BD471427-A76A-4764-94C1-08C8C3BC1379}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{01F957B7-5B84-4792-A781-87E82257618D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

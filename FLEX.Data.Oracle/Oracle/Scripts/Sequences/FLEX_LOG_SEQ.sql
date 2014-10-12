@@ -1,3 +1,0 @@
-﻿-- REPLACE 'mydb' WITH DB NAME
-
-CREATE SEQUENCE "mydb".FLEX_LOG_SEQ;
