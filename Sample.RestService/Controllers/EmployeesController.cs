@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Web.Mvc;
-using FLEX.Web.WebAPI.Results;
+using Finsa.Caravan.WebApi.Results;
 using Sample.DataAccess.EntityFramework;
 
 namespace RestService.Controllers

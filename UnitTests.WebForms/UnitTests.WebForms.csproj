@@ -65,7 +65,7 @@
     <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FLEX.Web\Caravan.WebForms.csproj">
+    <ProjectReference Include="..\Caravan.WebForms\Caravan.WebForms.csproj">
       <Project>{407b5921-9039-4d0d-a40a-36a19c251cdc}</Project>
       <Name>Caravan.WebForms</Name>
     </ProjectReference>

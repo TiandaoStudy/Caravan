@@ -69,7 +69,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Caravan\Caravan.Helpers.csproj">
+    <ProjectReference Include="..\Caravan.Helpers\Caravan.Helpers.csproj">
       <Project>{CEFF687B-7817-4326-9310-AB655407B610}</Project>
       <Name>Caravan.Helpers</Name>
     </ProjectReference>

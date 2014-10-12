@@ -4,7 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 
-namespace FLEX.Web.WebAPI.Results
+namespace Finsa.Caravan.WebApi.Results
 {
     public sealed class JsonNetResult : ActionResult
     {

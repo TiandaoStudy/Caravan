@@ -94,20 +94,14 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Caravan\Caravan.Helpers.csproj">
+    <ProjectReference Include="..\Caravan.Helpers\Caravan.Helpers.csproj">
       <Project>{ceff687b-7817-4326-9310-ab655407b610}</Project>
       <Name>Caravan.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release (
-    set dir="$(SolutionDir)NuGetPackager.Common/lib/net40"
-    if not exist "%25dir%25" mkdir "%25dir%25"
-    copy "$(TargetDir)FLEX.Common.dll" "$(SolutionDir)NuGetPackager.Common/lib/net40"
-    copy "$(TargetDir)FLEX.Common.pdb" "$(SolutionDir)NuGetPackager.Common/lib/net40"
-    copy "$(TargetDir)FLEX.Common.xml" "$(SolutionDir)NuGetPackager.Common/lib/net40"
-)</PostBuildEvent>
+    <PostBuildEvent>copy $(TargetDir)FLEX.Common.* "$(SolutionDir)NuGetPackager.Common/lib/net40"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

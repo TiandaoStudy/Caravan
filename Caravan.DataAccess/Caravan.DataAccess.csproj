@@ -34,7 +34,7 @@
     <DocumentationFile>bin\Release\FLEX.DataAccess.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetDir)FLEX.DataAccess.* "$(SolutionDir)FLEX.Data.Packager/lib/net40"</PostBuildEvent>
+    <PostBuildEvent>copy $(TargetDir)FLEX.DataAccess.* "$(SolutionDir)NuGetPackager.DataAccess/lib/net40"</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CodeProject.ObjectPool, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
@@ -103,11 +103,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Caravan\Caravan.Helpers.csproj">
+    <ProjectReference Include="..\Caravan.Helpers\Caravan.Helpers.csproj">
       <Project>{ceff687b-7817-4326-9310-ab655407b610}</Project>
       <Name>Caravan.Helpers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FLEX.Common\Caravan.Common.csproj">
+    <ProjectReference Include="..\Caravan.Common\Caravan.Common.csproj">
       <Project>{11904ED0-33D2-4005-8766-B1E393A32EA7}</Project>
       <Name>Caravan.Common</Name>
     </ProjectReference>
