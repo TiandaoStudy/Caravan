@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FLEX.Web.MVC.Controls.ValueHolders
+namespace Finsa.Caravan.Mvc.Controls.ValueHolders
 {
     using System;
     using System.Collections.Generic;

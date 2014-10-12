@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using FLEX.Web.MVC.Controllers;
+using Finsa.Caravan.Mvc.Controllers;
 
 namespace Sample.WebUI.MVC.Controllers
 {

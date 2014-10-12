@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace FLEX.Web.MVC.Controllers
+namespace Finsa.Caravan.Mvc.Controllers
 {
    public abstract class FlexController : Controller
    {

@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FLEX.Web.MVC.Layouts
+namespace Finsa.Caravan.Mvc.Layouts
 {
     using System;
     using System.Collections.Generic;

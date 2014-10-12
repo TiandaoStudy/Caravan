@@ -15,7 +15,7 @@
     <AssemblyName>Sample.WebUI.MVC</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -199,9 +199,25 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Caravan.Common\Caravan.Common.csproj">
+      <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>
+      <Name>Caravan.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Caravan.DataAccess\Caravan.DataAccess.csproj">
+      <Project>{418b2d91-d53e-49bf-98fc-66da9490dc37}</Project>
+      <Name>Caravan.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Caravan.Helpers\Caravan.Helpers.csproj">
+      <Project>{ceff687b-7817-4326-9310-ab655407b610}</Project>
+      <Name>Caravan.Helpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Caravan.Mvc\Caravan.Mvc.csproj">
       <Project>{811b51a4-669e-463e-897a-b593824d6d75}</Project>
       <Name>Caravan.Mvc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Caravan.WebApi\Caravan.WebApi.csproj">
+      <Project>{27d82597-28b1-4441-8c42-0a220c38c4d8}</Project>
+      <Name>Caravan.WebApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sample.DataModel\Sample.DataModel.csproj">
       <Project>{33a9cd5a-87c6-4bb3-b304-4dc6411bef4f}</Project>

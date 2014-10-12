@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Web.Mvc;
-using FLEX.Web.MVC.Controllers;
+using Finsa.Caravan.Mvc.Controllers;
 using FLEX.Web.MVC.Controls.DataVisualization;
 using Newtonsoft.Json;
 using RestSharp;

@@ -7,8 +7,8 @@
     <ProjectGuid>{811B51A4-669E-463E-897A-B593824D6D75}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FLEX.Web.MVC</RootNamespace>
-    <AssemblyName>FLEX.Web.MVC</AssemblyName>
+    <RootNamespace>Finsa.Caravan.Mvc</RootNamespace>
+    <AssemblyName>Finsa.Caravan.Mvc</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
