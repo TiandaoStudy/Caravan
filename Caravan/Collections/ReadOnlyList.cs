@@ -31,7 +31,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Finsa.Caravan.Diagnostics;
-using Finsa.Caravan.Helpers;
 
 namespace Finsa.Caravan.Collections
 {

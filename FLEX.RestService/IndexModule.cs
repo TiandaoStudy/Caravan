@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Finsa.Caravan;
-using Finsa.Caravan.Helpers;
 using LinqToQuerystring.Nancy;
 using Nancy;
 

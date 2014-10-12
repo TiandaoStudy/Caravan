@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using Finsa.Caravan.Reflection;
-using FLEX.Common.Data;
+using FLEX.DataAccess;
 using FLEX.Web;
 
 namespace FLEX.WebForms

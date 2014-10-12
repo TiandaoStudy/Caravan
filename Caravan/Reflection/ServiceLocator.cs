@@ -29,7 +29,6 @@
 using System;
 using System.Collections.Concurrent;
 using Finsa.Caravan.Diagnostics;
-using Finsa.Caravan.Helpers;
 
 namespace Finsa.Caravan.Reflection
 {

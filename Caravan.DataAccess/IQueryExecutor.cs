@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace FLEX.Common.Data
+namespace FLEX.DataAccess
 {
    /// <summary>
    /// 

@@ -30,7 +30,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Finsa.Caravan.Helpers
+namespace Finsa.Caravan
 {
 	[Serializable]
     public abstract class GTuple : IList<object>

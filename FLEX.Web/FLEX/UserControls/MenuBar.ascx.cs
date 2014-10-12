@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using FLEX.Common.Data;
+using FLEX.DataAccess;
 using FLEX.Web.XmlSettings.MenuBar;
 using FLEX.WebForms;
 

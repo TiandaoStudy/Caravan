@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Threading;
 using System.Web.UI;
 using Finsa.Caravan.Diagnostics;
-using FLEX.Common.Data;
+using FLEX.DataAccess;
 using FLEX.WebForms;
 
 // ReSharper disable CheckNamespace

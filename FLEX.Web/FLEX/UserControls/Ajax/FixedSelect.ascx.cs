@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Finsa.Caravan;
 using Finsa.Caravan.Collections;
 using Finsa.Caravan.Diagnostics;
-using Finsa.Caravan.Helpers;
 using FLEX.Common.Web;
 
 // ReSharper disable CheckNamespace

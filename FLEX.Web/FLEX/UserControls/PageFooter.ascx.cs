@@ -1,5 +1,5 @@
 ﻿using System;
-using FLEX.Common.Data;
+using FLEX.DataAccess;
 using FLEX.WebForms;
 
 // ReSharper disable CheckNamespace
@@ -15,7 +15,7 @@ namespace FLEX.Web.UserControls
          try
          {
             // Footer extender
-            var ext = LoadControl(Configuration.Instance.ControlExtendersFolder + "/PageFooter.ascx");
+            var ext = LoadControl(WebForms.Configuration.Instance.ControlExtendersFolder + "/PageFooter.ascx");
             footerExtender.Controls.Add(ext);
 
             // ...

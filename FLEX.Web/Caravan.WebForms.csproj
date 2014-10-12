@@ -910,7 +910,9 @@
     <None Include="FLEX\Styles\Bootstrap.less" />
     <None Include="FLEX\Styles\FLEX.less" />
     <None Include="FLEX\Styles\FontAwesome.less" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="WebMarkupMin.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -945,6 +947,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Caravan.DataAccess\Caravan.DataAccess.csproj">
+      <Project>{418b2d91-d53e-49bf-98fc-66da9490dc37}</Project>
+      <Name>Caravan.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Caravan\Caravan.Helpers.csproj">
       <Project>{ceff687b-7817-4326-9310-ab655407b610}</Project>
       <Name>Caravan.Helpers</Name>
@@ -952,10 +958,6 @@
     <ProjectReference Include="..\FLEX.Common\Caravan.Common.csproj">
       <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>
       <Name>Caravan.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FLEX.Data.Oracle\Caravan.DataAccess.vbproj">
-      <Project>{396d8f01-e785-4c04-9fc3-cfae3be932a2}</Project>
-      <Name>Caravan.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

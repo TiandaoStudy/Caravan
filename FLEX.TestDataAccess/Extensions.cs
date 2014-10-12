@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-using FLEX.Common.Data;
 using FLEX.Common.Web;
+using FLEX.DataAccess;
 
 namespace FLEX.Extensions.TestDataAccess
 {

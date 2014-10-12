@@ -31,7 +31,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using Finsa.Caravan.Helpers;
 using Newtonsoft.Json;
 
 namespace Finsa.Caravan.Extensions

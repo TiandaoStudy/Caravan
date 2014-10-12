@@ -1,5 +1,5 @@
 ﻿using System;
-using FLEX.Common.Data;
+using FLEX.DataAccess;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 

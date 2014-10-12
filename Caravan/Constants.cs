@@ -1,4 +1,4 @@
-namespace Finsa.Caravan.Helpers
+namespace Finsa.Caravan
 {
     public static class Constants
     {

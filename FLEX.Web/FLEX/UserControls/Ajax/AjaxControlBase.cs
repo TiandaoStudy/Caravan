@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using FLEX.Common.Data;
+using FLEX.DataAccess;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

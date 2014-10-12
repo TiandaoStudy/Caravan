@@ -7,7 +7,7 @@
     <ProjectGuid>{CEFF687B-7817-4326-9310-AB655407B610}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Finsa.Caravan.Helpers</RootNamespace>
+    <RootNamespace>Finsa.Caravan</RootNamespace>
     <AssemblyName>Finsa.Caravan.Helpers</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

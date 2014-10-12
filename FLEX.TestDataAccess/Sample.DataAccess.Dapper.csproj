@@ -115,6 +115,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Caravan.DataAccess\Caravan.DataAccess.csproj">
+      <Project>{418B2D91-D53E-49BF-98FC-66DA9490DC37}</Project>
+      <Name>Caravan.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Caravan\Caravan.Helpers.csproj">
       <Project>{CEFF687B-7817-4326-9310-AB655407B610}</Project>
       <Name>Caravan.Helpers</Name>

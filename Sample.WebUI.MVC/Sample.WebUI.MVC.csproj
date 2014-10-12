@@ -15,7 +15,7 @@
     <AssemblyName>Sample.WebUI.MVC</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -277,7 +277,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58608</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/FLEX.Sample.MVC</IISUrl>
+          <IISUrl>http://localhost:58608/FLEX.Sample.MVC</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

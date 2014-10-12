@@ -1,5 +1,4 @@
 ﻿using Finsa.Caravan;
-using Finsa.Caravan.Helpers;
 using NUnit.Framework;
 
 namespace UnitTests.Helpers

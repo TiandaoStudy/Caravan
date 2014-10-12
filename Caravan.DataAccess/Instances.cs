@@ -2,7 +2,7 @@
 using System.Configuration;
 using Finsa.Caravan.Reflection;
 
-namespace FLEX.Common.Data
+namespace FLEX.DataAccess
 {
     /// <summary>
     /// 
