@@ -211,13 +211,13 @@
       <Project>{ceff687b-7817-4326-9310-ab655407b610}</Project>
       <Name>Caravan.Helpers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Caravan.Mvc\Caravan.MVC.csproj">
+    <ProjectReference Include="..\Caravan.Mvc\Caravan.Mvc.csproj">
       <Project>{811b51a4-669e-463e-897a-b593824d6d75}</Project>
-      <Name>Caravan.MVC</Name>
+      <Name>Caravan.Mvc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Caravan.WebApi\Caravan.WebAPI.csproj">
+    <ProjectReference Include="..\Caravan.WebApi\Caravan.WebApi.csproj">
       <Project>{27d82597-28b1-4441-8c42-0a220c38c4d8}</Project>
-      <Name>Caravan.WebAPI</Name>
+      <Name>Caravan.WebApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sample.DataModel\Sample.DataModel.csproj">
       <Project>{33a9cd5a-87c6-4bb3-b304-4dc6411bef4f}</Project>

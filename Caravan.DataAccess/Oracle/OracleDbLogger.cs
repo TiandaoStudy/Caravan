@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Xml.Linq;
 using Dapper;
 using Finsa.Caravan;
 using Finsa.Caravan.Collections;
@@ -143,7 +142,7 @@ namespace FLEX.DataAccess.Oracle
                    flog_key_3 as Key3, flog_value_3 as Value3, flog_key_4 as Key4, flog_value_4 as Value4, flog_key_5 as Key5, flog_value_5 as Value5,
                    flog_key_6 as Key6, flog_value_6 as Value6, flog_key_7 as Key7, flog_value_7 as Value7, flog_key_8 as Key8, flog_value_8 as Value8,
                    flog_key_9 as Key9, flog_value_9 as Value9
-              from {0}flex_log\r\n                  
+              from {0}flex_log
              where upper(flog_application) = upper(:applicationName)";
          query = string.Format(query, Configuration.Instance.OracleRunner);
          using (var connection = QueryExecutor.Instance.OpenConnection())
