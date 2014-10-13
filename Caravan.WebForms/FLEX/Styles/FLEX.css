@@ -7294,7 +7294,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 body {
   margin: 0;
   padding: 0;
-  background-color: #ffffff;
+  background-color: #428bca;
   background-image: url(../Images/pattern.png);
 }
 .padded-icon {
@@ -7808,7 +7808,7 @@ footer .navbar-default .navbar-nav > li > a {
   border-bottom-right-radius: 3px;
 }
 #modal-header {
-  background-color: #ffffff;
+  background-color: #428bca;
   height: 32px;
   padding-top: 5px;
   overflow: hidden;
