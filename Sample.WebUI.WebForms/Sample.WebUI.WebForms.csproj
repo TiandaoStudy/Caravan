@@ -493,7 +493,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>60882</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/FLEX.Sample.WebForms</IISUrl>
+          <IISUrl>http://localhost/Caravan.Sample.WebForms</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

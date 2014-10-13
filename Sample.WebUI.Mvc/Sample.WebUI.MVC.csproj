@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sample.WebUI.MVC</RootNamespace>
-    <AssemblyName>Sample.WebUI.MVC</AssemblyName>
+    <RootNamespace>Sample.WebUI.Mvc</RootNamespace>
+    <AssemblyName>Sample.WebUI.Mvc</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
@@ -211,13 +211,13 @@
       <Project>{ceff687b-7817-4326-9310-ab655407b610}</Project>
       <Name>Caravan.Helpers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Caravan.Mvc\Caravan.Mvc.csproj">
+    <ProjectReference Include="..\Caravan.Mvc\Caravan.MVC.csproj">
       <Project>{811b51a4-669e-463e-897a-b593824d6d75}</Project>
-      <Name>Caravan.Mvc</Name>
+      <Name>Caravan.MVC</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Caravan.WebApi\Caravan.WebApi.csproj">
+    <ProjectReference Include="..\Caravan.WebApi\Caravan.WebAPI.csproj">
       <Project>{27d82597-28b1-4441-8c42-0a220c38c4d8}</Project>
-      <Name>Caravan.WebApi</Name>
+      <Name>Caravan.WebAPI</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sample.DataModel\Sample.DataModel.csproj">
       <Project>{33a9cd5a-87c6-4bb3-b304-4dc6411bef4f}</Project>
@@ -291,9 +291,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>58608</DevelopmentServerPort>
+          <DevelopmentServerPort>55964</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58608/FLEX.Sample.MVC</IISUrl>
+          <IISUrl>http://localhost/Caravan.Sample.Mvc</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
