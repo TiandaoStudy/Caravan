@@ -105,7 +105,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Core\CaravanModule.cs" />
     <Compile Include="IndexModule.cs" />
+    <Compile Include="LogsModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecurityModule.cs" />
   </ItemGroup>

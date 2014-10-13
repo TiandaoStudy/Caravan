@@ -61,6 +61,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="DataModel\LogEntry.cs" />
     <Compile Include="DataModel\LogResult.cs" />
+    <Compile Include="DataModel\LogSettings.cs" />
     <Compile Include="FLEX.Common.XmlSchemas.MenuEntries.Item.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>

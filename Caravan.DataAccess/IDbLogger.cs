@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Runtime.CompilerServices;
 using Finsa.Caravan;
 using FLEX.Common.DataModel;
@@ -33,8 +32,6 @@ namespace FLEX.DataAccess
 
       IEnumerable<LogEntry> RetrieveAllLogs();
       IEnumerable<LogEntry> RetrieveCurrentApplicationLogs();
-
-      DataTable RetrieveAllLogsTable();
-      DataTable RetrieveCurrentApplicationLogsTable();
+      IEnumerable<LogEntry> RetrieveApplicationLogs(string applicationName);
    }
 }

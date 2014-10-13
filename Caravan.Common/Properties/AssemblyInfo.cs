@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("FLEX.Common")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("FINSA S.p.A.")]
+[assembly: AssemblyCompany("Finsa S.p.A.")]
 [assembly: AssemblyProduct("FLEX.Common")]
 [assembly: AssemblyCopyright("Copyright © Finsa S.p.A. 2014-2024")]
 [assembly: AssemblyTrademark("Finsa S.p.A.")]

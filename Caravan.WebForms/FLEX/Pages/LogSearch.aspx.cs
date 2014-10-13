@@ -1,4 +1,5 @@
 ﻿using System;
+using Finsa.Caravan.Extensions;
 using FLEX.DataAccess;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
@@ -29,7 +30,7 @@ namespace FLEX.WebForms.Pages
       protected void fdtgLogs_DataSourceUpdating(object sender, EventArgs args)
       {
          // This should not catch any exception, others will do.
-         fdtgLogs.DataSource = DbLogger.Instance.RetrieveCurrentApplicationLogsTable();
+         fdtgLogs.DataSource = DbLogger.Instance.RetrieveCurrentApplicationLogs().ToDataTable();
       }
 
       protected void btnRefresh_Click(object sender, EventArgs args)
