@@ -3,7 +3,10 @@
 <%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
 
 <style type="text/css">
-   .<%= ClientID %>-sugg-size { max-height: <%= MaxMenuHeight %>px; }
+   .<%= ClientID %>-sugg-size {
+      max-height: <%= MaxMenuHeight %>px;
+      overflow-y: auto;
+   }
 </style>
     
 <script type="text/javascript">
