@@ -18,7 +18,7 @@ namespace FLEX.WebForms
             try {
                 CachedInstance = ServiceLocator.Load<IErrorManager>(Configuration.Instance.ErrorManagerTypeInfo);
             } catch (Exception ex) {
-                DbLogger.Instance.LogFatal<IErrorManager>(ex, "Loading IErrorManager");
+                Logger.Instance.LogFatal<IErrorManager>(ex, "Loading IErrorManager");
                 throw new ConfigurationErrorsException(ErrorMessages.TopLevel_ErrorManager_ErrorLoadingType, ex);
             }
         }
@@ -41,7 +41,7 @@ namespace FLEX.WebForms
             try {
                 CachedInstance = ServiceLocator.Load<IPageManager>(Configuration.Instance.PageManagerTypeInfo);
             } catch (Exception ex) {
-                DbLogger.Instance.LogFatal<IPageManager>(ex, "Loading IPageManager");
+                Logger.Instance.LogFatal<IPageManager>(ex, "Loading IPageManager");
                 throw new ConfigurationErrorsException(ErrorMessages.TopLevel_PageManager_ErrorLoadingType, ex);
             }
         }
@@ -64,7 +64,7 @@ namespace FLEX.WebForms
             try {
                 CachedInstance = ServiceLocator.Load<ISecurityManager>(Configuration.Instance.SecurityManagerTypeInfo);
             } catch (Exception ex) {
-                DbLogger.Instance.LogFatal<ISecurityManager>(ex, "Loading ISecurityManager");
+                Logger.Instance.LogFatal<ISecurityManager>(ex, "Loading ISecurityManager");
                 throw new ConfigurationErrorsException(ErrorMessages.TopLevel_SecurityManager_ErrorLoadingType, ex);
             }
         }

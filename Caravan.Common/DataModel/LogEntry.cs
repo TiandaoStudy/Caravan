@@ -5,12 +5,13 @@ namespace FLEX.Common.DataModel
    [Serializable]
    public sealed class LogEntry
    {
-      public const string AutomaticallyFilled = "Automatically filled parameter, please do not specify a value!";
+      public const string AutomaticallyFilled = "Automatically filled parameter";
       public const string NotSpecified = "...";
 
-      public DateTime EntryDate { get; set; }
-      public string Type { get; set; }
-      public string Application { get; set; }
+      public DateTime Date { get; set; }
+      public string TypeString { get; set; }
+      public string ApplicationName { get; set; }
+      public string UserName { get; set; }
       public string CodeUnit { get; set; }
       public string Function { get; set; }
       public string ShortMessage { get; set; }
@@ -36,5 +37,15 @@ namespace FLEX.Common.DataModel
       public string Value8 { get; set; }
       public string Key9 { get; set; }
       public string Value9 { get; set; }
+
+      public LogType Type
+      {
+         get
+         {
+            LogType logType;
+            Enum.TryParse(TypeString, true, out logType);
+            return logType;
+         }
+      }
    }
 }

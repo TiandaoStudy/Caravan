@@ -39,7 +39,7 @@ namespace FLEX.Web.UserControls
          }
          catch (Exception ex)
          {
-            DbLogger.Instance.LogError<MenuBar>(ex);
+            Logger.Instance.LogError<MenuBar>(ex);
             throw;
          }        
       }

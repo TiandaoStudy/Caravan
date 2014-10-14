@@ -35,7 +35,7 @@ namespace FLEX.Sample.WebUI
       {
          try
          {
-            DbLogger.Instance.LogError<CandidateList>("Short msg", DateTime.Now.ToLongDateString(), "A test");
+            Logger.Instance.LogError<CandidateList>("Short msg", DateTime.Now.ToLongDateString(), "A test");
          }
          catch (Exception ex)
          {

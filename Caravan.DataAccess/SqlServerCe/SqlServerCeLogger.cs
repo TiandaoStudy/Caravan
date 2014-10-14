@@ -3,9 +3,9 @@ using Finsa.Caravan;
 using FLEX.Common.DataModel;
 using FLEX.DataAccess.Core;
 
-namespace FLEX.DataAccess.SqlServer
+namespace FLEX.DataAccess.SqlServerCe
 {
-	public sealed class SqlServerLogger : LoggerBase
+   public sealed class SqlServerCeLogger : LoggerBase
 	{
 	   public override IEnumerable<LogEntry> GetAllLogs()
 	   {

@@ -30,7 +30,7 @@ namespace FLEX.WebForms.Pages
       protected void fdtgLogs_DataSourceUpdating(object sender, EventArgs args)
       {
          // This should not catch any exception, others will do.
-         fdtgLogs.DataSource = DbLogger.Instance.RetrieveCurrentApplicationLogs().ToDataTable();
+         fdtgLogs.DataSource = Logger.Instance.GetCurrentApplicationLogs().ToDataTable();
       }
 
       protected void btnRefresh_Click(object sender, EventArgs args)

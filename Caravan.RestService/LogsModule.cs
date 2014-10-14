@@ -7,7 +7,7 @@ namespace Finsa.Caravan.RestService
    {
       public LogsModule() : base("logs")
       {
-         Get["/{applicationName}"] = p => DbLogger.Instance.RetrieveApplicationLogs(p.applicationName);
+         Get["/{applicationName}"] = p => Logger.Instance.GetApplicationLogs(p.applicationName);
       }
    }
 }
