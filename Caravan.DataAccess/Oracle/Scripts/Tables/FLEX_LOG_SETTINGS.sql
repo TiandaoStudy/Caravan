@@ -22,8 +22,8 @@ COMMENT ON COLUMN mydb.flex_log_settings.flos_enabled IS 'Attivazione del loggin
 COMMENT ON COLUMN mydb.flex_log_settings.flos_days IS 'Numeri di giorni di persistenza della riga di log';
 COMMENT ON COLUMN mydb.flex_log_settings.flos_max_entries IS 'Massimo numero di righe presenti nel log per il tipo e la applicazione';
 
-INSERT INTO mydb.flex_log_settings (flos_type,flos_enabled,flos_days) VALUES ('debug', 'myapp', 1, 90, 1000);
-INSERT INTO mydb.flex_log_settings (flos_type,flos_enabled,flos_days) VALUES ('info', 'myapp', 1, 90, 1000);
-INSERT INTO mydb.flex_log_settings (flos_type,flos_enabled,flos_days) VALUES ('warn', 'myapp', 1, 90, 1000);
-INSERT INTO mydb.flex_log_settings (flos_type,flos_enabled,flos_days) VALUES ('error', 'myapp', 1, 90, 1000);
-INSERT INTO mydb.flex_log_settings (flos_type,flos_enabled,flos_days) VALUES ('fatal', 'myapp', 1, 90, 1000);
+INSERT INTO mydb.flex_log_settings (flos_type, flos_application, flos_enabled, flos_days, flos_max_entries) VALUES ('debug', 'myapp', 1, 90, 1000);
+INSERT INTO mydb.flex_log_settings (flos_type, flos_application, flos_enabled, flos_days, flos_max_entries) VALUES ('info', 'myapp', 1, 90, 1000);
+INSERT INTO mydb.flex_log_settings (flos_type, flos_application, flos_enabled, flos_days, flos_max_entries) VALUES ('warn', 'myapp', 1, 90, 1000);
+INSERT INTO mydb.flex_log_settings (flos_type, flos_application, flos_enabled, flos_days, flos_max_entries) VALUES ('error', 'myapp', 1, 90, 1000);
+INSERT INTO mydb.flex_log_settings (flos_type, flos_application, flos_enabled, flos_days, flos_max_entries) VALUES ('fatal', 'myapp', 1, 90, 1000);

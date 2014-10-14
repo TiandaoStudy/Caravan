@@ -50,5 +50,5 @@ COMMENT ON COLUMN mydb.flex_log.flog_context IS 'Infomazione dettagliata del con
 COMMENT ON COLUMN mydb.flex_log.flog_key_0 IS 'Nome del parametro opzionale, ad esempio AZI_ID';
 COMMENT ON COLUMN mydb.flex_log.flog_value_0 IS 'Valore del parametro opzionale, ad esempio RS'; 
 
-CREATE INDEX mydb.idx_flex_log_date ON mydb.flex_log (flog_entry_date DESC);
+CREATE INDEX mydb.idx_flex_log_date ON mydb.flex_log (flog_date DESC);
 CREATE INDEX mydb.idx_flex_los_type ON mydb.flex_log (flos_type, flos_application);
