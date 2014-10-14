@@ -4,7 +4,7 @@
 <ajax:UpdatePanel runat="server" ID="updPanel">
    <ContentTemplate>
       <div class="input-group">
-         <asp:TextBox ID="txtNumber" runat="server" />
+         <asp:TextBox ID="txtNumber" runat="server" CssClass="form-control numeric-spinner-input" />
          <div class="input-group-btn">
             <asp:LinkButton runat="server" ID="btnApply" CssClass="btn btn-default numeric-spinner-apply" ToolTip="Apply" Text="✓" OnClick="btnApply_Click" />
          </div>

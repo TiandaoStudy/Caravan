@@ -221,6 +221,10 @@
     <Content Include="Scripts\bootstrap-hover-dropdown.min.js">
       <DependentUpon>bootstrap-hover-dropdown.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\bootstrap-maxlength.js" />
+    <Content Include="Scripts\bootstrap-maxlength.min.js">
+      <DependentUpon>bootstrap-maxlength.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\bootstrap-switch.js" />
     <Content Include="Scripts\bootstrap-switch.min.js">
       <DependentUpon>bootstrap-switch.js</DependentUpon>
@@ -412,6 +416,9 @@
     </None>
     <None Include="Scripts\bootstrap-hover-dropdown.min.js.map">
       <DependentUpon>bootstrap-hover-dropdown.js</DependentUpon>
+    </None>
+    <None Include="Scripts\bootstrap-maxlength.min.js.map">
+      <DependentUpon>bootstrap-maxlength.js</DependentUpon>
     </None>
     <None Include="Scripts\bootstrap-switch.min.js.map">
       <DependentUpon>bootstrap-switch.js</DependentUpon>

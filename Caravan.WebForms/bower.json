@@ -34,6 +34,7 @@
     "backbone": "~1.1.2",
     "octicons": "~2.1.2",
     "bootstrap-hover-dropdown": "~2.0.11",
-    "foundation-icon-fonts": "*"
+    "foundation-icon-fonts": "*",
+    "bootstrap-maxlength": "~1.5.7"
   }
 }
