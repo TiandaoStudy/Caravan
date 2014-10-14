@@ -48,10 +48,21 @@ namespace FLEX.DataAccess
       {
          get { return (string) this[QueryExecutorTypeInfoKey]; }
       }
-
+      
+      [ConfigurationProperty(ConnectionStringKey, IsRequired = false)]
       public string ConnectionString
       {
-         get { return (string) PersistentCache.DefaultInstance.Get(CachePartitionName, ConnectionStringKey); }
+         get
+         {
+            var cachedConnectionString = PersistentCache.DefaultInstance.Get(CachePartitionName, ConnectionStringKey);
+            if (cachedConnectionString != null)
+            {
+               return (string) cachedConnectionString;
+            }
+            var configConnectionString = (string) this[ConnectionStringKey];
+            ConnectionString = configConnectionString;
+            return ConnectionString;
+         }
          set
          {
             QueryExecutor.Instance.ElaborateConnectionString(ref value);

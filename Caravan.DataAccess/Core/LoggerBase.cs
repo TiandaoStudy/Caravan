@@ -83,11 +83,11 @@ namespace FLEX.DataAccess.Core
 
       public abstract IList<LogSettings> GetAllSettings(LogType logType);
 
-      public abstract LogSettings GetApplicationSettings(LogType logType, string applicationName);
+      public abstract LogSettings GetApplicationSettings(string applicationName, LogType logType);
 
       public LogSettings GetCurrentApplicationSettings(LogType logType)
       {
-         return GetApplicationSettings(logType, Common.Configuration.Instance.ApplicationName);
+         return GetApplicationSettings(Common.Configuration.Instance.ApplicationName, logType);
       }
 
       #endregion

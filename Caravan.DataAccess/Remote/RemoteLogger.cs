@@ -23,7 +23,7 @@ namespace FLEX.DataAccess.Remote
          throw new NotImplementedException();
       }
 
-      public override LogSettings GetApplicationSettings(LogType logType, string applicationName)
+      public override LogSettings GetApplicationSettings(string applicationName, LogType logType)
       {
          throw new NotImplementedException();
       }

@@ -23,7 +23,7 @@ namespace FLEX.DataAccess.Dummy
          return ReadOnlyList.Empty<LogSettings>();
       }
 
-      public override LogSettings GetApplicationSettings(LogType logType, string applicationName)
+      public override LogSettings GetApplicationSettings(string applicationName, LogType logType)
       {
          return new LogSettings {TypeString = logType.ToString(), ApplicationName = applicationName, Enabled = false, Days = 1, MaxEntries = 1};
       }

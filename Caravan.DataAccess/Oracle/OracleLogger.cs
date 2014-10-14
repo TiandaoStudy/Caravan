@@ -76,7 +76,7 @@ namespace FLEX.DataAccess.Oracle
       public override IEnumerable<LogEntry> GetAllLogs()
       {
          var query = @"
-            select flog_date as Date, flos_type as TypeString, flos_application as ApplicationName, flog_user UserName, flog_code_unit as CodeUnit,
+            select flog_date ""Date"", flos_type as TypeString, flos_application as ApplicationName, flog_user UserName, flog_code_unit as CodeUnit,
                    flog_function as Function, flog_short_msg as ShortMessage, flog_long_msg as LongMessage, flog_context as Context,
                    flog_key_0 as Key0, flog_value_0 as Value0, flog_key_1 as Key1, flog_value_1 as Value1, flog_key_2 as Key2, flog_value_2 as Value2,
                    flog_key_3 as Key3, flog_value_3 as Value3, flog_key_4 as Key4, flog_value_4 as Value4, flog_key_5 as Key5, flog_value_5 as Value5,
@@ -94,14 +94,14 @@ namespace FLEX.DataAccess.Oracle
       public override IEnumerable<LogEntry> GetApplicationLogs(string applicationName)
       {
          var query = @"
-            select flog_date as Date, flos_type as TypeString, flos_application as ApplicationName, flog_user UserName, flog_code_unit as CodeUnit,
+            select flog_date ""Date"", flos_type as TypeString, flos_application as ApplicationName, flog_user UserName, flog_code_unit as CodeUnit,
                    flog_function as Function, flog_short_msg as ShortMessage, flog_long_msg as LongMessage, flog_context as Context,
                    flog_key_0 as Key0, flog_value_0 as Value0, flog_key_1 as Key1, flog_value_1 as Value1, flog_key_2 as Key2, flog_value_2 as Value2,
                    flog_key_3 as Key3, flog_value_3 as Value3, flog_key_4 as Key4, flog_value_4 as Value4, flog_key_5 as Key5, flog_value_5 as Value5,
                    flog_key_6 as Key6, flog_value_6 as Value6, flog_key_7 as Key7, flog_value_7 as Value7, flog_key_8 as Key8, flog_value_8 as Value8,
                    flog_key_9 as Key9, flog_value_9 as Value9
               from {0}flex_log
-             where lower(flog_application) = lower(:applicationName)";
+             where lower(flos_application) = lower(:applicationName)";
          query = string.Format(query, Configuration.Instance.OracleRunner);
          using (var connection = QueryExecutor.Instance.OpenConnection())
          {
@@ -128,7 +128,7 @@ namespace FLEX.DataAccess.Oracle
          }
       }
 
-      public override LogSettings GetApplicationSettings(LogType logType, string applicationName)
+      public override LogSettings GetApplicationSettings(string applicationName, LogType logType)
       {
          var query = @"
             select flos_type TypeString, flos_application ApplicationName, flos_enabled Enabled,

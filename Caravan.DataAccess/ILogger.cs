@@ -202,10 +202,10 @@ namespace FLEX.DataAccess
       /// <summary>
       ///   TODO
       /// </summary>
-      /// <param name="logType"></param>
       /// <param name="applicationName"></param>
+      /// <param name="logType"></param>
       /// <returns></returns>
-      LogSettings GetApplicationSettings(LogType logType, string applicationName);
+      LogSettings GetApplicationSettings(string applicationName, LogType logType);
 
       #endregion
    }

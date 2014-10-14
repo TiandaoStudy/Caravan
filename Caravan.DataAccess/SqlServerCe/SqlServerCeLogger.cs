@@ -22,7 +22,7 @@ namespace FLEX.DataAccess.SqlServerCe
 	      throw new System.NotImplementedException();
 	   }
 
-	   public override LogSettings GetApplicationSettings(LogType logType, string applicationName)
+	   public override LogSettings GetApplicationSettings(string applicationName, LogType logType)
 	   {
 	      throw new System.NotImplementedException();
 	   }
