@@ -7862,6 +7862,12 @@ footer .navbar-default .navbar-nav > li > a {
   background-size: 5% auto;
 }
 /*******************************************************************************
+  DATE PICKER
+*******************************************************************************/
+.datepicker-input {
+  height: 26px;
+}
+/*******************************************************************************
   DATA GRID
 *******************************************************************************/
 .datagrid td,
@@ -7909,6 +7915,9 @@ footer .navbar-default .navbar-nav > li > a {
   padding: 0px !important;
   height: 24px;
   width: 24px;
+}
+.numeric-spinner-input {
+  height: 24px;
 }
 .numeric-spinner-apply {
   padding: 0px !important;

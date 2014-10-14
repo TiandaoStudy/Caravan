@@ -97,7 +97,7 @@
     row = $("#" + tableId + " .datagrid-pager").parent();
     row.css({
       "background-color": "white",
-      "border-bottom": "0px !important"
+      "border-bottom": "none !important"
     });
   };
 
