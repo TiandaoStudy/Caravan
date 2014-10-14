@@ -83,6 +83,7 @@ namespace FLEX.DataAccess.Oracle
                    flog_key_6 as Key6, flog_value_6 as Value6, flog_key_7 as Key7, flog_value_7 as Value7, flog_key_8 as Key8, flog_value_8 as Value8,
                    flog_key_9 as Key9, flog_value_9 as Value9
               from {0}flex_log
+             order by flog_date desc
          ";
          query = string.Format(query, Configuration.Instance.OracleRunner);
          using (var connection = QueryExecutor.Instance.OpenConnection())
@@ -101,7 +102,9 @@ namespace FLEX.DataAccess.Oracle
                    flog_key_6 as Key6, flog_value_6 as Value6, flog_key_7 as Key7, flog_value_7 as Value7, flog_key_8 as Key8, flog_value_8 as Value8,
                    flog_key_9 as Key9, flog_value_9 as Value9
               from {0}flex_log
-             where lower(flos_application) = lower(:applicationName)";
+             where lower(flos_application) = lower(:applicationName)
+             order by flog_date desc
+         ";
          query = string.Format(query, Configuration.Instance.OracleRunner);
          using (var connection = QueryExecutor.Instance.OpenConnection())
          {
@@ -120,6 +123,7 @@ namespace FLEX.DataAccess.Oracle
                    flos_days Days, flos_max_entries MaxEntries
               from {0}flex_log_settings
              where lower(flos_type) = lower(:logType)
+             order by flos_type
          ";
          query = string.Format(query, Configuration.Instance.OracleRunner);
          using (var connection = QueryExecutor.Instance.OpenConnection())
@@ -136,6 +140,7 @@ namespace FLEX.DataAccess.Oracle
               from {0}flex_log_settings
              where lower(flos_type) = lower(:logType)
                and lower(flos_application) = lower(:applicationName)
+             order by flos_application, flos_type
          ";
          query = string.Format(query, Configuration.Instance.OracleRunner);
          using (var connection = QueryExecutor.Instance.OpenConnection())
