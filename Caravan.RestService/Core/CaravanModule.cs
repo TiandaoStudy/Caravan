@@ -14,7 +14,13 @@ namespace Finsa.Caravan.RestService.Core
       {
       }
 
-      protected static LogType ParseLogType(string logTypeString)
+      protected static LogType? ParseLogType(string logTypeString, bool fallback = true)
+      {
+         LogType logType;
+         return Enum.TryParse(logTypeString, true, out logType) ? logType : new LogType?();
+      }
+
+      protected static LogType SafeParseLogType(string logTypeString, bool fallback = true)
       {
          LogType logType;
          return Enum.TryParse(logTypeString, true, out logType) ? logType : LogType.Info;

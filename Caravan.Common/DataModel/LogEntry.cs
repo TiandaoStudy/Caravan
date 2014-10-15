@@ -49,6 +49,7 @@ namespace Finsa.Caravan.Common.DataModel
             Enum.TryParse(TypeString, true, out logType);
             return logType;
          }
+         set { TypeString = value.ToString().ToLower(); }
       }
    }
 }

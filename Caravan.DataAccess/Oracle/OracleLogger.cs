@@ -61,11 +61,11 @@ namespace FLEX.DataAccess.Oracle
                connection.Execute(procedure, p, commandType: CommandType.StoredProcedure);
             }
 
-            return LogResult.Successful;
+            return LogResult.Success;
          }
          catch (Exception ex)
          {
-            return new LogResult {Succeeded = false, Exception = ex};
+            return LogResult.Failure(ex);
          }
       }
 

@@ -10,7 +10,7 @@ namespace FLEX.DataAccess.Dummy
    {
       protected override LogResult Log<TCodeUnit>(LogType type, string applicationName, string userName, string function, string shortMessage, string longMessage, string context, IEnumerable<GKeyValuePair<string, string>> args)
       {
-         return LogResult.Successful;
+         return LogResult.Success;
       }
 
       protected override IEnumerable<LogEntry> Logs(string applicationName, LogType? logType)
