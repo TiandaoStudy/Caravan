@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Finsa.Caravan;
-using FLEX.Common.DataModel;
+using Finsa.Caravan.Common.DataModel;
 
 namespace FLEX.DataAccess
 {
@@ -166,20 +166,29 @@ namespace FLEX.DataAccess
       ///   TODO
       /// </summary>
       /// <returns></returns>
-      IEnumerable<LogEntry> GetAllLogs();
-
-      /// <summary>
-      ///   TODO
-      /// </summary>
-      /// <returns></returns>
-      IEnumerable<LogEntry> GetCurrentApplicationLogs();
+      IEnumerable<LogEntry> Logs();
 
       /// <summary>
       ///   TODO
       /// </summary>
       /// <param name="applicationName"></param>
       /// <returns></returns>
-      IEnumerable<LogEntry> GetApplicationLogs(string applicationName);
+      IEnumerable<LogEntry> Logs(string applicationName);
+
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      /// <param name="logType"></param>
+      /// <returns></returns>
+      IEnumerable<LogEntry> Logs(LogType logType);
+
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      /// <param name="applicationName"></param>
+      /// <param name="logType"></param>
+      /// <returns></returns>
+      IEnumerable<LogEntry> Logs(string applicationName, LogType logType);
 
       #endregion
 
@@ -188,16 +197,22 @@ namespace FLEX.DataAccess
       /// <summary>
       ///   TODO
       /// </summary>
-      /// <param name="logType"></param>
       /// <returns></returns>
-      IList<LogSettings> GetAllSettings(LogType logType);
+      IList<LogSettings> LogSettings();
+
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      /// <param name="applicationName"></param>
+      /// <returns></returns>
+      IList<LogSettings> LogSettings(string applicationName);
 
       /// <summary>
       ///   TODO
       /// </summary>
       /// <param name="logType"></param>
       /// <returns></returns>
-      LogSettings GetCurrentApplicationSettings(LogType logType);
+      IList<LogSettings> LogSettings(LogType logType);
 
       /// <summary>
       ///   TODO
@@ -205,7 +220,7 @@ namespace FLEX.DataAccess
       /// <param name="applicationName"></param>
       /// <param name="logType"></param>
       /// <returns></returns>
-      LogSettings GetApplicationSettings(string applicationName, LogType logType);
+      LogSettings LogSettings(string applicationName, LogType logType);
 
       #endregion
    }

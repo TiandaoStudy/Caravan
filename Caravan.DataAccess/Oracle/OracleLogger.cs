@@ -5,9 +5,9 @@ using System.Linq;
 using Dapper;
 using Finsa.Caravan;
 using Finsa.Caravan.Collections;
+using Finsa.Caravan.Common.DataModel;
 using Finsa.Caravan.Diagnostics;
 using Finsa.Caravan.Extensions;
-using FLEX.Common.DataModel;
 using FLEX.DataAccess.Core;
 
 namespace FLEX.DataAccess.Oracle
@@ -73,7 +73,7 @@ namespace FLEX.DataAccess.Oracle
 
       #region Logs Retrieval
 
-      public override IEnumerable<LogEntry> GetAllLogs()
+      protected override IEnumerable<LogEntry> Logs(string applicationName, LogType? logType)
       {
          var query = @"
             select flog_date ""Date"", flos_type as TypeString, flos_application as ApplicationName, flog_user UserName, flog_code_unit as CodeUnit,
@@ -83,32 +83,15 @@ namespace FLEX.DataAccess.Oracle
                    flog_key_6 as Key6, flog_value_6 as Value6, flog_key_7 as Key7, flog_value_7 as Value7, flog_key_8 as Key8, flog_value_8 as Value8,
                    flog_key_9 as Key9, flog_value_9 as Value9
               from {0}flex_log
+             where (:applicationName is null or lower(flos_application) = lower(:applicationName))
+               and (:logType is null or lower(flos_type) = lower(:logType))
              order by flog_date desc
          ";
          query = string.Format(query, Configuration.Instance.OracleRunner);
+         var logTypeString = (logType == null) ? null : logType.ToString();
          using (var connection = QueryExecutor.Instance.OpenConnection())
          {
-            return connection.Query<LogEntry>(query);
-         }
-      }
-
-      public override IEnumerable<LogEntry> GetApplicationLogs(string applicationName)
-      {
-         var query = @"
-            select flog_date ""Date"", flos_type as TypeString, flos_application as ApplicationName, flog_user UserName, flog_code_unit as CodeUnit,
-                   flog_function as Function, flog_short_msg as ShortMessage, flog_long_msg as LongMessage, flog_context as Context,
-                   flog_key_0 as Key0, flog_value_0 as Value0, flog_key_1 as Key1, flog_value_1 as Value1, flog_key_2 as Key2, flog_value_2 as Value2,
-                   flog_key_3 as Key3, flog_value_3 as Value3, flog_key_4 as Key4, flog_value_4 as Value4, flog_key_5 as Key5, flog_value_5 as Value5,
-                   flog_key_6 as Key6, flog_value_6 as Value6, flog_key_7 as Key7, flog_value_7 as Value7, flog_key_8 as Key8, flog_value_8 as Value8,
-                   flog_key_9 as Key9, flog_value_9 as Value9
-              from {0}flex_log
-             where lower(flos_application) = lower(:applicationName)
-             order by flog_date desc
-         ";
-         query = string.Format(query, Configuration.Instance.OracleRunner);
-         using (var connection = QueryExecutor.Instance.OpenConnection())
-         {
-            return connection.Query<LogEntry>(query, new {applicationName});
+            return connection.Query<LogEntry>(query, new {applicationName, logType = logTypeString});
          }
       }
 
@@ -116,36 +99,21 @@ namespace FLEX.DataAccess.Oracle
 
       #region Log Settings
 
-      public override IList<LogSettings> GetAllSettings(LogType logType)
+      protected override IList<LogSettings> LogSettings(string applicationName, LogType? logType)
       {
          var query = @"
-            select flos_type TypeString, flos_application ApplicationName, flos_enabled Enabled,
+            select flos_application ApplicationName, flos_type TypeString, flos_enabled Enabled,
                    flos_days Days, flos_max_entries MaxEntries
               from {0}flex_log_settings
-             where lower(flos_type) = lower(:logType)
-             order by flos_type
-         ";
-         query = string.Format(query, Configuration.Instance.OracleRunner);
-         using (var connection = QueryExecutor.Instance.OpenConnection())
-         {
-            return connection.Query<LogSettings>(query, new {logType = logType.ToString()}).ToList();
-         }
-      }
-
-      public override LogSettings GetApplicationSettings(string applicationName, LogType logType)
-      {
-         var query = @"
-            select flos_type TypeString, flos_application ApplicationName, flos_enabled Enabled,
-                   flos_days Days, flos_max_entries MaxEntries
-              from {0}flex_log_settings
-             where lower(flos_type) = lower(:logType)
-               and lower(flos_application) = lower(:applicationName)
+             where (:applicationName is null or lower(flos_application) = lower(:applicationName))
+               and (:logType is null or lower(flos_type) = lower(:logType))
              order by flos_application, flos_type
          ";
          query = string.Format(query, Configuration.Instance.OracleRunner);
+         var logTypeString = (logType == null) ? null : logType.ToString();
          using (var connection = QueryExecutor.Instance.OpenConnection())
          {
-            return connection.Query<LogSettings>(query, new {logType = logType.ToString(), applicationName}).First();
+            return connection.Query<LogSettings>(query, new {applicationName, logType = logTypeString}).ToList();
          }
       }
 

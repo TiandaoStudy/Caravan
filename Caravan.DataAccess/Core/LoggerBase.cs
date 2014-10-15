@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Web;
 using Finsa.Caravan;
+using Finsa.Caravan.Common.DataModel;
 using Finsa.Caravan.Diagnostics;
-using FLEX.Common.DataModel;
 
 namespace FLEX.DataAccess.Core
 {
@@ -72,28 +73,62 @@ namespace FLEX.DataAccess.Core
          return Log<TCodeUnit>(LogType.Fatal, applicationName, userName, function, exception, context, args);
       }
 
-      public abstract IEnumerable<LogEntry> GetAllLogs();
-
-      public abstract IEnumerable<LogEntry> GetApplicationLogs(string applicationName);
-
-      public IEnumerable<LogEntry> GetCurrentApplicationLogs()
+      public IEnumerable<LogEntry> Logs()
       {
-         return GetApplicationLogs(Common.Configuration.Instance.ApplicationName);
+         return Logs(null, null);
       }
 
-      public abstract IList<LogSettings> GetAllSettings(LogType logType);
-
-      public abstract LogSettings GetApplicationSettings(string applicationName, LogType logType);
-
-      public LogSettings GetCurrentApplicationSettings(LogType logType)
+      public IEnumerable<LogEntry> Logs(string applicationName)
       {
-         return GetApplicationSettings(Common.Configuration.Instance.ApplicationName, logType);
+         Raise<ArgumentException>.IfIsEmpty(applicationName);
+         return Logs(applicationName, null);
+      }
+
+      public IEnumerable<LogEntry> Logs(LogType logType)
+      {
+         Raise<ArgumentException>.If(Enum.IsDefined(typeof(LogType), logType));
+         return Logs(null, (LogType?) logType);
+      }
+
+      public IEnumerable<LogEntry> Logs(string applicationName, LogType logType)
+      {
+         Raise<ArgumentException>.IfIsEmpty(applicationName);
+         Raise<ArgumentException>.If(Enum.IsDefined(typeof(LogType), logType));
+         return Logs(applicationName, (LogType?) logType);
+      }
+
+      public IList<LogSettings> LogSettings()
+      {
+         return LogSettings(null, null);
+      }
+
+      public IList<LogSettings> LogSettings(string applicationName)
+      {
+         Raise<ArgumentException>.IfIsEmpty(applicationName);
+         return LogSettings(applicationName, null);
+      }
+
+      public IList<LogSettings> LogSettings(LogType logType)
+      {
+         Raise<ArgumentException>.If(Enum.IsDefined(typeof(LogType), logType));
+         return LogSettings(null, (LogType?) logType);
+      }
+
+      public LogSettings LogSettings(string applicationName, LogType logType)
+      {
+         Raise<ArgumentException>.IfIsEmpty(applicationName);
+         Raise<ArgumentException>.If(Enum.IsDefined(typeof(LogType), logType));
+         return LogSettings(applicationName, (LogType?) logType).FirstOrDefault();
       }
 
       #endregion
 
       protected abstract LogResult Log<TCodeUnit>(LogType type, string applicationName, string userName, string function, string shortMessage, string longMessage, string context,
          IEnumerable<GKeyValuePair<string, string>> args);
+
+      protected abstract IEnumerable<LogEntry> Logs(string applicationName, LogType? logType);
+
+      protected abstract IList<LogSettings> LogSettings(string applicationName, LogType? logType); 
 
       protected static string GetCurrentUserName()
       {

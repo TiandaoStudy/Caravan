@@ -1,6 +1,7 @@
 using System;
+using Newtonsoft.Json;
 
-namespace FLEX.Common.DataModel
+namespace Finsa.Caravan.Common.DataModel
 {
    [Serializable]
    public sealed class LogEntry
@@ -9,7 +10,6 @@ namespace FLEX.Common.DataModel
       public const string NotSpecified = "...";
 
       public DateTime Date { get; set; }
-      public string TypeString { get; set; }
       public string ApplicationName { get; set; }
       public string UserName { get; set; }
       public string CodeUnit { get; set; }
@@ -37,6 +37,9 @@ namespace FLEX.Common.DataModel
       public string Value8 { get; set; }
       public string Key9 { get; set; }
       public string Value9 { get; set; }
+      
+      [JsonIgnore]
+      public string TypeString { get; set; }
 
       public LogType Type
       {

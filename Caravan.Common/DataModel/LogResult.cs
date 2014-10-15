@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FLEX.Common.DataModel
+namespace Finsa.Caravan.Common.DataModel
 {
    [Serializable]
    public class LogResult

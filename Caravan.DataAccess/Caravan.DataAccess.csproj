@@ -96,7 +96,7 @@
     <Compile Include="Remote\RemoteLogger.cs" />
     <Compile Include="SqlServerCe\SqlServerCeLogger.cs" />
     <Compile Include="SqlServerCe\SqlServerCeQueryExecutor.cs" />
-    <Compile Include="SqlServer\SqlServerDbLogger.cs" />
+    <Compile Include="SqlServer\SqlServerLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
