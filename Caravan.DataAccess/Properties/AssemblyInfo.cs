@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("FLEX.DataAccess")]
+[assembly: AssemblyTitle("Finsa.Caravan.DataAccess")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Finsa S.p.A.")]
-[assembly: AssemblyProduct("FLEX.DataAccess")]
+[assembly: AssemblyProduct("Finsa.Caravan.DataAccess")]
 [assembly: AssemblyCopyright("Copyright © Finsa S.p.A. 2014-2024")]
 [assembly: AssemblyTrademark("Finsa S.p.A.")]
 [assembly: AssemblyCulture("")]

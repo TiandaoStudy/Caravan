@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace FLEX.DataAccess
+namespace Finsa.Caravan.DataAccess
 {
    /// <summary>
    /// 

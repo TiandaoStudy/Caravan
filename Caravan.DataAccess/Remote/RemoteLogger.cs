@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Finsa.Caravan;
 using Finsa.Caravan.Common.DataModel;
-using FLEX.DataAccess.Core;
+using Finsa.Caravan.DataAccess.Core;
 
-namespace FLEX.DataAccess.Remote
+namespace Finsa.Caravan.DataAccess.Remote
 {
    public sealed class RemoteLogger : LoggerBase
    {

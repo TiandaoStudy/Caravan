@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using Finsa.Caravan;
 using Finsa.Caravan.Common.DataModel;
-using FLEX.DataAccess.Core;
+using Finsa.Caravan.DataAccess.Core;
 
-namespace FLEX.DataAccess.SqlServerCe
+namespace Finsa.Caravan.DataAccess.SqlServerCe
 {
    public sealed class SqlServerCeLogger : LoggerBase
 	{

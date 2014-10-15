@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
-using Finsa.Caravan;
 using Finsa.Caravan.Collections;
 using Finsa.Caravan.Common.DataModel;
+using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.Diagnostics;
 using Finsa.Caravan.Extensions;
-using FLEX.DataAccess.Core;
 
-namespace FLEX.DataAccess.Oracle
+namespace Finsa.Caravan.DataAccess.Oracle
 {
    public sealed class OracleLogger : LoggerBase
    {
@@ -44,7 +43,7 @@ namespace FLEX.DataAccess.Oracle
             {
                var p = new DynamicParameters();
                p.Add("p_type", type.ToString(), DbType.AnsiString);
-               p.Add("p_application", Common.Configuration.Instance.ApplicationName.Truncate(MaxApplicationNameLength), DbType.AnsiString);
+               p.Add("p_application", FLEX.Common.Configuration.Instance.ApplicationName.Truncate(MaxApplicationNameLength), DbType.AnsiString);
                p.Add("p_user", GetCurrentUserName().Truncate(MaxUserNameLength), DbType.AnsiString);
                p.Add("p_code_unit", codeUnit.Truncate(MaxCodeUnitLength), DbType.AnsiString);
                p.Add("p_function", function.Truncate(MaxFunctionLength), DbType.AnsiString);
@@ -57,7 +56,7 @@ namespace FLEX.DataAccess.Oracle
                   p.Add(string.Format("p_key_{0}", i), arg.Key.Truncate(MaxKeyLength), DbType.AnsiString);
                   p.Add(string.Format("p_value_{0}", i), arg.Value == null ? null : arg.Value.Truncate(MaxValueLength), DbType.String);
                }
-               var procedure = string.Format("{0}pck_flex_log.sp_log", Configuration.Instance.OracleRunner);
+               var procedure = string.Format("{0}pck_caravan_log.sp_log", Configuration.Instance.OracleRunner);
                connection.Execute(procedure, p, commandType: CommandType.StoredProcedure);
             }
 
@@ -76,16 +75,16 @@ namespace FLEX.DataAccess.Oracle
       protected override IEnumerable<LogEntry> Logs(string applicationName, LogType? logType)
       {
          var query = @"
-            select flog_date ""Date"", flos_type as TypeString, flos_application as ApplicationName, flog_user UserName, flog_code_unit as CodeUnit,
-                   flog_function as Function, flog_short_msg as ShortMessage, flog_long_msg as LongMessage, flog_context as Context,
-                   flog_key_0 as Key0, flog_value_0 as Value0, flog_key_1 as Key1, flog_value_1 as Value1, flog_key_2 as Key2, flog_value_2 as Value2,
-                   flog_key_3 as Key3, flog_value_3 as Value3, flog_key_4 as Key4, flog_value_4 as Value4, flog_key_5 as Key5, flog_value_5 as Value5,
-                   flog_key_6 as Key6, flog_value_6 as Value6, flog_key_7 as Key7, flog_value_7 as Value7, flog_key_8 as Key8, flog_value_8 as Value8,
-                   flog_key_9 as Key9, flog_value_9 as Value9
-              from {0}flex_log
-             where (:applicationName is null or lower(flos_application) = lower(:applicationName))
-               and (:logType is null or lower(flos_type) = lower(:logType))
-             order by flog_date desc
+            select clog_date ""Date"", clos_type as TypeString, clos_application as ApplicationName, clog_user UserName, clog_code_unit as CodeUnit,
+                   clog_function as Function, clog_short_msg as ShortMessage, clog_long_msg as LongMessage, clog_context as Context,
+                   clog_key_0 as Key0, clog_value_0 as Value0, clog_key_1 as Key1, clog_value_1 as Value1, clog_key_2 as Key2, clog_value_2 as Value2,
+                   clog_key_3 as Key3, clog_value_3 as Value3, clog_key_4 as Key4, clog_value_4 as Value4, clog_key_5 as Key5, clog_value_5 as Value5,
+                   clog_key_6 as Key6, clog_value_6 as Value6, clog_key_7 as Key7, clog_value_7 as Value7, clog_key_8 as Key8, clog_value_8 as Value8,
+                   clog_key_9 as Key9, clog_value_9 as Value9
+              from {0}caravan_log
+             where (:applicationName is null or lower(clos_application) = lower(:applicationName))
+               and (:logType is null or lower(clos_type) = lower(:logType))
+             order by clog_date desc
          ";
          query = string.Format(query, Configuration.Instance.OracleRunner);
          using (var connection = QueryExecutor.Instance.OpenConnection())
@@ -104,12 +103,12 @@ namespace FLEX.DataAccess.Oracle
       protected override IList<LogSettings> LogSettings(string applicationName, LogType? logType)
       {
          var query = @"
-            select flos_application ApplicationName, flos_type TypeString, flos_enabled Enabled,
-                   flos_days Days, flos_max_entries MaxEntries
-              from {0}flex_log_settings
-             where (:applicationName is null or lower(flos_application) = lower(:applicationName))
-               and (:logType is null or lower(flos_type) = lower(:logType))
-             order by flos_application, flos_type
+            select clos_application ApplicationName, clos_type TypeString, clos_enabled Enabled,
+                   clos_days Days, clos_max_entries MaxEntries
+              from {0}caravan_log_settings
+             where (:applicationName is null or lower(clos_application) = lower(:applicationName))
+               and (:logType is null or lower(clos_type) = lower(:logType))
+             order by clos_application, clos_type
          ";
          query = string.Format(query, Configuration.Instance.OracleRunner);
          using (var connection = QueryExecutor.Instance.OpenConnection())

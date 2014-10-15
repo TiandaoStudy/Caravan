@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Finsa.Caravan;
 using Finsa.Caravan.Common.DataModel;
 
-namespace FLEX.DataAccess
+namespace Finsa.Caravan.DataAccess
 {
    /// <summary>
    ///   TODO

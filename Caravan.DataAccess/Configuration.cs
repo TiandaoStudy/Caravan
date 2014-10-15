@@ -2,11 +2,11 @@ using System;
 using System.Configuration;
 using PommaLabs.KVLite;
 
-namespace FLEX.DataAccess
+namespace Finsa.Caravan.DataAccess
 {
    public sealed class Configuration : ConfigurationSection
    {
-      private const string SectionName = "FlexDataConfiguration";
+      private const string SectionName = "finsa.caravan.dataaccess";
       private const string CachePartitionName = "Caravan.DataAccess";
       private const string ConnectionStringKey = "ConnectionString";
       private const string LoggerTypeInfoKey = "LoggerTypeInfo";

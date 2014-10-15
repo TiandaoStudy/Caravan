@@ -2,7 +2,7 @@ using System.Data;
 using Dapper;
 using Finsa.Caravan.Extensions;
 
-namespace FLEX.DataAccess.Core
+namespace Finsa.Caravan.DataAccess.Core
 {
     public abstract class QueryExecutorBase : IQueryExecutor
     {

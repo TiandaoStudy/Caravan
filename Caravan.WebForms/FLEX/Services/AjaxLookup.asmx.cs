@@ -9,9 +9,9 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using System.Xml;
 using Finsa.Caravan;
+using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.Diagnostics;
 using Finsa.Caravan.Text;
-using FLEX.DataAccess;
 using FLEX.Web.XmlSettings.AjaxLookup;
 using FLEX.WebForms;
 

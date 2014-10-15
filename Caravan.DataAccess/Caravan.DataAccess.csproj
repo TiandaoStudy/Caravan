@@ -7,8 +7,8 @@
     <ProjectGuid>{418B2D91-D53E-49BF-98FC-66DA9490DC37}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FLEX.DataAccess</RootNamespace>
-    <AssemblyName>FLEX.DataAccess</AssemblyName>
+    <RootNamespace>Finsa.Caravan.DataAccess</RootNamespace>
+    <AssemblyName>Finsa.Caravan.DataAccess</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
@@ -31,10 +31,10 @@
     <DefineConstants>TRACE;USETHROWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\FLEX.DataAccess.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Finsa.Caravan.DataAccess.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetDir)FLEX.DataAccess.* "$(SolutionDir)NuGetPackager.DataAccess/lib/net40"</PostBuildEvent>
+    <PostBuildEvent>copy $(TargetDir)Finsa.Caravan.DataAccess.* "$(SolutionDir)NuGetPackager.DataAccess/lib/net40"</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CodeProject.ObjectPool, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
@@ -115,8 +115,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Oracle\Scripts\Packages\PCK_FLEX_LOG.sql" />
-    <Content Include="Oracle\Scripts\Sequences\FLEX_LOG_SEQ.sql" />
+    <Content Include="Oracle\Scripts\Packages\pck_caravan_log.sql" />
+    <Content Include="Oracle\Scripts\Sequences\caravan_log_seq.sql" />
     <Content Include="Oracle\Scripts\Tables\caravan_log.sql" />
     <Content Include="Oracle\Scripts\Tables\caravan_log_settings.sql" />
   </ItemGroup>

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Web;
-using Finsa.Caravan;
 using Finsa.Caravan.Common.DataModel;
 using Finsa.Caravan.Diagnostics;
 
-namespace FLEX.DataAccess.Core
+namespace Finsa.Caravan.DataAccess.Core
 {
    public abstract class LoggerBase : ILogger
    {

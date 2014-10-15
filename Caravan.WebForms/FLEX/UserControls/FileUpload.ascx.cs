@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Web.UI.HtmlControls;
-using FLEX.DataAccess;
+using Finsa.Caravan.DataAccess;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

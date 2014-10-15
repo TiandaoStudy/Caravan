@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using Finsa.Caravan;
 using Finsa.Caravan.Collections;
 using Finsa.Caravan.Common.DataModel;
-using FLEX.DataAccess.Core;
+using Finsa.Caravan.DataAccess.Core;
 
-namespace FLEX.DataAccess.Dummy
+namespace Finsa.Caravan.DataAccess.Dummy
 {
    public sealed class DummyLogger : LoggerBase
    {
