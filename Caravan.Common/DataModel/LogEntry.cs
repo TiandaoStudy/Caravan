@@ -76,7 +76,7 @@ namespace Finsa.Caravan.Common.DataModel
       [JsonIgnore]
       public string Value9 { get; set; }
 
-      public IList<GKeyValuePair<string, string>> Arguments
+      public GKeyValuePair<string, string>[] Arguments
       {
          get
          {
@@ -131,7 +131,7 @@ namespace Finsa.Caravan.Common.DataModel
             {
                list.Add(GKeyValuePair.Create(Key9, Value9));
             }
-            return list;
+            return list.ToArray();
          }
          set
          {
@@ -139,7 +139,7 @@ namespace Finsa.Caravan.Common.DataModel
             {
                return;
             }
-            for (var i = 0; i < value.Count; ++i)
+            for (var i = 0; i < value.Length; ++i)
             {
                var key = value[i].Key;
                var val = value[i].Value;

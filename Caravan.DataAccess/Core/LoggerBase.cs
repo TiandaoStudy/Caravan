@@ -192,8 +192,12 @@ namespace Finsa.Caravan.DataAccess.Core
          return exception;
       } 
 
-      protected static string GetCurrentUserName()
+      protected static string GetCurrentUserName(string userName)
       {
+         if (!String.IsNullOrWhiteSpace(userName))
+         {
+            return userName;
+         }
          if (HttpContext.Current == null || HttpContext.Current.User == null || HttpContext.Current.User.Identity == null)
          {
             return LogEntry.NotSpecified;
