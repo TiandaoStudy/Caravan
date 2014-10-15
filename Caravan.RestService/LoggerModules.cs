@@ -13,12 +13,10 @@ namespace Finsa.Caravan.RestService
       {
          Get["/"] = _ => Logger.Instance.Logs();
          Get["/{applicationName}"] = p => Logger.Instance.Logs((string) p.applicationName);
-         Get["/{logType}"] = p => Logger.Instance.Logs(SafeParseLogType((string) p.logType));
          Get["/{applicationName}/{logType}"] = p => Logger.Instance.Logs((string) p.applicationName, SafeParseLogType((string) p.logType));
          
          Post["/"] = _ => Log(null, null);
          Post["/{applicationName}"] = p => Log(p.applicationName, null);
-         Post["/{logType}"] = p => Log(null, ParseLogType((string) p.logType));
          Post["/{applicationName}/{logType}"] = p => Log(p.applicationName, ParseLogType((string) p.logType));
       }
 
@@ -33,7 +31,7 @@ namespace Finsa.Caravan.RestService
          {
             return Response.AsJson(LogResult.Failure(ex));
          }
-         var result = Logger.Instance.Log(e.Type, e.ApplicationName, e.UserName, e.CodeUnit, e.Function, e.ShortMessage, e.LongMessage, e.Context, null);
+         var result = Logger.Instance.Log(e.Type, e.ApplicationName, e.UserName, e.CodeUnit, e.Function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments);
          return Response.AsJson(result);
       }
 
@@ -76,7 +74,6 @@ namespace Finsa.Caravan.RestService
       {
          Get["/"] = _ => Logger.Instance.LogSettings();
          Get["/{applicationName}"] = p => Logger.Instance.LogSettings((string) p.applicationName);
-         Get["/{logType}"] = p => Logger.Instance.LogSettings(SafeParseLogType((string) p.logType));
          Get["/{applicationName}/{logType}"] = p => Logger.Instance.LogSettings((string) p.applicationName, SafeParseLogType((string) p.logType));
       }
    }

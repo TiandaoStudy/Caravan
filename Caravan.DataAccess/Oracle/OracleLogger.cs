@@ -88,10 +88,12 @@ namespace FLEX.DataAccess.Oracle
              order by flog_date desc
          ";
          query = string.Format(query, Configuration.Instance.OracleRunner);
-         var logTypeString = (logType == null) ? null : logType.ToString();
          using (var connection = QueryExecutor.Instance.OpenConnection())
          {
-            return connection.Query<LogEntry>(query, new {applicationName, logType = logTypeString});
+            var parameters = new DynamicParameters();
+            parameters.Add("applicationName", applicationName, DbType.AnsiString);
+            parameters.Add("logType", (logType == null) ? null : logType.ToString(), DbType.AnsiString);
+            return connection.Query<LogEntry>(query, parameters);
          }
       }
 
@@ -110,10 +112,12 @@ namespace FLEX.DataAccess.Oracle
              order by flos_application, flos_type
          ";
          query = string.Format(query, Configuration.Instance.OracleRunner);
-         var logTypeString = (logType == null) ? null : logType.ToString();
          using (var connection = QueryExecutor.Instance.OpenConnection())
          {
-            return connection.Query<LogSettings>(query, new {applicationName, logType = logTypeString}).ToList();
+            var parameters = new DynamicParameters();
+            parameters.Add("applicationName", applicationName, DbType.AnsiString);
+            parameters.Add("logType", (logType == null) ? null : logType.ToString(), DbType.AnsiString);
+            return connection.Query<LogSettings>(query, parameters).ToList();
          }
       }
 

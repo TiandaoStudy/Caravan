@@ -3,7 +3,7 @@
 
 CREATE TABLE mydb.flex_log_settings
    (
-      flos_type        CHAR(5 CHAR)        NOT NULL
+      flos_type        VARCHAR2(5 CHAR)    NOT NULL
     , flos_application VARCHAR2(30 CHAR)   NOT NULL
     , flos_enabled     NUMBER(1)           NOT NULL
     , flos_days        NUMBER(3)           NOT NULL

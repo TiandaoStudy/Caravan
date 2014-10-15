@@ -97,14 +97,14 @@ namespace FLEX.DataAccess.Core
 
       public IEnumerable<LogEntry> Logs(LogType logType)
       {
-         Raise<ArgumentException>.If(Enum.IsDefined(typeof(LogType), logType));
+         Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
          return Logs(null, (LogType?) logType);
       }
 
       public IEnumerable<LogEntry> Logs(string applicationName, LogType logType)
       {
          Raise<ArgumentException>.IfIsEmpty(applicationName);
-         Raise<ArgumentException>.If(Enum.IsDefined(typeof(LogType), logType));
+         Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
          return Logs(applicationName, (LogType?) logType);
       }
 
@@ -121,14 +121,14 @@ namespace FLEX.DataAccess.Core
 
       public IList<LogSettings> LogSettings(LogType logType)
       {
-         Raise<ArgumentException>.If(Enum.IsDefined(typeof(LogType), logType));
+         Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
          return LogSettings(null, (LogType?) logType);
       }
 
       public LogSettings LogSettings(string applicationName, LogType logType)
       {
          Raise<ArgumentException>.IfIsEmpty(applicationName);
-         Raise<ArgumentException>.If(Enum.IsDefined(typeof(LogType), logType));
+         Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
          return LogSettings(applicationName, (LogType?) logType).FirstOrDefault();
       }
 

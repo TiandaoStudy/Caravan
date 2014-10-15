@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Finsa.Caravan.Common.DataModel
 {
@@ -14,6 +15,7 @@ namespace Finsa.Caravan.Common.DataModel
       [JsonIgnore]
       public string TypeString { get; set; }
 
+      [JsonConverter(typeof(StringEnumConverter))]
       public LogType Type
       {
          get

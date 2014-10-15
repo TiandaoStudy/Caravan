@@ -3,7 +3,7 @@
 CREATE TABLE mydb.flex_log 
    (  flog_id           NUMBER               NOT NULL
     , flog_date         DATE DEFAULT SYSDATE NOT NULL 
-    , flos_type         CHAR(5 CHAR)         NOT NULL
+    , flos_type         VARCHAR2(5 CHAR)         NOT NULL
     , flos_application  VARCHAR2(30 CHAR)    NOT NULL
     , flog_user         VARCHAR2(30 CHAR)
     , flog_code_unit    VARCHAR2(100 CHAR)   NOT NULL
