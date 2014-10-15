@@ -7,7 +7,7 @@
     <ProjectGuid>{11904ED0-33D2-4005-8766-B1E393A32EA7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FLEX.Common</RootNamespace>
+    <RootNamespace>Finsa.Caravan.Common</RootNamespace>
     <AssemblyName>FLEX.Common</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -62,6 +62,9 @@
     <Compile Include="DataModel\LogEntry.cs" />
     <Compile Include="DataModel\LogResult.cs" />
     <Compile Include="DataModel\LogSettings.cs" />
+    <Compile Include="DataModel\SecAction.cs" />
+    <Compile Include="DataModel\SecGroup.cs" />
+    <Compile Include="DataModel\SecUser.cs" />
     <Compile Include="FLEX.Common.XmlSchemas.MenuEntries.Item.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>

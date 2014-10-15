@@ -33,7 +33,7 @@ CREATE TABLE mydb.caravan_log
    , clog_key_9        VARCHAR2(100 CHAR)
    , clog_value_9      VARCHAR2(400 CHAR)
    , CONSTRAINT pk_caravan_log PRIMARY KEY (clog_id) USING INDEX TABLESPACE dati_base_index ENABLE
-   , CONSTRAINT fk_crvnlog_crvnlogsettings FOREIGN KEY (clos_type, clos_application) REFERENCES mydb.caravan_log_settings (clos_type, clos_application) ENABLE
+   , CONSTRAINT fk_crvnlog_crvnlogsettings FOREIGN KEY (clos_type, clos_application) REFERENCES mydb.caravan_log_settings (clos_type, clos_application) ON DELETE CASCADE ENABLE
 )
 TABLESPACE dati_base;
 
