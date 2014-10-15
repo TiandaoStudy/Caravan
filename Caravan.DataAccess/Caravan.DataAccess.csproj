@@ -117,8 +117,8 @@
   <ItemGroup>
     <Content Include="Oracle\Scripts\Packages\PCK_FLEX_LOG.sql" />
     <Content Include="Oracle\Scripts\Sequences\FLEX_LOG_SEQ.sql" />
-    <Content Include="Oracle\Scripts\Tables\FLEX_LOG.sql" />
-    <Content Include="Oracle\Scripts\Tables\FLEX_LOG_SETTINGS.sql" />
+    <Content Include="Oracle\Scripts\Tables\caravan_log.sql" />
+    <Content Include="Oracle\Scripts\Tables\caravan_log_settings.sql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,6 +1,6 @@
 ﻿-- REPLACE 'mydb' WITH DB NAME
 
-CREATE OR REPLACE PACKAGE mydb.pck_flex_log AS
+CREATE OR REPLACE PACKAGE mydb.pck_caravan_log AS
 
    procedure sp_log_debug         (p_application           in varchar2,
                                    p_user                  in varchar2,
@@ -171,11 +171,11 @@ CREATE OR REPLACE PACKAGE mydb.pck_flex_log AS
                                    p_key_9                 in varchar2 default null,
                                    p_value_9               in varchar2 default null);
 
-end pck_flex_log;
+end pck_caravan_log;
 
 /
 
-create or replace PACKAGE body          mydb.pck_flex_log AS
+create or replace PACKAGE body          mydb.pck_caravan_log AS
 
    --****************************************************************************************
    PROCEDURE sp_log_debug         (p_application           in varchar2,
@@ -207,7 +207,7 @@ create or replace PACKAGE body          mydb.pck_flex_log AS
                                    p_value_9               in varchar2 default null)
    AS
    BEGIN
-      mydb.pck_flex_log.sp_log('debug', lower(p_application), lower(p_user), lower(p_code_unit), lower(p_function), p_short_msg, p_long_msg,
+      mydb.pck_caravan_log.sp_log('debug', lower(p_application), lower(p_user), lower(p_code_unit), lower(p_function), p_short_msg, p_long_msg,
                                lower(p_key_0), p_value_0, lower(p_key_1), p_value_1, lower(p_key_2), p_value_2, lower(p_key_3), p_value_3, lower(p_key_4), p_value_4,
                                lower(p_key_5), p_value_5, lower(p_key_6), p_value_6, lower(p_key_7), p_value_7, lower(p_key_8), p_value_8, lower(p_key_9), p_value_9); 
    END sp_log_debug;
@@ -243,7 +243,7 @@ create or replace PACKAGE body          mydb.pck_flex_log AS
                                    p_value_9               in varchar2 default null)
    AS
    BEGIN
-      mydb.pck_flex_log.sp_log('info', lower(p_application), lower(p_user), lower(p_code_unit), lower(p_function), p_short_msg, p_long_msg,
+      mydb.pck_caravan_log.sp_log('info', lower(p_application), lower(p_user), lower(p_code_unit), lower(p_function), p_short_msg, p_long_msg,
                                lower(p_key_0), p_value_0, lower(p_key_1), p_value_1, lower(p_key_2), p_value_2, lower(p_key_3), p_value_3, lower(p_key_4), p_value_4,
                                lower(p_key_5), p_value_5, lower(p_key_6), p_value_6, lower(p_key_7), p_value_7, lower(p_key_8), p_value_8, lower(p_key_9), p_value_9); 
    END sp_log_info;
@@ -279,7 +279,7 @@ create or replace PACKAGE body          mydb.pck_flex_log AS
                                    p_value_9               in varchar2 default null)
    AS
    BEGIN
-      mydb.pck_flex_log.sp_log('warn', lower(p_application), lower(p_user), lower(p_code_unit), lower(p_function), p_short_msg, p_long_msg,
+      mydb.pck_caravan_log.sp_log('warn', lower(p_application), lower(p_user), lower(p_code_unit), lower(p_function), p_short_msg, p_long_msg,
                                lower(p_key_0), p_value_0, lower(p_key_1), p_value_1, lower(p_key_2), p_value_2, lower(p_key_3), p_value_3, lower(p_key_4), p_value_4,
                                lower(p_key_5), p_value_5, lower(p_key_6), p_value_6, lower(p_key_7), p_value_7, lower(p_key_8), p_value_8, lower(p_key_9), p_value_9); 
    END sp_log_warn;
@@ -315,7 +315,7 @@ create or replace PACKAGE body          mydb.pck_flex_log AS
                                    p_value_9               in varchar2 default null)
    AS
    BEGIN
-      mydb.pck_flex_log.sp_log('error', lower(p_application), lower(p_user), lower(p_code_unit), lower(p_function), p_short_msg, p_long_msg,
+      mydb.pck_caravan_log.sp_log('error', lower(p_application), lower(p_user), lower(p_code_unit), lower(p_function), p_short_msg, p_long_msg,
                                lower(p_key_0), p_value_0, lower(p_key_1), p_value_1, lower(p_key_2), p_value_2, lower(p_key_3), p_value_3, lower(p_key_4), p_value_4,
                                lower(p_key_5), p_value_5, lower(p_key_6), p_value_6, lower(p_key_7), p_value_7, lower(p_key_8), p_value_8, lower(p_key_9), p_value_9); 
    END sp_log_error;
@@ -351,7 +351,7 @@ create or replace PACKAGE body          mydb.pck_flex_log AS
                                    p_value_9               in varchar2 default null)
    AS
    BEGIN
-      mydb.pck_flex_log.sp_log('fatal', lower(p_application), lower(p_user), lower(p_code_unit), lower(p_function), p_short_msg, p_long_msg,
+      mydb.pck_caravan_log.sp_log('fatal', lower(p_application), lower(p_user), lower(p_code_unit), lower(p_function), p_short_msg, p_long_msg,
                                lower(p_key_0), p_value_0, lower(p_key_1), p_value_1, lower(p_key_2), p_value_2, lower(p_key_3), p_value_3, lower(p_key_4), p_value_4,
                                lower(p_key_5), p_value_5, lower(p_key_6), p_value_6, lower(p_key_7), p_value_7, lower(p_key_8), p_value_8, lower(p_key_9), p_value_9); 
    END sp_log_fatal;
@@ -395,37 +395,37 @@ create or replace PACKAGE body          mydb.pck_flex_log AS
       v_entry_count NUMBER(5);
    BEGIN
       
-      SELECT flos_enabled, flos_days
+      SELECT clos_enabled, clos_days
         INTO v_enabled, v_days
-        FROM mydb.flex_log_settings
-       WHERE lower(flos_type) = lower(p_type)
-         AND lower(flos_application) = lower(p_application);
+        FROM mydb.caravan_log_settings
+       WHERE lower(clos_type) = lower(p_type)
+         AND lower(clos_application) = lower(p_application);
 
       BEGIN
-         -- We delete logs older than "flos_days"
+         -- We delete logs older than "clos_days"
          DELETE 
-           FROM mydb.flex_log 
-          WHERE flog_date < SYSDATE - v_days
-            AND lower(flos_type) = lower(p_type)
-            AND lower(flos_application) = lower(p_application);
+           FROM mydb.caravan_log 
+          WHERE clog_date < SYSDATE - v_days
+            AND lower(clos_type) = lower(p_type)
+            AND lower(clos_application) = lower(p_application);
          
          -- We delete enough entries to preserve the upper limit
          SELECT COUNT(*) INTO v_entry_count
-           FROM mydb.flex_log 
-          WHERE lower(flos_type) = lower(p_type)
-            AND lower(flos_application) = lower(p_application);
+           FROM mydb.caravan_log 
+          WHERE lower(clos_type) = lower(p_type)
+            AND lower(clos_application) = lower(p_application);
          
          IF v_entry_count >= v_max_entries THEN
             DELETE
-              FROM mydb.flex_log
-             WHERE lower(flos_type) = lower(p_type)
-               AND lower(flos_application) = lower(p_application)
-               AND flog_id IN (SELECT flog_id 
-                                 FROM (SELECT f.flog_id 
-                                         FROM mydb.flex_log f 
-                                        WHERE lower(f.flos_type) = lower(p_type)
-                                          AND lower(f.flos_application) = lower(p_application)
-                                        ORDER BY f.flog_date DESC)
+              FROM mydb.caravan_log
+             WHERE lower(clos_type) = lower(p_type)
+               AND lower(clos_application) = lower(p_application)
+               AND clog_id IN (SELECT clog_id 
+                                 FROM (SELECT f.clog_id 
+                                         FROM mydb.caravan_log f 
+                                        WHERE lower(f.clos_type) = lower(p_type)
+                                          AND lower(f.clos_application) = lower(p_application)
+                                        ORDER BY f.clog_date DESC)
                                 WHERE rownum <= (v_entry_count - v_max_entries + 1));
          END IF;
       EXCEPTION 
@@ -434,11 +434,11 @@ create or replace PACKAGE body          mydb.pck_flex_log AS
       
       -- If log is enabled, then we can insert a new entry
       IF v_enabled = 1 THEN         
-         INSERT INTO mydb.flex_log(flog_id, flog_date, flos_type, flos_application, flog_user, flog_code_unit, flog_function, 
-                                   flog_short_msg, flog_long_msg, flog_context, 
-                                   flog_key_0, flog_value_0, flog_key_1, flog_value_1, flog_key_2, flog_value_2, flog_key_3, flog_value_3, flog_key_4, flog_value_4,
-                                   flog_key_5, flog_value_5, flog_key_6, flog_value_6, flog_key_7, flog_value_7, flog_key_8, flog_value_8, flog_key_9, flog_value_9)
-                           VALUES (mydb.flex_log_seq.nextval, sysdate, lower(p_type), lower(p_application), lower(p_user), lower(p_code_unit), lower(p_function), 
+         INSERT INTO mydb.caravan_log(clog_id, clog_date, clos_type, clos_application, clog_user, clog_code_unit, clog_function, 
+                                   clog_short_msg, clog_long_msg, clog_context, 
+                                   clog_key_0, clog_value_0, clog_key_1, clog_value_1, clog_key_2, clog_value_2, clog_key_3, clog_value_3, clog_key_4, clog_value_4,
+                                   clog_key_5, clog_value_5, clog_key_6, clog_value_6, clog_key_7, clog_value_7, clog_key_8, clog_value_8, clog_key_9, clog_value_9)
+                           VALUES (mydb.caravan_log_seq.nextval, sysdate, lower(p_type), lower(p_application), lower(p_user), lower(p_code_unit), lower(p_function), 
                                    p_short_msg, p_long_msg, p_context,
                                    lower(p_key_0), p_value_0, lower(p_key_1), p_value_1, lower(p_key_2), p_value_2, lower(p_key_3), p_value_3, lower(p_key_4), p_value_4,
                                    lower(p_key_5), p_value_5, lower(p_key_6), p_value_6, lower(p_key_7), p_value_7, lower(p_key_8), p_value_8, lower(p_key_9), p_value_9);         
@@ -448,4 +448,4 @@ create or replace PACKAGE body          mydb.pck_flex_log AS
       COMMIT;
    END sp_log;
 
-END pck_flex_log;
+END pck_caravan_log;

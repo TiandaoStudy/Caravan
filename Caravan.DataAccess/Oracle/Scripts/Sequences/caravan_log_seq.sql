@@ -1,3 +1,3 @@
 ﻿-- REPLACE 'mydb' WITH DB NAME
 
-CREATE SEQUENCE "mydb".FLEX_LOG_SEQ;
+CREATE SEQUENCE mydb.caravan_log_seq;
