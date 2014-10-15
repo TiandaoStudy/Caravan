@@ -31,12 +31,12 @@ namespace FLEX.DataAccess.Oracle
 
       #region Logging Methods
 
-      protected override LogResult Log<TCodeUnit>(LogType type, string applicationName, string userName, string function, string shortMessage, string longMessage, string context,
+      public override LogResult Log(LogType type, string applicationName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
          IEnumerable<GKeyValuePair<string, string>> args)
       {
          try
          {
-            Raise<ArgumentNullException>.IfIsNull(shortMessage);
+            Raise<ArgumentException>.IfIsEmpty(codeUnit);
             var argsList = (args == null) ? ReadOnlyList.Empty<GKeyValuePair<string, string>>() as IList<GKeyValuePair<string, string>> : args.ToList();
             Raise<ArgumentOutOfRangeException>.If(argsList.Count > MaxArgumentCount);
 
@@ -46,7 +46,7 @@ namespace FLEX.DataAccess.Oracle
                p.Add("p_type", type.ToString(), DbType.AnsiString);
                p.Add("p_application", Common.Configuration.Instance.ApplicationName.Truncate(MaxApplicationNameLength), DbType.AnsiString);
                p.Add("p_user", GetCurrentUserName().Truncate(MaxUserNameLength), DbType.AnsiString);
-               p.Add("p_code_unit", typeof(TCodeUnit).FullName.Truncate(MaxCodeUnitLength), DbType.AnsiString);
+               p.Add("p_code_unit", codeUnit.Truncate(MaxCodeUnitLength), DbType.AnsiString);
                p.Add("p_function", function.Truncate(MaxFunctionLength), DbType.AnsiString);
                p.Add("p_short_msg", shortMessage == null ? LogEntry.NotSpecified : shortMessage.Truncate(MaxShortMessageLength), DbType.String);
                p.Add("p_long_msg", longMessage == null ? LogEntry.NotSpecified : longMessage.Truncate(MaxLongMessageLength), DbType.String);

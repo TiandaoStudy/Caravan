@@ -8,9 +8,9 @@ namespace FLEX.DataAccess.Dummy
 {
    public sealed class DummyLogger : LoggerBase
    {
-      protected override LogResult Log<TCodeUnit>(LogType type, string applicationName, string userName, string function, string shortMessage, string longMessage, string context, IEnumerable<GKeyValuePair<string, string>> args)
+      public override LogResult Log(LogType type, string applicationName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<GKeyValuePair<string, string>> args)
       {
-         return LogResult.Success;
+         throw new System.NotImplementedException();
       }
 
       protected override IEnumerable<LogEntry> Logs(string applicationName, LogType? logType)

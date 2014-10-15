@@ -13,6 +13,12 @@ namespace FLEX.DataAccess.Core
    {
       #region ILogger Members
 
+      public LogResult Log<TCodeUnit>(LogType type, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled,
+         string function = LogEntry.AutomaticallyFilled)
+      {
+         return Log<TCodeUnit>(type, applicationName, userName, function, shortMessage, longMessage, context, args);
+      }
+
       public LogResult LogDebug<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null,
          string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled)
       {
@@ -47,6 +53,11 @@ namespace FLEX.DataAccess.Core
          string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled)
       {
          return Log<TCodeUnit>(LogType.Debug, applicationName, userName, function, exception, context, args);
+      }
+
+      public LogResult Log<TCodeUnit>(LogType type, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, string function = LogEntry.AutomaticallyFilled)
+      {
+         return Log<TCodeUnit>(type, applicationName, userName, function, exception, context, args);
       }
 
       public LogResult LogInfo<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled,
@@ -123,23 +134,41 @@ namespace FLEX.DataAccess.Core
 
       #endregion
 
-      protected abstract LogResult Log<TCodeUnit>(LogType type, string applicationName, string userName, string function, string shortMessage, string longMessage, string context,
+      public abstract LogResult Log(LogType type, string applicationName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
          IEnumerable<GKeyValuePair<string, string>> args);
 
       protected abstract IEnumerable<LogEntry> Logs(string applicationName, LogType? logType);
 
-      protected abstract IList<LogSettings> LogSettings(string applicationName, LogType? logType); 
+      protected abstract IList<LogSettings> LogSettings(string applicationName, LogType? logType);
 
-      protected static string GetCurrentUserName()
+      #region Shortcuts
+
+      private LogResult Log<TCodeUnit>(LogType type, string applicationName, string userName, string function, string shortMessage, string longMessage, string context, IEnumerable<GKeyValuePair<string, string>> args)
       {
-         if (HttpContext.Current == null || HttpContext.Current.User == null || HttpContext.Current.User.Identity == null)
+         try
          {
-            return LogEntry.NotSpecified;
+            Raise<ArgumentException>.IfIsEmpty(shortMessage);
          }
-         return HttpContext.Current.User.Identity.Name;
+         catch (Exception ex)
+         {
+            return LogResult.Failure(ex);
+         }
+         return Log(type, applicationName, userName, typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
       }
 
-      #region Private Methods
+      public LogResult Log(LogType type, string applicationName, string userName, string codeUnit, string function, Exception exception, string context, IEnumerable<GKeyValuePair<string, string>> args)
+      {
+         try
+         {
+            Raise<ArgumentNullException>.IfIsNull(exception);
+            exception = FindInnermostException(exception);
+         }
+         catch (Exception ex)
+         {
+            return LogResult.Failure(ex);
+         }
+         return Log(type, applicationName, userName, codeUnit, function, exception.Message, exception.StackTrace, context, args);
+      }
 
       private LogResult Log<TCodeUnit>(LogType type, string applicationName, string userName, string function, Exception exception, string context, IEnumerable<GKeyValuePair<string, string>> args)
       {
@@ -150,9 +179,9 @@ namespace FLEX.DataAccess.Core
          }
          catch (Exception ex)
          {
-            return new LogResult {Succeeded = false, Exception = ex};
+            return LogResult.Failure(ex);
          }
-         return Log<TCodeUnit>(type, applicationName, userName, function, exception.Message, exception.StackTrace, context, args);
+         return Log(type, applicationName, userName, typeof(TCodeUnit).FullName, function, exception.Message, exception.StackTrace, context, args);
       }
 
       private static Exception FindInnermostException(Exception exception)
@@ -162,6 +191,15 @@ namespace FLEX.DataAccess.Core
             exception = exception.InnerException;
          }
          return exception;
+      } 
+
+      protected static string GetCurrentUserName()
+      {
+         if (HttpContext.Current == null || HttpContext.Current.User == null || HttpContext.Current.User.Identity == null)
+         {
+            return LogEntry.NotSpecified;
+         }
+         return HttpContext.Current.User.Identity.Name;
       }
 
       #endregion

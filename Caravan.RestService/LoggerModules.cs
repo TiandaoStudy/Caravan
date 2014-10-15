@@ -24,19 +24,17 @@ namespace Finsa.Caravan.RestService
 
       private Response Log(string applicationName, LogType? logType)
       {
-         LogEntry entry;
+         LogEntry e;
          try
          {
-            entry = PrepareEntry((string) Request.Form.entry, applicationName, logType);
+            e = PrepareEntry((string) Request.Form.entry, applicationName, logType);
          }
          catch (Exception ex)
          {
             return Response.AsJson(LogResult.Failure(ex));
          }
-
-
-         
-         return Response.AsJson(LogResult.Success);
+         var result = Logger.Instance.Log(e.Type, e.ApplicationName, e.UserName, e.CodeUnit, e.Function, e.ShortMessage, e.LongMessage, e.Context, null);
+         return Response.AsJson(result);
       }
 
       private static LogEntry PrepareEntry(string json, string applicationName, LogType? logType)

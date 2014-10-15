@@ -12,7 +12,38 @@ namespace FLEX.DataAccess
    public interface ILogger
    {
       #region Logging Methods
-
+      
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      /// <param name="type"></param>
+      /// <param name="applicationName"></param>
+      /// <param name="userName"></param>
+      /// <param name="codeUnit"></param>
+      /// <param name="function"></param>
+      /// <param name="shortMessage"></param>
+      /// <param name="longMessage"></param>
+      /// <param name="context"></param>
+      /// <param name="args"></param>
+      /// <returns></returns>
+      LogResult Log(LogType type, string applicationName, string userName, string codeUnit, string function, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null);
+      
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      /// <typeparam name="TCodeUnit"></typeparam>
+      /// <param name="type"></param>
+      /// <param name="shortMessage"></param>
+      /// <param name="longMessage"></param>
+      /// <param name="context"></param>
+      /// <param name="args"></param>
+      /// <param name="applicationName"></param>
+      /// <param name="userName"></param>
+      /// <param name="function"></param>
+      /// <returns></returns>
+      LogResult Log<TCodeUnit>(LogType type, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null,
+         string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled);
+      
       /// <summary>
       ///   TODO
       /// </summary>
@@ -87,6 +118,35 @@ namespace FLEX.DataAccess
       /// <returns></returns>
       LogResult LogFatal<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null,
          string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled);
+      
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      /// <param name="type"></param>
+      /// <param name="applicationName"></param>
+      /// <param name="userName"></param>
+      /// <param name="codeUnit"></param>
+      /// <param name="function"></param>
+      /// <param name="exception"></param>
+      /// <param name="context"></param>
+      /// <param name="args"></param>
+      /// <returns></returns>
+      LogResult Log(LogType type, string applicationName, string userName, string codeUnit, string function, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null);
+
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      /// <typeparam name="TCodeUnit"></typeparam>
+      /// <param name="type"></param>
+      /// <param name="exception"></param>
+      /// <param name="context"></param>
+      /// <param name="args"></param>
+      /// <param name="applicationName"></param>
+      /// <param name="userName"></param>
+      /// <param name="function"></param>
+      /// <returns></returns>
+      LogResult Log<TCodeUnit>(LogType type, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null, 
+         string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled);
 
       /// <summary>
       ///   TODO
@@ -101,7 +161,7 @@ namespace FLEX.DataAccess
       /// <returns></returns>
       LogResult LogDebug<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null, 
          string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled);
-
+      
       /// <summary>
       ///   TODO
       /// </summary>
