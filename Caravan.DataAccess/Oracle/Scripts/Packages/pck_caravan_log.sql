@@ -395,8 +395,8 @@ create or replace PACKAGE body          mydb.pck_caravan_log AS
       v_entry_count NUMBER(5);
    BEGIN
       
-      SELECT clos_enabled, clos_days
-        INTO v_enabled, v_days
+      SELECT clos_enabled, clos_days, clos_max_entries
+        INTO v_enabled, v_days, v_max_entries
         FROM mydb.caravan_log_settings
        WHERE lower(clos_type) = lower(p_type)
          AND lower(clos_application) = lower(p_application);
@@ -425,7 +425,7 @@ create or replace PACKAGE body          mydb.pck_caravan_log AS
                                          FROM mydb.caravan_log f 
                                         WHERE lower(f.clos_type) = lower(p_type)
                                           AND lower(f.clos_application) = lower(p_application)
-                                        ORDER BY f.clog_date DESC)
+                                        ORDER BY f.clog_date ASC)
                                 WHERE rownum <= (v_entry_count - v_max_entries + 1));
          END IF;
       EXCEPTION 

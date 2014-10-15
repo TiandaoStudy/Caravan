@@ -43,7 +43,7 @@ namespace Finsa.Caravan.DataAccess.Oracle
             {
                var p = new DynamicParameters();
                p.Add("p_type", type.ToString(), DbType.AnsiString);
-               p.Add("p_application", FLEX.Common.Configuration.Instance.ApplicationName.Truncate(MaxApplicationNameLength), DbType.AnsiString);
+               p.Add("p_application", applicationName.Truncate(MaxApplicationNameLength), DbType.AnsiString);
                p.Add("p_user", GetCurrentUserName().Truncate(MaxUserNameLength), DbType.AnsiString);
                p.Add("p_code_unit", codeUnit.Truncate(MaxCodeUnitLength), DbType.AnsiString);
                p.Add("p_function", function.Truncate(MaxFunctionLength), DbType.AnsiString);

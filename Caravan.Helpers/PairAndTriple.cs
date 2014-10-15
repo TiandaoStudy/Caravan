@@ -29,13 +29,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Finsa.Caravan
 {
-    [Serializable]
+    [Serializable, JsonObject(MemberSerialization.OptIn)]
     public struct GPair<T1, T2> : IEquatable<GPair<T1, T2>>, IList<object>
     {
+       [JsonProperty]
         public T1 First { get; set; }
+       
+       [JsonProperty]
         public T2 Second { get; set; }
 
         #region IEquatable<GPair<T1,T2>> Members
@@ -175,10 +179,13 @@ namespace Finsa.Caravan
         }
     }
 
-    [Serializable]
+    [Serializable, JsonObject(MemberSerialization.OptIn)]
     public struct GKeyValuePair<T1, T2> : IEquatable<GKeyValuePair<T1, T2>>, IList<object>
     {
+       [JsonProperty]
         public T1 Key { get; set; }
+
+       [JsonProperty]
         public T2 Value { get; set; }
 
         #region IEquatable<GKeyValuePair<T1,T2>> Members
@@ -321,11 +328,16 @@ namespace Finsa.Caravan
         }
     }
 
-    [Serializable]
+    [Serializable, JsonObject(MemberSerialization.OptIn)]
     public struct GTriple<T1, T2, T3> : IEquatable<GTriple<T1, T2, T3>>, IList<object>
     {
+       [JsonProperty]
         public T1 First { get; set; }
+       
+       [JsonProperty]
         public T2 Second { get; set; }
+       
+       [JsonProperty]
         public T3 Third { get; set; }
 
         #region IEquatable<GTriple<T1,T2,T3>> Members
