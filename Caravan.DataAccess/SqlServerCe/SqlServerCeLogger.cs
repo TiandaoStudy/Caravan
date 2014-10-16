@@ -11,12 +11,12 @@ namespace Finsa.Caravan.DataAccess.SqlServerCe
          throw new System.NotImplementedException();
       }
 
-      protected override IEnumerable<LogEntry> Logs(string applicationName, LogType? logType)
+      protected override IEnumerable<LogEntry> GetLogs(string applicationName, LogType? logType)
       {
          throw new System.NotImplementedException();
       }
 
-      protected override IList<LogSettings> LogSettings(string applicationName, LogType? logType)
+      protected override IList<LogSettings> GetLogSettings(string applicationName, LogType? logType)
       {
          throw new System.NotImplementedException();
       }

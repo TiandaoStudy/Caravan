@@ -72,7 +72,7 @@ namespace Finsa.Caravan.DataAccess.Oracle
 
       #region Logs Retrieval
 
-      protected override IEnumerable<LogEntry> Logs(string applicationName, LogType? logType)
+      protected override IEnumerable<LogEntry> GetLogs(string applicationName, LogType? logType)
       {
          var query = @"
             select clog_date ""Date"", clos_type as TypeString, capp_name as ApplicationName, clog_user UserName, clog_code_unit as CodeUnit,
@@ -87,11 +87,13 @@ namespace Finsa.Caravan.DataAccess.Oracle
              order by clog_date desc
          ";
          query = string.Format(query, Configuration.Instance.OracleRunner);
+         
+         var parameters = new DynamicParameters();
+         parameters.Add("applicationName", applicationName, DbType.AnsiString);
+         parameters.Add("logType", (logType == null) ? null : logType.ToString(), DbType.AnsiString);
+         
          using (var connection = QueryExecutor.Instance.OpenConnection())
          {
-            var parameters = new DynamicParameters();
-            parameters.Add("applicationName", applicationName, DbType.AnsiString);
-            parameters.Add("logType", (logType == null) ? null : logType.ToString(), DbType.AnsiString);
             return connection.Query<LogEntry>(query, parameters);
          }
       }
@@ -100,7 +102,7 @@ namespace Finsa.Caravan.DataAccess.Oracle
 
       #region Log Settings
 
-      protected override IList<LogSettings> LogSettings(string applicationName, LogType? logType)
+      protected override IList<LogSettings> GetLogSettings(string applicationName, LogType? logType)
       {
          var query = @"
             select capp_name ApplicationName, clos_type TypeString, clos_enabled Enabled,
@@ -111,11 +113,13 @@ namespace Finsa.Caravan.DataAccess.Oracle
              order by capp_name, clos_type
          ";
          query = string.Format(query, Configuration.Instance.OracleRunner);
+         
+         var parameters = new DynamicParameters();
+         parameters.Add("applicationName", applicationName, DbType.AnsiString);
+         parameters.Add("logType", (logType == null) ? null : logType.ToString(), DbType.AnsiString);
+         
          using (var connection = QueryExecutor.Instance.OpenConnection())
          {
-            var parameters = new DynamicParameters();
-            parameters.Add("applicationName", applicationName, DbType.AnsiString);
-            parameters.Add("logType", (logType == null) ? null : logType.ToString(), DbType.AnsiString);
             return connection.Query<LogSettings>(query, parameters).ToList();
          }
       }

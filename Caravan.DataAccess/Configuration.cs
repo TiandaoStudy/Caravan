@@ -13,12 +13,34 @@ namespace Finsa.Caravan.DataAccess
       private const string OracleRunnerKey = "OracleRunner";
       private const string OracleStatementCacheSizeKey = "OracleStatementCacheSize";
       private const string QueryExecutorTypeInfoKey = "QueryExecutorTypeInfo";
+      private const string SecurityManagerTypeInfoKey = "SecurityManagerTypeInfo";
 
       private static readonly Configuration CachedInstance = ConfigurationManager.GetSection(SectionName) as Configuration;
 
       public static Configuration Instance
       {
          get { return CachedInstance; }
+      }
+      
+      [ConfigurationProperty(ConnectionStringKey, IsRequired = false)]
+      public string ConnectionString
+      {
+         get
+         {
+            var cachedConnectionString = PersistentCache.DefaultInstance.Get(CachePartitionName, ConnectionStringKey);
+            if (cachedConnectionString != null)
+            {
+               return (string) cachedConnectionString;
+            }
+            var configConnectionString = (string) this[ConnectionStringKey];
+            ConnectionString = configConnectionString;
+            return ConnectionString;
+         }
+         set
+         {
+            QueryExecutor.Instance.ElaborateConnectionString(ref value);
+            PersistentCache.DefaultInstance.AddStatic(CachePartitionName, ConnectionStringKey, value);
+         }
       }
 
       [ConfigurationProperty(LoggerTypeInfoKey, IsRequired = true)]
@@ -48,26 +70,11 @@ namespace Finsa.Caravan.DataAccess
       {
          get { return (string) this[QueryExecutorTypeInfoKey]; }
       }
-      
-      [ConfigurationProperty(ConnectionStringKey, IsRequired = false)]
-      public string ConnectionString
+
+      [ConfigurationProperty(SecurityManagerTypeInfoKey, IsRequired = true)]
+      public string SecurityManagerTypeInfo
       {
-         get
-         {
-            var cachedConnectionString = PersistentCache.DefaultInstance.Get(CachePartitionName, ConnectionStringKey);
-            if (cachedConnectionString != null)
-            {
-               return (string) cachedConnectionString;
-            }
-            var configConnectionString = (string) this[ConnectionStringKey];
-            ConnectionString = configConnectionString;
-            return ConnectionString;
-         }
-         set
-         {
-            QueryExecutor.Instance.ElaborateConnectionString(ref value);
-            PersistentCache.DefaultInstance.AddStatic(CachePartitionName, ConnectionStringKey, value);
-         }
+         get { return (string) this[SecurityManagerTypeInfoKey]; }
       }
    }
 }

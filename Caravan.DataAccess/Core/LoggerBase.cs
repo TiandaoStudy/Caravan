@@ -85,50 +85,50 @@ namespace Finsa.Caravan.DataAccess.Core
 
       public IEnumerable<LogEntry> Logs()
       {
-         return Logs(null, null);
+         return GetLogs(null, null);
       }
 
       public IEnumerable<LogEntry> Logs(string applicationName)
       {
          Raise<ArgumentException>.IfIsEmpty(applicationName);
-         return Logs(applicationName, null);
+         return GetLogs(applicationName, null);
       }
 
       public IEnumerable<LogEntry> Logs(LogType logType)
       {
          Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-         return Logs(null, (LogType?) logType);
+         return GetLogs(null, (LogType?) logType);
       }
 
       public IEnumerable<LogEntry> Logs(string applicationName, LogType logType)
       {
          Raise<ArgumentException>.IfIsEmpty(applicationName);
          Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-         return Logs(applicationName, (LogType?) logType);
+         return GetLogs(applicationName, (LogType?) logType);
       }
 
       public IList<LogSettings> LogSettings()
       {
-         return LogSettings(null, null);
+         return GetLogSettings(null, null);
       }
 
       public IList<LogSettings> LogSettings(string applicationName)
       {
          Raise<ArgumentException>.IfIsEmpty(applicationName);
-         return LogSettings(applicationName, null);
+         return GetLogSettings(applicationName, null);
       }
 
       public IList<LogSettings> LogSettings(LogType logType)
       {
          Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-         return LogSettings(null, (LogType?) logType);
+         return GetLogSettings(null, (LogType?) logType);
       }
 
       public LogSettings LogSettings(string applicationName, LogType logType)
       {
          Raise<ArgumentException>.IfIsEmpty(applicationName);
          Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-         return LogSettings(applicationName, (LogType?) logType).FirstOrDefault();
+         return GetLogSettings(applicationName, (LogType?) logType).FirstOrDefault();
       }
 
       #endregion
@@ -136,9 +136,9 @@ namespace Finsa.Caravan.DataAccess.Core
       public abstract LogResult Log(LogType type, string applicationName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
          IEnumerable<GKeyValuePair<string, string>> args);
 
-      protected abstract IEnumerable<LogEntry> Logs(string applicationName, LogType? logType);
+      protected abstract IEnumerable<LogEntry> GetLogs(string applicationName, LogType? logType);
 
-      protected abstract IList<LogSettings> LogSettings(string applicationName, LogType? logType);
+      protected abstract IList<LogSettings> GetLogSettings(string applicationName, LogType? logType);
 
       #region Shortcuts
 

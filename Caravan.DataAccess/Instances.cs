@@ -54,4 +54,30 @@ namespace Finsa.Caravan.DataAccess
          get { return CachedInstance; }
       }
    }
+
+   /// <summary>
+   ///   TODO
+   /// </summary>
+   public static class SecurityManager
+   {
+      private static readonly ISecurityManager CachedInstance;
+
+      static SecurityManager()
+      {
+         try
+         {
+            CachedInstance = ServiceLocator.Load<ISecurityManager>(Configuration.Instance.SecurityManagerTypeInfo);
+         }
+         catch (Exception ex)
+         {
+            Logger.Instance.LogFatal<ISecurityManager>(ex, "Loading ISecurityManager");
+            throw new ConfigurationErrorsException("Could not load the ISecurityManager implementation. See inner exception for more details.", ex);
+         }
+      }
+
+      public static ISecurityManager Instance
+      {
+         get { return CachedInstance; }
+      }
+   }
 }

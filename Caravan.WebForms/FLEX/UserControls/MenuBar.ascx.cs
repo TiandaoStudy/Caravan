@@ -6,6 +6,7 @@ using System.Xml;
 using Finsa.Caravan.DataAccess;
 using FLEX.Web.XmlSettings.MenuBar;
 using FLEX.WebForms;
+using SecurityManager = FLEX.WebForms.SecurityManager;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

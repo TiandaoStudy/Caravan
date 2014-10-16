@@ -3,6 +3,7 @@ using System.Configuration;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.Reflection;
 using FLEX.Web;
+using ISecurityManager = FLEX.Web.ISecurityManager;
 
 namespace FLEX.WebForms
 {
