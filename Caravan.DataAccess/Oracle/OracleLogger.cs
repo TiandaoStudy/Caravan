@@ -20,7 +20,7 @@ namespace Finsa.Caravan.DataAccess.Oracle
       private const int MaxCodeUnitLength = 100;
       private const int MaxFunctionLength = 100;
       private const int MaxShortMessageLength = 400;
-      private const int MaxLongMessageLength = 4000;
+      private const int MaxLongMessageLength = 2000;
       private const int MaxContextLength = 400;
       private const int MaxKeyLength = 100;
       private const int MaxValueLength = 400;

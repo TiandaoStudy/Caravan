@@ -4,34 +4,34 @@ CREATE TABLE mydb.caravan_log
 (  
      clog_id           NUMBER               NOT NULL
    , clog_date         DATE DEFAULT SYSDATE NOT NULL 
-   , clos_type         VARCHAR2(5 CHAR)     NOT NULL
-   , clos_application  VARCHAR2(30 CHAR)    NOT NULL
-   , clog_user         VARCHAR2(30 CHAR)
-   , clog_code_unit    VARCHAR2(100 CHAR)   NOT NULL
-   , clog_function     VARCHAR2(100 CHAR)   NOT NULL
-   , clog_short_msg    VARCHAR2(400 CHAR)   NOT NULL
-   , clog_long_msg     VARCHAR2(4000 CHAR)
-   , clog_context      VARCHAR2(400 CHAR)
-   , clog_key_0        VARCHAR2(100 CHAR)
-   , clog_value_0      VARCHAR2(400 CHAR)
-   , clog_key_1        VARCHAR2(100 CHAR) 
-   , clog_value_1      VARCHAR2(400 CHAR)
-   , clog_key_2        VARCHAR2(100 CHAR) 
-   , clog_value_2      VARCHAR2(400 CHAR)
-   , clog_key_3        VARCHAR2(100 CHAR) 
-   , clog_value_3      VARCHAR2(400 CHAR) 
-   , clog_key_4        VARCHAR2(100 CHAR) 
-   , clog_value_4      VARCHAR2(400 CHAR) 
-   , clog_key_5        VARCHAR2(100 CHAR) 
-   , clog_value_5      VARCHAR2(400 CHAR) 
-   , clog_key_6        VARCHAR2(100 CHAR) 
-   , clog_value_6      VARCHAR2(400 CHAR) 
-   , clog_key_7        VARCHAR2(100 CHAR) 
-   , clog_value_7      VARCHAR2(400 CHAR) 
-   , clog_key_8        VARCHAR2(100 CHAR) 
-   , clog_value_8      VARCHAR2(400 CHAR) 
-   , clog_key_9        VARCHAR2(100 CHAR)
-   , clog_value_9      VARCHAR2(400 CHAR)
+   , clos_type         NVARCHAR2(5)         NOT NULL
+   , clos_application  NVARCHAR2(30)        NOT NULL
+   , clog_user         NVARCHAR2(30)
+   , clog_code_unit    NVARCHAR2(100)       NOT NULL
+   , clog_function     NVARCHAR2(100)       NOT NULL
+   , clog_short_msg    NVARCHAR2(400)       NOT NULL
+   , clog_long_msg     NVARCHAR2(2000)
+   , clog_context      NVARCHAR2(400)
+   , clog_key_0        NVARCHAR2(100)
+   , clog_value_0      NVARCHAR2(400)
+   , clog_key_1        NVARCHAR2(100) 
+   , clog_value_1      NVARCHAR2(400)
+   , clog_key_2        NVARCHAR2(100) 
+   , clog_value_2      NVARCHAR2(400)
+   , clog_key_3        NVARCHAR2(100) 
+   , clog_value_3      NVARCHAR2(400) 
+   , clog_key_4        NVARCHAR2(100) 
+   , clog_value_4      NVARCHAR2(400) 
+   , clog_key_5        NVARCHAR2(100) 
+   , clog_value_5      NVARCHAR2(400) 
+   , clog_key_6        NVARCHAR2(100) 
+   , clog_value_6      NVARCHAR2(400) 
+   , clog_key_7        NVARCHAR2(100) 
+   , clog_value_7      NVARCHAR2(400) 
+   , clog_key_8        NVARCHAR2(100) 
+   , clog_value_8      NVARCHAR2(400) 
+   , clog_key_9        NVARCHAR2(100)
+   , clog_value_9      NVARCHAR2(400)
    , CONSTRAINT pk_caravan_log PRIMARY KEY (clog_id) USING INDEX TABLESPACE dati_base_index ENABLE
    , CONSTRAINT fk_crvnlog_crvnlogsettings FOREIGN KEY (clos_type, clos_application) REFERENCES mydb.caravan_log_settings (clos_type, clos_application) ON DELETE CASCADE ENABLE
 )
