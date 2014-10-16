@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Finsa.Caravan.Common.DataModel;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.DataModel;
 
 namespace Finsa.Caravan.DataAccess.SqlServerCe
 {

@@ -14,6 +14,7 @@ namespace Finsa.Caravan.DataAccess.Oracle
             select capp_name Name, capp_description Description
               from {0}caravan_sec_app
              where (:appName is null or capp_name = lower(:appName))
+             order by capp_name
          ";
          query = string.Format(query, Configuration.Instance.OracleRunner);
 

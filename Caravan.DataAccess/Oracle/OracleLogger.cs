@@ -4,8 +4,8 @@ using System.Data;
 using System.Linq;
 using Dapper;
 using Finsa.Caravan.Collections;
-using Finsa.Caravan.Common.DataModel;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.DataModel;
 using Finsa.Caravan.Diagnostics;
 using Finsa.Caravan.Extensions;
 

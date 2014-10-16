@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Finsa.Caravan.Common.DataModel
+namespace Finsa.Caravan.DataModel
 {
    [Serializable]
    public class SecAction

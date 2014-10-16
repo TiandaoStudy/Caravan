@@ -1,6 +1,6 @@
 ﻿using System;
-using Finsa.Caravan.Common.DataModel;
 using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.DataModel;
 using Finsa.Caravan.RestService.Core;
 using Nancy;
 using Newtonsoft.Json;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Finsa.Caravan.Common.DataModel;
+using Finsa.Caravan.DataModel;
 
 namespace Finsa.Caravan.DataAccess
 {

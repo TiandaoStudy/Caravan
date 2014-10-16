@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Finsa.Caravan.Common.DataModel
+namespace Finsa.Caravan.DataModel
 {
    [Serializable]
    public class LogSettings

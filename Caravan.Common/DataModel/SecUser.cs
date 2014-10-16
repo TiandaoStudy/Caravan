@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Finsa.Caravan.Common.DataModel
+namespace Finsa.Caravan.DataModel
 {
    [Serializable]
    public class SecUser
