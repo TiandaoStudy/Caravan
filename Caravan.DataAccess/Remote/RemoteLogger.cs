@@ -12,12 +12,12 @@ namespace Finsa.Caravan.DataAccess.Remote
          throw new NotImplementedException();
       }
 
-      protected override IEnumerable<LogEntry> GetLogs(string applicationName, LogType? logType)
+      protected override IEnumerable<LogEntry> GetLogs(string appName, LogType? logType)
       {
          throw new NotImplementedException();
       }
 
-      protected override IList<LogSettings> GetLogSettings(string applicationName, LogType? logType)
+      protected override IList<LogSettings> GetLogSettings(string appName, LogType? logType)
       {
          throw new NotImplementedException();
       }

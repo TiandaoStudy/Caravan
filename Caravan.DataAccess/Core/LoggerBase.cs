@@ -136,9 +136,9 @@ namespace Finsa.Caravan.DataAccess.Core
       public abstract LogResult Log(LogType type, string applicationName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
          IEnumerable<GKeyValuePair<string, string>> args);
 
-      protected abstract IEnumerable<LogEntry> GetLogs(string applicationName, LogType? logType);
+      protected abstract IEnumerable<LogEntry> GetLogs(string appName, LogType? logType);
 
-      protected abstract IList<LogSettings> GetLogSettings(string applicationName, LogType? logType);
+      protected abstract IList<LogSettings> GetLogSettings(string appName, LogType? logType);
 
       #region Shortcuts
 

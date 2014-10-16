@@ -10,9 +10,9 @@ namespace Finsa.Caravan.DataModel
    {
       public const string AutomaticallyFilled = "Automatically filled parameter";
       public const string NotSpecified = "...";
-
+      
+      public SecApp App { get; set; }
       public DateTime Date { get; set; }
-      public string ApplicationName { get; set; }
       public string UserName { get; set; }
       public string CodeUnit { get; set; }
       public string Function { get; set; }

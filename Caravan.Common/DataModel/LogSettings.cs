@@ -7,7 +7,7 @@ namespace Finsa.Caravan.DataModel
    [Serializable]
    public class LogSettings
    {
-      public string ApplicationName { get; set; }
+      public SecApp App { get; set; }
       public bool Enabled { get; set; }
       public int Days { get; set; }
       public int MaxEntries { get; set; }

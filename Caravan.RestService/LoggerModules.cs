@@ -31,7 +31,7 @@ namespace Finsa.Caravan.RestService
          {
             return Response.AsJson(LogResult.Failure(ex));
          }
-         var result = Logger.Instance.Log(e.Type, e.ApplicationName, e.UserName, e.CodeUnit, e.Function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments);
+         var result = Logger.Instance.Log(e.Type, e.App.Name, e.UserName, e.CodeUnit, e.Function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments);
          return Response.AsJson(result);
       }
 
@@ -44,14 +44,14 @@ namespace Finsa.Caravan.RestService
          }
          if (applicationName == null)
          {
-            if (String.IsNullOrWhiteSpace(entry.ApplicationName))
+            if (String.IsNullOrWhiteSpace(entry.App.Name))
             {
                throw new Exception(ErrorMessages.LogsModule_MissingAppName);
             }
          }
          else
          {
-            entry.ApplicationName = applicationName;
+            entry.App.Name = applicationName;
          }
          if (logType == null)
          {
