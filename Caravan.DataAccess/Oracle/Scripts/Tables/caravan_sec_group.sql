@@ -8,8 +8,8 @@ CREATE TABLE mydb.caravan_sec_group
    , cgrp_description NVARCHAR2(150)  NOT NULL
    , cgrp_admin       NUMBER(1)       NOT NULL
    , CHECK (cgrp_name = lower(cgrp_name)) ENABLE
-   , CONSTRAINT pk_caravan_sec_group PRIMARY KEY (cgrp_id) USING INDEX TABLESPACE dati_base_index ENABLE
-   , CONSTRAINT uk_caravan_sec_group UNIQUE (cgrp_name) USING INDEX TABLESPACE dati_base_index ENABLE
+   , CONSTRAINT pk_caravan_sec_group PRIMARY KEY (cgrp_id, capp_id) USING INDEX TABLESPACE dati_base_index ENABLE
+   , CONSTRAINT uk_caravan_sec_group UNIQUE (cgrp_name, capp_id) USING INDEX TABLESPACE dati_base_index ENABLE
    , CONSTRAINT fk_crvnsecgroup_crvnsecapp FOREIGN KEY (capp_id) REFERENCES mydb.caravan_sec_app (capp_id) ON DELETE CASCADE ENABLE
 )
 TABLESPACE dati_base;

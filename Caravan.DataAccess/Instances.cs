@@ -53,6 +53,11 @@ namespace Finsa.Caravan.DataAccess
       {
          get { return CachedInstance; }
       }
+
+      internal static string OracleQuery(string query)
+      {
+         return String.Format(query, Configuration.Instance.OracleRunner);
+      }
    }
 
    /// <summary>
