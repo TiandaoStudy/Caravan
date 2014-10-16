@@ -19,6 +19,16 @@ namespace Finsa.Caravan.DataAccess.Core
          return GetApplications(applicationName).FirstOrDefault();
       }
 
+      public IEnumerable<SecGroup> Groups()
+      {
+         throw new NotImplementedException();
+      }
+
+      public IEnumerable<SecGroup> Groups(string applicationName)
+      {
+         throw new NotImplementedException();
+      }
+
       #region Abstract Methods
 
       protected abstract IEnumerable<SecApp> GetApplications(string applicationName);

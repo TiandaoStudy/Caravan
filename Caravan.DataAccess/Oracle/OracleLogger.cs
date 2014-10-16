@@ -81,7 +81,8 @@ namespace Finsa.Caravan.DataAccess.Oracle
                    clog_key_3 as Key3, clog_value_3 as Value3, clog_key_4 as Key4, clog_value_4 as Value4, clog_key_5 as Key5, clog_value_5 as Value5,
                    clog_key_6 as Key6, clog_value_6 as Value6, clog_key_7 as Key7, clog_value_7 as Value7, clog_key_8 as Key8, clog_value_8 as Value8,
                    clog_key_9 as Key9, clog_value_9 as Value9
-              from {0}caravan_log
+              from {0}caravan_log lg
+              join {0}caravan_sec_app sa on (lg.capp_id = sa.capp_id)
              where (:applicationName is null or capp_name = lower(:applicationName))
                and (:logType is null or clos_type = lower(:logType))
              order by clog_date desc
@@ -107,7 +108,8 @@ namespace Finsa.Caravan.DataAccess.Oracle
          var query = @"
             select capp_name ApplicationName, clos_type TypeString, clos_enabled Enabled,
                    clos_days Days, clos_max_entries MaxEntries
-              from {0}caravan_log_settings
+              from {0}caravan_log_settings ls
+              join {0}caravan_sec_app sa on (ls.capp_id = sa.capp_id)
              where (:applicationName is null or capp_name = lower(:applicationName))
                and (:logType is null or clos_type = lower(:logType))
              order by capp_name, clos_type
