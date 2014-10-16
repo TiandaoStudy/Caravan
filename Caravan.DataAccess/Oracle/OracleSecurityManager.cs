@@ -51,12 +51,20 @@ namespace Finsa.Caravan.DataAccess.Oracle
             foreach (var group in groups)
             {
                query = QueryExecutor.OracleQuery(@"
-                  select cgrp_id Id, cgrp_name Name, cgrp_description Description, cgrp_admin IsAdmin,
-                         sa.capp_id, sa.capp_id Id, sa.capp_name Name, sa.capp_description Description
-                    from {0}caravan_sec_user su
-                   where (:appName is null or capp_name = lower(:appName))
-                   order by capp_name, cgrp_name
+                  select su.cusr_id Id, su.cusr_active Active, su.cusr_login Login, su.cusr_hashed_pwd HashedPassword,
+                         su.cusr_first_name FirstName, su.cusr_last_name LastName, su.cusr_email Email
+                    from {0}caravan_sec_user_group sug
+                    join {0}caravan_sec_user su on (sug.cusr_id = su.cusr_id and sug.capp_id = su.capp_id)
+                   where sug.capp_id = :appId
+                     and sug.cgrp_id = :grpId
+                   order by cusr_login
                ");
+
+               parameters = new DynamicParameters();
+               parameters.Add("appId", group.App.Id, DbType.Int64);
+               parameters.Add("grpId", group.Id, DbType.Int64);
+
+               group.Users = ctx.Query<SecUser>(query, parameters);
             }
 
             return groups;
