@@ -5,11 +5,11 @@ namespace Finsa.Caravan.DataAccess
 {
    public interface ISecurityManager
    {
-      #region Applications
+      #region Apps
 
-      IEnumerable<SecApp> Applications();
+      IEnumerable<SecApp> Apps();
 
-      SecApp Application(string applicationName);
+      SecApp App(string appName);
 
       #endregion
 
@@ -17,7 +17,7 @@ namespace Finsa.Caravan.DataAccess
 
       IEnumerable<SecGroup> Groups();
 
-      IEnumerable<SecGroup> Groups(string applicationName);
+      IEnumerable<SecGroup> Groups(string appName);
 
       #endregion
    }

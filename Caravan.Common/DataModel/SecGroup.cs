@@ -8,6 +8,8 @@ namespace Finsa.Caravan.DataModel
    {
       public long Id { get; set; }
 
+      public SecApp App { get; set; }
+
       public string Name { get; set; }
 
       public string Description { get; set; }
