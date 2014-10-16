@@ -75,15 +75,15 @@ namespace Finsa.Caravan.DataAccess.Oracle
       protected override IEnumerable<LogEntry> Logs(string applicationName, LogType? logType)
       {
          var query = @"
-            select clog_date ""Date"", clos_type as TypeString, clos_application as ApplicationName, clog_user UserName, clog_code_unit as CodeUnit,
+            select clog_date ""Date"", clos_type as TypeString, capp_name as ApplicationName, clog_user UserName, clog_code_unit as CodeUnit,
                    clog_function as Function, clog_short_msg as ShortMessage, clog_long_msg as LongMessage, clog_context as Context,
                    clog_key_0 as Key0, clog_value_0 as Value0, clog_key_1 as Key1, clog_value_1 as Value1, clog_key_2 as Key2, clog_value_2 as Value2,
                    clog_key_3 as Key3, clog_value_3 as Value3, clog_key_4 as Key4, clog_value_4 as Value4, clog_key_5 as Key5, clog_value_5 as Value5,
                    clog_key_6 as Key6, clog_value_6 as Value6, clog_key_7 as Key7, clog_value_7 as Value7, clog_key_8 as Key8, clog_value_8 as Value8,
                    clog_key_9 as Key9, clog_value_9 as Value9
               from {0}caravan_log
-             where (:applicationName is null or lower(clos_application) = lower(:applicationName))
-               and (:logType is null or lower(clos_type) = lower(:logType))
+             where (:applicationName is null or capp_name = lower(:applicationName))
+               and (:logType is null or clos_type = lower(:logType))
              order by clog_date desc
          ";
          query = string.Format(query, Configuration.Instance.OracleRunner);
@@ -103,12 +103,12 @@ namespace Finsa.Caravan.DataAccess.Oracle
       protected override IList<LogSettings> LogSettings(string applicationName, LogType? logType)
       {
          var query = @"
-            select clos_application ApplicationName, clos_type TypeString, clos_enabled Enabled,
+            select capp_name ApplicationName, clos_type TypeString, clos_enabled Enabled,
                    clos_days Days, clos_max_entries MaxEntries
               from {0}caravan_log_settings
-             where (:applicationName is null or lower(clos_application) = lower(:applicationName))
-               and (:logType is null or lower(clos_type) = lower(:logType))
-             order by clos_application, clos_type
+             where (:applicationName is null or capp_name = lower(:applicationName))
+               and (:logType is null or clos_type = lower(:logType))
+             order by capp_name, clos_type
          ";
          query = string.Format(query, Configuration.Instance.OracleRunner);
          using (var connection = QueryExecutor.Instance.OpenConnection())

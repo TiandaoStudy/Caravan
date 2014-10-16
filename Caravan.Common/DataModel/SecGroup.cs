@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Finsa.Caravan.Common.DataModel
 {
@@ -6,5 +7,7 @@ namespace Finsa.Caravan.Common.DataModel
    public class SecGroup
    {
       public int Id { get; set; }
+
+      public IEnumerable<SecUser> Users { get; set; } 
    }
 }

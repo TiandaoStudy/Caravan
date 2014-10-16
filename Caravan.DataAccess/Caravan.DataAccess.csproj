@@ -123,6 +123,7 @@
     <Content Include="Oracle\Scripts\Tables\caravan_sec_user.sql" />
     <Content Include="Oracle\Scripts\Tables\caravan_sec_user_group.sql" />
     <Content Include="Oracle\Scripts\Tables\caravan_sec_action.sql" />
+    <Content Include="Oracle\Scripts\Tables\caravan_sec_app.sql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

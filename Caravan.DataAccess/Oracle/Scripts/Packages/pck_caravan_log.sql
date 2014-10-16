@@ -398,33 +398,33 @@ create or replace PACKAGE body          mydb.pck_caravan_log AS
       SELECT clos_enabled, clos_days, clos_max_entries
         INTO v_enabled, v_days, v_max_entries
         FROM mydb.caravan_log_settings
-       WHERE lower(clos_type) = lower(p_type)
-         AND lower(clos_application) = lower(p_application);
+       WHERE clos_type = lower(p_type)
+         AND capp_name = lower(p_application);
 
       BEGIN
          -- We delete logs older than "clos_days"
          DELETE 
            FROM mydb.caravan_log 
           WHERE clog_date < SYSDATE - v_days
-            AND lower(clos_type) = lower(p_type)
-            AND lower(clos_application) = lower(p_application);
+            AND clos_type = lower(p_type)
+            AND capp_name = lower(p_application);
          
          -- We delete enough entries to preserve the upper limit
          SELECT COUNT(*) INTO v_entry_count
            FROM mydb.caravan_log 
-          WHERE lower(clos_type) = lower(p_type)
-            AND lower(clos_application) = lower(p_application);
+          WHERE clos_type = lower(p_type)
+            AND capp_name = lower(p_application);
          
          IF v_entry_count >= v_max_entries THEN
             DELETE
               FROM mydb.caravan_log
-             WHERE lower(clos_type) = lower(p_type)
-               AND lower(clos_application) = lower(p_application)
+             WHERE clos_type = lower(p_type)
+               AND capp_name = lower(p_application)
                AND clog_id IN (SELECT clog_id 
                                  FROM (SELECT f.clog_id 
                                          FROM mydb.caravan_log f 
                                         WHERE lower(f.clos_type) = lower(p_type)
-                                          AND lower(f.clos_application) = lower(p_application)
+                                          AND lower(f.capp_name) = lower(p_application)
                                         ORDER BY f.clog_date ASC)
                                 WHERE rownum <= (v_entry_count - v_max_entries + 1));
          END IF;
@@ -434,7 +434,7 @@ create or replace PACKAGE body          mydb.pck_caravan_log AS
       
       -- If log is enabled, then we can insert a new entry
       IF v_enabled = 1 THEN         
-         INSERT INTO mydb.caravan_log(clog_id, clog_date, clos_type, clos_application, clog_user, clog_code_unit, clog_function, 
+         INSERT INTO mydb.caravan_log(clog_id, clog_date, clos_type, capp_name, clog_user, clog_code_unit, clog_function, 
                                    clog_short_msg, clog_long_msg, clog_context, 
                                    clog_key_0, clog_value_0, clog_key_1, clog_value_1, clog_key_2, clog_value_2, clog_key_3, clog_value_3, clog_key_4, clog_value_4,
                                    clog_key_5, clog_value_5, clog_key_6, clog_value_6, clog_key_7, clog_value_7, clog_key_8, clog_value_8, clog_key_9, clog_value_9)
