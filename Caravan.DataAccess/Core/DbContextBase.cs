@@ -5,7 +5,7 @@ namespace Finsa.Caravan.DataAccess.Core
 {
    internal abstract class DbContextBase : CaravanDbContext<DbContextBase>
    {
-      protected DbContextBase() : base(QueryExecutor.Instance.OpenConnection(), true)
+      protected DbContextBase() : base(Db.QueryExecutor.OpenConnection(), true)
       {
       }
 

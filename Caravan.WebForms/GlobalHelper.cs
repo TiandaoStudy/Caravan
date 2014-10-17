@@ -51,7 +51,7 @@ namespace FLEX.WebForms
          HttpContext.Current.Response.Filter = null;
 
          // Logs the error into the DB.
-         Logger.Instance.LogFatal<GlobalHelper>(HttpContext.Current.Server.GetLastError());
+         Db.Logger.LogFatal<GlobalHelper>(HttpContext.Current.Server.GetLastError());
       }
    }
 }

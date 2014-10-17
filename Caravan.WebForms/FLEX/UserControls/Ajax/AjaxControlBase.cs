@@ -29,7 +29,7 @@ namespace FLEX.Web.UserControls.Ajax
          }
          catch (Exception ex)
          {
-            Logger.Instance.LogError<AjaxControlBase>(ex);
+            Db.Logger.LogError<AjaxControlBase>(ex);
             throw;
          }
       }

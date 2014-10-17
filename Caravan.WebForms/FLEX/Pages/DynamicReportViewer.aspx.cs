@@ -86,7 +86,7 @@ namespace FLEX.WebForms.Pages
          switch (_queryInfo.Second)
          {
             case CommandType.Text:
-               var dataTable = QueryExecutor.Instance.OpenConnection().Query(_queryInfo.First, parameters).ToDataTable();
+               var dataTable = Db.QueryExecutor.OpenConnection().Query(_queryInfo.First, parameters).ToDataTable();
                fdtgReport.DataSource = dataTable;
                break;
             case CommandType.StoredProcedure:
@@ -216,7 +216,7 @@ namespace FLEX.WebForms.Pages
                checkBoxList.SetDataSource(list);
                break;
             case "SQL":
-               var dataTable = QueryExecutor.Instance.OpenConnection().Query((string) paramSpec.DataSource).ToDataTable();
+               var dataTable = Db.QueryExecutor.OpenConnection().Query((string) paramSpec.DataSource).ToDataTable();
                checkBoxList.SetDataSource(dataTable, paramSpec.ValueColumn, paramSpec.LabelColumn);
                break;
          }

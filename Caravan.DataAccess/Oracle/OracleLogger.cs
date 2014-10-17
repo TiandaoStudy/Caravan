@@ -23,8 +23,6 @@ namespace Finsa.Caravan.DataAccess.Oracle
 
       #endregion
 
-      #region Logging Methods
-
       public override LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
          IEnumerable<GKeyValuePair<string, string>> args)
       {
@@ -71,8 +69,6 @@ namespace Finsa.Caravan.DataAccess.Oracle
             return LogResult.Failure(ex);
          }
       }
-
-      #endregion
 
       protected override IEnumerable<LogEntry> GetLogs(string appName, LogType? logType)
       {

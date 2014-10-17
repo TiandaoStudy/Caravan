@@ -9,11 +9,9 @@ namespace Finsa.Caravan.DataAccess
       private const string SectionName = "finsa.caravan.dataaccess";
       private const string CachePartitionName = "Caravan.DataAccess";
       private const string ConnectionStringKey = "ConnectionString";
-      private const string LoggerTypeInfoKey = "LoggerTypeInfo";
+      private const string DatabaseVendorKey = "DatabaseVendor";
       private const string OracleRunnerKey = "OracleRunner";
       private const string OracleStatementCacheSizeKey = "OracleStatementCacheSize";
-      private const string QueryExecutorTypeInfoKey = "QueryExecutorTypeInfo";
-      private const string SecurityManagerTypeInfoKey = "SecurityManagerTypeInfo";
 
       private static readonly Configuration CachedInstance = ConfigurationManager.GetSection(SectionName) as Configuration;
 
@@ -38,15 +36,15 @@ namespace Finsa.Caravan.DataAccess
          }
          set
          {
-            QueryExecutor.Instance.ElaborateConnectionString(ref value);
+            Db.QueryExecutor.ElaborateConnectionString(ref value);
             PersistentCache.DefaultInstance.AddStatic(CachePartitionName, ConnectionStringKey, value);
          }
       }
 
-      [ConfigurationProperty(LoggerTypeInfoKey, IsRequired = true)]
-      public string LoggerTypeInfo
+      [ConfigurationProperty(DatabaseVendorKey, IsRequired = true)]
+      public DatabaseVendor DatabaseVendor
       {
-         get { return this[LoggerTypeInfoKey] as string; }
+         get { return (DatabaseVendor) this[DatabaseVendorKey]; }
       }
 
       [ConfigurationProperty(OracleRunnerKey, IsRequired = false, DefaultValue = "")]
@@ -59,18 +57,6 @@ namespace Finsa.Caravan.DataAccess
       public int OracleStatementCacheSize
       {
          get { return Convert.ToInt32(this[OracleStatementCacheSizeKey]); }
-      }
-
-      [ConfigurationProperty(QueryExecutorTypeInfoKey, IsRequired = true)]
-      public string QueryExecutorTypeInfo
-      {
-         get { return this[QueryExecutorTypeInfoKey] as string; }
-      }
-
-      [ConfigurationProperty(SecurityManagerTypeInfoKey, IsRequired = true)]
-      public string SecurityManagerTypeInfo
-      {
-         get { return this[SecurityManagerTypeInfoKey] as string; }
       }
    }
 }
