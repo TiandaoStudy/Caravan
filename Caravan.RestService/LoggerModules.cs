@@ -51,7 +51,7 @@ namespace Finsa.Caravan.RestService
          }
          else
          {
-            entry.App.Name = applicationName;
+            entry.App = new SecApp {Name = applicationName};
          }
          if (logType == null)
          {

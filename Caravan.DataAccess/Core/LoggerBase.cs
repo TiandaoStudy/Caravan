@@ -133,7 +133,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
       #endregion
 
-      public abstract LogResult Log(LogType type, string applicationName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
+      public abstract LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
          IEnumerable<GKeyValuePair<string, string>> args);
 
       protected abstract IEnumerable<LogEntry> GetLogs(string appName, LogType? logType);
@@ -142,7 +142,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
       #region Shortcuts
 
-      private LogResult Log<TCodeUnit>(LogType type, string applicationName, string userName, string function, string shortMessage, string longMessage, string context, IEnumerable<GKeyValuePair<string, string>> args)
+      private LogResult Log<TCodeUnit>(LogType type, string appName, string userName, string function, string shortMessage, string longMessage, string context, IEnumerable<GKeyValuePair<string, string>> args)
       {
          try
          {
@@ -152,10 +152,10 @@ namespace Finsa.Caravan.DataAccess.Core
          {
             return LogResult.Failure(ex);
          }
-         return Log(type, applicationName, userName, typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
+         return Log(type, appName, userName, typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
       }
 
-      public LogResult Log(LogType type, string applicationName, string userName, string codeUnit, string function, Exception exception, string context, IEnumerable<GKeyValuePair<string, string>> args)
+      public LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, Exception exception, string context, IEnumerable<GKeyValuePair<string, string>> args)
       {
          try
          {
@@ -166,10 +166,10 @@ namespace Finsa.Caravan.DataAccess.Core
          {
             return LogResult.Failure(ex);
          }
-         return Log(type, applicationName, userName, codeUnit, function, exception.Message, exception.StackTrace, context, args);
+         return Log(type, appName, userName, codeUnit, function, exception.Message, exception.StackTrace, context, args);
       }
 
-      private LogResult Log<TCodeUnit>(LogType type, string applicationName, string userName, string function, Exception exception, string context, IEnumerable<GKeyValuePair<string, string>> args)
+      private LogResult Log<TCodeUnit>(LogType type, string appName, string userName, string function, Exception exception, string context, IEnumerable<GKeyValuePair<string, string>> args)
       {
          try
          {
@@ -180,7 +180,7 @@ namespace Finsa.Caravan.DataAccess.Core
          {
             return LogResult.Failure(ex);
          }
-         return Log(type, applicationName, userName, typeof(TCodeUnit).FullName, function, exception.Message, exception.StackTrace, context, args);
+         return Log(type, appName, userName, typeof(TCodeUnit).FullName, function, exception.Message, exception.StackTrace, context, args);
       }
 
       private static Exception FindInnermostException(Exception exception)

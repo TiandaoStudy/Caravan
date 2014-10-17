@@ -16,7 +16,7 @@ namespace Finsa.Caravan.DataAccess
       ///   TODO
       /// </summary>
       /// <param name="type"></param>
-      /// <param name="applicationName"></param>
+      /// <param name="appName"></param>
       /// <param name="userName"></param>
       /// <param name="codeUnit"></param>
       /// <param name="function"></param>
@@ -25,7 +25,7 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="context"></param>
       /// <param name="args"></param>
       /// <returns></returns>
-      LogResult Log(LogType type, string applicationName, string userName, string codeUnit, string function, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null);
+      LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null);
       
       /// <summary>
       ///   TODO
@@ -122,7 +122,7 @@ namespace Finsa.Caravan.DataAccess
       ///   TODO
       /// </summary>
       /// <param name="type"></param>
-      /// <param name="applicationName"></param>
+      /// <param name="appName"></param>
       /// <param name="userName"></param>
       /// <param name="codeUnit"></param>
       /// <param name="function"></param>
@@ -130,7 +130,7 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="context"></param>
       /// <param name="args"></param>
       /// <returns></returns>
-      LogResult Log(LogType type, string applicationName, string userName, string codeUnit, string function, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null);
+      LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null);
 
       /// <summary>
       ///   TODO

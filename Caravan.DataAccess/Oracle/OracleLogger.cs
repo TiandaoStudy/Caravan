@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using Dapper;
-using Finsa.Caravan.Collections;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel;
 using Finsa.Caravan.Diagnostics;
@@ -16,52 +13,58 @@ namespace Finsa.Caravan.DataAccess.Oracle
    {
       #region Constants
 
-      private const int MaxApplicationNameLength = 30;
       private const int MaxUserNameLength = 30;
       private const int MaxCodeUnitLength = 100;
       private const int MaxFunctionLength = 100;
       private const int MaxShortMessageLength = 400;
       private const int MaxLongMessageLength = 2000;
       private const int MaxContextLength = 400;
-      private const int MaxKeyLength = 100;
-      private const int MaxValueLength = 400;
       private const int MaxArgumentCount = 10;
 
       #endregion
 
       #region Logging Methods
 
-      public override LogResult Log(LogType type, string applicationName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
+      public override LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
          IEnumerable<GKeyValuePair<string, string>> args)
       {
          try
          {
             Raise<ArgumentException>.IfIsEmpty(codeUnit);
-            var argsList = (args == null) ? ReadOnlyList.Empty<GKeyValuePair<string, string>>() as IList<GKeyValuePair<string, string>> : args.ToList();
-            Raise<ArgumentOutOfRangeException>.If(argsList.Count > MaxArgumentCount);
+            var argsList = (args == null) ? new GKeyValuePair<string, string>[0] : args.ToArray();
+            Raise<ArgumentOutOfRangeException>.If(argsList.Length > MaxArgumentCount);
 
-            using (var connection = QueryExecutor.Instance.OpenConnection())
+            using (var ctx = new OracleDbContext())
+            using (var trx = ctx.Database.BeginTransaction())
             {
-               var p = new DynamicParameters();
-               p.Add("p_type", type.ToString(), DbType.AnsiString);
-               p.Add("p_application", applicationName.Truncate(MaxApplicationNameLength), DbType.AnsiString);
-               p.Add("p_user", GetCurrentUserName(userName).Truncate(MaxUserNameLength), DbType.AnsiString);
-               p.Add("p_code_unit", codeUnit.Truncate(MaxCodeUnitLength), DbType.AnsiString);
-               p.Add("p_function", function.Truncate(MaxFunctionLength), DbType.AnsiString);
-               p.Add("p_short_msg", shortMessage == null ? LogEntry.NotSpecified : shortMessage.Truncate(MaxShortMessageLength), DbType.String);
-               p.Add("p_long_msg", longMessage == null ? LogEntry.NotSpecified : longMessage.Truncate(MaxLongMessageLength), DbType.String);
-               p.Add("p_context", context == null ? LogEntry.NotSpecified : context.Truncate(MaxContextLength), DbType.AnsiString);
-               for (var i = 0; i < argsList.Count; i++)
+               try
                {
-                  var arg = argsList[i];
-                  p.Add(string.Format("p_key_{0}", i), arg.Key.Truncate(MaxKeyLength), DbType.AnsiString);
-                  p.Add(string.Format("p_value_{0}", i), arg.Value == null ? null : arg.Value.Truncate(MaxValueLength), DbType.String);
-               }
-               var procedure = string.Format("{0}pck_caravan_log.sp_log", Configuration.Instance.OracleRunner);
-               connection.Execute(procedure, p, commandType: CommandType.StoredProcedure);
-            }
+                  var logEntry = new LogEntry
+                  {
+                     Id = ctx.LogEntry.Max(e => (long?) e.Id) ?? 0,
+                     AppId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First(),
+                     TypeString = type.ToString(),
+                     UserLogin = GetCurrentUserName(userName).Truncate(MaxUserNameLength),
+                     CodeUnit = codeUnit.Truncate(MaxCodeUnitLength),
+                     Function = function.Truncate(MaxFunctionLength),
+                     ShortMessage = shortMessage == null ? LogEntry.NotSpecified : shortMessage.Truncate(MaxShortMessageLength),
+                     LongMessage = longMessage == null ? LogEntry.NotSpecified : longMessage.Truncate(MaxLongMessageLength),
+                     Context = context == null ? LogEntry.NotSpecified : context.Truncate(MaxContextLength),
+                     Arguments = argsList
+                  };
 
-            return LogResult.Success;
+                  ctx.LogEntry.Add(logEntry);
+                  ctx.SaveChanges();
+
+                  trx.Commit();
+                  return LogResult.Success;
+               }
+               catch
+               {
+                  trx.Rollback();
+                  throw;
+               }
+            }
          }
          catch (Exception ex)
          {

@@ -6,7 +6,7 @@ namespace Finsa.Caravan.DataAccess.SqlServerCe
 {
    public sealed class SqlServerCeLogger : LoggerBase
 	{
-      public override LogResult Log(LogType type, string applicationName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<GKeyValuePair<string, string>> args)
+      public override LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<GKeyValuePair<string, string>> args)
       {
          throw new System.NotImplementedException();
       }

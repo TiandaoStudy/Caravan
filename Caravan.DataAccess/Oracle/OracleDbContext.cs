@@ -102,7 +102,8 @@ namespace Finsa.Caravan.DataAccess.Oracle
 
          mb.Entity<LogEntry>()
             .ToTable("CARAVAN_LOG", DataAccess.Configuration.Instance.OracleRunner)
-            .HasKey(x => x.Id);
+            .HasKey(x => x.Id)
+            .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
          mb.Entity<LogEntry>().Property(x => x.Id).HasColumnName("CLOG_ID");
          mb.Entity<LogEntry>().Property(x => x.AppId).HasColumnName("CAPP_ID");
