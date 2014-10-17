@@ -8,9 +8,11 @@ using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Xml;
+using Dapper;
 using Finsa.Caravan;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.Diagnostics;
+using Finsa.Caravan.Extensions;
 using Finsa.Caravan.Text;
 using FLEX.Web.XmlSettings.AjaxLookup;
 using FLEX.WebForms;
@@ -48,7 +50,7 @@ namespace FLEX.Web.Services
       {
          var lookupData = LoadAjaxLookupData(xmlLookup, lookupBy);
          var lookupQuery = ProcessQuery(lookupData, userQuery, queryFilter);
-         using (var resultData = QueryExecutor.Instance.FillDataTableFromQuery(lookupQuery))
+         using (var resultData = QueryExecutor.OpenConnection().Query(lookupQuery).ToDataTable())
          {
             return ProcessData(lookupData, resultData);
          }

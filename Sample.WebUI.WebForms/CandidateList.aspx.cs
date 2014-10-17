@@ -1,7 +1,6 @@
 ﻿using System;
 using Finsa.Caravan.DataAccess;
 using FLEX.Common.Web;
-using FLEX.Extensions.TestDataAccess;
 using FLEX.Web.Pages;
 
 namespace FLEX.Sample.WebUI
@@ -45,17 +44,17 @@ namespace FLEX.Sample.WebUI
 
       protected void fdtgCandidates_DataSourceUpdating(object sender, EventArgs e)
       {
-         var candidates = Candidate.RetrieveByCriteria(SearchCriteria);
-         candidates.DefaultView.Sort = fdtgCandidates.SortExpression;
-         candidates.AcceptChanges();
-         fdtgCandidates.DataSource = candidates;
+         //var candidates = Candidate.RetrieveByCriteria(SearchCriteria);
+         //candidates.DefaultView.Sort = fdtgCandidates.SortExpression;
+         //candidates.AcceptChanges();
+         //fdtgCandidates.DataSource = candidates;
 
-         if (candidates.Rows.Count > 0 && fdtgCandidates.SelectedIndex == -1)
-         {
-            fdtgCandidates.SelectedIndex = 0;
-         }
+         //if (candidates.Rows.Count > 0 && fdtgCandidates.SelectedIndex == -1)
+         //{
+         //   fdtgCandidates.SelectedIndex = 0;
+         //}
 
-         fdtgCandidates.DataSource = candidates;
+         //fdtgCandidates.DataSource = candidates;
       }
 
       #region Search Criteria
@@ -86,10 +85,10 @@ namespace FLEX.Sample.WebUI
 
       public void flexExportList_DataSourceNeeded(object sender, EventArgs e)
       {
-         var candidates = Candidate.RetrieveByCriteria(SearchCriteria);
+         //var candidates = Candidate.RetrieveByCriteria(SearchCriteria);
          //flexExportList.DataSource = candidates;     
         // fdtgCandidates.DataBind();
-         flexExportList.SetDataSource(fdtgCandidates, "CandidateList", new int[]{0});
+         flexExportList.SetDataSource(fdtgCandidates, "CandidateList", new []{0});
       }
 
       #endregion

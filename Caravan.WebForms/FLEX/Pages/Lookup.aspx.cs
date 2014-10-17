@@ -3,9 +3,11 @@ using System.Data;
 using System.IO;
 using System.Web;
 using System.Xml;
+using Dapper;
 using Finsa.Caravan;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.Diagnostics;
+using Finsa.Caravan.Extensions;
 using FLEX.Web.XmlSettings.Lookup;
 using FLEX.WebForms;
 
@@ -24,7 +26,7 @@ namespace FLEX.Web.Pages
       public static DataTable RetrieveData(string lookup)
       {
          var lookupQuery = LoadLookupData(lookup).LookupQuery;
-         return QueryExecutor.Instance.FillDataTableFromQuery(lookupQuery);
+         return QueryExecutor.OpenConnection().Query(lookupQuery).ToDataTable();
       }
 
       #region Lookup XML Handlers
