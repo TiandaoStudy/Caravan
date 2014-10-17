@@ -1,15 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel;
 
 namespace Finsa.Caravan.DataAccess.Oracle
 {
-   internal sealed class OracleDbContext : CaravanDbContext<OracleDbContext>
+   internal sealed class OracleDbContext : DbContextBase
    {
-      public OracleDbContext() : base(QueryExecutor.Instance.OpenConnection(), true)
-      {
-      }
-
       protected override void OnModelCreating(DbModelBuilder mb)
       {
          base.OnModelCreating(mb);
@@ -39,7 +36,6 @@ namespace Finsa.Caravan.DataAccess.Oracle
 
          mb.Entity<SecUser>().Property(x => x.Id).HasColumnName("CUSR_ID");
          mb.Entity<SecUser>().Property(x => x.AppId).HasColumnName("CAPP_ID");
-         mb.Entity<SecUser>().Property(x => x.AppId).HasColumnName("CAPP_ID");
          mb.Entity<SecUser>().Property(x => x.Active).HasColumnName("CUSR_ACTIVE");
          mb.Entity<SecUser>().Property(x => x.Login).HasColumnName("CUSR_LOGIN");
          mb.Entity<SecUser>().Property(x => x.HashedPassword).HasColumnName("CUSR_HASHED_PWD");
@@ -52,7 +48,106 @@ namespace Finsa.Caravan.DataAccess.Oracle
             .HasRequired<SecApp>(x => x.App)
             .WithMany(x => x.Users)
             .HasForeignKey(x => x.AppId);
+
+         /************************************************
+          * SecGroup
+          ************************************************/
          
+         mb.Entity<SecGroup>()
+            .ToTable("CARAVAN_SEC_GROUP", DataAccess.Configuration.Instance.OracleRunner)
+            .HasKey(x => new {x.Id, x.AppId});
+
+         mb.Entity<SecGroup>().Property(x => x.Id).HasColumnName("CGRP_ID");
+         mb.Entity<SecGroup>().Property(x => x.AppId).HasColumnName("CAPP_ID");
+         mb.Entity<SecGroup>().Property(x => x.Name).HasColumnName("CGRP_NAME");
+         mb.Entity<SecGroup>().Property(x => x.Description).HasColumnName("CGRP_DESCRIPTION");
+         mb.Entity<SecGroup>().Property(x => x.IsAdmin).HasColumnName("CGRP_ADMIN");
+
+         // SecGroup(N) <-> SecApp(1)
+         mb.Entity<SecGroup>()
+            .HasRequired<SecApp>(x => x.App)
+            .WithMany(x => x.Groups)
+            .HasForeignKey(x => x.AppId);
+         
+         // SecGroup(N) <-> SecUser(N)
+         mb.Entity<SecGroup>()
+            .HasMany<SecUser>(x => x.Users)
+            .WithMany(x => x.Groups)
+            .Map(x => x.MapLeftKey("CGRP_ID", "CGRP_APP_ID").MapRightKey("CUSR_ID", "CUSR_APP_ID").ToTable("CARAVAN_SEC_USER_GROUP"));
+
+         /************************************************
+          * LogSettings
+          ************************************************/
+
+         mb.Entity<LogSettings>()
+            .ToTable("CARAVAN_LOG_SETTINGS", DataAccess.Configuration.Instance.OracleRunner)
+            .HasKey(x => new {x.AppId, x.TypeString});
+
+         mb.Entity<LogSettings>().Property(x => x.AppId).HasColumnName("CAPP_ID");
+         mb.Entity<LogSettings>().Property(x => x.TypeString).HasColumnName("CLOS_TYPE");
+         mb.Entity<LogSettings>().Property(x => x.Enabled).HasColumnName("CLOS_ENABLED");
+         mb.Entity<LogSettings>().Property(x => x.Days).HasColumnName("CLOS_DAYS");
+         mb.Entity<LogSettings>().Property(x => x.MaxEntries).HasColumnName("CLOS_MAX_ENTRIES");
+         mb.Entity<LogSettings>().Ignore(x => x.Type);
+
+         // LogSettings(N) <-> SecApp(1)
+         mb.Entity<LogSettings>()
+            .HasRequired<SecApp>(x => x.App)
+            .WithMany(x => x.LogSettings)
+            .HasForeignKey(x => x.AppId);
+
+         /************************************************
+          * LogEntry
+          ************************************************/
+
+         mb.Entity<LogEntry>()
+            .ToTable("CARAVAN_LOG", DataAccess.Configuration.Instance.OracleRunner)
+            .HasKey(x => x.Id);
+
+         mb.Entity<LogEntry>().Property(x => x.Id).HasColumnName("CLOG_ID");
+         mb.Entity<LogEntry>().Property(x => x.AppId).HasColumnName("CAPP_ID");
+         mb.Entity<LogEntry>().Property(x => x.TypeString).HasColumnName("CLOS_TYPE");
+         mb.Entity<LogEntry>().Property(x => x.Date).HasColumnName("CLOG_DATE");
+         mb.Entity<LogEntry>().Property(x => x.UserLogin).HasColumnName("CLOG_USER");
+         mb.Entity<LogEntry>().Property(x => x.CodeUnit).HasColumnName("CLOG_CODE_UNIT");
+         mb.Entity<LogEntry>().Property(x => x.Function).HasColumnName("CLOG_FUNCTION");
+         mb.Entity<LogEntry>().Property(x => x.ShortMessage).HasColumnName("CLOG_SHORT_MSG");
+         mb.Entity<LogEntry>().Property(x => x.LongMessage).HasColumnName("CLOG_LONG_MSG");
+         mb.Entity<LogEntry>().Property(x => x.Context).HasColumnName("CLOG_CONTEXT");
+         mb.Entity<LogEntry>().Property(x => x.Key0).HasColumnName("CLOG_KEY_0");
+         mb.Entity<LogEntry>().Property(x => x.Value0).HasColumnName("CLOG_VALUE_0");
+         mb.Entity<LogEntry>().Property(x => x.Key1).HasColumnName("CLOG_KEY_1");
+         mb.Entity<LogEntry>().Property(x => x.Value1).HasColumnName("CLOG_VALUE_1");
+         mb.Entity<LogEntry>().Property(x => x.Key2).HasColumnName("CLOG_KEY_2");
+         mb.Entity<LogEntry>().Property(x => x.Value2).HasColumnName("CLOG_VALUE_2");
+         mb.Entity<LogEntry>().Property(x => x.Key3).HasColumnName("CLOG_KEY_3");
+         mb.Entity<LogEntry>().Property(x => x.Value3).HasColumnName("CLOG_VALUE_3");
+         mb.Entity<LogEntry>().Property(x => x.Key4).HasColumnName("CLOG_KEY_4");
+         mb.Entity<LogEntry>().Property(x => x.Value4).HasColumnName("CLOG_VALUE_4");
+         mb.Entity<LogEntry>().Property(x => x.Key5).HasColumnName("CLOG_KEY_5");
+         mb.Entity<LogEntry>().Property(x => x.Value5).HasColumnName("CLOG_VALUE_5");
+         mb.Entity<LogEntry>().Property(x => x.Key6).HasColumnName("CLOG_KEY_6");
+         mb.Entity<LogEntry>().Property(x => x.Value6).HasColumnName("CLOG_VALUE_6");
+         mb.Entity<LogEntry>().Property(x => x.Key7).HasColumnName("CLOG_KEY_7");
+         mb.Entity<LogEntry>().Property(x => x.Value7).HasColumnName("CLOG_VALUE_7");
+         mb.Entity<LogEntry>().Property(x => x.Key8).HasColumnName("CLOG_KEY_8");
+         mb.Entity<LogEntry>().Property(x => x.Value8).HasColumnName("CLOG_VALUE_8");
+         mb.Entity<LogEntry>().Property(x => x.Key9).HasColumnName("CLOG_KEY_9");
+         mb.Entity<LogEntry>().Property(x => x.Value9).HasColumnName("CLOG_VALUE_9");
+         mb.Entity<LogEntry>().Ignore(x => x.Type);
+         mb.Entity<LogEntry>().Ignore(x => x.Arguments);
+
+         // LogEntry(N) <-> SecApp(1)
+         mb.Entity<LogEntry>()
+            .HasRequired<SecApp>(x => x.App)
+            .WithMany(x => x.LogEntries)
+            .HasForeignKey(x => x.AppId);
+
+         // LogEntry(N) <-> LogSettings(1)
+         mb.Entity<LogEntry>()
+            .HasRequired<LogSettings>(x => x.LogSettings)
+            .WithMany(x => x.LogEntries)
+            .HasForeignKey(x => new {x.AppId, x.TypeString});
       }
    }
 }

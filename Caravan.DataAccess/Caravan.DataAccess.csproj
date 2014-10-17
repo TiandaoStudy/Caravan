@@ -95,6 +95,7 @@
   <ItemGroup>
     <Compile Include="CaravanDbContext.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="Core\DbContextBase.cs" />
     <Compile Include="Core\LoggerBase.cs" />
     <Compile Include="Core\SecurityManagerBase.cs" />
     <Compile Include="Dummy\DummyLogger.cs" />
@@ -132,7 +133,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Oracle\Scripts\Packages\pck_caravan_log.sql" />
-    <Content Include="Oracle\Scripts\Sequences\caravan_log_seq.sql" />
     <Content Include="Oracle\Scripts\Tables\caravan_log.sql" />
     <Content Include="Oracle\Scripts\Tables\caravan_sec_group.sql" />
     <Content Include="Oracle\Scripts\Tables\caravan_log_settings.sql" />

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using Dapper;
 using Finsa.Caravan.Collections;
@@ -70,69 +71,28 @@ namespace Finsa.Caravan.DataAccess.Oracle
 
       #endregion
 
-      #region Logs Retrieval
-
       protected override IEnumerable<LogEntry> GetLogs(string appName, LogType? logType)
       {
-         var query = @"
-            select clog_date ""Date"", clos_type as TypeString, clog_user UserName, clog_code_unit as CodeUnit,
-                   clog_function as Function, clog_short_msg as ShortMessage, clog_long_msg as LongMessage, clog_context as Context,
-                   clog_key_0 as Key0, clog_value_0 as Value0, clog_key_1 as Key1, clog_value_1 as Value1, clog_key_2 as Key2, clog_value_2 as Value2,
-                   clog_key_3 as Key3, clog_value_3 as Value3, clog_key_4 as Key4, clog_value_4 as Value4, clog_key_5 as Key5, clog_value_5 as Value5,
-                   clog_key_6 as Key6, clog_value_6 as Value6, clog_key_7 as Key7, clog_value_7 as Value7, clog_key_8 as Key8, clog_value_8 as Value8,
-                   clog_key_9 as Key9, clog_value_9 as Value9,
-                   sa.capp_id, sa.capp_id Id, sa.capp_name Name, sa.capp_description Description
-              from {0}caravan_log lg
-              join {0}caravan_sec_app sa on (lg.capp_id = sa.capp_id)
-             where (:appName is null or capp_name = lower(:appName))
-               and (:logType is null or clos_type = lower(:logType))
-             order by clog_date desc
-         ";
-         query = string.Format(query, Configuration.Instance.OracleRunner);
-         
-         var parameters = new DynamicParameters();
-         parameters.Add("appName", appName, DbType.AnsiString);
-         parameters.Add("logType", (logType == null) ? null : logType.ToString(), DbType.AnsiString);
-         
-         using (var connection = QueryExecutor.Instance.OpenConnection())
+         using (var ctx = new OracleDbContext())
          {
-            return connection.Query<LogEntry, SecApp, LogEntry>(query, (l, a) => { 
-               l.App = a;
-               return l;
-            }, parameters, splitOn: "capp_id");
+            return (from s in ctx.LogEntry.Include(s => s.App)
+                    where appName == null || s.App.Name == appName.ToLower()
+                    where logType == null || s.TypeString == logType.ToString().ToLower()
+                    orderby s.App.Name, s.TypeString, s.Date descending
+                    select s).ToList();
          }
       }
-
-      #endregion
-
-      #region Log Settings
 
       protected override IList<LogSettings> GetLogSettings(string appName, LogType? logType)
       {
-         var query = @"
-            select clos_type TypeString, clos_enabled Enabled, clos_days Days, clos_max_entries MaxEntries,
-                   sa.capp_id, sa.capp_id Id, sa.capp_name Name, sa.capp_description Description
-              from {0}caravan_log_settings ls
-              join {0}caravan_sec_app sa on (ls.capp_id = sa.capp_id)
-             where (:appName is null or capp_name = lower(:appName))
-               and (:logType is null or clos_type = lower(:logType))
-             order by capp_name, clos_type
-         ";
-         query = string.Format(query, Configuration.Instance.OracleRunner);
-         
-         var parameters = new DynamicParameters();
-         parameters.Add("appName", appName, DbType.AnsiString);
-         parameters.Add("logType", (logType == null) ? null : logType.ToString(), DbType.AnsiString);
-         
-         using (var connection = QueryExecutor.Instance.OpenConnection())
+         using (var ctx = new OracleDbContext())
          {
-            return connection.Query<LogSettings, SecApp, LogSettings>(query, (l, a) => {
-               l.App = a;
-               return l;
-            }, parameters, splitOn: "capp_id").ToList();
+            return (from s in ctx.LogSettings.Include(s => s.App)
+                    where appName == null || s.App.Name == appName.ToLower()
+                    where logType == null || s.TypeString == logType.ToString().ToLower()
+                    orderby s.App.Name, s.TypeString
+                    select s).ToList();
          }
       }
-
-      #endregion
    }
 }

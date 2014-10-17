@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using Dapper;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel;
 
@@ -14,53 +12,21 @@ namespace Finsa.Caravan.DataAccess.Oracle
       {
          using (var ctx = new OracleDbContext())
          {
-            return (from a in ctx.SecApps.Include(a => a.Users)
-                    where appName == null || a.Name == appName.ToLower() 
-                    select a).ToList();
+            return (from a in ctx.SecApps.Include("Users.Groups").Include(a => a.Groups).Include(a => a.LogSettings)
+                    where appName == null || a.Name == appName.ToLower()
+                    orderby a.Name
+                    select a).ToLogAndList();
          }
       }
 
       protected override IEnumerable<SecGroup> GetGroups(string appName)
       {
-         var query = QueryExecutor.OracleQuery(@"
-            select cgrp_id Id, cgrp_name Name, cgrp_description Description, cgrp_admin IsAdmin,
-                   sa.capp_id, sa.capp_id Id, sa.capp_name Name, sa.capp_description Description
-              from {0}caravan_sec_group sg
-              join {0}caravan_sec_app sa on (sg.capp_id = sa.capp_id)
-             where (:appName is null or capp_name = lower(:appName))
-             order by capp_name, cgrp_name
-         ");
-
-         var parameters = new DynamicParameters();
-         parameters.Add("appName", appName, DbType.AnsiString);
-
-         using (var ctx = QueryExecutor.Instance.OpenConnection())
+         using (var ctx = new OracleDbContext())
          {
-            var groups = ctx.Query<SecGroup, SecApp, SecGroup>(query, (g, a) => {
-               g.App = a;
-               return g;
-            }, parameters, splitOn: "capp_id").ToList();
-
-            foreach (var group in groups)
-            {
-               query = QueryExecutor.OracleQuery(@"
-                  select su.cusr_id Id, su.cusr_active Active, su.cusr_login Login, su.cusr_hashed_pwd HashedPassword,
-                         su.cusr_first_name FirstName, su.cusr_last_name LastName, su.cusr_email Email
-                    from {0}caravan_sec_user_group sug
-                    join {0}caravan_sec_user su on (sug.cusr_id = su.cusr_id and sug.capp_id = su.capp_id)
-                   where sug.capp_id = :appId
-                     and sug.cgrp_id = :grpId
-                   order by cusr_login
-               ");
-
-               parameters = new DynamicParameters();
-               parameters.Add("appId", group.App.Id, DbType.Int64);
-               parameters.Add("grpId", group.Id, DbType.Int64);
-
-               group.Users = ctx.Query<SecUser>(query, parameters).ToList();
-            }
-
-            return groups;
+            return (from g in ctx.SecGroups.Include(u => u.Users)
+                    where appName == null || g.App.Name == appName.ToLower()
+                    orderby g.Name, g.App.Name
+                    select g).ToList();
          }
       }
 
@@ -68,7 +34,10 @@ namespace Finsa.Caravan.DataAccess.Oracle
       {
          using (var ctx = new OracleDbContext())
          {
-            return ctx.SecUsers.ToList();
+            return (from u in ctx.SecUsers.Include(u => u.Groups)
+                    where appName == null || u.App.Name == appName.ToLower()
+                    orderby u.Login, u.App.Name
+                    select u).ToList();
          }
       }
    }

@@ -8,6 +8,8 @@ namespace Finsa.Caravan.DataAccess
    /// </summary>
    public interface IQueryExecutor
    {
+      DatabaseVendor Vendor { get; }
+
       /// <summary>
       /// 
       /// </summary>
@@ -34,5 +36,13 @@ namespace Finsa.Caravan.DataAccess
       /// </summary>
       /// <returns></returns>
       DbConnection OpenConnection();
+   }
+
+   public enum DatabaseVendor
+   {
+      Dummy,
+      Oracle,
+      SqlServer,
+      SqlServerCe
    }
 }

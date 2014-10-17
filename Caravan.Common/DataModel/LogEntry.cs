@@ -10,19 +10,46 @@ namespace Finsa.Caravan.DataModel
    {
       public const string AutomaticallyFilled = "Automatically filled parameter";
       public const string NotSpecified = "...";
+
+      private GKeyValuePair<string, string>[] _cachedArguments;
       
+      [JsonProperty(Order = 0)]
+      public long Id { get; set; }
+
+      [JsonProperty(Order = 1)]
+      public long AppId { get; set; }
+      
+      [JsonIgnore]
       public SecApp App { get; set; }
+      
+      [JsonProperty(Order = 3)]
       public DateTime Date { get; set; }
-      public string UserName { get; set; }
+      
+      [JsonProperty(Order = 4)]
+      public string UserLogin { get; set; }
+      
+      [JsonProperty(Order = 5)]
       public string CodeUnit { get; set; }
+      
+      [JsonProperty(Order = 6)]
       public string Function { get; set; }
+      
+      [JsonProperty(Order = 7)]
       public string ShortMessage { get; set; }
+      
+      [JsonProperty(Order = 8)]
       public string LongMessage { get; set; }
+      
+      [JsonProperty(Order = 9)]
       public string Context { get; set; }
+
+      [JsonIgnore]
+      public LogSettings LogSettings { get; set; }
       
       [JsonIgnore]
       public string TypeString { get; set; }
-
+      
+      [JsonProperty(Order = 2)]
       [JsonConverter(typeof(StringEnumConverter))]
       public LogType Type
       {
@@ -75,11 +102,16 @@ namespace Finsa.Caravan.DataModel
       public string Key9 { get; set; }
       [JsonIgnore]
       public string Value9 { get; set; }
-
+      
+      [JsonProperty(Order = 10)]
       public GKeyValuePair<string, string>[] Arguments
       {
          get
          {
+            if (_cachedArguments != null)
+            {
+               return _cachedArguments;
+            }
             var list = new List<GKeyValuePair<string, string>>();
             // Pair 0
             if (Key0 != null)
@@ -131,7 +163,8 @@ namespace Finsa.Caravan.DataModel
             {
                list.Add(GKeyValuePair.Create(Key9, Value9));
             }
-            return list.ToArray();
+            _cachedArguments = list.ToArray();
+            return _cachedArguments;
          }
          set
          {
@@ -139,6 +172,10 @@ namespace Finsa.Caravan.DataModel
             {
                return;
             }
+            
+            // Argument cache is not invalidated.
+            _cachedArguments = null;
+
             for (var i = 0; i < value.Length; ++i)
             {
                var key = value[i].Key;

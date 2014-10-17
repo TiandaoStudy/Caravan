@@ -7,7 +7,9 @@ namespace Finsa.Caravan.DataAccess.Core
 {
     public abstract class QueryExecutorBase : IQueryExecutor
     {
-        public DataTable FillDataTableFromQuery(string query)
+       public abstract DatabaseVendor Vendor { get; }
+
+       public DataTable FillDataTableFromQuery(string query)
         {
             using (var connection = OpenConnection())
             {

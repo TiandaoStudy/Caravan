@@ -7,7 +7,12 @@ namespace Finsa.Caravan.DataAccess.Oracle
 {
    public sealed class OracleQueryExecutor : QueryExecutorBase
    {
-      private static readonly DbProviderFactory DbFactory = new OracleClientFactory();
+      private static readonly OracleClientFactory DbFactory = new OracleClientFactory();
+
+      public override DatabaseVendor Vendor
+      {
+         get { return DatabaseVendor.Oracle; }
+      }
 
       public override void ElaborateConnectionString(ref string connectionString)
       {
