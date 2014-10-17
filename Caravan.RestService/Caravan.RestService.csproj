@@ -127,7 +127,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Core\CaravanModule.cs" />
+    <Compile Include="Core\CustomModule.cs" />
+    <Compile Include="Core\CustomJsonSerializer.cs" />
     <Compile Include="IndexModule.cs" />
     <Compile Include="LoggerModules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

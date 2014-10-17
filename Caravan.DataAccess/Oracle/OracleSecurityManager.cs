@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using Dapper;
 using Finsa.Caravan.DataAccess.Core;
@@ -11,19 +12,11 @@ namespace Finsa.Caravan.DataAccess.Oracle
    {
       protected override IEnumerable<SecApp> GetApps(string appName)
       {
-         var query = QueryExecutor.OracleQuery(@"
-            select capp_id Id, capp_name Name, capp_description Description
-              from {0}caravan_sec_app
-             where (:appName is null or capp_name = lower(:appName))
-             order by capp_name
-         ");
-
-         var parameters = new DynamicParameters();
-         parameters.Add("appName", appName, DbType.AnsiString);
-
-         using (var ctx = QueryExecutor.Instance.OpenConnection())
+         using (var ctx = new OracleDbContext())
          {
-            return ctx.Query<SecApp>(query, parameters);
+            return (from a in ctx.SecApps.Include(a => a.Users)
+                    where appName == null || a.Name == appName.ToLower() 
+                    select a).ToList();
          }
       }
 

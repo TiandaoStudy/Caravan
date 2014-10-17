@@ -21,6 +21,7 @@ namespace Finsa.Caravan.DataAccess
          Init();
       }
 
+      public DbSet<SecApp> SecApps { get; set; } 
       public DbSet<SecUser> SecUsers { get; set; }
 
       private static void Init()

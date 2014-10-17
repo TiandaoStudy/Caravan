@@ -4,13 +4,13 @@ using Nancy;
 
 namespace Finsa.Caravan.RestService.Core
 {
-   public abstract class CaravanModule : NancyModule
+   public abstract class CustomModule : NancyModule
    {
-      protected CaravanModule()
+      protected CustomModule()
       {
       }
 
-      protected CaravanModule(string modulePath) : base(modulePath)
+      protected CustomModule(string modulePath) : base(modulePath)
       {
       }
 

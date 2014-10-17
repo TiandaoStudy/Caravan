@@ -7,7 +7,7 @@ using Nancy;
 
 namespace Finsa.Caravan.RestService
 {
-   public sealed class SecurityModule : CaravanModule
+   public sealed class SecurityModule : CustomModule
    {
       public SecurityModule() : base("security")
       {

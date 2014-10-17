@@ -6,7 +6,7 @@ using Nancy;
 
 namespace Finsa.Caravan.RestService
 {
-   public sealed class IndexModule : CaravanModule
+   public sealed class IndexModule : CustomModule
    {
        private static readonly IList<GPair<int, string>> TestData = new [] {
            GPair.Create(1, "AAA"),

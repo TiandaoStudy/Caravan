@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Finsa.Caravan.RestService
 {
-   public sealed class LogsModule : CaravanModule
+   public sealed class LogsModule : CustomModule
    {
       public LogsModule() : base("logs")
       {
@@ -68,7 +68,7 @@ namespace Finsa.Caravan.RestService
       }
    }
 
-   public sealed class LogSettingsModule : CaravanModule
+   public sealed class LogSettingsModule : CustomModule
    {
       public LogSettingsModule() : base("/logSettings")
       {

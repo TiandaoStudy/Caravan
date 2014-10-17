@@ -12,7 +12,7 @@ namespace Finsa.Caravan.DataModel
       [JsonIgnore]
       public long AppId { get; set; }
 
-      //public SecApp App { get; set; }
+      public SecApp App { get; set; }
 
       public bool Active { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using Finsa.Caravan.DataModel;
 
 namespace Finsa.Caravan.DataAccess.Oracle
@@ -16,6 +17,19 @@ namespace Finsa.Caravan.DataAccess.Oracle
          mb.HasDefaultSchema(DataAccess.Configuration.Instance.OracleRunner);
          
          /************************************************
+          * SecApp
+          ************************************************/
+         
+         mb.Entity<SecApp>()
+            .ToTable("CARAVAN_SEC_APP", DataAccess.Configuration.Instance.OracleRunner)
+            .HasKey(x => x.Id)
+            .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
+         mb.Entity<SecApp>().Property(x => x.Id).HasColumnName("CAPP_ID");
+         mb.Entity<SecApp>().Property(x => x.Name).HasColumnName("CAPP_NAME");
+         mb.Entity<SecApp>().Property(x => x.Description).HasColumnName("CAPP_DESCRIPTION");
+
+         /************************************************
           * SecUser
           ************************************************/
 
@@ -32,6 +46,12 @@ namespace Finsa.Caravan.DataAccess.Oracle
          mb.Entity<SecUser>().Property(x => x.FirstName).HasColumnName("CUSR_FIRST_NAME");
          mb.Entity<SecUser>().Property(x => x.LastName).HasColumnName("CUSR_LAST_NAME");
          mb.Entity<SecUser>().Property(x => x.Email).HasColumnName("CUSR_EMAIL");
+
+         // SecUser(N) <-> SecApp(1)
+         mb.Entity<SecUser>()
+            .HasRequired<SecApp>(x => x.App)
+            .WithMany(x => x.Users)
+            .HasForeignKey(x => x.AppId);
          
       }
    }

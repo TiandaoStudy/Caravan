@@ -15,11 +15,11 @@ namespace Finsa.Caravan.DataModel
 
       public virtual ICollection<SecUser> Users { get; set; }
  
-      public virtual ICollection<SecGroup> Groups { get; set; }
+      //public virtual ICollection<SecGroup> Groups { get; set; }
 
-      public virtual ICollection<LogSettings> LogSettings { get; set; }
+      //public virtual ICollection<LogSettings> LogSettings { get; set; }
 
-      [JsonIgnore]
-      public virtual ICollection<LogEntry> LogEntries { get; set; } 
+      //[JsonIgnore]
+      //public virtual ICollection<LogEntry> LogEntries { get; set; } 
    }
 }
