@@ -16,6 +16,6 @@ namespace Finsa.Caravan.DataModel
 
       public bool IsAdmin { get; set; }
 
-      public IEnumerable<SecUser> Users { get; set; } 
+      public virtual ICollection<SecUser> Users { get; set; } 
    }
 }

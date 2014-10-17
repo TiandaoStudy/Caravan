@@ -18,6 +18,7 @@ namespace Finsa.Caravan.DataModel
       }
 
       public bool Succeeded { get; set; }
+
       public Exception Exception { get; set; }
    }
 }

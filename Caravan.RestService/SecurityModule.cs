@@ -24,6 +24,7 @@ namespace Finsa.Caravan.RestService
          Get["/apps"] = _ => Response.AsJson(SecurityManager.Instance.Apps());
          Get["/apps/{appName}"] = p => Response.AsJson(SecurityManager.Instance.App((string) p.appName));
          Get["/apps/{appName}/groups"] = p => Response.AsJson(SecurityManager.Instance.Groups((string) p.appName));
+         Get["/apps/{appName}/users"] = p => Response.AsJson(SecurityManager.Instance.Users((string) p.appName));
       }
    }
 }

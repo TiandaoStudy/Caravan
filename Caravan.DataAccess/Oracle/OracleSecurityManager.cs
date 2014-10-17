@@ -9,7 +9,7 @@ namespace Finsa.Caravan.DataAccess.Oracle
 {
    public sealed class OracleSecurityManager : SecurityManagerBase
    {
-      protected override IEnumerable<SecApp> GetApplications(string appName)
+      protected override IEnumerable<SecApp> GetApps(string appName)
       {
          var query = QueryExecutor.OracleQuery(@"
             select capp_id Id, capp_name Name, capp_description Description
@@ -64,10 +64,18 @@ namespace Finsa.Caravan.DataAccess.Oracle
                parameters.Add("appId", group.App.Id, DbType.Int64);
                parameters.Add("grpId", group.Id, DbType.Int64);
 
-               group.Users = ctx.Query<SecUser>(query, parameters);
+               group.Users = ctx.Query<SecUser>(query, parameters).ToList();
             }
 
             return groups;
+         }
+      }
+
+      protected override IEnumerable<SecUser> GetUsers(string appName)
+      {
+         using (var ctx = new OracleDbContext())
+         {
+            return ctx.SecUsers.ToList();
          }
       }
    }

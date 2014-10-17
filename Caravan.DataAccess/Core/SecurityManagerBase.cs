@@ -8,16 +8,22 @@ namespace Finsa.Caravan.DataAccess.Core
 {
    public abstract class SecurityManagerBase : ISecurityManager
    {
+      #region Apps
+
       public IEnumerable<SecApp> Apps()
       {
-         return GetApplications(null);
+         return GetApps(null);
       }
 
       public SecApp App(string appName)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
-         return GetApplications(appName).FirstOrDefault();
+         return GetApps(appName).FirstOrDefault();
       }
+
+      #endregion
+
+      #region Groups
 
       public IEnumerable<SecGroup> Groups()
       {
@@ -30,11 +36,30 @@ namespace Finsa.Caravan.DataAccess.Core
          return GetGroups(appName);
       }
 
+      #endregion
+
+      #region Users
+
+      public IEnumerable<SecUser> Users()
+      {
+         return GetUsers(null);
+      }
+
+      public IEnumerable<SecUser> Users(string appName)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         return GetUsers(appName);
+      }
+
+      #endregion
+
       #region Abstract Methods
 
-      protected abstract IEnumerable<SecApp> GetApplications(string appName);
+      protected abstract IEnumerable<SecApp> GetApps(string appName);
 
       protected abstract IEnumerable<SecGroup> GetGroups(string appName);
+
+      protected abstract IEnumerable<SecUser> GetUsers(string appName);
 
       #endregion
    }

@@ -1,4 +1,5 @@
 using System.Data;
+using System.Data.Common;
 using Dapper;
 using Finsa.Caravan.Extensions;
 
@@ -24,6 +25,6 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public abstract void ElaborateConnectionString(ref string connectionString);
 
-        public abstract IDbConnection OpenConnection();
+        public abstract DbConnection OpenConnection();
     }
 }

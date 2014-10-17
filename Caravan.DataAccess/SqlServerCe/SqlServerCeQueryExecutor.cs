@@ -14,7 +14,7 @@ namespace Finsa.Caravan.DataAccess.SqlServerCe
 			connectionString = connectionString;
 		}
 
-		public override IDbConnection OpenConnection()
+		public override DbConnection OpenConnection()
 		{
 			var connection = DbFactory.CreateConnection();
 			connection.ConnectionString = Configuration.Instance.ConnectionString;

@@ -27,12 +27,12 @@ namespace Finsa.Caravan.DataAccess
       {
          get
          {
-            var cachedConnectionString = PersistentCache.DefaultInstance.Get(CachePartitionName, ConnectionStringKey);
+            var cachedConnectionString = PersistentCache.DefaultInstance.Get(CachePartitionName, ConnectionStringKey) as string;
             if (cachedConnectionString != null)
             {
-               return (string) cachedConnectionString;
+               return cachedConnectionString;
             }
-            var configConnectionString = (string) this[ConnectionStringKey];
+            var configConnectionString = this[ConnectionStringKey] as string;
             ConnectionString = configConnectionString;
             return ConnectionString;
          }
@@ -46,17 +46,13 @@ namespace Finsa.Caravan.DataAccess
       [ConfigurationProperty(LoggerTypeInfoKey, IsRequired = true)]
       public string LoggerTypeInfo
       {
-         get { return (string) this[LoggerTypeInfoKey]; }
+         get { return this[LoggerTypeInfoKey] as string; }
       }
 
       [ConfigurationProperty(OracleRunnerKey, IsRequired = false, DefaultValue = "")]
       public string OracleRunner
       {
-         get
-         {
-            var runner = this[OracleRunnerKey] as string;
-            return string.IsNullOrWhiteSpace(runner) ? runner : runner + ".";
-         }
+         get { return this[OracleRunnerKey] as string; }
       }
 
       [ConfigurationProperty(OracleStatementCacheSizeKey, IsRequired = false, DefaultValue = 10)]
@@ -68,13 +64,13 @@ namespace Finsa.Caravan.DataAccess
       [ConfigurationProperty(QueryExecutorTypeInfoKey, IsRequired = true)]
       public string QueryExecutorTypeInfo
       {
-         get { return (string) this[QueryExecutorTypeInfoKey]; }
+         get { return this[QueryExecutorTypeInfoKey] as string; }
       }
 
       [ConfigurationProperty(SecurityManagerTypeInfoKey, IsRequired = true)]
       public string SecurityManagerTypeInfo
       {
-         get { return (string) this[SecurityManagerTypeInfoKey]; }
+         get { return this[SecurityManagerTypeInfoKey] as string; }
       }
    }
 }

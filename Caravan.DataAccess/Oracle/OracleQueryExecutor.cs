@@ -1,4 +1,3 @@
-using System.Data;
 using System.Data.Common;
 using System.Globalization;
 using Finsa.Caravan.DataAccess.Core;
@@ -34,7 +33,7 @@ namespace Finsa.Caravan.DataAccess.Oracle
          }
       }
 
-      public override IDbConnection OpenConnection()
+      public override DbConnection OpenConnection()
       {
          var connection = DbFactory.CreateConnection();
          connection.ConnectionString = Configuration.Instance.ConnectionString;

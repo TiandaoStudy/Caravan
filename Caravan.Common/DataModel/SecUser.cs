@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Finsa.Caravan.DataModel
 {
@@ -8,7 +9,10 @@ namespace Finsa.Caravan.DataModel
    {
       public long Id { get; set; }
 
-      public SecApp App { get; set; }
+      [JsonIgnore]
+      public long AppId { get; set; }
+
+      //public SecApp App { get; set; }
 
       public bool Active { get; set; }
 
@@ -22,6 +26,6 @@ namespace Finsa.Caravan.DataModel
 
       public string Email { get; set; }
 
-      public IEnumerable<SecGroup> Groups { get; set; }
+      //public virtual ICollection<SecGroup> Groups { get; set; }
    }
 }

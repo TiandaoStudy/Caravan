@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Data.Common;
 
 namespace Finsa.Caravan.DataAccess
 {
@@ -32,6 +33,6 @@ namespace Finsa.Caravan.DataAccess
       /// 
       /// </summary>
       /// <returns></returns>
-      IDbConnection OpenConnection();
+      DbConnection OpenConnection();
    }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using Finsa.Caravan.Reflection;
 
 namespace Finsa.Caravan.DataAccess
@@ -26,6 +28,14 @@ namespace Finsa.Caravan.DataAccess
       public static ILogger Instance
       {
          get { return CachedInstance; }
+      }
+
+      public static List<T> ToLogAndList<T>(this IQueryable<T> queryable)
+      {
+         var logEntry = queryable.ToString();
+         // Tenere traccia del tempo
+         // Loggare in modo asincrono
+         return queryable.ToList();
       }
    }
 
