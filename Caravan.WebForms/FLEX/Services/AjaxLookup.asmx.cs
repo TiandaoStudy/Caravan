@@ -50,7 +50,7 @@ namespace FLEX.Web.Services
       {
          var lookupData = LoadAjaxLookupData(xmlLookup, lookupBy);
          var lookupQuery = ProcessQuery(lookupData, userQuery, queryFilter);
-         using (var resultData = QueryExecutor.OpenConnection().Query(lookupQuery).ToDataTable())
+         using (var resultData = QueryExecutor.Instance.OpenConnection().Query(lookupQuery).ToDataTable())
          {
             return ProcessData(lookupData, resultData);
          }

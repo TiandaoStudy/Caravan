@@ -35,7 +35,7 @@ namespace Finsa.Caravan.DataAccess.Oracle
             Raise<ArgumentOutOfRangeException>.If(argsList.Length > MaxArgumentCount);
 
             using (var ctx = new OracleDbContext())
-            using (var trx = ctx.Database.BeginTransaction())
+            using (var trx = ctx.BeginTransaction())
             {
                try
                {

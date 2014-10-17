@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.Common;
 using System.Linq;
 using Finsa.Caravan.Reflection;
 
@@ -63,16 +62,6 @@ namespace Finsa.Caravan.DataAccess
       public static IQueryExecutor Instance
       {
          get { return CachedInstance; }
-      }
-
-      public static DbConnection OpenConnection()
-      {
-         return CachedInstance.OpenConnection();
-      }
-
-      internal static string OracleQuery(string query)
-      {
-         return String.Format(query, Configuration.Instance.OracleRunner);
       }
    }
 

@@ -1,20 +1,19 @@
 using System.Data.Common;
 using System.Globalization;
-using Finsa.Caravan.DataAccess.Core;
 using Oracle.ManagedDataAccess.Client;
 
 namespace Finsa.Caravan.DataAccess.Oracle
 {
-   public sealed class OracleQueryExecutor : QueryExecutorBase
+   public sealed class OracleQueryExecutor : IQueryExecutor
    {
       private static readonly OracleClientFactory DbFactory = new OracleClientFactory();
 
-      public override DatabaseVendor Vendor
+      public DatabaseVendor Vendor
       {
          get { return DatabaseVendor.Oracle; }
       }
 
-      public override void ElaborateConnectionString(ref string connectionString)
+      public void ElaborateConnectionString(ref string connectionString)
       {
          var lowerConnString = connectionString.ToLower(CultureInfo.InvariantCulture);
 
@@ -38,7 +37,7 @@ namespace Finsa.Caravan.DataAccess.Oracle
          }
       }
 
-      public override DbConnection OpenConnection()
+      public DbConnection OpenConnection()
       {
          var connection = DbFactory.CreateConnection();
          connection.ConnectionString = Configuration.Instance.ConnectionString;

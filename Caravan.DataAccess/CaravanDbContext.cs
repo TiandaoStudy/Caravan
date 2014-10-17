@@ -21,6 +21,11 @@ namespace Finsa.Caravan.DataAccess
          Init();
       }
 
+      public DbContextTransaction BeginTransaction()
+      {
+         return Database.BeginTransaction();
+      }
+
       private static void Init()
       {
          Database.SetInitializer<TCtx>(null);

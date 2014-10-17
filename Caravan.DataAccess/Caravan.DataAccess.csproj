@@ -108,7 +108,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Oracle\OracleLogger.cs" />
     <Compile Include="Oracle\OracleQueryExecutor.cs" />
-    <Compile Include="Core\QueryExecutorBase.cs" />
     <Compile Include="Remote\RemoteLogger.cs" />
     <Compile Include="SqlServerCe\SqlServerCeLogger.cs" />
     <Compile Include="SqlServerCe\SqlServerCeQueryExecutor.cs" />
