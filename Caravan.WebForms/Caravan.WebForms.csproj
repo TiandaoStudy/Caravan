@@ -7,7 +7,7 @@
     <ProjectGuid>{407B5921-9039-4D0D-A40A-36A19C251CDC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FLEX.WebForms</RootNamespace>
+    <RootNamespace>Finsa.Caravan.WebForms</RootNamespace>
     <AssemblyName>FLEX.WebForms</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -122,6 +122,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
+    <Compile Include="Finsa.Caravan.WebForms.webMarkupMin.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
     <Compile Include="FLEX.Web.XmlSettings.AjaxLookup.AjaxLookupData.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
@@ -132,9 +135,6 @@
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
     <Compile Include="FLEX.Web.XmlSettings.MenuBar.Menu.cs">
-      <DependentUpon>XsdClassGen.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FLEX.WebForms.webMarkupMin.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
     <Compile Include="FLEX\MasterPages\CustomView.Master.cs">

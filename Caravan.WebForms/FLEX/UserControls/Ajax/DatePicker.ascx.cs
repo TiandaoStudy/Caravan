@@ -51,9 +51,9 @@ namespace FLEX.Web.UserControls.Ajax
          {
             Raise<InvalidOperationException>.IfNot(HasValues);
             Raise<InvalidOperationException>.IfNot(DateIsValid(txtDate.Text));
-            return DateTime.Parse(txtDate.Text, WebSettings.CurrentUserCulture, DateTimeStyles.AllowWhiteSpaces);
+            return DateTime.Parse(txtDate.Text, WebForms.Configuration.CurrentUserCulture, DateTimeStyles.AllowWhiteSpaces);
          }
-         set { txtDate.Text = value.ToString("d", WebSettings.CurrentUserCulture); }
+         set { txtDate.Text = value.ToString("d", WebForms.Configuration.CurrentUserCulture); }
       }
 
       public string StartDate
@@ -130,7 +130,7 @@ namespace FLEX.Web.UserControls.Ajax
          get
          {
             DateTime result;
-            if (HasValues && DateTime.TryParse(txtDate.Text, WebSettings.CurrentUserCulture, DateTimeStyles.AllowWhiteSpaces, out result))
+            if (HasValues && DateTime.TryParse(txtDate.Text, WebForms.Configuration.CurrentUserCulture, DateTimeStyles.AllowWhiteSpaces, out result))
             {
                return result;
             }
@@ -209,7 +209,7 @@ namespace FLEX.Web.UserControls.Ajax
       private static bool DateIsValid(string dateStr)
       {
          DateTime dt;
-         return DateTime.TryParse(dateStr, WebSettings.CurrentUserCulture, DateTimeStyles.AllowWhiteSpaces, out dt);
+         return DateTime.TryParse(dateStr, WebForms.Configuration.CurrentUserCulture, DateTimeStyles.AllowWhiteSpaces, out dt);
       }
 
       #endregion

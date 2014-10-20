@@ -7,7 +7,7 @@
 // </auto-generated>
 //-----------------------------------------------------------------------------------------------------
 
-namespace FLEX.WebForms {
+namespace Finsa.Caravan.WebForms {
     
     
     /// <remarks/>

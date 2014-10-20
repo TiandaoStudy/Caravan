@@ -32,6 +32,13 @@ namespace FLEX.Web.Services
    [ScriptService]
    public class AjaxLookup : WebService
    {
+      private const string DefaultResultCount = "10";
+      private const string QueryFilterToken = "{:QueryFilter:}";
+      private const string ResultCountToken = "{:ResultCount:}";
+      private const string TokenEnd = ":}";
+      private const string TokenStart = "{:";
+      private const string UserQueryToken = "{:UserQuery:}";
+
       [WebMethod]
       public List<Result> Lookup(string xmlLookup, string lookupBy, string userQuery, string queryFilter)
       {
@@ -108,11 +115,11 @@ namespace FLEX.Web.Services
          // Since we are probably handling an SQL query, we must escape single quotes in the userQuery parameter.
          userQuery = userQuery.Replace("'", "''");
          // Then, we take the XML file and we replace all inputs inside it.
-         return new FastReplacer(WebSettings.AjaxLookup_TokenStart, WebSettings.AjaxLookup_TokenEnd)
+         return new FastReplacer(TokenStart, TokenEnd)
             .Append(lookupData.LookupQuery)
-            .Replace(WebSettings.AjaxLookup_UserQueryToken, userQuery)
-            .Replace(WebSettings.AjaxLookup_QueryFilterToken, queryFilter)
-            .Replace(WebSettings.AjaxLookup_ResultCountToken, WebSettings.AjaxLookup_DefaultResultCount)
+            .Replace(UserQueryToken, userQuery)
+            .Replace(QueryFilterToken, queryFilter)
+            .Replace(ResultCountToken, DefaultResultCount)
             .ToString();
       }
 

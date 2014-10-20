@@ -4,6 +4,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Finsa.Caravan.Collections;
 using Finsa.Caravan.Diagnostics;
+using Finsa.Caravan.WebForms;
 using FLEX.Common;
 using FLEX.Common.Web;
 using FLEX.WebForms;

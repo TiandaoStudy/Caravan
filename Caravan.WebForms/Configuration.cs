@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using System.Globalization;
 
 namespace FLEX.WebForms
 {
@@ -78,5 +79,14 @@ namespace FLEX.WebForms
       {
          get { return (string) this[SessionExpiredPageUrlKey]; }
       }
+
+      #region Internal Settings
+
+      public static CultureInfo CurrentUserCulture
+      {
+         get { return CultureInfo.CreateSpecificCulture("it-IT"); }
+      }
+
+      #endregion
    }
 }

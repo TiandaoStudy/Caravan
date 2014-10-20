@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Configuration;
-using System.Globalization;
 
 namespace FLEX.Web
 {
@@ -11,36 +10,6 @@ namespace FLEX.Web
    public static class WebSettings
    {
       private static readonly NameValueCollection AppSettings = ConfigurationManager.AppSettings;
-
-      public static string AjaxLookup_DefaultResultCount
-      {
-         get { return AppSettings["AjaxLookup_DefaultResultCount"]; }
-      }
-
-      public static string AjaxLookup_QueryFilterToken
-      {
-         get { return AppSettings["AjaxLookup_QueryFilterToken"]; }
-      }
-
-      public static string AjaxLookup_ResultCountToken
-      {
-         get { return AppSettings["AjaxLookup_ResultCountToken"]; }
-      }
-
-      public static string AjaxLookup_TokenEnd
-      {
-         get { return AppSettings["AjaxLookup_TokenEnd"]; }
-      }
-
-      public static string AjaxLookup_TokenStart
-      {
-         get { return AppSettings["AjaxLookup_TokenStart"]; }
-      }
-
-      public static string AjaxLookup_UserQueryToken
-      {
-         get { return AppSettings["AjaxLookup_UserQueryToken"]; }
-      }
 
       public static string AjaxLookup_XmlPath
       {
@@ -55,16 +24,6 @@ namespace FLEX.Web
       public static string MenuBar_XmlPath
       {
          get { return AppSettings["MenuBar_XmlPath"]; }
-      }
-
-      public static CultureInfo CurrentUserCulture
-      {
-         get { return CultureInfo.CreateSpecificCulture("it-IT"); }
-      }
-
-      public static string Templates_ImagesPath
-      {
-         get { return AppSettings["Templates_ImagesPath"]; }
       }
 
       public static int CacheManager_DefaultMinutes

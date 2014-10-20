@@ -53,7 +53,7 @@ namespace FLEX.WebForms.Pages
          try
          {
             // Report name is mandatory.
-            Raise<InvalidOperationException>.IfIsEmpty(Request[ReportNameRequestKey], ErrorMessages.Pages_DynamicReportViewer_MissingReportName);
+            Raise<InvalidOperationException>.IfIsEmpty(Request[ReportNameRequestKey], Finsa.Caravan.WebForms.ErrorMessages.Pages_DynamicReportViewer_MissingReportName);
 
             // Configuration for the VerticalSearch search button.
             Master.SearchButton.Visible = true;

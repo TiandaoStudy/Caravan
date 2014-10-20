@@ -12,11 +12,11 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace FLEX.WebForms
+namespace Finsa.Caravan.WebForms
 {
     /// <summary>
     ///   Automatically generated mapping for the webMarkupMin XML element
-    ///   declared in the FLEX.WebForms namespace.
+    ///   declared in the Finsa.Caravan.WebForms namespace.
     /// </summary>
 	public partial class webMarkupMin
 	{

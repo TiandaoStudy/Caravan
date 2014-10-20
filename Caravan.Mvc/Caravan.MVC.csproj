@@ -35,6 +35,13 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CodeProject.ObjectPool, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CodeProject.ObjectPool.1.0.6\lib\net40\CodeProject.ObjectPool.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.36\lib\net45\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -47,6 +54,9 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PommaLabs.KVLite">
+      <HintPath>..\packages\PommaLabs.KVLite.0.4.3\lib\net40\PommaLabs.KVLite.dll</HintPath>
+    </Reference>
     <Reference Include="RazorGenerator.Mvc">
       <HintPath>..\packages\RazorGenerator.Mvc.2.2.3\lib\net40\RazorGenerator.Mvc.dll</HintPath>
     </Reference>
@@ -57,6 +67,10 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.94.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Data.SQLite.Core.MSIL.1.0.94.0\lib\net45\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -165,6 +179,7 @@
     </Compile>
     <Compile Include="Controls\ValueHolders\JQueryDatePickerOptions.cs" />
     <Compile Include="Controls\ValueHolders\ValueHolderOptionsBase.cs" />
+    <Compile Include="GlobalHelper.cs" />
     <Compile Include="Layouts\FlexSharedLayout_.generated.cs">
       <DependentUpon>FlexSharedLayout_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -527,6 +542,10 @@
     <Folder Include="Images\select2\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Caravan.DataAccess\Caravan.DataAccess.csproj">
+      <Project>{418b2d91-d53e-49bf-98fc-66da9490dc37}</Project>
+      <Name>Caravan.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Caravan.Helpers\Caravan.Helpers.csproj">
       <Project>{ceff687b-7817-4326-9310-ab655407b610}</Project>
       <Name>Caravan.Helpers</Name>

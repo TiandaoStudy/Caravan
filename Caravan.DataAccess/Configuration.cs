@@ -8,10 +8,6 @@ namespace Finsa.Caravan.DataAccess
    {
       private const string SectionName = "Finsa.Caravan.DataAccess";
       private const string CachePartitionName = "Caravan.DataAccess";
-      private const string ConnectionStringKey = "ConnectionString";
-      private const string DataAccessKindKey = "DataAccessKind";
-      private const string OracleStatementCacheSizeKey = "OracleStatementCacheSize";
-      private const string OracleUserKey = "OracleUser";
 
       private static readonly Configuration CachedInstance = ConfigurationManager.GetSection(SectionName) as Configuration;
 
@@ -21,6 +17,9 @@ namespace Finsa.Caravan.DataAccess
       }
 
       #region Common Settings
+
+      private const string ConnectionStringKey = "ConnectionString";
+      private const string DataAccessKindKey = "DataAccessKind";
 
       [ConfigurationProperty(ConnectionStringKey, IsRequired = false)]
       public string ConnectionString
@@ -52,6 +51,9 @@ namespace Finsa.Caravan.DataAccess
       #endregion
 
       #region Oracle Specific
+
+      private const string OracleStatementCacheSizeKey = "OracleStatementCacheSize";
+      private const string OracleUserKey = "OracleUser";
 
       [ConfigurationProperty(OracleStatementCacheSizeKey, IsRequired = false, DefaultValue = 10)]
       public int OracleStatementCacheSize

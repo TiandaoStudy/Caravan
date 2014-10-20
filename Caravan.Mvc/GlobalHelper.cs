@@ -4,7 +4,7 @@ using System.Web;
 using Finsa.Caravan.DataAccess;
 using PommaLabs.KVLite;
 
-namespace Finsa.Caravan.WebForms
+namespace Finsa.Caravan.Mvc
 {
    public sealed class GlobalHelper
    {
