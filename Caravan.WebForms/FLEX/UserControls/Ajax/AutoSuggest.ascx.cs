@@ -4,6 +4,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Finsa.Caravan.Collections;
 using Finsa.Caravan.Diagnostics;
+using Finsa.Caravan.Extensions;
 using Finsa.Caravan.WebForms;
 using FLEX.Common;
 using FLEX.Common.Web;
@@ -214,7 +215,7 @@ namespace FLEX.Web.UserControls.Ajax
 
       protected void txtKey_OnTextChanged(object sender, EventArgs e)
       {
-         Basics.TriggerEvent(ValueSelected, this, new SearchCriteriaSelectedArgs());
+         ValueSelected.SafeInvoke(this, new SearchCriteriaSelectedArgs());
       }
 
       #endregion

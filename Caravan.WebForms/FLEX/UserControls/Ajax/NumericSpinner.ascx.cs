@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.UI;
 using Finsa.Caravan.Collections;
 using Finsa.Caravan.Diagnostics;
+using Finsa.Caravan.Extensions;
 using FLEX.Common;
 using FLEX.Common.Web;
 
@@ -161,7 +162,7 @@ namespace FLEX.Web.UserControls.Ajax
 
       protected void btnApply_Click(object sender, EventArgs e)
       {
-         Basics.TriggerEvent(ValueSelected, this, new SearchCriteriaSelectedArgs());
+         ValueSelected.SafeInvoke(this, new SearchCriteriaSelectedArgs());
       }
 
       #endregion

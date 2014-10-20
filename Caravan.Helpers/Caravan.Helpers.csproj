@@ -61,6 +61,7 @@
     <Compile Include="Extensions\BooleanExtensions.cs" />
     <Compile Include="Extensions\DataTableExtensions.cs" />
     <Compile Include="Extensions\DecimalExtensions.cs" />
+    <Compile Include="Extensions\DelegateExtensions.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\EventExtensions.cs" />

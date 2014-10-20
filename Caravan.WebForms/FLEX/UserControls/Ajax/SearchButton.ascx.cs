@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using Finsa.Caravan.Extensions;
 using FLEX.Common;
 
 // ReSharper disable CheckNamespace
@@ -63,7 +64,7 @@ namespace FLEX.Web.UserControls.Ajax
 
       protected void btnSearch_Click(object sender, EventArgs args)
       {
-         Basics.TriggerEvent(Click, this, args);
+         Click.SafeInvoke(this, args);
       }
 
       #endregion
