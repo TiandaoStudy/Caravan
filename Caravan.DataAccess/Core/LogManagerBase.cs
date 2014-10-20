@@ -12,72 +12,72 @@ namespace Finsa.Caravan.DataAccess.Core
    {
       #region ILogManager Members
 
-      public LogResult Log<TCodeUnit>(LogType type, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled,
+      public LogResult Log<TCodeUnit>(LogType type, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled,
          string function = LogEntry.AutomaticallyFilled)
       {
          return Log<TCodeUnit>(type, applicationName, userName, function, shortMessage, longMessage, context, args);
       }
 
-      public LogResult LogDebug<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null,
+      public LogResult LogDebug<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null,
          string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled)
       {
          return Log<TCodeUnit>(LogType.Debug, applicationName, userName, function, shortMessage, longMessage, context, args);
       }
 
-      public LogResult LogInfo<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null,
+      public LogResult LogInfo<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null,
          string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled)
       {
          return Log<TCodeUnit>(LogType.Info, applicationName, userName, function, shortMessage, longMessage, context, args);
       }
 
-      public LogResult LogWarn<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null,
+      public LogResult LogWarn<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null,
          string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled)
       {
          return Log<TCodeUnit>(LogType.Warn, applicationName, userName, function, shortMessage, longMessage, context, args);
       }
 
-      public LogResult LogError<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null,
+      public LogResult LogError<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null,
          string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled)
       {
          return Log<TCodeUnit>(LogType.Error, applicationName, userName, function, shortMessage, longMessage, context, args);
       }
 
-      public LogResult LogFatal<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null,
+      public LogResult LogFatal<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null,
          string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled)
       {
          return Log<TCodeUnit>(LogType.Fatal, applicationName, userName, function, shortMessage, longMessage, context, args);
       }
 
-      public LogResult LogDebug<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled,
+      public LogResult LogDebug<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled,
          string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled)
       {
          return Log<TCodeUnit>(LogType.Debug, applicationName, userName, function, exception, context, args);
       }
 
-      public LogResult Log<TCodeUnit>(LogType type, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, string function = LogEntry.AutomaticallyFilled)
+      public LogResult Log<TCodeUnit>(LogType type, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, string function = LogEntry.AutomaticallyFilled)
       {
          return Log<TCodeUnit>(type, applicationName, userName, function, exception, context, args);
       }
 
-      public LogResult LogInfo<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled,
+      public LogResult LogInfo<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled,
          string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled)
       {
          return Log<TCodeUnit>(LogType.Info, applicationName, userName, function, exception, context, args);
       }
 
-      public LogResult LogWarn<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled,
+      public LogResult LogWarn<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled,
          string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled)
       {
          return Log<TCodeUnit>(LogType.Warn, applicationName, userName, function, exception, context, args);
       }
 
-      public LogResult LogError<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled,
+      public LogResult LogError<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled,
          string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled)
       {
          return Log<TCodeUnit>(LogType.Error, applicationName, userName, function, exception, context, args);
       }
 
-      public LogResult LogFatal<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled,
+      public LogResult LogFatal<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled,
          string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled)
       {
          return Log<TCodeUnit>(LogType.Fatal, applicationName, userName, function, exception, context, args);
@@ -134,7 +134,7 @@ namespace Finsa.Caravan.DataAccess.Core
       #endregion
 
       public abstract LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
-         IEnumerable<GKeyValuePair<string, string>> args);
+         IEnumerable<CKeyValuePair<string, string>> args);
 
       protected abstract IEnumerable<LogEntry> GetLogs(string appName, LogType? logType);
 
@@ -142,7 +142,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
       #region Shortcuts
 
-      private LogResult Log<TCodeUnit>(LogType type, string appName, string userName, string function, string shortMessage, string longMessage, string context, IEnumerable<GKeyValuePair<string, string>> args)
+      private LogResult Log<TCodeUnit>(LogType type, string appName, string userName, string function, string shortMessage, string longMessage, string context, IEnumerable<CKeyValuePair<string, string>> args)
       {
          try
          {
@@ -155,7 +155,7 @@ namespace Finsa.Caravan.DataAccess.Core
          return Log(type, appName, userName, typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
       }
 
-      public LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, Exception exception, string context, IEnumerable<GKeyValuePair<string, string>> args)
+      public LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, Exception exception, string context, IEnumerable<CKeyValuePair<string, string>> args)
       {
          try
          {
@@ -169,7 +169,7 @@ namespace Finsa.Caravan.DataAccess.Core
          return Log(type, appName, userName, codeUnit, function, exception.Message, exception.StackTrace, context, args);
       }
 
-      private LogResult Log<TCodeUnit>(LogType type, string appName, string userName, string function, Exception exception, string context, IEnumerable<GKeyValuePair<string, string>> args)
+      private LogResult Log<TCodeUnit>(LogType type, string appName, string userName, string function, Exception exception, string context, IEnumerable<CKeyValuePair<string, string>> args)
       {
          try
          {

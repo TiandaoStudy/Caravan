@@ -7,7 +7,7 @@ namespace Finsa.Caravan.DataAccess
    /// </summary>
    public interface IDbManager
    {
-      DatabaseKind Kind { get; }
+      DataAccessKind Kind { get; }
 
       /// <summary>
       /// 
@@ -22,7 +22,7 @@ namespace Finsa.Caravan.DataAccess
       DbConnection OpenConnection();
    }
 
-   public enum DatabaseKind
+   public enum DataAccessKind
    {
       Dummy,
       Oracle,

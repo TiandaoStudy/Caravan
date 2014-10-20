@@ -34,7 +34,7 @@ using Newtonsoft.Json;
 namespace Finsa.Caravan
 {
    [Serializable, JsonObject(MemberSerialization.OptIn)]
-   public sealed class GPair<T1, T2> : IEquatable<GPair<T1, T2>>, IList<object>
+   public sealed class CPair<T1, T2> : IEquatable<CPair<T1, T2>>, IList<object>
    {
       [JsonProperty]
       public T1 First { get; set; }
@@ -42,9 +42,9 @@ namespace Finsa.Caravan
       [JsonProperty]
       public T2 Second { get; set; }
 
-      #region IEquatable<GPair<T1,T2>> Members
+      #region IEquatable<CPair<T1,T2>> Members
 
-      public bool Equals(GPair<T1, T2> other)
+      public bool Equals(CPair<T1, T2> other)
       {
          return EqualityComparer<T1>.Default.Equals(First, other.First) && EqualityComparer<T2>.Default.Equals(Second, other.Second);
       }
@@ -59,7 +59,7 @@ namespace Finsa.Caravan
          {
             return false;
          }
-         return obj is GPair<T1, T2> && Equals((GPair<T1, T2>) obj);
+         return obj is CPair<T1, T2> && Equals((CPair<T1, T2>) obj);
       }
 
       public override int GetHashCode()
@@ -70,12 +70,12 @@ namespace Finsa.Caravan
          }
       }
 
-      public static bool operator ==(GPair<T1, T2> left, GPair<T1, T2> right)
+      public static bool operator ==(CPair<T1, T2> left, CPair<T1, T2> right)
       {
          return left.Equals(right);
       }
 
-      public static bool operator !=(GPair<T1, T2> left, GPair<T1, T2> right)
+      public static bool operator !=(CPair<T1, T2> left, CPair<T1, T2> right)
       {
          return !left.Equals(right);
       }
@@ -171,16 +171,16 @@ namespace Finsa.Caravan
       #endregion
    }
 
-   public static class GPair
+   public static class CPair
    {
-      public static GPair<T1, T2> Create<T1, T2>(T1 first, T2 second)
+      public static CPair<T1, T2> Create<T1, T2>(T1 first, T2 second)
       {
-         return new GPair<T1, T2> {First = first, Second = second};
+         return new CPair<T1, T2> {First = first, Second = second};
       }
    }
 
    [Serializable, JsonObject(MemberSerialization.OptIn)]
-   public sealed class GKeyValuePair<T1, T2> : IEquatable<GKeyValuePair<T1, T2>>, IList<object>
+   public sealed class CKeyValuePair<T1, T2> : IEquatable<CKeyValuePair<T1, T2>>, IList<object>
    {
       [JsonProperty]
       public T1 Key { get; set; }
@@ -188,9 +188,9 @@ namespace Finsa.Caravan
       [JsonProperty]
       public T2 Value { get; set; }
 
-      #region IEquatable<GKeyValuePair<T1,T2>> Members
+      #region IEquatable<CKeyValuePair<T1,T2>> Members
 
-      public bool Equals(GKeyValuePair<T1, T2> other)
+      public bool Equals(CKeyValuePair<T1, T2> other)
       {
          return EqualityComparer<T1>.Default.Equals(Key, other.Key);
       }
@@ -205,7 +205,7 @@ namespace Finsa.Caravan
          {
             return false;
          }
-         return obj is GKeyValuePair<T1, T2> && Equals((GKeyValuePair<T1, T2>) obj);
+         return obj is CKeyValuePair<T1, T2> && Equals((CKeyValuePair<T1, T2>) obj);
       }
 
       public override int GetHashCode()
@@ -216,12 +216,12 @@ namespace Finsa.Caravan
          }
       }
 
-      public static bool operator ==(GKeyValuePair<T1, T2> left, GKeyValuePair<T1, T2> right)
+      public static bool operator ==(CKeyValuePair<T1, T2> left, CKeyValuePair<T1, T2> right)
       {
          return left.Equals(right);
       }
 
-      public static bool operator !=(GKeyValuePair<T1, T2> left, GKeyValuePair<T1, T2> right)
+      public static bool operator !=(CKeyValuePair<T1, T2> left, CKeyValuePair<T1, T2> right)
       {
          return !left.Equals(right);
       }
@@ -317,16 +317,16 @@ namespace Finsa.Caravan
       #endregion
    }
 
-   public static class GKeyValuePair
+   public static class CKeyValuePair
    {
-      public static GKeyValuePair<T1, T2> Create<T1, T2>(T1 key, T2 value)
+      public static CKeyValuePair<T1, T2> Create<T1, T2>(T1 key, T2 value)
       {
-         return new GKeyValuePair<T1, T2> {Key = key, Value = value};
+         return new CKeyValuePair<T1, T2> {Key = key, Value = value};
       }
    }
 
    [Serializable, JsonObject(MemberSerialization.OptIn)]
-   public sealed class GTriple<T1, T2, T3> : IEquatable<GTriple<T1, T2, T3>>, IList<object>
+   public sealed class CTriple<T1, T2, T3> : IEquatable<CTriple<T1, T2, T3>>, IList<object>
    {
       [JsonProperty]
       public T1 First { get; set; }
@@ -337,9 +337,9 @@ namespace Finsa.Caravan
       [JsonProperty]
       public T3 Third { get; set; }
 
-      #region IEquatable<GTriple<T1,T2,T3>> Members
+      #region IEquatable<CTriple<T1,T2,T3>> Members
 
-      public bool Equals(GTriple<T1, T2, T3> other)
+      public bool Equals(CTriple<T1, T2, T3> other)
       {
          return EqualityComparer<T1>.Default.Equals(First, other.First) && EqualityComparer<T2>.Default.Equals(Second, other.Second) &&
                 EqualityComparer<T3>.Default.Equals(Third, other.Third);
@@ -355,7 +355,7 @@ namespace Finsa.Caravan
          {
             return false;
          }
-         return obj is GTriple<T1, T2, T3> && Equals((GTriple<T1, T2, T3>) obj);
+         return obj is CTriple<T1, T2, T3> && Equals((CTriple<T1, T2, T3>) obj);
       }
 
       public override int GetHashCode()
@@ -369,12 +369,12 @@ namespace Finsa.Caravan
          }
       }
 
-      public static bool operator ==(GTriple<T1, T2, T3> left, GTriple<T1, T2, T3> right)
+      public static bool operator ==(CTriple<T1, T2, T3> left, CTriple<T1, T2, T3> right)
       {
          return left.Equals(right);
       }
 
-      public static bool operator !=(GTriple<T1, T2, T3> left, GTriple<T1, T2, T3> right)
+      public static bool operator !=(CTriple<T1, T2, T3> left, CTriple<T1, T2, T3> right)
       {
          return !left.Equals(right);
       }
@@ -475,11 +475,11 @@ namespace Finsa.Caravan
       #endregion
    }
 
-   public static class GTriple
+   public static class CTriple
    {
-      public static GTriple<T1, T2, T3> Create<T1, T2, T3>(T1 first, T2 second, T3 third)
+      public static CTriple<T1, T2, T3> Create<T1, T2, T3>(T1 first, T2 second, T3 third)
       {
-         return new GTriple<T1, T2, T3> {First = first, Second = second, Third = third};
+         return new CTriple<T1, T2, T3> {First = first, Second = second, Third = third};
       }
    }
 }

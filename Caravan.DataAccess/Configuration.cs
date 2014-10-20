@@ -6,12 +6,12 @@ namespace Finsa.Caravan.DataAccess
 {
    public sealed class Configuration : ConfigurationSection
    {
-      private const string SectionName = "finsa.caravan.dataaccess";
+      private const string SectionName = "Finsa.Caravan.DataAccess";
       private const string CachePartitionName = "Caravan.DataAccess";
       private const string ConnectionStringKey = "ConnectionString";
-      private const string DatabaseVendorKey = "DatabaseKind";
-      private const string OracleRunnerKey = "OracleRunner";
+      private const string DataAccessKindKey = "DataAccessKind";
       private const string OracleStatementCacheSizeKey = "OracleStatementCacheSize";
+      private const string OracleUserKey = "OracleUser";
 
       private static readonly Configuration CachedInstance = ConfigurationManager.GetSection(SectionName) as Configuration;
 
@@ -19,7 +19,9 @@ namespace Finsa.Caravan.DataAccess
       {
          get { return CachedInstance; }
       }
-      
+
+      #region Common Settings
+
       [ConfigurationProperty(ConnectionStringKey, IsRequired = false)]
       public string ConnectionString
       {
@@ -41,22 +43,32 @@ namespace Finsa.Caravan.DataAccess
          }
       }
 
-      [ConfigurationProperty(DatabaseVendorKey, IsRequired = true)]
-      public DatabaseKind DatabaseKind
+      [ConfigurationProperty(DataAccessKindKey, IsRequired = true)]
+      public DataAccessKind DataAccessKind
       {
-         get { return (DatabaseKind) this[DatabaseVendorKey]; }
+         get { return (DataAccessKind) this[DataAccessKindKey]; }
       }
 
-      [ConfigurationProperty(OracleRunnerKey, IsRequired = false, DefaultValue = "")]
-      public string OracleRunner
-      {
-         get { return this[OracleRunnerKey] as string; }
-      }
+      #endregion
+
+      #region Oracle Specific
 
       [ConfigurationProperty(OracleStatementCacheSizeKey, IsRequired = false, DefaultValue = 10)]
       public int OracleStatementCacheSize
       {
          get { return Convert.ToInt32(this[OracleStatementCacheSizeKey]); }
       }
+
+      [ConfigurationProperty(OracleUserKey, IsRequired = false, DefaultValue = "")]
+      public string OracleUser
+      {
+         get { return this[OracleUserKey] as string; }
+      }
+
+      #endregion
+
+      #region Postgres Specific
+
+      #endregion
    }
 }

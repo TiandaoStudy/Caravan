@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
+using Finsa.Caravan;
 
 namespace FLEX.Common.IO
 {

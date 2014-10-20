@@ -1,4 +1,5 @@
 ﻿using System;
+using Finsa.Caravan;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -15,7 +16,7 @@ namespace FLEX.Web.Pages
            string[] ErrorArray= new string[3];
            btnPrint.Attributes["onclick"]= "return openReportViewer('REPORT=StampaErrorHandler');";
 
-           txtTitle.Text = Common.Configuration.Instance.ApplicationName;
+           txtTitle.Text = Configuration.Instance.ApplicationName;
 
            //Per errore potrei chiamare la pagina e la sessione è vuota
            if (Session[WebSettings.UserControls_Ajax_ErrorHandler_ExceptionSessionKey] == null) 

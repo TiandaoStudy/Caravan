@@ -38,12 +38,12 @@ using System.Collections.Generic;
 namespace Finsa.Caravan
 {
 	[Serializable]
-    public abstract class GTuple : IList<object>
+    public abstract class CTuple : IList<object>
     {
 <# for (var i = 1; i <= TupleTypeCount; ++i) { #>
-        public static GTuple<<#= GenericsFor(i) #>> Create<<#= GenericsFor(i) #>>(<#= ParamsAndTypesFor(i) #>)
+        public static CTuple<<#= GenericsFor(i) #>> Create<<#= GenericsFor(i) #>>(<#= ParamsAndTypesFor(i) #>)
         {
-            var tuple = new GTuple<<#= GenericsFor(i) #>>();
+            var tuple = new CTuple<<#= GenericsFor(i) #>>();
 <# for (var j = 1; j <= i; ++j) { #>
             tuple.Item<#= j #> = item<#= j #>;
 <# } #>
@@ -110,15 +110,15 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<<#= GenericsFor(i) #>> : GTuple, IEquatable<GTuple<<#= GenericsFor(i) #>>>
+    public sealed class CTuple<<#= GenericsFor(i) #>> : CTuple, IEquatable<CTuple<<#= GenericsFor(i) #>>>
     {
 <# for (var j = 1; j <= i; ++j) { #>
         public T<#= j #> Item<#= j #> { get; set; }
 <# } #>
         
-        #region IEquatable<GTuple<<#= GenericsFor(i) #>>> Members
+        #region IEquatable<CTuple<<#= GenericsFor(i) #>>> Members
 
-        public bool Equals(GTuple<<#= GenericsFor(i) #>> other)
+        public bool Equals(CTuple<<#= GenericsFor(i) #>> other)
         {
             return true
 <# for (var j = 1; j <= i; ++j) { #>
@@ -138,7 +138,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<<#= GenericsFor(i) #>> && Equals((GTuple<<#= GenericsFor(i) #>>) obj);
+            return obj is CTuple<<#= GenericsFor(i) #>> && Equals((CTuple<<#= GenericsFor(i) #>>) obj);
         }
 
         public override int GetHashCode()
@@ -151,12 +151,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<<#= GenericsFor(i) #>> left, GTuple<<#= GenericsFor(i) #>> right)
+        public static bool operator ==(CTuple<<#= GenericsFor(i) #>> left, CTuple<<#= GenericsFor(i) #>> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<<#= GenericsFor(i) #>> left, GTuple<<#= GenericsFor(i) #>> right)
+        public static bool operator !=(CTuple<<#= GenericsFor(i) #>> left, CTuple<<#= GenericsFor(i) #>> right)
         {
             return !Equals(left, right);
         }

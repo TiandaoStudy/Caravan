@@ -24,12 +24,12 @@ namespace Finsa.Caravan.DataAccess.Direct
       #endregion
 
       public override LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
-         IEnumerable<GKeyValuePair<string, string>> args)
+         IEnumerable<CKeyValuePair<string, string>> args)
       {
          try
          {
             Raise<ArgumentException>.IfIsEmpty(codeUnit);
-            var argsList = (args == null) ? new GKeyValuePair<string, string>[0] : args.ToArray();
+            var argsList = (args == null) ? new CKeyValuePair<string, string>[0] : args.ToArray();
             Raise<ArgumentOutOfRangeException>.If(argsList.Length > MaxArgumentCount);
 
             using (var ctx = Db.CreateContext())
@@ -37,7 +37,7 @@ namespace Finsa.Caravan.DataAccess.Direct
             {
                var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
                var typeId = type.ToString().ToLower();
-               var settings = ctx.LogSettings.First(s => s.AppId == appId && s.TypeString == typeId);
+               var settings = ctx.LogSettings.First(s => s.AppId == appId && s.TypeId == typeId);
 
                // We delete logs older than "settings.Days"
                var oldLogs = from l in ctx.LogEntries
@@ -104,8 +104,8 @@ namespace Finsa.Caravan.DataAccess.Direct
          {
             return (from s in ctx.LogSettings.Include(s => s.App)
                     where appName == null || s.App.Name == appName.ToLower()
-                    where logType == null || s.TypeString == logType.ToString().ToLower()
-                    orderby s.App.Name, s.TypeString
+                    where logType == null || s.TypeId == logType.ToString().ToLower()
+                    orderby s.App.Name, s.TypeId
                     select s).ToLogAndList();
          }
       }

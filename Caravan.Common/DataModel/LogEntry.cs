@@ -11,7 +11,7 @@ namespace Finsa.Caravan.DataModel
       public const string AutomaticallyFilled = "Automatically filled parameter";
       public const string NotSpecified = "...";
 
-      private GKeyValuePair<string, string>[] _cachedArguments;
+      private CKeyValuePair<string, string>[] _cachedArguments;
       
       [JsonProperty(Order = 0)]
       public long Id { get; set; }
@@ -104,7 +104,7 @@ namespace Finsa.Caravan.DataModel
       public string Value9 { get; set; }
       
       [JsonProperty(Order = 10)]
-      public GKeyValuePair<string, string>[] Arguments
+      public CKeyValuePair<string, string>[] Arguments
       {
          get
          {
@@ -112,56 +112,56 @@ namespace Finsa.Caravan.DataModel
             {
                return _cachedArguments;
             }
-            var list = new List<GKeyValuePair<string, string>>();
+            var list = new List<CKeyValuePair<string, string>>();
             // Pair 0
             if (Key0 != null)
             {
-               list.Add(GKeyValuePair.Create(Key0, Value0));
+               list.Add(CKeyValuePair.Create(Key0, Value0));
             }
             // Pair 1
             if (Key1 != null)
             {
-               list.Add(GKeyValuePair.Create(Key1, Value1));
+               list.Add(CKeyValuePair.Create(Key1, Value1));
             }
             // Pair 2
             if (Key2 != null)
             {
-               list.Add(GKeyValuePair.Create(Key2, Value2));
+               list.Add(CKeyValuePair.Create(Key2, Value2));
             }
             // Pair 3
             if (Key3 != null)
             {
-               list.Add(GKeyValuePair.Create(Key3, Value3));
+               list.Add(CKeyValuePair.Create(Key3, Value3));
             }
             // Pair 4
             if (Key4 != null)
             {
-               list.Add(GKeyValuePair.Create(Key4, Value4));
+               list.Add(CKeyValuePair.Create(Key4, Value4));
             }
             // Pair 5
             if (Key5 != null)
             {
-               list.Add(GKeyValuePair.Create(Key5, Value5));
+               list.Add(CKeyValuePair.Create(Key5, Value5));
             }
             // Pair 6
             if (Key6 != null)
             {
-               list.Add(GKeyValuePair.Create(Key6, Value6));
+               list.Add(CKeyValuePair.Create(Key6, Value6));
             }
             // Pair 7
             if (Key7 != null)
             {
-               list.Add(GKeyValuePair.Create(Key7, Value7));
+               list.Add(CKeyValuePair.Create(Key7, Value7));
             }
             // Pair 8
             if (Key8 != null)
             {
-               list.Add(GKeyValuePair.Create(Key8, Value8));
+               list.Add(CKeyValuePair.Create(Key8, Value8));
             }
             // Pair 9
             if (Key9 != null)
             {
-               list.Add(GKeyValuePair.Create(Key9, Value9));
+               list.Add(CKeyValuePair.Create(Key9, Value9));
             }
             _cachedArguments = list.ToArray();
             return _cachedArguments;

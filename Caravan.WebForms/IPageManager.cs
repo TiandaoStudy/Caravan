@@ -12,7 +12,7 @@ namespace FLEX.WebForms
       /// 
       /// </summary>
       /// <returns></returns>
-      IList<GKeyValuePair<string, string>> GetFooterInfo();
+      IList<CKeyValuePair<string, string>> GetFooterInfo();
 
       /// <summary>
       /// 

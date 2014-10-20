@@ -11,14 +11,14 @@ namespace Finsa.Caravan.DataAccess.Direct.Oracle
       {
          base.OnModelCreating(mb);
 
-         mb.HasDefaultSchema(DataAccess.Configuration.Instance.OracleRunner);
+         mb.HasDefaultSchema(DataAccess.Configuration.Instance.OracleUser);
          
          /************************************************
           * SecApp
           ************************************************/
          
          mb.Entity<SecApp>()
-            .ToTable("CARAVAN_SEC_APP", DataAccess.Configuration.Instance.OracleRunner)
+            .ToTable("CARAVAN_SEC_APP", DataAccess.Configuration.Instance.OracleUser)
             .HasKey(x => x.Id)
             .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
@@ -31,7 +31,7 @@ namespace Finsa.Caravan.DataAccess.Direct.Oracle
           ************************************************/
 
          mb.Entity<SecUser>()
-            .ToTable("CARAVAN_SEC_USER", DataAccess.Configuration.Instance.OracleRunner)
+            .ToTable("CARAVAN_SEC_USER", DataAccess.Configuration.Instance.OracleUser)
             .HasKey(x => new {x.Id, x.AppId});
 
          mb.Entity<SecUser>().Property(x => x.Id).HasColumnName("CUSR_ID");
@@ -54,7 +54,7 @@ namespace Finsa.Caravan.DataAccess.Direct.Oracle
           ************************************************/
          
          mb.Entity<SecGroup>()
-            .ToTable("CARAVAN_SEC_GROUP", DataAccess.Configuration.Instance.OracleRunner)
+            .ToTable("CARAVAN_SEC_GROUP", DataAccess.Configuration.Instance.OracleUser)
             .HasKey(x => new {x.Id, x.AppId});
 
          mb.Entity<SecGroup>().Property(x => x.Id).HasColumnName("CGRP_ID");
@@ -80,11 +80,11 @@ namespace Finsa.Caravan.DataAccess.Direct.Oracle
           ************************************************/
 
          mb.Entity<LogSettings>()
-            .ToTable("CARAVAN_LOG_SETTINGS", DataAccess.Configuration.Instance.OracleRunner)
-            .HasKey(x => new {x.AppId, x.TypeString});
+            .ToTable("CARAVAN_LOG_SETTINGS", DataAccess.Configuration.Instance.OracleUser)
+            .HasKey(x => new {x.AppId, x.TypeId});
 
          mb.Entity<LogSettings>().Property(x => x.AppId).HasColumnName("CAPP_ID");
-         mb.Entity<LogSettings>().Property(x => x.TypeString).HasColumnName("CLOS_TYPE");
+         mb.Entity<LogSettings>().Property(x => x.TypeId).HasColumnName("CLOS_TYPE");
          mb.Entity<LogSettings>().Property(x => x.Enabled).HasColumnName("CLOS_ENABLED");
          mb.Entity<LogSettings>().Property(x => x.Days).HasColumnName("CLOS_DAYS");
          mb.Entity<LogSettings>().Property(x => x.MaxEntries).HasColumnName("CLOS_MAX_ENTRIES");
@@ -101,7 +101,7 @@ namespace Finsa.Caravan.DataAccess.Direct.Oracle
           ************************************************/
 
          mb.Entity<LogEntry>()
-            .ToTable("CARAVAN_LOG", DataAccess.Configuration.Instance.OracleRunner)
+            .ToTable("CARAVAN_LOG", DataAccess.Configuration.Instance.OracleUser)
             .HasKey(x => x.Id)
             .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 

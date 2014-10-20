@@ -30,8 +30,8 @@ namespace Finsa.Caravan
 {
     public static class ErrorMessages
     {
-        public const string TopLevel_Pair_NotFullCollection = "GPair is not (and cannot be) a full collection, therefore some IList methods are not implemented.";
-        public const string TopLevel_Triple_NotFullCollection = "GTriple is not (and cannot be) a full collection, therefore some IList methods are not implemented.";
+        public const string TopLevel_Pair_NotFullCollection = "CPair is not (and cannot be) a full collection, therefore some IList methods are not implemented.";
+        public const string TopLevel_Triple_NotFullCollection = "CTriple is not (and cannot be) a full collection, therefore some IList methods are not implemented.";
         public const string TopLevel_Tuple_NotFullCollection = "GTuple is not (and cannot be) a full collection, therefore some IList methods are not implemented.";
 
         public const string Collections_ReadOnlyList_Immutable = "List is immutable and it cannot be modified.";

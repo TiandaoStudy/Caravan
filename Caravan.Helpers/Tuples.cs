@@ -33,35 +33,35 @@ using System.Collections.Generic;
 namespace Finsa.Caravan
 {
 	[Serializable]
-    public abstract class GTuple : IList<object>
+    public abstract class CTuple : IList<object>
     {
-        public static GTuple<T1> Create<T1>(T1 item1)
+        public static CTuple<T1> Create<T1>(T1 item1)
         {
-            var tuple = new GTuple<T1>();
+            var tuple = new CTuple<T1>();
             tuple.Item1 = item1;
             return tuple;
         }
 
-        public static GTuple<T1, T2> Create<T1, T2>(T1 item1, T2 item2)
+        public static CTuple<T1, T2> Create<T1, T2>(T1 item1, T2 item2)
         {
-            var tuple = new GTuple<T1, T2>();
+            var tuple = new CTuple<T1, T2>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3> Create<T1, T2, T3>(T1 item1, T2 item2, T3 item3)
+        public static CTuple<T1, T2, T3> Create<T1, T2, T3>(T1 item1, T2 item2, T3 item3)
         {
-            var tuple = new GTuple<T1, T2, T3>();
+            var tuple = new CTuple<T1, T2, T3>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4> Create<T1, T2, T3, T4>(T1 item1, T2 item2, T3 item3, T4 item4)
+        public static CTuple<T1, T2, T3, T4> Create<T1, T2, T3, T4>(T1 item1, T2 item2, T3 item3, T4 item4)
         {
-            var tuple = new GTuple<T1, T2, T3, T4>();
+            var tuple = new CTuple<T1, T2, T3, T4>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -69,9 +69,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5> Create<T1, T2, T3, T4, T5>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5)
+        public static CTuple<T1, T2, T3, T4, T5> Create<T1, T2, T3, T4, T5>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -80,9 +80,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5, T6> Create<T1, T2, T3, T4, T5, T6>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6)
+        public static CTuple<T1, T2, T3, T4, T5, T6> Create<T1, T2, T3, T4, T5, T6>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5, T6>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5, T6>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -92,9 +92,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5, T6, T7> Create<T1, T2, T3, T4, T5, T6, T7>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7)
+        public static CTuple<T1, T2, T3, T4, T5, T6, T7> Create<T1, T2, T3, T4, T5, T6, T7>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5, T6, T7>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5, T6, T7>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -105,9 +105,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5, T6, T7, T8> Create<T1, T2, T3, T4, T5, T6, T7, T8>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8)
+        public static CTuple<T1, T2, T3, T4, T5, T6, T7, T8> Create<T1, T2, T3, T4, T5, T6, T7, T8>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5, T6, T7, T8>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5, T6, T7, T8>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -119,9 +119,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9)
+        public static CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -134,9 +134,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10)
+        public static CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -150,9 +150,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11)
+        public static CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -167,9 +167,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12)
+        public static CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -185,9 +185,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13)
+        public static CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -204,9 +204,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13, T14 item14)
+        public static CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13, T14 item14)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -224,9 +224,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13, T14 item14, T15 item15)
+        public static CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13, T14 item14, T15 item15)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -245,9 +245,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13, T14 item14, T15 item15, T16 item16)
+        public static CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13, T14 item14, T15 item15, T16 item16)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -267,9 +267,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13, T14 item14, T15 item15, T16 item16, T17 item17)
+        public static CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13, T14 item14, T15 item15, T16 item16, T17 item17)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -290,9 +290,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13, T14 item14, T15 item15, T16 item16, T17 item17, T18 item18)
+        public static CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13, T14 item14, T15 item15, T16 item16, T17 item17, T18 item18)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -314,9 +314,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13, T14 item14, T15 item15, T16 item16, T17 item17, T18 item18, T19 item19)
+        public static CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13, T14 item14, T15 item15, T16 item16, T17 item17, T18 item18, T19 item19)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -339,9 +339,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13, T14 item14, T15 item15, T16 item16, T17 item17, T18 item18, T19 item19, T20 item20)
+        public static CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13, T14 item14, T15 item15, T16 item16, T17 item17, T18 item18, T19 item19, T20 item20)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -365,9 +365,9 @@ namespace Finsa.Caravan
             return tuple;
         }
 
-        public static GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13, T14 item14, T15 item15, T16 item16, T17 item17, T18 item18, T19 item19, T20 item20, T21 item21)
+        public static CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8, T9 item9, T10 item10, T11 item11, T12 item12, T13 item13, T14 item14, T15 item15, T16 item16, T17 item17, T18 item18, T19 item19, T20 item20, T21 item21)
         {
-            var tuple = new GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>();
+            var tuple = new CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>();
             tuple.Item1 = item1;
             tuple.Item2 = item2;
             tuple.Item3 = item3;
@@ -450,13 +450,13 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1> : GTuple, IEquatable<GTuple<T1>>
+    public sealed class CTuple<T1> : CTuple, IEquatable<CTuple<T1>>
     {
         public T1 Item1 { get; set; }
         
-        #region IEquatable<GTuple<T1>> Members
+        #region IEquatable<CTuple<T1>> Members
 
-        public bool Equals(GTuple<T1> other)
+        public bool Equals(CTuple<T1> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -475,7 +475,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1> && Equals((GTuple<T1>) obj);
+            return obj is CTuple<T1> && Equals((CTuple<T1>) obj);
         }
 
         public override int GetHashCode()
@@ -487,12 +487,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1> left, GTuple<T1> right)
+        public static bool operator ==(CTuple<T1> left, CTuple<T1> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1> left, GTuple<T1> right)
+        public static bool operator !=(CTuple<T1> left, CTuple<T1> right)
         {
             return !Equals(left, right);
         }
@@ -561,14 +561,14 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2> : GTuple, IEquatable<GTuple<T1, T2>>
+    public sealed class CTuple<T1, T2> : CTuple, IEquatable<CTuple<T1, T2>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2>> Members
+        #region IEquatable<CTuple<T1, T2>> Members
 
-        public bool Equals(GTuple<T1, T2> other)
+        public bool Equals(CTuple<T1, T2> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -588,7 +588,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2> && Equals((GTuple<T1, T2>) obj);
+            return obj is CTuple<T1, T2> && Equals((CTuple<T1, T2>) obj);
         }
 
         public override int GetHashCode()
@@ -601,12 +601,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2> left, GTuple<T1, T2> right)
+        public static bool operator ==(CTuple<T1, T2> left, CTuple<T1, T2> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2> left, GTuple<T1, T2> right)
+        public static bool operator !=(CTuple<T1, T2> left, CTuple<T1, T2> right)
         {
             return !Equals(left, right);
         }
@@ -683,15 +683,15 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3> : GTuple, IEquatable<GTuple<T1, T2, T3>>
+    public sealed class CTuple<T1, T2, T3> : CTuple, IEquatable<CTuple<T1, T2, T3>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
         public T3 Item3 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3>> Members
+        #region IEquatable<CTuple<T1, T2, T3>> Members
 
-        public bool Equals(GTuple<T1, T2, T3> other)
+        public bool Equals(CTuple<T1, T2, T3> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -712,7 +712,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3> && Equals((GTuple<T1, T2, T3>) obj);
+            return obj is CTuple<T1, T2, T3> && Equals((CTuple<T1, T2, T3>) obj);
         }
 
         public override int GetHashCode()
@@ -726,12 +726,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3> left, GTuple<T1, T2, T3> right)
+        public static bool operator ==(CTuple<T1, T2, T3> left, CTuple<T1, T2, T3> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3> left, GTuple<T1, T2, T3> right)
+        public static bool operator !=(CTuple<T1, T2, T3> left, CTuple<T1, T2, T3> right)
         {
             return !Equals(left, right);
         }
@@ -816,16 +816,16 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4> : GTuple, IEquatable<GTuple<T1, T2, T3, T4>>
+    public sealed class CTuple<T1, T2, T3, T4> : CTuple, IEquatable<CTuple<T1, T2, T3, T4>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
         public T3 Item3 { get; set; }
         public T4 Item4 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4> other)
+        public bool Equals(CTuple<T1, T2, T3, T4> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -847,7 +847,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4> && Equals((GTuple<T1, T2, T3, T4>) obj);
+            return obj is CTuple<T1, T2, T3, T4> && Equals((CTuple<T1, T2, T3, T4>) obj);
         }
 
         public override int GetHashCode()
@@ -862,12 +862,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4> left, GTuple<T1, T2, T3, T4> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4> left, CTuple<T1, T2, T3, T4> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4> left, GTuple<T1, T2, T3, T4> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4> left, CTuple<T1, T2, T3, T4> right)
         {
             return !Equals(left, right);
         }
@@ -960,7 +960,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5>>
+    public sealed class CTuple<T1, T2, T3, T4, T5> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -968,9 +968,9 @@ namespace Finsa.Caravan
         public T4 Item4 { get; set; }
         public T5 Item5 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -993,7 +993,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5> && Equals((GTuple<T1, T2, T3, T4, T5>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5> && Equals((CTuple<T1, T2, T3, T4, T5>) obj);
         }
 
         public override int GetHashCode()
@@ -1009,12 +1009,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5> left, GTuple<T1, T2, T3, T4, T5> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5> left, CTuple<T1, T2, T3, T4, T5> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5> left, GTuple<T1, T2, T3, T4, T5> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5> left, CTuple<T1, T2, T3, T4, T5> right)
         {
             return !Equals(left, right);
         }
@@ -1115,7 +1115,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5, T6> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5, T6>>
+    public sealed class CTuple<T1, T2, T3, T4, T5, T6> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5, T6>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -1124,9 +1124,9 @@ namespace Finsa.Caravan
         public T5 Item5 { get; set; }
         public T6 Item6 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5, T6>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5, T6>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5, T6> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5, T6> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -1150,7 +1150,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5, T6> && Equals((GTuple<T1, T2, T3, T4, T5, T6>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5, T6> && Equals((CTuple<T1, T2, T3, T4, T5, T6>) obj);
         }
 
         public override int GetHashCode()
@@ -1167,12 +1167,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5, T6> left, GTuple<T1, T2, T3, T4, T5, T6> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5, T6> left, CTuple<T1, T2, T3, T4, T5, T6> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5, T6> left, GTuple<T1, T2, T3, T4, T5, T6> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5, T6> left, CTuple<T1, T2, T3, T4, T5, T6> right)
         {
             return !Equals(left, right);
         }
@@ -1281,7 +1281,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5, T6, T7> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7>>
+    public sealed class CTuple<T1, T2, T3, T4, T5, T6, T7> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -1291,9 +1291,9 @@ namespace Finsa.Caravan
         public T6 Item6 { get; set; }
         public T7 Item7 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5, T6, T7> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5, T6, T7> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -1318,7 +1318,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5, T6, T7> && Equals((GTuple<T1, T2, T3, T4, T5, T6, T7>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5, T6, T7> && Equals((CTuple<T1, T2, T3, T4, T5, T6, T7>) obj);
         }
 
         public override int GetHashCode()
@@ -1336,12 +1336,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5, T6, T7> left, GTuple<T1, T2, T3, T4, T5, T6, T7> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5, T6, T7> left, CTuple<T1, T2, T3, T4, T5, T6, T7> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5, T6, T7> left, GTuple<T1, T2, T3, T4, T5, T6, T7> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5, T6, T7> left, CTuple<T1, T2, T3, T4, T5, T6, T7> right)
         {
             return !Equals(left, right);
         }
@@ -1458,7 +1458,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8>>
+    public sealed class CTuple<T1, T2, T3, T4, T5, T6, T7, T8> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -1469,9 +1469,9 @@ namespace Finsa.Caravan
         public T7 Item7 { get; set; }
         public T8 Item8 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5, T6, T7, T8> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5, T6, T7, T8> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -1497,7 +1497,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5, T6, T7, T8> && Equals((GTuple<T1, T2, T3, T4, T5, T6, T7, T8>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5, T6, T7, T8> && Equals((CTuple<T1, T2, T3, T4, T5, T6, T7, T8>) obj);
         }
 
         public override int GetHashCode()
@@ -1516,12 +1516,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5, T6, T7, T8> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5, T6, T7, T8> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5, T6, T7, T8> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5, T6, T7, T8> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8> right)
         {
             return !Equals(left, right);
         }
@@ -1646,7 +1646,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9>>
+    public sealed class CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -1658,9 +1658,9 @@ namespace Finsa.Caravan
         public T8 Item8 { get; set; }
         public T9 Item9 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -1687,7 +1687,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> && Equals((GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> && Equals((CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9>) obj);
         }
 
         public override int GetHashCode()
@@ -1707,12 +1707,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> right)
         {
             return !Equals(left, right);
         }
@@ -1845,7 +1845,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>
+    public sealed class CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -1858,9 +1858,9 @@ namespace Finsa.Caravan
         public T9 Item9 { get; set; }
         public T10 Item10 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -1888,7 +1888,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> && Equals((GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> && Equals((CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>) obj);
         }
 
         public override int GetHashCode()
@@ -1909,12 +1909,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> right)
         {
             return !Equals(left, right);
         }
@@ -2055,7 +2055,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>
+    public sealed class CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -2069,9 +2069,9 @@ namespace Finsa.Caravan
         public T10 Item10 { get; set; }
         public T11 Item11 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -2100,7 +2100,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> && Equals((GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> && Equals((CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>) obj);
         }
 
         public override int GetHashCode()
@@ -2122,12 +2122,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> right)
         {
             return !Equals(left, right);
         }
@@ -2276,7 +2276,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>
+    public sealed class CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -2291,9 +2291,9 @@ namespace Finsa.Caravan
         public T11 Item11 { get; set; }
         public T12 Item12 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -2323,7 +2323,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> && Equals((GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> && Equals((CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>) obj);
         }
 
         public override int GetHashCode()
@@ -2346,12 +2346,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> right)
         {
             return !Equals(left, right);
         }
@@ -2508,7 +2508,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>
+    public sealed class CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -2524,9 +2524,9 @@ namespace Finsa.Caravan
         public T12 Item12 { get; set; }
         public T13 Item13 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -2557,7 +2557,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> && Equals((GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> && Equals((CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>) obj);
         }
 
         public override int GetHashCode()
@@ -2581,12 +2581,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> right)
         {
             return !Equals(left, right);
         }
@@ -2751,7 +2751,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>
+    public sealed class CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -2768,9 +2768,9 @@ namespace Finsa.Caravan
         public T13 Item13 { get; set; }
         public T14 Item14 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -2802,7 +2802,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> && Equals((GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> && Equals((CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>) obj);
         }
 
         public override int GetHashCode()
@@ -2827,12 +2827,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> right)
         {
             return !Equals(left, right);
         }
@@ -3005,7 +3005,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>
+    public sealed class CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -3023,9 +3023,9 @@ namespace Finsa.Caravan
         public T14 Item14 { get; set; }
         public T15 Item15 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -3058,7 +3058,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> && Equals((GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> && Equals((CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>) obj);
         }
 
         public override int GetHashCode()
@@ -3084,12 +3084,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> right)
         {
             return !Equals(left, right);
         }
@@ -3270,7 +3270,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>
+    public sealed class CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -3289,9 +3289,9 @@ namespace Finsa.Caravan
         public T15 Item15 { get; set; }
         public T16 Item16 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -3325,7 +3325,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> && Equals((GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> && Equals((CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>) obj);
         }
 
         public override int GetHashCode()
@@ -3352,12 +3352,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> right)
         {
             return !Equals(left, right);
         }
@@ -3546,7 +3546,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>
+    public sealed class CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -3566,9 +3566,9 @@ namespace Finsa.Caravan
         public T16 Item16 { get; set; }
         public T17 Item17 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -3603,7 +3603,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> && Equals((GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> && Equals((CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>) obj);
         }
 
         public override int GetHashCode()
@@ -3631,12 +3631,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> right)
         {
             return !Equals(left, right);
         }
@@ -3833,7 +3833,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>
+    public sealed class CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -3854,9 +3854,9 @@ namespace Finsa.Caravan
         public T17 Item17 { get; set; }
         public T18 Item18 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -3892,7 +3892,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> && Equals((GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> && Equals((CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>) obj);
         }
 
         public override int GetHashCode()
@@ -3921,12 +3921,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> right)
         {
             return !Equals(left, right);
         }
@@ -4131,7 +4131,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>
+    public sealed class CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -4153,9 +4153,9 @@ namespace Finsa.Caravan
         public T18 Item18 { get; set; }
         public T19 Item19 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -4192,7 +4192,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> && Equals((GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> && Equals((CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>) obj);
         }
 
         public override int GetHashCode()
@@ -4222,12 +4222,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> right)
         {
             return !Equals(left, right);
         }
@@ -4440,7 +4440,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>
+    public sealed class CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -4463,9 +4463,9 @@ namespace Finsa.Caravan
         public T19 Item19 { get; set; }
         public T20 Item20 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -4503,7 +4503,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> && Equals((GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> && Equals((CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>) obj);
         }
 
         public override int GetHashCode()
@@ -4534,12 +4534,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> right)
         {
             return !Equals(left, right);
         }
@@ -4760,7 +4760,7 @@ namespace Finsa.Caravan
     ///   TODO
     /// </summary>
 	[Serializable]
-    public sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> : GTuple, IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>
+    public sealed class CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> : CTuple, IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>
     {
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
@@ -4784,9 +4784,9 @@ namespace Finsa.Caravan
         public T20 Item20 { get; set; }
         public T21 Item21 { get; set; }
         
-        #region IEquatable<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> Members
+        #region IEquatable<CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> Members
 
-        public bool Equals(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> other)
+        public bool Equals(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> other)
         {
             return true
                 && EqualityComparer<T1>.Default.Equals(Item1, other.Item1)
@@ -4825,7 +4825,7 @@ namespace Finsa.Caravan
             if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            return obj is GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> && Equals((GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>) obj);
+            return obj is CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> && Equals((CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>) obj);
         }
 
         public override int GetHashCode()
@@ -4857,12 +4857,12 @@ namespace Finsa.Caravan
             }
         }
 
-        public static bool operator ==(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> right)
+        public static bool operator ==(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> left, GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> right)
+        public static bool operator !=(CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> left, CTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> right)
         {
             return !Equals(left, right);
         }

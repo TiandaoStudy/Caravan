@@ -8,9 +8,9 @@ namespace Finsa.Caravan.DataAccess.Direct.Oracle
    {
       private static readonly OracleClientFactory DbFactory = new OracleClientFactory();
 
-      public DatabaseKind Kind
+      public DataAccessKind Kind
       {
-         get { return DatabaseKind.Oracle; }
+         get { return DataAccessKind.Oracle; }
       }
 
       public void ElaborateConnectionString(ref string connectionString)

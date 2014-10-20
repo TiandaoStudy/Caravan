@@ -43,8 +43,8 @@ namespace FLEX.WebForms.Pages
 
       #region Instance Fields
 
-      private readonly List<GKeyValuePair<ISearchControl, string>> _searchControls = new List<GKeyValuePair<ISearchControl, string>>();
-      private GPair<string, CommandType> _queryInfo; 
+      private readonly List<CKeyValuePair<ISearchControl, string>> _searchControls = new List<CKeyValuePair<ISearchControl, string>>();
+      private CPair<string, CommandType> _queryInfo; 
 
       #endregion
 
@@ -151,10 +151,10 @@ namespace FLEX.WebForms.Pages
 
       #region Query Handling
 
-      private static GPair<string, CommandType> RetrieveQueryInfo(dynamic querySpec)
+      private static CPair<string, CommandType> RetrieveQueryInfo(dynamic querySpec)
       {
          var commandType = StringExtensions.ToEnumOrDefault(querySpec.Type, CommandType.Text);
-         return GPair.Create(querySpec.Code, commandType);
+         return CPair.Create(querySpec.Code, commandType);
       }
 
       #endregion
@@ -187,7 +187,7 @@ namespace FLEX.WebForms.Pages
          var placeHolder = e.Item.FindControl("plhSearchCriterium") as PlaceHolder;
          var control = ControlBuilders[paramSpec.ControlType](this, paramSpec);
          placeHolder.Controls.Add(control);
-         _searchControls.Add(GPair.Create(control as ISearchControl, paramSpec.UniqueName));
+         _searchControls.Add(CPair.Create(control as ISearchControl, paramSpec.UniqueName));
       }
 
       private static Control BuildSearchCriteria_AutoSuggest(Page page, dynamic paramSpec)
@@ -212,7 +212,7 @@ namespace FLEX.WebForms.Pages
          switch ((string) paramSpec.DataSourceType)
          {
             case "JSON":
-               var list = JsonConvert.DeserializeObject<IList<GPair<string, string>>>(paramSpec.DataSource);
+               var list = JsonConvert.DeserializeObject<IList<CPair<string, string>>>(paramSpec.DataSource);
                checkBoxList.SetDataSource(list);
                break;
             case "SQL":

@@ -50,10 +50,10 @@ namespace Finsa.Caravan.Extensions
             Contract.Requires<ArgumentNullException>(dataTable != null, ErrorMessages.Extensions_DataTableExtensions_NullDataTable);
             Contract.Ensures(Contract.Result<string>() != null);
 
-            var columns = new GPair<DataColumn, string>[dataTable.Columns.Count];
+            var columns = new CPair<DataColumn, string>[dataTable.Columns.Count];
             var idx = 0;
             foreach (DataColumn col in dataTable.Columns) {
-                columns[idx++] = GPair.Create(col, col.ColumnName.Trim());
+                columns[idx++] = CPair.Create(col, col.ColumnName.Trim());
             }
 
             var rows = new Dictionary<string, object>[dataTable.Rows.Count];

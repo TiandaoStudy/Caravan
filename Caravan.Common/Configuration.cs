@@ -3,14 +3,14 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 
-namespace FLEX.Common
+namespace Finsa.Caravan
 {
    /// <summary>
    ///   TODO
    /// </summary>
    public sealed class Configuration : ConfigurationSection
    {
-      private const string SectionName = "FlexCommonConfiguration";
+      private const string SectionName = "Finsa.Caravan.Common";
       private const string ApplicationNameKey = "ApplicationName";
       private const string ApplicationTitleKey = "ApplicationTitle";
       private const string BufferPoolCountForBufferedIOKey = "BufferPoolCountForBufferedIO";

@@ -7,7 +7,7 @@ namespace Finsa.Caravan.DataAccess.Remote
 {
    public sealed class RemoteLogManager : LogManagerBase
    {
-      public override LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<GKeyValuePair<string, string>> args)
+      public override LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<CKeyValuePair<string, string>> args)
       {
          throw new NotImplementedException();
       }

@@ -9,9 +9,9 @@ namespace Finsa.Caravan.RestService
 {
    public sealed class IndexModule : CustomModule
    {
-       private static readonly IList<GPair<int, string>> TestData = new [] {
-           GPair.Create(1, "AAA"),
-           GPair.Create(2, "BBB")
+       private static readonly IList<CPair<int, string>> TestData = new [] {
+           CPair.Create(1, "AAA"),
+           CPair.Create(2, "BBB")
        }; 
 
       public IndexModule()

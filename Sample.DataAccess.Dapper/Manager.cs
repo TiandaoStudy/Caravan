@@ -57,22 +57,22 @@ namespace FLEX.Extensions.TestDataAccess
             };
         }
 
-        private static IEnumerable<GPair<int, int>> TestCandidatesSchools()
+        private static IEnumerable<CPair<int, int>> TestCandidatesSchools()
         {
             return new[]
             {
-                GPair.Create(0, 6), // Davide Paparella, Scuola Media Inferiore
-                GPair.Create(1, 6), // Diana Martinez Gonzalez, Scuola Media InferioreCorso di Laurea in Informatica
-                GPair.Create(1, 0), // Diana Martinez Gonzalez, Corso di Laurea in Informatica
+                CPair.Create(0, 6), // Davide Paparella, Scuola Media Inferiore
+                CPair.Create(1, 6), // Diana Martinez Gonzalez, Scuola Media InferioreCorso di Laurea in Informatica
+                CPair.Create(1, 0), // Diana Martinez Gonzalez, Corso di Laurea in Informatica
             };
         }
 
-        private static IEnumerable<GPair<int, int>> TestCandidatesGender()
+        private static IEnumerable<CPair<int, int>> TestCandidatesGender()
         {
             return new[]
             {
-                GPair.Create(0, 1), // Davide Paparella, Male
-                GPair.Create(1, 0), // Diana Martinez Gonzalez, Female
+                CPair.Create(0, 1), // Davide Paparella, Male
+                CPair.Create(1, 0), // Diana Martinez Gonzalez, Female
             };
         }
     }

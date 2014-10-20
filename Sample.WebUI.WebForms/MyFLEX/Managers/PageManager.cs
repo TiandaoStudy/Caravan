@@ -9,11 +9,11 @@ namespace FLEX.Sample.WebUI.MyFLEX.Managers
 {
    public sealed class PageManager : IPageManager
    {
-      public IList<GKeyValuePair<string, string>> GetFooterInfo()
+      public IList<CKeyValuePair<string, string>> GetFooterInfo()
       {
-         return new List<GKeyValuePair<string, string>>
+         return new List<CKeyValuePair<string, string>>
          {
-            GKeyValuePair.Create("Host", HttpContext.Current.Server.MachineName)
+            CKeyValuePair.Create("Host", HttpContext.Current.Server.MachineName)
          };
       }
 

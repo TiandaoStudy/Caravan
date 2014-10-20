@@ -20,17 +20,17 @@ namespace Finsa.Caravan.DataAccess
 
       static Db()
       {
-         switch (Configuration.Instance.DatabaseKind)
+         switch (Configuration.Instance.DataAccessKind)
          {
-            case DatabaseKind.Dummy:
+            case DataAccessKind.Dummy:
                break;
-            case DatabaseKind.Oracle:
+            case DataAccessKind.Oracle:
                DbManagerInstance = new OracleDbManager();
                DbContextGenerator = OracleDbContextGenerator;
                break;
-            case DatabaseKind.SqlServer:
+            case DataAccessKind.SqlServer:
                break;
-            case DatabaseKind.SqlServerCe:
+            case DataAccessKind.SqlServerCe:
                DbManagerInstance = new SqlServerCeDbManager();
                break;
          }
@@ -78,7 +78,7 @@ namespace Finsa.Caravan.DataAccess
             var milliseconds = stopwatch.ElapsedMilliseconds;
             Logger.LogDebug<IDbManager>("EF generated query", logEntry, "Logging and timing the query", new[]
             {
-               GKeyValuePair.Create("milliseconds", milliseconds.ToString(CultureInfo.InvariantCulture))
+               CKeyValuePair.Create("milliseconds", milliseconds.ToString(CultureInfo.InvariantCulture))
             });
          });
 
