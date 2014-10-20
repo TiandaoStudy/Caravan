@@ -9,7 +9,7 @@ using Finsa.Caravan.Extensions;
 
 namespace Finsa.Caravan.DataAccess.Direct
 {
-   public sealed class DirectLogger : LoggerBase
+   public sealed class DirectLogManager : LogManagerBase
    {
       #region Constants
 
@@ -106,7 +106,7 @@ namespace Finsa.Caravan.DataAccess.Direct
                     where appName == null || s.App.Name == appName.ToLower()
                     where logType == null || s.TypeString == logType.ToString().ToLower()
                     orderby s.App.Name, s.TypeString
-                    select s).ToList();
+                    select s).ToLogAndList();
          }
       }
    }

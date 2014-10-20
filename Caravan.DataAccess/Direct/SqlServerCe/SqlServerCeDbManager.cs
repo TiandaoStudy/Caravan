@@ -1,8 +1,8 @@
 using System.Data.Common;
 
-namespace Finsa.Caravan.DataAccess.SqlServerCe
+namespace Finsa.Caravan.DataAccess.Direct.SqlServerCe
 {
-	public sealed class SqlServerCeQueryExecutor : IQueryExecutor
+	public sealed class SqlServerCeDbManager : IDbManager
 	{
 		private static readonly DbProviderFactory DbFactory = DbProviderFactories.GetFactory("System.Data.SqlServerCe.4.0");
 

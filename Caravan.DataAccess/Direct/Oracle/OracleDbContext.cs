@@ -107,7 +107,7 @@ namespace Finsa.Caravan.DataAccess.Direct.Oracle
 
          mb.Entity<LogEntry>().Property(x => x.Id).HasColumnName("CLOG_ID");
          mb.Entity<LogEntry>().Property(x => x.AppId).HasColumnName("CAPP_ID");
-         mb.Entity<LogEntry>().Property(x => x.TypeString).HasColumnName("CLOS_TYPE");
+         mb.Entity<LogEntry>().Property(x => x.TypeId).HasColumnName("CLOS_TYPE");
          mb.Entity<LogEntry>().Property(x => x.Date).HasColumnName("CLOG_DATE");
          mb.Entity<LogEntry>().Property(x => x.UserLogin).HasColumnName("CLOG_USER");
          mb.Entity<LogEntry>().Property(x => x.CodeUnit).HasColumnName("CLOG_CODE_UNIT");
@@ -148,7 +148,7 @@ namespace Finsa.Caravan.DataAccess.Direct.Oracle
          mb.Entity<LogEntry>()
             .HasRequired<LogSettings>(x => x.LogSettings)
             .WithMany(x => x.LogEntries)
-            .HasForeignKey(x => new {x.AppId, x.TypeString});
+            .HasForeignKey(x => new {x.AppId, TypeString = x.TypeId});
       }
    }
 }

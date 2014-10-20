@@ -8,9 +8,9 @@ using Finsa.Caravan.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
-   public abstract class LoggerBase : ILogger
+   public abstract class LogManagerBase : ILogManager
    {
-      #region ILogger Members
+      #region ILogManager Members
 
       public LogResult Log<TCodeUnit>(LogType type, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<GKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled,
          string function = LogEntry.AutomaticallyFilled)

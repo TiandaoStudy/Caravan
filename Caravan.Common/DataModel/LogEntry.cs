@@ -47,7 +47,7 @@ namespace Finsa.Caravan.DataModel
       public LogSettings LogSettings { get; set; }
       
       [JsonIgnore]
-      public string TypeString { get; set; }
+      public string TypeId { get; set; }
       
       [JsonProperty(Order = 2)]
       [JsonConverter(typeof(StringEnumConverter))]
@@ -56,10 +56,10 @@ namespace Finsa.Caravan.DataModel
          get
          {
             LogType logType;
-            Enum.TryParse(TypeString, true, out logType);
+            Enum.TryParse(TypeId, true, out logType);
             return logType;
          }
-         set { TypeString = value.ToString().ToLower(); }
+         set { TypeId = value.ToString().ToLower(); }
       }
       
       [JsonIgnore]

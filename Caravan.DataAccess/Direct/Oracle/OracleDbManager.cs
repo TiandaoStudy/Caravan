@@ -2,9 +2,9 @@ using System.Data.Common;
 using System.Globalization;
 using Oracle.ManagedDataAccess.Client;
 
-namespace Finsa.Caravan.DataAccess.Oracle
+namespace Finsa.Caravan.DataAccess.Direct.Oracle
 {
-   public sealed class OracleQueryExecutor : IQueryExecutor
+   public sealed class OracleDbManager : IDbManager
    {
       private static readonly OracleClientFactory DbFactory = new OracleClientFactory();
 

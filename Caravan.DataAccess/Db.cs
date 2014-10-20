@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Direct;
 using Finsa.Caravan.DataAccess.Direct.Oracle;
-using Finsa.Caravan.DataAccess.Oracle;
+using Finsa.Caravan.DataAccess.Direct.SqlServerCe;
 
 namespace Finsa.Caravan.DataAccess
 {
    public static class Db
    {
-      private static readonly ILogger LoggerInstance = new DirectLogger();
+      private static readonly ILogManager LogManagerInstance = new DirectLogManager();
       private static readonly ISecurityManager SecurityManagerInstance = new DirectSecurityManager();
-      private static readonly IQueryExecutor QueryExecutorInstance;
+      private static readonly IDbManager DbManagerInstance;
       private static readonly Func<DbContextBase> DbContextGenerator;
 
       static Db()
@@ -22,27 +25,28 @@ namespace Finsa.Caravan.DataAccess
             case DatabaseKind.Dummy:
                break;
             case DatabaseKind.Oracle:
-               QueryExecutorInstance = new OracleQueryExecutor();
+               DbManagerInstance = new OracleDbManager();
                DbContextGenerator = OracleDbContextGenerator;
                break;
             case DatabaseKind.SqlServer:
                break;
             case DatabaseKind.SqlServerCe:
+               DbManagerInstance = new SqlServerCeDbManager();
                break;
          }
       }
 
-      public static IQueryExecutor QueryExecutor
+      public static IDbManager Manager
       {
-         get { return QueryExecutorInstance; }
+         get { return DbManagerInstance; }
       }
 
-      public static ILogger Logger
+      public static ILogManager Logger
       {
-         get { return LoggerInstance; }
+         get { return LogManagerInstance; }
       }
 
-      public static ISecurityManager SecurityManager
+      public static ISecurityManager Security
       {
          get { return SecurityManagerInstance; }
       }
@@ -63,10 +67,22 @@ namespace Finsa.Caravan.DataAccess
 
       public static List<T> ToLogAndList<T>(this IQueryable<T> queryable)
       {
-         var logEntry = queryable.ToString();
-         // Tenere traccia del tempo
-         // Loggare in modo asincrono
-         return queryable.ToList();
+         var stopwatch = new Stopwatch();
+         stopwatch.Start();
+         var list = queryable.ToList();
+         stopwatch.Stop();
+
+         Task.Factory.StartNew(() =>
+         {
+            var logEntry = queryable.ToString();
+            var milliseconds = stopwatch.ElapsedMilliseconds;
+            Logger.LogDebug<IDbManager>("EF generated query", logEntry, "Logging and timing the query", new[]
+            {
+               GKeyValuePair.Create("milliseconds", milliseconds.ToString(CultureInfo.InvariantCulture))
+            });
+         });
+
+         return list;
       }
    }
 }

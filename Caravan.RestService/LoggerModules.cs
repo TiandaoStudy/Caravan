@@ -55,7 +55,7 @@ namespace Finsa.Caravan.RestService
          }
          if (logType == null)
          {
-            if (String.IsNullOrWhiteSpace(entry.TypeString))
+            if (String.IsNullOrWhiteSpace(entry.TypeId))
             {
                throw new Exception(ErrorMessages.LogsModule_MissingLogType);
             }

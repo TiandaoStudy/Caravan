@@ -21,10 +21,10 @@ namespace Finsa.Caravan.RestService
             return xml;
          };
 
-         Get["/apps"] = _ => Response.AsJson(Db.SecurityManager.Apps());
-         Get["/apps/{appName}"] = p => Response.AsJson(Db.SecurityManager.App((string) p.appName));
-         Get["/apps/{appName}/groups"] = p => Response.AsJson(Db.SecurityManager.Groups((string) p.appName));
-         Get["/apps/{appName}/users"] = p => Response.AsJson(Db.SecurityManager.Users((string) p.appName));
+         Get["/apps"] = _ => Response.AsJson(Db.Security.Apps());
+         Get["/apps/{appName}"] = p => Response.AsJson(Db.Security.App((string) p.appName));
+         Get["/apps/{appName}/groups"] = p => Response.AsJson(Db.Security.Groups((string) p.appName));
+         Get["/apps/{appName}/users"] = p => Response.AsJson(Db.Security.Users((string) p.appName));
       }
    }
 }

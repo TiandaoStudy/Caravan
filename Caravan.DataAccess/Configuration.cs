@@ -36,7 +36,7 @@ namespace Finsa.Caravan.DataAccess
          }
          set
          {
-            Db.QueryExecutor.ElaborateConnectionString(ref value);
+            Db.Manager.ElaborateConnectionString(ref value);
             PersistentCache.DefaultInstance.AddStatic(CachePartitionName, ConnectionStringKey, value);
          }
       }

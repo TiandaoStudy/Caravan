@@ -8,7 +8,7 @@ namespace Finsa.Caravan.DataAccess
    /// <summary>
    ///   TODO
    /// </summary>
-   public interface ILogger
+   public interface ILogManager
    {
       #region Logging Methods
       

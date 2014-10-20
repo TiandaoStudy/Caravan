@@ -5,7 +5,7 @@ namespace Finsa.Caravan.DataAccess
    /// <summary>
    /// 
    /// </summary>
-   public interface IQueryExecutor
+   public interface IDbManager
    {
       DatabaseKind Kind { get; }
 
