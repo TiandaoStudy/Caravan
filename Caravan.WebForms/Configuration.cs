@@ -18,7 +18,7 @@ namespace FLEX.WebForms
       private const string EnableOutputCompressionKey = "EnableOutputCompression";
       private const string EnableOutputMinificationKey = "EnableOutputMinification";
       private const string ErrorManagerTypeInfoKey = "ErrorManagerTypeInfo";
-      private const string LookupsXmlPathKey = "AjaxLookupsXmlPath";
+      private const string LookupsXmlPathKey = "LookupsXmlPath";
       private const string MenuBarBrandClickKey = "MenuBarBrandClick";
       private const string MenuBarHomeClickKey = "MenuBarHomeClick";
       private const string MenuBarInfoClickKey = "MenuBarInfoClick";
@@ -140,7 +140,7 @@ namespace FLEX.WebForms
 
       internal static TimeSpan DefaultIntervalForVolatile
       {
-         get { return TimeSpan.FromMinutes(HttpContext.Current.Session.Timeout * 2); }
+         get { return TimeSpan.FromMinutes((HttpContext.Current.Session != null) ? HttpContext.Current.Session.Timeout * 2 : 30); }
       }
 
       internal static string ExceptionSessionKey

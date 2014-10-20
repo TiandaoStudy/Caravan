@@ -12,7 +12,7 @@ namespace Finsa.Caravan
    {
       private const string SectionName = "Finsa.Caravan.Common";
       private const string ApplicationNameKey = "ApplicationName";
-      private const string ApplicationTitleKey = "ApplicationTitle";
+      private const string ApplicationDescriptionKey = "ApplicationDescription";
       private const string BufferPoolCountForBufferedIOKey = "BufferPoolCountForBufferedIO";
       private const string BufferSizeInBytesForBufferedIOKey = "BufferSizeInBytesForBufferedIO";
 
@@ -32,10 +32,10 @@ namespace Finsa.Caravan
          get { return (string) this[ApplicationNameKey]; }
       }
 
-      [ConfigurationProperty(ApplicationTitleKey, IsRequired = true)]
-      public string ApplicationTitle
+      [ConfigurationProperty(ApplicationDescriptionKey, IsRequired = true)]
+      public string ApplicationDescription
       {
-         get { return (string) this[ApplicationTitleKey]; }
+         get { return (string) this[ApplicationDescriptionKey]; }
       }
 
       [ConfigurationProperty(BufferPoolCountForBufferedIOKey, IsRequired = false, DefaultValue = 16)]

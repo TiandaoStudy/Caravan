@@ -99,6 +99,7 @@
     <Compile Include="Core\DbContextBase.cs" />
     <Compile Include="Core\LogManagerBase.cs" />
     <Compile Include="Core\SecurityManagerBase.cs" />
+    <Compile Include="Direct\SqlServerCe\SqlServerCeDbContext.cs" />
     <Compile Include="Dummy\DummyLogManager.cs" />
     <Compile Include="Dummy\DummySecurityManager.cs" />
     <Compile Include="ILogManager.cs" />
@@ -140,6 +141,7 @@
     <Content Include="Direct\Oracle\Scripts\Tables\caravan_sec_user_group.sql" />
     <Content Include="Direct\Oracle\Scripts\Tables\caravan_sec_action.sql" />
     <Content Include="Direct\Oracle\Scripts\Tables\caravan_sec_app.sql" />
+    <Content Include="Direct\SqlServerCe\Scripts\Tables\caravan_log.sql" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Direct\Postgres\" />
