@@ -54,10 +54,7 @@ namespace FLEX.WebForms
       {
          Raise<ArgumentOutOfRangeException>.If(minutes <= 0);
          var aggrKey = CreateAggregateKey(key1, key2);
-         //var absoluteExpiration = DateTime.Now.AddMinutes(minutes);
-         // We use Cache.NoSlidingExpiration because we are setting an absolute expiration.
-         //HttpRuntime.Cache.Insert(aggrKey, value, NoCacheDependencies, absoluteExpiration, Cache.NoSlidingExpiration);
-         HttpRuntime.Cache.Insert(aggrKey, value, NoCacheDependencies, Cache.NoAbsoluteExpiration, TimeSpan.FromMinutes(minutes), CacheItemPriority.Default, null);
+         HttpRuntime.Cache.Insert(aggrKey, value, NoCacheDependencies, Cache.NoAbsoluteExpiration, TimeSpan.FromMinutes(minutes));
       }
 
       public static bool TryRetrieveValueForKey<TValue>(out TValue value, object key1, params object[] key2)

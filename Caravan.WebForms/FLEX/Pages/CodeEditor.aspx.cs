@@ -22,8 +22,8 @@ namespace FLEX.Web.Pages
          {
             ViewState["dictFilesPath"] = _filesPath;
             var scriptsPath = PommaLabs.Armando.Configuration.Instance.ScriptsPath;
-            var xmlPath = Server.MapPath(FLEX.Web.WebSettings.AjaxLookup_XmlPath);
-            var menuPath = Server.MapPath(FLEX.Web.WebSettings.MenuBar_XmlPath);
+            var xmlPath = Server.MapPath(WebForms.Configuration.Instance.AjaxLookupsXmlPath);
+            var menuPath = Server.MapPath(WebForms.Configuration.Instance.MenuBarXmlPath);
             var files = new Dictionary<string, string> {{"Data Scritps", scriptsPath}, {"Ajax Lookup", xmlPath}, {"Menu", menuPath}};
             BuildTreeView(files);
          }

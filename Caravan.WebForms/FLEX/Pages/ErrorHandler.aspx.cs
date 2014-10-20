@@ -19,14 +19,14 @@ namespace FLEX.Web.Pages
            txtTitle.Text = Configuration.Instance.ApplicationName;
 
            //Per errore potrei chiamare la pagina e la sessione è vuota
-           if (Session[WebSettings.UserControls_Ajax_ErrorHandler_ExceptionSessionKey] == null) 
+           if (Session[WebForms.Configuration.ExceptionSessionKey] == null) 
            {
               //Chiudo la finestra
               Response.Write("<script language='javascript'>window.close();</script>");
            }
            else 
            {
-              ex = ((Exception)Session[WebSettings.UserControls_Ajax_ErrorHandler_ExceptionSessionKey]);
+              ex = ((Exception)Session[WebForms.Configuration.ExceptionSessionKey]);
               if (ex != null) 
               {
                  txtDetail.Text = ex.ToString();

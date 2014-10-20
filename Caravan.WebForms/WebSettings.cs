@@ -11,29 +11,9 @@ namespace FLEX.Web
    {
       private static readonly NameValueCollection AppSettings = ConfigurationManager.AppSettings;
 
-      public static string AjaxLookup_XmlPath
-      {
-         get { return AppSettings["AjaxLookup_XmlPath"]; }
-      }
-
-      public static string Lookup_XmlPath
-      {
-         get { return AppSettings["Lookup_XmlPath"]; }
-      }
-
-      public static string MenuBar_XmlPath
-      {
-         get { return AppSettings["MenuBar_XmlPath"]; }
-      }
-
       public static int CacheManager_DefaultMinutes
       {
          get { return Convert.ToInt32(AppSettings["FLEX.Web.CacheManager.DefaultMinutes"]); }
-      }
-
-      public static string UserControls_Ajax_ErrorHandler_ExceptionSessionKey
-      {
-         get { return AppSettings["FLEX.Web.UserControls.Ajax.ErrorHandler.ExceptionSessionKey"]; }
       }
 
       #region UserControls.MenuBar

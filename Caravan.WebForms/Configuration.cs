@@ -9,12 +9,15 @@ namespace FLEX.WebForms
    public sealed class Configuration : ConfigurationSection
    {
       private const string SectionName = "FlexWebConfiguration";
+      private const string AjaxLookupsXmlPathKey = "AjaxLookupsXmlPath";
       private const string CheckSecurityKey = "CheckSecurity";
       private const string ControlExtendersFolderKey = "ControlExtendersFolder";
       private const string DynamicReportsFolderKey = "DynamicReportsFolder";
       private const string EnableOutputCompressionKey = "EnableOutputCompression";
       private const string EnableOutputMinificationKey = "EnableOutputMinification";
       private const string ErrorManagerTypeInfoKey = "ErrorManagerTypeInfo";
+      private const string LookupsXmlPathKey = "AjaxLookupsXmlPath";
+      private const string MenuBarXmlPathKey = "MenuBarXmlPath";
       private const string PageManagerTypeInfoKey = "PageManagerTypeInfo";
       private const string SecurityManagerTypeInfoKey = "SecurityManagerTypeInfo";
       private const string SessionExpiredPageUrlKey = "SessionExpiredPageUrl";
@@ -26,6 +29,12 @@ namespace FLEX.WebForms
          get { return CachedInstance; }
       }
 
+      [ConfigurationProperty(AjaxLookupsXmlPathKey, IsRequired = false)]
+      public string AjaxLookupsXmlPath
+      {
+         get { return this[AjaxLookupsXmlPathKey] as string; }
+      }
+
       [ConfigurationProperty(CheckSecurityKey, IsRequired = false, DefaultValue = true)]
       public bool CheckSecurity
       {
@@ -35,7 +44,7 @@ namespace FLEX.WebForms
       [ConfigurationProperty(ControlExtendersFolderKey, IsRequired = true)]
       public string ControlExtendersFolder
       {
-         get { return (string) this[ControlExtendersFolderKey]; }
+         get { return this[ControlExtendersFolderKey] as string; }
       }
 
       [ConfigurationProperty(DynamicReportsFolderKey, IsRequired = true)]
@@ -62,6 +71,18 @@ namespace FLEX.WebForms
          get { return (string) this[ErrorManagerTypeInfoKey]; }
       }
 
+      [ConfigurationProperty(LookupsXmlPathKey, IsRequired = false)]
+      public string LookupsXmlPath
+      {
+         get { return this[LookupsXmlPathKey] as string; }
+      }
+
+      [ConfigurationProperty(MenuBarXmlPathKey, IsRequired = true)]
+      public string MenuBarXmlPath
+      {
+         get { return this[MenuBarXmlPathKey] as string; }
+      }
+
       [ConfigurationProperty(PageManagerTypeInfoKey, IsRequired = true)]
       public string PageManagerTypeInfo
       {
@@ -82,9 +103,14 @@ namespace FLEX.WebForms
 
       #region Internal Settings
 
-      public static CultureInfo CurrentUserCulture
+      internal static CultureInfo CurrentUserCulture
       {
          get { return CultureInfo.CreateSpecificCulture("it-IT"); }
+      }
+
+      internal static string ExceptionSessionKey
+      {
+         get { return "C895F535-DA46-478c-ACD3-9E21B69A76D6"; }
       }
 
       #endregion

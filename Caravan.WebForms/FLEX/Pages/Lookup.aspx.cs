@@ -34,7 +34,7 @@ namespace FLEX.Web.Pages
       private static LookupData LoadLookupData(string lookup)
       {
          // At first, we create the relative path for our XML.
-         var xmlPath = Path.Combine(WebSettings.Lookup_XmlPath, lookup + Constants.XmlExtension);
+         var xmlPath = Path.Combine(WebForms.Configuration.Instance.LookupsXmlPath, lookup + Constants.XmlExtension);
 
          // And then we make it absolute to our server.
          xmlPath = HttpContext.Current.Server.MapPath(xmlPath);

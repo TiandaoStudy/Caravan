@@ -179,6 +179,11 @@
     </Compile>
     <Compile Include="Controls\ValueHolders\JQueryDatePickerOptions.cs" />
     <Compile Include="Controls\ValueHolders\ValueHolderOptionsBase.cs" />
+    <Compile Include="ErrorMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErrorMessages.resx</DependentUpon>
+    </Compile>
     <Compile Include="GlobalHelper.cs" />
     <Compile Include="Layouts\FlexSharedLayout_.generated.cs">
       <DependentUpon>FlexSharedLayout_.cshtml</DependentUpon>
@@ -558,6 +563,12 @@
       <Project>{27d82597-28b1-4441-8c42-0a220c38c4d8}</Project>
       <Name>Caravan.WebApi</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ErrorMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

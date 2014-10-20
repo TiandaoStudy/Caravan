@@ -25,7 +25,7 @@ namespace FLEX.Web.UserControls
          {
             // Legge il file XML con il quale si configura la barra del menu.
             var xml = new XmlDocument();
-            xml.Load(Server.MapPath(WebSettings.MenuBar_XmlPath));
+            xml.Load(Server.MapPath(WebForms.Configuration.Instance.MenuBarXmlPath));
            
             var sourceXml = xml.OuterXml;
             sourceXml = SecurityManager.Instance.ApplyMenuSecurity(Context.User, sourceXml);

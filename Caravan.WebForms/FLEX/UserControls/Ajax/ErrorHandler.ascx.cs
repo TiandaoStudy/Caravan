@@ -30,7 +30,7 @@ namespace FLEX.Web.UserControls.Ajax
          {
             txtSystemErrorCode.Text = locationByte.ToString(CultureInfo.InvariantCulture);
             ex = ElaborateException(ex);
-            Session[WebSettings.UserControls_Ajax_ErrorHandler_ExceptionSessionKey] = ex;
+            Session[WebForms.Configuration.ExceptionSessionKey] = ex;
             ErrorManager.Instance.LogException(ex, Page);
          }
          catch (Exception inner)
