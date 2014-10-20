@@ -15,7 +15,7 @@ using Finsa.Caravan.Diagnostics;
 using Finsa.Caravan.Extensions;
 using Finsa.Caravan.Text;
 using FLEX.Web.XmlSettings.AjaxLookup;
-using FLEX.WebForms;
+using PommaLabs.KVLite;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -32,6 +32,7 @@ namespace FLEX.Web.Services
    [ScriptService]
    public class AjaxLookup : WebService
    {
+      private const string CachePartition = "Caravan.WebForms.AjaxLookupsXml";
       private const string DefaultResultCount = "10";
       private const string QueryFilterToken = "{:QueryFilter:}";
       private const string ResultCountToken = "{:ResultCount:}";
@@ -74,8 +75,8 @@ namespace FLEX.Web.Services
          xmlPath = HttpContext.Current.Server.MapPath(xmlPath);
 
          // If cache contains an instance of the lookup data, we return it.
-         AjaxLookupDataLookupBy lookupData;
-         if (CacheManager.TryRetrieveValueForKey(out lookupData, xmlPath, lookupBy))
+         var lookupData = VolatileCache.DefaultInstance[CachePartition, xmlPath] as AjaxLookupDataLookupBy;
+         if (lookupData != null)
          {
             return lookupData;
          }
@@ -95,7 +96,7 @@ namespace FLEX.Web.Services
 
          // We store the lookup data instance inside the cache, and then we return it.
          // We must pay attention to put the type of the lookup inside the key.
-         CacheManager.StoreValueForKey(lookupData, xmlPath, lookupBy);
+         VolatileCache.DefaultInstance.AddSliding(CachePartition, xmlPath, lookupData, WebForms.Configuration.DefaultIntervalForVolatile);
          return lookupData;
       }
 

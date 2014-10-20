@@ -1,5 +1,7 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Globalization;
+using System.Web;
 
 namespace FLEX.WebForms
 {
@@ -134,6 +136,11 @@ namespace FLEX.WebForms
       internal static CultureInfo CurrentUserCulture
       {
          get { return CultureInfo.CreateSpecificCulture("it-IT"); }
+      }
+
+      internal static TimeSpan DefaultIntervalForVolatile
+      {
+         get { return TimeSpan.FromMinutes(HttpContext.Current.Session.Timeout * 2); }
       }
 
       internal static string ExceptionSessionKey

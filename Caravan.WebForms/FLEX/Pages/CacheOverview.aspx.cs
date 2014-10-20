@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Finsa.Caravan.Extensions;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
@@ -35,9 +33,9 @@ namespace FLEX.WebForms.Pages
       {
          try
          {
-            CacheManager.ClearCache();
             // Applico una pulizia sicura della cache, per evitare che le voci importanti vadano perse.
             PersistentCache.DefaultInstance.Clear(CacheReadMode.ConsiderExpirationDate);
+            VolatileCache.DefaultInstance.Clear(CacheReadMode.ConsiderExpirationDate);
             // Aggiorno la fonte dati sottostante la griglia.
             fdtgCache.UpdateDataSource();
          }
@@ -69,24 +67,28 @@ namespace FLEX.WebForms.Pages
 
       private static IEnumerable<CacheItem> GetVolatileCacheItems()
       {
-         return HttpRuntime.Cache.Cast<DictionaryEntry>().Select(x => new CacheItem {Partition = "HttpRuntime.Cache", Key = (string) x.Key, Value = x.Value.ToString(), UtcCreation = DateTime.Today});
+         return VolatileCache.DefaultInstance.GetAllItems().Select(x => new CacheItem
+         {
+            Partition = x.Partition,
+            Key = x.Key,
+            Value = x.Value.ToString(),
+            UtcCreation = x.UtcCreation.ToLocalTime(),
+            UtcExpiry = x.UtcExpiry.HasValue ? x.UtcExpiry.Value.ToLocalTime() : x.UtcExpiry,
+            Interval = x.Interval
+         });
       }
 
       private static IEnumerable<CacheItem> GetPersistentCacheItems()
       {
-         return
-            PersistentCache.DefaultInstance.GetAllItems()
-               .Select(
-                  x =>
-                     new CacheItem
-                     {
-                        Partition = x.Partition,
-                        Key = x.Key,
-                        Value = x.Value.ToString(),
-                        UtcCreation = x.UtcCreation.ToLocalTime(),
-                        UtcExpiry = x.UtcExpiry.HasValue ? x.UtcExpiry.Value.ToLocalTime() : x.UtcExpiry,
-                        Interval = x.Interval
-                     });
+         return PersistentCache.DefaultInstance.GetAllItems().Select(x => new CacheItem
+         {
+            Partition = x.Partition,
+            Key = x.Key,
+            Value = x.Value.ToString(),
+            UtcCreation = x.UtcCreation.ToLocalTime(),
+            UtcExpiry = x.UtcExpiry.HasValue ? x.UtcExpiry.Value.ToLocalTime() : x.UtcExpiry,
+            Interval = x.Interval
+         });
       }
 
       #endregion

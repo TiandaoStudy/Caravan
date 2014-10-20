@@ -9,7 +9,7 @@ using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.Diagnostics;
 using Finsa.Caravan.Extensions;
 using FLEX.Web.XmlSettings.Lookup;
-using FLEX.WebForms;
+using PommaLabs.KVLite;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -19,6 +19,8 @@ namespace FLEX.Web.Pages
 {
    public partial class Lookup : PageBase
    {
+      private const string CachePartition = "Caravan.WebForms.LookupsXml";
+
       protected void Page_Load(object sender, EventArgs e)
       {
       }
@@ -40,8 +42,8 @@ namespace FLEX.Web.Pages
          xmlPath = HttpContext.Current.Server.MapPath(xmlPath);
 
          // If cache contains an instance of the lookup data, we return it.
-         LookupData lookupData;
-         if (CacheManager.TryRetrieveValueForKey(out lookupData, xmlPath))
+         var lookupData = VolatileCache.DefaultInstance[CachePartition, xmlPath] as LookupData;
+         if (lookupData != null)
          {
             return lookupData;
          }
@@ -60,7 +62,7 @@ namespace FLEX.Web.Pages
          }
 
          // We store the lookup data instance inside the cache, and then we return it.
-         CacheManager.StoreValueForKey(lookupData, xmlPath);
+         VolatileCache.DefaultInstance.AddSliding(CachePartition, xmlPath, lookupData, WebForms.Configuration.DefaultIntervalForVolatile);
          return lookupData;
       }
 
