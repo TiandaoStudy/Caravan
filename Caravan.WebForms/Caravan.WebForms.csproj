@@ -85,14 +85,11 @@
     </Reference>
     <Reference Include="PommaLabs.KVLite, Version=0.4.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.KVLite.0.4.5\lib\net40\PommaLabs.KVLite.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.KVLite.0.4.6\lib\net40\PommaLabs.KVLite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite">
-      <HintPath>..\packages\System.Data.SQLite.Core.MSIL.1.0.94.0\lib\net40\System.Data.SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="System.IO">
       <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\net40\System.IO.dll</HintPath>
     </Reference>
@@ -442,7 +439,6 @@
     <Compile Include="FLEX\UserControls\Ajax\ErrorHandler.ascx.designer.cs">
       <DependentUpon>ErrorHandler.ascx</DependentUpon>
     </Compile>
-    <Compile Include="WebSettings.cs" />
     <Compile Include="XsdClassGen.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

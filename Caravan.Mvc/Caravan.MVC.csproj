@@ -57,8 +57,9 @@
     <Reference Include="PommaLabs.GRAMPA">
       <HintPath>..\packages\PommaLabs.GRAMPA.0.18.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.KVLite">
-      <HintPath>..\packages\PommaLabs.KVLite.0.4.5\lib\net40\PommaLabs.KVLite.dll</HintPath>
+    <Reference Include="PommaLabs.KVLite, Version=0.4.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PommaLabs.KVLite.0.4.6\lib\net40\PommaLabs.KVLite.dll</HintPath>
     </Reference>
     <Reference Include="RazorGenerator.Mvc">
       <HintPath>..\packages\RazorGenerator.Mvc.2.2.3\lib\net40\RazorGenerator.Mvc.dll</HintPath>
@@ -70,10 +71,6 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite, Version=1.0.94.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\System.Data.SQLite.Core.MSIL.1.0.94.0\lib\net45\System.Data.SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
