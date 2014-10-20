@@ -1,6 +1,5 @@
 ﻿using System.Data.Common;
 using System.Data.Entity;
-using Finsa.Caravan.DataModel;
 
 namespace Finsa.Caravan.DataAccess
 {

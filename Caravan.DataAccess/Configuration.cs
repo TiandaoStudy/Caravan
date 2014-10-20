@@ -9,7 +9,7 @@ namespace Finsa.Caravan.DataAccess
       private const string SectionName = "finsa.caravan.dataaccess";
       private const string CachePartitionName = "Caravan.DataAccess";
       private const string ConnectionStringKey = "ConnectionString";
-      private const string DatabaseVendorKey = "DatabaseVendor";
+      private const string DatabaseVendorKey = "DatabaseKind";
       private const string OracleRunnerKey = "OracleRunner";
       private const string OracleStatementCacheSizeKey = "OracleStatementCacheSize";
 
@@ -42,9 +42,9 @@ namespace Finsa.Caravan.DataAccess
       }
 
       [ConfigurationProperty(DatabaseVendorKey, IsRequired = true)]
-      public DatabaseVendor DatabaseVendor
+      public DatabaseKind DatabaseKind
       {
-         get { return (DatabaseVendor) this[DatabaseVendorKey]; }
+         get { return (DatabaseKind) this[DatabaseVendorKey]; }
       }
 
       [ConfigurationProperty(OracleRunnerKey, IsRequired = false, DefaultValue = "")]

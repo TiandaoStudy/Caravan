@@ -1,5 +1,4 @@
-﻿using System.Data;
-using System.Data.Common;
+﻿using System.Data.Common;
 
 namespace Finsa.Caravan.DataAccess
 {
@@ -8,7 +7,7 @@ namespace Finsa.Caravan.DataAccess
    /// </summary>
    public interface IQueryExecutor
    {
-      DatabaseVendor Vendor { get; }
+      DatabaseKind Kind { get; }
 
       /// <summary>
       /// 
@@ -23,10 +22,12 @@ namespace Finsa.Caravan.DataAccess
       DbConnection OpenConnection();
    }
 
-   public enum DatabaseVendor
+   public enum DatabaseKind
    {
       Dummy,
       Oracle,
+      Postgres,
+      Remote,
       SqlServer,
       SqlServerCe
    }

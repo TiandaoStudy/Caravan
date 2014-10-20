@@ -4,13 +4,13 @@ using System.Linq;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel;
 
-namespace Finsa.Caravan.DataAccess.Oracle
+namespace Finsa.Caravan.DataAccess.Direct
 {
-   public sealed class OracleSecurityManager : SecurityManagerBase
+   public sealed class DirectSecurityManager : SecurityManagerBase
    {
       protected override IEnumerable<SecApp> GetApps(string appName)
       {
-         using (var ctx = new OracleDbContext())
+         using (var ctx = Db.CreateContext())
          {
             return (from a in ctx.SecApps.Include("Users.Groups").Include(a => a.Groups).Include(a => a.LogSettings)
                     where appName == null || a.Name == appName.ToLower()
@@ -21,7 +21,7 @@ namespace Finsa.Caravan.DataAccess.Oracle
 
       protected override IEnumerable<SecGroup> GetGroups(string appName)
       {
-         using (var ctx = new OracleDbContext())
+         using (var ctx = Db.CreateContext())
          {
             return (from g in ctx.SecGroups.Include(u => u.Users)
                     where appName == null || g.App.Name == appName.ToLower()
@@ -32,7 +32,7 @@ namespace Finsa.Caravan.DataAccess.Oracle
 
       protected override IEnumerable<SecUser> GetUsers(string appName)
       {
-         using (var ctx = new OracleDbContext())
+         using (var ctx = Db.CreateContext())
          {
             return (from u in ctx.SecUsers.Include(u => u.Groups)
                     where appName == null || u.App.Name == appName.ToLower()

@@ -3,7 +3,7 @@ using System.Data.Entity;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel;
 
-namespace Finsa.Caravan.DataAccess.Oracle
+namespace Finsa.Caravan.DataAccess.Direct.Oracle
 {
    internal sealed class OracleDbContext : DbContextBase
    {

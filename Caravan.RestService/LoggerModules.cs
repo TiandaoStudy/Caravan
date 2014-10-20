@@ -12,20 +12,20 @@ namespace Finsa.Caravan.RestService
       public LogsModule() : base("logs")
       {
          Get["/"] = _ => Db.Logger.Logs();
-         Get["/{applicationName}"] = p => Db.Logger.Logs((string) p.applicationName);
-         Get["/{applicationName}/{logType}"] = p => Db.Logger.Logs((string) p.applicationName, SafeParseLogType((string) p.logType));
+         Get["/{appName}"] = p => Db.Logger.Logs((string) p.appName);
+         Get["/{appName}/{logType}"] = p => Db.Logger.Logs((string) p.appName, SafeParseLogType((string) p.logType));
          
          Post["/"] = _ => Log(null, null);
-         Post["/{applicationName}"] = p => Log(p.applicationName, null);
-         Post["/{applicationName}/{logType}"] = p => Log(p.applicationName, ParseLogType((string) p.logType));
+         Post["/{appName}"] = p => Log(p.appName, null);
+         Post["/{appName}/{logType}"] = p => Log(p.appName, ParseLogType((string) p.logType));
       }
 
-      private Response Log(string applicationName, LogType? logType)
+      private Response Log(string appName, LogType? logType)
       {
          LogEntry e;
          try
          {
-            e = PrepareEntry((string) Request.Form.entry, applicationName, logType);
+            e = PrepareEntry((string) Request.Form.entry, appName, logType);
          }
          catch (Exception ex)
          {
@@ -35,14 +35,14 @@ namespace Finsa.Caravan.RestService
          return Response.AsJson(result);
       }
 
-      private static LogEntry PrepareEntry(string json, string applicationName, LogType? logType)
+      private static LogEntry PrepareEntry(string json, string appName, LogType? logType)
       {
          var entry = JsonConvert.DeserializeObject<LogEntry>(json);
          if (entry == null)
          {
             throw new Exception(ErrorMessages.LogsModule_InvalidEntry);
          }
-         if (applicationName == null)
+         if (appName == null)
          {
             if (String.IsNullOrWhiteSpace(entry.App.Name))
             {
@@ -51,7 +51,7 @@ namespace Finsa.Caravan.RestService
          }
          else
          {
-            entry.App = new SecApp {Name = applicationName};
+            entry.App = new SecApp {Name = appName};
          }
          if (logType == null)
          {
@@ -73,8 +73,8 @@ namespace Finsa.Caravan.RestService
       public LogSettingsModule() : base("/logSettings")
       {
          Get["/"] = _ => Db.Logger.LogSettings();
-         Get["/{applicationName}"] = p => Db.Logger.LogSettings((string) p.applicationName);
-         Get["/{applicationName}/{logType}"] = p => Db.Logger.LogSettings((string) p.applicationName, SafeParseLogType((string) p.logType));
+         Get["/{appName}"] = p => Db.Logger.LogSettings((string) p.appName);
+         Get["/{appName}/{logType}"] = p => Db.Logger.LogSettings((string) p.appName, SafeParseLogType((string) p.logType));
       }
    }
 }

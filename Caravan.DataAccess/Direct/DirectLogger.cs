@@ -7,9 +7,9 @@ using Finsa.Caravan.DataModel;
 using Finsa.Caravan.Diagnostics;
 using Finsa.Caravan.Extensions;
 
-namespace Finsa.Caravan.DataAccess.Oracle
+namespace Finsa.Caravan.DataAccess.Direct
 {
-   public sealed class OracleLogger : LoggerBase
+   public sealed class DirectLogger : LoggerBase
    {
       #region Constants
 
@@ -32,7 +32,7 @@ namespace Finsa.Caravan.DataAccess.Oracle
             var argsList = (args == null) ? new GKeyValuePair<string, string>[0] : args.ToArray();
             Raise<ArgumentOutOfRangeException>.If(argsList.Length > MaxArgumentCount);
 
-            using (var ctx = new OracleDbContext())
+            using (var ctx = Db.CreateContext())
             using (var trx = ctx.BeginTransaction())
             {
                try
@@ -72,7 +72,7 @@ namespace Finsa.Caravan.DataAccess.Oracle
 
       protected override IEnumerable<LogEntry> GetLogs(string appName, LogType? logType)
       {
-         using (var ctx = new OracleDbContext())
+         using (var ctx = Db.CreateContext())
          {
             return (from s in ctx.LogEntry.Include(s => s.App)
                     where appName == null || s.App.Name == appName.ToLower()
@@ -84,7 +84,7 @@ namespace Finsa.Caravan.DataAccess.Oracle
 
       protected override IList<LogSettings> GetLogSettings(string appName, LogType? logType)
       {
-         using (var ctx = new OracleDbContext())
+         using (var ctx = Db.CreateContext())
          {
             return (from s in ctx.LogSettings.Include(s => s.App)
                     where appName == null || s.App.Name == appName.ToLower()

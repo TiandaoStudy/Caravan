@@ -2,30 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.DataAccess.Direct;
+using Finsa.Caravan.DataAccess.Direct.Oracle;
 using Finsa.Caravan.DataAccess.Oracle;
 
 namespace Finsa.Caravan.DataAccess
 {
    public static class Db
    {
-      private static readonly ILogger LoggerInstance = new OracleLogger();
-      private static readonly ISecurityManager SecurityManagerInstance = new OracleSecurityManager();
+      private static readonly ILogger LoggerInstance = new DirectLogger();
+      private static readonly ISecurityManager SecurityManagerInstance = new DirectSecurityManager();
       private static readonly IQueryExecutor QueryExecutorInstance;
       private static readonly Func<DbContextBase> DbContextGenerator;
 
       static Db()
       {
-         switch (Configuration.Instance.DatabaseVendor)
+         switch (Configuration.Instance.DatabaseKind)
          {
-            case DatabaseVendor.Dummy:
+            case DatabaseKind.Dummy:
                break;
-            case DatabaseVendor.Oracle:
+            case DatabaseKind.Oracle:
                QueryExecutorInstance = new OracleQueryExecutor();
                DbContextGenerator = OracleDbContextGenerator;
                break;
-            case DatabaseVendor.SqlServer:
+            case DatabaseKind.SqlServer:
                break;
-            case DatabaseVendor.SqlServerCe:
+            case DatabaseKind.SqlServerCe:
                break;
          }
       }
@@ -45,7 +47,7 @@ namespace Finsa.Caravan.DataAccess
          get { return SecurityManagerInstance; }
       }
 
-      internal static DbContextBase CreateDbContext()
+      internal static DbContextBase CreateContext()
       {
          return DbContextGenerator();
       }

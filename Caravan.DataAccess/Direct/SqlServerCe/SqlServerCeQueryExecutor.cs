@@ -6,9 +6,9 @@ namespace Finsa.Caravan.DataAccess.SqlServerCe
 	{
 		private static readonly DbProviderFactory DbFactory = DbProviderFactories.GetFactory("System.Data.SqlServerCe.4.0");
 
-	   public DatabaseVendor Vendor
+	   public DatabaseKind Kind
 	   {
-	      get { return DatabaseVendor.SqlServerCe; }
+	      get { return DatabaseKind.SqlServerCe; }
 	   }
 
 	   public void ElaborateConnectionString(ref string connectionString)
