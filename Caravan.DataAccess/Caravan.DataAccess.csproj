@@ -61,8 +61,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\External Libraries\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.KVLite">
-      <HintPath>..\packages\PommaLabs.KVLite.0.4.3\lib\net40\PommaLabs.KVLite.dll</HintPath>
+    <Reference Include="PommaLabs.GRAMPA">
+      <HintPath>..\packages\PommaLabs.GRAMPA.0.18.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+    </Reference>
+    <Reference Include="PommaLabs.KVLite, Version=0.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PommaLabs.KVLite.0.4.4\lib\net40\PommaLabs.KVLite.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.104.5.0\lib\net4\RestSharp.dll</HintPath>
