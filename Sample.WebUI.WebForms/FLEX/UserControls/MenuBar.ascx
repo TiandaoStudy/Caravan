@@ -1,5 +1,4 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MenuBar.ascx.cs" Inherits="FLEX.Web.UserControls.MenuBar" %>
-<%@ Import Namespace="FLEX.Web" %>
 <%@ Import Namespace="FLEX.Web.MasterPages" %>
 
 <style>
@@ -116,7 +115,7 @@
                <span class="icon-bar"></span>
                <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#" onclick="<%= WebSettings.UserControls_MenuBar_BrandClick %>">
+            <a class="navbar-brand" href="#" onclick="<%= FLEX.WebForms.Configuration.Instance.MenuBarBrandClick %>">
                <img src='<%= Head.MyFlexPath %>/Images/logo-menubar.png' class='logo' alt='Logo' />&nbsp;<%= Finsa.Caravan.Configuration.Instance.ApplicationName %>
             </a>
          </div>
@@ -124,17 +123,17 @@
             <ul class="nav navbar-nav" id="ul_menu" runat="server"></ul>
             <ul class="nav navbar-nav navbar-right">
                <li>
-                  <a href="#" onclick="<%= WebSettings.UserControls_MenuBar_HomeClick %>">
+                  <a href="#" onclick="<%= FLEX.WebForms.Configuration.Instance.MenuBarHomeClick %>">
                      <span class="glyphicon glyphicon-home padded-icon"></span>Home
                   </a>
                </li>
                <li>
-                  <a href="#" onclick="<%= WebSettings.UserControls_MenuBar_LogoutClick %>">
+                  <a href="#" onclick="<%= FLEX.WebForms.Configuration.Instance.MenuBarLogoutClick %>">
                      <span class="glyphicon glyphicon-circle-arrow-left padded-icon"></span>Logout
                   </a>
                </li>
                <li>
-                  <a href="#" onclick="<%= WebSettings.UserControls_MenuBar_InfoClick %>">
+                  <a href="#" onclick="<%= FLEX.WebForms.Configuration.Instance.MenuBarInfoClick %>">
                      <span class="glyphicon glyphicon-info-sign padded-icon"></span>Info
                   </a>
                </li>

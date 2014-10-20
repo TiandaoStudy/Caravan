@@ -17,6 +17,10 @@ namespace FLEX.WebForms
       private const string EnableOutputMinificationKey = "EnableOutputMinification";
       private const string ErrorManagerTypeInfoKey = "ErrorManagerTypeInfo";
       private const string LookupsXmlPathKey = "AjaxLookupsXmlPath";
+      private const string MenuBarBrandClickKey = "MenuBarBrandClick";
+      private const string MenuBarHomeClickKey = "MenuBarHomeClick";
+      private const string MenuBarInfoClickKey = "MenuBarInfoClick";
+      private const string MenuBarLogoutClickKey = "MenuBarLogoutClick";
       private const string MenuBarXmlPathKey = "MenuBarXmlPath";
       private const string PageManagerTypeInfoKey = "PageManagerTypeInfo";
       private const string SecurityManagerTypeInfoKey = "SecurityManagerTypeInfo";
@@ -75,6 +79,30 @@ namespace FLEX.WebForms
       public string LookupsXmlPath
       {
          get { return this[LookupsXmlPathKey] as string; }
+      }
+
+      [ConfigurationProperty(MenuBarBrandClickKey, IsRequired = true)]
+      public string MenuBarBrandClick
+      {
+         get { return this[MenuBarBrandClickKey] as string; }
+      }
+
+      [ConfigurationProperty(MenuBarHomeClickKey, IsRequired = true)]
+      public string MenuBarHomeClick
+      {
+         get { return this[MenuBarHomeClickKey] as string; }
+      }
+
+      [ConfigurationProperty(MenuBarInfoClickKey, IsRequired = true)]
+      public string MenuBarInfoClick
+      {
+         get { return this[MenuBarInfoClickKey] as string; }
+      }
+
+      [ConfigurationProperty(MenuBarLogoutClickKey, IsRequired = true)]
+      public string MenuBarLogoutClick
+      {
+         get { return this[MenuBarLogoutClickKey] as string; }
       }
 
       [ConfigurationProperty(MenuBarXmlPathKey, IsRequired = true)]
