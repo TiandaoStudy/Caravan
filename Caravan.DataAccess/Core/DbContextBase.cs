@@ -9,7 +9,7 @@ namespace Finsa.Caravan.DataAccess.Core
       {
       }
 
-      public DbSet<LogEntry> LogEntry { get; set; }
+      public DbSet<LogEntry> LogEntries { get; set; }
       public DbSet<LogSettings> LogSettings { get; set; }
       public DbSet<SecApp> SecApps { get; set; }
       public DbSet<SecGroup> SecGroups { get; set; }

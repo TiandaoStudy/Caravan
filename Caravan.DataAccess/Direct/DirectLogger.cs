@@ -35,13 +35,36 @@ namespace Finsa.Caravan.DataAccess.Direct
             using (var ctx = Db.CreateContext())
             using (var trx = ctx.BeginTransaction())
             {
-               try
+               var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
+               var typeId = type.ToString().ToLower();
+               var settings = ctx.LogSettings.First(s => s.AppId == appId && s.TypeString == typeId);
+
+               // We delete logs older than "settings.Days"
+               var oldLogs = from l in ctx.LogEntries
+                             where l.AppId == appId && l.TypeId == typeId
+                             where l.Date < DateTime.Now.Subtract(TimeSpan.FromDays(settings.Days))
+                             select l;
+               ctx.LogEntries.RemoveRange(oldLogs);
+
+               // We delete enough entries to preserve the upper limit
+               var logCount = ctx.LogEntries.Count(e => e.AppId == appId && e.TypeId == typeId);
+               if (logCount >= settings.MaxEntries)
                {
-                  var logEntry = new LogEntry
+                  var olderLogs = (from l in ctx.LogEntries
+                                   where l.AppId == appId && l.TypeId == typeId
+                                   orderby l.Date ascending 
+                                   select l).Take(logCount - settings.MaxEntries + 1);
+                  ctx.LogEntries.RemoveRange(olderLogs);
+               }
+
+               // If log is enabled, then we can insert a new entry
+               if (settings.Enabled)
+               {
+                  ctx.LogEntries.Add(new LogEntry
                   {
-                     Id = ctx.LogEntry.Max(e => (long?) e.Id) ?? 0,
-                     AppId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First(),
-                     TypeString = type.ToString(),
+                     Id = ctx.LogEntries.Max(e => (long?) e.Id) ?? 0,
+                     AppId = appId,
+                     TypeId = typeId,
                      UserLogin = GetCurrentUserName(userName).Truncate(MaxUserNameLength),
                      CodeUnit = codeUnit.Truncate(MaxCodeUnitLength),
                      Function = function.Truncate(MaxFunctionLength),
@@ -49,19 +72,12 @@ namespace Finsa.Caravan.DataAccess.Direct
                      LongMessage = longMessage == null ? LogEntry.NotSpecified : longMessage.Truncate(MaxLongMessageLength),
                      Context = context == null ? LogEntry.NotSpecified : context.Truncate(MaxContextLength),
                      Arguments = argsList
-                  };
-
-                  ctx.LogEntry.Add(logEntry);
-                  ctx.SaveChanges();
-
-                  trx.Commit();
-                  return LogResult.Success;
+                  });
                }
-               catch
-               {
-                  trx.Rollback();
-                  throw;
-               }
+               
+               ctx.SaveChanges();
+               trx.Commit();
+               return LogResult.Success;
             }
          }
          catch (Exception ex)
@@ -74,10 +90,10 @@ namespace Finsa.Caravan.DataAccess.Direct
       {
          using (var ctx = Db.CreateContext())
          {
-            return (from s in ctx.LogEntry.Include(s => s.App)
+            return (from s in ctx.LogEntries.Include(s => s.App)
                     where appName == null || s.App.Name == appName.ToLower()
-                    where logType == null || s.TypeString == logType.ToString().ToLower()
-                    orderby s.App.Name, s.TypeString, s.Date descending
+                    where logType == null || s.TypeId == logType.ToString().ToLower()
+                    orderby s.App.Name, s.TypeId, s.Date descending
                     select s).ToList();
          }
       }
