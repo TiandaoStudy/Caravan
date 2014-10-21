@@ -23,6 +23,9 @@ namespace Finsa.Caravan.DataModel
       public virtual ICollection<SecGroup> Groups { get; set; }
       
       [JsonProperty(Order = 5)]
+      public virtual ICollection<SecContext> Contexts { get; set; }
+         
+      [JsonProperty(Order = 6)]
       public virtual ICollection<LogSettings> LogSettings { get; set; }
 
       [JsonIgnore]

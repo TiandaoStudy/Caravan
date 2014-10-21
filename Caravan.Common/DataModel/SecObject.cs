@@ -3,7 +3,7 @@
 namespace Finsa.Caravan.DataModel
 {
    [Serializable]
-   public class SecAction
+   public class SecObject
    {
    }
 }

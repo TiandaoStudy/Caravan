@@ -21,5 +21,10 @@ namespace Finsa.Caravan.DataAccess.Remote
       {
          throw new NotImplementedException();
       }
+
+      protected override IEnumerable<SecContext> GetContexts(string appName)
+      {
+         throw new NotImplementedException();
+      }
    }
 }

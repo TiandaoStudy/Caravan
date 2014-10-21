@@ -136,8 +136,9 @@
     <Content Include="Direct\Oracle\Scripts\Tables\caravan_log_settings.sql" />
     <Content Include="Direct\Oracle\Scripts\Tables\caravan_sec_user.sql" />
     <Content Include="Direct\Oracle\Scripts\Tables\caravan_sec_user_group.sql" />
-    <Content Include="Direct\Oracle\Scripts\Tables\caravan_sec_action.sql" />
+    <Content Include="Direct\Oracle\Scripts\Tables\caravan_sec_object.sql" />
     <Content Include="Direct\Oracle\Scripts\Tables\caravan_sec_app.sql" />
+    <Content Include="Direct\Oracle\Scripts\Tables\caravan_sec_context.sql" />
     <Content Include="Direct\SqlServerCe\Scripts\Tables\caravan_log.sql" />
     <Content Include="Direct\SqlServerCe\Scripts\Tables\caravan_log_settings.sql" />
     <Content Include="Direct\SqlServerCe\Scripts\Tables\caravan_sec_app.sql" />

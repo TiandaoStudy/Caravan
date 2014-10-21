@@ -53,6 +53,21 @@ namespace Finsa.Caravan.DataAccess.Core
 
       #endregion
 
+      #region Users
+
+      public IEnumerable<SecContext> Contexts()
+      {
+         return GetContexts(null);
+      }
+
+      public IEnumerable<SecContext> Contexts(string appName)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         return GetContexts(appName);
+      }
+
+      #endregion
+
       #region Abstract Methods
 
       protected abstract IEnumerable<SecApp> GetApps(string appName);
@@ -60,6 +75,8 @@ namespace Finsa.Caravan.DataAccess.Core
       protected abstract IEnumerable<SecGroup> GetGroups(string appName);
 
       protected abstract IEnumerable<SecUser> GetUsers(string appName);
+
+      protected abstract IEnumerable<SecContext> GetContexts(string appName);
 
       #endregion
    }

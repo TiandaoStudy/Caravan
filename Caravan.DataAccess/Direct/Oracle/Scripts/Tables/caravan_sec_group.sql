@@ -14,5 +14,5 @@ CREATE TABLE mydb.caravan_sec_group
 )
 TABLESPACE dati_base;
 
-INSERT INTO mydb.caravan_sec_group (cgrp_id, capp_id, cgrp_name, cgrp_description, cgrp_admin) VALUES (0, 0, 'Admin', 'Admin Description', 1);
-INSERT INTO mydb.caravan_sec_group (cgrp_id, capp_id, cgrp_name, cgrp_description, cgrp_admin) VALUES (1, 0, 'User', 'User Description', 0);
+INSERT INTO mydb.caravan_sec_group (cgrp_id, capp_id, cgrp_name, cgrp_description, cgrp_admin) VALUES (0, 0, 'admin', 'Admin Description', 1);
+INSERT INTO mydb.caravan_sec_group (cgrp_id, capp_id, cgrp_name, cgrp_description, cgrp_admin) VALUES (1, 0, 'user', 'User Description', 0);

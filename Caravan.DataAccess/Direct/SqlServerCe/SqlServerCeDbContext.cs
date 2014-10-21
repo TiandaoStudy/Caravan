@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Finsa.Caravan.DataAccess.Direct.SqlServerCe
 {
-   class SqlServerCeDbContext
+   internal sealed class SqlServerCeDbContext
    {
    }
 }

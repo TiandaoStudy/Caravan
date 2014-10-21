@@ -61,8 +61,9 @@
     <Compile Include="DataModel\LogEntry.cs" />
     <Compile Include="DataModel\LogResult.cs" />
     <Compile Include="DataModel\LogSettings.cs" />
-    <Compile Include="DataModel\SecAction.cs" />
+    <Compile Include="DataModel\SecObject.cs" />
     <Compile Include="DataModel\SecApp.cs" />
+    <Compile Include="DataModel\SecContext.cs" />
     <Compile Include="DataModel\SecGroup.cs" />
     <Compile Include="DataModel\SecUser.cs" />
     <Compile Include="FLEX.Common.XmlSchemas.MenuEntries.Item.cs">

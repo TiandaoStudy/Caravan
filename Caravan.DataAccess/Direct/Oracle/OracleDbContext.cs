@@ -76,6 +76,25 @@ namespace Finsa.Caravan.DataAccess.Direct.Oracle
             .Map(x => x.MapLeftKey("CGRP_ID", "CGRP_APP_ID").MapRightKey("CUSR_ID", "CUSR_APP_ID").ToTable("CARAVAN_SEC_USER_GROUP"));
 
          /************************************************
+          * SecContext
+          ************************************************/
+         
+         mb.Entity<SecContext>()
+            .ToTable("CARAVAN_SEC_CONTEXT", DataAccess.Configuration.Instance.OracleUser)
+            .HasKey(x => new {x.Id, x.AppId});
+
+         mb.Entity<SecContext>().Property(x => x.Id).HasColumnName("CCTX_ID");
+         mb.Entity<SecContext>().Property(x => x.AppId).HasColumnName("CAPP_ID");
+         mb.Entity<SecContext>().Property(x => x.Name).HasColumnName("CCTX_NAME");
+         mb.Entity<SecContext>().Property(x => x.Description).HasColumnName("CCTX_DESCRIPTION");
+
+         // SecContext(N) <-> SecApp(1)
+         mb.Entity<SecContext>()
+            .HasRequired<SecApp>(x => x.App)
+            .WithMany(x => x.Contexts)
+            .HasForeignKey(x => x.AppId);
+
+         /************************************************
           * LogSettings
           ************************************************/
 

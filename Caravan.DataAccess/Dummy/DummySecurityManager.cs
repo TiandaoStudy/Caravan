@@ -1,39 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Finsa.Caravan.Collections;
+using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel;
 
 namespace Finsa.Caravan.DataAccess.Dummy
 {
-   public sealed class DummySecurityManager : ISecurityManager
+   public sealed class DummySecurityManager : SecurityManagerBase
    {
-      public IEnumerable<SecApp> Apps()
+      protected override IEnumerable<SecApp> GetApps(string appName)
       {
-         throw new NotImplementedException();
+         return ReadOnlyList.Empty<SecApp>();
       }
 
-      public SecApp App(string appName)
+      protected override IEnumerable<SecGroup> GetGroups(string appName)
       {
-         throw new NotImplementedException();
+         return ReadOnlyList.Empty<SecGroup>();
       }
 
-      public IEnumerable<SecGroup> Groups()
+      protected override IEnumerable<SecUser> GetUsers(string appName)
       {
-         throw new NotImplementedException();
+         return ReadOnlyList.Empty<SecUser>();
       }
 
-      public IEnumerable<SecGroup> Groups(string appName)
+      protected override IEnumerable<SecContext> GetContexts(string appName)
       {
-         throw new NotImplementedException();
-      }
-
-      public IEnumerable<SecUser> Users()
-      {
-         throw new NotImplementedException();
-      }
-
-      public IEnumerable<SecUser> Users(string appName)
-      {
-         throw new NotImplementedException();
+         return ReadOnlyList.Empty<SecContext>();
       }
    }
 }

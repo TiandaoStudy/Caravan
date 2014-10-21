@@ -28,5 +28,13 @@ namespace Finsa.Caravan.DataAccess
       IEnumerable<SecUser> Users(string appName);
 
       #endregion
+
+      #region Contexts
+
+      IEnumerable<SecContext> Contexts();
+
+      IEnumerable<SecContext> Contexts(string appName);
+
+      #endregion
    }
 }

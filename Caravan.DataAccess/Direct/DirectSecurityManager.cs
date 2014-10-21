@@ -12,7 +12,7 @@ namespace Finsa.Caravan.DataAccess.Direct
       {
          using (var ctx = Db.CreateContext())
          {
-            return (from a in ctx.SecApps.Include("Users.Groups").Include(a => a.Groups).Include(a => a.LogSettings)
+            return (from a in ctx.SecApps.Include("Users.Groups").Include(a => a.Groups).Include(a => a.LogSettings).Include(a => a.Contexts)
                     where appName == null || a.Name == appName.ToLower()
                     orderby a.Name
                     select a).ToLogAndList();
@@ -38,6 +38,17 @@ namespace Finsa.Caravan.DataAccess.Direct
                     where appName == null || u.App.Name == appName.ToLower()
                     orderby u.Login, u.App.Name
                     select u).ToList();
+         }
+      }
+
+      protected override IEnumerable<SecContext> GetContexts(string appName)
+      {
+         using (var ctx = Db.CreateContext())
+         {
+            return (from c in ctx.SecContexts//.Include(u => u.Groups)
+                    where appName == null || c.App.Name == appName.ToLower()
+                    orderby c.Name, c.App.Name
+                    select c).ToList();
          }
       }
    }
