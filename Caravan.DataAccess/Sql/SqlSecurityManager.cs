@@ -19,23 +19,45 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-      protected override IEnumerable<SecGroup> GetGroups(string appName)
+      protected override IEnumerable<SecGroup> GetGroups(string appName, string groupName)
       {
          using (var ctx = Db.CreateContext())
          {
             return (from g in ctx.SecGroups.Include("Users.Groups")
                     where appName == null || g.App.Name == appName.ToLower()
+                    where groupName == null || g.Name == groupName.ToLower()
                     orderby g.Name, g.App.Name
                     select g).ToList();
          }
       }
 
-      protected override IEnumerable<SecUser> GetUsers(string appName)
+      protected override void DoAddOrUpdateGroup(string appName, SecGroup group)
+      {
+         throw new System.NotImplementedException();
+      }
+
+      protected override void DoRemoveGroup(string appName, string groupName)
+      {
+         using (var ctx = Db.CreateContext())
+         using (var trx = ctx.BeginTransaction())
+         {
+            var grp = ctx.SecGroups.FirstOrDefault(g => g.App.Name == appName.ToLower() && g.Name == groupName.ToLower());
+            if (grp != null)
+            {
+               ctx.SecGroups.Remove(grp);
+            }
+            ctx.SaveChanges();
+            trx.Commit();
+         }
+      }
+
+      protected override IEnumerable<SecUser> GetUsers(string appName, string userLogin)
       {
          using (var ctx = Db.CreateContext())
          {
             return (from u in ctx.SecUsers.Include("Groups.Users")
                     where appName == null || u.App.Name == appName.ToLower()
+                    where userLogin == null || u.Login == userLogin.ToLower()
                     orderby u.Login, u.App.Name
                     select u).ToList();
          }

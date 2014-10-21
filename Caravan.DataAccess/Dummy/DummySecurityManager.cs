@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Finsa.Caravan.Collections;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel;
 
@@ -9,22 +8,32 @@ namespace Finsa.Caravan.DataAccess.Dummy
    {
       protected override IEnumerable<SecApp> GetApps(string appName)
       {
-         return ReadOnlyList.Empty<SecApp>();
+         throw new System.NotImplementedException();
       }
 
-      protected override IEnumerable<SecGroup> GetGroups(string appName)
+      protected override IEnumerable<SecGroup> GetGroups(string appName, string groupName)
       {
-         return ReadOnlyList.Empty<SecGroup>();
+         throw new System.NotImplementedException();
       }
 
-      protected override IEnumerable<SecUser> GetUsers(string appName)
+      protected override void DoAddOrUpdateGroup(string appName, SecGroup @group)
       {
-         return ReadOnlyList.Empty<SecUser>();
+         throw new System.NotImplementedException();
+      }
+
+      protected override void DoRemoveGroup(string appName, string groupName)
+      {
+         throw new System.NotImplementedException();
+      }
+
+      protected override IEnumerable<SecUser> GetUsers(string appName, string userLogin)
+      {
+         throw new System.NotImplementedException();
       }
 
       protected override IEnumerable<SecContext> GetContexts(string appName)
       {
-         return ReadOnlyList.Empty<SecContext>();
+         throw new System.NotImplementedException();
       }
    }
 }

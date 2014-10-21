@@ -12,12 +12,22 @@ namespace Finsa.Caravan.DataAccess.Rest
          throw new NotImplementedException();
       }
 
-      protected override IEnumerable<SecGroup> GetGroups(string appName)
+      protected override IEnumerable<SecGroup> GetGroups(string appName, string groupName)
       {
          throw new NotImplementedException();
       }
 
-      protected override IEnumerable<SecUser> GetUsers(string appName)
+      protected override void DoAddOrUpdateGroup(string appName, SecGroup @group)
+      {
+         throw new NotImplementedException();
+      }
+
+      protected override void DoRemoveGroup(string appName, string groupName)
+      {
+         throw new NotImplementedException();
+      }
+
+      protected override IEnumerable<SecUser> GetUsers(string appName, string userLogin)
       {
          throw new NotImplementedException();
       }
