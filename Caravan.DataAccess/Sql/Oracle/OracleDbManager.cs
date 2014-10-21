@@ -2,7 +2,7 @@ using System.Data.Common;
 using System.Globalization;
 using Oracle.ManagedDataAccess.Client;
 
-namespace Finsa.Caravan.DataAccess.Direct.Oracle
+namespace Finsa.Caravan.DataAccess.Sql.Oracle
 {
    public sealed class OracleDbManager : IDbManager
    {

@@ -7,9 +7,9 @@ using Finsa.Caravan.DataModel;
 using Finsa.Caravan.Diagnostics;
 using Finsa.Caravan.Extensions;
 
-namespace Finsa.Caravan.DataAccess.Direct
+namespace Finsa.Caravan.DataAccess.Sql
 {
-   public sealed class DirectLogManager : LogManagerBase
+   public sealed class SqlLogManager : LogManagerBase
    {
       #region Constants
 

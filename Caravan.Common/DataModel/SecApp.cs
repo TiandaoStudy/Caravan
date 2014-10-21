@@ -24,7 +24,10 @@ namespace Finsa.Caravan.DataModel
       
       [JsonProperty(Order = 5)]
       public virtual ICollection<SecContext> Contexts { get; set; }
-         
+      
+      [JsonIgnore]
+      public virtual ICollection<SecObject> Objects { get; set; } 
+
       [JsonProperty(Order = 6)]
       public virtual ICollection<LogSettings> LogSettings { get; set; }
 

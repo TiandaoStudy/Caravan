@@ -4,15 +4,15 @@ using System.Linq;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel;
 
-namespace Finsa.Caravan.DataAccess.Direct
+namespace Finsa.Caravan.DataAccess.Sql
 {
-   public sealed class DirectSecurityManager : SecurityManagerBase
+   public sealed class SqlSecurityManager : SecurityManagerBase
    {
       protected override IEnumerable<SecApp> GetApps(string appName)
       {
          using (var ctx = Db.CreateContext())
          {
-            return (from a in ctx.SecApps.Include("Users.Groups").Include(a => a.Groups).Include(a => a.LogSettings).Include(a => a.Contexts)
+            return (from a in ctx.SecApps.Include("Users.Groups").Include(a => a.Groups).Include(a => a.LogSettings).Include("Contexts.Objects")
                     where appName == null || a.Name == appName.ToLower()
                     orderby a.Name
                     select a).ToLogAndList();

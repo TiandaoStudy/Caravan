@@ -5,16 +5,16 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataAccess.Direct;
-using Finsa.Caravan.DataAccess.Direct.Oracle;
-using Finsa.Caravan.DataAccess.Direct.SqlServerCe;
+using Finsa.Caravan.DataAccess.Sql;
+using Finsa.Caravan.DataAccess.Sql.Oracle;
+using Finsa.Caravan.DataAccess.Sql.SqlServerCe;
 
 namespace Finsa.Caravan.DataAccess
 {
    public static class Db
    {
-      private static readonly ILogManager LogManagerInstance = new DirectLogManager();
-      private static readonly ISecurityManager SecurityManagerInstance = new DirectSecurityManager();
+      private static readonly ILogManager LogManagerInstance = new SqlLogManager();
+      private static readonly ISecurityManager SecurityManagerInstance = new SqlSecurityManager();
       private static readonly IDbManager DbManagerInstance;
       private static readonly Func<DbContextBase> DbContextGenerator;
 
@@ -32,6 +32,7 @@ namespace Finsa.Caravan.DataAccess
                break;
             case DataAccessKind.SqlServerCe:
                DbManagerInstance = new SqlServerCeDbManager();
+               DbContextGenerator = SqlServerCeDbContextGenerator;
                break;
          }
       }
@@ -61,6 +62,11 @@ namespace Finsa.Caravan.DataAccess
       private static OracleDbContext OracleDbContextGenerator()
       {
          return new OracleDbContext();
+      }
+
+      private static SqlServerCeDbContext SqlServerCeDbContextGenerator()
+      {
+         return new SqlServerCeDbContext();
       }
 
       #endregion

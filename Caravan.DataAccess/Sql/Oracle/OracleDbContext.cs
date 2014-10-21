@@ -3,7 +3,7 @@ using System.Data.Entity;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel;
 
-namespace Finsa.Caravan.DataAccess.Direct.Oracle
+namespace Finsa.Caravan.DataAccess.Sql.Oracle
 {
    internal sealed class OracleDbContext : DbContextBase
    {
@@ -92,6 +92,33 @@ namespace Finsa.Caravan.DataAccess.Direct.Oracle
          mb.Entity<SecContext>()
             .HasRequired<SecApp>(x => x.App)
             .WithMany(x => x.Contexts)
+            .HasForeignKey(x => x.AppId);
+
+         /************************************************
+          * SecObject
+          ************************************************/
+         
+         mb.Entity<SecObject>()
+            .ToTable("CARAVAN_SEC_OBJECT", DataAccess.Configuration.Instance.OracleUser)
+            .HasKey(x => new {x.Id, x.ContextId, x.AppId});
+
+         mb.Entity<SecObject>().Property(x => x.Id).HasColumnName("COBJ_ID");
+         mb.Entity<SecObject>().Property(x => x.ContextId).HasColumnName("CCTX_ID");
+         mb.Entity<SecObject>().Property(x => x.AppId).HasColumnName("CAPP_ID");
+         mb.Entity<SecObject>().Property(x => x.Name).HasColumnName("COBJ_NAME");
+         mb.Entity<SecObject>().Property(x => x.Description).HasColumnName("COBJ_DESCRIPTION");
+         mb.Entity<SecObject>().Property(x => x.Type).HasColumnName("COBJ_TYPE");
+
+         // SecObject(N) <-> SecContext(1)
+         mb.Entity<SecObject>()
+            .HasRequired<SecContext>(x => x.Context)
+            .WithMany(x => x.Objects)
+            .HasForeignKey(x => new {x.ContextId, x.AppId});
+
+         // SecObject(N) <-> SecApp(1)
+         mb.Entity<SecObject>()
+            .HasRequired<SecApp>(x => x.App)
+            .WithMany(x => x.Objects)
             .HasForeignKey(x => x.AppId);
 
          /************************************************

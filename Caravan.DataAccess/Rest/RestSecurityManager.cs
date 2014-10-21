@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel;
 
-namespace Finsa.Caravan.DataAccess.Remote
+namespace Finsa.Caravan.DataAccess.Rest
 {
-   public sealed class RemoteSecurityManager : SecurityManagerBase
+   public sealed class RestSecurityManager : SecurityManagerBase
    {
       protected override IEnumerable<SecApp> GetApps(string appName)
       {

@@ -1,6 +1,6 @@
 using System.Data.Common;
 
-namespace Finsa.Caravan.DataAccess.Direct.SqlServerCe
+namespace Finsa.Caravan.DataAccess.Sql.SqlServerCe
 {
 	public sealed class SqlServerCeDbManager : IDbManager
 	{
