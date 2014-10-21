@@ -40,9 +40,10 @@ namespace Finsa.Caravan.DataAccess.Direct
                var settings = ctx.LogSettings.First(s => s.AppId == appId && s.TypeId == typeId);
 
                // We delete logs older than "settings.Days"
+               var minDate = DateTime.Now.Subtract(TimeSpan.FromDays(settings.Days));
                var oldLogs = from l in ctx.LogEntries
                              where l.AppId == appId && l.TypeId == typeId
-                             where l.Date < DateTime.Now.Subtract(TimeSpan.FromDays(settings.Days))
+                             where l.Date < minDate
                              select l;
                ctx.LogEntries.RemoveRange(oldLogs);
 
@@ -62,7 +63,8 @@ namespace Finsa.Caravan.DataAccess.Direct
                {
                   ctx.LogEntries.Add(new LogEntry
                   {
-                     Id = ctx.LogEntries.Max(e => (long?) e.Id) ?? 0,
+                     Id = (ctx.LogEntries.Max(e => (long?) e.Id) ?? -1) + 1,
+                     Date = DateTime.Now,
                      AppId = appId,
                      TypeId = typeId,
                      UserLogin = GetCurrentUserName(userName).Truncate(MaxUserNameLength),

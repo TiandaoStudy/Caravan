@@ -393,6 +393,7 @@ create or replace PACKAGE body          mydb.pck_caravan_log AS
       v_days        NUMBER(3);
       v_max_entries NUMBER(5);
       v_entry_count NUMBER(5);
+      v_max_id      NUMBER;
    BEGIN
       
       SELECT clos_enabled, clos_days, clos_max_entries
@@ -433,12 +434,16 @@ create or replace PACKAGE body          mydb.pck_caravan_log AS
       END;
       
       -- If log is enabled, then we can insert a new entry
-      IF v_enabled = 1 THEN         
+      IF v_enabled = 1 THEN
+         SELECT NVL(MAX(clog_id) + 1, 0) 
+           INTO v_max_id
+           FROM mydb.caravan_log;
+
          INSERT INTO mydb.caravan_log(clog_id, clog_date, clos_type, capp_id, clog_user, clog_code_unit, clog_function, 
                                    clog_short_msg, clog_long_msg, clog_context, 
                                    clog_key_0, clog_value_0, clog_key_1, clog_value_1, clog_key_2, clog_value_2, clog_key_3, clog_value_3, clog_key_4, clog_value_4,
                                    clog_key_5, clog_value_5, clog_key_6, clog_value_6, clog_key_7, clog_value_7, clog_key_8, clog_value_8, clog_key_9, clog_value_9)
-                           VALUES (mydb.caravan_log_seq.nextval, sysdate, lower(p_type), p_app_id, lower(p_user), lower(p_code_unit), lower(p_function), 
+                           VALUES (v_max_id, sysdate, lower(p_type), p_app_id, lower(p_user), lower(p_code_unit), lower(p_function), 
                                    p_short_msg, p_long_msg, p_context,
                                    lower(p_key_0), p_value_0, lower(p_key_1), p_value_1, lower(p_key_2), p_value_2, lower(p_key_3), p_value_3, lower(p_key_4), p_value_4,
                                    lower(p_key_5), p_value_5, lower(p_key_6), p_value_6, lower(p_key_7), p_value_7, lower(p_key_8), p_value_8, lower(p_key_9), p_value_9);         

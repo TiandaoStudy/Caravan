@@ -148,7 +148,7 @@ namespace Finsa.Caravan.DataAccess.Direct.Oracle
          mb.Entity<LogEntry>()
             .HasRequired<LogSettings>(x => x.LogSettings)
             .WithMany(x => x.LogEntries)
-            .HasForeignKey(x => new {x.AppId, TypeString = x.TypeId});
+            .HasForeignKey(x => new {x.AppId, x.TypeId});
       }
    }
 }
