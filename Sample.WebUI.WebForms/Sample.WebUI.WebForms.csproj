@@ -98,6 +98,7 @@
       <HintPath>..\External Libraries\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.ManagedDataAccess.EntityFramework">
+       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\External Libraries\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="PommaLabs.GRAMPA">

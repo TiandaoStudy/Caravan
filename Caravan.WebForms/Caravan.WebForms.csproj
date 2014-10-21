@@ -604,7 +604,6 @@
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
-    <None Include="app.config" />
     <None Include="CHANGELOG.md" />
     <None Include="FLEX\Fonts\foundation-icons.eot" />
     <None Include="FLEX\Fonts\foundation-icons.ttf" />
@@ -970,7 +969,10 @@
       <Name>Caravan.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="FLEX\Pages\Security\" />
+    <Folder Include="FLEX\Pages\Tools\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>:: FONTS - Package

@@ -356,7 +356,6 @@
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
-    <None Include="app.config" />
     <None Include="bower.json" />
     <None Include="Controls\DataVisualization\FlexDataGrid_.cshtml">
       <Generator>RazorGenerator</Generator>
