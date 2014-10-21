@@ -57,7 +57,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration.cs" />
+    <Compile Include="Common\Configuration.cs" />
     <Compile Include="DataModel\LogEntry.cs" />
     <Compile Include="DataModel\LogResult.cs" />
     <Compile Include="DataModel\LogSettings.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using Finsa.Caravan;
+using Finsa.Caravan.Common;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

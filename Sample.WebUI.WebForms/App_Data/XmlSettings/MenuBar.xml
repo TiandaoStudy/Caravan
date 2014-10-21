@@ -70,8 +70,8 @@
          </Item>
          <Item ID="Item59" Caption="Security" ItemWidth="90px">
             <Group Layout="Vertical" OffsetX="-1" OffsetY="-1" Filter="DropShadow" Filter_DropShadow_Color="#dddddd" Filter_DropShadow_OffsetX="3" Filter_DropShadow_OffsetY="3" Transition="None">
-               <Item ID="Item60"  ItemWidth="100px" Caption="User" ClientCall="FLEX_RunFromMenu('SecUtenteListaInit.aspx?INIT=SRC')" />
-               <Item ID="Item61" Caption="Group" ClientCall="FLEX_RunFromMenu('SecGruppoLista.aspx?INIT=SRC')" />
+               <Item ID="Item60"  ItemWidth="100px" Caption="Users" ClientCall="FLEX_RunFromMenu('SecUtenteListaInit.aspx?INIT=SRC')" />
+               <Item ID="Item61" Caption="Groups" ClientCall="FLEX_RunFromMenu('FLEX/Pages/SecGroupList.aspx')" />
                <Item ID="Item62" Caption="Menu" ClientCall="FLEX_RunFromMenu('SecMenu.aspx?INIT=SRC')" />
                <Item ID="Item63" Caption="Functions" ClientCall="FLEX_RunFromMenu('SecFunctions.aspx?INIT=SRC')" />
                <Item ID="Item64" Caption="Reports" ItemWidth="100px">

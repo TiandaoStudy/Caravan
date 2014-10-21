@@ -164,6 +164,13 @@
     <Compile Include="FLEX\Pages\CodeEditor.aspx.designer.cs">
       <DependentUpon>CodeEditor.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FLEX\Pages\SecGroupList.aspx.cs">
+      <DependentUpon>SecGroupList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\SecGroupList.aspx.designer.cs">
+      <DependentUpon>SecGroupList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FLEX\Pages\ReportViewer.aspx.cs">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -468,6 +475,9 @@
     <Content Include="FLEX\Images\logo-finsa.png" />
     <Content Include="FLEX\Images\pattern.png" />
     <Content Include="FLEX\Pages\CodeEditor.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\Pages\SecGroupList.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\Pages\ReportViewer.aspx">

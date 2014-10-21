@@ -39,18 +39,24 @@ namespace Finsa.Caravan.Mvc.Controls.PageElements
     #line hidden
     
     #line 6 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
-    using FLEX.Common;
+    using Finsa.Caravan.Common;
     
     #line default
     #line hidden
     
     #line 7 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
-    using FLEX.Web.MVC.Controls.PageElements;
+    using FLEX.Common;
     
     #line default
     #line hidden
     
     #line 8 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+    using FLEX.Web.MVC.Controls.PageElements;
+    
+    #line default
+    #line hidden
+    
+    #line 9 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
     using FLEX.Web.MVC.Layouts;
     
     #line default
@@ -66,7 +72,7 @@ return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 
 
-#line 11 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+#line 12 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
  
 
 #line default
@@ -110,7 +116,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "@media (min-width: 768px) {\
 
 
 
-#line 84 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+#line 85 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
 
 
 #line default
@@ -122,7 +128,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "   <script type=\"text/javas
 
 
 
-#line 93 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+#line 94 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
 
 
 #line default
@@ -142,7 +148,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, @"   <nav>
 
 
 
-#line 104 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+#line 105 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, FlexCoreLayout.MyFlexPath);
 
 #line default
@@ -152,7 +158,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "/Images/logo-menubar.png\' c
 
 
 
-#line 104 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+#line 105 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
                                                                        WebViewPage.WriteTo(@__razor_helper_writer, Configuration.Instance.ApplicationName);
 
 #line default
@@ -164,7 +170,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n               </a>\r\n 
 
 
 
-#line 109 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+#line 110 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, new HtmlString(FlexMenuBarHelper.GetMenuFromService(ajaxHelper)));
 
 #line default
@@ -200,7 +206,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, @"
 
 
 
-#line 135 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+#line 136 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
 
 #line default
 #line hidden

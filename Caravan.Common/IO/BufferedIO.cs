@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
 using Finsa.Caravan;
+using Finsa.Caravan.Common;
 
 namespace FLEX.Common.IO
 {

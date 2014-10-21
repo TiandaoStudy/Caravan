@@ -116,7 +116,7 @@
                <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#" onclick="<%= FLEX.WebForms.Configuration.Instance.MenuBarBrandClick %>">
-               <img src='<%= Head.MyFlexPath %>/Images/logo-menubar.png' class='logo' alt='Logo' />&nbsp;<%= Finsa.Caravan.Configuration.Instance.ApplicationName %>
+               <img src='<%= Head.MyFlexPath %>/Images/logo-menubar.png' class='logo' alt='Logo' />&nbsp;<%= Finsa.Caravan.Common.Configuration.Instance.ApplicationName %>
             </a>
          </div>
          <div id="menuBar-collapse" class="navbar-collapse collapse">
