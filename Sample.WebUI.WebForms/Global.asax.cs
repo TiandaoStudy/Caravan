@@ -2,8 +2,6 @@
 using System.Configuration;
 using System.Web;
 using Finsa.Caravan.WebForms;
-using FLEX.Web;
-using FLEX.WebForms;
 
 namespace FLEX.Sample.WebUI
 {
@@ -11,9 +9,10 @@ namespace FLEX.Sample.WebUI
    {
       protected void Application_Start(object sender, EventArgs args)
       {
-         var connectionStringFmt = ConfigurationManager.ConnectionStrings["Northwind"].ConnectionString;
-         var northwindPath = HttpContext.Current.Server.MapPath("~/bin/Northwind.sdf");
-         GlobalHelper.Application_Start(sender, args, String.Format(connectionStringFmt, northwindPath));
+         //var connectionStringFmt = ConfigurationManager.ConnectionStrings["Northwind"].ConnectionString;
+         //var northwindPath = HttpContext.Current.Server.MapPath("~/bin/Northwind.sdf");
+         //GlobalHelper.Application_Start(sender, args, String.Format(connectionStringFmt, northwindPath));
+         GlobalHelper.Application_Start(sender, args, ConfigurationManager.ConnectionStrings["USERBASE"].ConnectionString);
       }
 
       protected void Session_Start(object sender, EventArgs e)

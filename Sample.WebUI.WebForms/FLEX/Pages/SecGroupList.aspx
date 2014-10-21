@@ -15,14 +15,16 @@
 </asp:Content>
 
 <asp:Content ID="aspGridContent" ContentPlaceHolderID="gridContent" runat="server">
-   <flex:DataGrid runat="server" ID="fdtgGroups" DefaultSortExpression="Key" DefaultSortDirection="Ascending" OnDataSourceUpdating="fdtgGroups_DataSourceUpdating">
+   <flex:DataGrid runat="server" ID="fdtgGroups" DefaultSortExpression="Name" DefaultSortDirection="Ascending" OnDataSourceUpdating="fdtgGroups_DataSourceUpdating">
       <Columns>
-         <asp:BoundField DataField="Partition" HeaderText="Partition" SortExpression="Partition" Visible="true" />
-         <asp:BoundField DataField="Key" HeaderText="Key" SortExpression="Key" Visible="true" />
-         <asp:BoundField DataField="Value" HeaderText="Value" SortExpression="Value" Visible="true" />
-         <asp:BoundField DataField="UtcCreation" HeaderText="Created On" SortExpression="UtcCreation" Visible="true" />
-         <asp:BoundField DataField="UtcExpiry" HeaderText="Expires On" SortExpression="UtcExpiry" Visible="true" />
-         <asp:BoundField DataField="Interval" HeaderText="Refresh Interval" SortExpression="Interval" Visible="true" />
+         <asp:BoundField DataField="Id" HeaderText="Id" SortExpression="Id" Visible="true" />
+         <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" Visible="true" />
+         <asp:BoundField DataField="Description" HeaderText="Description" SortExpression="Description" Visible="true" />
+         <asp:TemplateField HeaderText="Admin">
+            <ItemTemplate>
+               <asp:CheckBox ID="chkAdmin" runat="server" Enabled="False" Checked='<%# Eval("IsAdmin").Equals("true") %>' />
+            </ItemTemplate>
+         </asp:TemplateField>
       </Columns>
    </flex:DataGrid>
 </asp:Content>

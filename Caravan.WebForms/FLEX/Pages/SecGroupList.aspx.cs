@@ -16,7 +16,10 @@ namespace Finsa.Caravan.WebForms.Pages
    {
       protected void Page_Load(object sender, EventArgs e)
       {
-         
+         if (!IsPostBack)
+         {
+            fdtgGroups.UpdateDataSource();
+         }
       }
 
       #region Search Criteria
