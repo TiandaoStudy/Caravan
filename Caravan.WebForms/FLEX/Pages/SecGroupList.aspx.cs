@@ -46,5 +46,14 @@ namespace Finsa.Caravan.WebForms.Pages
       }
 
       #endregion
+
+      #region Buttons
+
+      protected void btnInsert_Click(object sender, EventArgs e)
+      {
+         throw new NotImplementedException();
+      }
+
+      #endregion
    }
 }

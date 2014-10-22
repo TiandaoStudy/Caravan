@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SecGroupList.aspx.cs" Inherits="Finsa.Caravan.WebForms.Pages.SecGroupList" MasterPageFile="~/FLEX/MasterPages/VerticalSearch.Master" %>
 <%@ MasterType VirtualPath="~/FLEX/MasterPages/VerticalSearch.Master"%>
 <%@ Register TagPrefix="flex" Namespace="FLEX.WebForms.UserControls" Assembly="FLEX.WebForms" %>
+<%@ Register TagPrefix="flex" TagName="ImageButton" Src="~/FLEX/UserControls/Ajax/ImageButton.ascx" %>
 
 <asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">
    <title>Group Management</title>
@@ -17,12 +18,22 @@
 <asp:Content ID="aspGridContent" ContentPlaceHolderID="gridContent" runat="server">
    <flex:DataGrid runat="server" ID="fdtgGroups" DefaultSortExpression="Name" DefaultSortDirection="Ascending" OnDataSourceUpdating="fdtgGroups_DataSourceUpdating">
       <Columns>
-         <asp:BoundField DataField="Id" HeaderText="Id" SortExpression="Id" Visible="true" />
-         <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" Visible="true" />
-         <asp:BoundField DataField="Description" HeaderText="Description" SortExpression="Description" Visible="true" />
-         <asp:TemplateField HeaderText="Admin">
+         <asp:TemplateField HeaderText="Actions">
             <ItemTemplate>
-               <asp:CheckBox ID="chkAdmin" runat="server" Enabled="False" Checked='<%# Eval("IsAdmin").Equals("true") %>' />
+               <asp:LinkButton runat="server" ID="btnEdit" ToolTip="Edit group information">
+                  <span class="glyphicon glyphicon-pencil padded-icon"></span>
+               </asp:LinkButton>
+               <asp:LinkButton runat="server" ID="btnDelete" ToolTip="Delete this group">
+                  <span class="glyphicon glyphicon-trash padded-icon"></span>
+               </asp:LinkButton>
+            </ItemTemplate>
+         </asp:TemplateField>
+         <asp:BoundField DataField="Id" HeaderText="Id" SortExpression="Id" />
+         <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+         <asp:BoundField DataField="Description" HeaderText="Description" SortExpression="Description" />
+         <asp:TemplateField HeaderText="Admin" SortExpression="IsAdmin">
+            <ItemTemplate>
+               <asp:CheckBox ID="chkAdmin" runat="server" Enabled="False" Checked='<%# Eval("IsAdmin") %>' />
             </ItemTemplate>
          </asp:TemplateField>
       </Columns>
@@ -34,7 +45,7 @@
 </asp:Content>
 
 <asp:Content ID="aspRightButtonsContent" ContentPlaceHolderID="rightButtonsContent" runat="server">
-   
+   <flex:ImageButton runat="server" ID="btnInsert" ButtonClass="btn btn-primary" ButtonText="Insert" IconClass="glyphicon glyphicon-plus" OnClick="btnInsert_Click" />
 </asp:Content>
 
 <asp:Content ID="aspLowerContent" ContentPlaceHolderID="lowerContent" runat="server">
