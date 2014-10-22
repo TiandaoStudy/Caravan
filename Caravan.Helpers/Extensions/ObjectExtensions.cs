@@ -11,6 +11,17 @@ namespace Finsa.Caravan.Extensions
    /// </summary>
    public static class ObjectExtensions
    {
+      #region JavaScript utilities
+
+      public static string ToJavaScriptString<T>(this T obj)
+      {
+         return ReferenceEquals(obj, null) ? null : obj.ToString().ToJavaScriptString();
+      }
+
+      #endregion
+
+      #region Object Hashing
+
       /// <summary>
       ///   TODO
       /// </summary>
@@ -44,5 +55,7 @@ namespace Finsa.Caravan.Extensions
          }
          return sb.ToString();
       }
+
+      #endregion
    }
 }

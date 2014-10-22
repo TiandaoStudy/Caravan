@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataModel;
 using Finsa.Caravan.Extensions;
@@ -43,6 +45,19 @@ namespace Finsa.Caravan.WebForms.Pages
                        select new SecGroup {Id = g.Id, Name = g.Name, Description = g.Description, IsAdmin = g.IsAdmin})
                        .ToDataTable();
          fdtgGroups.DataSource = groups;
+      }
+
+      protected void fdtgGroups_OnRowDataBound(object sender, GridViewRowEventArgs e)
+      {
+         if (e.Row.RowType != DataControlRowType.DataRow)
+         {
+            return;
+         }
+
+         var btnEdit = e.Row.FindControl("btnEdit") as LinkButton;
+         btnEdit.OnClientClick = String.Format("return editGroup({0});", DataBinder.Eval(e.Row.DataItem, "Name").ToJavaScriptString());
+
+         var btnDelete = e.Row.FindControl("btnDelete") as LinkButton;
       }
 
       #endregion
