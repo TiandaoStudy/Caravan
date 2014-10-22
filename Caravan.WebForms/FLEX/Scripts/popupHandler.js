@@ -538,17 +538,23 @@ function openModalWindow(url, width, height, drag, openCallback, closeCallback) 
 
 // Opens a modal window
 function openModal(options) {
-  var openVoidCallback = function () {
+  var openCallback = function (callback) {
     try {
-
+       if (callback) {
+          callback();
+       }
     } catch (ex) { alert('openVoidCallback: ' + ex.message); }
     return false;
   };
 
-  var closeVoidCallback = function () {
-    try {
-
-    } catch (ex) { alert('closeVoidCallback: ' + ex.message); }
+  var closeCallback = function (callback) {
+     try {
+        if (callback) {
+           callback();
+        }
+        // Clear "top.returnValue" used by modals
+        delete top.returnValue;
+     } catch (ex) { alert('closeVoidCallback: ' + ex.message); }
     return false;
   };
 
@@ -557,8 +563,6 @@ function openModal(options) {
     width: 'auto',
     height: 'auto',
     draggable: false,
-    openCallback: openVoidCallback,
-    closeCallback: closeVoidCallback,
     title: "TITLE",
     closeFunction: "closeWindow();"
   };
@@ -568,8 +572,8 @@ function openModal(options) {
    settings.width = options.width || defaultOptions.width;
    settings.height = options.height || defaultOptions.height;
    settings.draggable = options.draggable || defaultOptions.draggable;
-   settings.openCallback = options.openCallback || defaultOptions.openCallback;
-   settings.closeCallback = options.closeCallback || defaultOptions.closeCallback;
+   settings.openCallback = openCallback(options.openCallback);
+   settings.closeCallback = closeCallback(options.closeCallback);
    settings.title = options.title || defaultOptions.title;
    settings.closeFunction = options.closeFunction || defaultOptions.closeFunction;
 

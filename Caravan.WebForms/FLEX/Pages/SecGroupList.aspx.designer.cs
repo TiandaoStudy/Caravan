@@ -31,6 +31,33 @@ namespace Finsa.Caravan.WebForms.Pages {
         protected global::FLEX.Web.UserControls.Ajax.ImageButton btnInsert;
         
         /// <summary>
+        /// hiddenRefresh control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FLEX.Web.UserControls.Ajax.HiddenTrigger hiddenRefresh;
+        
+        /// <summary>
+        /// hiddenDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FLEX.Web.UserControls.Ajax.HiddenTrigger hiddenDelete;
+        
+        /// <summary>
+        /// groupNameToBeDeleted control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField groupNameToBeDeleted;
+        
+        /// <summary>
         /// Master property.
         /// </summary>
         /// <remarks>

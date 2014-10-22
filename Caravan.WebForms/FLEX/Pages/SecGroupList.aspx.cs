@@ -4,6 +4,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataModel;
+using Finsa.Caravan.Diagnostics;
 using Finsa.Caravan.Extensions;
 using FLEX.Common.Web;
 using FLEX.Web.Pages;
@@ -54,19 +55,44 @@ namespace Finsa.Caravan.WebForms.Pages
             return;
          }
 
+         var groupName = DataBinder.Eval(e.Row.DataItem, "Name").ToJavaScriptString();
+
          var btnEdit = e.Row.FindControl("btnEdit") as LinkButton;
-         btnEdit.OnClientClick = String.Format("return editGroup({0});", DataBinder.Eval(e.Row.DataItem, "Name").ToJavaScriptString());
+         btnEdit.OnClientClick = String.Format("return editGroup({0});", groupName);
 
          var btnDelete = e.Row.FindControl("btnDelete") as LinkButton;
+         btnDelete.OnClientClick = String.Format("return deleteGroup({0});", groupName);
       }
 
       #endregion
 
       #region Buttons
 
-      protected void btnInsert_Click(object sender, EventArgs e)
+      protected void hiddenRefresh_OnTriggered(object sender, EventArgs e)
       {
-         throw new NotImplementedException();
+         try
+         {
+            fdtgGroups.UpdateDataSource();
+         }
+         catch (Exception ex)
+         {
+            ErrorHandler.CatchException(ex);
+         }
+      }
+
+      protected void hiddenDelete_OnTriggered(object sender, EventArgs e)
+      {
+         try
+         {
+            var groupName = groupNameToBeDeleted.Value;
+            Raise<ArgumentException>.IfIsEmpty(groupName);
+            Db.Security.RemoveGroup(Common.Configuration.Instance.ApplicationName, groupName);
+            fdtgGroups.UpdateDataSource();
+         }
+         catch (Exception ex)
+         {
+            ErrorHandler.CatchException(ex);
+         }
       }
 
       #endregion
