@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.DataModel;
 using Finsa.Caravan.Diagnostics;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
@@ -20,20 +21,20 @@ namespace Finsa.Caravan.WebForms.Pages
       {
          try
          {
-            var mode = Request["mode"];
-            Raise<ArgumentException>.IfIsEmpty(mode, "Page mode cannot be empty");
-            mode = mode.ToLower();
-            Raise<ArgumentException>.IfNot(mode == NewMode || mode == EditMode, "Invalid mode value");
+            Mode = Request["mode"];
+            Raise<ArgumentException>.IfIsEmpty(Mode, "Page mode cannot be empty");
+            Mode = Mode.ToLower();
+            Raise<ArgumentException>.IfNot(Mode == NewMode || Mode == EditMode, "Invalid mode value");
 
-            if (mode == NewMode)
+            if (Mode == NewMode)
             {
                LoadForNew();
             }
-            else if (mode == EditMode)
+            else if (Mode == EditMode)
             {
-               var grpName = Request["groupName"];
-               Raise<ArgumentException>.IfIsEmpty(grpName);
-               LoadForEdit(grpName);
+               GroupName = Request["groupName"];
+               Raise<ArgumentException>.IfIsEmpty(GroupName);
+               LoadForEdit(GroupName);
             }
          }
          catch (Exception ex)
@@ -42,13 +43,27 @@ namespace Finsa.Caravan.WebForms.Pages
          }
       }
 
+      private string Mode { get; set; }
+
+      private string GroupName { get; set; }
+
       private void LoadForNew()
       {
+         if (IsPostBack)
+         {
+            return;
+         }
+
          txtGrpId.Text = @"Automatically filled";
       }
 
       private void LoadForEdit(string groupName)
       {
+         if (IsPostBack)
+         {
+            return;
+         }
+
          var group = Db.Security.Group(Common.Configuration.Instance.ApplicationName, groupName);
          Raise<ArgumentException>.IfIsNull(group, "Given group name does not exist");
 
@@ -57,5 +72,30 @@ namespace Finsa.Caravan.WebForms.Pages
          txtGrpDescr.Text = group.Description;
          chkAdmin.Checked = group.IsAdmin;
       }
+
+      #region Buttons
+
+      protected void hiddenSave_OnTriggered(object sender, EventArgs e)
+      {
+         try
+         {
+            if (Mode == NewMode)
+            {
+            
+            }
+            else if (Mode == EditMode)
+            {
+               var newGroup = new SecGroup {Name = txtGrpName.Text, Description = txtGrpDescr.Text, IsAdmin = chkAdmin.Checked};
+               Db.Security.UpdateGroup(Common.Configuration.Instance.ApplicationName, GroupName, newGroup);
+            }
+            Master.RegisterCloseScript(this);
+         }
+         catch (Exception ex)
+         {
+            ErrorHandler.CatchException(ex);
+         }
+      }
+
+      #endregion
    }
 }

@@ -19,9 +19,11 @@ namespace Finsa.Caravan.DataAccess
 
       SecGroup Group(string appName, string groupName);
 
-      void AddOrUpdateGroup(string appName, SecGroup group);
+      void AddGroup(string appName, SecGroup group);
 
       void RemoveGroup(string appName, string groupName);
+
+      void UpdateGroup(string appName, string groupName, SecGroup newGroup);
 
       #endregion
 

@@ -28,4 +28,10 @@ namespace Finsa.Caravan.DataModel
       [JsonProperty(Order = 4)]
       public virtual ICollection<SecUser> Users { get; set; } 
    }
+
+   [Serializable]
+   public class SecGroupList
+   {
+      public IEnumerable<SecGroup> Groups { get; set; } 
+   }
 }

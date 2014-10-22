@@ -49,6 +49,33 @@ namespace Finsa.Caravan.WebForms.Pages {
         protected global::System.Web.UI.WebControls.CheckBox chkAdmin;
         
         /// <summary>
+        /// btxExit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FLEX.Web.UserControls.Ajax.ImageButton btxExit;
+        
+        /// <summary>
+        /// btxSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FLEX.Web.UserControls.Ajax.ImageButton btxSave;
+        
+        /// <summary>
+        /// hiddenSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FLEX.Web.UserControls.Ajax.HiddenTrigger hiddenSave;
+        
+        /// <summary>
         /// Master property.
         /// </summary>
         /// <remarks>

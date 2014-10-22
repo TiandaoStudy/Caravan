@@ -20,6 +20,7 @@ nav .navbar-default .navbar-brand .logo {
 }
 .padded-icon {
   margin-right: 5px;
+  text-decoration: none !important;
 }
 /*******************************************************************************
   BOOTSTRAP TUNING

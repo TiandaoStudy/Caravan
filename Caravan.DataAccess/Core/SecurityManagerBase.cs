@@ -38,11 +38,11 @@ namespace Finsa.Caravan.DataAccess.Core
          return GetGroups(appName, groupName).FirstOrDefault();
       }
 
-      public void AddOrUpdateGroup(string appName, SecGroup group)
+      public void AddGroup(string appName, SecGroup group)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsNotNull(group);
-         DoAddOrUpdateGroup(appName, group);
+         Raise<ArgumentException>.IfIsNull(group);
+         DoAddGroup(appName, group);
       }
 
       public void RemoveGroup(string appName, string groupName)
@@ -50,6 +50,14 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(groupName);
          DoRemoveGroup(appName, groupName);
+      }
+
+      public void UpdateGroup(string appName, string groupName, SecGroup newGroup)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfIsEmpty(groupName);
+         Raise<ArgumentException>.IfIsNull(newGroup);
+         DoUpdateGroup(appName, groupName, newGroup);
       }
 
       #endregion
@@ -92,9 +100,11 @@ namespace Finsa.Caravan.DataAccess.Core
 
       protected abstract IEnumerable<SecGroup> GetGroups(string appName, string groupName);
 
-      protected abstract void DoAddOrUpdateGroup(string appName, SecGroup group);
+      protected abstract void DoAddGroup(string appName, SecGroup group);
 
       protected abstract void DoRemoveGroup(string appName, string groupName);
+
+      protected abstract void DoUpdateGroup(string appName, string groupName, SecGroup newGroup);
 
       protected abstract IEnumerable<SecUser> GetUsers(string appName, string userLogin);
 

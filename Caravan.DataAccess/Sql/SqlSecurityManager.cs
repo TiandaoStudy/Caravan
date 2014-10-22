@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel;
+using Finsa.Caravan.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
@@ -31,7 +33,7 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-      protected override void DoAddOrUpdateGroup(string appName, SecGroup group)
+      protected override void DoAddGroup(string appName, SecGroup group)
       {
          throw new System.NotImplementedException();
       }
@@ -46,6 +48,22 @@ namespace Finsa.Caravan.DataAccess.Sql
             {
                ctx.SecGroups.Remove(grp);
             }
+            ctx.SaveChanges();
+            trx.Commit();
+         }
+      }
+
+      protected override void DoUpdateGroup(string appName, string groupName, SecGroup newGroup)
+      {
+         using (var ctx = Db.CreateContext())
+         using (var trx = ctx.BeginTransaction())
+         {
+            var grp = ctx.SecGroups.FirstOrDefault(g => g.App.Name == appName.ToLower() && g.Name == groupName.ToLower());
+            Raise<InvalidOperationException>.IfIsNull(grp, ErrorMessages.Sql_SqlSecurityManager_MissingGroup);
+            grp.Name = newGroup.Name;
+            grp.Description = newGroup.Description;
+            grp.IsAdmin = newGroup.IsAdmin;
+            // Users???
             ctx.SaveChanges();
             trx.Commit();
          }

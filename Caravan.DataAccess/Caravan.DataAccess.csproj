@@ -96,6 +96,11 @@
     <Compile Include="Core\DbContextBase.cs" />
     <Compile Include="Core\LogManagerBase.cs" />
     <Compile Include="Core\SecurityManagerBase.cs" />
+    <Compile Include="ErrorMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErrorMessages.resx</DependentUpon>
+    </Compile>
     <Compile Include="Sql\SqlServerCe\SqlServerCeDbContext.cs" />
     <Compile Include="Dummy\DummyLogManager.cs" />
     <Compile Include="Dummy\DummySecurityManager.cs" />
@@ -145,6 +150,12 @@
   <ItemGroup>
     <Folder Include="Sql\Postgres\" />
     <Folder Include="Sql\SqlServer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ErrorMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

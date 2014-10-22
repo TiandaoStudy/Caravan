@@ -87,11 +87,11 @@
       <Columns>
          <asp:TemplateField HeaderText="Actions">
             <ItemTemplate>
-               <asp:LinkButton runat="server" ID="btnEdit" ToolTip="Edit group information" CommandName="editGroup">
-                  <span class="glyphicon glyphicon-pencil padded-icon"></span>
+               <asp:LinkButton runat="server" ID="btnEdit" ToolTip="Edit group information" CommandName="editGroup" CssClass="padded-icon">
+                  <span class="glyphicon glyphicon-pencil"></span>
                </asp:LinkButton>
-               <asp:LinkButton runat="server" ID="btnDelete" ToolTip="Delete this group" CommandName="deleteGroup">
-                  <span class="glyphicon glyphicon-trash padded-icon"></span>
+               <asp:LinkButton runat="server" ID="btnDelete" ToolTip="Delete this group" CommandName="deleteGroup" CssClass="padded-icon">
+                  <span class="glyphicon glyphicon-trash"></span>
                </asp:LinkButton>
             </ItemTemplate>
          </asp:TemplateField>

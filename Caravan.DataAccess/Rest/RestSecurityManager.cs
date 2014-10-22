@@ -17,12 +17,17 @@ namespace Finsa.Caravan.DataAccess.Rest
          throw new NotImplementedException();
       }
 
-      protected override void DoAddOrUpdateGroup(string appName, SecGroup @group)
+      protected override void DoAddGroup(string appName, SecGroup @group)
       {
          throw new NotImplementedException();
       }
 
       protected override void DoRemoveGroup(string appName, string groupName)
+      {
+         throw new NotImplementedException();
+      }
+
+      protected override void DoUpdateGroup(string appName, string groupName, SecGroup newGroup)
       {
          throw new NotImplementedException();
       }
