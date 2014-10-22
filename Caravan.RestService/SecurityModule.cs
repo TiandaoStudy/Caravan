@@ -26,6 +26,8 @@ namespace Finsa.Caravan.RestService
          Get["/{appName}"] = p => Response.AsJson(Db.Security.App((string) p.appName));
          
          Get["/{appName}/groups"] = p => Response.AsJson(Db.Security.Groups((string) p.appName));
+         Post["/{appName}/groups"] = p => null;
+         Put["/{appName}/groups/{groupName}"] = p => null;
          Delete["/{appName}/groups/{groupName}"] = p => null;
 
          Get["/{appName}/users"] = p => Response.AsJson(Db.Security.Users((string) p.appName));
