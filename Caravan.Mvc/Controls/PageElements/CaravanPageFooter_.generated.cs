@@ -36,13 +36,13 @@ namespace Finsa.Caravan.Mvc.Controls.PageElements
     public static class CaravanPageFooter_
     {
 
-public static System.Web.WebPages.HelperResult FlexPageFooter(this HtmlHelper htmlHelper) {
+public static System.Web.WebPages.HelperResult CaravanPageFooter(this HtmlHelper htmlHelper) {
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 
 
 #line 6 "..\..\Controls\PageElements\CaravanPageFooter_.cshtml"
-                                                    
+                                                       
 
 
 #line default

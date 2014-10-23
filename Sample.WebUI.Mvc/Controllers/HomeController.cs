@@ -10,7 +10,7 @@ using Sample.DataModel.Entities;
 
 namespace Sample.WebUI.Mvc.Controllers
 {
-   public class HomeController : FlexController
+   public class HomeController : CaravanController
    {
       public ActionResult Index()
       {

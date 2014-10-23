@@ -109,7 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
-    <Compile Include="Controllers\FlexController.cs" />
+    <Compile Include="Controllers\CaravanController.cs" />
     <Compile Include="Controls\ControlOptionsBase.cs" />
     <Compile Include="Controls\DataVisualization\CaravanDataGridOptions.cs" />
     <Compile Include="Controls\DataVisualization\CaravanDataGrid_.generated.cs">
@@ -393,6 +393,7 @@
     <None Include="Layouts\Pages\VerticalSearchLayout.cshtml" />
     <None Include="Layouts\Pages\PageLayout.cshtml" />
     <None Include="Layouts\Modals\ModalLayout.cshtml" />
+    <Content Include="Layouts\Web.config" />
     <None Include="packages.config" />
     <None Include="Scripts\backbone.min.js.map">
       <DependentUpon>backbone.js</DependentUpon>
@@ -560,6 +561,7 @@ copy $(ProjectDir)\Images\*.* $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Images
 :: LAYOUTS - NuGet Packager
 :: LAYOUTS - Sample Web UI
 copy $(ProjectDir)\Layouts\*.cshtml $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Layouts
+copy $(ProjectDir)\Layouts\*.config $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Layouts
 copy $(ProjectDir)\Layouts\Modals\*.cshtml $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Layouts\Modals
 copy $(ProjectDir)\Layouts\Pages\*.cshtml $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Layouts\Pages
 

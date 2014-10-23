@@ -271,9 +271,6 @@
     <Content Include="Views\Home\CV.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\PQLista.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Caravan.Mvc\Scripts\base64.min.js.map" />
     <Content Include="Caravan.Mvc\Scripts\jquery-2.1.1.min.map" />
   </ItemGroup>

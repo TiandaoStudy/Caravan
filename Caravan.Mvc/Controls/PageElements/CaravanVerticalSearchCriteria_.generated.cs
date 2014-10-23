@@ -42,7 +42,7 @@ namespace Finsa.Caravan.Mvc.Controls.PageElements
     public static class CaravanVerticalSearchCriteria_
     {
 
-public static System.Web.WebPages.HelperResult FlexVerticalSearchCriteria(this HtmlHelper htmlHelper, IEnumerable<CaravanVerticalSearchCriteriumOptions> spec)
+public static System.Web.WebPages.HelperResult CaravanVerticalSearchCriteria(this HtmlHelper htmlHelper, IEnumerable<CaravanVerticalSearchCriteriumOptions> spec)
 {
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 

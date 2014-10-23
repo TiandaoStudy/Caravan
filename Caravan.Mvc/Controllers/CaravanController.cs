@@ -2,7 +2,7 @@
 
 namespace Finsa.Caravan.Mvc.Controllers
 {
-   public abstract class FlexController : Controller
+   public abstract class CaravanController : Controller
    {
    }
 }
