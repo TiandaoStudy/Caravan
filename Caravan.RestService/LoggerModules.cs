@@ -4,6 +4,7 @@ using Finsa.Caravan.DataModel;
 using Finsa.Caravan.RestService.Core;
 using Nancy;
 using Newtonsoft.Json;
+using PommaLabs.KVLite.Nancy;
 
 namespace Finsa.Caravan.RestService
 {
@@ -12,8 +13,18 @@ namespace Finsa.Caravan.RestService
       public LogsModule() : base("logs")
       {
          Get["/"] = _ => Db.Logger.Logs();
-         Get["/{appName}"] = p => Db.Logger.Logs((string) p.appName);
-         Get["/{appName}/{logType}"] = p => Db.Logger.Logs((string) p.appName, SafeParseLogType((string) p.logType));
+         
+         Get["/{appName}"] = p =>
+         {
+            Context.EnableOutputCache(60);
+            return Db.Logger.Logs((string) p.appName);
+         };
+         
+         Get["/{appName}/{logType}"] = p =>
+         {
+            Context.EnableOutputCache(60);
+            return Db.Logger.Logs((string) p.appName, SafeParseLogType((string) p.logType));
+         };
          
          Post["/"] = _ => Log(null, null);
          Post["/{appName}"] = p => Log(p.appName, null);

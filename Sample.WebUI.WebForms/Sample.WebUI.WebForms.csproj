@@ -49,9 +49,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CodeProject.ObjectPool.1.0.6\lib\net40\CodeProject.ObjectPool.dll</HintPath>
     </Reference>
-    <Reference Include="Dapper, Version=1.36.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Dapper.1.36\lib\net40\Dapper.dll</HintPath>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.37\lib\net40\Dapper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -104,7 +104,7 @@
       <HintPath>..\packages\PommaLabs.GRAMPA.0.18.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
     <Reference Include="PommaLabs.KVLite">
-      <HintPath>..\packages\PommaLabs.KVLite.0.4.6\lib\net40\PommaLabs.KVLite.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.KVLite.0.5.0\lib\net40\PommaLabs.KVLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

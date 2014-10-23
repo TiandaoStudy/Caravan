@@ -39,8 +39,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CodeProject.ObjectPool.1.0.6\lib\net40\CodeProject.ObjectPool.dll</HintPath>
     </Reference>
-    <Reference Include="Dapper">
-      <HintPath>..\packages\Dapper.1.36\lib\net45\Dapper.dll</HintPath>
+    <Reference Include="Dapper, Version=1.37.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Dapper.1.37\lib\net45\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -57,9 +58,9 @@
     <Reference Include="PommaLabs.GRAMPA">
       <HintPath>..\packages\PommaLabs.GRAMPA.0.18.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.KVLite, Version=0.4.6.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PommaLabs.KVLite, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.KVLite.0.4.6\lib\net40\PommaLabs.KVLite.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.KVLite.0.5.0\lib\net40\PommaLabs.KVLite.dll</HintPath>
     </Reference>
     <Reference Include="RazorGenerator.Mvc">
       <HintPath>..\packages\RazorGenerator.Mvc.2.2.3\lib\net40\RazorGenerator.Mvc.dll</HintPath>
@@ -356,6 +357,7 @@
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
+    <None Include="app.config" />
     <None Include="bower.json" />
     <None Include="Controls\DataVisualization\FlexDataGrid_.cshtml">
       <Generator>RazorGenerator</Generator>
