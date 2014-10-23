@@ -149,38 +149,38 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="FLEX.MVC\Fonts\fontawesome-webfont.svg" />
-    <Content Include="FLEX.MVC\Fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="FLEX.MVC\Scripts\backbone.min.js" />
-    <Content Include="FLEX.MVC\Scripts\base64.min.js" />
-    <Content Include="FLEX.MVC\Scripts\bootstrap-datepicker.min.js" />
-    <Content Include="FLEX.MVC\Scripts\bootstrap-hover-dropdown.min.js" />
-    <Content Include="FLEX.MVC\Scripts\bootstrap-switch.min.js" />
-    <Content Include="FLEX.MVC\Scripts\bootstrap-table.min.js" />
-    <Content Include="FLEX.MVC\Scripts\bootstrap.min.js" />
-    <Content Include="FLEX.MVC\Scripts\flex.min.js" />
-    <Content Include="FLEX.MVC\Scripts\html5shiv.min.js" />
-    <Content Include="FLEX.MVC\Scripts\jquery-2.1.1.min.js" />
-    <Content Include="FLEX.MVC\Scripts\jquery-ui.min.js" />
-    <Content Include="FLEX.MVC\Scripts\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="FLEX.MVC\Scripts\respond.min.js" />
-    <Content Include="FLEX.MVC\Scripts\select2.min.js" />
-    <Content Include="FLEX.MVC\Scripts\spin.min.js" />
-    <Content Include="FLEX.MVC\Scripts\underscore.min.js" />
-    <Content Include="FLEX.MVC\Styles\bootstrap-datepicker3.min.css" />
-    <Content Include="FLEX.MVC\Styles\bootstrap-switch.min.css" />
-    <Content Include="FLEX.MVC\Styles\bootstrap-table.min.css" />
-    <Content Include="FLEX.MVC\Styles\bootstrap.min.css" />
-    <Content Include="FLEX.MVC\Styles\flex.min.css" />
-    <Content Include="FLEX.MVC\Styles\font-awesome.min.css" />
-    <Content Include="FLEX.MVC\Styles\Fonts.min.css" />
-    <Content Include="FLEX.MVC\Styles\jquery-ui.min.css" />
-    <Content Include="FLEX.MVC\Styles\select2-bootstrap.min.css" />
-    <Content Include="FLEX.MVC\Styles\select2.min.css" />
+    <Content Include="Caravan.Mvc\Fonts\fontawesome-webfont.svg" />
+    <Content Include="Caravan.Mvc\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Caravan.Mvc\Scripts\backbone.min.js" />
+    <Content Include="Caravan.Mvc\Scripts\base64.min.js" />
+    <Content Include="Caravan.Mvc\Scripts\bootstrap-datepicker.min.js" />
+    <Content Include="Caravan.Mvc\Scripts\bootstrap-hover-dropdown.min.js" />
+    <Content Include="Caravan.Mvc\Scripts\bootstrap-switch.min.js" />
+    <Content Include="Caravan.Mvc\Scripts\bootstrap-table.min.js" />
+    <Content Include="Caravan.Mvc\Scripts\bootstrap.min.js" />
+    <Content Include="Caravan.Mvc\Scripts\flex.min.js" />
+    <Content Include="Caravan.Mvc\Scripts\html5shiv.min.js" />
+    <Content Include="Caravan.Mvc\Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Caravan.Mvc\Scripts\jquery-ui.min.js" />
+    <Content Include="Caravan.Mvc\Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Caravan.Mvc\Scripts\respond.min.js" />
+    <Content Include="Caravan.Mvc\Scripts\select2.min.js" />
+    <Content Include="Caravan.Mvc\Scripts\spin.min.js" />
+    <Content Include="Caravan.Mvc\Scripts\underscore.min.js" />
+    <Content Include="Caravan.Mvc\Styles\bootstrap-datepicker3.min.css" />
+    <Content Include="Caravan.Mvc\Styles\bootstrap-switch.min.css" />
+    <Content Include="Caravan.Mvc\Styles\bootstrap-table.min.css" />
+    <Content Include="Caravan.Mvc\Styles\bootstrap.min.css" />
+    <Content Include="Caravan.Mvc\Styles\flex.min.css" />
+    <Content Include="Caravan.Mvc\Styles\font-awesome.min.css" />
+    <Content Include="Caravan.Mvc\Styles\Fonts.min.css" />
+    <Content Include="Caravan.Mvc\Styles\jquery-ui.min.css" />
+    <Content Include="Caravan.Mvc\Styles\select2-bootstrap.min.css" />
+    <Content Include="Caravan.Mvc\Styles\select2.min.css" />
     <Content Include="Global.asax" />
-    <Content Include="MyFLEX.MVC\Images\logo-menubar.png" />
-    <Content Include="MyFLEX.MVC\Scripts\autocompletes.js" />
-    <Content Include="MyFLEX.MVC\Scripts\autocompletes.min.js">
+    <Content Include="Caravan.Mvc\My\Images\logo-menubar.png" />
+    <Content Include="Caravan.Mvc\My\Scripts\autocompletes.js" />
+    <Content Include="Caravan.Mvc\My\Scripts\autocompletes.min.js">
       <DependentUpon>autocompletes.js</DependentUpon>
     </Content>
     <Content Include="Web.config" />
@@ -191,13 +191,13 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="MyFLEX.MVC\Scripts\autocompletes.min.js.map">
+    <Content Include="Caravan.Mvc\My\Scripts\autocompletes.min.js.map">
       <DependentUpon>autocompletes.js</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="FLEX.MVC\Images\" />
+    <Folder Include="Caravan.Mvc\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -234,22 +234,22 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FLEX.MVC\Scripts\backbone.min.js.map" />
-    <Content Include="FLEX.MVC\Scripts\bootstrap.min.js.map" />
-    <Content Include="FLEX.MVC\Scripts\html5shiv.min.js.map" />
-    <Content Include="FLEX.MVC\Scripts\jquery-ui.min.js.map" />
-    <Content Include="FLEX.MVC\Scripts\respond.min.js.map" />
-    <Content Include="FLEX.MVC\Scripts\underscore.min.js.map" />
+    <Content Include="Caravan.Mvc\Scripts\backbone.min.js.map" />
+    <Content Include="Caravan.Mvc\Scripts\bootstrap.min.js.map" />
+    <Content Include="Caravan.Mvc\Scripts\html5shiv.min.js.map" />
+    <Content Include="Caravan.Mvc\Scripts\jquery-ui.min.js.map" />
+    <Content Include="Caravan.Mvc\Scripts\respond.min.js.map" />
+    <Content Include="Caravan.Mvc\Scripts\underscore.min.js.map" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FLEX.MVC\Fonts\fontawesome-webfont.eot" />
-    <Content Include="FLEX.MVC\Fonts\fontawesome-webfont.ttf" />
-    <Content Include="FLEX.MVC\Fonts\fontawesome-webfont.woff" />
-    <Content Include="FLEX.MVC\Fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="FLEX.MVC\Fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="FLEX.MVC\Fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="FLEX.MVC\Fonts\_tMhxyW6i8lbI7YsUdFlGA.eot" />
-    <Content Include="FLEX.MVC\Fonts\_xyN3apAT_yRRDeqB3sPRg.woff" />
+    <Content Include="Caravan.Mvc\Fonts\fontawesome-webfont.eot" />
+    <Content Include="Caravan.Mvc\Fonts\fontawesome-webfont.ttf" />
+    <Content Include="Caravan.Mvc\Fonts\fontawesome-webfont.woff" />
+    <Content Include="Caravan.Mvc\Fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Caravan.Mvc\Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Caravan.Mvc\Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Caravan.Mvc\Fonts\_tMhxyW6i8lbI7YsUdFlGA.eot" />
+    <Content Include="Caravan.Mvc\Fonts\_xyN3apAT_yRRDeqB3sPRg.woff" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Overview\Index.cshtml" />
@@ -258,11 +258,11 @@
     <Content Include="Views\Overview\Style.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FLEX.MVC\Scripts\select2.min.js.map" />
+    <Content Include="Caravan.Mvc\Scripts\select2.min.js.map" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FLEX.MVC\Scripts\bootstrap-hover-dropdown.min.js.map" />
-    <Content Include="FLEX.MVC\Scripts\bootstrap-switch.min.js.map" />
+    <Content Include="Caravan.Mvc\Scripts\bootstrap-hover-dropdown.min.js.map" />
+    <Content Include="Caravan.Mvc\Scripts\bootstrap-switch.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Search.cshtml" />
@@ -274,12 +274,12 @@
     <Content Include="Views\Home\PQLista.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FLEX.MVC\Scripts\base64.min.js.map" />
-    <Content Include="FLEX.MVC\Scripts\jquery-2.1.1.min.map" />
+    <Content Include="Caravan.Mvc\Scripts\base64.min.js.map" />
+    <Content Include="Caravan.Mvc\Scripts\jquery-2.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FLEX.MVC\Scripts\bootstrap-datepicker.min.js.map" />
-    <Content Include="FLEX.MVC\Scripts\bootstrap-table.min.js.map" />
+    <Content Include="Caravan.Mvc\Scripts\bootstrap-datepicker.min.js.map" />
+    <Content Include="Caravan.Mvc\Scripts\bootstrap-table.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Caravan.Mvc\Layouts\Pages\VerticalSearchLayout.cshtml" />

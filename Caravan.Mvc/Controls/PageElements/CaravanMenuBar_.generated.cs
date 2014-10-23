@@ -149,7 +149,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, @"   <nav>
 
 
 #line 105 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
-WebViewPage.WriteTo(@__razor_helper_writer, CoreLayoutHelper.MyFlexPath);
+WebViewPage.WriteTo(@__razor_helper_writer, CoreLayoutHelper.MyCaravanPath);
 
 #line default
 #line hidden
@@ -159,7 +159,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "/Images/logo-menubar.png\' c
 
 
 #line 105 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
-                                                                         WebViewPage.WriteTo(@__razor_helper_writer, Configuration.Instance.ApplicationName);
+                                                                            WebViewPage.WriteTo(@__razor_helper_writer, Configuration.Instance.ApplicationName);
 
 #line default
 #line hidden

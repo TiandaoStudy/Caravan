@@ -551,11 +551,11 @@
   <PropertyGroup>
     <PostBuildEvent>:: FONTS - NuGet Packager
 :: FONTS - Sample Web UI
-copy $(ProjectDir)\Fonts\*.* $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Fonts
+copy $(ProjectDir)\Fonts\*.* $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Fonts
 
 :: IMAGES - NuGet Packager
 :: IMAGES - Sample Web UI
-copy $(ProjectDir)\Images\*.* $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Images
+copy $(ProjectDir)\Images\*.* $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Images
 
 :: LAYOUTS - NuGet Packager
 :: LAYOUTS - Sample Web UI
@@ -565,12 +565,12 @@ copy $(ProjectDir)\Layouts\Pages\*.cshtml $(SolutionDir)\Sample.WebUI.Mvc\Carava
 
 :: SCRIPTS - NuGet Packager
 :: SCRIPTS - Sample Web UI
-copy $(ProjectDir)\Scripts\*.min.js $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Scripts
-copy $(ProjectDir)\Scripts\*.map $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Scripts
+copy $(ProjectDir)\Scripts\*.min.js $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Scripts
+copy $(ProjectDir)\Scripts\*.map $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Scripts
 
 :: STYLES - NuGet Packager
 :: STYLES - Sample Web UI
-copy $(ProjectDir)\Styles\*.min.css $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Styles</PostBuildEvent>
+copy $(ProjectDir)\Styles\*.min.css $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Styles</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

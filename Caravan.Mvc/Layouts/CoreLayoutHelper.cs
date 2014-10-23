@@ -6,15 +6,15 @@ namespace Finsa.Caravan.Mvc.Layouts
    public static class CoreLayoutHelper
    {
       private static readonly string CachedRootPath;
-      private static readonly string CachedFlexPath;
-      private static readonly string CachedMyFlexPath;
+      private static readonly string CachedCaravanPath;
+      private static readonly string CachedMyCaravanPath;
       private static readonly Random Random = new Random();
 
       static CoreLayoutHelper()
       {
          CachedRootPath = FullyQualifiedApplicationPath;
-         CachedFlexPath = CachedRootPath + "FLEX.MVC";
-         CachedMyFlexPath = CachedRootPath + "MyFLEX.MVC";
+         CachedCaravanPath = CachedRootPath + "Caravan.Mvc";
+         CachedMyCaravanPath = CachedCaravanPath + "/My";
       }
 
       #region Public Properties
@@ -24,14 +24,14 @@ namespace Finsa.Caravan.Mvc.Layouts
          get { return CachedRootPath; }
       }
 
-      public static string FlexPath
+      public static string CaravanPath
       {
-         get { return CachedFlexPath; }
+         get { return CachedCaravanPath; }
       }
 
-      public static string MyFlexPath
+      public static string MyCaravanPath
       {
-         get { return CachedMyFlexPath; }
+         get { return CachedMyCaravanPath; }
       }
 
       public static string HeadSection
@@ -62,7 +62,7 @@ namespace Finsa.Caravan.Mvc.Layouts
          get
          {
             //Return variable declaration
-            string appPath = null;
+            var appPath = String.Empty;
 
             //Getting the current context of HTTP request
             var context = HttpContext.Current;
@@ -79,8 +79,11 @@ namespace Finsa.Caravan.Mvc.Layouts
                      : ":" + context.Request.Url.Port,
                   context.Request.ApplicationPath);
             }
+
             if (!appPath.EndsWith("/"))
+            {
                appPath += "/";
+            }
             return appPath;
          }
       }
