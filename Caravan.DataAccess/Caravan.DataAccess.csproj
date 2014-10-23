@@ -105,7 +105,7 @@
     <Compile Include="Dummy\DummyLogManager.cs" />
     <Compile Include="Dummy\DummySecurityManager.cs" />
     <Compile Include="ILogManager.cs" />
-    <Compile Include="DataAccess.cs" />
+    <Compile Include="Db.cs" />
     <Compile Include="IDbManager.cs" />
     <Compile Include="ISecurityManager.cs" />
     <Compile Include="Sql\Oracle\OracleDbContext.cs" />

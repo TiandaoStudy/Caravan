@@ -7,7 +7,7 @@
 
 @{
    ViewBag.Title = "title";
-   Layout = "~/Caravan.Mvc/Layouts/Pages/VerticalSearchLayout.cshtml";
+   Layout = "~/Caravan.Mvc/Views/Shared/Pages/VerticalSearchLayout.cshtml";
    ViewBag.DataColumns = new [] {"A", "B", "C", "D", "E", "F", "G"};
    var gen = new RandomDataTableGenerator(ViewBag.DataColumns);
    ViewBag.DataSource = gen.GenerateDataTable(5000);
@@ -45,7 +45,7 @@
       });
    </script>
 
-   @Html.FlexVerticalSearchCriteria(new List<CaravanVerticalSearchCriteriumOptions>
+   @Html.CaravanVerticalSearchCriteria(new List<CaravanVerticalSearchCriteriumOptions>
    {
       new CaravanVerticalSearchCriteriumOptions
       {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 
-namespace Finsa.Caravan.Mvc.Layouts
+namespace Finsa.Caravan.Mvc.Views.Shared
 {
    public static class CoreLayoutHelper
    {

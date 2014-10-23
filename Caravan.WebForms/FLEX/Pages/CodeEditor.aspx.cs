@@ -108,7 +108,7 @@ namespace FLEX.Web.Pages
             var logMsg = String.Format("File {0} has been changed by {1}", Path.GetFileName(filesPath[nameFiles]), HttpContext.Current.User.Identity.Name);
             var diff = new diff_match_patch();
             var diffList = diff.diff_main(oldFile, newFile);
-            DataAccess.Logger.LogWarn<CodeEditor>(logMsg, diff.diff_prettyHtml(diffList));
+            Db.Logger.LogWarn<CodeEditor>(logMsg, diff.diff_prettyHtml(diffList));
 
             var extension = Path.GetExtension(filesPath[nameFiles]);
             if (extension == ".cs")

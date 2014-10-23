@@ -45,7 +45,7 @@ namespace Finsa.Caravan.Mvc.Controls.PageElements
     #line hidden
     
     #line 7 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
-    using Finsa.Caravan.Mvc.Layouts;
+    using Finsa.Caravan.Mvc.Views.Shared;
     
     #line default
     #line hidden

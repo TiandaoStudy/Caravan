@@ -15,19 +15,19 @@ namespace Finsa.Caravan.RestService
          Get["/"] = _ =>
          {
             Context.EnableOutputCache(Configuration.ShortCacheTimeoutInSeconds);
-            return DataAccess.DataAccess.Logger.Logs();
+            return DataAccess.Db.Logger.Logs();
          };
          
          Get["/{appName}"] = p =>
          {
             Context.EnableOutputCache(Configuration.ShortCacheTimeoutInSeconds);
-            return DataAccess.DataAccess.Logger.Logs((string) p.appName);
+            return DataAccess.Db.Logger.Logs((string) p.appName);
          };
          
          Get["/{appName}/{logType}"] = p =>
          {
             Context.EnableOutputCache(Configuration.ShortCacheTimeoutInSeconds);
-            return DataAccess.DataAccess.Logger.Logs((string) p.appName, SafeParseLogType((string) p.logType));
+            return DataAccess.Db.Logger.Logs((string) p.appName, SafeParseLogType((string) p.logType));
          };
          
          Post["/"] = _ => Log(null, null);
@@ -46,7 +46,7 @@ namespace Finsa.Caravan.RestService
          {
             return Response.AsJson(LogResult.Failure(ex));
          }
-         var result = DataAccess.DataAccess.Logger.Log(e.Type, e.App.Name, e.UserLogin, e.CodeUnit, e.Function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments);
+         var result = DataAccess.Db.Logger.Log(e.Type, e.App.Name, e.UserLogin, e.CodeUnit, e.Function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments);
          return Response.AsJson(result);
       }
 
@@ -87,9 +87,9 @@ namespace Finsa.Caravan.RestService
    {
       public LogSettingsModule() : base("/logSettings")
       {
-         Get["/"] = _ => DataAccess.DataAccess.Logger.LogSettings();
-         Get["/{appName}"] = p => DataAccess.DataAccess.Logger.LogSettings((string) p.appName);
-         Get["/{appName}/{logType}"] = p => DataAccess.DataAccess.Logger.LogSettings((string) p.appName, SafeParseLogType((string) p.logType));
+         Get["/"] = _ => DataAccess.Db.Logger.LogSettings();
+         Get["/{appName}"] = p => DataAccess.Db.Logger.LogSettings((string) p.appName);
+         Get["/{appName}/{logType}"] = p => DataAccess.Db.Logger.LogSettings((string) p.appName, SafeParseLogType((string) p.logType));
       }
    }
 }

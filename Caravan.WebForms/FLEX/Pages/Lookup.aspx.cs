@@ -28,7 +28,7 @@ namespace FLEX.Web.Pages
       public static DataTable RetrieveData(string lookup)
       {
          var lookupQuery = LoadLookupData(lookup).LookupQuery;
-         return DataAccess.Manager.OpenConnection().Query(lookupQuery).ToDataTable();
+         return Db.Manager.OpenConnection().Query(lookupQuery).ToDataTable();
       }
 
       #region Lookup XML Handlers

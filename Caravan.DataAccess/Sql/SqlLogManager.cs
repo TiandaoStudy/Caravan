@@ -32,7 +32,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             var argsList = (args == null) ? new CKeyValuePair<string, string>[0] : args.ToArray();
             Raise<ArgumentOutOfRangeException>.If(argsList.Length > MaxArgumentCount);
 
-            using (var ctx = DataAccess.CreateContext())
+            using (var ctx = Db.CreateContext())
             using (var trx = ctx.BeginTransaction())
             {
                var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
@@ -90,7 +90,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override IEnumerable<LogEntry> GetLogs(string appName, LogType? logType)
       {
-         using (var ctx = DataAccess.CreateContext())
+         using (var ctx = Db.CreateContext())
          {
             return (from s in ctx.LogEntries.Include(s => s.App)
                     where appName == null || s.App.Name == appName.ToLower()
@@ -102,7 +102,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override IList<LogSettings> GetLogSettings(string appName, LogType? logType)
       {
-         using (var ctx = DataAccess.CreateContext())
+         using (var ctx = Db.CreateContext())
          {
             return (from s in ctx.LogSettings.Include(s => s.App)
                     where appName == null || s.App.Name == appName.ToLower()

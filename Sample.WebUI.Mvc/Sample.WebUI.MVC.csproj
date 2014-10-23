@@ -198,6 +198,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Caravan.Mvc\Images\" />
+    <Folder Include="Caravan.Mvc\Views\Security\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -217,8 +218,8 @@
       <Project>{ceff687b-7817-4326-9310-ab655407b610}</Project>
       <Name>Caravan.Helpers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Caravan.Mvc\Caravan.Mvc.csproj">
-      <Project>{811b51a4-669e-463e-897a-b593824d6d75}</Project>
+    <ProjectReference Include="..\Caravan.Mvc2\Caravan.Mvc.csproj">
+      <Project>{daa22a2c-a101-4f71-b4e1-f0db283a642c}</Project>
       <Name>Caravan.Mvc</Name>
     </ProjectReference>
     <ProjectReference Include="..\Caravan.WebApi\Caravan.WebApi.csproj">
@@ -279,16 +280,17 @@
     <Content Include="Caravan.Mvc\Scripts\bootstrap-table.min.js.map" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Caravan.Mvc\Layouts\Pages\VerticalSearchLayout.cshtml" />
+    <Content Include="Caravan.Mvc\Views\Shared\CoreLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Caravan.Mvc\Layouts\Pages\PageLayout.cshtml" />
+    <Content Include="Caravan.Mvc\Views\web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Caravan.Mvc\Layouts\Modals\ModalLayout.cshtml" />
+    <Content Include="Caravan.Mvc\Views\Shared\Modals\ModalLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Caravan.Mvc\Layouts\CoreLayout.cshtml" />
+    <Content Include="Caravan.Mvc\Views\Shared\Pages\PageLayout.cshtml" />
+    <Content Include="Caravan.Mvc\Views\Shared\Pages\VerticalSearchLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -64,7 +64,7 @@ namespace Finsa.Caravan.WebForms.Pages
             return;
          }
 
-         var group = DataAccess.DataAccess.Security.Group(Common.Configuration.Instance.ApplicationName, groupName);
+         var group = DataAccess.Db.Security.Group(Common.Configuration.Instance.ApplicationName, groupName);
          Raise<ArgumentException>.IfIsNull(group, "Given group name does not exist");
 
          txtGrpId.Text = group.Id.ToString(CultureInfo.InvariantCulture);
@@ -86,7 +86,7 @@ namespace Finsa.Caravan.WebForms.Pages
             else if (Mode == EditMode)
             {
                var newGroup = new SecGroup {Name = txtGrpName.Text, Description = txtGrpDescr.Text, IsAdmin = chkAdmin.Checked};
-               DataAccess.DataAccess.Security.UpdateGroup(Common.Configuration.Instance.ApplicationName, GroupName, newGroup);
+               DataAccess.Db.Security.UpdateGroup(Common.Configuration.Instance.ApplicationName, GroupName, newGroup);
             }
             Master.RegisterCloseScript(this);
          }

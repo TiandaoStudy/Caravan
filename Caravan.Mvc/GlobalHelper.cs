@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO.Compression;
 using System.Web;
+using Finsa.Caravan.DataAccess;
 using PommaLabs.KVLite;
 
 namespace Finsa.Caravan.Mvc
@@ -55,7 +56,7 @@ namespace Finsa.Caravan.Mvc
          HttpContext.Current.Response.Filter = null;
 
          // Logs the error into the DB.
-         DataAccess.DataAccess.Logger.LogFatal<GlobalHelper>(HttpContext.Current.Server.GetLastError());
+         Db.Logger.LogFatal<GlobalHelper>(HttpContext.Current.Server.GetLastError());
       }
    }
 }

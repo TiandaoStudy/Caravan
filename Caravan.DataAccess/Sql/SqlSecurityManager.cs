@@ -12,7 +12,7 @@ namespace Finsa.Caravan.DataAccess.Sql
    {
       protected override IEnumerable<SecApp> GetApps(string appName)
       {
-         using (var ctx = DataAccess.CreateContext())
+         using (var ctx = Db.CreateContext())
          {
             return (from a in ctx.SecApps.Include("Users.Groups").Include("Groups.Users").Include("Contexts.Objects").Include(a => a.LogSettings)
                     where appName == null || a.Name == appName.ToLower()
@@ -23,7 +23,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override IEnumerable<SecGroup> GetGroups(string appName, string groupName)
       {
-         using (var ctx = DataAccess.CreateContext())
+         using (var ctx = Db.CreateContext())
          {
             return (from g in ctx.SecGroups.Include("Users.Groups")
                     where appName == null || g.App.Name == appName.ToLower()
@@ -40,7 +40,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override void DoRemoveGroup(string appName, string groupName)
       {
-         using (var ctx = DataAccess.CreateContext())
+         using (var ctx = Db.CreateContext())
          using (var trx = ctx.BeginTransaction())
          {
             var grp = ctx.SecGroups.FirstOrDefault(g => g.App.Name == appName.ToLower() && g.Name == groupName.ToLower());
@@ -55,7 +55,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override void DoUpdateGroup(string appName, string groupName, SecGroup newGroup)
       {
-         using (var ctx = DataAccess.CreateContext())
+         using (var ctx = Db.CreateContext())
          using (var trx = ctx.BeginTransaction())
          {
             var grp = ctx.SecGroups.FirstOrDefault(g => g.App.Name == appName.ToLower() && g.Name == groupName.ToLower());
@@ -71,7 +71,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override IEnumerable<SecUser> GetUsers(string appName, string userLogin)
       {
-         using (var ctx = DataAccess.CreateContext())
+         using (var ctx = Db.CreateContext())
          {
             return (from u in ctx.SecUsers.Include("Groups.Users")
                     where appName == null || u.App.Name == appName.ToLower()
@@ -83,7 +83,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override IEnumerable<SecContext> GetContexts(string appName)
       {
-         using (var ctx = DataAccess.CreateContext())
+         using (var ctx = Db.CreateContext())
          {
             return (from c in ctx.SecContexts.Include(c => c.Objects)
                     where appName == null || c.App.Name == appName.ToLower()
