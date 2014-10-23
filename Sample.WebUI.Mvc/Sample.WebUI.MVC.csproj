@@ -218,7 +218,7 @@
       <Project>{ceff687b-7817-4326-9310-ab655407b610}</Project>
       <Name>Caravan.Helpers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Caravan.Mvc2\Caravan.Mvc.csproj">
+    <ProjectReference Include="..\Caravan.Mvc\Caravan.Mvc.csproj">
       <Project>{daa22a2c-a101-4f71-b4e1-f0db283a642c}</Project>
       <Name>Caravan.Mvc</Name>
     </ProjectReference>
