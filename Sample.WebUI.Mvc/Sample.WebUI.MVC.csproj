@@ -196,9 +196,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\PersistentCache\" />
     <Folder Include="Caravan.Mvc\Images\" />
-    <Folder Include="Caravan.Mvc\Views\Security\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -291,6 +290,9 @@
   <ItemGroup>
     <Content Include="Caravan.Mvc\Views\Shared\Pages\PageLayout.cshtml" />
     <Content Include="Caravan.Mvc\Views\Shared\Pages\VerticalSearchLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Caravan.Mvc\Views\Security\SecGroupList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

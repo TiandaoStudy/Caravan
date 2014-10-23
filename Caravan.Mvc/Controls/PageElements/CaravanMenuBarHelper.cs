@@ -36,7 +36,11 @@ namespace Finsa.Caravan.Mvc.Controls.PageElements
             {
                if (item.URL != null)
                {
-                  return "<li>" + ajaxHelper.ActionLink(caption, item.URL, new AjaxOptions
+                  var splitUrl = item.URL.Split('/');
+                  var controller = splitUrl[0];
+                  var action = splitUrl[1];
+                  
+                  return "<li>" + ajaxHelper.ActionLink(caption, action, controller, new AjaxOptions
                   {
                      HttpMethod = "GET", 
                      InsertionMode = InsertionMode.Replace, 

@@ -4,15 +4,20 @@
    <Group>
       <Item ID="Item1" Caption="Functions" Enabled="True">
          <Group Layout="Vertical">
-            <Item ID="Item2" Caption="Customers List" URL="Search" />
-            <Item ID="Item3" Caption="Employee List" URL="CV" />
+            <Item ID="Item2" Caption="Customers List" URL="Home/Search" />
+            <Item ID="Item3" Caption="Employee List" URL="Home/CV" />
          </Group>
       </Item>
-      <Item ID="Item80" Caption="Tools">
+      <Item ID="Item7" Caption="Security">
          <Group Layout="Vertical">
-            <Item ID="Item83" Caption="Code Editor" URL="FLEX/Pages/CodeEditor.aspx" />
-            <Item ID="Item84" Caption="Log Search" URL="FLEX/Pages/LogSearch.aspx" />
-            <Item ID="Item85" Caption="Cache Overview" URL="FLEX/Pages/CacheOverview.aspx" />
+            <Item ID="Item70" Caption="Groups" URL="Security/SecGroupList" />
+         </Group>
+      </Item>
+      <Item ID="Item8" Caption="Tools">
+         <Group Layout="Vertical">
+            <Item ID="Item83" Caption="Code Editor" URL="Tools/CodeEditor" />
+            <Item ID="Item84" Caption="Log Search" URL="Tools/LogSearch" />
+            <Item ID="Item85" Caption="Cache Overview" URL="Tools/CacheOverview" />
          </Group>
       </Item>
       <Item ID="Item112" Caption="Manual" ClientCall="window.open('http://www.bing.it/')" />

@@ -1,8 +1,10 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.WebPages;
+using Finsa.Caravan.Mvc;
 using RazorGenerator.Mvc;
 using PreApplicationStartCode = System.Web.Mvc.PreApplicationStartCode;
 
@@ -26,6 +28,8 @@ namespace Sample.WebUI.Mvc
          GlobalConfiguration.Configure(WebApiConfig.Register);
          FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
          RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+         GlobalHelper.Application_Start(String.Empty);
       }
    }
 }

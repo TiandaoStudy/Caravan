@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace Finsa.Caravan.Mvc.Controllers
 {
     public class SecurityController : Controller
     {
         // GET: Security
-        public ActionResult Index()
+        public ActionResult SecGroupList()
         {
             return View();
         }

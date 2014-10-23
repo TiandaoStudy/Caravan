@@ -551,6 +551,7 @@
     <Content Include="Views\Shared\Pages\PageLayout.cshtml" />
     <Content Include="Views\Shared\Pages\VerticalSearchLayout.cshtml" />
     <Content Include="Views\Shared\Web.config" />
+    <Content Include="Views\Security\SecGroupList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -562,7 +563,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Images\select2\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Security\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ErrorMessages.resx">
@@ -628,6 +628,7 @@ copy $(ProjectDir)\Images\*.* $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Images
 :: LAYOUTS - NuGet Packager
 :: LAYOUTS - Sample Web UI
 copy $(ProjectDir)\Views\web.config $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Views
+copy $(ProjectDir)\Views\Security\*.cshtml $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Views\Security
 copy $(ProjectDir)\Views\Shared\*.cshtml $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Views\Shared
 copy $(ProjectDir)\Views\Shared\Modals\*.cshtml $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Views\Shared\Modals
 copy $(ProjectDir)\Views\Shared\Pages\*.cshtml $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Views\Shared\Pages

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO.Compression;
+using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using Finsa.Caravan.DataAccess;
 using PommaLabs.KVLite;
 
@@ -13,7 +15,7 @@ namespace Finsa.Caravan.Mvc
          throw new InvalidOperationException();
       }
       
-      public static void Application_Start(object sender, EventArgs args, string connectionString)
+      public static void Application_Start(string connectionString)
       {
          // Sets the default connection string.
          DataAccess.Configuration.Instance.ConnectionString = connectionString;
@@ -21,6 +23,13 @@ namespace Finsa.Caravan.Mvc
          // Run vacuum on the persistent cache. It should be put AFTER the connection string is set,
          // since that string it stored on the cache itself and we do not want conflicts, right?
          PersistentCache.DefaultInstance.VacuumAsync();
+
+         // Allow looks views up in ~/Caravan.Mvc/Views directory.
+         var razorEngine = ViewEngines.Engines.OfType<RazorViewEngine>().First();
+         razorEngine.ViewLocationFormats = razorEngine.ViewLocationFormats.Concat(new [] 
+         { 
+            "~/Caravan.Mvc/Views/{1}/{0}.cshtml"
+         }).ToArray();
       }
 
       public static void Application_PreSendRequestHeaders(object sender, EventArgs args)
