@@ -12,17 +12,21 @@ namespace Finsa.Caravan.RestService
    {
       public LogsModule() : base("logs")
       {
-         Get["/"] = _ => Db.Logger.Logs();
+         Get["/"] = _ =>
+         {
+            Context.EnableOutputCache(Configuration.ShortCacheTimeoutInSeconds);
+            return Db.Logger.Logs();
+         };
          
          Get["/{appName}"] = p =>
          {
-            Context.EnableOutputCache(60);
+            Context.EnableOutputCache(Configuration.ShortCacheTimeoutInSeconds);
             return Db.Logger.Logs((string) p.appName);
          };
          
          Get["/{appName}/{logType}"] = p =>
          {
-            Context.EnableOutputCache(60);
+            Context.EnableOutputCache(Configuration.ShortCacheTimeoutInSeconds);
             return Db.Logger.Logs((string) p.appName, SafeParseLogType((string) p.logType));
          };
          
