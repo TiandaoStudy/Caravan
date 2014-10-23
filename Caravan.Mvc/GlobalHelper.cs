@@ -15,10 +15,13 @@ namespace Finsa.Caravan.Mvc
          throw new InvalidOperationException();
       }
       
-      public static void Application_Start(string connectionString)
+      public static void Application_Start(string connectionString = null)
       {
-         // Sets the default connection string.
-         DataAccess.Configuration.Instance.ConnectionString = connectionString;
+         // Sets the default connection string, if variable has a value.
+         if (!String.IsNullOrWhiteSpace(connectionString))
+         {
+            DataAccess.Configuration.Instance.ConnectionString = connectionString;
+         }
 
          // Run vacuum on the persistent cache. It should be put AFTER the connection string is set,
          // since that string it stored on the cache itself and we do not want conflicts, right?

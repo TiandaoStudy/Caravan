@@ -5,7 +5,7 @@ namespace Finsa.Caravan.Mvc.Controls.DataVisualization
 {
    public sealed class CaravanDataGridOptions : ControlOptionsBase
    {
-      //public IPagedList<object> PagedItems { get; set; }
+      public IEnumerable<object> Items { get; set; }
       public Func<int, string> PagerAction { get; set; }
       public ICollection<CaravanDataGridColumnOptions> Columns { get; set; }
    }

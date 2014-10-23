@@ -27,7 +27,7 @@ namespace Finsa.Caravan.DataAccess
          get
          {
             var cachedConnectionString = PersistentCache.DefaultInstance.Get(CachePartitionName, ConnectionStringKey) as string;
-            if (cachedConnectionString != null)
+            if (!String.IsNullOrWhiteSpace(cachedConnectionString))
             {
                return cachedConnectionString;
             }

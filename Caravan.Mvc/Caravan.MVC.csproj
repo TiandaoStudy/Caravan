@@ -450,6 +450,7 @@
     </Compile>
     <Compile Include="GlobalHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Security\SecGroupList.cs" />
     <Compile Include="Views\Shared\CoreLayoutHelper.cs" />
   </ItemGroup>
   <ItemGroup>
