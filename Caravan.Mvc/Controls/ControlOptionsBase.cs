@@ -1,4 +1,4 @@
-﻿namespace FLEX.Web.MVC.Controls
+﻿namespace Finsa.Caravan.Mvc.Controls
 {
    public abstract class ControlOptionsBase
    {

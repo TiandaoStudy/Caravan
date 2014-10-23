@@ -1,4 +1,4 @@
-﻿namespace FLEX.Web.MVC.Controls.ValueHolders
+﻿namespace Finsa.Caravan.Mvc.Controls.ValueHolders
 {
    public sealed class JQueryDatePickerOptions
    {

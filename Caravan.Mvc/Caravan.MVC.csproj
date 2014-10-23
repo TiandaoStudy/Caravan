@@ -186,12 +186,12 @@
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="GlobalHelper.cs" />
-    <Compile Include="Layouts\FlexSharedLayout_.generated.cs">
-      <DependentUpon>FlexSharedLayout_.cshtml</DependentUpon>
+    <Compile Include="Layouts\CaravanCoreLayout_.generated.cs">
+      <DependentUpon>CaravanCoreLayout_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Layouts\FlexCoreLayout.cs" />
+    <Compile Include="Layouts\CaravanCoreLayout.cs" />
     <Compile Include="Layouts\Pages\FlexVerticalSearchLayout_.generated.cs">
       <DependentUpon>FlexVerticalSearchLayout_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -409,9 +409,9 @@
     </None>
     <None Include="Fonts\_tMhxyW6i8lbI7YsUdFlGA.eot" />
     <None Include="Fonts\_xyN3apAT_yRRDeqB3sPRg.woff" />
-    <None Include="Layouts\FlexSharedLayout_.cshtml">
+    <None Include="Layouts\CaravanCoreLayout_.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>FlexSharedLayout_.generated.cs</LastGenOutput>
+      <LastGenOutput>CaravanCoreLayout_.generated.cs</LastGenOutput>
     </None>
     <None Include="Layouts\Pages\FlexVerticalSearchLayout_.cshtml">
       <Generator>RazorGenerator</Generator>

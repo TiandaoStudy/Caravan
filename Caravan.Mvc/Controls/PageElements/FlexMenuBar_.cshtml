@@ -5,9 +5,8 @@
 @using Finsa.Caravan
 @using Finsa.Caravan.Common
 @using Finsa.Caravan.Mvc.Controls.PageElements
+@using Finsa.Caravan.Mvc.Layouts
 @using FLEX.Common
-@using FLEX.Web.MVC.Controls.PageElements
-@using FLEX.Web.MVC.Layouts
 
 @helper FlexMenuBar(this HtmlHelper htmlHelper, AjaxHelper ajaxHelper)
 {
@@ -103,7 +102,7 @@
                   <span class="icon-bar"></span>
                </button>
                <a class="navbar-brand" href="#" onclick=" WebSettings.UserControls_MenuBar_BrandClick ">
-                  <img src='@(FlexCoreLayout.MyFlexPath)/Images/logo-menubar.png' class='logo' alt='Logo' />&nbsp;@Configuration.Instance.ApplicationName
+                  <img src='@(CaravanCoreLayout.MyFlexPath)/Images/logo-menubar.png' class='logo' alt='Logo' />&nbsp;@Configuration.Instance.ApplicationName
                </a>
             </div>
             <div id="menuBar-collapse" class="navbar-collapse collapse">

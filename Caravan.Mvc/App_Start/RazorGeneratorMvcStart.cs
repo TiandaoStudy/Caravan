@@ -1,13 +1,13 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
-using FLEX.Web.MVC;
+using Finsa.Caravan.Mvc;
 using RazorGenerator.Mvc;
 using WebActivatorEx;
 
 [assembly: PostApplicationStartMethod(typeof (RazorGeneratorMvcStart), "Start")]
 
-namespace FLEX.Web.MVC
+namespace Finsa.Caravan.Mvc
 {
    public static class RazorGeneratorMvcStart
    {

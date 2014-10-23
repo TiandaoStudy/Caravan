@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO.Compression;
 using System.Web;
-using Finsa.Caravan.DataAccess;
 using PommaLabs.KVLite;
 
 namespace Finsa.Caravan.Mvc
@@ -43,6 +42,11 @@ namespace Finsa.Caravan.Mvc
 
       public static void Application_Error(object sender, EventArgs args)
       {
+         if (HttpContext.Current == null)
+         {
+            return;
+         }
+
          // Removes any special filtering, especially GZip filtering.
          // Assigning the response filter to a dummy variable is required
          // in order to avoid a .NET issue which is triggered by setting

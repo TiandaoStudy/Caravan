@@ -27,17 +27,17 @@ namespace Finsa.Caravan.Mvc.Layouts
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 4 "..\..\Layouts\FlexSharedLayout_.cshtml"
-    using FLEX.Web.MVC.Layouts;
+    #line 4 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+    using Finsa.Caravan.Mvc.Layouts;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Layouts/FlexSharedLayout_.cshtml")]
-    public partial class FlexSharedLayout_ : System.Web.Mvc.WebViewPage<dynamic>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Layouts/CaravanCoreLayout_.cshtml")]
+    public partial class CaravanCoreLayout_ : System.Web.Mvc.WebViewPage<dynamic>
     {
-        public FlexSharedLayout_()
+        public CaravanCoreLayout_()
         {
         }
         public override void Execute()
@@ -65,8 +65,8 @@ WriteLiteral(@"
 
 
             
-            #line 15 "..\..\Layouts\FlexSharedLayout_.cshtml"
-              Write(FlexCoreLayout.FlexPath);
+            #line 15 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+              Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -75,8 +75,8 @@ WriteLiteral("/Styles/fonts.min.css\" rel=\"stylesheet\" media=\"screen\" />\r\n
 
 
             
-            #line 16 "..\..\Layouts\FlexSharedLayout_.cshtml"
-              Write(FlexCoreLayout.FlexPath);
+            #line 16 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+              Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -86,8 +86,8 @@ WriteLiteral("/Styles/jquery-ui.min.css\" rel=\"stylesheet\" media=\"screen\" />
 
 
             
-            #line 19 "..\..\Layouts\FlexSharedLayout_.cshtml"
-              Write(FlexCoreLayout.FlexPath);
+            #line 19 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+              Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -96,8 +96,8 @@ WriteLiteral("/Styles/bootstrap.min.css");
 
 
             
-            #line 19 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                                                 Write(FlexCoreLayout.DoNotCacheTag);
+            #line 19 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                                                    Write(CaravanCoreLayout.DoNotCacheTag);
 
             
             #line default
@@ -106,8 +106,8 @@ WriteLiteral("\" rel=\"stylesheet\" media=\"screen\" />\r\n      <link href=\"")
 
 
             
-            #line 20 "..\..\Layouts\FlexSharedLayout_.cshtml"
-              Write(FlexCoreLayout.FlexPath);
+            #line 20 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+              Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -117,8 +117,8 @@ WriteLiteral("/Styles/bootstrap-datepicker3.min.css\" rel=\"stylesheet\" media=\
 
 
             
-            #line 21 "..\..\Layouts\FlexSharedLayout_.cshtml"
-              Write(FlexCoreLayout.FlexPath);
+            #line 21 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+              Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -128,8 +128,8 @@ WriteLiteral("/Styles/bootstrap-switch.min.css\" rel=\"stylesheet\" media=\"scre
 
 
             
-            #line 23 "..\..\Layouts\FlexSharedLayout_.cshtml"
-              Write(FlexCoreLayout.FlexPath);
+            #line 23 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+              Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -139,8 +139,8 @@ WriteLiteral("/Styles/flex.min.css\" rel=\"stylesheet\" media=\"screen\" />\r\n 
 
 
             
-            #line 25 "..\..\Layouts\FlexSharedLayout_.cshtml"
-              Write(FlexCoreLayout.FlexPath);
+            #line 25 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+              Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -150,8 +150,8 @@ WriteLiteral("/Styles/bootstrap-table.min.css\" rel=\"stylesheet\" media=\"scree
 
 
             
-            #line 26 "..\..\Layouts\FlexSharedLayout_.cshtml"
-              Write(FlexCoreLayout.FlexPath);
+            #line 26 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+              Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -160,8 +160,8 @@ WriteLiteral("/Styles/select2.min.css");
 
 
             
-            #line 26 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                                               Write(FlexCoreLayout.DoNotCacheTag);
+            #line 26 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                                                  Write(CaravanCoreLayout.DoNotCacheTag);
 
             
             #line default
@@ -170,8 +170,8 @@ WriteLiteral("\" rel=\"stylesheet\" media=\"screen\" />\r\n      <link href=\"")
 
 
             
-            #line 27 "..\..\Layouts\FlexSharedLayout_.cshtml"
-              Write(FlexCoreLayout.FlexPath);
+            #line 27 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+              Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -182,8 +182,8 @@ WriteLiteral("/Styles/select2-bootstrap.min.css\" rel=\"stylesheet\" media=\"scr
 
 
             
-            #line 31 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                  Write(FlexCoreLayout.FlexPath);
+            #line 31 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                  Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -192,8 +192,8 @@ WriteLiteral("/Scripts/html5shiv.min.js\"></script>\r\n         <script src=\"")
 
 
             
-            #line 32 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                  Write(FlexCoreLayout.FlexPath);
+            #line 32 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                  Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -203,8 +203,8 @@ WriteLiteral("/Scripts/respond.min.js\"></script>\r\n      <![endif]-->\r\n     
 
 
             
-            #line 35 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.FlexPath);
+            #line 35 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                      Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -213,8 +213,8 @@ WriteLiteral("/Scripts/base64.min.js\"></script>\r\n\r\n      <script type=\"tex
 
 
             
-            #line 37 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.FlexPath);
+            #line 37 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                      Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -224,8 +224,8 @@ WriteLiteral("/Scripts/jquery-2.1.1.min.js\"></script>\r\n      <script type=\"t
 
 
             
-            #line 38 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.FlexPath);
+            #line 38 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                      Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -235,8 +235,8 @@ WriteLiteral("/Scripts/underscore.min.js\"></script>\r\n      <script type=\"tex
 
 
             
-            #line 39 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.FlexPath);
+            #line 39 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                      Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -246,8 +246,8 @@ WriteLiteral("/Scripts/backbone.min.js\"></script>\r\n\r\n      <script type=\"t
 
 
             
-            #line 41 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.FlexPath);
+            #line 41 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                      Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -256,8 +256,8 @@ WriteLiteral("/Scripts/jquery-ui.min.js\"></script>\r\n      <script type=\"text
 
 
             
-            #line 42 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.FlexPath);
+            #line 42 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                      Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -267,8 +267,8 @@ WriteLiteral("/Scripts/jquery.unobtrusive-ajax.min.js\"></script>\r\n      <scri
 
 
             
-            #line 43 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.FlexPath);
+            #line 43 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                      Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -277,8 +277,8 @@ WriteLiteral("/Scripts/spin.min.js\"></script>\r\n\r\n      <script type=\"text/
 
 
             
-            #line 45 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.FlexPath);
+            #line 45 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                      Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -287,8 +287,8 @@ WriteLiteral("/Scripts/bootstrap.min.js\"></script>\r\n      <script type=\"text
 
 
             
-            #line 46 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.FlexPath);
+            #line 46 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                      Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -298,8 +298,8 @@ WriteLiteral("/Scripts/bootstrap-hover-dropdown.min.js\"></script>\r\n      <scr
 
 
             
-            #line 47 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.FlexPath);
+            #line 47 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                      Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -309,8 +309,8 @@ WriteLiteral("/Scripts/bootstrap-datepicker.min.js\"></script>\r\n      <script 
 
 
             
-            #line 48 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.FlexPath);
+            #line 48 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                      Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -320,8 +320,8 @@ WriteLiteral("/Scripts/bootstrap-maxlength.min.js\"></script>\r\n      <script t
 
 
             
-            #line 49 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.FlexPath);
+            #line 49 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                      Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -331,8 +331,8 @@ WriteLiteral("/Scripts/bootstrap-switch.min.js\"></script>\r\n\r\n      <script 
 
 
             
-            #line 51 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.FlexPath);
+            #line 51 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                      Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -342,8 +342,8 @@ WriteLiteral("/Scripts/bootstrap-table.min.js\"></script>\r\n      <script type=
 
 
             
-            #line 52 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.FlexPath);
+            #line 52 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                      Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -354,8 +354,8 @@ WriteLiteral("/Scripts/select2.min.js\"></script>\r\n      \r\n      <!-- Custom
 
 
             
-            #line 55 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.FlexPath);
+            #line 55 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                      Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -364,8 +364,8 @@ WriteLiteral("/Scripts/flex.min.js");
 
 
             
-            #line 55 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                                                                    Write(FlexCoreLayout.DoNotCacheTag);
+            #line 55 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                                                                       Write(CaravanCoreLayout.DoNotCacheTag);
 
             
             #line default
@@ -374,8 +374,8 @@ WriteLiteral("\"></script>\r\n\r\n      <script type=\"text/javascript\" src=\""
 
 
             
-            #line 57 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                      Write(FlexCoreLayout.MyFlexPath);
+            #line 57 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                      Write(CaravanCoreLayout.MyFlexPath);
 
             
             #line default
@@ -384,8 +384,8 @@ WriteLiteral("/Scripts/autocompletes.min.js");
 
 
             
-            #line 57 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                                                                                               Write(FlexCoreLayout.DoNotCacheTag);
+            #line 57 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                                                                                                  Write(CaravanCoreLayout.DoNotCacheTag);
 
             
             #line default
@@ -395,8 +395,8 @@ WriteLiteral("\"></script>\r\n      \r\n      <script type=\"text/javascript\">\
 
 
             
-            #line 61 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                         Write(FlexCoreLayout.RootPath);
+            #line 61 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                         Write(CaravanCoreLayout.RootPath);
 
             
             #line default
@@ -405,8 +405,8 @@ WriteLiteral("\";\r\n         settings.flexPath = \"");
 
 
             
-            #line 62 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                         Write(FlexCoreLayout.FlexPath);
+            #line 62 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                         Write(CaravanCoreLayout.FlexPath);
 
             
             #line default
@@ -415,8 +415,8 @@ WriteLiteral("\";\r\n         settings.myFlexPath = \"");
 
 
             
-            #line 63 "..\..\Layouts\FlexSharedLayout_.cshtml"
-                           Write(FlexCoreLayout.MyFlexPath);
+            #line 63 "..\..\Layouts\CaravanCoreLayout_.cshtml"
+                           Write(CaravanCoreLayout.MyFlexPath);
 
             
             #line default
@@ -425,7 +425,7 @@ WriteLiteral("\";\r\n      </script>\r\n      \r\n      ");
 
 
             
-            #line 66 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 66 "..\..\Layouts\CaravanCoreLayout_.cshtml"
  Write(RenderSection("HeadSection"));
 
             
@@ -435,7 +435,7 @@ WriteLiteral("\r\n   </head>\r\n   \r\n   <body>\r\n      ");
 
 
             
-            #line 70 "..\..\Layouts\FlexSharedLayout_.cshtml"
+            #line 70 "..\..\Layouts\CaravanCoreLayout_.cshtml"
  Write(RenderSection("BodySection"));
 
             

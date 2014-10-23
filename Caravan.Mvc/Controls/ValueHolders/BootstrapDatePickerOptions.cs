@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace FLEX.Web.MVC.Controls.ValueHolders
+namespace Finsa.Caravan.Mvc.Controls.ValueHolders
 {
    /// <summary>
    ///   http://bootstrap-datepicker.readthedocs.org/en/release/options.html
    /// </summary>
-   public sealed class BootstrapDatePickerOptions
+   public sealed class BootstrapDatePickerOptions : ValueHolderOptionsBase
    {
       public BootstrapDatePickerOptions()
       {
@@ -18,8 +18,6 @@ namespace FLEX.Web.MVC.Controls.ValueHolders
          EndDate = "31/12/2999";
          
       }
-
-      public string ID { get; set; }
 
       public bool Autoclose { get; set; }
 

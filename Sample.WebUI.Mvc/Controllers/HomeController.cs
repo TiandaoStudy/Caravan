@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web.Mvc;
 using Finsa.Caravan.Mvc.Controllers;
-using FLEX.Web.MVC.Controls.DataVisualization;
+using Finsa.Caravan.Mvc.Controls.DataVisualization;
 using Newtonsoft.Json;
 using RestSharp;
 using Sample.DataModel.Entities;

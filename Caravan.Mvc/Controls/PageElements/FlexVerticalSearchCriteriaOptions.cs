@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FLEX.Web.MVC.Controls.PageElements
+namespace Finsa.Caravan.Mvc.Controls.PageElements
 {
    public sealed class FlexVerticalSearchCriteriaOptions : ControlOptionsBase
    {

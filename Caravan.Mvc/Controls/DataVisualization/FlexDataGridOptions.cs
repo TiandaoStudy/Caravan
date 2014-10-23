@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FLEX.Web.MVC.Controls.DataVisualization
+namespace Finsa.Caravan.Mvc.Controls.DataVisualization
 {
    public sealed class FlexDataGridOptions : ControlOptionsBase
    {

@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Web;
 
-namespace FLEX.Web.MVC.Layouts
+namespace Finsa.Caravan.Mvc.Layouts
 {
-   public static class FlexCoreLayout
+   public static class CaravanCoreLayout
    {
       private static readonly string CachedRootPath;
       private static readonly string CachedFlexPath;
       private static readonly string CachedMyFlexPath;
       private static readonly Random Random = new Random();
 
-      static FlexCoreLayout()
+      static CaravanCoreLayout()
       {
          CachedRootPath = FullyQualifiedApplicationPath;
          CachedFlexPath = CachedRootPath + "FLEX.MVC";
