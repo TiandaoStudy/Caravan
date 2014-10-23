@@ -2,7 +2,7 @@
 using System.Web;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.RestService.Core;
-using FLEX.Common.XmlSchemas.MenuEntries;
+using Finsa.Caravan.XmlSchemas.MenuEntries;
 using Nancy;
 
 namespace Finsa.Caravan.RestService
@@ -21,19 +21,19 @@ namespace Finsa.Caravan.RestService
             return xml;
          };
 
-         Get["/"] = _ => Response.AsJson(Db.Security.Apps());
+         Get["/"] = _ => Response.AsJson(DataAccess.DataAccess.Security.Apps());
          
-         Get["/{appName}"] = p => Response.AsJson(Db.Security.App((string) p.appName));
+         Get["/{appName}"] = p => Response.AsJson(DataAccess.DataAccess.Security.App((string) p.appName));
          
-         Get["/{appName}/groups"] = p => Response.AsJson(Db.Security.Groups((string) p.appName));
-         Get["/{appName}/groups/{groupName}"] = p => Response.AsJson(Db.Security.Group((string) p.appName, (string) p.groupName));
+         Get["/{appName}/groups"] = p => Response.AsJson(DataAccess.DataAccess.Security.Groups((string) p.appName));
+         Get["/{appName}/groups/{groupName}"] = p => Response.AsJson(DataAccess.DataAccess.Security.Group((string) p.appName, (string) p.groupName));
          Post["/{appName}/groups"] = p => null;
          Put["/{appName}/groups/{groupName}"] = p => null;
          Delete["/{appName}/groups/{groupName}"] = p => null;
 
-         Get["/{appName}/users"] = p => Response.AsJson(Db.Security.Users((string) p.appName));
+         Get["/{appName}/users"] = p => Response.AsJson(DataAccess.DataAccess.Security.Users((string) p.appName));
          
-         Get["/{appName}/contexts"] = p => Response.AsJson(Db.Security.Contexts((string) p.appName));
+         Get["/{appName}/contexts"] = p => Response.AsJson(DataAccess.DataAccess.Security.Contexts((string) p.appName));
       }
    }
 }

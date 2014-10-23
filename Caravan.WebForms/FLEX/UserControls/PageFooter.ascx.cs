@@ -26,7 +26,7 @@ namespace FLEX.Web.UserControls
          }
          catch (Exception ex)
          {
-            Db.Logger.LogError<PageFooter>(ex);
+            DataAccess.Logger.LogError<PageFooter>(ex);
             throw;
          }
       }

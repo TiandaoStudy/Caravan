@@ -3,16 +3,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
-using FLEX.Common.XmlSchemas.MenuEntries;
+using Finsa.Caravan.XmlSchemas.MenuEntries;
 using RestSharp;
 
-namespace FLEX.Web.MVC.Controls.PageElements
+namespace Finsa.Caravan.Mvc.Controls.PageElements
 {
    public static class FlexMenuBarHelper
    {
       public static string GetMenuFromService(AjaxHelper ajaxHelper)
       {
-         var client = new RestClient("http://localhost/FLEX.RestService");
+         var client = new RestClient("http://localhost/Caravan.RestService");
          var request = new RestRequest("security/menu", Method.GET);
 
          Menu menu;

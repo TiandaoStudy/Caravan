@@ -11,14 +11,14 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
       {
          base.OnModelCreating(mb);
 
-         mb.HasDefaultSchema(DataAccess.Configuration.Instance.OracleUser);
+         mb.HasDefaultSchema(Caravan.DataAccess.Configuration.Instance.OracleUser);
          
          /************************************************
           * SecApp
           ************************************************/
          
          mb.Entity<SecApp>()
-            .ToTable("CARAVAN_SEC_APP", DataAccess.Configuration.Instance.OracleUser)
+            .ToTable("CARAVAN_SEC_APP", Caravan.DataAccess.Configuration.Instance.OracleUser)
             .HasKey(x => x.Id)
             .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
@@ -31,7 +31,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
           ************************************************/
 
          mb.Entity<SecUser>()
-            .ToTable("CARAVAN_SEC_USER", DataAccess.Configuration.Instance.OracleUser)
+            .ToTable("CARAVAN_SEC_USER", Caravan.DataAccess.Configuration.Instance.OracleUser)
             .HasKey(x => new {x.Id, x.AppId});
 
          mb.Entity<SecUser>().Property(x => x.Id).HasColumnName("CUSR_ID");
@@ -54,7 +54,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
           ************************************************/
          
          mb.Entity<SecGroup>()
-            .ToTable("CARAVAN_SEC_GROUP", DataAccess.Configuration.Instance.OracleUser)
+            .ToTable("CARAVAN_SEC_GROUP", Caravan.DataAccess.Configuration.Instance.OracleUser)
             .HasKey(x => new {x.Id, x.AppId});
 
          mb.Entity<SecGroup>().Property(x => x.Id).HasColumnName("CGRP_ID");
@@ -80,7 +80,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
           ************************************************/
          
          mb.Entity<SecContext>()
-            .ToTable("CARAVAN_SEC_CONTEXT", DataAccess.Configuration.Instance.OracleUser)
+            .ToTable("CARAVAN_SEC_CONTEXT", Caravan.DataAccess.Configuration.Instance.OracleUser)
             .HasKey(x => new {x.Id, x.AppId});
 
          mb.Entity<SecContext>().Property(x => x.Id).HasColumnName("CCTX_ID");
@@ -99,7 +99,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
           ************************************************/
          
          mb.Entity<SecObject>()
-            .ToTable("CARAVAN_SEC_OBJECT", DataAccess.Configuration.Instance.OracleUser)
+            .ToTable("CARAVAN_SEC_OBJECT", Caravan.DataAccess.Configuration.Instance.OracleUser)
             .HasKey(x => new {x.Id, x.ContextId, x.AppId});
 
          mb.Entity<SecObject>().Property(x => x.Id).HasColumnName("COBJ_ID");
@@ -126,7 +126,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
           ************************************************/
 
          mb.Entity<LogSettings>()
-            .ToTable("CARAVAN_LOG_SETTINGS", DataAccess.Configuration.Instance.OracleUser)
+            .ToTable("CARAVAN_LOG_SETTINGS", Caravan.DataAccess.Configuration.Instance.OracleUser)
             .HasKey(x => new {x.AppId, x.TypeId});
 
          mb.Entity<LogSettings>().Property(x => x.AppId).HasColumnName("CAPP_ID");
@@ -147,7 +147,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
           ************************************************/
 
          mb.Entity<LogEntry>()
-            .ToTable("CARAVAN_LOG", DataAccess.Configuration.Instance.OracleUser)
+            .ToTable("CARAVAN_LOG", Caravan.DataAccess.Configuration.Instance.OracleUser)
             .HasKey(x => x.Id)
             .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 

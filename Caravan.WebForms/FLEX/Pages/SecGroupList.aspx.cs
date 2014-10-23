@@ -42,7 +42,7 @@ namespace Finsa.Caravan.WebForms.Pages
       protected void fdtgGroups_DataSourceUpdating(object sender, EventArgs args)
       {
          // This should not catch any exception, others will do.
-         var groups = (from g in Db.Security.Groups(Common.Configuration.Instance.ApplicationName)
+         var groups = (from g in DataAccess.DataAccess.Security.Groups(Common.Configuration.Instance.ApplicationName)
                        select new SecGroup {Id = g.Id, Name = g.Name, Description = g.Description, IsAdmin = g.IsAdmin})
                        .ToDataTable();
          fdtgGroups.DataSource = groups;
@@ -86,7 +86,7 @@ namespace Finsa.Caravan.WebForms.Pages
          {
             var groupName = groupNameToBeDeleted.Value;
             Raise<ArgumentException>.IfIsEmpty(groupName);
-            Db.Security.RemoveGroup(Common.Configuration.Instance.ApplicationName, groupName);
+            DataAccess.DataAccess.Security.RemoveGroup(Common.Configuration.Instance.ApplicationName, groupName);
             fdtgGroups.UpdateDataSource();
          }
          catch (Exception ex)

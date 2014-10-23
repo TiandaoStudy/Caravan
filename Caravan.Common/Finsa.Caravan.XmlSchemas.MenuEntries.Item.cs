@@ -12,11 +12,11 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace FLEX.Common.XmlSchemas.MenuEntries
+namespace Finsa.Caravan.XmlSchemas.MenuEntries
 {
     /// <summary>
     ///   Automatically generated mapping for the Item XML element
-    ///   declared in the FLEX.Common.XmlSchemas.MenuEntries namespace.
+    ///   declared in the Finsa.Caravan.XmlSchemas.MenuEntries namespace.
     /// </summary>
 	public partial class Item
 	{

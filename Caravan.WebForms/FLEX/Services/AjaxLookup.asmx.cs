@@ -49,7 +49,7 @@ namespace FLEX.Web.Services
          }
          catch (Exception exc)
          {
-            Db.Logger.LogError<AjaxLookup>(exc);
+            DataAccess.Logger.LogError<AjaxLookup>(exc);
             return new List<Result> {new Result("ERR", "Service Error", exc.Message)};
          }
       }
@@ -58,7 +58,7 @@ namespace FLEX.Web.Services
       {
          var lookupData = LoadAjaxLookupData(xmlLookup, lookupBy);
          var lookupQuery = ProcessQuery(lookupData, userQuery, queryFilter);
-         using (var resultData = Db.Manager.OpenConnection().Query(lookupQuery).ToDataTable())
+         using (var resultData = DataAccess.Manager.OpenConnection().Query(lookupQuery).ToDataTable())
          {
             return ProcessData(lookupData, resultData);
          }

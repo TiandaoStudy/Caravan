@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using RestSharp;
 using Sample.DataModel.Entities;
 
-namespace Sample.WebUI.MVC.Controllers
+namespace Sample.WebUI.Mvc.Controllers
 {
    public class HomeController : FlexController
    {

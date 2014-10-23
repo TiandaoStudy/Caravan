@@ -10,4 +10,4 @@
 # To map a specific schema element name to a specific code type name use the format:
 #    <schema namespace>,<schema element name>,<code type name>
 #
-FLEX.Common.XmlSchemas.MenuEntries,FLEX.Common.XmlSchemas.MenuEntries
+Finsa.Caravan.XmlSchemas.MenuEntries,Finsa.Caravan.XmlSchemas.MenuEntries

@@ -11,14 +11,14 @@ using Finsa.Caravan.DataAccess.Sql.SqlServerCe;
 
 namespace Finsa.Caravan.DataAccess
 {
-   public static class Db
+   public static class DataAccess
    {
       private static readonly ILogManager LogManagerInstance = new SqlLogManager();
       private static readonly ISecurityManager SecurityManagerInstance = new SqlSecurityManager();
       private static readonly IDbManager DbManagerInstance;
       private static readonly Func<DbContextBase> DbContextGenerator;
 
-      static Db()
+      static DataAccess()
       {
          switch (Configuration.Instance.DataAccessKind)
          {
