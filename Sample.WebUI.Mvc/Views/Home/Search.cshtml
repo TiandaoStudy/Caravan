@@ -7,7 +7,7 @@
 
 @{
    ViewBag.Title = "title";
-   Layout = "~/Layouts/Pages/FlexVerticalSearchLayout_.cshtml";
+   Layout = "~/Caravan.Mvc/Layouts/Pages/VerticalSearchLayout.cshtml";
    ViewBag.DataColumns = new [] {"A", "B", "C", "D", "E", "F", "G"};
    var gen = new RandomDataTableGenerator(ViewBag.DataColumns);
    ViewBag.DataSource = gen.GenerateDataTable(5000);
@@ -45,9 +45,9 @@
       });
    </script>
 
-   @Html.FlexVerticalSearchCriteria(new List<FlexVerticalSearchCriteriumOptions>
+   @Html.FlexVerticalSearchCriteria(new List<CaravanVerticalSearchCriteriumOptions>
    {
-      new FlexVerticalSearchCriteriumOptions
+      new CaravanVerticalSearchCriteriumOptions
       {
          Label = "Employee", Control = () => Html.JQuerySelect2(new JQuerySelect2Options
          {
@@ -59,15 +59,15 @@
             AllowClear = true
          })
       },
-      new FlexVerticalSearchCriteriumOptions
+      new CaravanVerticalSearchCriteriumOptions
       {
          Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true)
       },
-      new FlexVerticalSearchCriteriumOptions
+      new CaravanVerticalSearchCriteriumOptions
       {
          Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true, OnChange = "onSwitchChanged"})
       },
-      new FlexVerticalSearchCriteriumOptions
+      new CaravanVerticalSearchCriteriumOptions
       {
          Label = "Date", Control = () => Html.BootstrapDatePicker(new BootstrapDatePickerOptions {ID="datepicker",   MinView = BootstrapDatePickerOptions.MinViewMode.Days, StartView=BootstrapDatePickerOptions.StartViewMode.Month, ChangeDate="onChangedDate"})
       }

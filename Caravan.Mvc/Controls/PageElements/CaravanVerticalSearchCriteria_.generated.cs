@@ -20,7 +20,7 @@ namespace Finsa.Caravan.Mvc.Controls.PageElements
     using System.Web;
     using System.Web.Helpers;
     
-    #line 4 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
+    #line 4 "..\..\Controls\PageElements\CaravanVerticalSearchCriteria_.cshtml"
     using System.Web.Mvc;
     
     #line default
@@ -32,23 +32,23 @@ namespace Finsa.Caravan.Mvc.Controls.PageElements
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 5 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
+    #line 5 "..\..\Controls\PageElements\CaravanVerticalSearchCriteria_.cshtml"
     using Finsa.Caravan.Mvc.Controls.PageElements;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    public static class FlexVerticalSearchCriteria_
+    public static class CaravanVerticalSearchCriteria_
     {
 
-public static System.Web.WebPages.HelperResult FlexVerticalSearchCriteria(this HtmlHelper htmlHelper, IEnumerable<FlexVerticalSearchCriteriumOptions> spec)
+public static System.Web.WebPages.HelperResult FlexVerticalSearchCriteria(this HtmlHelper htmlHelper, IEnumerable<CaravanVerticalSearchCriteriumOptions> spec)
 {
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 
 
-#line 8 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
+#line 8 "..\..\Controls\PageElements\CaravanVerticalSearchCriteria_.cshtml"
  
    var i = 0;
    foreach (var s in spec)
@@ -63,7 +63,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "      <li class=\"vertical-s
 
 
 
-#line 13 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
+#line 13 "..\..\Controls\PageElements\CaravanVerticalSearchCriteria_.cshtml"
                                                           WebViewPage.WriteTo(@__razor_helper_writer, i);
 
 #line default
@@ -73,7 +73,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" onclick=\" onSearchCriter
 
 
 
-#line 13 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
+#line 13 "..\..\Controls\PageElements\CaravanVerticalSearchCriteria_.cshtml"
                                                                                                     WebViewPage.WriteTo(@__razor_helper_writer, i);
 
 #line default
@@ -83,7 +83,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "); \">\r\n            <i id=
 
 
 
-#line 14 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
+#line 14 "..\..\Controls\PageElements\CaravanVerticalSearchCriteria_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, i);
 
 #line default
@@ -93,7 +93,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" class=\"glyphicon glyphic
 
 
 
-#line 14 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
+#line 14 "..\..\Controls\PageElements\CaravanVerticalSearchCriteria_.cshtml"
                                         WebViewPage.WriteTo(@__razor_helper_writer, s.Label);
 
 #line default
@@ -103,7 +103,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n         </label>\r\n   
 
 
 
-#line 16 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
+#line 16 "..\..\Controls\PageElements\CaravanVerticalSearchCriteria_.cshtml"
  WebViewPage.WriteTo(@__razor_helper_writer, i);
 
 #line default
@@ -113,7 +113,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" class=\"collapse in\">\r\
 
 
 
-#line 17 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
+#line 17 "..\..\Controls\PageElements\CaravanVerticalSearchCriteria_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, s.Control());
 
 #line default
@@ -123,7 +123,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n         </div>\r\n     
 
 
 
-#line 20 "..\..\Controls\PageElements\FlexVerticalSearchCriteria_.cshtml"
+#line 20 "..\..\Controls\PageElements\CaravanVerticalSearchCriteria_.cshtml"
       ++i;
    }
 

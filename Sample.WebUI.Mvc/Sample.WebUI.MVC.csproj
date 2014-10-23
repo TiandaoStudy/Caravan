@@ -281,6 +281,18 @@
     <Content Include="FLEX.MVC\Scripts\bootstrap-datepicker.min.js.map" />
     <Content Include="FLEX.MVC\Scripts\bootstrap-table.min.js.map" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Caravan.Mvc\Layouts\Pages\VerticalSearchLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Caravan.Mvc\Layouts\Pages\PageLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Caravan.Mvc\Layouts\Modals\ModalLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Caravan.Mvc\Layouts\CoreLayout.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

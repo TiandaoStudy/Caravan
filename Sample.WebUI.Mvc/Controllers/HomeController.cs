@@ -43,16 +43,16 @@ namespace Sample.WebUI.Mvc.Controllers
          var content = response.Content; // raw content as string
          var employees = JsonConvert.DeserializeObject<IEnumerable<Employee>>(content);
 
-         return PartialView("~/Controls/DataVisualization/FlexDataGrid_.cshtml", new FlexDataGridOptions
+         return PartialView("~/Controls/DataVisualization/FlexDataGrid_.cshtml", new CaravanDataGridOptions
          {
             ID = "fdtg-customers",
             //PagedItems = (employees).ToPagedList(pageIndex ?? 1, 5),
             PagerAction = page => Url.Action("InitializeSearchGrid", new {pageIndex = page}),
-            Columns = new List<FlexDataGridColumnOptions>
+            Columns = new List<CaravanDataGridColumnOptions>
             {
-               new FlexDataGridColumnOptions {Header = "LastName", Control = (r) => r.LastName},
-               new FlexDataGridColumnOptions {Header = "FirstName", Control = (r) => r.FirstName},
-               new FlexDataGridColumnOptions {Header = "Title", Control = (r) => r.Title}
+               new CaravanDataGridColumnOptions {Header = "LastName", Control = (r) => r.LastName},
+               new CaravanDataGridColumnOptions {Header = "FirstName", Control = (r) => r.FirstName},
+               new CaravanDataGridColumnOptions {Header = "Title", Control = (r) => r.Title}
             }
          });
       }

@@ -20,7 +20,7 @@ namespace Finsa.Caravan.Mvc.Controls.PageElements
     using System.Web;
     using System.Web.Helpers;
     
-    #line 4 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+    #line 4 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
     using System.Web.Mvc;
     
     #line default
@@ -32,38 +32,38 @@ namespace Finsa.Caravan.Mvc.Controls.PageElements
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 5 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+    #line 5 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
     using Finsa.Caravan;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+    #line 6 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
     using Finsa.Caravan.Common;
     
     #line default
     #line hidden
     
-    #line 7 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+    #line 7 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
     using Finsa.Caravan.Mvc.Controls.PageElements;
     
     #line default
     #line hidden
     
-    #line 8 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+    #line 8 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
     using Finsa.Caravan.Mvc.Layouts;
     
     #line default
     #line hidden
     
-    #line 9 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+    #line 9 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
     using FLEX.Common;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    public static class FlexMenuBar_
+    public static class CaravanMenuBar_
     {
 
 public static System.Web.WebPages.HelperResult FlexMenuBar(this HtmlHelper htmlHelper, AjaxHelper ajaxHelper)
@@ -72,7 +72,7 @@ return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 
 
-#line 12 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+#line 12 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
  
 
 #line default
@@ -116,7 +116,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "@media (min-width: 768px) {\
 
 
 
-#line 85 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+#line 85 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
 
 
 #line default
@@ -128,7 +128,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "   <script type=\"text/javas
 
 
 
-#line 94 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+#line 94 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
 
 
 #line default
@@ -148,8 +148,8 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, @"   <nav>
 
 
 
-#line 105 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
-WebViewPage.WriteTo(@__razor_helper_writer, CaravanCoreLayout.MyFlexPath);
+#line 105 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
+WebViewPage.WriteTo(@__razor_helper_writer, CoreLayoutHelper.MyFlexPath);
 
 #line default
 #line hidden
@@ -158,8 +158,8 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "/Images/logo-menubar.png\' c
 
 
 
-#line 105 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
-                                                                          WebViewPage.WriteTo(@__razor_helper_writer, Configuration.Instance.ApplicationName);
+#line 105 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
+                                                                         WebViewPage.WriteTo(@__razor_helper_writer, Configuration.Instance.ApplicationName);
 
 #line default
 #line hidden
@@ -170,8 +170,8 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n               </a>\r\n 
 
 
 
-#line 110 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
-WebViewPage.WriteTo(@__razor_helper_writer, new HtmlString(FlexMenuBarHelper.GetMenuFromService(ajaxHelper)));
+#line 110 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
+WebViewPage.WriteTo(@__razor_helper_writer, new HtmlString(CaravanMenuBarHelper.GetMenuFromService(ajaxHelper)));
 
 #line default
 #line hidden
@@ -206,7 +206,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, @"
 
 
 
-#line 136 "..\..\Controls\PageElements\FlexMenuBar_.cshtml"
+#line 136 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
 
 #line default
 #line hidden

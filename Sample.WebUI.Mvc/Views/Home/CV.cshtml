@@ -9,17 +9,17 @@
 
 @section SearchCriteriaSection {
 
-   @Html.FlexVerticalSearchCriteria(new List<FlexVerticalSearchCriteriumOptions>
+   @Html.FlexVerticalSearchCriteria(new List<CaravanVerticalSearchCriteriumOptions>
    {
-      new FlexVerticalSearchCriteriumOptions
+      new CaravanVerticalSearchCriteriumOptions
       {
          Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true)
       },
-      new FlexVerticalSearchCriteriumOptions
+      new CaravanVerticalSearchCriteriumOptions
       {
          Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true)
       },
-      new FlexVerticalSearchCriteriumOptions
+      new CaravanVerticalSearchCriteriumOptions
       {
          Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true})
       }

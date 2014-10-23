@@ -20,14 +20,14 @@ namespace Finsa.Caravan.Mvc.Controls.ValueHolders
     using System.Web;
     using System.Web.Helpers;
     
-    #line 4 "..\..\Controls\ValueHolders\FlexCheckBoxList_.cshtml"
+    #line 4 "..\..\Controls\ValueHolders\CaravanCheckBoxList_.cshtml"
     using System.Web.Mvc;
     
     #line default
     #line hidden
     using System.Web.Mvc.Ajax;
     
-    #line 5 "..\..\Controls\ValueHolders\FlexCheckBoxList_.cshtml"
+    #line 5 "..\..\Controls\ValueHolders\CaravanCheckBoxList_.cshtml"
     using System.Web.Mvc.Html;
     
     #line default
@@ -37,14 +37,14 @@ namespace Finsa.Caravan.Mvc.Controls.ValueHolders
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 6 "..\..\Controls\ValueHolders\FlexCheckBoxList_.cshtml"
+    #line 6 "..\..\Controls\ValueHolders\CaravanCheckBoxList_.cshtml"
     using Finsa.Caravan.Mvc.Controls.ValueHolders;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    public static class FlexCheckBoxList_
+    public static class CaravanCheckBoxList_
     {
 
 public static System.Web.WebPages.HelperResult FlexCheckBoxList(this HtmlHelper htmlHelper, BootstrapSwitchOptions options) {
@@ -52,7 +52,7 @@ return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 
 
-#line 8 "..\..\Controls\ValueHolders\FlexCheckBoxList_.cshtml"
+#line 8 "..\..\Controls\ValueHolders\CaravanCheckBoxList_.cshtml"
                                                                                       
 
 
@@ -69,7 +69,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, @"   <fieldset>
 
 
 
-#line 16 "..\..\Controls\ValueHolders\FlexCheckBoxList_.cshtml"
+#line 16 "..\..\Controls\ValueHolders\CaravanCheckBoxList_.cshtml"
    
 
 #line default

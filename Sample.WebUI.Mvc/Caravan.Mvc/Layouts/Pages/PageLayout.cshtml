@@ -1,0 +1,26 @@
+﻿@using Finsa.Caravan.Mvc.Controls.PageElements
+
+@{
+   Layout = "~/Caravan.Mvc/Layouts/CoreLayout.cshtml";
+}
+
+@section HeadSection {
+   
+   @RenderSection("HeadSection")
+}
+
+@section BodySection {
+
+   <div  class="container-fluid">
+      @Html.FlexPageHeader()
+
+      @Html.FlexMenuBar(Ajax)
+      
+     <div class="row" id="main-page-container" >  
+         @RenderSection("BodySection")
+      </div>
+   
+      @Html.FlexPageFooter()
+   </div>
+
+}

@@ -1,0 +1,70 @@
+﻿@using Finsa.Caravan.Mvc.Layouts
+
+<!DOCTYPE html>
+
+<html>
+   <head>
+      <!-- Required for IE compatibility -->
+      <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=EDGE" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <link href="@(CoreLayoutHelper.FlexPath)/Styles/fonts.min.css" rel="stylesheet" media="screen" />
+      <link href="@(CoreLayoutHelper.FlexPath)/Styles/jquery-ui.min.css" rel="stylesheet" media="screen" />
+      
+      <!-- "DoNotCacheTag" is needed to avoid issues with IE9 -->
+      <link href="@(CoreLayoutHelper.FlexPath)/Styles/bootstrap.min.css@(CoreLayoutHelper.DoNotCacheTag)" rel="stylesheet" media="screen" />
+      <link href="@(CoreLayoutHelper.FlexPath)/Styles/bootstrap-datepicker3.min.css" rel="stylesheet" media="screen" />
+      <link href="@(CoreLayoutHelper.FlexPath)/Styles/bootstrap-switch.min.css" rel="stylesheet" media="screen" />
+      
+      <link href="@(CoreLayoutHelper.FlexPath)/Styles/flex.min.css" rel="stylesheet" media="screen" />
+      
+      <link href="@(CoreLayoutHelper.FlexPath)/Styles/bootstrap-table.min.css" rel="stylesheet" media="screen" />
+      <link href="@(CoreLayoutHelper.FlexPath)/Styles/select2.min.css@(CoreLayoutHelper.DoNotCacheTag)" rel="stylesheet" media="screen" />
+      <link href="@(CoreLayoutHelper.FlexPath)/Styles/select2-bootstrap.min.css" rel="stylesheet" media="screen" />
+
+      <!-- Respond.js and html5shiv must be put AFTER CSS for Bootstrap -->
+      <!--[if lt IE 9]>  
+         <script src="@(CoreLayoutHelper.FlexPath)/Scripts/html5shiv.min.js"></script>
+         <script src="@(CoreLayoutHelper.FlexPath)/Scripts/respond.min.js"></script>
+      <![endif]-->
+      
+      <script type="text/javascript" src="@(CoreLayoutHelper.FlexPath)/Scripts/base64.min.js"></script>
+
+      <script type="text/javascript" src="@(CoreLayoutHelper.FlexPath)/Scripts/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="@(CoreLayoutHelper.FlexPath)/Scripts/underscore.min.js"></script>
+      <script type="text/javascript" src="@(CoreLayoutHelper.FlexPath)/Scripts/backbone.min.js"></script>
+
+      <script type="text/javascript" src="@(CoreLayoutHelper.FlexPath)/Scripts/jquery-ui.min.js"></script>
+      <script type="text/javascript" src="@(CoreLayoutHelper.FlexPath)/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+      <script type="text/javascript" src="@(CoreLayoutHelper.FlexPath)/Scripts/spin.min.js"></script>
+
+      <script type="text/javascript" src="@(CoreLayoutHelper.FlexPath)/Scripts/bootstrap.min.js"></script>
+      <script type="text/javascript" src="@(CoreLayoutHelper.FlexPath)/Scripts/bootstrap-hover-dropdown.min.js"></script>
+      <script type="text/javascript" src="@(CoreLayoutHelper.FlexPath)/Scripts/bootstrap-datepicker.min.js"></script>
+      <script type="text/javascript" src="@(CoreLayoutHelper.FlexPath)/Scripts/bootstrap-maxlength.min.js"></script>
+      <script type="text/javascript" src="@(CoreLayoutHelper.FlexPath)/Scripts/bootstrap-switch.min.js"></script>
+
+      <script type="text/javascript" src="@(CoreLayoutHelper.FlexPath)/Scripts/bootstrap-table.min.js"></script>
+      <script type="text/javascript" src="@(CoreLayoutHelper.FlexPath)/Scripts/select2.min.js"></script>
+      
+      <!-- Custom scripts, use DoNotCacheTag to allow emergency updates! -->
+      <script type="text/javascript" src="@(CoreLayoutHelper.FlexPath)/Scripts/flex.min.js@(CoreLayoutHelper.DoNotCacheTag)"></script>
+
+      <script type="text/javascript" src="@(CoreLayoutHelper.MyFlexPath)/Scripts/autocompletes.min.js@(CoreLayoutHelper.DoNotCacheTag)"></script>
+      
+      <script type="text/javascript">
+         // JS settings
+         settings.rootPath = "@CoreLayoutHelper.RootPath";
+         settings.flexPath = "@CoreLayoutHelper.FlexPath";
+         settings.myFlexPath = "@CoreLayoutHelper.MyFlexPath";
+      </script>
+      
+      @RenderSection("HeadSection")
+   </head>
+   
+   <body>
+      @RenderSection("BodySection")
+   </body>
+
+</html>

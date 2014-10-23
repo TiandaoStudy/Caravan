@@ -21,7 +21,7 @@ namespace Finsa.Caravan.Mvc.Controls.DataVisualization
     using System.Web.Helpers;
     using System.Web.Mvc;
     
-    #line 4 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+    #line 4 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
     using System.Web.Mvc.Ajax;
     
     #line default
@@ -32,17 +32,17 @@ namespace Finsa.Caravan.Mvc.Controls.DataVisualization
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 5 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+    #line 5 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
     using Finsa.Caravan.Mvc.Controls.DataVisualization;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Controls/DataVisualization/FlexDataGrid_.cshtml")]
-    public partial class FlexDataGrid_ : System.Web.Mvc.WebViewPage<FlexDataGridOptions>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Controls/DataVisualization/CaravanDataGrid_.cshtml")]
+    public partial class CaravanDataGrid_ : System.Web.Mvc.WebViewPage<CaravanDataGridOptions>
     {
-        public FlexDataGrid_()
+        public CaravanDataGrid_()
         {
         }
         public override void Execute()
@@ -64,7 +64,7 @@ WriteLiteral("\r\n<div id=\"");
 
 
             
-            #line 9 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+            #line 9 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
     Write(Model.ID);
 
             
@@ -74,7 +74,7 @@ WriteLiteral("-container\">\r\n   ");
 
 
             
-            #line 10 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+            #line 10 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
 Write(Ajax.ActionLink("update-grid", "InitializeSearchGrid", new {searchCriteriaJson = "", pageIndex = 1}, new AjaxOptions
    {
       HttpMethod = "GET",
@@ -89,7 +89,7 @@ WriteLiteral("\r\n\r\n   <table id=\"");
 
 
             
-            #line 17 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+            #line 17 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
          Write(Model.ID);
 
             
@@ -100,7 +100,7 @@ WriteLiteral("\" class=\"table table-striped table-bordered table-condensed tabl
 
 
             
-            #line 20 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+            #line 20 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
              foreach (var column in Model.Columns)
             {
 
@@ -111,7 +111,7 @@ WriteLiteral("               <th>");
 
 
             
-            #line 22 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+            #line 22 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
               Write(column.Header);
 
             
@@ -121,7 +121,7 @@ WriteLiteral("</th>\r\n");
 
 
             
-            #line 23 "..\..\Controls\DataVisualization\FlexDataGrid_.cshtml"
+            #line 23 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
             }
 
             

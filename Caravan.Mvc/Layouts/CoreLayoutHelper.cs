@@ -3,14 +3,14 @@ using System.Web;
 
 namespace Finsa.Caravan.Mvc.Layouts
 {
-   public static class CaravanCoreLayout
+   public static class CoreLayoutHelper
    {
       private static readonly string CachedRootPath;
       private static readonly string CachedFlexPath;
       private static readonly string CachedMyFlexPath;
       private static readonly Random Random = new Random();
 
-      static CaravanCoreLayout()
+      static CoreLayoutHelper()
       {
          CachedRootPath = FullyQualifiedApplicationPath;
          CachedFlexPath = CachedRootPath + "FLEX.MVC";

@@ -8,7 +8,7 @@ using RestSharp;
 
 namespace Finsa.Caravan.Mvc.Controls.PageElements
 {
-   public static class FlexMenuBarHelper
+   public static class CaravanMenuBarHelper
    {
       public static string GetMenuFromService(AjaxHelper ajaxHelper)
       {

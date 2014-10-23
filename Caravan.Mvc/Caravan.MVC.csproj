@@ -111,9 +111,9 @@
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="Controllers\FlexController.cs" />
     <Compile Include="Controls\ControlOptionsBase.cs" />
-    <Compile Include="Controls\DataVisualization\FlexDataGridOptions.cs" />
-    <Compile Include="Controls\DataVisualization\FlexDataGrid_.generated.cs">
-      <DependentUpon>FlexDataGrid_.cshtml</DependentUpon>
+    <Compile Include="Controls\DataVisualization\CaravanDataGridOptions.cs" />
+    <Compile Include="Controls\DataVisualization\CaravanDataGrid_.generated.cs">
+      <DependentUpon>CaravanDataGrid_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -122,28 +122,28 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Controls\PageElements\FlexVerticalSearchCriteria_.generated.cs">
-      <DependentUpon>FlexVerticalSearchCriteria_.cshtml</DependentUpon>
+    <Compile Include="Controls\PageElements\CaravanVerticalSearchCriteria_.generated.cs">
+      <DependentUpon>CaravanVerticalSearchCriteria_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Controls\PageElements\FlexMenuBarHelper.cs" />
-    <Compile Include="Controls\PageElements\FlexPageHeader_.generated.cs">
-      <DependentUpon>FlexPageHeader_.cshtml</DependentUpon>
+    <Compile Include="Controls\PageElements\CaravanMenuBarHelper.cs" />
+    <Compile Include="Controls\PageElements\CaravanPageHeader_.generated.cs">
+      <DependentUpon>CaravanPageHeader_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Controls\PageElements\FlexPageFooter_.generated.cs">
-      <DependentUpon>FlexPageFooter_.cshtml</DependentUpon>
+    <Compile Include="Controls\PageElements\CaravanPageFooter_.generated.cs">
+      <DependentUpon>CaravanPageFooter_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Controls\PageElements\FlexMenuBar_.generated.cs">
-      <DependentUpon>FlexMenuBar_.cshtml</DependentUpon>
+    <Compile Include="Controls\PageElements\CaravanMenuBar_.generated.cs">
+      <DependentUpon>CaravanMenuBar_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Controls\PageElements\FlexVerticalSearchCriteriaOptions.cs" />
+    <Compile Include="Controls\PageElements\CaravanVerticalSearchCriteriaOptions.cs" />
     <Compile Include="Controls\ValueHolders\BootstrapSwitch_.generated.cs">
       <DependentUpon>BootstrapSwitch_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -156,8 +156,8 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Controls\ValueHolders\BootstrapDatePickerOptions.cs" />
-    <Compile Include="Controls\ValueHolders\FlexCheckBoxList_.generated.cs">
-      <DependentUpon>FlexCheckBoxList_.cshtml</DependentUpon>
+    <Compile Include="Controls\ValueHolders\CaravanCheckBoxList_.generated.cs">
+      <DependentUpon>CaravanCheckBoxList_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -186,27 +186,7 @@
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="GlobalHelper.cs" />
-    <Compile Include="Layouts\CaravanCoreLayout_.generated.cs">
-      <DependentUpon>CaravanCoreLayout_.cshtml</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Layouts\CaravanCoreLayout.cs" />
-    <Compile Include="Layouts\Pages\FlexVerticalSearchLayout_.generated.cs">
-      <DependentUpon>FlexVerticalSearchLayout_.cshtml</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Layouts\Pages\FlexPageLayout_.generated.cs">
-      <DependentUpon>FlexPageLayout_.cshtml</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Layouts\Popups\Popup.generated.cs">
-      <DependentUpon>Popup.cshtml</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
+    <Compile Include="Layouts\CoreLayoutHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -359,29 +339,29 @@
     <None Include=".bin\node.cmd" />
     <None Include="app.config" />
     <None Include="bower.json" />
-    <None Include="Controls\DataVisualization\FlexDataGrid_.cshtml">
+    <None Include="Controls\DataVisualization\CaravanDataGrid_.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>FlexDataGrid_.generated.cs</LastGenOutput>
+      <LastGenOutput>CaravanDataGrid_.generated.cs</LastGenOutput>
     </None>
     <None Include="Controls\Dummy_.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Dummy_.generated.cs</LastGenOutput>
     </None>
-    <None Include="Controls\PageElements\FlexVerticalSearchCriteria_.cshtml">
+    <None Include="Controls\PageElements\CaravanVerticalSearchCriteria_.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>FlexVerticalSearchCriteria_.generated.cs</LastGenOutput>
+      <LastGenOutput>CaravanVerticalSearchCriteria_.generated.cs</LastGenOutput>
     </None>
-    <None Include="Controls\PageElements\FlexPageHeader_.cshtml">
+    <None Include="Controls\PageElements\CaravanPageHeader_.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>FlexPageHeader_.generated.cs</LastGenOutput>
+      <LastGenOutput>CaravanPageHeader_.generated.cs</LastGenOutput>
     </None>
-    <None Include="Controls\PageElements\FlexPageFooter_.cshtml">
+    <None Include="Controls\PageElements\CaravanPageFooter_.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>FlexPageFooter_.generated.cs</LastGenOutput>
+      <LastGenOutput>CaravanPageFooter_.generated.cs</LastGenOutput>
     </None>
-    <None Include="Controls\PageElements\FlexMenuBar_.cshtml">
+    <None Include="Controls\PageElements\CaravanMenuBar_.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>FlexMenuBar_.generated.cs</LastGenOutput>
+      <LastGenOutput>CaravanMenuBar_.generated.cs</LastGenOutput>
     </None>
     <None Include="Controls\ValueHolders\BootstrapSwitch_.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -391,9 +371,9 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>BootstrapDatePicker_.generated.cs</LastGenOutput>
     </None>
-    <None Include="Controls\ValueHolders\FlexCheckBoxList_.cshtml">
+    <None Include="Controls\ValueHolders\CaravanCheckBoxList_.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>FlexCheckBoxList_.generated.cs</LastGenOutput>
+      <LastGenOutput>CaravanCheckBoxList_.generated.cs</LastGenOutput>
     </None>
     <None Include="Controls\ValueHolders\JQuerySelect2_.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -409,22 +389,10 @@
     </None>
     <None Include="Fonts\_tMhxyW6i8lbI7YsUdFlGA.eot" />
     <None Include="Fonts\_xyN3apAT_yRRDeqB3sPRg.woff" />
-    <None Include="Layouts\CaravanCoreLayout_.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>CaravanCoreLayout_.generated.cs</LastGenOutput>
-    </None>
-    <None Include="Layouts\Pages\FlexVerticalSearchLayout_.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>FlexVerticalSearchLayout_.generated.cs</LastGenOutput>
-    </None>
-    <None Include="Layouts\Pages\FlexPageLayout_.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>FlexPageLayout_.generated.cs</LastGenOutput>
-    </None>
-    <None Include="Layouts\Popups\Popup.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Popup.generated.cs</LastGenOutput>
-    </None>
+    <None Include="Layouts\CoreLayout.cshtml" />
+    <None Include="Layouts\Pages\VerticalSearchLayout.cshtml" />
+    <None Include="Layouts\Pages\PageLayout.cshtml" />
+    <None Include="Layouts\Modals\ModalLayout.cshtml" />
     <None Include="packages.config" />
     <None Include="Scripts\backbone.min.js.map">
       <DependentUpon>backbone.js</DependentUpon>
@@ -588,6 +556,12 @@ copy $(ProjectDir)\Fonts\*.* $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Fonts
 :: IMAGES - NuGet Packager
 :: IMAGES - Sample Web UI
 copy $(ProjectDir)\Images\*.* $(SolutionDir)\Sample.WebUI.MVC\FLEX.MVC\Images
+
+:: LAYOUTS - NuGet Packager
+:: LAYOUTS - Sample Web UI
+copy $(ProjectDir)\Layouts\*.cshtml $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Layouts
+copy $(ProjectDir)\Layouts\Modals\*.cshtml $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Layouts\Modals
+copy $(ProjectDir)\Layouts\Pages\*.cshtml $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Layouts\Pages
 
 :: SCRIPTS - NuGet Packager
 :: SCRIPTS - Sample Web UI

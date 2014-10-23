@@ -102,12 +102,12 @@
                   <span class="icon-bar"></span>
                </button>
                <a class="navbar-brand" href="#" onclick=" WebSettings.UserControls_MenuBar_BrandClick ">
-                  <img src='@(CaravanCoreLayout.MyFlexPath)/Images/logo-menubar.png' class='logo' alt='Logo' />&nbsp;@Configuration.Instance.ApplicationName
+                  <img src='@(CoreLayoutHelper.MyFlexPath)/Images/logo-menubar.png' class='logo' alt='Logo' />&nbsp;@Configuration.Instance.ApplicationName
                </a>
             </div>
             <div id="menuBar-collapse" class="navbar-collapse collapse">
                <ul class="nav navbar-nav" id="ul_menu" runat="server">
-                  @(new HtmlString(FlexMenuBarHelper.GetMenuFromService(ajaxHelper)))
+                  @(new HtmlString(CaravanMenuBarHelper.GetMenuFromService(ajaxHelper)))
 
 
                 
