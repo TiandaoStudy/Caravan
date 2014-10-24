@@ -189,6 +189,12 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>JQuerySelect2_.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\autocomplete-defs.js">
+      <DependentUpon>autocomplete-defs.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\autocomplete-defs.min.js">
+      <DependentUpon>autocomplete-defs.coffee</DependentUpon>
+    </Content>
     <Content Include="Scripts\backbone.min.js.map">
       <DependentUpon>backbone.js</DependentUpon>
     </Content>
@@ -225,6 +231,7 @@
     <Content Include="Scripts\bootstrap-table-export.min.js.map">
       <DependentUpon>bootstrap-table-export.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\autocomplete-defs.coffee" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Images\jquery-ui\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Images\jquery-ui\ui-bg_flat_100_3071A9_40x100.png" />
@@ -383,6 +390,7 @@
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="Controllers\CaravanController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controls\ControlOptionsBase.cs" />

@@ -72,5 +72,25 @@ namespace Finsa.Caravan.DataAccess
       #region Postgres Specific
 
       #endregion
+
+      #region Rest Specific
+
+      private const string CaravanRestServiceUrlKey = "CaravanRestServiceUrl";
+
+      [ConfigurationProperty(CaravanRestServiceUrlKey, IsRequired = false, DefaultValue = "")]
+      public string CaravanRestServiceUrl
+      {
+         get
+         {
+            var url = this[CaravanRestServiceUrlKey] as string;
+            if (!String.IsNullOrWhiteSpace(url) && !url.EndsWith("/"))
+            {
+               return url + "/";
+            }
+            return url;
+         }
+      }
+
+      #endregion
    }
 }

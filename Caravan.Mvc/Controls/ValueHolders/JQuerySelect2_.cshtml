@@ -19,9 +19,9 @@
                $.ajax("@options.DataSourceUrl", {
                   dataType: "json",
                   type: "POST",
-                  data: {q: @(options.QueryBuilder)(query.term) },
+                  data: {query: @(options.QueryBuilder)(query.term) },
                   success: function(data, textStatus, jqXhr) {
-                     data = _.map(data, @options.DataMapper);
+                     data = @(options.DataMapper)(data);
                      query.callback({ more: false, results: data });
                   }
                });

@@ -159,10 +159,14 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Caravan.Mvc\Fonts\fontawesome-webfont.svg" />
     <Content Include="Caravan.Mvc\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Caravan.Mvc\My\Scripts\autocomplete-defs.min.js">
+      <DependentUpon>autocomplete-defs.js</DependentUpon>
+    </Content>
     <Content Include="Caravan.Mvc\Scripts\backbone.min.js" />
     <Content Include="Caravan.Mvc\Scripts\base64.min.js" />
     <Content Include="Caravan.Mvc\Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Caravan.Mvc\Scripts\bootstrap-hover-dropdown.min.js" />
+    <Content Include="Caravan.Mvc\Scripts\bootstrap-maxlength.min.js" />
     <Content Include="Caravan.Mvc\Scripts\bootstrap-switch.min.js" />
     <Content Include="Caravan.Mvc\Scripts\bootstrap-table.min.js" />
     <Content Include="Caravan.Mvc\Scripts\bootstrap.min.js" />
@@ -187,10 +191,7 @@
     <Content Include="Caravan.Mvc\Styles\select2.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Caravan.Mvc\My\Images\logo-menubar.png" />
-    <Content Include="Caravan.Mvc\My\Scripts\autocompletes.js" />
-    <Content Include="Caravan.Mvc\My\Scripts\autocompletes.min.js">
-      <DependentUpon>autocompletes.js</DependentUpon>
-    </Content>
+    <Content Include="Caravan.Mvc\My\Scripts\autocomplete-defs.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -199,9 +200,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Caravan.Mvc\My\Scripts\autocompletes.min.js.map">
-      <DependentUpon>autocompletes.js</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\PersistentCache\" />
@@ -301,6 +299,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Caravan.Mvc\Views\Security\SecGroupList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Caravan.Mvc\Scripts\bootstrap-maxlength.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Caravan.Mvc\My\Scripts\autocomplete-defs.min.js.map">
+      <DependentUpon>autocomplete-defs.js</DependentUpon>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

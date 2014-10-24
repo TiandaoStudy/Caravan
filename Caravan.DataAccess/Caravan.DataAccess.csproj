@@ -104,6 +104,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Core\DbContextBase.cs" />
     <Compile Include="Core\LogManagerBase.cs" />
+    <Compile Include="Core\QueryManagerBase.cs" />
     <Compile Include="Core\SecurityManagerBase.cs" />
     <Compile Include="Dummy\DummyQueryManager.cs" />
     <Compile Include="ErrorMessages.Designer.cs">

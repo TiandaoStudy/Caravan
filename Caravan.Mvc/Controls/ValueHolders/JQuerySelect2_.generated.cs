@@ -132,7 +132,7 @@ WebViewPage.WriteTo(@__razor_helper_writer, options.DataSourceUrl);
 #line hidden
 
 WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\", {\r\n                  dataType: \"json\",\r\n                  type: \"POST\",\r\n     " +
-"             data: {q: ");
+"             data: {query: ");
 
 
 
@@ -143,7 +143,7 @@ WebViewPage.WriteTo(@__razor_helper_writer, options.QueryBuilder);
 #line hidden
 
 WebViewPage.WriteLiteralTo(@__razor_helper_writer, "(query.term) },\r\n                  success: function(data, textStatus, jqXhr) {\r\n" +
-"                     data = _.map(data, ");
+"                     data = ");
 
 
 
@@ -153,8 +153,9 @@ WebViewPage.WriteTo(@__razor_helper_writer, options.DataMapper);
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, ");\r\n                     query.callback({ more: false, results: data });\r\n       " +
-"           }\r\n               });\r\n            }\r\n         });\r\n\r\n         $(\"#");
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "(data);\r\n                     query.callback({ more: false, results: data });\r\n  " +
+"                }\r\n               });\r\n            }\r\n         });\r\n\r\n         $" +
+"(\"#");
 
 
 

@@ -35,7 +35,7 @@
             <tr>
                @foreach (var column in options.Columns)
                {
-                  <th data-field="@column.ID" data-align="@column.HAlign" data-valign="@column.VAlign" data-sortable="@column.Sortable.ToJavaScriptBoolean()">
+                  <th data-field="@column.ID" data-sortable="@column.Sortable.ToJavaScriptBoolean()">
                      @column.Header
                   </th>
                }
@@ -48,7 +48,7 @@
                <tr>
                   @foreach (var column in options.Columns)
                   {
-                     <td>
+                     <td data-align="@column.HAlign" data-valign="@column.VAlign">
                         @column.Control(item)
                      </td>
                   }

@@ -174,32 +174,12 @@ WebViewPage.WriteTo(@__razor_helper_writer, column.ID);
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" data-align=\"");
-
-
-
-#line 38 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
-               WebViewPage.WriteTo(@__razor_helper_writer, column.HAlign);
-
-#line default
-#line hidden
-
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" data-valign=\"");
-
-
-
-#line 38 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
-                                            WebViewPage.WriteTo(@__razor_helper_writer, column.VAlign);
-
-#line default
-#line hidden
-
 WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" data-sortable=\"");
 
 
 
 #line 38 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
-                                                                           WebViewPage.WriteTo(@__razor_helper_writer, column.Sortable.ToJavaScriptBoolean());
+                  WebViewPage.WriteTo(@__razor_helper_writer, column.Sortable.ToJavaScriptBoolean());
 
 #line default
 #line hidden
@@ -246,7 +226,27 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "               <tr>\r\n");
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "                     <td>\r\n                        ");
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "                     <td data-align=\"");
+
+
+
+#line 51 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+WebViewPage.WriteTo(@__razor_helper_writer, column.HAlign);
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" data-valign=\"");
+
+
+
+#line 51 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+                       WebViewPage.WriteTo(@__razor_helper_writer, column.VAlign);
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\">\r\n                        ");
 
 
 

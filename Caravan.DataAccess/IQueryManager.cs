@@ -5,6 +5,6 @@ namespace Finsa.Caravan.DataAccess
 {
    public interface IQueryManager
    {
-      IEnumerable<SecGroup> Groups(string queryString);
+      IEnumerable<SecGroup> Groups(string appName, string queryString);
    }
 }
