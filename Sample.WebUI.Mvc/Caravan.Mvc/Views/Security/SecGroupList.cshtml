@@ -1,4 +1,5 @@
-﻿@model Finsa.Caravan.Mvc.ViewModels.Security.SecGroupList
+﻿@using Finsa.Caravan.Mvc.Controls.DataVisualization
+@model Finsa.Caravan.Mvc.ViewModels.Security.SecGroupList
 
 @{
    Layout = "~/Caravan.Mvc/Views/Shared/Pages/VerticalSearchLayout.cshtml";
@@ -13,5 +14,13 @@
 }
 
 @section DataGridSection {
-
+   @Ajax.CaravanDataGrid(new CaravanDataGridOptions
+   {
+      ID = "dtgGroups",
+      Items = Model.Groups,
+      Columns = new []
+      {
+         new CaravanDataGridColumnOptions {Header = "ID", Control = x => x.Id}, 
+      }
+   })
 }

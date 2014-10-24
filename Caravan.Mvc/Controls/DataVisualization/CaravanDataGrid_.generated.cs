@@ -59,11 +59,32 @@ return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 #line default
 #line hidden
 
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "   <script type=\"text/javascript\" defer=\"defer\">\r\n      $(document).ready(functio" +
+"n() {\r\n         $(\'#");
+
+
+
+#line 12 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+WebViewPage.WriteTo(@__razor_helper_writer, options.ID);
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\').bootstrapTable();\r\n      });\r\n   </script>\r\n");
+
+
+
+#line 15 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+
+
+#line default
+#line hidden
+
 WebViewPage.WriteLiteralTo(@__razor_helper_writer, "   <div id=\"");
 
 
 
-#line 10 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 16 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.ID);
 
 #line default
@@ -73,7 +94,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "-container\">\r\n      ");
 
 
 
-#line 11 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 17 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, ajaxHelper.ActionLink("update-grid", "InitializeSearchGrid", new {searchCriteriaJson = "", pageIndex = 1}, new AjaxOptions
       {
          HttpMethod = "GET",
@@ -88,18 +109,18 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n\r\n      <table id=\"")
 
 
 
-#line 18 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 24 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.ID);
 
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" class=\"table table-striped table-bordered table-condensed table-hover\">\r\n      " +
-"   <thead>\r\n            <tr>\r\n");
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" class=\"table table-striped table-condensed table-hover\">\r\n         <thead>\r\n   " +
+"         <tr>\r\n");
 
 
 
-#line 21 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 27 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
                 foreach (var column in options.Columns)
                {
 
@@ -110,7 +131,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "                  <th>");
 
 
 
-#line 23 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 29 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, column.Header);
 
 #line default
@@ -120,7 +141,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "</th>\r\n");
 
 
 
-#line 24 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 30 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
                }
 
 #line default
@@ -130,7 +151,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "            </tr>\r\n       
 
 
 
-#line 29 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 35 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
              foreach (var item in options.Items)
             {
 
@@ -141,7 +162,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "               <tr>\r\n");
 
 
 
-#line 32 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 38 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
                    foreach (var column in options.Columns)
                   {
 
@@ -152,7 +173,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "                     <td>\r\
 
 
 
-#line 35 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 41 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, column.Control(item));
 
 #line default
@@ -162,7 +183,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n                     </t
 
 
 
-#line 37 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 43 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
                   }
 
 #line default
@@ -172,7 +193,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "               </tr>\r\n");
 
 
 
-#line 39 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 45 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
             }
 
 #line default
@@ -182,7 +203,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "         </tbody>\r\n      <
 
 
 
-#line 43 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 49 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
 
 #line default
 #line hidden
