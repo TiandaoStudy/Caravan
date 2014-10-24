@@ -20,12 +20,12 @@
    </script>
 
    <div id="@options.ID-container">
-      @ajaxHelper.ActionLink("update-grid", "InitializeSearchGrid", new {searchCriteriaJson = "", pageIndex = 1}, new AjaxOptions
+      @ajaxHelper.ActionLink(options.ID + "-updater", options.UpdateAction, new {searchCriteriaJson = "", pageIndex = 1}, new AjaxOptions
       {
          HttpMethod = "GET",
          InsertionMode = InsertionMode.Replace,
          UpdateTargetId = @options.ID + "-container"
-      }, new {id = "update-grid", @class = "hidden"})
+      }, new {id = options.ID + "-updater", @class = "hidden"})
 
       <table id="@options.ID" class="table table-striped table-condensed table-hover" data-toggle="table"
              data-pagination="@options.ShowPagination.ToJavaScriptBoolean()" 

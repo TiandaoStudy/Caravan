@@ -112,12 +112,12 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "-container\">\r\n      ");
 
 
 #line 23 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
-WebViewPage.WriteTo(@__razor_helper_writer, ajaxHelper.ActionLink("update-grid", "InitializeSearchGrid", new {searchCriteriaJson = "", pageIndex = 1}, new AjaxOptions
+WebViewPage.WriteTo(@__razor_helper_writer, ajaxHelper.ActionLink(options.ID + "-updater", options.UpdateAction, new {searchCriteriaJson = "", pageIndex = 1}, new AjaxOptions
       {
          HttpMethod = "GET",
          InsertionMode = InsertionMode.Replace,
          UpdateTargetId = @options.ID + "-container"
-      }, new {id = "update-grid", @class = "hidden"}));
+      }, new {id = options.ID + "-updater", @class = "hidden"}));
 
 #line default
 #line hidden

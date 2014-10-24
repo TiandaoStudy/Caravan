@@ -18,6 +18,7 @@ namespace Finsa.Caravan.Mvc.Controls.DataVisualization
       public bool ShowExportButton { get; set; }
       public bool ShowPagination { get; set; }
       public bool ShowSearchBox { get; set; }
+      public string UpdateAction { get; set; }
    }
 
    public sealed class BootstrapTableColumnOptions : ControlOptionsBase
