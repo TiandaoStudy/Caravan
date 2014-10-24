@@ -1,4 +1,5 @@
-﻿@using Finsa.Caravan.Mvc.Controls.DataVisualization
+﻿@using Finsa.Caravan.DataModel
+@using Finsa.Caravan.Mvc.Controls.DataVisualization
 @model Finsa.Caravan.Mvc.ViewModels.Security.SecGroupList
 
 @{
@@ -14,13 +15,28 @@
 }
 
 @section DataGridSection {
-   @Ajax.CaravanDataGrid(new CaravanDataGridOptions
+   @Ajax.BootstrapTable(new BootstrapTableOptions
    {
-      ID = "dtgGroups",
+      ID = "tblGroups",
       Items = Model.Groups,
       Columns = new []
       {
-         new CaravanDataGridColumnOptions {Header = "ID", Control = x => x.Id}, 
+         new BootstrapTableColumnOptions
+         {
+            ID = "grpId", 
+            Header = "ID", 
+            Sortable = true, 
+            HorizontalAlignment = HorizonalTextAlignment.Right, 
+            Control = x => x.Id
+         },
+         new BootstrapTableColumnOptions
+         {
+            ID = "grpName", 
+            Header = "Name", 
+            Sortable = true, 
+            HorizontalAlignment = HorizonalTextAlignment.Left, 
+            Control = x => x.Name
+         },
       }
    })
 }

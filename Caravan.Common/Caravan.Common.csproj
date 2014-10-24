@@ -66,6 +66,7 @@
     <Compile Include="DataModel\SecContext.cs" />
     <Compile Include="DataModel\SecGroup.cs" />
     <Compile Include="DataModel\SecUser.cs" />
+    <Compile Include="DataModel\TextAlignment.cs" />
     <Compile Include="Finsa.Caravan.XmlSchemas.MenuEntries.Item.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>

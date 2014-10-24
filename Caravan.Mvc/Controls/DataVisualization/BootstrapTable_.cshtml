@@ -3,9 +3,10 @@
 
 @using System.Web.Mvc
 @using System.Web.Mvc.Ajax
+@using Finsa.Caravan.Extensions
 @using Finsa.Caravan.Mvc.Controls.DataVisualization
 
-@helper CaravanDataGrid(this AjaxHelper ajaxHelper, CaravanDataGridOptions options)
+@helper BootstrapTable(this AjaxHelper ajaxHelper, BootstrapTableOptions options)
 {
    <script type="text/javascript" defer="defer">
       $(document).ready(function() {
@@ -21,12 +22,19 @@
          UpdateTargetId = @options.ID + "-container"
       }, new {id = "update-grid", @class = "hidden"})
 
-      <table id="@options.ID" class="table table-striped table-condensed table-hover">
+      <table id="@options.ID" class="table table-striped table-condensed table-hover" data-toggle="table"
+             data-pagination="@options.ShowPagination.ToJavaScriptBoolean()" 
+             data-search="@options.ShowSearchBox.ToJavaScriptBoolean()"
+             data-show-columns="true"
+             data-show-export="@options.ShowExportButton.ToJavaScriptBoolean()">
+         
          <thead>
             <tr>
                @foreach (var column in options.Columns)
                {
-                  <th>@column.Header</th>
+                  <th data-field="@column.ID" data-align="@column.HAlign" data-valign="@column.VAlign" data-sortable="@column.Sortable.ToJavaScriptBoolean()">
+                     @column.Header
+                  </th>
                }
             </tr>
          </thead>

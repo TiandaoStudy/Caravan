@@ -141,9 +141,9 @@
     <Content Include="Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Controls\DataVisualization\CaravanDataGrid_.cshtml">
+    <Content Include="Controls\DataVisualization\BootstrapTable_.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>CaravanDataGrid_.generated.cs</LastGenOutput>
+      <LastGenOutput>BootstrapTable_.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Controls\Dummy_.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -208,6 +208,10 @@
     <Content Include="Scripts\bootstrap-switch.min.js.map">
       <DependentUpon>bootstrap-switch.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\bootstrap-table-export.js" />
+    <Content Include="Scripts\bootstrap-table-export.min.js">
+      <DependentUpon>bootstrap-table-export.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\bootstrap-table.min.js.map">
       <DependentUpon>bootstrap-table.js</DependentUpon>
     </Content>
@@ -217,6 +221,9 @@
     <Content Include="Scripts\flex.coffee" />
     <Content Include="Scripts\html5shiv.min.js.map">
       <DependentUpon>html5shiv.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap-table-export.min.js.map">
+      <DependentUpon>bootstrap-table-export.js</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Images\jquery-ui\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -284,6 +291,10 @@
     <Content Include="Scripts\jquery-ui.min.js">
       <DependentUpon>jquery-ui.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\jquery.base64.js" />
+    <Content Include="Scripts\jquery.base64.min.js">
+      <DependentUpon>jquery.base64.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\respond.js" />
@@ -296,6 +307,10 @@
     </Content>
     <Content Include="Scripts\spin.js" />
     <Content Include="Scripts\spin.min.js" />
+    <Content Include="Scripts\tableExport.js" />
+    <Content Include="Scripts\tableExport.min.js">
+      <DependentUpon>tableExport.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js">
       <DependentUpon>underscore.js</DependentUpon>
@@ -371,9 +386,9 @@
     <Compile Include="Controllers\CaravanController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controls\ControlOptionsBase.cs" />
-    <Compile Include="Controls\DataVisualization\CaravanDataGridOptions.cs" />
-    <Compile Include="Controls\DataVisualization\CaravanDataGrid_.generated.cs">
-      <DependentUpon>CaravanDataGrid_.cshtml</DependentUpon>
+    <Compile Include="Controls\DataVisualization\BootstrapTableOptions.cs" />
+    <Compile Include="Controls\DataVisualization\BootstrapTable_.generated.cs">
+      <DependentUpon>BootstrapTable_.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -553,6 +568,12 @@
     <Content Include="Views\Shared\Pages\VerticalSearchLayout.cshtml" />
     <Content Include="Views\Shared\Web.config" />
     <Content Include="Views\Security\SecGroupList.cshtml" />
+    <Content Include="Scripts\jquery.base64.min.js.map">
+      <DependentUpon>jquery.base64.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\tableExport.min.js.map">
+      <DependentUpon>tableExport.js</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

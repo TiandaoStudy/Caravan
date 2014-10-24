@@ -30,6 +30,12 @@ namespace Finsa.Caravan.DataModel
    }
 
    [Serializable]
+   public class SecGroupSingle
+   {
+      public SecGroup Group { get; set; } 
+   }
+
+   [Serializable]
    public class SecGroupList
    {
       public IEnumerable<SecGroup> Groups { get; set; } 

@@ -20,13 +20,13 @@ namespace Finsa.Caravan.Mvc.Controls.DataVisualization
     using System.Web;
     using System.Web.Helpers;
     
-    #line 4 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+    #line 4 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
     using System.Web.Mvc;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+    #line 5 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
     using System.Web.Mvc.Ajax;
     
     #line default
@@ -37,23 +37,29 @@ namespace Finsa.Caravan.Mvc.Controls.DataVisualization
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 6 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+    #line 6 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+    using Finsa.Caravan.Extensions;
+    
+    #line default
+    #line hidden
+    
+    #line 7 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
     using Finsa.Caravan.Mvc.Controls.DataVisualization;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    public static class CaravanDataGrid_
+    public static class BootstrapTable_
     {
 
-public static System.Web.WebPages.HelperResult CaravanDataGrid(this AjaxHelper ajaxHelper, CaravanDataGridOptions options)
+public static System.Web.WebPages.HelperResult BootstrapTable(this AjaxHelper ajaxHelper, BootstrapTableOptions options)
 {
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 
 
-#line 9 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 10 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
  
 
 #line default
@@ -64,7 +70,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "   <script type=\"text/javas
 
 
 
-#line 12 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 13 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.ID);
 
 #line default
@@ -74,7 +80,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\').bootstrapTable();\r\n   
 
 
 
-#line 15 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 16 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 
 
 #line default
@@ -84,7 +90,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "   <div id=\"");
 
 
 
-#line 16 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 17 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.ID);
 
 #line default
@@ -94,7 +100,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "-container\">\r\n      ");
 
 
 
-#line 17 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 18 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, ajaxHelper.ActionLink("update-grid", "InitializeSearchGrid", new {searchCriteriaJson = "", pageIndex = 1}, new AjaxOptions
       {
          HttpMethod = "GET",
@@ -109,39 +115,109 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n\r\n      <table id=\"")
 
 
 
-#line 24 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 25 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.ID);
 
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" class=\"table table-striped table-condensed table-hover\">\r\n         <thead>\r\n   " +
-"         <tr>\r\n");
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" class=\"table table-striped table-condensed table-hover\" data-toggle=\"table\"\r\n  " +
+"           data-pagination=\"");
 
 
 
-#line 27 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 26 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+WebViewPage.WriteTo(@__razor_helper_writer, options.ShowPagination.ToJavaScriptBoolean());
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" \r\n             data-search=\"");
+
+
+
+#line 27 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+WebViewPage.WriteTo(@__razor_helper_writer, options.ShowSearchBox.ToJavaScriptBoolean());
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\"\r\n             data-show-columns=\"true\"\r\n             data-show-export=\"");
+
+
+
+#line 29 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+WebViewPage.WriteTo(@__razor_helper_writer, options.ShowExportButton.ToJavaScriptBoolean());
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\">\r\n         \r\n         <thead>\r\n            <tr>\r\n");
+
+
+
+#line 33 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
                 foreach (var column in options.Columns)
                {
 
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "                  <th>");
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "                  <th data-field=\"");
 
 
 
-#line 29 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 35 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+WebViewPage.WriteTo(@__razor_helper_writer, column.ID);
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" data-align=\"");
+
+
+
+#line 35 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+               WebViewPage.WriteTo(@__razor_helper_writer, column.HAlign);
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" data-valign=\"");
+
+
+
+#line 35 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+                                            WebViewPage.WriteTo(@__razor_helper_writer, column.VAlign);
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" data-sortable=\"");
+
+
+
+#line 35 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+                                                                           WebViewPage.WriteTo(@__razor_helper_writer, column.Sortable.ToJavaScriptBoolean());
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\">\r\n                     ");
+
+
+
+#line 36 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, column.Header);
 
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "</th>\r\n");
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n                  </th>\r\n");
 
 
 
-#line 30 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 38 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
                }
 
 #line default
@@ -151,7 +227,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "            </tr>\r\n       
 
 
 
-#line 35 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 43 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
              foreach (var item in options.Items)
             {
 
@@ -162,7 +238,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "               <tr>\r\n");
 
 
 
-#line 38 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 46 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
                    foreach (var column in options.Columns)
                   {
 
@@ -173,7 +249,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "                     <td>\r\
 
 
 
-#line 41 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 49 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, column.Control(item));
 
 #line default
@@ -183,7 +259,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n                     </t
 
 
 
-#line 43 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 51 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
                   }
 
 #line default
@@ -193,7 +269,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "               </tr>\r\n");
 
 
 
-#line 45 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 53 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
             }
 
 #line default
@@ -203,7 +279,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "         </tbody>\r\n      <
 
 
 
-#line 49 "..\..\Controls\DataVisualization\CaravanDataGrid_.cshtml"
+#line 57 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 
 #line default
 #line hidden
