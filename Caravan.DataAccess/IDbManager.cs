@@ -27,7 +27,7 @@ namespace Finsa.Caravan.DataAccess
       Dummy,
       Oracle,
       Postgres,
-      Remote,
+      Rest,
       SqlServer,
       SqlServerCe
    }

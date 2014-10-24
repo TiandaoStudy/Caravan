@@ -37,6 +37,9 @@
     <PostBuildEvent>copy $(TargetDir)Finsa.Caravan.DataAccess.* "$(SolutionDir)NuGetPackager.DataAccess/lib/net40"</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="CodeProject.ObjectPool, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CodeProject.ObjectPool.1.0.6\lib\net40\CodeProject.ObjectPool.dll</HintPath>
@@ -51,6 +54,12 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="LinqToQuerystring">
+      <HintPath>..\packages\LinqToQuerystring.0.7.0.8\lib\net35\LinqToQuerystring.dll</HintPath>
+    </Reference>
+    <Reference Include="LinqToQuerystring.EntityFramework">
+      <HintPath>..\packages\LinqToQuerystring.EntityFramework.1.2\lib\net40\LinqToQuerystring.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -96,11 +105,15 @@
     <Compile Include="Core\DbContextBase.cs" />
     <Compile Include="Core\LogManagerBase.cs" />
     <Compile Include="Core\SecurityManagerBase.cs" />
+    <Compile Include="Dummy\DummyQueryManager.cs" />
     <Compile Include="ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
+    <Compile Include="IQueryManager.cs" />
+    <Compile Include="Rest\RestQueryManager.cs" />
+    <Compile Include="Sql\SqlQueryManager.cs" />
     <Compile Include="Sql\SqlServerCe\SqlServerCeDbContext.cs" />
     <Compile Include="Dummy\DummyLogManager.cs" />
     <Compile Include="Dummy\DummySecurityManager.cs" />
@@ -118,6 +131,7 @@
     <Compile Include="Sql\SqlServerCe\SqlServerCeDbManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

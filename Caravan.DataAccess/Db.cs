@@ -5,6 +5,8 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.DataAccess.Dummy;
+using Finsa.Caravan.DataAccess.Rest;
 using Finsa.Caravan.DataAccess.Sql;
 using Finsa.Caravan.DataAccess.Sql.Oracle;
 using Finsa.Caravan.DataAccess.Sql.SqlServerCe;
@@ -13,8 +15,9 @@ namespace Finsa.Caravan.DataAccess
 {
    public static class Db
    {
-      private static readonly ILogManager LogManagerInstance = new SqlLogManager();
-      private static readonly ISecurityManager SecurityManagerInstance = new SqlSecurityManager();
+      private static readonly ILogManager LogManagerInstance;
+      private static readonly IQueryManager QueryManagerInstance;
+      private static readonly ISecurityManager SecurityManagerInstance;
       private static readonly IDbManager DbManagerInstance;
       private static readonly Func<DbContextBase> DbContextGenerator;
 
@@ -23,16 +26,38 @@ namespace Finsa.Caravan.DataAccess
          switch (Configuration.Instance.DataAccessKind)
          {
             case DataAccessKind.Dummy:
+               LogManagerInstance = new DummyLogManager();
+               QueryManagerInstance = new DummyQueryManager();
+               SecurityManagerInstance = new DummySecurityManager();
                break;
             case DataAccessKind.Oracle:
                DbManagerInstance = new OracleDbManager();
                DbContextGenerator = OracleDbContextGenerator;
+               LogManagerInstance = new SqlLogManager();
+               QueryManagerInstance = new SqlQueryManager();
+               SecurityManagerInstance = new SqlSecurityManager();
+               break;
+            case DataAccessKind.Postgres:
+               LogManagerInstance = new SqlLogManager();
+               QueryManagerInstance = new SqlQueryManager();
+               SecurityManagerInstance = new SqlSecurityManager();
+               break;
+            case DataAccessKind.Rest:
+               LogManagerInstance = new RestLogManager();
+               QueryManagerInstance = new RestQueryManager();
+               SecurityManagerInstance = new RestSecurityManager();
                break;
             case DataAccessKind.SqlServer:
+               LogManagerInstance = new SqlLogManager();
+               QueryManagerInstance = new SqlQueryManager();
+               SecurityManagerInstance = new SqlSecurityManager();
                break;
             case DataAccessKind.SqlServerCe:
                DbManagerInstance = new SqlServerCeDbManager();
                DbContextGenerator = SqlServerCeDbContextGenerator;
+               LogManagerInstance = new SqlLogManager();
+               QueryManagerInstance = new SqlQueryManager();
+               SecurityManagerInstance = new SqlSecurityManager();
                break;
          }
       }
@@ -45,6 +70,11 @@ namespace Finsa.Caravan.DataAccess
       public static ILogManager Logger
       {
          get { return LogManagerInstance; }
+      }
+
+      public static IQueryManager Query
+      {
+         get { return QueryManagerInstance; }
       }
 
       public static ISecurityManager Security
