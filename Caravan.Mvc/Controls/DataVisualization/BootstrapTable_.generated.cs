@@ -76,11 +76,22 @@ WebViewPage.WriteTo(@__razor_helper_writer, options.ID);
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\').bootstrapTable();\r\n      });\r\n   </script>\r\n");
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\').bootstrapTable({\r\n            showColumns: true,\r\n            showExport: ");
 
 
 
-#line 16 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 15 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+WebViewPage.WriteTo(@__razor_helper_writer, options.ShowExportButton.ToJavaScriptBoolean());
+
+#line default
+#line hidden
+
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, ",\r\n            showRefresh: true,\r\n            showToggle: true\r\n         });\r\n  " +
+"    });\r\n   </script>\r\n");
+
+
+
+#line 21 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 
 
 #line default
@@ -90,7 +101,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "   <div id=\"");
 
 
 
-#line 17 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 22 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.ID);
 
 #line default
@@ -100,7 +111,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "-container\">\r\n      ");
 
 
 
-#line 18 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 23 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, ajaxHelper.ActionLink("update-grid", "InitializeSearchGrid", new {searchCriteriaJson = "", pageIndex = 1}, new AjaxOptions
       {
          HttpMethod = "GET",
@@ -115,7 +126,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n\r\n      <table id=\"")
 
 
 
-#line 25 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 30 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.ID);
 
 #line default
@@ -126,7 +137,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" class=\"table table-strip
 
 
 
-#line 26 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 31 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.ShowPagination.ToJavaScriptBoolean());
 
 #line default
@@ -136,18 +147,8 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" \r\n             data-sea
 
 
 
-#line 27 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 32 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.ShowSearchBox.ToJavaScriptBoolean());
-
-#line default
-#line hidden
-
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\"\r\n             data-show-columns=\"true\"\r\n             data-show-export=\"");
-
-
-
-#line 29 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
-WebViewPage.WriteTo(@__razor_helper_writer, options.ShowExportButton.ToJavaScriptBoolean());
 
 #line default
 #line hidden
@@ -156,7 +157,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\">\r\n         \r\n        
 
 
 
-#line 33 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 36 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
                 foreach (var column in options.Columns)
                {
 
@@ -167,7 +168,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "                  <th data-f
 
 
 
-#line 35 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 38 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, column.ID);
 
 #line default
@@ -177,7 +178,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" data-align=\"");
 
 
 
-#line 35 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 38 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
                WebViewPage.WriteTo(@__razor_helper_writer, column.HAlign);
 
 #line default
@@ -187,7 +188,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" data-valign=\"");
 
 
 
-#line 35 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 38 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
                                             WebViewPage.WriteTo(@__razor_helper_writer, column.VAlign);
 
 #line default
@@ -197,7 +198,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" data-sortable=\"");
 
 
 
-#line 35 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 38 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
                                                                            WebViewPage.WriteTo(@__razor_helper_writer, column.Sortable.ToJavaScriptBoolean());
 
 #line default
@@ -207,7 +208,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\">\r\n                     
 
 
 
-#line 36 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 39 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, column.Header);
 
 #line default
@@ -217,7 +218,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n                  </th>\
 
 
 
-#line 38 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 41 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
                }
 
 #line default
@@ -227,7 +228,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "            </tr>\r\n       
 
 
 
-#line 43 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 46 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
              foreach (var item in options.Items)
             {
 
@@ -238,7 +239,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "               <tr>\r\n");
 
 
 
-#line 46 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 49 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
                    foreach (var column in options.Columns)
                   {
 
@@ -249,7 +250,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "                     <td>\r\
 
 
 
-#line 49 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 52 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, column.Control(item));
 
 #line default
@@ -259,7 +260,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n                     </t
 
 
 
-#line 51 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 54 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
                   }
 
 #line default
@@ -269,7 +270,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "               </tr>\r\n");
 
 
 
-#line 53 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 56 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
             }
 
 #line default
@@ -279,7 +280,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "         </tbody>\r\n      <
 
 
 
-#line 57 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
+#line 60 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
 
 #line default
 #line hidden
