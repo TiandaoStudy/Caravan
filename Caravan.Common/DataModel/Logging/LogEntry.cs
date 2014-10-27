@@ -228,4 +228,16 @@ namespace Finsa.Caravan.DataModel.Logging
          }
       }
    }
+
+   [Serializable]
+   public class LogEntrySingle
+   {
+      public LogEntry Entry { get; set; } 
+   }
+
+   [Serializable]
+   public class LogEntryList
+   {
+      public IEnumerable<LogEntry> Entries { get; set; } 
+   }
 }

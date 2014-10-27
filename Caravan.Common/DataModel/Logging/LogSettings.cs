@@ -44,6 +44,18 @@ namespace Finsa.Caravan.DataModel.Logging
       }
    }
 
+   [Serializable]
+   public class LogSettingsSingle
+   {
+      public LogSettings Settings { get; set; } 
+   }
+
+   [Serializable]
+   public class LogSettingsList
+   {
+      public IEnumerable<LogSettings> Settings { get; set; } 
+   }
+
    public enum LogType : byte
    {
       Debug = 0,

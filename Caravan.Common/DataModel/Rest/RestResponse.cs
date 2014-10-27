@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using Finsa.Caravan.DataModel.Logging;
 using Newtonsoft.Json;
 
 namespace Finsa.Caravan.DataModel.Rest
@@ -13,6 +14,16 @@ namespace Finsa.Caravan.DataModel.Rest
       [JsonProperty(Order = 1)]
       public TBody Body { get; set; }
    }
+   
+   [Serializable, JsonObject(MemberSerialization.OptIn)]
+   public class FailureBody
+   {
+      [JsonProperty(Order = 0)]
+      public string Description { get; set; }
+      
+      [JsonProperty(Order = 1)]
+      public Exception Exception { get; set; }
+   }
 
    public static class RestResponse
    {
@@ -23,6 +34,24 @@ namespace Finsa.Caravan.DataModel.Rest
             StatusCode = HttpStatusCode.OK,
             Body = body
          };
+      }
+
+      public static RestResponse<FailureBody> Failure(Exception exception)
+      {
+         return new RestResponse<FailureBody>
+         {
+            StatusCode = HttpStatusCode.InternalServerError,
+            Body = new FailureBody
+            {
+               Description = exception.Message,
+               Exception = exception
+            }
+         };
+      }
+
+      public static dynamic FromLogResult(LogResult result)
+      {
+         return result.Succeeded ? (dynamic) Success("OK") : Failure(result.Exception);
       }
    }
 }

@@ -1,10 +1,9 @@
 ﻿using System;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataModel.Logging;
+using Finsa.Caravan.DataModel.Rest;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.RestService.Core;
-using Nancy;
-using Newtonsoft.Json;
 
 namespace Finsa.Caravan.RestService
 {
@@ -12,45 +11,72 @@ namespace Finsa.Caravan.RestService
    {
       public LoggerModule() : base("logger")
       {
+         /*
+          * Entries
+          */
+
          Post["/{appName}/entries"] = p =>
          {
             StartSafeResponse<dynamic>(NotCached);
-            return Db.Logger.Logs((string) p.appName);
+            var entries = Db.Logger.Logs((string) p.appName);
+            return RestResponse.Success(new LogEntryList {Entries = entries});
          };
          
          Post["/{appName}/entries/{logType}"] = p =>
          {
             StartSafeResponse<dynamic>(NotCached);
-            return Db.Logger.Logs((string) p.appName, SafeParseLogType((string) p.logType));
+            var entries = Db.Logger.Logs((string) p.appName, SafeParseLogType((string) p.logType));
+            return RestResponse.Success(new LogEntryList {Entries = entries});
          };
          
-         Post["/entries"] = _ => Log(null, null);
-         Post["/entries/{appName}"] = p => Log(p.appName, null);
-         Post["/entries/{appName}/{logType}"] = p => Log(p.appName, ParseLogType((string) p.logType));
+         Put["/{appName}/entries"] = p =>
+         {
+            var entry = StartSafeResponse<LogEntrySingle>(NotCached);
+            var result = Log(entry.Entry, p.appName, null);
+            return RestResponse.FromLogResult(result);
+         };
 
-         Post["/settings"] = _ => Db.Logger.LogSettings();
-         Post["/settings/{appName}"] = p => Db.Logger.LogSettings((string) p.appName);
-         Post["/settings/{appName}/{logType}"] = p => Db.Logger.LogSettings((string) p.appName, SafeParseLogType((string) p.logType));
+         Put["/{appName}/entries/{logType}"] = p =>
+         {
+            var entry = StartSafeResponse<LogEntrySingle>(NotCached);
+            var result = Log(entry.Entry, p.appName, ParseLogType((string) p.logType));
+            return RestResponse.FromLogResult(result);
+         };
+         
+         /*
+          * Settings
+          */
+
+         Post["/{appName}/settings"] = p =>
+         {
+            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            var settings = Db.Logger.LogSettings((string) p.appName);
+            return RestResponse.Success(new LogSettingsList {Settings = settings});
+         };
+
+         Post["/{appName}/settings/{logType}"] = p =>
+         {
+            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            var settings = Db.Logger.LogSettings((string) p.appName, SafeParseLogType((string) p.logType));
+            return RestResponse.Success(new LogSettingsSingle {Settings = settings});
+         };
       }
 
-      private Response Log(string appName, LogType? logType)
+      private static LogResult Log(LogEntry e, string appName, LogType? logType)
       {
-         LogEntry e;
          try
          {
-            e = PrepareEntry((string) Request.Form.entry, appName, logType);
+            e = PrepareEntry(e, appName, logType);
          }
          catch (Exception ex)
          {
-            return Response.AsJson(LogResult.Failure(ex));
+            return LogResult.Failure(ex);
          }
-         var result = Db.Logger.Log(e.Type, e.App.Name, e.UserLogin, e.CodeUnit, e.Function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments);
-         return Response.AsJson(result);
+         return Db.Logger.Log(e.Type, e.App.Name, e.UserLogin, e.CodeUnit, e.Function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments);
       }
 
-      private static LogEntry PrepareEntry(string json, string appName, LogType? logType)
+      private static LogEntry PrepareEntry(LogEntry entry, string appName, LogType? logType)
       {
-         var entry = JsonConvert.DeserializeObject<LogEntry>(json);
          if (entry == null)
          {
             throw new Exception(ErrorMessages.LogsModule_InvalidEntry);
