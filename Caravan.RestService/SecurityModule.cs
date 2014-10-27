@@ -1,10 +1,10 @@
 ﻿using System.IO;
 using System.Web;
 using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.DataModel.Rest;
 using Finsa.Caravan.RestService.Core;
 using Finsa.Caravan.XmlSchemas.MenuEntries;
 using Nancy;
-using PommaLabs.KVLite.Nancy;
 
 namespace Finsa.Caravan.RestService
 {
@@ -22,33 +22,76 @@ namespace Finsa.Caravan.RestService
             return xml;
          };
 
-         Get["/"] = _ =>
+         /*
+          * Apps
+          */
+
+         Post["/"] = _ =>
          {
-            Context.EnableOutputCache(Configuration.LongCacheTimeoutInSeconds);
-            return Db.Security.Apps();
+            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            return RestResponse.Success(Db.Security.Apps());
          };
          
-         Get["/{appName}"] = p =>
+         Post["/{appName}"] = p =>
          {
-            Context.EnableOutputCache(Configuration.LongCacheTimeoutInSeconds);
-            return Db.Security.App((string) p.appName);
+            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            return RestResponse.Success(Db.Security.App((string) p.appName));
          };
+
+         /*
+          * Contexts
+          */
          
-         Get["/{appName}/groups"] = p => Response.AsJson(Db.Security.Groups((string) p.appName));
+         Get["/{appName}/contexts"] = p =>
+         {
+            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            return Db.Security.Contexts((string) p.appName);
+         };
+
+         /*
+          * Entries
+          */
+
+         Get["/{appName}/entries"] = p =>
+         {
+            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            return null;
+         };
+
+         /*
+          * Groups
+          */
+         
+         Get["/{appName}/groups"] = p =>
+         {
+            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            return Db.Security.Groups((string) p.appName);
+         };
+
          Get["/{appName}/groups/{groupName}"] = p => Response.AsJson(Db.Security.Group((string) p.appName, (string) p.groupName));
          Post["/{appName}/groups"] = p => null;
          Put["/{appName}/groups/{groupName}"] = p => null;
          Delete["/{appName}/groups/{groupName}"] = p => null;
 
-         Get["/{appName}/objects"] = p =>
+         /*
+          * Objects
+          */
+
+         Post["/{appName}/objects"] = p =>
          {
-            Context.EnableOutputCache(Configuration.LongCacheTimeoutInSeconds);
-            return null;
+            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            return Db.Security.Objects((string) p.appName);
          };
 
-         Get["/{appName}/users"] = p => Response.AsJson(Db.Security.Users((string) p.appName));
-         
-         Get["/{appName}/contexts"] = p => Response.AsJson(Db.Security.Contexts((string) p.appName));
+         /*
+          * Users
+          */
+
+         Post["/{appName}/users"] = p =>
+         {
+            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            return Db.Security.Users((string) p.appName);
+         };
       }
    }
 }

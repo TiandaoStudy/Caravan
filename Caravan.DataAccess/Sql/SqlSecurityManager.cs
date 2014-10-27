@@ -97,7 +97,7 @@ namespace Finsa.Caravan.DataAccess.Sql
          throw new NotImplementedException();
       }
 
-      protected override IEnumerable<SecObject> GetSecurityObjects(string appName, string userLogin, string[] groupNames, string contextName, string objectType)
+      protected override IEnumerable<SecObject> GetEntries(string appName, string userLogin, string[] groupNames, string contextName, string objectType)
       {
          throw new NotImplementedException();
       }

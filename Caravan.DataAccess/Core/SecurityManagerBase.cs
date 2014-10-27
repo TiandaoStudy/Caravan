@@ -116,25 +116,25 @@ namespace Finsa.Caravan.DataAccess.Core
 
       #endregion
 
-      #region Context Security
+      #region Entries
 
-      public IEnumerable<SecObject> SecurityObjects(string appName, string userLogin, string[] groupNames, string contextName)
+      public IEnumerable<SecObject> Entries(string appName, string userLogin, string[] groupNames, string contextName)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(userLogin);
          Raise<ArgumentException>.IfIsEmpty(groupNames as ICollection<string>);
          Raise<ArgumentException>.IfIsEmpty(contextName);
-         return GetSecurityObjects(appName, userLogin, groupNames, contextName, null);
+         return GetEntries(appName, userLogin, groupNames, contextName, null);
       }
 
-      public IEnumerable<SecObject> SecurityObjects(string appName, string userLogin, string[] groupNames, string contextName, string objectType)
+      public IEnumerable<SecObject> Entries(string appName, string userLogin, string[] groupNames, string contextName, string objectType)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(userLogin);
          Raise<ArgumentException>.IfIsEmpty(groupNames as ICollection<string>);
          Raise<ArgumentException>.IfIsEmpty(contextName);
          Raise<ArgumentException>.IfIsEmpty(objectType);
-         return GetSecurityObjects(appName, userLogin, groupNames, contextName, objectType);
+         return GetEntries(appName, userLogin, groupNames, contextName, objectType);
       }
 
       #endregion
@@ -157,7 +157,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
       protected abstract IEnumerable<SecObject> GetObjects(string appName, string contextName);
 
-      protected abstract IEnumerable<SecObject> GetSecurityObjects(string appName, string userLogin, string[] groupNames, string contextName, string objectType);
+      protected abstract IEnumerable<SecObject> GetEntries(string appName, string userLogin, string[] groupNames, string contextName, string objectType);
 
       #endregion
    }

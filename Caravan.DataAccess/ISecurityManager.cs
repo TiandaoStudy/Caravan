@@ -53,11 +53,11 @@ namespace Finsa.Caravan.DataAccess
 
       #endregion
 
-      #region Context Security
+      #region Entries
 
-      IEnumerable<SecObject> SecurityObjects(string appName, string userLogin, string[] groupNames, string contextName);
+      IEnumerable<SecObject> Entries(string appName, string userLogin, string[] groupNames, string contextName);
 
-      IEnumerable<SecObject> SecurityObjects(string appName, string userLogin, string[] groupNames, string contextName, string objectType);
+      IEnumerable<SecObject> Entries(string appName, string userLogin, string[] groupNames, string contextName, string objectType);
 
       #endregion
    }

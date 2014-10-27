@@ -168,6 +168,7 @@
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_object.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_app.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_context.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\caravan_security.sql" />
     <Content Include="Sql\SqlServerCe\Scripts\Tables\caravan_log.sql" />
     <Content Include="Sql\SqlServerCe\Scripts\Tables\caravan_log_settings.sql" />
     <Content Include="Sql\SqlServerCe\Scripts\Tables\caravan_sec_app.sql" />

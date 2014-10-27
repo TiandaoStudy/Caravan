@@ -161,7 +161,7 @@
     <Compile Include="Core\CustomModule.cs" />
     <Compile Include="Core\CustomJsonSerializer.cs" />
     <Compile Include="IndexModule.cs" />
-    <Compile Include="LoggerModules.cs" />
+    <Compile Include="LoggerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>

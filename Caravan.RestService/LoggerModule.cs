@@ -1,6 +1,5 @@
 ﻿using System;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.DataModel;
 using Finsa.Caravan.DataModel.Logging;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.RestService.Core;
@@ -10,31 +9,35 @@ using PommaLabs.KVLite.Nancy;
 
 namespace Finsa.Caravan.RestService
 {
-   public sealed class LogsModule : CustomModule
+   public sealed class LoggerModule : CustomModule
    {
-      public LogsModule() : base("logs")
+      public LoggerModule() : base("log")
       {
-         Get["/"] = _ =>
+         Get["/entries"] = _ =>
          {
             Context.EnableOutputCache(Configuration.ShortCacheTimeoutInSeconds);
-            return DataAccess.Db.Logger.Logs();
+            return Db.Logger.Logs();
          };
          
-         Get["/{appName}"] = p =>
+         Get["/entries/{appName}"] = p =>
          {
             Context.EnableOutputCache(Configuration.ShortCacheTimeoutInSeconds);
-            return DataAccess.Db.Logger.Logs((string) p.appName);
+            return Db.Logger.Logs((string) p.appName);
          };
          
-         Get["/{appName}/{logType}"] = p =>
+         Get["/entries/{appName}/{logType}"] = p =>
          {
             Context.EnableOutputCache(Configuration.ShortCacheTimeoutInSeconds);
-            return DataAccess.Db.Logger.Logs((string) p.appName, SafeParseLogType((string) p.logType));
+            return Db.Logger.Logs((string) p.appName, SafeParseLogType((string) p.logType));
          };
          
-         Post["/"] = _ => Log(null, null);
-         Post["/{appName}"] = p => Log(p.appName, null);
-         Post["/{appName}/{logType}"] = p => Log(p.appName, ParseLogType((string) p.logType));
+         Post["/entries"] = _ => Log(null, null);
+         Post["/entries/{appName}"] = p => Log(p.appName, null);
+         Post["/entries/{appName}/{logType}"] = p => Log(p.appName, ParseLogType((string) p.logType));
+
+         Get["/settings"] = _ => Db.Logger.LogSettings();
+         Get["/settings/{appName}"] = p => Db.Logger.LogSettings((string) p.appName);
+         Get["/settings/{appName}/{logType}"] = p => Db.Logger.LogSettings((string) p.appName, SafeParseLogType((string) p.logType));
       }
 
       private Response Log(string appName, LogType? logType)
@@ -48,7 +51,7 @@ namespace Finsa.Caravan.RestService
          {
             return Response.AsJson(LogResult.Failure(ex));
          }
-         var result = DataAccess.Db.Logger.Log(e.Type, e.App.Name, e.UserLogin, e.CodeUnit, e.Function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments);
+         var result = Db.Logger.Log(e.Type, e.App.Name, e.UserLogin, e.CodeUnit, e.Function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments);
          return Response.AsJson(result);
       }
 
@@ -82,16 +85,6 @@ namespace Finsa.Caravan.RestService
             entry.Type = logType.Value;
          }
          return entry;
-      }
-   }
-
-   public sealed class LogSettingsModule : CustomModule
-   {
-      public LogSettingsModule() : base("/logSettings")
-      {
-         Get["/"] = _ => DataAccess.Db.Logger.LogSettings();
-         Get["/{appName}"] = p => DataAccess.Db.Logger.LogSettings((string) p.appName);
-         Get["/{appName}/{logType}"] = p => DataAccess.Db.Logger.LogSettings((string) p.appName, SafeParseLogType((string) p.logType));
       }
    }
 }

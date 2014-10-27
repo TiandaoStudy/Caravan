@@ -27,5 +27,10 @@ namespace Finsa.Caravan.Extensions
             action(arg1, arg2);
          }
       }
+
+      public static TRet SafeInvoke<T1, T2, TRet>(this Func<T1, T2, TRet> func, T1 arg1, T2 arg2)
+      {
+         return (func != null) ? func(arg1, arg2) : default(TRet);
+      }
    }
 }

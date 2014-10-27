@@ -62,8 +62,11 @@
     <Compile Include="DataModel\Logging\LogEntry.cs" />
     <Compile Include="DataModel\Logging\LogResult.cs" />
     <Compile Include="DataModel\Logging\LogSettings.cs" />
+    <Compile Include="DataModel\Rest\RestRequest.cs" />
+    <Compile Include="DataModel\Rest\RestResponse.cs" />
     <Compile Include="DataModel\Security\SecApp.cs" />
     <Compile Include="DataModel\Security\SecContext.cs" />
+    <Compile Include="DataModel\Security\SecEntry.cs" />
     <Compile Include="DataModel\Security\SecGroup.cs" />
     <Compile Include="DataModel\Security\SecObject.cs" />
     <Compile Include="DataModel\Security\SecUser.cs" />

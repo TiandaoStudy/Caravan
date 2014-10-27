@@ -46,7 +46,7 @@ namespace Finsa.Caravan.DataAccess.Dummy
          throw new System.NotImplementedException();
       }
 
-      protected override IEnumerable<SecObject> GetSecurityObjects(string appName, string userLogin, string[] groupNames, string contextName, string objectType)
+      protected override IEnumerable<SecObject> GetEntries(string appName, string userLogin, string[] groupNames, string contextName, string objectType)
       {
          throw new System.NotImplementedException();
       }
