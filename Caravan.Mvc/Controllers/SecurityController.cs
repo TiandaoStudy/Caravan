@@ -19,5 +19,14 @@ namespace Finsa.Caravan.Mvc.Controllers
          };
          return View(viewModel);
       }
+
+      public ActionResult SecGroupList_Table()
+      {
+         var viewModel = new SecGroupList
+         {
+            Groups = Db.Security.Groups(Common.Configuration.Instance.ApplicationName)
+         };
+         return PartialView();
+      }
    }
 }
