@@ -26,19 +26,59 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
+using System.IO;
 using Finsa.Caravan.Extensions;
 using NUnit.Framework;
-using UnitTests.Helpers;
 
-namespace UnitTests.Extensions
+namespace UnitTests.Helpers.Extensions
 {
-   class StringExtensionsTests : TestBase
-   {
-      [Test]
-      public void ToBooleanOrDefault_NullString()
-      {
-         string str = null;
-         Assert.AreEqual(str.ToBooleanOrDefault(), default(bool));
-      }
-   }
+    internal class StringExtensionsTests : TestBase
+    {
+        [Test]
+        public void ToBooleanOrDefault_NullString()
+        {
+            Assert.AreEqual((null as string).ToBooleanOrDefault(), default(bool));
+        }
+
+       [Test]
+       [ExpectedException(typeof(ArgumentNullException))]
+       public void MapPath_NullString()
+       {
+          (null as string).MapPath();
+       }
+
+       [Test]
+       public void MapPath_EmptyOrBlankIsBasePath()
+       {
+          var emptyMap = String.Empty.MapPath();
+          var blankMap = "   ".MapPath();
+          var baseMap = "~".MapPath();
+          Assert.AreEqual(baseMap, emptyMap);
+          Assert.AreEqual(baseMap, blankMap);
+       }
+
+       [Test]
+       public void MapPath_BasePathIsAppDomainDirectory()
+       {
+          var basePath = "~".MapPath();
+          Assert.AreEqual(AppDomain.CurrentDomain.BaseDirectory, basePath);
+       }
+
+       [Test]
+       public void MapPath_RootedPathIsEqualToRelative()
+       {
+          var rootedPath = "~/my/test".MapPath();
+          var relativePath = "my/test".MapPath();
+          Assert.AreEqual(Path.GetFullPath(rootedPath), Path.GetFullPath(relativePath));
+       }
+
+       [Test]
+       public void MapPath_MappedPathIsAlwaysRooted()
+       {
+          Assert.IsTrue(Path.IsPathRooted("~/my/test".MapPath()));
+          Assert.IsTrue(Path.IsPathRooted("my/test".MapPath()));
+          Assert.IsTrue(Path.IsPathRooted("C:/my/test".MapPath()));
+       }
+    }
 }

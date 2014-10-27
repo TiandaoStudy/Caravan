@@ -48,4 +48,3 @@ namespace Finsa.Caravan.Extensions
         #endregion
     }
 }
-

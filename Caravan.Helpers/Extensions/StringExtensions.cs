@@ -27,7 +27,9 @@
 // THE SOFTWARE.
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.IO;
 using System.Text;
 
 namespace Finsa.Caravan.Extensions
@@ -257,6 +259,32 @@ namespace Finsa.Caravan.Extensions
         }
 
         #endregion
+
+       // Order is important!
+       private static readonly string[] MapPathStarts = {"~//", "~\\\\", "~/", "~\\", "~"};
+
+        public static string MapPath(this string path)
+        {
+            Contract.Requires<ArgumentNullException>(path != null);
+            Contract.Ensures(Contract.Result<string>() != null);
+            Contract.Ensures(Contract.Result<string>().Length > 0);
+
+            if (Path.IsPathRooted(path))
+            {
+                return path;
+            }
+            var basePath = AppDomain.CurrentDomain.BaseDirectory;
+            var trimmedPath = path.Trim();
+           foreach (var start in MapPathStarts)
+           {
+              if (trimmedPath.StartsWith(start))
+              {
+                 trimmedPath = trimmedPath.Substring(start.Length, trimmedPath.Length - start.Length);
+                 break;
+              }
+           }
+            return Path.Combine(basePath, trimmedPath);
+        }
 
         public static string Truncate(this string str, int maxLength)
         {

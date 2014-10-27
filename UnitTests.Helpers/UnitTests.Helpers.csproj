@@ -54,7 +54,9 @@
     <Compile Include="Diagnostics\IfIsNullTests.cs" />
     <Compile Include="Diagnostics\RaiseTests.cs" />
     <Compile Include="Diagnostics\DiagnosticsTestBase.cs" />
+    <Compile Include="EnvironmentTests.cs" />
     <Compile Include="Extensions\EnumerableExtensionsTests.cs" />
+    <Compile Include="Extensions\ObjectExtensionsTests.cs" />
     <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="PairAndTripleTests.cs" />
     <Compile Include="TestBase.cs" />
