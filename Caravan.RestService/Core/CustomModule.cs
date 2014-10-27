@@ -12,6 +12,8 @@ namespace Finsa.Caravan.RestService.Core
 {
    public abstract class CustomModule : NancyModule
    {
+      protected const int NotCached = -1;
+
       protected CustomModule()
       {
       }
@@ -40,13 +42,13 @@ namespace Finsa.Caravan.RestService.Core
          return Enum.TryParse(logTypeString, true, out logType) ? logType : LogType.Info;
       }
 
-      protected TBody StartSafeResponse<TBody>(int? cacheSeconds)
+      protected TBody StartSafeResponse<TBody>(int cacheSeconds)
       {
          var parsedBody = ParseBody<TBody>();
          ApplySecurity(parsedBody.Auth);
-         if (cacheSeconds.HasValue)
+         if (cacheSeconds != NotCached)
          {
-            Context.EnableOutputCache(cacheSeconds.Value);
+            Context.EnableOutputCache(cacheSeconds);
          }
          else
          {

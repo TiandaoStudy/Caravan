@@ -5,29 +5,22 @@ using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.RestService.Core;
 using Nancy;
 using Newtonsoft.Json;
-using PommaLabs.KVLite.Nancy;
 
 namespace Finsa.Caravan.RestService
 {
    public sealed class LoggerModule : CustomModule
    {
-      public LoggerModule() : base("log")
+      public LoggerModule() : base("logger")
       {
-         Get["/entries"] = _ =>
+         Post["/{appName}/entries"] = p =>
          {
-            Context.EnableOutputCache(Configuration.ShortCacheTimeoutInSeconds);
-            return Db.Logger.Logs();
-         };
-         
-         Get["/entries/{appName}"] = p =>
-         {
-            Context.EnableOutputCache(Configuration.ShortCacheTimeoutInSeconds);
+            StartSafeResponse<dynamic>(NotCached);
             return Db.Logger.Logs((string) p.appName);
          };
          
-         Get["/entries/{appName}/{logType}"] = p =>
+         Post["/{appName}/entries/{logType}"] = p =>
          {
-            Context.EnableOutputCache(Configuration.ShortCacheTimeoutInSeconds);
+            StartSafeResponse<dynamic>(NotCached);
             return Db.Logger.Logs((string) p.appName, SafeParseLogType((string) p.logType));
          };
          
@@ -35,9 +28,9 @@ namespace Finsa.Caravan.RestService
          Post["/entries/{appName}"] = p => Log(p.appName, null);
          Post["/entries/{appName}/{logType}"] = p => Log(p.appName, ParseLogType((string) p.logType));
 
-         Get["/settings"] = _ => Db.Logger.LogSettings();
-         Get["/settings/{appName}"] = p => Db.Logger.LogSettings((string) p.appName);
-         Get["/settings/{appName}/{logType}"] = p => Db.Logger.LogSettings((string) p.appName, SafeParseLogType((string) p.logType));
+         Post["/settings"] = _ => Db.Logger.LogSettings();
+         Post["/settings/{appName}"] = p => Db.Logger.LogSettings((string) p.appName);
+         Post["/settings/{appName}/{logType}"] = p => Db.Logger.LogSettings((string) p.appName, SafeParseLogType((string) p.logType));
       }
 
       private Response Log(string appName, LogType? logType)

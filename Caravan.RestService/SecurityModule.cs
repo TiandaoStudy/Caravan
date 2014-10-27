@@ -2,6 +2,7 @@
 using System.Web;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataModel.Rest;
+using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.RestService.Core;
 using Finsa.Caravan.XmlSchemas.MenuEntries;
 using Nancy;
@@ -29,13 +30,13 @@ namespace Finsa.Caravan.RestService
          Post["/"] = _ =>
          {
             StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
-            return RestResponse.Success(Db.Security.Apps());
+            return RestResponse.Success(new SecAppList {Apps = Db.Security.Apps()});
          };
          
          Post["/{appName}"] = p =>
          {
             StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
-            return RestResponse.Success(Db.Security.App((string) p.appName));
+            return RestResponse.Success(new SecAppSingle {App = Db.Security.App((string) p.appName)});
          };
 
          /*
