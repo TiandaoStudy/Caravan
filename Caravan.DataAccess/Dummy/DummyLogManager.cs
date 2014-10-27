@@ -2,6 +2,7 @@
 using Finsa.Caravan.Collections;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel;
+using Finsa.Caravan.DataModel.Logging;
 
 namespace Finsa.Caravan.DataAccess.Dummy
 {

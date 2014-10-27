@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Web.UI.WebControls;
+using Finsa.Caravan.DataModel.Security;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Finsa.Caravan.DataModel
+namespace Finsa.Caravan.DataModel.Logging
 {
    [Serializable]
    public class LogEntry

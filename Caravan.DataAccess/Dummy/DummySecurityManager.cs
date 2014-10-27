@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel;
+using Finsa.Caravan.DataModel.Security;
 
 namespace Finsa.Caravan.DataAccess.Dummy
 {

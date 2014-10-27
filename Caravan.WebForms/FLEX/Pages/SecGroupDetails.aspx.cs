@@ -2,6 +2,7 @@
 using System.Globalization;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataModel;
+using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.Diagnostics;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;

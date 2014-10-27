@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Finsa.Caravan.DataModel
+namespace Finsa.Caravan.DataModel.Security
 {
    [Serializable]
    public class SecContext

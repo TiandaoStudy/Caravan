@@ -4,6 +4,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataModel;
+using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.Diagnostics;
 using Finsa.Caravan.Extensions;
 using FLEX.Common.Web;

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Finsa.Caravan.DataModel.Logging;
 using Newtonsoft.Json;
 
-namespace Finsa.Caravan.DataModel
+namespace Finsa.Caravan.DataModel.Security
 {
    [Serializable]
    public class SecApp

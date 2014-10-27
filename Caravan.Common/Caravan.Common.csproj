@@ -58,15 +58,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Configuration.cs" />
-    <Compile Include="DataModel\LogEntry.cs" />
-    <Compile Include="DataModel\LogResult.cs" />
-    <Compile Include="DataModel\LogSettings.cs" />
-    <Compile Include="DataModel\SecObject.cs" />
-    <Compile Include="DataModel\SecApp.cs" />
-    <Compile Include="DataModel\SecContext.cs" />
-    <Compile Include="DataModel\SecGroup.cs" />
-    <Compile Include="DataModel\SecUser.cs" />
-    <Compile Include="DataModel\TextAlignment.cs" />
+    <Compile Include="DataModel\Formatting\TextAlignment.cs" />
+    <Compile Include="DataModel\Logging\LogEntry.cs" />
+    <Compile Include="DataModel\Logging\LogResult.cs" />
+    <Compile Include="DataModel\Logging\LogSettings.cs" />
+    <Compile Include="DataModel\Security\SecApp.cs" />
+    <Compile Include="DataModel\Security\SecContext.cs" />
+    <Compile Include="DataModel\Security\SecGroup.cs" />
+    <Compile Include="DataModel\Security\SecObject.cs" />
+    <Compile Include="DataModel\Security\SecUser.cs" />
     <Compile Include="Finsa.Caravan.XmlSchemas.MenuEntries.Item.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
@@ -105,6 +105,7 @@
       <Name>Caravan.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy $(TargetDir)Finsa.Caravan.Common.* "$(SolutionDir)NuGetPackager.Common/lib/net40"</PostBuildEvent>

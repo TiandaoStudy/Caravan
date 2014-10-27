@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Finsa.Caravan.DataModel
+namespace Finsa.Caravan.DataModel.Logging
 {
    [Serializable]
    public class LogResult

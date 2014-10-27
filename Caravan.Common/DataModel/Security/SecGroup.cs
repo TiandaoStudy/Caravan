@@ -1,20 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Finsa.Caravan.DataModel
+namespace Finsa.Caravan.DataModel.Security
 {
    [Serializable]
-   public class SecObject
+   public class SecGroup
    {
       [JsonProperty(Order = 0)]
       public long Id { get; set; }
       
-      [JsonIgnore]
-      public long ContextId { get; set; }
-      
-      [JsonIgnore]
-      public SecContext Context { get; set; }
-
       [JsonIgnore]
       public long AppId { get; set; }
       
@@ -28,6 +23,21 @@ namespace Finsa.Caravan.DataModel
       public string Description { get; set; }
       
       [JsonProperty(Order = 3)]
-      public string Type { get; set; }
+      public bool IsAdmin { get; set; }
+      
+      [JsonProperty(Order = 4)]
+      public virtual ICollection<SecUser> Users { get; set; } 
+   }
+
+   [Serializable]
+   public class SecGroupSingle
+   {
+      public SecGroup Group { get; set; } 
+   }
+
+   [Serializable]
+   public class SecGroupList
+   {
+      public IEnumerable<SecGroup> Groups { get; set; } 
    }
 }

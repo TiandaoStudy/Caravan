@@ -1,5 +1,6 @@
 ﻿using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataModel;
+using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.RestService.Core;
 using PommaLabs.KVLite.Nancy;
 

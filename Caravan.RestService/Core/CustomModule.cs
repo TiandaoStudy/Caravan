@@ -1,5 +1,6 @@
 ﻿using System;
 using Finsa.Caravan.DataModel;
+using Finsa.Caravan.DataModel.Logging;
 using Nancy;
 
 namespace Finsa.Caravan.RestService.Core

@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel;
+using Finsa.Caravan.DataModel.Logging;
 using Finsa.Caravan.Diagnostics;
 using Finsa.Caravan.Extensions;
 

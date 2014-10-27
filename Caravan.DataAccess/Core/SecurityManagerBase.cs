@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Finsa.Caravan.DataModel;
+using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core

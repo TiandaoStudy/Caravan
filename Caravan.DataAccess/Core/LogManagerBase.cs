@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Web;
 using Finsa.Caravan.DataModel;
+using Finsa.Caravan.DataModel.Logging;
 using Finsa.Caravan.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core

@@ -1,5 +1,7 @@
 ﻿using System.Data.Entity;
 using Finsa.Caravan.DataModel;
+using Finsa.Caravan.DataModel.Logging;
+using Finsa.Caravan.DataModel.Security;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
