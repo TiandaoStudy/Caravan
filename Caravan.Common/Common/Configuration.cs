@@ -1,8 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Web;
+﻿using System.Configuration;
 
 namespace Finsa.Caravan.Common
 {
@@ -50,21 +46,5 @@ namespace Finsa.Caravan.Common
       {
          get { return (int) this[BufferSizeInBytesForBufferedIOKey]; }
       }
-
-      #region Utilities
-
-      public static string MapPath(string path)
-      {
-         if (HttpContext.Current == null) return path;
-         var mappedPath = HttpContext.Current.Server.MapPath(path);
-         return mappedPath.EndsWith("\\") ? mappedPath : mappedPath + "\\";
-      }
-
-      public static string MapPath(params string[] hints)
-      {
-         return hints.Aggregate(AppDomain.CurrentDomain.BaseDirectory, Path.Combine);
-      }
-
-      #endregion
    }
 }
