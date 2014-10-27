@@ -7,7 +7,7 @@ CREATE TABLE mydb.caravan_sec_object
    , capp_id          NUMBER          NOT NULL
    , cobj_name        NVARCHAR2(30)   NOT NULL
    , cobj_description NVARCHAR2(100)  NOT NULL
-   , cobj_type        NVARCHAR2(3)    NOT NULL
+   , cobj_type        NVARCHAR2(20)   NOT NULL
    , CHECK (cobj_name = lower(cobj_name)) ENABLE
    , CONSTRAINT pk_caravan_sec_object PRIMARY KEY (cobj_id, cctx_id, capp_id) USING INDEX TABLESPACE dati_base_index ENABLE
    , CONSTRAINT uk_caravan_sec_object UNIQUE (cobj_name, cctx_id) USING INDEX TABLESPACE dati_base_index ENABLE

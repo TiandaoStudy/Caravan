@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataModel;
 using Finsa.Caravan.DataModel.Security;
 
 namespace Finsa.Caravan.DataAccess.Dummy
@@ -38,6 +37,16 @@ namespace Finsa.Caravan.DataAccess.Dummy
       }
 
       protected override IEnumerable<SecContext> GetContexts(string appName)
+      {
+         throw new System.NotImplementedException();
+      }
+
+      protected override IEnumerable<SecObject> GetObjects(string appName, string contextName)
+      {
+         throw new System.NotImplementedException();
+      }
+
+      protected override IEnumerable<SecObject> GetSecurityObjects(string appName, string userLogin, string[] groupNames, string contextName, string objectType)
       {
          throw new System.NotImplementedException();
       }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Finsa.Caravan.DataModel;
 using Finsa.Caravan.DataModel.Security;
 
 namespace Finsa.Caravan.DataAccess
@@ -41,6 +40,24 @@ namespace Finsa.Caravan.DataAccess
       IEnumerable<SecContext> Contexts();
 
       IEnumerable<SecContext> Contexts(string appName);
+
+      #endregion
+
+      #region Objects
+
+      IEnumerable<SecObject> Objects();
+
+      IEnumerable<SecObject> Objects(string appName);
+
+      IEnumerable<SecObject> Objects(string appName, string contextName);
+
+      #endregion
+
+      #region Context Security
+
+      IEnumerable<SecObject> SecurityObjects(string appName, string userLogin, string[] groupNames, string contextName);
+
+      IEnumerable<SecObject> SecurityObjects(string appName, string userLogin, string[] groupNames, string contextName, string objectType);
 
       #endregion
    }

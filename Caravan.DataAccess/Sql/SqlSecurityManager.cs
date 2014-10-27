@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataModel;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.Diagnostics;
 
@@ -91,6 +90,16 @@ namespace Finsa.Caravan.DataAccess.Sql
                     orderby c.Name, c.App.Name
                     select c).ToList();
          }
+      }
+
+      protected override IEnumerable<SecObject> GetObjects(string appName, string contextName)
+      {
+         throw new NotImplementedException();
+      }
+
+      protected override IEnumerable<SecObject> GetSecurityObjects(string appName, string userLogin, string[] groupNames, string contextName, string objectType)
+      {
+         throw new NotImplementedException();
       }
    }
 }

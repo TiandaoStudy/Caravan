@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Finsa.Caravan.DataModel;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.Diagnostics;
 
@@ -95,6 +94,51 @@ namespace Finsa.Caravan.DataAccess.Core
 
       #endregion
 
+      #region Objects
+
+      public IEnumerable<SecObject> Objects()
+      {
+         return GetObjects(null, null);
+      }
+
+      public IEnumerable<SecObject> Objects(string appName)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         return GetObjects(appName, null);
+      }
+
+      public IEnumerable<SecObject> Objects(string appName, string contextName)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfIsEmpty(contextName);
+         return GetObjects(appName, contextName);
+      }
+
+      #endregion
+
+      #region Context Security
+
+      public IEnumerable<SecObject> SecurityObjects(string appName, string userLogin, string[] groupNames, string contextName)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfIsEmpty(userLogin);
+         Raise<ArgumentException>.IfIsEmpty(groupNames as ICollection<string>);
+         Raise<ArgumentException>.IfIsEmpty(contextName);
+         return GetSecurityObjects(appName, userLogin, groupNames, contextName, null);
+      }
+
+      public IEnumerable<SecObject> SecurityObjects(string appName, string userLogin, string[] groupNames, string contextName, string objectType)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfIsEmpty(userLogin);
+         Raise<ArgumentException>.IfIsEmpty(groupNames as ICollection<string>);
+         Raise<ArgumentException>.IfIsEmpty(contextName);
+         Raise<ArgumentException>.IfIsEmpty(objectType);
+         return GetSecurityObjects(appName, userLogin, groupNames, contextName, objectType);
+      }
+
+      #endregion
+
       #region Abstract Methods
 
       protected abstract IEnumerable<SecApp> GetApps(string appName);
@@ -110,6 +154,10 @@ namespace Finsa.Caravan.DataAccess.Core
       protected abstract IEnumerable<SecUser> GetUsers(string appName, string userLogin);
 
       protected abstract IEnumerable<SecContext> GetContexts(string appName);
+
+      protected abstract IEnumerable<SecObject> GetObjects(string appName, string contextName);
+
+      protected abstract IEnumerable<SecObject> GetSecurityObjects(string appName, string userLogin, string[] groupNames, string contextName, string objectType);
 
       #endregion
    }

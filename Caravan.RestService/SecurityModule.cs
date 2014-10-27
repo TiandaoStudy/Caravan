@@ -4,6 +4,7 @@ using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.RestService.Core;
 using Finsa.Caravan.XmlSchemas.MenuEntries;
 using Nancy;
+using PommaLabs.KVLite.Nancy;
 
 namespace Finsa.Caravan.RestService
 {
@@ -21,19 +22,33 @@ namespace Finsa.Caravan.RestService
             return xml;
          };
 
-         Get["/"] = _ => Response.AsJson(DataAccess.Db.Security.Apps());
+         Get["/"] = _ =>
+         {
+            Context.EnableOutputCache(Configuration.LongCacheTimeoutInSeconds);
+            return Db.Security.Apps();
+         };
          
-         Get["/{appName}"] = p => Response.AsJson(DataAccess.Db.Security.App((string) p.appName));
+         Get["/{appName}"] = p =>
+         {
+            Context.EnableOutputCache(Configuration.LongCacheTimeoutInSeconds);
+            return Db.Security.App((string) p.appName);
+         };
          
-         Get["/{appName}/groups"] = p => Response.AsJson(DataAccess.Db.Security.Groups((string) p.appName));
-         Get["/{appName}/groups/{groupName}"] = p => Response.AsJson(DataAccess.Db.Security.Group((string) p.appName, (string) p.groupName));
+         Get["/{appName}/groups"] = p => Response.AsJson(Db.Security.Groups((string) p.appName));
+         Get["/{appName}/groups/{groupName}"] = p => Response.AsJson(Db.Security.Group((string) p.appName, (string) p.groupName));
          Post["/{appName}/groups"] = p => null;
          Put["/{appName}/groups/{groupName}"] = p => null;
          Delete["/{appName}/groups/{groupName}"] = p => null;
 
-         Get["/{appName}/users"] = p => Response.AsJson(DataAccess.Db.Security.Users((string) p.appName));
+         Get["/{appName}/objects"] = p =>
+         {
+            Context.EnableOutputCache(Configuration.LongCacheTimeoutInSeconds);
+            return null;
+         };
+
+         Get["/{appName}/users"] = p => Response.AsJson(Db.Security.Users((string) p.appName));
          
-         Get["/{appName}/contexts"] = p => Response.AsJson(DataAccess.Db.Security.Contexts((string) p.appName));
+         Get["/{appName}/contexts"] = p => Response.AsJson(Db.Security.Contexts((string) p.appName));
       }
    }
 }
