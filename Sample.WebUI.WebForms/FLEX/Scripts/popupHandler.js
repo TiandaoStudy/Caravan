@@ -602,6 +602,7 @@ function openModal(options) {
          var modalClose = $("#modal-close");
          modalClose.html('<a href="#" class="close">x</a>');
          modalClose.addClass('modal-close');
+         modalClose.unbind("click");
          modalClose.click(function() { eval(settings.closeFunction); });
          // Rimozione click dall'overlay
          document.getElementById("modal-overlay").onclick = null;

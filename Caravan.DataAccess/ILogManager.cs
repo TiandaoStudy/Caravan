@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Finsa.Caravan.DataModel;
 using Finsa.Caravan.DataModel.Logging;
 
 namespace Finsa.Caravan.DataAccess
