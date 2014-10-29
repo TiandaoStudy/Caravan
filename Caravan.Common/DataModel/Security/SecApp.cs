@@ -33,7 +33,10 @@ namespace Finsa.Caravan.DataModel.Security
       public virtual ICollection<LogSettings> LogSettings { get; set; }
 
       [JsonIgnore]
-      public virtual ICollection<LogEntry> LogEntries { get; set; } 
+      public virtual ICollection<LogEntry> LogEntries { get; set; }
+
+      [JsonIgnore]
+      public virtual ICollection<SecEntry> SecEntries { get; set; }
    }
 
    [Serializable]
