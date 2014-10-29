@@ -20,6 +20,8 @@ namespace FLEX.Web.UserControls.Ajax
          get { return FlagCrudTag; }
       }
 
+      public int HeightWorkingArea { get; set; }
+
       public string LeftPanelTitle
       {
          set { lbTitlePanelLeft.Text = value; }
@@ -305,8 +307,15 @@ namespace FLEX.Web.UserControls.Ajax
 
          if (_dataLeftRowToRemove.ItemArray.Length == 1)
          {
-            _expr_filter += _dataLeftRowToRemove.Table.Columns[0].ColumnName + " = '" +
+            if (_dataLeftRowToRemove.ItemArray[0] is DBNull)
+            {
+               _expr_filter += _dataLeftRowToRemove.Table.Columns[0].ColumnName + " is NULL";
+            }
+            else
+           {
+              _expr_filter += _dataLeftRowToRemove.Table.Columns[0].ColumnName + " = '" +
                             _dataLeftRowToRemove.ItemArray[0] + "'";
+           }
          }
          else
          {
@@ -314,13 +323,28 @@ namespace FLEX.Web.UserControls.Ajax
             {
                if (i == _dataLeftRowToRemove.ItemArray.Length - 1)
                {
-                  _expr_filter += _dataLeftRowToRemove.Table.Columns[i].ColumnName + " = '" +
-                                  _dataLeftRowToRemove.ItemArray[i] + "'";
+                  if (_dataLeftRowToRemove.ItemArray[i] is DBNull)
+                  {
+                     _expr_filter += _dataLeftRowToRemove.Table.Columns[i].ColumnName + " is NULL";
+                  }
+                  else
+                  {
+                     _expr_filter += _dataLeftRowToRemove.Table.Columns[i].ColumnName + " = '" +
+                               _dataLeftRowToRemove.ItemArray[i] + "'";
+                  }
+               
                }
                else
                {
-                  _expr_filter += _dataLeftRowToRemove.Table.Columns[i].ColumnName + " = '" +
+                  if (_dataLeftRowToRemove.ItemArray[i] is DBNull)
+                  {
+                     _expr_filter += _dataLeftRowToRemove.Table.Columns[i].ColumnName + " is NULL and";
+                  }
+                  else
+                  {
+                      _expr_filter += _dataLeftRowToRemove.Table.Columns[i].ColumnName + " = '" +
                                   _dataLeftRowToRemove.ItemArray[i] + "' and ";
+                  }
                }
             }
          }
@@ -403,8 +427,15 @@ namespace FLEX.Web.UserControls.Ajax
 
          if (_dataRigthRowToRemove.ItemArray.Length == 1)
          {
-            _expr_filter += _dataRigthRowToRemove.Table.Columns[0].ColumnName + " = '" +
+            if (_dataRigthRowToRemove.ItemArray[0] is DBNull)
+            {
+               _expr_filter += _dataRigthRowToRemove.Table.Columns[0].ColumnName + " is NULL";
+            }
+            else
+            {
+                _expr_filter += _dataRigthRowToRemove.Table.Columns[0].ColumnName + " = '" +
                             _dataRigthRowToRemove.ItemArray[0] + "'";
+            }
          }
          else
          {
@@ -412,13 +443,27 @@ namespace FLEX.Web.UserControls.Ajax
             {
                if (i == _dataRigthRowToRemove.ItemArray.Length - 1)
                {
+                  if (_dataRigthRowToRemove.ItemArray[i] is DBNull)
+                  {
+                     _expr_filter += _dataRigthRowToRemove.Table.Columns[i].ColumnName + " is NULL";
+                  }
+                  else
+                  {
                   _expr_filter += _dataRigthRowToRemove.Table.Columns[i].ColumnName + " = '" +
                                   _dataRigthRowToRemove.ItemArray[i] + "'";
+                  }
                }
                else
                {
-                  _expr_filter += _dataRigthRowToRemove.Table.Columns[i].ColumnName + " = '" +
+                  if (_dataRigthRowToRemove.ItemArray[i] is DBNull)
+                  {
+                     _expr_filter += _dataRigthRowToRemove.Table.Columns[i].ColumnName + " is NULL and";
+                  }
+                  else
+                  {
+                     _expr_filter += _dataRigthRowToRemove.Table.Columns[i].ColumnName + " = '" +
                                   _dataRigthRowToRemove.ItemArray[i] + "' and ";
+                  }
                }
             }
          }
