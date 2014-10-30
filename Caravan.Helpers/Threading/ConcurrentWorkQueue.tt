@@ -1,0 +1,550 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Text" #>
+<#@ output extension=".cs" #>
+//
+// ConcurrentWorkQueue.cs
+//
+// Author:
+//       Alessio Parma <alessio.parma@gmail.com>
+//
+// The MIT License (MIT)
+//
+// Copyright (c) 2014-2016 Alessio Parma <alessio.parma@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Finsa.Caravan.Threading
+{
+	/// <summary>
+	///   A class whose goal is to help make thread safe those data structures which are not.<br/>
+	///   By using two simple methods (<see cref="EnqueueReadAction"/> or <see cref="EnqueueWriteAction"/>, for example),
+	///   you can make all read operations concurrent, while write ones are executed in a blocking fashion.<br/>
+	///   As a matter of fact, this class is just a wrapper placed upon a <see cref="ReaderWriterLockSlim"/>.
+	/// </summary>
+	public sealed class ConcurrentWorkQueue : IDisposable
+	{
+		readonly ReaderWriterLockSlim _workQueue = new ReaderWriterLockSlim();
+
+		ConcurrentWorkQueue()
+		{
+			// Nothing, for now.
+		}
+
+		/// <summary>
+		///   Creates an instance of the <see cref="ConcurrentWorkQueue"/> class.
+		/// </summary>
+		/// <returns>An instance of the <see cref="ConcurrentWorkQueue"/> class.</returns>
+		/// <remarks>Instance is not cached.</remarks>
+		public static ConcurrentWorkQueue Create()
+		{
+			return new ConcurrentWorkQueue();
+		}
+
+		#region Read Actions
+
+        /// <summary>
+		///   Enqueues a read operation. If there are no write operations in the queue,
+		///   it will be executed immediately, in parallel with other read operations.<br/>
+		///   Otherwise, this operation will be blocked, until the write operation has been processed.
+		/// </summary>
+		/// <param name="action">The read action that must be executed.</param>
+		public void EnqueueReadAction(Action action)
+		{
+			StartRead(action);
+			try
+			{
+				action();
+			}
+			finally
+			{
+				EndRead();
+			}
+		}
+
+<# for (var i = 1; i <= ActionOverloadCount; ++i) { #>		
+		/// <summary>
+		///   Enqueues a read operation. If there are no write operations in the queue,
+		///   it will be executed immediately, in parallel with other read operations.<br/>
+		///   Otherwise, this operation will be blocked, until the write operation has been processed.
+		/// </summary>
+		/// <param name="action">The read action that must be executed.</param>
+<#= ParamsDocCommentFor(i) #>
+		public void EnqueueReadAction<<#= GenericsFor(i) #>>(Action<<#= GenericsFor(i) #>> action, <#= ParamsAndTypesFor(i) #>)
+        {
+            StartRead(action);
+            try
+            {
+                action(<#= ParamsFor(i) #>);
+            }
+            finally
+            {
+                EndRead();
+            }
+        }
+<# } #>
+
+		#endregion
+
+		#region Async Read Actions
+
+        /// <summary>
+		///   Enqueues a read operation. If there are no write operations in the queue,
+		///   it will be executed immediately, in parallel with other read operations.<br/>
+		///   Otherwise, this operation will be blocked, until the write operation has been processed.
+		/// </summary>
+		/// <param name="action">The read action that must be executed.</param>
+		public Task EnqueueReadActionAsync(Action action)
+		{
+			return Task.Factory.StartNew(() => EnqueueReadAction(action));
+		}
+
+        /// <summary>
+		///   Enqueues a read operation. If there are no write operations in the queue,
+		///   it will be executed immediately, in parallel with other read operations.<br/>
+		///   Otherwise, this operation will be blocked, until the write operation has been processed.
+		/// </summary>
+		/// <param name="action">The read action that must be executed.</param>
+		/// <param name="cancToken">The cancellation token.</param>
+		public Task EnqueueReadActionAsync(Action action, CancellationToken cancToken)
+		{
+			return Task.Factory.StartNew(() => EnqueueReadAction(action), cancToken);
+		}
+
+<# for (var i = 1; i <= ActionOverloadCount; ++i) { #>
+		/// <summary>
+		///   Enqueues a read operation. If there are no write operations in the queue,
+		///   it will be executed immediately, in parallel with other read operations.<br/>
+		///   Otherwise, this operation will be blocked, until the write operation has been processed.
+		/// </summary>
+		/// <param name="action">The read action that must be executed.</param>
+<#= ParamsDocCommentFor(i) #>
+		public Task EnqueueReadActionAsync<<#= GenericsFor(i) #>>(Action<<#= GenericsFor(i) #>> action, <#= ParamsAndTypesFor(i) #>)
+        {
+            return Task.Factory.StartNew(() => EnqueueReadAction(action, <#= ParamsFor(i) #>));
+        }
+	
+		/// <summary>
+		///   Enqueues a read operation. If there are no write operations in the queue,
+		///   it will be executed immediately, in parallel with other read operations.<br/>
+		///   Otherwise, this operation will be blocked, until the write operation has been processed.
+		/// </summary>
+		/// <param name="action">The read action that must be executed.</param>
+<#= ParamsDocCommentFor(i) #>
+		/// <param name="cancToken">The cancellation token.</param>
+		public Task EnqueueReadActionAsync<<#= GenericsFor(i) #>>(Action<<#= GenericsFor(i) #>> action, <#= ParamsAndTypesFor(i) #>, CancellationToken cancToken)
+        {
+            return Task.Factory.StartNew(() => EnqueueReadAction(action, <#= ParamsFor(i) #>), cancToken);
+        }
+<# } #>
+
+		#endregion
+
+		#region Read Functions
+
+        /// <summary>
+		///   Enqueues a read operation. If there are no write operations in the queue,
+		///   it will be executed immediately, in parallel with other read operations.<br/>
+		///   Otherwise, this operation will be blocked, until the write operation has been processed.
+		/// </summary>
+		/// <param name="func">The read function that must be executed.</param>
+		public TRet EnqueueReadFunc<TRet>(Func<TRet> func)
+		{
+			StartRead(func);
+			try
+			{
+				return func();
+			}
+			finally
+			{
+				EndRead();
+			}
+		}
+
+<# for (var i = 1; i <= FuncOverloadCount; ++i) { #>		
+		/// <summary>
+		///   Enqueues a read operation. If there are no write operations in the queue,
+		///   it will be executed immediately, in parallel with other read operations.<br/>
+		///   Otherwise, this operation will be blocked, until the write operation has been processed.
+		/// </summary>
+		/// <param name="func">The read function that must be executed.</param>
+<#= ParamsDocCommentFor(i) #>
+		public TRet EnqueueReadFunc<<#= GenericsFor(i) #>, TRet>(Func<<#= GenericsFor(i) #>, TRet> func, <#= ParamsAndTypesFor(i) #>)
+        {
+            StartRead(func);
+            try
+            {
+                return func(<#= ParamsFor(i) #>);
+            }
+            finally
+            {
+                EndRead();
+            }
+        }
+<# } #>
+
+		#endregion
+
+		#region Async Read Functions
+
+        /// <summary>
+		///   Enqueues a read operation. If there are no write operations in the queue,
+		///   it will be executed immediately, in parallel with other read operations.<br/>
+		///   Otherwise, this operation will be blocked, until the write operation has been processed.
+		/// </summary>
+		/// <param name="func">The read function that must be executed.</param>
+		public Task<TRet> EnqueueReadFuncAsync<TRet>(Func<TRet> func)
+		{
+			return Task.Factory.StartNew(() => EnqueueReadFunc(func));
+		}
+
+        /// <summary>
+		///   Enqueues a read operation. If there are no write operations in the queue,
+		///   it will be executed immediately, in parallel with other read operations.<br/>
+		///   Otherwise, this operation will be blocked, until the write operation has been processed.
+		/// </summary>
+		/// <param name="func">The read function that must be executed.</param>
+		/// <param name="cancToken">The cancellation token.</param>
+		public Task<TRet> EnqueueReadFuncAsync<TRet>(Func<TRet> func, CancellationToken cancToken)
+		{
+			return Task.Factory.StartNew(() => EnqueueReadFunc(func), cancToken);
+		}
+
+<# for (var i = 1; i <= FuncOverloadCount; ++i) { #>		
+		/// <summary>
+		///   Enqueues a read operation. If there are no write operations in the queue,
+		///   it will be executed immediately, in parallel with other read operations.<br/>
+		///   Otherwise, this operation will be blocked, until the write operation has been processed.
+		/// </summary>
+		/// <param name="func">The read function that must be executed.</param>
+<#= ParamsDocCommentFor(i) #>
+		public Task<TRet> EnqueueReadFuncAsync<<#= GenericsFor(i) #>, TRet>(Func<<#= GenericsFor(i) #>, TRet> func, <#= ParamsAndTypesFor(i) #>)
+        {
+            return Task.Factory.StartNew(() => EnqueueReadFunc(func, <#= ParamsFor(i) #>));
+        }
+				
+		/// <summary>
+		///   Enqueues a read operation. If there are no write operations in the queue,
+		///   it will be executed immediately, in parallel with other read operations.<br/>
+		///   Otherwise, this operation will be blocked, until the write operation has been processed.
+		/// </summary>
+		/// <param name="func">The read function that must be executed.</param>
+<#= ParamsDocCommentFor(i) #>
+		/// <param name="cancToken">The cancellation token.</param>
+		public Task<TRet> EnqueueReadFuncAsync<<#= GenericsFor(i) #>, TRet>(Func<<#= GenericsFor(i) #>, TRet> func, <#= ParamsAndTypesFor(i) #>, CancellationToken cancToken)
+        {
+            return Task.Factory.StartNew(() => EnqueueReadFunc(func, <#= ParamsFor(i) #>), cancToken);
+        }
+<# } #>
+
+		#endregion
+
+		#region Write Actions
+
+        /// <summary>
+		///   Enqueues a write operation. Write operations are never executed in parallel,
+		///   both with other write operations and with other read operations.
+		/// </summary>
+		/// <param name="action">The write action that must be executed.</param>
+		public void EnqueueWriteAction(Action action)
+		{
+			StartWrite(action);
+			try
+			{
+				action();
+			}
+			finally
+			{
+				EndWrite();
+			}
+        }
+
+<# for (var i = 1; i <= ActionOverloadCount; ++i) { #>	
+		/// <summary>
+		///   Enqueues a write operation. Write operations are never executed in parallel,
+		///   both with other write operations and with other read operations.
+		/// </summary>
+		/// <param name="action">The write action that must be executed.</param>
+<#= ParamsDocCommentFor(i) #>
+		public void EnqueueWriteAction<<#= GenericsFor(i) #>>(Action<<#= GenericsFor(i) #>> action, <#= ParamsAndTypesFor(i) #>)
+        {
+            StartWrite(action);
+            try
+            {
+                action(<#= ParamsFor(i) #>);
+            }
+            finally
+            {
+                EndWrite();
+            }
+        }
+<# } #>
+
+		#endregion
+
+		#region Async Write Actions
+
+        /// <summary>
+		///   Enqueues a write operation. Write operations are never executed in parallel,
+		///   both with other write operations and with other read operations.
+		/// </summary>
+		/// <param name="action">The write action that must be executed.</param>
+		public Task EnqueueWriteActionAsync(Action action)
+		{
+			return Task.Factory.StartNew(() => EnqueueWriteAction(action));
+		}
+
+        /// <summary>
+		///   Enqueues a write operation. Write operations are never executed in parallel,
+		///   both with other write operations and with other read operations.
+		/// </summary>
+		/// <param name="action">The write action that must be executed.</param>
+		/// <param name="cancToken">The cancellation token.</param>
+		public Task EnqueueWriteActionAsync(Action action, CancellationToken cancToken)
+		{
+			return Task.Factory.StartNew(() => EnqueueWriteAction(action), cancToken);
+		}
+
+<# for (var i = 1; i <= ActionOverloadCount; ++i) { #>
+		/// <summary>
+		///   Enqueues a write operation. Write operations are never executed in parallel,
+		///   both with other write operations and with other read operations.
+		/// </summary>
+		/// <param name="action">The write action that must be executed.</param>
+<#= ParamsDocCommentFor(i) #>
+		public Task EnqueueWriteActionAsync<<#= GenericsFor(i) #>>(Action<<#= GenericsFor(i) #>> action, <#= ParamsAndTypesFor(i) #>)
+        {
+            return Task.Factory.StartNew(() => EnqueueWriteAction(action, <#= ParamsFor(i) #>));
+        }
+	
+		/// <summary>
+		///   Enqueues a write operation. Write operations are never executed in parallel,
+		///   both with other write operations and with other read operations.
+		/// </summary>
+		/// <param name="action">The write action that must be executed.</param>
+<#= ParamsDocCommentFor(i) #>
+		/// <param name="cancToken">The cancellation token.</param>
+		public Task EnqueueWriteActionAsync<<#= GenericsFor(i) #>>(Action<<#= GenericsFor(i) #>> action, <#= ParamsAndTypesFor(i) #>, CancellationToken cancToken)
+        {
+            return Task.Factory.StartNew(() => EnqueueWriteAction(action, <#= ParamsFor(i) #>), cancToken);
+        }
+<# } #>
+
+		#endregion
+
+		#region Write Functions
+
+        /// <summary>
+		///   Enqueues a write operation. Write operations are never executed in parallel,
+		///   both with other write operations and with other read operations.
+		/// </summary>
+		/// <param name="func">The write function that must be executed.</param>
+		public TRet EnqueueWriteFunc<TRet>(Func<TRet> func)
+		{
+			StartWrite(func);
+			try
+			{
+				return func();
+			}
+			finally
+			{
+				EndWrite();
+			}
+        }
+
+<# for (var i = 1; i <= FuncOverloadCount; ++i) { #>	
+		/// <summary>
+		///   Enqueues a write operation. Write operations are never executed in parallel,
+		///   both with other write operations and with other read operations.
+		/// </summary>
+		/// <param name="func">The write function that must be executed.</param>
+<#= ParamsDocCommentFor(i) #>
+		public TRet EnqueueWriteFunc<<#= GenericsFor(i) #>, TRet>(Func<<#= GenericsFor(i) #>, TRet> func, <#= ParamsAndTypesFor(i) #>)
+        {
+            StartWrite(func);
+            try
+            {
+                return func(<#= ParamsFor(i) #>);
+            }
+            finally
+            {
+                EndWrite();
+            }
+        }
+<# } #>
+
+		#endregion
+
+		#region Async Write Functions
+
+        /// <summary>
+		///   Enqueues a write operation. Write operations are never executed in parallel,
+		///   both with other write operations and with other read operations.
+		/// </summary>
+		/// <param name="func">The write function that must be executed.</param>
+		public Task<TRet> EnqueueWriteFuncAsync<TRet>(Func<TRet> func)
+		{
+			return Task.Factory.StartNew(() => EnqueueWriteFunc(func));
+		}
+
+        /// <summary>
+		///   Enqueues a write operation. Write operations are never executed in parallel,
+		///   both with other write operations and with other read operations.
+		/// </summary>
+		/// <param name="func">The write function that must be executed.</param>
+		/// <param name="cancToken">The cancellation token.</param>
+		public Task<TRet> EnqueueWriteFuncAsync<TRet>(Func<TRet> func, CancellationToken cancToken)
+		{
+			return Task.Factory.StartNew(() => EnqueueWriteFunc(func), cancToken);
+		}
+
+<# for (var i = 1; i <= FuncOverloadCount; ++i) { #>		
+		/// <summary>
+		///   Enqueues a write operation. Write operations are never executed in parallel,
+		///   both with other write operations and with other read operations.
+		/// </summary>
+		/// <param name="func">The write function that must be executed.</param>
+<#= ParamsDocCommentFor(i) #>
+		public Task<TRet> EnqueueWriteFuncAsync<<#= GenericsFor(i) #>, TRet>(Func<<#= GenericsFor(i) #>, TRet> func, <#= ParamsAndTypesFor(i) #>)
+        {
+            return Task.Factory.StartNew(() => EnqueueWriteFunc(func, <#= ParamsFor(i) #>));
+        }
+				
+		/// <summary>
+		///   Enqueues a write operation. Write operations are never executed in parallel,
+		///   both with other write operations and with other read operations.
+		/// </summary>
+		/// <param name="func">The write function that must be executed.</param>
+<#= ParamsDocCommentFor(i) #>
+		/// <param name="cancToken">The cancellation token.</param>
+		public Task<TRet> EnqueueWriteFuncAsync<<#= GenericsFor(i) #>, TRet>(Func<<#= GenericsFor(i) #>, TRet> func, <#= ParamsAndTypesFor(i) #>, CancellationToken cancToken)
+        {
+            return Task.Factory.StartNew(() => EnqueueWriteFunc(func, <#= ParamsFor(i) #>), cancToken);
+        }
+<# } #>
+
+		#endregion
+
+		#region IDisposable Members
+
+        /// <summary>
+		///   Disposes the underlying instance of <see cref="ReaderWriterLockSlim"/>.
+		/// </summary>
+		public void Dispose()
+		{
+		    if (_workQueue != null)
+		    {
+                _workQueue.Dispose();		        
+		    }
+			GC.SuppressFinalize(this);
+		}
+
+		#endregion
+
+        #region Private Members
+
+	    private void StartRead<TAction>(TAction action) where TAction : class
+	    {
+            if (ReferenceEquals(action, null))
+            {
+                throw new ArgumentNullException(ErrorMessages.Threading_ConcurrentWorkQueue_NullAction);
+            }
+            _workQueue.EnterReadLock();
+	    }
+
+	    private void EndRead()
+	    {
+            _workQueue.ExitReadLock();
+	    }
+
+	    private void StartWrite<TAction>(TAction action) where TAction : class
+	    {
+            if (ReferenceEquals(action, null))
+            {
+                throw new ArgumentNullException(ErrorMessages.Threading_ConcurrentWorkQueue_NullAction);
+            }
+            _workQueue.EnterWriteLock();
+	    }
+
+	    private void EndWrite()
+	    {
+            _workQueue.ExitWriteLock();
+	    }
+
+        #endregion
+    }
+}
+<#+ // Functions used throughout the template
+
+const byte ActionOverloadCount = 16;
+const byte FuncOverloadCount = 16;
+
+static string GenericsFor(int c)
+{
+	Debug.Assert(c >= 1);
+	var builder = new StringBuilder("T1");
+	for (var i = 2; i <= c; ++i)
+	{
+		builder.AppendFormat(", T{0}", i);
+	}
+	return builder.ToString();
+}
+
+static string ParamsFor(int c)
+{
+	Debug.Assert(c >= 1);
+	var builder = new StringBuilder("a1");
+	for (var i = 2; i <= c; ++i)
+	{
+		builder.AppendFormat(", a{0}", i);
+	}
+	return builder.ToString();
+}
+
+static string ParamsAndTypesFor(int c)
+{
+	Debug.Assert(c >= 1);
+	var builder = new StringBuilder("T1 a1");
+	for (var i = 2; i <= c; ++i)
+	{
+		builder.AppendFormat(", T{0} a{0}", i);
+	}
+	return builder.ToString();
+}
+
+static string ParamsDocCommentFor(int c)
+{
+	const string template = @"        /// <param name=""a{0}"">Parameter {0}.</param>";
+	var builder = new StringBuilder();
+	for (var i = 1; i <= c; ++i)
+	{
+		var line = String.Format(template, i);
+		if (i == c) builder.Append(line);
+		else builder.AppendLine(line);
+	}
+	return builder.ToString();
+}
+
+#>
