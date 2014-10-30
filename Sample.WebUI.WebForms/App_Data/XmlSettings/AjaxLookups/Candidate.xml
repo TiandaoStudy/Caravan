@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<AjaxLookupData xmlns="FLEX.Web.XmlSettings.AjaxLookup">
+  <LookupBy>
+    <SuggestionField>Cand_Email</SuggestionField>
+    <KeyField>Cand_Email</KeyField>
+    <DescriptionField>Cand_NameSurname</DescriptionField>
+    <SortField>Cand_Email</SortField>
+    <LookupQuery>
+      select Cand_Id, (Cand_Name + ' ' + Cand_Surname) as Cand_NameSurname, Cand_Email
+      from Candidate
+      where Cand_Email like '%{:UserQuery:}%'
+    </LookupQuery>
+  </LookupBy>
+  <LookupBy>
+    <SuggestionField>Cand_NameSurname</SuggestionField>
+    <KeyField>Cand_Email</KeyField>
+    <DescriptionField>Cand_Email</DescriptionField>
+    <SortField>Cand_NameSurname</SortField>
+    <LookupQuery>
+      select Cand_Id, (Cand_Name + ' ' + Cand_Surname) as Cand_NameSurname, Cand_Email
+      from Candidate
+      where (Cand_Name + ' ' + Cand_Surname) like '%{:UserQuery:}%'
+    </LookupQuery>
+  </LookupBy>
+</AjaxLookupData>
