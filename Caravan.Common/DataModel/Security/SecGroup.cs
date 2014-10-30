@@ -26,7 +26,10 @@ namespace Finsa.Caravan.DataModel.Security
       public bool IsAdmin { get; set; }
       
       [JsonProperty(Order = 4)]
-      public virtual ICollection<SecUser> Users { get; set; } 
+      public virtual ICollection<SecUser> Users { get; set; }
+
+      [JsonIgnore]
+      public virtual ICollection<SecEntry> SecEntries { get; set; }
    }
 
    [Serializable]

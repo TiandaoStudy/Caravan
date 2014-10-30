@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Web;
+using Antlr.Runtime.Misc;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataModel.Rest;
 using Finsa.Caravan.DataModel.Security;
@@ -53,16 +55,17 @@ namespace Finsa.Caravan.RestService
           * Entries
           */
 
-         Get["/{appName}/entries"] = p =>
+         Post["/{appName}/entries/{contextName}"] = p =>
          {
             StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
-            return null;
+            var entries = Db.Security.Entries((string) p.appName, (string) p.contextName);
+            return RestResponse.Success(new SecEntryList {Entries = entries});
          };
 
          /*
           * Groups
           */
-         
+
          Get["/{appName}/groups"] = p =>
          {
             StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);

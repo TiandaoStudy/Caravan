@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Finsa.Caravan.DataModel.Security
@@ -29,5 +30,8 @@ namespace Finsa.Caravan.DataModel.Security
       
       [JsonProperty(Order = 3)]
       public string Type { get; set; }
+
+      [JsonIgnore]
+      public virtual ICollection<SecEntry> SecEntries { get; set; }
    }
 }

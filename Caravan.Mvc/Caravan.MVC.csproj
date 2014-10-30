@@ -493,9 +493,6 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <None Include=".bin\bower.cmd" />
-    <None Include=".bin\git.cmd" />
-    <None Include=".bin\node.cmd" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <Content Include="Styles\bootstrap-reference.less" />
     <Content Include="Styles\bootstrap.less" />

@@ -35,7 +35,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override void DoAddGroup(string appName, SecGroup group)
       {
-         throw new System.NotImplementedException();
+         throw new NotImplementedException();
       }
 
       protected override void DoRemoveGroup(string appName, string groupName)
@@ -97,9 +97,20 @@ namespace Finsa.Caravan.DataAccess.Sql
          throw new NotImplementedException();
       }
 
-      protected override IEnumerable<SecObject> GetEntries(string appName, string userLogin, string[] groupNames, string contextName, string objectType)
+      protected override IList<SecEntry> GetEntries(string appName, string contextName, string objectType, string userLogin, string[] groupNames)
       {
-         throw new NotImplementedException();
+         using (var ctx = Db.CreateContext())
+         {
+            var noGroups = groupNames.Length == 0;
+            return (from e in ctx.SecEntries.Include(e => e.App).Include(e => e.Context).Include(e => e.Object).Include(e => e.User).Include(e => e.User)
+                    where appName == null || e.App.Name == appName
+                    where contextName == null || e.Context.Name == contextName
+                    where objectType == null || e.Object.Type == objectType
+                    where userLogin == null || e.User.Login == userLogin
+                    where noGroups || groupNames.Contains(e.Group.Name)
+                    orderby e.Object.Name
+                    select e).ToList();
+         }
       }
    }
 }

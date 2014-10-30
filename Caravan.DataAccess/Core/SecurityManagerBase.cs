@@ -8,6 +8,8 @@ namespace Finsa.Caravan.DataAccess.Core
 {
    public abstract class SecurityManagerBase : ISecurityManager
    {
+      private static readonly string[] EmptyStringArray = new string[0];
+
       #region Apps
 
       public IEnumerable<SecApp> Apps()
@@ -118,23 +120,29 @@ namespace Finsa.Caravan.DataAccess.Core
 
       #region Entries
 
-      public IEnumerable<SecObject> Entries(string appName, string userLogin, string[] groupNames, string contextName)
+      public IList<SecEntry> Entries(string appName, string contextName)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(userLogin);
-         Raise<ArgumentException>.IfIsEmpty(groupNames as ICollection<string>);
          Raise<ArgumentException>.IfIsEmpty(contextName);
-         return GetEntries(appName, userLogin, groupNames, contextName, null);
+         return GetEntries(appName.ToLower(), contextName.ToLower(), null, null, EmptyStringArray);
       }
 
-      public IEnumerable<SecObject> Entries(string appName, string userLogin, string[] groupNames, string contextName, string objectType)
+      public IList<SecEntry> Entries(string appName, string contextName, string objectType)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(userLogin);
-         Raise<ArgumentException>.IfIsEmpty(groupNames as ICollection<string>);
          Raise<ArgumentException>.IfIsEmpty(contextName);
          Raise<ArgumentException>.IfIsEmpty(objectType);
-         return GetEntries(appName, userLogin, groupNames, contextName, objectType);
+         return GetEntries(appName.ToLower(), contextName.ToLower(), objectType.ToLower(), null, EmptyStringArray);
+      }
+
+      public IList<SecEntry> Entries(string appName, string contextName, string objectType, string userLogin, string[] groupNames)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfIsEmpty(contextName);
+         Raise<ArgumentException>.IfIsEmpty(objectType);
+         Raise<ArgumentException>.IfIsEmpty(userLogin);
+         Raise<ArgumentException>.IfIsEmpty(groupNames as ICollection<string>);
+         return GetEntries(appName.ToLower(), contextName.ToLower(), objectType.ToLower(), userLogin.ToLower(), groupNames.Select(g => g.ToLower()).ToArray());
       }
 
       #endregion
@@ -157,7 +165,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
       protected abstract IEnumerable<SecObject> GetObjects(string appName, string contextName);
 
-      protected abstract IEnumerable<SecObject> GetEntries(string appName, string userLogin, string[] groupNames, string contextName, string objectType);
+      protected abstract IList<SecEntry> GetEntries(string appName, string contextName, string objectType, string userLogin, string[] groupNames);
 
       #endregion
    }

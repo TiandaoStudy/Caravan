@@ -55,9 +55,11 @@ namespace Finsa.Caravan.DataAccess
 
       #region Entries
 
-      IEnumerable<SecObject> Entries(string appName, string userLogin, string[] groupNames, string contextName);
+      IList<SecEntry> Entries(string appName, string contextName);
 
-      IEnumerable<SecObject> Entries(string appName, string userLogin, string[] groupNames, string contextName, string objectType);
+      IList<SecEntry> Entries(string appName, string contextName, string objectType);
+
+      IList<SecEntry> Entries(string appName, string contextName, string objectType, string userLogin, string[] groupNames);
 
       #endregion
    }

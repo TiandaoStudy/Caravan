@@ -36,5 +36,8 @@ namespace Finsa.Caravan.DataModel.Security
       
       [JsonProperty(Order = 7)]
       public virtual ICollection<SecGroup> Groups { get; set; }
+
+      [JsonIgnore]
+      public virtual ICollection<SecEntry> SecEntries { get; set; }
    }
 }

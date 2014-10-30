@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Finsa.Caravan.DataModel.Security
 {
@@ -26,5 +27,17 @@ namespace Finsa.Caravan.DataModel.Security
       public long ObjectId { get; set; }
 
       public SecObject Object { get; set; }
+   }
+
+   [Serializable]
+   public class SecEntrySingle
+   {
+      public SecEntry Entry { get; set; } 
+   }
+
+   [Serializable]
+   public class SecEntryList
+   {
+      public IEnumerable<SecEntry> Entries { get; set; } 
    }
 }

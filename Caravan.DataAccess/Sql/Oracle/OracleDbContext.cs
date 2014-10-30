@@ -132,23 +132,41 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
             .HasKey(x => new {x.Id, x.AppId});
 
          mb.Entity<SecEntry>().Property(x => x.Id).HasColumnName("CSEC_ID");
-         mb.Entity<SecEntry>().Property(x => x.ContextId).HasColumnName("CCTX_ID");
          mb.Entity<SecEntry>().Property(x => x.AppId).HasColumnName("CAPP_ID");
          mb.Entity<SecEntry>().Property(x => x.UserId).HasColumnName("CUSR_ID");
          mb.Entity<SecEntry>().Property(x => x.GroupId).HasColumnName("CGRP_ID");
+         mb.Entity<SecEntry>().Property(x => x.ContextId).HasColumnName("CCTX_ID");
          mb.Entity<SecEntry>().Property(x => x.ObjectId).HasColumnName("COBJ_ID");
-
-         // SecEntry(N) <-> SecContext(1)
-         mb.Entity<SecEntry>()
-            .HasRequired<SecContext>(x => x.Context)
-            .WithMany(x => x.Entries)
-            .HasForeignKey(x => new {x.ContextId, x.AppId});
          
          // SecEntry(N) <-> SecApp(1)
          mb.Entity<SecEntry>()
             .HasRequired<SecApp>(x => x.App)
             .WithMany(x => x.SecEntries)
             .HasForeignKey(x => x.AppId);
+
+         // SecEntry(N) <-> SecUser(1)
+         mb.Entity<SecEntry>()
+            .HasOptional<SecUser>(x => x.User)
+            .WithMany(x => x.SecEntries)
+            .HasForeignKey(x => new {x.UserId, x.AppId});
+
+         // SecEntry(N) <-> SecGroup(1)
+         mb.Entity<SecEntry>()
+            .HasOptional<SecGroup>(x => x.Group)
+            .WithMany(x => x.SecEntries)
+            .HasForeignKey(x => new {x.GroupId, x.AppId});
+
+         // SecEntry(N) <-> SecContext(1)
+         mb.Entity<SecEntry>()
+            .HasRequired<SecContext>(x => x.Context)
+            .WithMany(x => x.SecEntries)
+            .HasForeignKey(x => new {x.ContextId, x.AppId});
+
+         // SecEntry(N) <-> SecObject(1)
+         mb.Entity<SecEntry>()
+            .HasRequired<SecObject>(x => x.Object)
+            .WithMany(x => x.SecEntries)
+            .HasForeignKey(x => new {x.ObjectId, x.ContextId, x.AppId});
 
          /************************************************
           * LogSettings

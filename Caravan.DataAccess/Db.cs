@@ -84,7 +84,9 @@ namespace Finsa.Caravan.DataAccess
 
       internal static DbContextBase CreateContext()
       {
-         return DbContextGenerator();
+         var ctx = DbContextGenerator();
+         ctx.Configuration.ProxyCreationEnabled = false;
+         return ctx;
       }
 
       #region Context Generators
