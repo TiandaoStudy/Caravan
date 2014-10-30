@@ -34,4 +34,16 @@ namespace Finsa.Caravan.DataModel.Security
       [JsonIgnore]
       public virtual ICollection<SecEntry> SecEntries { get; set; }
    }
+
+   [Serializable]
+   public class SecObjectSingle
+   {
+      public SecObject Object { get; set; } 
+   }
+
+   [Serializable]
+   public class SecObjectList
+   {
+      public IEnumerable<SecObject> Objects { get; set; } 
+   }
 }

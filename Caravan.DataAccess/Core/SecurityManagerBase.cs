@@ -6,7 +6,7 @@ using Finsa.Caravan.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
-   public abstract class SecurityManagerBase : ISecurityManager
+   public abstract class SecurityManagerBase<TSec> : ISecurityManager where TSec : SecurityManagerBase<TSec>
    {
       private static readonly string[] EmptyStringArray = new string[0];
 
@@ -145,6 +145,40 @@ namespace Finsa.Caravan.DataAccess.Core
          return GetEntries(appName.ToLower(), contextName.ToLower(), objectType.ToLower(), userLogin.ToLower(), groupNames.Select(g => g.ToLower()).ToArray());
       }
 
+      public void AddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfIsNull(secContext);
+         Raise<ArgumentException>.IfIsEmpty(secContext.Name);
+         Raise<ArgumentException>.IfIsNull(secObject);
+         Raise<ArgumentException>.IfIsEmpty(secObject.Name);
+         Raise<ArgumentException>.If(String.IsNullOrWhiteSpace(userLogin) && String.IsNullOrWhiteSpace(groupName));
+
+         const string logShort = "Security entry for object '{0}' in context '{1}' has been added for '{2}'";
+         const string logCtx = "Adding a new security entry";
+
+         try
+         {
+            secContext.Name = secContext.Name.ToLower();
+            secObject.Name = secObject.Name.ToLower();
+            if (userLogin != null)
+            {
+               userLogin = userLogin.ToLower();
+            }
+            if (groupName != null)
+            {
+               groupName = groupName.ToLower();
+            }
+            DoAddEntry(appName.ToLower(), secContext, secObject, userLogin, groupName);
+            Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, secObject.Name, secContext.Name, userLogin ?? groupName), context: logCtx);
+         }
+         catch (Exception ex)
+         {
+            Db.Logger.LogWarnAsync<TSec>(ex, logCtx);
+            throw;
+         }
+      }
+
       #endregion
 
       #region Abstract Methods
@@ -166,6 +200,8 @@ namespace Finsa.Caravan.DataAccess.Core
       protected abstract IEnumerable<SecObject> GetObjects(string appName, string contextName);
 
       protected abstract IList<SecEntry> GetEntries(string appName, string contextName, string objectType, string userLogin, string[] groupNames);
+
+      protected abstract void DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName);
 
       #endregion
    }

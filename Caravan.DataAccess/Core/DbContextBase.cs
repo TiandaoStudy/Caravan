@@ -17,6 +17,7 @@ namespace Finsa.Caravan.DataAccess.Core
       public DbSet<SecContext> SecContexts { get; set; }
       public DbSet<SecEntry> SecEntries { get; set; }
       public DbSet<SecGroup> SecGroups { get; set; }
+      public DbSet<SecObject> SecObjects { get; set; }
       public DbSet<SecUser> SecUsers { get; set; }
    }
 }
