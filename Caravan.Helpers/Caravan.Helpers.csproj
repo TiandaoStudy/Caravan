@@ -199,7 +199,9 @@
   </Target>
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetDir)Finsa.Caravan.Helpers.* "$(SolutionDir)NuGetPackager.Helpers\lib\net40"</PostBuildEvent>
+    <PostBuildEvent>IF EXIST $(SolutionDir)NuGetPackager.Helpers (
+    copy $(TargetDir)Finsa.Caravan.Helpers.* "$(SolutionDir)NuGetPackager.Helpers\lib\net40"
+)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

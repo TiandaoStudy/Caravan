@@ -34,7 +34,9 @@
     <DocumentationFile>bin\Release\Finsa.Caravan.DataAccess.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetDir)Finsa.Caravan.DataAccess.* "$(SolutionDir)NuGetPackager.DataAccess/lib/net40"</PostBuildEvent>
+    <PostBuildEvent>IF EXIST $(SolutionDir)NuGetPackager.DataAccess (
+    copy $(TargetDir)Finsa.Caravan.DataAccess.* "$(SolutionDir)NuGetPackager.DataAccess/lib/net40"
+)</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime">

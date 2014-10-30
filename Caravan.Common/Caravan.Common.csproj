@@ -111,7 +111,9 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetDir)Finsa.Caravan.Common.* "$(SolutionDir)NuGetPackager.Common/lib/net40"</PostBuildEvent>
+    <PostBuildEvent>IF EXIST $(SolutionDir)NuGetPackager.Common (
+    copy $(TargetDir)Finsa.Caravan.Common.* "$(SolutionDir)NuGetPackager.Common/lib/net40"
+)</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

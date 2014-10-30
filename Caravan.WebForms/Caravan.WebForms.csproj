@@ -994,67 +994,47 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>:: FONTS - Package
-copy $(ProjectDir)\FLEX\Fonts\*.* $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Fonts
-:: FONTS - Test Web UI
-copy $(ProjectDir)\FLEX\Fonts\*.* $(SolutionDir)Sample.WebUI.WebForms\FLEX\Fonts
+    <PostBuildEvent>IF EXIST $(SolutionDir)NuGetPackager.WebForms (
+    :: FONTS
+    del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Fonts
+    copy $(ProjectDir)\FLEX\Fonts\*.* $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Fonts
+    
+    :: IMAGES
+    del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Images
+    copy $(ProjectDir)\FLEX\Images\*.* $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Images
+    copy $(ProjectDir)\FLEX\Images\JQueryUI\*.* $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Images\JQueryUI
+    
+    :: MASTER PAGES
+    del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\MasterPages
+    copy $(ProjectDir)\FLEX\MasterPages\*.Master $(SolutionDir)NuGetPackager.WebForms\content\FLEX\MasterPages
+        
+    :: PAGES
+    del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Pages
+    copy $(ProjectDir)\FLEX\Pages\*.aspx $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Pages
+    copy $(ProjectDir)\FLEX\Pages\Templates\*.aspx $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Pages\Templates
+     
+    :: SERVICES
+    del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Services
+    copy $(ProjectDir)\FLEX\Services\*.asmx $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Services
+    
+    :: SCRIPTS
+    del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Scripts
+    copy $(ProjectDir)\FLEX\Scripts\*.js $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Scripts
+    copy $(ProjectDir)\FLEX\Scripts\*.map $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Scripts
 
-:: IMAGES - Package
-del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Images
-copy $(ProjectDir)\FLEX\Images\*.* $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Images
-copy $(ProjectDir)\FLEX\Images\JQueryUI\*.* $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Images\JQueryUI
-:: IMAGES - Test Web UI
-del $(SolutionDir)Sample.WebUI.WebForms\FLEX\Images
-copy $(ProjectDir)\FLEX\Images\*.* $(SolutionDir)Sample.WebUI.WebForms\FLEX\Images
-copy $(ProjectDir)\FLEX\Images\JQueryUI\*.* $(SolutionDir)Sample.WebUI.WebForms\FLEX\Images\JQueryUI
-
-:: MASTER PAGES - Package
-copy $(ProjectDir)\FLEX\MasterPages\*.Master $(SolutionDir)NuGetPackager.WebForms\content\FLEX\MasterPages
-:: MASTER PAGES - Test Web UI
-copy $(ProjectDir)\FLEX\MasterPages\*.Master $(SolutionDir)Sample.WebUI.WebForms\FLEX\MasterPages
-
-:: PAGES - Package
-copy $(ProjectDir)\FLEX\Pages\*.aspx $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Pages
-copy $(ProjectDir)\FLEX\Pages\Templates\*.aspx $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Pages\Templates
-:: PAGES - Test Web UI
-copy $(ProjectDir)\FLEX\Pages\*.aspx $(SolutionDir)Sample.WebUI.WebForms\FLEX\Pages
-copy $(ProjectDir)\FLEX\Pages\Templates\*.aspx $(SolutionDir)Sample.WebUI.WebForms\FLEX\Pages\Templates
-
-:: SERVICES - Package
-copy $(ProjectDir)\FLEX\Services\*.asmx $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Services
-:: SERVICES - Test Web UI
-copy $(ProjectDir)\FLEX\Services\*.asmx $(SolutionDir)Sample.WebUI.WebForms\FLEX\Services
-
-:: SCRIPTS - NuGet Packager
-copy $(ProjectDir)\FLEX\Scripts\*.js $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Scripts
-copy $(ProjectDir)\FLEX\Scripts\*.map $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Scripts
-:: SCRIPTS - Sample Web UI
-copy $(ProjectDir)\FLEX\Scripts\*.js $(SolutionDir)Sample.WebUI.WebForms\FLEX\Scripts
-copy $(ProjectDir)\FLEX\Scripts\*.map $(SolutionDir)Sample.WebUI.WebForms\FLEX\Scripts
-
-:: STYLES - Package
-copy $(ProjectDir)\FLEX\Styles\*.css $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Styles\*.css
-:: STYLES - Test Web UI
-copy $(ProjectDir)\FLEX\Styles\*.css $(SolutionDir)Sample.WebUI.WebForms\FLEX\Styles\*.css
-
-:: USER CONTROLS - Package
-copy $(ProjectDir)\FLEX\UserControls\*.ascx $(SolutionDir)NuGetPackager.WebForms\content\FLEX\UserControls
-copy $(ProjectDir)\FLEX\UserControls\Ajax\*.ascx $(SolutionDir)NuGetPackager.WebForms\content\FLEX\UserControls\Ajax
-:: USER CONTROLS - Test Web UI
-copy $(ProjectDir)\FLEX\UserControls\*.ascx $(SolutionDir)Sample.WebUI.WebForms\FLEX\UserControls
-copy $(ProjectDir)\FLEX\UserControls\Ajax\*.ascx $(SolutionDir)Sample.WebUI.WebForms\FLEX\UserControls\Ajax
-
-:: XML SETTINGS - Package
-copy $(ProjectDir)\FLEX\XmlSettings\*.xsd $(SolutionDir)NuGetPackager.WebForms\content\FLEX\XmlSettings
-copy $(ProjectDir)\FLEX\XmlSettings\AjaxLookups\*.xsd $(SolutionDir)NuGetPackager.WebForms\content\FLEX\XmlSettings\AjaxLookups
-copy $(ProjectDir)\FLEX\XmlSettings\Lookups\*.xsd $(SolutionDir)NuGetPackager.WebForms\content\FLEX\XmlSettings\Lookups
-:: XML SETTINGS - Test Web UI
-copy $(ProjectDir)\FLEX\XmlSettings\*.xsd $(SolutionDir)Sample.WebUI.WebForms\FLEX\XmlSettings
-copy $(ProjectDir)\FLEX\XmlSettings\AjaxLookups\*.xsd $(SolutionDir)Sample.WebUI.WebForms\FLEX\XmlSettings\AjaxLookups
-copy $(ProjectDir)\FLEX\XmlSettings\Lookups\*.xsd $(SolutionDir)Sample.WebUI.WebForms\FLEX\XmlSettings\Lookups
-
-copy $(TargetDir)FLEX.WebForms.* "$(SolutionDir)NuGetPackager.WebForms/lib/net40"
-</PostBuildEvent>
+    :: STYLES
+    del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Styles
+    copy $(ProjectDir)\FLEX\Styles\*.css $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Styles\*.css
+    
+    :: USER CONTROLS
+    del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\UserControls
+    copy $(ProjectDir)\FLEX\UserControls\*.ascx $(SolutionDir)NuGetPackager.WebForms\content\FLEX\UserControls
+    copy $(ProjectDir)\FLEX\UserControls\Ajax\*.ascx $(SolutionDir)NuGetPackager.WebForms\content\FLEX\UserControls\Ajax
+    
+    :: DLL
+    del $(SolutionDir)NuGetPackager.WebForms\lib\net40
+    copy $(TargetDir)FLEX.WebForms.* "$(SolutionDir)NuGetPackager.WebForms/lib/net40"
+)</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
