@@ -12,7 +12,7 @@ namespace FLEX.Sample.WebUI
          //var connectionStringFmt = ConfigurationManager.ConnectionStrings["Northwind"].ConnectionString;
          //var northwindPath = HttpContext.Current.Server.MapPath("~/bin/Northwind.sdf");
          //GlobalHelper.Application_Start(sender, args, String.Format(connectionStringFmt, northwindPath));
-         GlobalHelper.Application_Start(sender, args, ConfigurationManager.ConnectionStrings["USERBASE"].ConnectionString);
+         GlobalHelper.Application_Start(sender, args, ConfigurationManager.ConnectionStrings["ASCESI"].ConnectionString);
       }
 
       protected void Session_Start(object sender, EventArgs e)
