@@ -22,25 +22,8 @@ namespace FLEX.Web.Pages
          if (!Page.IsPostBack)
          { 
             InitControls();
-            // Legge il file XML
-            docXML.Load(Server.MapPath(WebForms.Configuration.Instance.MenuBarXmlPath));
+           
 
-            TreeView1.Nodes.Clear();
-            TreeView1.Nodes.Add(new TreeNode(docXML.DocumentElement.Name));
-            TreeNode tNode = new TreeNode();
-            tNode = TreeView1.Nodes[0];
-
-            AddNode(docXML.DocumentElement, tNode);
-            var _listChildNodes = TreeView1.Nodes[0].ChildNodes;
-            TreeView1.Nodes.Clear();
-            for (int i = 0; i < _listChildNodes.Count; i++)
-            {
-               TreeView1.Nodes.Add(_listChildNodes[i]);
-            }
-            
-            TreeView1.ExpandAll();
-
-            //Db.Security.Users(Finsa.Caravan.Common.Configuration.Instance.ApplicationName);
          }
       }
 
@@ -49,14 +32,11 @@ namespace FLEX.Web.Pages
          XmlNode xNode;
          TreeNode tNode;
          XmlNodeList nodeList;
-         int i;
 
-         // Loop through the XML nodes until the leaf is reached.
-         // Add the nodes to the TreeView during the looping process.
          if (inXmlNode.HasChildNodes)
          {
             nodeList = inXmlNode.ChildNodes;
-            for (i = 0; i <= nodeList.Count - 1; i++)
+            for (int i = 0; i <= nodeList.Count - 1; i++)
             {
                xNode = inXmlNode.ChildNodes[i];
                if (xNode.Name == "Item")
@@ -84,22 +64,26 @@ namespace FLEX.Web.Pages
       protected void InitControls() 
       {
          //Users
-         //b.usr_id, b.usr_login as Login, b.usr_name as Name, b.usr_surname as Surname
-         //DataTable _tableLeft = new DataTable();
-         //_tableLeft.Columns.Add("Id", typeof(int));
-         //_tableLeft.Columns.Add("Login", typeof(string));
-         //_tableLeft.Columns.Add("Name", typeof(string));
-         //_tableLeft.Columns.Add("Surname", typeof(string));
-         
-         //DataTable _tableRight = new DataTable();
-         //_tableRight.Columns.Add("Id", typeof(int));
-         //_tableRight.Columns.Add("Login", typeof(string));
-         //_tableRight.Columns.Add("Name", typeof(string));
-         //_tableRight.Columns.Add("Surname", typeof(string));
          DataTable _tableLeft = new DataTable();
+         _tableLeft.Columns.Add("Id", typeof(int));
+         _tableLeft.Columns.Add("Login", typeof(string));
+         _tableLeft.Columns.Add("FirstName", typeof(string));
+         _tableLeft.Columns.Add("LastName", typeof(string));
+
          DataTable _tableRight = new DataTable();
+         _tableRight.Columns.Add("Id", typeof(int));
+         _tableRight.Columns.Add("Login", typeof(string));
+         _tableRight.Columns.Add("FirstName", typeof(string));
+         _tableRight.Columns.Add("LastName", typeof(string));
+        
+
     
-         var  _temp=Db.Security.Users(Finsa.Caravan.Common.Configuration.Instance.ApplicationName);
+         var  _users = Db.Security.Users(Finsa.Caravan.Common.Configuration.Instance.ApplicationName);
+         foreach (var item in _users)
+         {
+            _tableLeft.Rows.Add(item.Id, item.Login, item.FirstName, item.LastName);
+         }
+
          flexMultipleSelectUsers.SetLeftDataSource(_tableLeft);
          flexMultipleSelectUsers.SetRightDataSource(_tableRight);
          flexMultipleSelectUsers.LeftPanelTitle = "Available Users";
@@ -108,20 +92,40 @@ namespace FLEX.Web.Pages
          //Groups
          DataTable _tableLeftGroups = new DataTable();
          _tableLeftGroups.Columns.Add("Id", typeof(int));
-         _tableLeftGroups.Columns.Add("Login", typeof(string));
          _tableLeftGroups.Columns.Add("Name", typeof(string));
-         _tableLeftGroups.Columns.Add("Surname", typeof(string));
 
          DataTable _tableRightGroups = new DataTable();
          _tableRightGroups.Columns.Add("Id", typeof(int));
-         _tableRightGroups.Columns.Add("Login", typeof(string));
          _tableRightGroups.Columns.Add("Name", typeof(string));
-         _tableRightGroups.Columns.Add("Surname", typeof(string));
+
+         var _groups = Db.Security.Groups(Finsa.Caravan.Common.Configuration.Instance.ApplicationName);
+         foreach (var item in _groups)
+         {
+            _tableLeftGroups.Rows.Add(item.Id, item.Name);
+         }
 
          flexMultiSelectGroups.SetLeftDataSource(_tableLeftGroups);
          flexMultiSelectGroups.SetRightDataSource(_tableRightGroups);
          flexMultiSelectGroups.LeftPanelTitle = "Available Groups";
          flexMultiSelectGroups.RightPanelTitle = "Chosen Groups";
+
+         // Legge il file XML
+         docXML.Load(Server.MapPath(WebForms.Configuration.Instance.MenuBarXmlPath));
+
+         TreeView1.Nodes.Clear();
+         TreeView1.Nodes.Add(new TreeNode(docXML.DocumentElement.Name));
+         TreeNode tNode = new TreeNode();
+         tNode = TreeView1.Nodes[0];
+
+         AddNode(docXML.DocumentElement, tNode);
+         var _listChildNodes = TreeView1.Nodes[0].ChildNodes;
+         TreeView1.Nodes.Clear();
+         for (int i = 0; i < _listChildNodes.Count; i++)
+         {
+            TreeView1.Nodes.Add(_listChildNodes[i]);
+         }
+
+         TreeView1.ExpandAll();
       }
 
       protected void TreeView1_SelectedNodeChanged(object sender, EventArgs e)
