@@ -40,7 +40,7 @@ namespace FLEX.Web.Pages
             
             TreeView1.ExpandAll();
 
-            Db.Security.Users(Finsa.Caravan.Common.Configuration.Instance.ApplicationName);
+            //Db.Security.Users(Finsa.Caravan.Common.Configuration.Instance.ApplicationName);
          }
       }
 
@@ -85,18 +85,21 @@ namespace FLEX.Web.Pages
       {
          //Users
          //b.usr_id, b.usr_login as Login, b.usr_name as Name, b.usr_surname as Surname
-        	DataTable _tableLeft = new DataTable();
-	      _tableLeft.Columns.Add("Id", typeof(int));
-	      _tableLeft.Columns.Add("Login", typeof(string));
-	      _tableLeft.Columns.Add("Name", typeof(string));
-	      _tableLeft.Columns.Add("Surname", typeof(string));
+         //DataTable _tableLeft = new DataTable();
+         //_tableLeft.Columns.Add("Id", typeof(int));
+         //_tableLeft.Columns.Add("Login", typeof(string));
+         //_tableLeft.Columns.Add("Name", typeof(string));
+         //_tableLeft.Columns.Add("Surname", typeof(string));
          
+         //DataTable _tableRight = new DataTable();
+         //_tableRight.Columns.Add("Id", typeof(int));
+         //_tableRight.Columns.Add("Login", typeof(string));
+         //_tableRight.Columns.Add("Name", typeof(string));
+         //_tableRight.Columns.Add("Surname", typeof(string));
+         DataTable _tableLeft = new DataTable();
          DataTable _tableRight = new DataTable();
-	      _tableRight.Columns.Add("Id", typeof(int));
-	      _tableRight.Columns.Add("Login", typeof(string));
-	      _tableRight.Columns.Add("Name", typeof(string));
-	      _tableRight.Columns.Add("Surname", typeof(string));
-
+    
+         var  _temp=Db.Security.Users(Finsa.Caravan.Common.Configuration.Instance.ApplicationName);
          flexMultipleSelectUsers.SetLeftDataSource(_tableLeft);
          flexMultipleSelectUsers.SetRightDataSource(_tableRight);
          flexMultipleSelectUsers.LeftPanelTitle = "Available Users";
