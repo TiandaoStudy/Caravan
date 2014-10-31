@@ -6,10 +6,13 @@ using Finsa.Caravan.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
-   public abstract class SecurityManagerBase<TSec> : ISecurityManager where TSec : SecurityManagerBase<TSec>
+   public abstract class SecurityManagerBase
    {
-      private static readonly string[] EmptyStringArray = new string[0];
+      protected static readonly string[] EmptyStringArray = new string[0];
+   }
 
+   public abstract class SecurityManagerBase<TSec> : SecurityManagerBase, ISecurityManager where TSec : SecurityManagerBase<TSec>
+   {
       #region Apps
 
       public IEnumerable<SecApp> Apps()
@@ -170,7 +173,7 @@ namespace Finsa.Caravan.DataAccess.Core
                groupName = groupName.ToLower();
             }
             DoAddEntry(appName.ToLower(), secContext, secObject, userLogin, groupName);
-            Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, secObject.Name, secContext.Name, userLogin ?? groupName), context: logCtx);
+            Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, secObject.Name, secContext.Name, userLogin ?? groupName), context: logCtx, applicationName: appName);
          }
          catch (Exception ex)
          {
@@ -200,7 +203,7 @@ namespace Finsa.Caravan.DataAccess.Core
                groupName = groupName.ToLower();
             }
             DoRemoveEntry(appName.ToLower(), contextName.ToLower(), objectName.ToLower(), userLogin, groupName);
-            Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, objectName.ToLower(), contextName.ToLower(), userLogin ?? groupName), context: logCtx);
+            Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, objectName.ToLower(), contextName.ToLower(), userLogin ?? groupName), context: logCtx, applicationName: appName);
          }
          catch (Exception ex)
          {

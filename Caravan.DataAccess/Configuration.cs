@@ -92,5 +92,20 @@ namespace Finsa.Caravan.DataAccess
       }
 
       #endregion
+
+      #region Internal Settings
+
+      private string _currentAppName;
+
+      /// <summary>
+      ///   Needed because the REST service has to "act" as a proxy for apps.
+      /// </summary>
+      internal string CurrentAppName
+      {
+         get { return _currentAppName ?? Common.Configuration.Instance.ApplicationName; }
+         set { _currentAppName = value.ToLower(); }
+      }
+
+      #endregion
    }
 }

@@ -109,14 +109,14 @@ namespace Finsa.Caravan.DataAccess.Core
       public IEnumerable<LogEntry> Logs(LogType logType)
       {
          Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-         return GetLogs(null, (LogType?) logType);
+         return GetLogs(null, logType);
       }
 
       public IEnumerable<LogEntry> Logs(string applicationName, LogType logType)
       {
          Raise<ArgumentException>.IfIsEmpty(applicationName);
          Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-         return GetLogs(applicationName, (LogType?) logType);
+         return GetLogs(applicationName, logType);
       }
 
       public IList<LogSettings> LogSettings()
@@ -133,14 +133,14 @@ namespace Finsa.Caravan.DataAccess.Core
       public IList<LogSettings> LogSettings(LogType logType)
       {
          Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-         return GetLogSettings(null, (LogType?) logType);
+         return GetLogSettings(null, logType);
       }
 
       public LogSettings LogSettings(string applicationName, LogType logType)
       {
          Raise<ArgumentException>.IfIsEmpty(applicationName);
          Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-         return GetLogSettings(applicationName, (LogType?) logType).FirstOrDefault();
+         return GetLogSettings(applicationName, logType).FirstOrDefault();
       }
 
       #endregion
