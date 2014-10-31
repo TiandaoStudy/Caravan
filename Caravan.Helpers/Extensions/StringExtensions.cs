@@ -289,7 +289,7 @@ namespace Finsa.Caravan.Extensions
         public static string Truncate(this string str, int maxLength)
         {
             if (String.IsNullOrEmpty(str)) {
-                return str;
+                return String.Empty;
             }
             maxLength = Math.Max(0, maxLength);
             return (str.Length < maxLength ? str : str.Substring(0, maxLength));

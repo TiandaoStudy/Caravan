@@ -67,12 +67,12 @@ namespace Finsa.Caravan.DataAccess.Sql
                      Date = DateTime.Now,
                      AppId = appId,
                      TypeId = typeId,
-                     UserLogin = GetCurrentUserName(userName).Truncate(MaxUserNameLength),
-                     CodeUnit = codeUnit.Truncate(MaxCodeUnitLength),
-                     Function = function.Truncate(MaxFunctionLength),
-                     ShortMessage = shortMessage == null ? LogEntry.NotSpecified : shortMessage.Truncate(MaxShortMessageLength),
-                     LongMessage = longMessage == null ? LogEntry.NotSpecified : longMessage.Truncate(MaxLongMessageLength),
-                     Context = context == null ? LogEntry.NotSpecified : context.Truncate(MaxContextLength),
+                     UserLogin = GetCurrentUserName(userName).Truncate(MaxUserNameLength).ToLower(),
+                     CodeUnit = codeUnit.Truncate(MaxCodeUnitLength).ToLower(),
+                     Function = function.Truncate(MaxFunctionLength).ToLower(),
+                     ShortMessage = shortMessage.Truncate(MaxShortMessageLength),
+                     LongMessage = longMessage.Truncate(MaxLongMessageLength),
+                     Context = context.Truncate(MaxContextLength),
                      Arguments = argsList
                   });
                }

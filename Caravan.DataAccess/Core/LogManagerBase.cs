@@ -164,7 +164,7 @@ namespace Finsa.Caravan.DataAccess.Core
          {
             return LogResult.Failure(ex);
          }
-         return Log(type, appName, userName, typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
+         return Log(type, GetCurrentAppName(appName), userName, typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
       }
 
       public LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, Exception exception, string context, IEnumerable<CKeyValuePair<string, string>> args)
@@ -178,7 +178,7 @@ namespace Finsa.Caravan.DataAccess.Core
          {
             return LogResult.Failure(ex);
          }
-         return Log(type, appName, userName, codeUnit, function, exception.Message, exception.StackTrace, context, args);
+         return Log(type, GetCurrentAppName(appName), userName, codeUnit, function, exception.Message, exception.StackTrace, context, args);
       }
 
       private LogResult Log<TCodeUnit>(LogType type, string appName, string userName, string function, Exception exception, string context, IEnumerable<CKeyValuePair<string, string>> args)
@@ -192,7 +192,7 @@ namespace Finsa.Caravan.DataAccess.Core
          {
             return LogResult.Failure(ex);
          }
-         return Log(type, appName, userName, typeof(TCodeUnit).FullName, function, exception.Message, exception.StackTrace, context, args);
+         return Log(type, GetCurrentAppName(appName), userName, typeof(TCodeUnit).FullName, function, exception.Message, exception.StackTrace, context, args);
       }
 
       private static Exception FindInnermostException(Exception exception)
@@ -202,11 +202,20 @@ namespace Finsa.Caravan.DataAccess.Core
             exception = exception.InnerException;
          }
          return exception;
-      } 
+      }
+
+      private static string GetCurrentAppName(string appName)
+      {
+         if (String.IsNullOrWhiteSpace(appName) || appName == LogEntry.AutomaticallyFilled)
+         {
+            return Common.Configuration.Instance.ApplicationName;
+         }
+         return appName;
+      }
 
       protected static string GetCurrentUserName(string userName)
       {
-         if (!String.IsNullOrWhiteSpace(userName))
+         if (!String.IsNullOrWhiteSpace(userName) && userName != LogEntry.AutomaticallyFilled)
          {
             return userName;
          }
