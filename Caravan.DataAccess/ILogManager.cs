@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Finsa.Caravan.DataModel.Logging;
 
 namespace Finsa.Caravan.DataAccess
@@ -86,6 +87,21 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="function"></param>
       /// <returns></returns>
       LogResult LogWarn<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null,
+         string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled);
+
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      /// <typeparam name="TCodeUnit"></typeparam>
+      /// <param name="shortMessage"></param>
+      /// <param name="longMessage"></param>
+      /// <param name="context"></param>
+      /// <param name="args"></param>
+      /// <param name="applicationName"></param>
+      /// <param name="userName"></param>
+      /// <param name="function"></param>
+      /// <returns></returns>
+      Task<LogResult> LogWarnAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null,
          string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled);
 
       /// <summary>
@@ -187,6 +203,20 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="function"></param>
       /// <returns></returns>
       LogResult LogWarn<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, 
+         string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled);
+
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      /// <typeparam name="TCodeUnit"></typeparam>
+      /// <param name="exception"></param>
+      /// <param name="context"></param>
+      /// <param name="args"></param>
+      /// <param name="applicationName"></param>
+      /// <param name="userName"></param>
+      /// <param name="function"></param>
+      /// <returns></returns>
+      Task<LogResult> LogWarnAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, 
          string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled);
 
       /// <summary>

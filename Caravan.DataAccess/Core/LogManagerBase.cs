@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Web;
-using Finsa.Caravan.DataModel;
 using Finsa.Caravan.DataModel.Logging;
 using Finsa.Caravan.Diagnostics;
 
@@ -35,6 +35,12 @@ namespace Finsa.Caravan.DataAccess.Core
          string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled)
       {
          return Log<TCodeUnit>(LogType.Warn, applicationName, userName, function, shortMessage, longMessage, context, args);
+      }
+
+      public Task<LogResult> LogWarnAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled,
+         string function = LogEntry.AutomaticallyFilled)
+      {
+         return Task.Factory.StartNew(() => LogWarn<TCodeUnit>(shortMessage, longMessage, context, args, applicationName, userName, function));
       }
 
       public LogResult LogError<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null,
@@ -70,6 +76,11 @@ namespace Finsa.Caravan.DataAccess.Core
          string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled)
       {
          return Log<TCodeUnit>(LogType.Warn, applicationName, userName, function, exception, context, args);
+      }
+
+      public Task<LogResult> LogWarnAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, string function = LogEntry.AutomaticallyFilled)
+      {
+         return Task.Factory.StartNew(() => LogWarn<TCodeUnit>(exception, context, args, applicationName, userName, function));
       }
 
       public LogResult LogError<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled,

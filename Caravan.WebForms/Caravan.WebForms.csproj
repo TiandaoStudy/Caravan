@@ -230,6 +230,13 @@
     <Compile Include="FLEX\Pages\PopupBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="FLEX\Pages\SecMenu.aspx.cs">
+      <DependentUpon>SecMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\SecMenu.aspx.designer.cs">
+      <DependentUpon>SecMenu.aspx.cs</DependentUpon>
+    </Compile>
     <Compile Include="FLEX\Pages\Templates\Popup.aspx.cs">
       <DependentUpon>Popup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -504,6 +511,9 @@
     <Content Include="FLEX\Pages\ErrorHandler.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Content Include="FLEX\Pages\SecMenu.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="FLEX\Pages\Templates\Popup.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -676,9 +686,7 @@
     <Content Include="FLEX\UserControls\Ajax\ImageButton.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\UserControls\Ajax\DatePicker.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="FLEX\UserControls\Ajax\DatePicker.ascx" />
     <Content Include="FLEX\Scripts\bootstrap-datepicker.js" />
     <Content Include="FLEX\Scripts\bootstrap-datepicker.min.js">
       <DependentUpon>bootstrap-datepicker.js</DependentUpon>

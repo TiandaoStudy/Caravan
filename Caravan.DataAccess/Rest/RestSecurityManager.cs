@@ -5,7 +5,7 @@ using Finsa.Caravan.DataModel.Security;
 
 namespace Finsa.Caravan.DataAccess.Rest
 {
-   public sealed class RestSecurityManager : SecurityManagerBase
+   public sealed class RestSecurityManager : SecurityManagerBase<RestSecurityManager>
    {
       protected override IEnumerable<SecApp> GetApps(string appName)
       {
@@ -47,9 +47,18 @@ namespace Finsa.Caravan.DataAccess.Rest
          throw new NotImplementedException();
       }
 
+      #region Entries
+
       protected override IList<SecEntry> GetEntries(string appName, string contextName, string objectType, string userLogin, string[] groupNames)
       {
          throw new NotImplementedException();
       }
+
+      protected override void DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+      {
+         throw new NotImplementedException();
+      }
+
+      #endregion
    }
 }

@@ -4,7 +4,7 @@ using Finsa.Caravan.DataModel.Security;
 
 namespace Finsa.Caravan.DataAccess.Dummy
 {
-   public sealed class DummySecurityManager : SecurityManagerBase
+   public sealed class DummySecurityManager : SecurityManagerBase<DummySecurityManager>
    {
       protected override IEnumerable<SecApp> GetApps(string appName)
       {
@@ -46,9 +46,18 @@ namespace Finsa.Caravan.DataAccess.Dummy
          throw new System.NotImplementedException();
       }
 
+      #region Entries
+
       protected override IList<SecEntry> GetEntries(string appName, string contextName, string objectType, string userLogin, string[] groupNames)
       {
          throw new System.NotImplementedException();
       }
+
+      protected override void DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+      {
+         throw new System.NotImplementedException();
+      }
+
+      #endregion
    }
 }

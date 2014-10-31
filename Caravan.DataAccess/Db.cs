@@ -82,10 +82,16 @@ namespace Finsa.Caravan.DataAccess
          get { return SecurityManagerInstance; }
       }
 
-      internal static DbContextBase CreateContext()
+      internal static DbContextBase CreateReadContext()
       {
          var ctx = DbContextGenerator();
          ctx.Configuration.ProxyCreationEnabled = false;
+         return ctx;
+      }
+
+      internal static DbContextBase CreateContext()
+      {
+         var ctx = DbContextGenerator();
          return ctx;
       }
 
