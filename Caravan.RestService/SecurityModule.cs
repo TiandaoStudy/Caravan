@@ -65,7 +65,7 @@ namespace Finsa.Caravan.RestService
          Put["/{appName}/entries/{contextName}"] = p =>
          {
             var secEntry = StartSafeResponse<SecEntrySingle>(NotCached).Entry;
-            //Db.Security.AddEntry((string) p.appName, (string) p.contextName, secEntry.Object, secEntry.User.Login, secEntry.Group.Name);
+            Db.Security.AddEntry((string) p.appName, secEntry.Context, secEntry.Object, secEntry.User.Login, secEntry.Group.Name);
             return RestResponse.Success("...");
          };
 

@@ -124,14 +124,15 @@ namespace Finsa.Caravan.DataAccess.Sql
             var dbContext = ctx.SecContexts.FirstOrDefault(c => c.AppId == appId && c.Name == secContext.Name);
             if (dbContext == null)
             {
-               secContext.Id = ctx.SecContexts.Where(o => o.AppId == appId).Max(o => (int?) o.Id) ?? 0;
-               ctx.SecContexts.Add(dbContext);
+               secContext.Id = (ctx.SecContexts.Where(o => o.AppId == appId).Max(o => (long?) o.Id) ?? -1) + 1;
+               secContext.AppId = appId;
+               ctx.SecContexts.Add(secContext);
                dbContext = secContext;
             }
-            var dbObject = ctx.SecObjects.FirstOrDefault(o => o.App.Name == appName && o.ContextId == dbContext.Id && o.Name == secObject.Name);
+            var dbObject = ctx.SecObjects.FirstOrDefault(o => o.AppId == appId && o.ContextId == dbContext.Id && o.Name == secObject.Name);
             if (dbObject == null)
             {
-               secObject.Id = ctx.SecObjects.Where(o => o.App.Name == appName && o.ContextId == dbContext.Id).Max(o => (int?) o.Id) ?? 0;
+               secObject.Id = (ctx.SecObjects.Where(o => o.AppId == appId && o.ContextId == dbContext.Id).Max(o => (long?) o.Id) ?? -1) + 1;
                secObject.AppId = appId;
                secObject.ContextId = dbContext.Id;
                ctx.SecObjects.Add(secObject);
@@ -140,22 +141,26 @@ namespace Finsa.Caravan.DataAccess.Sql
             long? userId = null;
             if (!String.IsNullOrWhiteSpace(userLogin))
             {
-               userId = ctx.SecUsers.Where(u => u.App.Name == appName && u.Login == userLogin).Select(u => u.Id).FirstOrDefault();
+               userId = ctx.SecUsers.Where(u => u.AppId == appId && u.Login == userLogin).Select(u => (long?) u.Id).FirstOrDefault();
             }
             long? groupId = null;
             if (!String.IsNullOrWhiteSpace(groupName))
             {
-               groupId = ctx.SecGroups.Where(g => g.App.Name == appName && g.Name == groupName).Select(g => g.Id).FirstOrDefault();
+               groupId = ctx.SecGroups.Where(g => g.AppId == appId && g.Name == groupName).Select(g => (long?) g.Id).FirstOrDefault();
             }
-            var secEntry = new SecEntry
+            if (!ctx.SecEntries.Any(e => e.AppId == appId && e.UserId == userId && e.GroupId == groupId && e.ContextId == dbContext.Id && e.ObjectId == dbObject.Id))
             {
-               AppId = dbObject.AppId,
-               UserId = userId,
-               GroupId = groupId,
-               ContextId = dbObject.ContextId,
-               ObjectId = dbObject.Id
-            };
-            ctx.SecEntries.Add(secEntry);
+               var secEntry = new SecEntry
+               {
+                  Id = (ctx.SecEntries.Where(e => e.AppId == appId).Max(e => (long?) e.Id) ?? -1) + 1,
+                  AppId = appId,
+                  UserId = userId,
+                  GroupId = groupId,
+                  ContextId = dbContext.Id,
+                  ObjectId = dbObject.Id
+               };
+               ctx.SecEntries.Add(secEntry);
+            }
             ctx.SaveChanges();
             trx.Commit();
          }
