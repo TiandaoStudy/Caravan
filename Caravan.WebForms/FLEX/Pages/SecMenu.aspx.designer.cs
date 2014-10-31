@@ -121,6 +121,15 @@ namespace FLEX.Web.Pages {
         protected global::FLEX.Web.UserControls.Ajax.MultiSelect flexMultiSelectGroups;
         
         /// <summary>
+        /// btnSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSave;
+        
+        /// <summary>
         /// Master property.
         /// </summary>
         /// <remarks>

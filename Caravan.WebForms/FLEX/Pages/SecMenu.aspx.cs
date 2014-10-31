@@ -8,7 +8,8 @@ using System.IO;
 using System.Xml;
 using System.Xml.XPath;
 using Finsa.Caravan.Extensions;
-
+using FLEX.Web.UserControls.Ajax;
+using Finsa.Caravan.DataModel.Security;
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
 
@@ -151,6 +152,53 @@ namespace FLEX.Web.Pages
 
       protected void TreeView1_TreeNodeCollapsed(object sender, TreeNodeEventArgs e)
       {
+      }
+
+      protected void Unnamed_Click(object sender, EventArgs e)
+      {
+
+      }
+
+      protected void btnSave_Click(object sender, EventArgs e)
+      {
+         //Users
+
+         var secContext = new SecContext { Name = "menu", Description = "Menu Entries" };
+         var secObject = new SecObject { Name = TreeView1.SelectedValue, Description = TreeView1.SelectedNode.Text, Type= "menu" };
+
+         foreach (DataRow oDrR in flexMultipleSelectUsers.RightDataTable.Rows)
+         {
+            if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
+            {
+               Db.Security.AddEntry(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, secContext, secObject, oDrR["Login"].ToString(), null);
+            }
+         }
+
+         foreach (DataRow oDrL in flexMultipleSelectUsers.LeftDataTable.Rows)
+         {
+            if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
+            {
+               Db.Security.RemoveEntry(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, secContext.Name, secObject.Name, oDrL["Login"].ToString(), null);
+            }
+         }
+        
+         //Groups
+         foreach (DataRow oDrR in flexMultiSelectGroups.RightDataTable.Rows)
+         {
+            if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
+            {
+               Db.Security.AddEntry(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, secContext, secObject, null, oDrR["Name"].ToString());
+            }
+         }
+
+         foreach (DataRow oDrR in flexMultiSelectGroups.LeftDataTable.Rows)
+         {
+            if (oDrR[MultiSelect.FlagCrud].ToString() == "R")
+            {
+               Db.Security.RemoveEntry(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, secContext.Name, secObject.Name, null, oDrR["Name"].ToString());
+            }
+         }
+
       }
    }
 }
