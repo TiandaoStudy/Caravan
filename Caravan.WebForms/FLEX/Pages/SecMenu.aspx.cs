@@ -22,8 +22,6 @@ namespace FLEX.Web.Pages
          if (!Page.IsPostBack)
          { 
             InitControls();
-           
-
          }
       }
 
@@ -47,11 +45,6 @@ namespace FLEX.Web.Pages
                   tNode = inTreeNode.ChildNodes[inTreeNode.ChildNodes.Count-1];
                   AddNode(xNode, tNode);
                  }
-                 else
-                 {
-                    AddNode(xNode, inTreeNode);
-                 }
-
                }
                else
                {
@@ -118,9 +111,12 @@ namespace FLEX.Web.Pages
          tNode = TreeView1.Nodes[0];
 
          AddNode(docXML.DocumentElement, tNode);
-         var _listChildNodes = TreeView1.Nodes[0].ChildNodes;
+         TreeNode[] _listChildNodes = new TreeNode[TreeView1.Nodes[0].ChildNodes.Count];
+         TreeView1.Nodes[0].ChildNodes.CopyTo(_listChildNodes, 0);
          TreeView1.Nodes.Clear();
-         for (int i = 0; i < _listChildNodes.Count; i++)
+
+
+         for (int i = 0; i < _listChildNodes.Length; i++)
          {
             TreeView1.Nodes.Add(_listChildNodes[i]);
          }
