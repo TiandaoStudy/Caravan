@@ -121,6 +121,12 @@ namespace Finsa.Caravan.RestService
             var user = Db.Security.User(p.appName, p.userLogin);
             return RestResponse.Success(new SecUserSingle {User = user});
          };
+
+         Put["/{appName}/users"] = p => null;
+
+         Patch["/{appName}/users/{userLogin}"] = p => null;
+
+         Delete["/{appName}/users/{userLogin}"] = p => null;
       }
    }
 }
