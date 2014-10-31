@@ -42,7 +42,7 @@ namespace Finsa.Caravan.RestService.Core
          return Enum.TryParse(logTypeString, true, out logType) ? logType : LogType.Info;
       }
 
-      protected TBody StartSafeResponse<TBody>(string appName, int cacheSeconds)
+      protected TBody StartSafeResponse<TBody>(int cacheSeconds)
       {
          var parsedBody = ParseBody<TBody>();
          ApplySecurity(parsedBody.Auth);

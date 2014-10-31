@@ -17,7 +17,7 @@ namespace Finsa.Caravan.DataAccess.Rest
          throw new NotImplementedException();
       }
 
-      protected override void DoAddGroup(string appName, SecGroup @group)
+      protected override void DoAddGroup(string appName, SecGroup newGroup)
       {
          throw new NotImplementedException();
       }
@@ -33,6 +33,21 @@ namespace Finsa.Caravan.DataAccess.Rest
       }
 
       protected override IEnumerable<SecUser> GetUsers(string appName, string userLogin)
+      {
+         throw new NotImplementedException();
+      }
+
+      protected override void DoAddUser(string appName, SecUser newUser)
+      {
+         throw new NotImplementedException();
+      }
+
+      protected override void DoRemoveUser(string appName, string userLogin)
+      {
+         throw new NotImplementedException();
+      }
+
+      protected override void DoUpdateUser(string appName, string userLogin, SecUser newUser)
       {
          throw new NotImplementedException();
       }

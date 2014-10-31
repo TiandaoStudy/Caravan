@@ -19,7 +19,7 @@ namespace Finsa.Caravan.DataAccess
 
       SecGroup Group(string appName, string groupName);
 
-      void AddGroup(string appName, SecGroup group);
+      void AddGroup(string appName, SecGroup newGroup);
 
       void RemoveGroup(string appName, string groupName);
 
@@ -32,6 +32,12 @@ namespace Finsa.Caravan.DataAccess
       IEnumerable<SecUser> Users(string appName);
 
       SecUser User(string appName, string userLogin);
+
+      void AddUser(string appName, SecUser newUser);
+
+      void RemoveUser(string appName, string userLogin);
+
+      void UpdateUser(string appName, string userLogin, SecUser newUser);
 
       #endregion
 
@@ -56,6 +62,8 @@ namespace Finsa.Caravan.DataAccess
       #region Entries
 
       IList<SecEntry> Entries(string appName, string contextName);
+
+      IList<SecEntry> Entries(string appName, string contextName, string userLogin, string[] groupNames);
 
       IList<SecEntry> Entries(string appName, string contextName, string objectName);
 

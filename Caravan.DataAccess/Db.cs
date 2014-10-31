@@ -89,7 +89,7 @@ namespace Finsa.Caravan.DataAccess
          return ctx;
       }
 
-      internal static DbContextBase CreateContext()
+      internal static DbContextBase CreateWriteContext()
       {
          var ctx = DbContextGenerator();
          return ctx;

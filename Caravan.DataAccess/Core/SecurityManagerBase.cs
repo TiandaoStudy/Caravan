@@ -43,11 +43,11 @@ namespace Finsa.Caravan.DataAccess.Core
          return GetGroups(appName, groupName).FirstOrDefault();
       }
 
-      public void AddGroup(string appName, SecGroup group)
+      public void AddGroup(string appName, SecGroup newGroup)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsNull(group);
-         DoAddGroup(appName, group);
+         Raise<ArgumentException>.IfIsNull(newGroup);
+         DoAddGroup(appName, newGroup);
       }
 
       public void RemoveGroup(string appName, string groupName)
@@ -80,6 +80,28 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(userLogin);
          return GetUsers(appName, userLogin).FirstOrDefault();
+      }
+
+      public void AddUser(string appName, SecUser newUser)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfIsNull(newUser);
+         DoAddUser(appName, newUser);
+      }
+
+      public void RemoveUser(string appName, string userLogin)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfIsEmpty(userLogin);
+         DoRemoveUser(appName, userLogin);
+      }
+
+      public void UpdateUser(string appName, string userLogin, SecUser newUser)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfIsEmpty(userLogin);
+         Raise<ArgumentException>.IfIsNull(newUser);
+         DoUpdateUser(appName, userLogin, newUser);
       }
 
       #endregion
@@ -128,6 +150,15 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(contextName);
          return GetEntries(appName.ToLower(), contextName.ToLower(), null, null, EmptyStringArray);
+      }
+
+      public IList<SecEntry> Entries(string appName, string contextName, string userLogin, string[] groupNames)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfIsEmpty(contextName);
+         Raise<ArgumentException>.IfIsEmpty(userLogin);
+         Raise<ArgumentException>.IfIsEmpty(groupNames as ICollection<string>);
+         return GetEntries(appName.ToLower(), contextName.ToLower(), null, userLogin.ToLower(), groupNames.Select(g => g.ToLower()).ToArray());
       }
 
       public IList<SecEntry> Entries(string appName, string contextName, string objectName)
@@ -220,13 +251,19 @@ namespace Finsa.Caravan.DataAccess.Core
 
       protected abstract IEnumerable<SecGroup> GetGroups(string appName, string groupName);
 
-      protected abstract void DoAddGroup(string appName, SecGroup group);
+      protected abstract void DoAddGroup(string appName, SecGroup newGroup);
 
       protected abstract void DoRemoveGroup(string appName, string groupName);
 
       protected abstract void DoUpdateGroup(string appName, string groupName, SecGroup newGroup);
 
       protected abstract IEnumerable<SecUser> GetUsers(string appName, string userLogin);
+
+      protected abstract void DoAddUser(string appName, SecUser newUser);
+
+      protected abstract void DoRemoveUser(string appName, string userLogin);
+
+      protected abstract void DoUpdateUser(string appName, string userLogin, SecUser newUser);
 
       protected abstract IEnumerable<SecContext> GetContexts(string appName);
 

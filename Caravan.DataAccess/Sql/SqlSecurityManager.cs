@@ -10,6 +10,8 @@ namespace Finsa.Caravan.DataAccess.Sql
 {
    public sealed class SqlSecurityManager : SecurityManagerBase<SqlSecurityManager>
    {
+      #region Apps
+
       protected override IEnumerable<SecApp> GetApps(string appName)
       {
          using (var ctx = Db.CreateReadContext())
@@ -20,6 +22,10 @@ namespace Finsa.Caravan.DataAccess.Sql
                     select a).ToLogAndList();
          }
       }
+
+      #endregion
+
+      #region Groups
 
       protected override IEnumerable<SecGroup> GetGroups(string appName, string groupName)
       {
@@ -33,14 +39,14 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-      protected override void DoAddGroup(string appName, SecGroup group)
+      protected override void DoAddGroup(string appName, SecGroup newGroup)
       {
          throw new NotImplementedException();
       }
 
       protected override void DoRemoveGroup(string appName, string groupName)
       {
-         using (var ctx = Db.CreateContext())
+         using (var ctx = Db.CreateWriteContext())
          using (var trx = ctx.BeginTransaction())
          {
             var grp = ctx.SecGroups.FirstOrDefault(g => g.App.Name == appName.ToLower() && g.Name == groupName.ToLower());
@@ -55,7 +61,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override void DoUpdateGroup(string appName, string groupName, SecGroup newGroup)
       {
-         using (var ctx = Db.CreateContext())
+         using (var ctx = Db.CreateWriteContext())
          using (var trx = ctx.BeginTransaction())
          {
             var grp = ctx.SecGroups.FirstOrDefault(g => g.App.Name == appName.ToLower() && g.Name == groupName.ToLower());
@@ -69,6 +75,10 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
+      #endregion
+
+      #region Users
+
       protected override IEnumerable<SecUser> GetUsers(string appName, string userLogin)
       {
          using (var ctx = Db.CreateReadContext())
@@ -81,6 +91,25 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
+      protected override void DoAddUser(string appName, SecUser newUser)
+      {
+         throw new NotImplementedException();
+      }
+
+      protected override void DoRemoveUser(string appName, string userLogin)
+      {
+         throw new NotImplementedException();
+      }
+
+      protected override void DoUpdateUser(string appName, string userLogin, SecUser newUser)
+      {
+         throw new NotImplementedException();
+      }
+
+      #endregion
+
+      #region Contexts
+
       protected override IEnumerable<SecContext> GetContexts(string appName)
       {
          using (var ctx = Db.CreateReadContext())
@@ -92,10 +121,16 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
+      #endregion
+
+      #region Objects
+
       protected override IEnumerable<SecObject> GetObjects(string appName, string contextName)
       {
          throw new NotImplementedException();
       }
+
+      #endregion
 
       #region Entries
 
@@ -117,7 +152,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override void DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
       {
-         using (var ctx = Db.CreateContext())
+         using (var ctx = Db.CreateWriteContext())
          using (var trx = ctx.BeginTransaction())
          {
             var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).First();
@@ -177,17 +212,15 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override void DoRemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)
       {
-         using (var ctx = Db.CreateContext())
+         using (var ctx = Db.CreateWriteContext())
          using (var trx = ctx.BeginTransaction())
          {
             var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).First();
-
             var entry = ctx.SecEntries.FirstOrDefault(e => e.AppId == appId && e.Context.Name == contextName && e.Object.Name == objectName && (e.User == null || e.User.Login == userLogin) && (e.Group == null || e.Group.Name == groupName));
             if (entry != null)
             {
                ctx.SecEntries.Remove(entry);
             }
-
             ctx.SaveChanges();
             trx.Commit();
          }

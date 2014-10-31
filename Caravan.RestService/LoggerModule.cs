@@ -17,29 +17,29 @@ namespace Finsa.Caravan.RestService
 
          Post["/{appName}/entries"] = p =>
          {
-            StartSafeResponse<dynamic>(p.appName, NotCached);
+            StartSafeResponse<dynamic>(NotCached);
             var entries = Db.Logger.Logs(p.appName);
             return RestResponse.Success(new LogEntryList {Entries = entries});
          };
          
          Post["/{appName}/entries/{logType}"] = p =>
          {
-            StartSafeResponse<dynamic>(p.appName, NotCached);
-            var entries = Db.Logger.Logs((string) p.appName, SafeParseLogType((string) p.logType));
+            StartSafeResponse<dynamic>(NotCached);
+            var entries = Db.Logger.Logs(p.appName, SafeParseLogType(p.logType));
             return RestResponse.Success(new LogEntryList {Entries = entries});
          };
          
          Put["/{appName}/entries"] = p =>
          {
-            var entry = StartSafeResponse<LogEntrySingle>(p.appName, NotCached);
+            var entry = StartSafeResponse<LogEntrySingle>(NotCached);
             var result = Log(entry.Entry, p.appName, null);
             return RestResponse.FromLogResult(result);
          };
 
          Put["/{appName}/entries/{logType}"] = p =>
          {
-            var entry = StartSafeResponse<LogEntrySingle>(p.appName, NotCached);
-            var result = Log(entry.Entry, p.appName, ParseLogType((string) p.logType));
+            var entry = StartSafeResponse<LogEntrySingle>(NotCached);
+            var result = Log(entry.Entry, p.appName, ParseLogType(p.logType));
             return RestResponse.FromLogResult(result);
          };
          
@@ -49,15 +49,15 @@ namespace Finsa.Caravan.RestService
 
          Post["/{appName}/settings"] = p =>
          {
-            StartSafeResponse<dynamic>(p.appName, Configuration.LongCacheTimeoutInSeconds);
-            var settings = Db.Logger.LogSettings((string) p.appName);
+            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            var settings = Db.Logger.LogSettings(p.appName);
             return RestResponse.Success(new LogSettingsList {Settings = settings});
          };
 
          Post["/{appName}/settings/{logType}"] = p =>
          {
-            StartSafeResponse<dynamic>(p.appName, Configuration.LongCacheTimeoutInSeconds);
-            var settings = Db.Logger.LogSettings((string) p.appName, SafeParseLogType((string) p.logType));
+            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            var settings = Db.Logger.LogSettings(p.appName, SafeParseLogType(p.logType));
             return RestResponse.Success(new LogSettingsSingle {Settings = settings});
          };
       }

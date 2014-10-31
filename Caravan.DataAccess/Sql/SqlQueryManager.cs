@@ -10,7 +10,7 @@ namespace Finsa.Caravan.DataAccess.Sql
    {
       protected override IEnumerable<SecGroup> QueryGroups(string appName, string queryString)
       {
-         using (var ctx = Db.CreateContext())
+         using (var ctx = Db.CreateWriteContext())
          {
             return ctx.SecGroups
                .Include("Users.Groups")
