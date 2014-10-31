@@ -129,6 +129,10 @@ namespace Finsa.Caravan.DataAccess.Sql
                ctx.SecContexts.Add(secContext);
                dbContext = secContext;
             }
+            else
+            {
+               dbContext.Description = secContext.Description;
+            }
             var dbObject = ctx.SecObjects.FirstOrDefault(o => o.AppId == appId && o.ContextId == dbContext.Id && o.Name == secObject.Name);
             if (dbObject == null)
             {
@@ -137,6 +141,11 @@ namespace Finsa.Caravan.DataAccess.Sql
                secObject.ContextId = dbContext.Id;
                ctx.SecObjects.Add(secObject);
                dbObject = secObject;
+            }
+            else
+            {
+               dbObject.Description = secObject.Description;
+               dbObject.Type = secObject.Type;
             }
             long? userId = null;
             if (!String.IsNullOrWhiteSpace(userLogin))
@@ -161,6 +170,24 @@ namespace Finsa.Caravan.DataAccess.Sql
                };
                ctx.SecEntries.Add(secEntry);
             }
+            ctx.SaveChanges();
+            trx.Commit();
+         }
+      }
+
+      protected override void DoRemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)
+      {
+         using (var ctx = Db.CreateContext())
+         using (var trx = ctx.BeginTransaction())
+         {
+            var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).First();
+
+            var entry = ctx.SecEntries.FirstOrDefault(e => e.AppId == appId && e.Context.Name == contextName && e.Object.Name == objectName && (e.User == null || e.User.Login == userLogin) && (e.Group == null || e.Group.Name == groupName));
+            if (entry != null)
+            {
+               ctx.SecEntries.Remove(entry);
+            }
+
             ctx.SaveChanges();
             trx.Commit();
          }

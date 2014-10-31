@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Web;
-using Antlr.Runtime.Misc;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataModel.Rest;
 using Finsa.Caravan.DataModel.Security;
@@ -66,6 +64,13 @@ namespace Finsa.Caravan.RestService
          {
             var secEntry = StartSafeResponse<SecEntrySingle>(NotCached).Entry;
             Db.Security.AddEntry((string) p.appName, secEntry.Context, secEntry.Object, secEntry.User.Login, secEntry.Group.Name);
+            return RestResponse.Success("...");
+         };
+
+         Delete["/{appName}/entries/{contextName}"] = p =>
+         {
+            var secEntry = StartSafeResponse<SecEntrySingle>(NotCached).Entry;
+            Db.Security.RemoveEntry((string) p.appName, (string) p.contextName, secEntry.Object.Name, secEntry.User.Login, secEntry.Group.Name);
             return RestResponse.Success("...");
          };
 

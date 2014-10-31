@@ -58,6 +58,11 @@ namespace Finsa.Caravan.DataAccess.Dummy
          throw new System.NotImplementedException();
       }
 
+      protected override void DoRemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)
+      {
+         throw new System.NotImplementedException();
+      }
+
       #endregion
    }
 }

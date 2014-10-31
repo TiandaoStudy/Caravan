@@ -179,6 +179,36 @@ namespace Finsa.Caravan.DataAccess.Core
          }
       }
 
+      public void RemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfIsEmpty(contextName);
+         Raise<ArgumentException>.IfIsEmpty(objectName);
+         Raise<ArgumentException>.If(String.IsNullOrWhiteSpace(userLogin) && String.IsNullOrWhiteSpace(groupName));
+
+         const string logShort = "Security entry for object '{0}' in context '{1}' has been removed for '{2}'";
+         const string logCtx = "Removing a security entry";
+
+         try
+         {
+            if (userLogin != null)
+            {
+               userLogin = userLogin.ToLower();
+            }
+            if (groupName != null)
+            {
+               groupName = groupName.ToLower();
+            }
+            DoRemoveEntry(appName.ToLower(), contextName.ToLower(), objectName.ToLower(), userLogin, groupName);
+            Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, objectName.ToLower(), contextName.ToLower(), userLogin ?? groupName), context: logCtx);
+         }
+         catch (Exception ex)
+         {
+            Db.Logger.LogWarnAsync<TSec>(ex, logCtx);
+            throw;
+         }
+      }
+
       #endregion
 
       #region Abstract Methods
@@ -202,6 +232,8 @@ namespace Finsa.Caravan.DataAccess.Core
       protected abstract IList<SecEntry> GetEntries(string appName, string contextName, string objectType, string userLogin, string[] groupNames);
 
       protected abstract void DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName);
+
+      protected abstract void DoRemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName);
 
       #endregion
    }
