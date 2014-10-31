@@ -522,6 +522,60 @@
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>IF EXIST $(ProjectDir)FLEX (
+    :: FONTS
+    RD /S /Q $(ProjectDir)FLEX\Fonts
+    MD $(ProjectDir)FLEX\Fonts
+    copy $(SolutionDir)Caravan.WebForms\FLEX\Fonts\*.* $(ProjectDir)FLEX\Fonts
+    
+    :: IMAGES
+    RD /S /Q $(ProjectDir)FLEX\Images
+    MD $(ProjectDir)FLEX\Images\JQueryUI
+    copy $(SolutionDir)Caravan.WebForms\FLEX\Images\*.* $(ProjectDir)FLEX\Images
+    copy $(SolutionDir)Caravan.WebForms\FLEX\Images\JQueryUI\*.* $(ProjectDir)FLEX\Images\JQueryUI
+    
+    :: MASTER PAGES
+    RD /S /Q $(ProjectDir)FLEX\MasterPages
+    MD $(ProjectDir)FLEX\MasterPages
+    copy $(SolutionDir)Caravan.WebForms\FLEX\MasterPages\*.Master $(ProjectDir)FLEX\MasterPages
+        
+    :: PAGES
+    RD /S /Q $(ProjectDir)FLEX\Pages
+    MD $(ProjectDir)FLEX\Pages\Templates
+    copy $(SolutionDir)Caravan.WebForms\FLEX\Pages\*.aspx $(ProjectDir)FLEX\Pages
+    copy $(SolutionDir)Caravan.WebForms\FLEX\Pages\Templates\*.aspx $(ProjectDir)FLEX\Pages\Templates
+     
+    :: SERVICES
+    RD /S /Q $(ProjectDir)FLEX\Services
+    MD $(ProjectDir)FLEX\Services
+    copy $(SolutionDir)Caravan.WebForms\FLEX\Services\*.asmx $(ProjectDir)FLEX\Services
+    
+    :: SCRIPTS
+    RD /S /Q $(ProjectDir)FLEX\Scripts
+    MD $(ProjectDir)FLEX\Scripts
+    copy $(SolutionDir)Caravan.WebForms\FLEX\Scripts\*.js $(ProjectDir)FLEX\Scripts
+    copy $(SolutionDir)Caravan.WebForms\FLEX\Scripts\*.map $(ProjectDir)FLEX\Scripts
+   
+    :: SCRIPTS - ACE
+    MD $(ProjectDir)FLEX\Scripts\ace\snippets
+    copy $(SolutionDir)Caravan.WebForms\FLEX\Scripts\ace\*.js $(ProjectDir)FLEX\Scripts\ace
+    copy $(SolutionDir)Caravan.WebForms\FLEX\Scripts\ace\*.map $(ProjectDir)FLEX\Scripts\ace
+    copy $(SolutionDir)Caravan.WebForms\FLEX\Scripts\ace\snippets\*.js $(ProjectDir)FLEX\Scripts\ace\snippets
+    copy $(SolutionDir)Caravan.WebForms\FLEX\Scripts\ace\snippets\*.map $(ProjectDir)FLEX\Scripts\ace\snippets
+
+    :: STYLES
+    RD /S /Q $(ProjectDir)FLEX\Styles
+    MD $(ProjectDir)FLEX\Styles
+    copy $(SolutionDir)Caravan.WebForms\FLEX\Styles\*.min.css $(ProjectDir)FLEX\Styles
+    
+    :: USER CONTROLS
+    RD /S /Q $(ProjectDir)FLEX\UserControls
+    MD $(ProjectDir)FLEX\UserControls\Ajax
+    copy $(SolutionDir)Caravan.WebForms\FLEX\UserControls\*.ascx $(ProjectDir)FLEX\UserControls
+    copy $(SolutionDir)Caravan.WebForms\FLEX\UserControls\Ajax\*.ascx $(ProjectDir)FLEX\UserControls\Ajax
+)</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
