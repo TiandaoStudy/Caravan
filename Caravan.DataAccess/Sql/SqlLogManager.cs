@@ -67,7 +67,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                      Date = DateTime.Now,
                      AppId = appId,
                      TypeId = typeId,
-                     UserLogin = GetCurrentUserName(userName).Truncate(MaxUserNameLength).ToLower(),
+                     UserLogin = userName.Truncate(MaxUserNameLength).ToLower(),
                      CodeUnit = codeUnit.Truncate(MaxCodeUnitLength).ToLower(),
                      Function = function.Truncate(MaxFunctionLength).ToLower(),
                      ShortMessage = shortMessage.Truncate(MaxShortMessageLength),

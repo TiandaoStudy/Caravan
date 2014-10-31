@@ -51,7 +51,7 @@ namespace Finsa.Caravan.WebForms
          HttpContext.Current.Response.Filter = null;
 
          // Logs the error into the DB.
-         DataAccess.Db.Logger.LogFatal<GlobalHelper>(HttpContext.Current.Server.GetLastError());
+         Db.Logger.LogFatal<GlobalHelper>(HttpContext.Current.Server.GetLastError());
       }
    }
 }
