@@ -87,11 +87,26 @@ namespace Finsa.Caravan.RestService
             return RestResponse.Success(new SecGroupSingle {Group = group});
          };
 
-         Put["/{appName}/groups"] = p => null;
+         Put["/{appName}/groups"] = p =>
+         {
+            var group = StartSafeResponse<SecGroup>(NotCached);
+            Db.Security.AddGroup(p.appName, group);
+            return RestResponse.Success("OK");
+         };
 
-         Patch["/{appName}/groups/{groupName}"] = p => null;
+         Patch["/{appName}/groups/{groupName}"] = p =>
+         {
+            var group = StartSafeResponse<SecGroup>(NotCached);
+            Db.Security.UpdateGroup(p.appName, p.groupName, group);
+            return RestResponse.Success("OK");
+         };
 
-         Delete["/{appName}/groups/{groupName}"] = p => null;
+         Delete["/{appName}/groups/{groupName}"] = p =>
+         {
+            StartSafeResponse<dynamic>(NotCached);
+            Db.Security.RemoveGroup(p.appName, p.groupName);
+            return RestResponse.Success("OK");
+         };
 
          /*
           * Objects
@@ -122,11 +137,26 @@ namespace Finsa.Caravan.RestService
             return RestResponse.Success(new SecUserSingle {User = user});
          };
 
-         Put["/{appName}/users"] = p => null;
+         Put["/{appName}/users"] = p =>
+         {
+            var user = StartSafeResponse<SecUser>(NotCached);
+            Db.Security.AddUser(p.appName, user);
+            return RestResponse.Success("OK");
+         };
 
-         Patch["/{appName}/users/{userLogin}"] = p => null;
+         Patch["/{appName}/users/{userLogin}"] = p =>
+         {
+            var user = StartSafeResponse<SecUser>(NotCached);
+            Db.Security.UpdateUser(p.appName, p.userLogin, user);
+            return RestResponse.Success("OK");
+         };
 
-         Delete["/{appName}/users/{userLogin}"] = p => null;
+         Delete["/{appName}/users/{userLogin}"] = p =>
+         {
+            StartSafeResponse<dynamic>(NotCached);
+            Db.Security.RemoveUser(p.appName, p.userLogin);
+            return RestResponse.Success("OK");
+         };
       }
    }
 }
