@@ -84,6 +84,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataAccess.EntityFra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External Libraries", "External Libraries", "{EEB0F070-8283-4D00-8129-64D81E908DCE}"
 	ProjectSection(SolutionItems) = preProject
+		External Libraries\Microsoft.ReportViewer.Common.dll = External Libraries\Microsoft.ReportViewer.Common.dll
+		External Libraries\Microsoft.ReportViewer.ProcessingObjectModel.DLL = External Libraries\Microsoft.ReportViewer.ProcessingObjectModel.DLL
+		External Libraries\Microsoft.ReportViewer.WebForms.DLL = External Libraries\Microsoft.ReportViewer.WebForms.DLL
 		External Libraries\Oracle.ManagedDataAccess.dll = External Libraries\Oracle.ManagedDataAccess.dll
 		External Libraries\Oracle.ManagedDataAccess.EntityFramework.dll = External Libraries\Oracle.ManagedDataAccess.EntityFramework.dll
 	EndProjectSection
