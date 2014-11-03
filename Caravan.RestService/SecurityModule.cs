@@ -147,6 +147,7 @@ namespace Finsa.Caravan.RestService
          Patch["/{appName}/users/{userLogin}"] = p =>
          {
             var user = StartSafeResponse<SecUser>(NotCached);
+
             Db.Security.UpdateUser(p.appName, p.userLogin, user);
             return RestResponse.Success("OK");
          };
