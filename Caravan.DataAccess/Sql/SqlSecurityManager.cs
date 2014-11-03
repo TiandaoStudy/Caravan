@@ -98,7 +98,17 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override void DoRemoveUser(string appName, string userLogin)
       {
-         throw new NotImplementedException();
+         using (var ctx = Db.CreateWriteContext())
+         using (var trx = ctx.BeginTransaction())
+         {
+            var user = ctx.SecUsers.FirstOrDefault(us => us.App.Name == appName.ToLower() && us.Login == userLogin.ToLower());
+            if (user != null)
+            {
+               ctx.SecUsers.Remove(user);
+            }
+            ctx.SaveChanges();
+            trx.Commit();
+         }
       }
 
       protected override void DoUpdateUser(string appName, string userLogin, SecUser newUser)
