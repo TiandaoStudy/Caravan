@@ -98,10 +98,11 @@ namespace Finsa.Caravan.DataAccess.Sql
          {
             if (!ctx.SecUsers.Any(u => u.AppId == newUser.AppId && u.Login == newUser.Login))
             {
+               var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).First();
                var secUser = new SecUser
                {
-                  Id = (ctx.SecUsers.Where(us => us.AppId == newUser.AppId).Max(us => (long?)us.Id) ?? -1) + 1,
-                  AppId = newUser.AppId,
+                  Id = (ctx.SecUsers.Where(us => us.AppId == appId).Max(us => (long?)us.Id) ?? -1) + 1,
+                  AppId = appId,
                   Login = newUser.Login,
                   FirstName= newUser.FirstName,
                   LastName= newUser.LastName,
@@ -143,9 +144,6 @@ namespace Finsa.Caravan.DataAccess.Sql
                user.LastName = newUser.LastName;
                user.Email = newUser.Email;
                user.Login = newUser.Login;
-               user.App = newUser.App;
-               user.AppId = newUser.AppId;
-               user.Id = newUser.Id;
                user.Active = newUser.Active;
             }
             ctx.SaveChanges();
