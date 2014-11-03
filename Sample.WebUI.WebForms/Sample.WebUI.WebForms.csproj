@@ -305,7 +305,6 @@
     <Content Include="FLEX\Fonts\fontawesome-webfont.eot" />
     <Content Include="FLEX\Fonts\fontawesome-webfont.ttf" />
     <Content Include="FLEX\Fonts\fontawesome-webfont.woff" />
-    <Content Include="FLEX\Fonts\FontAwesome.otf" />
     <Content Include="FLEX\Fonts\icomoon.eot" />
     <Content Include="FLEX\Fonts\icomoon.ttf" />
     <Content Include="FLEX\Fonts\icomoon.woff" />

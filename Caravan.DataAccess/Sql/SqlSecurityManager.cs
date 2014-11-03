@@ -139,10 +139,10 @@ namespace Finsa.Caravan.DataAccess.Sql
          using (var ctx = Db.CreateReadContext())
          {
             var noGroups = groupNames.Length == 0;
-            return (from e in ctx.SecEntries.Include(e => e.App).Include(e => e.Context).Include(e => e.Object).Include(e => e.User).Include(e => e.User)
+            return (from e in ctx.SecEntries.Include(e => e.App).Include(e => e.Context).Include(e => e.Object).Include(e => e.User).Include(e => e.Group)
                     where appName == null || e.App.Name == appName
                     where contextName == null || e.Context.Name == contextName
-                    where objectType == null || e.Object.Type == objectType
+                    where objectType == null || e.Object.Name == objectType
                     where userLogin == null || e.User.Login == userLogin
                     where noGroups || groupNames.Contains(e.Group.Name)
                     orderby e.Object.Name

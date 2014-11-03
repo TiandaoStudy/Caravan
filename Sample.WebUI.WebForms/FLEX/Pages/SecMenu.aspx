@@ -55,7 +55,7 @@
 </asp:Content>
 
 <asp:Content ID="aspRightButtonsContent" ContentPlaceHolderID="rightButtonsContent" runat="server">
-   
+   <asp:Button runat="server" Text="Save" OnClick="btnSave_Click" ID="btnSave" CssClass="btn btn-primary"></asp:Button>
 </asp:Content>
 
 <asp:Content ID="aspLowerContent" ContentPlaceHolderID="lowerContent" runat="server">
