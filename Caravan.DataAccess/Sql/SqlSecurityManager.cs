@@ -93,7 +93,27 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override void DoAddUser(string appName, SecUser newUser)
       {
-         throw new NotImplementedException();
+         using (var ctx = Db.CreateWriteContext())
+         using (var trx = ctx.BeginTransaction())
+         {
+            if (!ctx.SecUsers.Any(u => u.AppId == newUser.AppId && u.Login == newUser.Login))
+            {
+               var secUser = new SecUser
+               {
+                  Id = (ctx.SecUsers.Where(us => us.AppId == newUser.AppId).Max(us => (long?)us.Id) ?? -1) + 1,
+                  AppId = newUser.AppId,
+                  Login = newUser.Login,
+                  FirstName= newUser.FirstName,
+                  LastName= newUser.LastName,
+                  App= newUser.App,
+                  Active= newUser.Active,
+                  Email= newUser.Email
+               };
+               ctx.SecUsers.Add(secUser);
+            }
+            ctx.SaveChanges();
+            trx.Commit();
+         }
       }
 
       protected override void DoRemoveUser(string appName, string userLogin)
@@ -113,7 +133,24 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override void DoUpdateUser(string appName, string userLogin, SecUser newUser)
       {
-         throw new NotImplementedException();
+         using (var ctx = Db.CreateWriteContext())
+         using (var trx = ctx.BeginTransaction())
+         {
+            var user = ctx.SecUsers.FirstOrDefault(us => us.App.Name == appName.ToLower() && us.Login == userLogin.ToLower());
+            if (user != null)
+            {
+               user.FirstName = newUser.FirstName;
+               user.LastName = newUser.LastName;
+               user.Email = newUser.Email;
+               user.Login = newUser.Login;
+               user.App = newUser.App;
+               user.AppId = newUser.AppId;
+               user.Id = newUser.Id;
+               user.Active = newUser.Active;
+            }
+            ctx.SaveChanges();
+            trx.Commit();
+         }
       }
 
       #endregion
