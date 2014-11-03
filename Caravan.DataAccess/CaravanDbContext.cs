@@ -20,9 +20,9 @@ namespace Finsa.Caravan.DataAccess
          Init();
       }
 
-      public DbContextTransaction BeginTransaction()
+      public DbTransaction BeginTransaction()
       {
-         return Database.BeginTransaction();
+         return Database.Connection.BeginTransaction();
       }
 
       private static void Init()
