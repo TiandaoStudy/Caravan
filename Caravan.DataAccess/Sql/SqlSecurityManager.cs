@@ -41,7 +41,27 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override void DoAddGroup(string appName, SecGroup newGroup)
       {
-         throw new NotImplementedException();
+         using (var ctx = Db.CreateWriteContext())
+         using (var trx = ctx.BeginTransaction())
+         {
+            if (!ctx.SecGroups.Any(g => g.App.Name == appName.ToLower() && g.Name == newGroup.Name.ToLower()))
+            {
+               var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).First();
+               var secGroup = new SecGroup
+               {
+                  Id = (ctx.SecGroups.Where(g => g.AppId == appId).Max(g => (long?)g.Id) ?? -1) + 1,
+                  AppId = appId,
+                  App = newGroup.App,
+                  Name= newGroup.Name,
+                  Description= newGroup.Description,
+                  IsAdmin= newGroup.IsAdmin
+               };
+               ctx.SecGroups.Add(secGroup);
+            }
+            ctx.SaveChanges();
+            trx.Commit();
+         }
+
       }
 
       protected override void DoRemoveGroup(string appName, string groupName)
