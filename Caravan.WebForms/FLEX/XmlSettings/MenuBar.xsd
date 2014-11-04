@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="FLEX.Web.XmlSettings.MenuBar"
+           xmlns="FLEX.Web.XmlSettings.MenuBar">
+   <xs:element name="Item">
+      <xs:complexType mixed="true">
+         <xs:sequence>
+            <xs:element name="Group" minOccurs="0">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element ref="Item" maxOccurs="unbounded" minOccurs="0"></xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="Layout" use="optional" />
+                  <xs:attribute type="xs:byte" name="OffsetX" use="optional" />
+                  <xs:attribute type="xs:byte" name="OffsetY" use="optional" />
+                  <xs:attribute type="xs:string" name="Filter" use="optional" />
+                  <xs:attribute type="xs:string" name="Filter_DropShadow_Color" use="optional" />
+                  <xs:attribute type="xs:byte" name="Filter_DropShadow_OffsetX" use="optional" />
+                  <xs:attribute type="xs:byte" name="Filter_DropShadow_OffsetY" use="optional" />
+                  <xs:attribute type="xs:string" name="Transition" use="optional" />
+               </xs:complexType>
+            </xs:element>
+         </xs:sequence>
+         <xs:attribute type="xs:string" name="ID" use="optional" />
+         <xs:attribute type="xs:string" name="Caption" use="optional" />
+         <xs:attribute type="xs:string" name="Enabled" use="optional" />
+         <xs:attribute type="xs:string" name="ItemWidth" use="optional" />
+         <xs:attribute type="xs:string" name="ClientCall" use="optional" />
+         <xs:attribute type="xs:string" name="Type" use="optional" />
+         <xs:attribute type="xs:byte" name="SeparatorHeight" use="optional" />
+         <xs:attribute type="xs:short" name="SeparatorWidth" use="optional" />
+         <xs:attribute type="xs:string" name="URL" use="optional" />
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Menu">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="Group">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element ref="Item" maxOccurs="unbounded" minOccurs="0"></xs:element>
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+         </xs:sequence>
+         <xs:attribute type="xs:string" name="Layout" />
+         <xs:attribute type="xs:string" name="MenuItemCssClass" />
+         <xs:attribute type="xs:string" name="MenuItemClickCssClass" />
+         <xs:attribute type="xs:string" name="MenuItemOverCssClass" />
+         <xs:attribute type="xs:string" name="DefaultGroupCssClass" />
+         <xs:attribute type="xs:string" name="DefaultItemCssClass" />
+         <xs:attribute type="xs:string" name="DefaultItemOverCssClass" />
+         <xs:attribute type="xs:string" name="MenuCssClass" />
+         <xs:attribute type="xs:string" name="DefaultDisabledItemCssClass" />
+         <xs:attribute type="xs:byte" name="MenuItemWidth" />
+         <xs:attribute type="xs:string" name="ScriptPath" />
+         <xs:attribute type="xs:string" name="ImagePath" />
+         <xs:attribute type="xs:string" name="CssFile" />
+         <xs:attribute type="xs:string" name="OpenOnClick" />
+      </xs:complexType>
+   </xs:element>
+</xs:schema>
