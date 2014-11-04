@@ -59,7 +59,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                }
 
                // If log is enabled, then we can insert a new entry
-               if (settings.Enabled)
+               if (settings.Enabled == 1)
                {
                   ctx.LogEntries.Add(new LogEntry
                   {

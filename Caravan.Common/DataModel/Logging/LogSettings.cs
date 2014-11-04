@@ -16,7 +16,7 @@ namespace Finsa.Caravan.DataModel.Logging
       public SecApp App { get; set; }
       
       [JsonProperty(Order = 2)]
-      public bool Enabled { get; set; }
+      public int Enabled { get; set; }
       
       [JsonProperty(Order = 3)]
       public int Days { get; set; }

@@ -17,7 +17,7 @@
   <Class Name="Finsa.Caravan.DataAccess.Db" Collapsed="true">
     <Position X="9.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAEiEAAAIAAAAAAAQAAAAAAAAABAiAAACEAACAABQ=</HashCode>
+      <HashCode>AAAAEiEAAAIAAAAAAAQAAAAAAAAABAiBAACEAAAAABQ=</HashCode>
       <FileName>Db.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -60,7 +60,7 @@
   <Class Name="Finsa.Caravan.DataAccess.Core.SecurityManagerBase&lt;TSec&gt;" Collapsed="true">
     <Position X="3" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>JSABgGEAEAAAACAAAAAAAAAAgAAgAAUEABAAAABgAgg=</HashCode>
+      <HashCode>JSEBgGEAEBAAACAAAAAAAAAAgRAgAAUkABAAAABgAgg=</HashCode>
       <FileName>Core\SecurityManagerBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -83,7 +83,7 @@
   <Class Name="Finsa.Caravan.DataAccess.Dummy.DummySecurityManager" Collapsed="true">
     <Position X="5.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>JSAAAAEAEAAAAAAAAAAAAAAAgAAAAAAEABAAAAAAAgg=</HashCode>
+      <HashCode>JSAAAAEAEBAAAAAAAAAAAAAAgBAAAAAEABAAAAAAAgg=</HashCode>
       <FileName>Dummy\DummySecurityManager.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -105,7 +105,7 @@
   <Class Name="Finsa.Caravan.DataAccess.Rest.RestSecurityManager" Collapsed="true">
     <Position X="3" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>JSAAAAEAEAAAAAAAAAAAAAAAgAAAAAAEABAAAAAAAgg=</HashCode>
+      <HashCode>JSAAAAEAEBAAAAAAAAAAAAAAgBAAAAAEABAAAAAAAgg=</HashCode>
       <FileName>Rest\RestSecurityManager.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -119,10 +119,9 @@
   <Class Name="Finsa.Caravan.DataAccess.Sql.Oracle.OracleDbManager" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="9.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAABAAAAgAAAAAAAAAQAAAAAAAAAAAQAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAABAAAEgAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
       <FileName>Sql\Oracle\OracleDbManager.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Finsa.Caravan.DataAccess.Sql.SqlLogManager" Collapsed="true">
     <Position X="3" Y="5.75" Width="1.5" />
@@ -141,7 +140,7 @@
   <Class Name="Finsa.Caravan.DataAccess.Sql.SqlSecurityManager" Collapsed="true">
     <Position X="0.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>JSAAAAEAEAAAAAAAAAAAAAAAgAAAAAAEABAAAAAAAgg=</HashCode>
+      <HashCode>JSAAAAEAEBAAAAAAAAAAAAAAgBAAAAAEABAAAAAAAgg=</HashCode>
       <FileName>Sql\SqlSecurityManager.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -155,15 +154,14 @@
   <Class Name="Finsa.Caravan.DataAccess.Sql.SqlServerCe.SqlServerCeDbManager" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="8" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAABAAAAgAAAAAAAAAQAAAAAAAAAAAQAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAABAAAEgAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
       <FileName>Sql\SqlServerCe\SqlServerCeDbManager.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Interface Name="Finsa.Caravan.DataAccess.IDbManager" Collapsed="true">
     <Position X="8" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAQAAAAAAAAAAAQAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAABAAAEAAAAAAAAAAQAAAAAAAAAAAQAAAAA=</HashCode>
       <FileName>IDbManager.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -184,7 +182,7 @@
   <Interface Name="Finsa.Caravan.DataAccess.ISecurityManager" Collapsed="true">
     <Position X="8" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAABgGEAAAAAACAAAAAAAAAAAAAgAAUAABAAAABgAAA=</HashCode>
+      <HashCode>AAEBgGEAAAAAACAAAAAAAAAAAQAgAAUgABAAAABgAAA=</HashCode>
       <FileName>ISecurityManager.cs</FileName>
     </TypeIdentifier>
   </Interface>

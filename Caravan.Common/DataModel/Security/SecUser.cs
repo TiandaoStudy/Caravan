@@ -17,7 +17,7 @@ namespace Finsa.Caravan.DataModel.Security
       public SecApp App { get; set; }
       
       [JsonProperty(Order = 1)]
-      public bool Active { get; set; }
+      public int Active { get; set; }
       
       [JsonProperty(Order = 2)]
       public string Login { get; set; }
@@ -39,6 +39,8 @@ namespace Finsa.Caravan.DataModel.Security
 
       [JsonIgnore]
       public virtual ICollection<SecEntry> SecEntries { get; set; }
+
+      #region Equality Members
 
       public bool Equals(SecUser other)
       {
@@ -72,12 +74,16 @@ namespace Finsa.Caravan.DataModel.Security
       {
          return !Equals(left, right);
       }
+
+      #endregion
    }
 
    [Serializable]
    public class SecUserSingle : IEquatable<SecUserSingle>
    {
       public SecUser User { get; set; }
+
+      #region Equality Members
 
       public bool Equals(SecUserSingle other)
       {
@@ -108,12 +114,16 @@ namespace Finsa.Caravan.DataModel.Security
       {
          return !Equals(left, right);
       }
+
+      #endregion
    }
 
    [Serializable]
    public class SecUserList : IEquatable<SecUserList>
    {
       public IEnumerable<SecUser> Users { get; set; }
+
+      #region Equality Members
 
       public bool Equals(SecUserList other)
       {
@@ -144,5 +154,7 @@ namespace Finsa.Caravan.DataModel.Security
       {
          return !Equals(left, right);
       }
+
+      #endregion
    }
 }

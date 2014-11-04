@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.DataModel;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.Diagnostics;
 using FLEX.Web.Pages;
@@ -65,13 +64,13 @@ namespace Finsa.Caravan.WebForms.Pages
             return;
          }
 
-         var group = DataAccess.Db.Security.Group(Common.Configuration.Instance.ApplicationName, groupName);
+         var group = Db.Security.Group(Common.Configuration.Instance.ApplicationName, groupName);
          Raise<ArgumentException>.IfIsNull(group, "Given group name does not exist");
 
          txtGrpId.Text = group.Id.ToString(CultureInfo.InvariantCulture);
          txtGrpName.Text = group.Name;
          txtGrpDescr.Text = group.Description;
-         chkAdmin.Checked = group.IsAdmin;
+         chkAdmin.Checked = group.IsAdmin == 1;
       }
 
       #region Buttons
@@ -86,8 +85,8 @@ namespace Finsa.Caravan.WebForms.Pages
             }
             else if (Mode == EditMode)
             {
-               var newGroup = new SecGroup {Name = txtGrpName.Text, Description = txtGrpDescr.Text, IsAdmin = chkAdmin.Checked};
-               DataAccess.Db.Security.UpdateGroup(Common.Configuration.Instance.ApplicationName, GroupName, newGroup);
+               var newGroup = new SecGroup {Name = txtGrpName.Text, Description = txtGrpDescr.Text, IsAdmin = chkAdmin.Checked ? 1 : 0};
+               Db.Security.UpdateGroup(Common.Configuration.Instance.ApplicationName, GroupName, newGroup);
             }
             Master.RegisterCloseScript(this);
          }

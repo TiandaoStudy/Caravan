@@ -20,6 +20,12 @@ namespace Finsa.Caravan.DataAccess
       /// </summary>
       /// <returns></returns>
       DbConnection OpenConnection();
+
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <returns></returns>
+      DbConnection CreateConnection();
    }
 
    public enum DataAccessKind
