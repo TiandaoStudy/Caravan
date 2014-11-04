@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -85,6 +86,7 @@ namespace Finsa.Caravan.DataAccess
       internal static DbContextBase CreateReadContext()
       {
          var ctx = DbContextGenerator();
+         ctx.Database.Initialize(false); 
          ctx.Configuration.ProxyCreationEnabled = false;
          return ctx;
       }
@@ -92,6 +94,7 @@ namespace Finsa.Caravan.DataAccess
       internal static DbContextBase CreateWriteContext()
       {
          var ctx = DbContextGenerator();
+         ctx.Database.Initialize(false); 
          return ctx;
       }
 

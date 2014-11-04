@@ -31,7 +31,7 @@ namespace Finsa.Caravan.DataAccess.Sql
       {
          using (var ctx = Db.CreateReadContext())
          {
-            return (from g in ctx.SecGroups.Include("Users.Groups")
+            return (from g in ctx.SecGroups.Include(g => g.App).Include("Users.Groups")
                     where appName == null || g.App.Name == appName.ToLower()
                     where groupName == null || g.Name == groupName.ToLower()
                     orderby g.Name, g.App.Name
@@ -103,9 +103,11 @@ namespace Finsa.Caravan.DataAccess.Sql
       {
          using (var ctx = Db.CreateReadContext())
          {
-            return (from u in ctx.SecUsers.Include("Groups.Users")
-                    where appName == null || u.App.Name == appName.ToLower()
-                    where userLogin == null || u.Login == userLogin.ToLower()
+            var lowerAppName = ctx.ToLowerOrEmpty(appName);
+            var lowerUserLogin = ctx.ToLowerOrEmpty(userLogin);
+            return (from u in ctx.SecUsers.Include(u => u.App).Include("Groups.Users")
+                    where appName == null || u.App.Name == lowerAppName
+                    where userLogin == null || u.Login == lowerUserLogin
                     orderby u.Login, u.App.Name
                     select u).ToList();
          }

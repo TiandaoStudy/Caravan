@@ -92,9 +92,10 @@ namespace Finsa.Caravan.DataAccess.Sql
       {
          using (var ctx = Db.CreateWriteContext())
          {
+            var logTypeString = logType.ToString();
             return (from s in ctx.LogEntries.Include(s => s.App)
                     where appName == null || s.App.Name == appName.ToLower()
-                    where logType == null || s.TypeId == logType.ToString().ToLower()
+                    where logType == null || s.TypeId == logTypeString.ToLower()
                     orderby s.App.Name, s.TypeId, s.Date descending
                     select s).ToList();
          }
@@ -104,9 +105,10 @@ namespace Finsa.Caravan.DataAccess.Sql
       {
          using (var ctx = Db.CreateWriteContext())
          {
+            var logTypeString = logType.ToString();
             return (from s in ctx.LogSettings.Include(s => s.App)
                     where appName == null || s.App.Name == appName.ToLower()
-                    where logType == null || s.TypeId == logType.ToString().ToLower()
+                    where logType == null || s.TypeId == logTypeString.ToLower()
                     orderby s.App.Name, s.TypeId
                     select s).ToLogAndList();
          }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using Finsa.Caravan.DataModel.Logging;
 using Finsa.Caravan.DataModel.Security;
@@ -26,6 +27,11 @@ namespace Finsa.Caravan.DataAccess.Core
       public DbSet<SecObject> SecObjects { get; set; }
 
       public DbSet<SecUser> SecUsers { get; set; }
+
+      internal string ToLowerOrEmpty(string str)
+      {
+         return str == null ? String.Empty : str.ToLower();
+      }
    }
 
    internal static class DbContextExtensions

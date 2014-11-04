@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataModel;
 using Finsa.Caravan.DataModel.Logging;
 using Finsa.Caravan.DataModel.Security;
 
@@ -70,7 +69,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
          mb.Entity<SecGroup>()
             .HasMany<SecUser>(x => x.Users)
             .WithMany(x => x.Groups)
-            .Map(x => x.MapLeftKey("CGRP_ID", "CGRP_APP_ID").MapRightKey("CUSR_ID", "CUSR_APP_ID").ToTable("CARAVAN_SEC_USER_GROUP"));
+            .Map(x => x.MapLeftKey("CGRP_ID", "CGRP_APP_ID").MapRightKey("CUSR_ID", "CUSR_APP_ID").ToTable("CARAVAN_SEC_USER_GROUP", DataAccess.Configuration.Instance.OracleUser));
 
          /************************************************
           * SecContext
