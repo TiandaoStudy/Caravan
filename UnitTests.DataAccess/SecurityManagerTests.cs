@@ -11,15 +11,11 @@ namespace UnitTests.DataAccess
     [TestFixture]
     class SecurityManagerTests
     {
-        public SecurityManagerTests()
-        {
-
-        }
-
         [SetUp]
         public void Init()
         {
-            //clear DB e inserisci applicazione
+           Db.ClearAllTablesUseOnlyInsideUnitTestsPlease();
+           Db.Security.AddApp(new SecApp {Name = "test-app-1", Description = "Test Application 1"});
         }
 
         [TearDown]
