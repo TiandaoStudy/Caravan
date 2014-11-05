@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.DataAccess;
@@ -241,10 +240,6 @@ namespace UnitTests.DataAccess
         {
 
         }
-
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void 
         
 
         #endregion

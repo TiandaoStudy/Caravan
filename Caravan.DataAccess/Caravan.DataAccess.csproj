@@ -150,12 +150,15 @@
     <Compile Include="Sql\SqlServerCe\SqlServerCeDbManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="ClassDiagram.cd" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="README.md" />
+    <None Include="Sql\SqlServerCe\Scripts\Tables.sqlce" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Caravan.Helpers\Caravan.Helpers.csproj">
@@ -184,9 +187,6 @@
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_app.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_context.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_security.sql" />
-    <Content Include="Sql\SqlServerCe\Scripts\Tables\caravan_log.sql" />
-    <Content Include="Sql\SqlServerCe\Scripts\Tables\caravan_log_settings.sql" />
-    <Content Include="Sql\SqlServerCe\Scripts\Tables\caravan_sec_app.sql" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Sql\Postgres\" />
