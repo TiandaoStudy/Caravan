@@ -541,7 +541,7 @@
     :: SCRIPTS
     RD /S /Q $(ProjectDir)FLEX\Scripts
     MD $(ProjectDir)FLEX\Scripts
-    copy $(SolutionDir)Caravan.WebForms\FLEX\Scripts\*.js $(ProjectDir)FLEX\Scripts
+    copy $(SolutionDir)Caravan.WebForms\FLEX\Scripts\*.min.js $(ProjectDir)FLEX\Scripts
     copy $(SolutionDir)Caravan.WebForms\FLEX\Scripts\*.map $(ProjectDir)FLEX\Scripts
    
     :: SCRIPTS - ACE

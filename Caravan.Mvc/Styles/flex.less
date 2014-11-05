@@ -25,12 +25,19 @@ body {
 nav {
    .navbar-default {
       .navbar-brand {
+         display: inline-block;
          font-size: @brand-font-size;
 
          .logo {
+            float: left;
             margin-right: @image-margin;
             width: @brand-logo-size;
             height: @brand-logo-size;
+         }
+
+         .navbar-brand-description {
+            float: left;
+            margin-left: @image-margin;
          }
       }
    }

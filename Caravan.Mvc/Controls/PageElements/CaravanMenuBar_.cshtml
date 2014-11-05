@@ -100,16 +100,16 @@
                   <span class="icon-bar"></span>
                </button>
                <a class="navbar-brand" href="#" onclick=" WebSettings.UserControls_MenuBar_BrandClick ">
-                  <img src='@(CoreLayoutHelper.MyCaravanPath)/Images/logo-menubar.png' class='logo' alt='Logo' />&nbsp;@Configuration.Instance.ApplicationName
+                  <img src='@(CoreLayoutHelper.MyCaravanPath)/Images/logo-menubar.png' class='logo' alt='Logo' />
+                  <span class="navbar-brand-description">@Configuration.Instance.ApplicationDescription</span>
                </a>
             </div>
+
             <div id="menuBar-collapse" class="navbar-collapse collapse">
                <ul class="nav navbar-nav" id="ul_menu" runat="server">
                   @(new HtmlString(CaravanMenuBarHelper.GetMenuFromService(ajaxHelper)))
-
-
-                
                </ul>
+
                <ul class="nav navbar-nav navbar-right">
                   <li>
                      <a href="#" onclick=" WebSettings.UserControls_MenuBar_HomeClick ">

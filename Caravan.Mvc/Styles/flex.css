@@ -11,12 +11,18 @@ body {
   background-image: url(../Images/pattern.png);
 }
 nav .navbar-default .navbar-brand {
+  display: inline-block;
   font-size: 20px;
 }
 nav .navbar-default .navbar-brand .logo {
+  float: left;
   margin-right: 5px;
   width: 24px;
   height: 24px;
+}
+nav .navbar-default .navbar-brand .navbar-brand-description {
+  float: left;
+  margin-left: 5px;
 }
 .padded-icon {
   margin-right: 5px;

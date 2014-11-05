@@ -142,33 +142,32 @@ WebViewPage.WriteTo(@__razor_helper_writer, CoreLayoutHelper.MyCaravanPath);
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "/Images/logo-menubar.png\' class=\'logo\' alt=\'Logo\' />&nbsp;");
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "/Images/logo-menubar.png\' class=\'logo\' alt=\'Logo\' />\r\n                  <span cla" +
+"ss=\"navbar-brand-description\">");
 
 
 
-#line 103 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
-                                                                            WebViewPage.WriteTo(@__razor_helper_writer, Configuration.Instance.ApplicationName);
+#line 104 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
+              WebViewPage.WriteTo(@__razor_helper_writer, Configuration.Instance.ApplicationDescription);
 
 #line default
 #line hidden
 
-WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\r\n               </a>\r\n            </div>\r\n            <div id=\"menuBar-collapse\"" +
-" class=\"navbar-collapse collapse\">\r\n               <ul class=\"nav navbar-nav\" id" +
-"=\"ul_menu\" runat=\"server\">\r\n                  ");
+WebViewPage.WriteLiteralTo(@__razor_helper_writer, "</span>\r\n               </a>\r\n            </div>\r\n\r\n            <div id=\"menuBar-" +
+"collapse\" class=\"navbar-collapse collapse\">\r\n               <ul class=\"nav navba" +
+"r-nav\" id=\"ul_menu\" runat=\"server\">\r\n                  ");
 
 
 
-#line 108 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
+#line 110 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, new HtmlString(CaravanMenuBarHelper.GetMenuFromService(ajaxHelper)));
 
 #line default
 #line hidden
 
 WebViewPage.WriteLiteralTo(@__razor_helper_writer, @"
-
-
-                
                </ul>
+
                <ul class=""nav navbar-nav navbar-right"">
                   <li>
                      <a href=""#"" onclick="" WebSettings.UserControls_MenuBar_HomeClick "">
