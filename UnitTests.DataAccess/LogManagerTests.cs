@@ -9,7 +9,19 @@ namespace UnitTests.DataAccess
     [TestFixture]
     public class LogManagerTests
     {
-        
+
+        [SetUp]
+        public void Init()
+        {
+            //connessione al db 
+        }
+
+        [TearDown]
+        public void CleanUp()
+        {
+
+        }
+
         [Test]
         public void LogSettings_NullArg_ReturnListOfAllApps()
         {
@@ -39,13 +51,6 @@ namespace UnitTests.DataAccess
         {
 
         }
-
-        //[Test]
-        //[ExpectedException(typeof(ArgumentException))]
-        //public void LogSettings_NotExistingAppName_ThrowsArgumenException()
-        //{
-
-        //}
                 
     }
 }

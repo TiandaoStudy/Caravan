@@ -18,7 +18,7 @@ namespace UnitTests.DataAccess
         [SetUp]
         public void Init()
         {
-
+            //connessione al db 
         }
 
         [TearDown]
@@ -39,7 +39,7 @@ namespace UnitTests.DataAccess
             string appName = "mio_test";
 
             //creare 2 oggetti SecUser
-            
+            //var user1 = new SecUser();
             //creare App con "appName"
             
             //chiamare AddUser passando i parametri creati
@@ -63,13 +63,6 @@ namespace UnitTests.DataAccess
         {
 
         }
-
-        //[Test]
-
-        //public void Users_NotExistingAppName_ThrowsArgumentException()
-        //{
-
-        //}
 
         #endregion
 
