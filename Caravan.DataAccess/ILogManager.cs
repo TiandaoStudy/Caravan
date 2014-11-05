@@ -255,21 +255,21 @@ namespace Finsa.Caravan.DataAccess
       ///   TODO
       /// </summary>
       /// <returns></returns>
-      IEnumerable<LogEntry> Logs();
+      IList<LogEntry> Logs();
 
       /// <summary>
       ///   TODO
       /// </summary>
       /// <param name="appName"></param>
       /// <returns></returns>
-      IEnumerable<LogEntry> Logs(string appName);
+      IList<LogEntry> Logs(string appName);
 
       /// <summary>
       ///   TODO
       /// </summary>
       /// <param name="logType"></param>
       /// <returns></returns>
-      IEnumerable<LogEntry> Logs(LogType logType);
+      IList<LogEntry> Logs(LogType logType);
 
       /// <summary>
       ///   TODO
@@ -277,7 +277,7 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="appName"></param>
       /// <param name="logType"></param>
       /// <returns></returns>
-      IEnumerable<LogEntry> Logs(string appName, LogType logType);
+      IList<LogEntry> Logs(string appName, LogType logType);
 
       #endregion
 

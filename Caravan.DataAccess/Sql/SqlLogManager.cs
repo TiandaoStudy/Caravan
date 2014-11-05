@@ -88,29 +88,39 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-      protected override IEnumerable<LogEntry> GetLogs(string appName, LogType? logType)
+      protected override IList<LogEntry> GetLogs(string appName, LogType? logType)
       {
-         using (var ctx = Db.CreateWriteContext())
+         using (var ctx = Db.CreateReadContext())
          {
-            var logTypeString = logType.ToString().ToLower();
-            return (from s in ctx.LogEntries.Include(s => s.App)
-                    where appName == null || s.App.Name == appName
-                    where logType == null || s.TypeId == logTypeString
-                    orderby s.App.Name, s.TypeId, s.Date descending
-                    select s).ToList();
+            var q = ctx.LogEntries.Include(s => s.App);
+            if (appName != null)
+            {
+               q = q.Where(s => s.App.Name == appName);
+            }
+            if (logType != null)
+            {
+               var logTypeString = logType.ToString().ToLower();
+               q = q.Where(s => s.TypeId == logTypeString);
+            }
+            return q.OrderBy(s => s.App.Name).ThenBy(s => s.TypeId).ThenByDescending(s => s.Date).ToList();
          }
       }
 
       protected override IList<LogSettings> GetLogSettings(string appName, LogType? logType)
       {
-         using (var ctx = Db.CreateWriteContext())
+         using (var ctx = Db.CreateReadContext())
          {
-            var logTypeString = logType.ToString().ToLower();
-            return (from s in ctx.LogSettings.Include(s => s.App)
-                    where appName == null || s.App.Name == appName
-                    where logType == null || s.TypeId == logTypeString
-                    orderby s.App.Name, s.TypeId
-                    select s).ToLogAndList();
+            var q = ctx.LogSettings.Include(s => s.App);
+            if (appName != null)
+            {
+               q = q.Where(s => s.App.Name == appName);
+            }
+            if (logType != null)
+            {
+               var logTypeString = logType.ToString().ToLower();
+               q = q.Where(s => s.TypeId == logTypeString);
+            }
+            return q.OrderBy(s => s.App.Name).ThenBy(s => s.TypeId).ToLogAndList();
          }
       }
    }
