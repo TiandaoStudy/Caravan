@@ -13,7 +13,7 @@ namespace UnitTests.DataAccess
         [SetUp]
         public void Init()
         {
-            //connessione al db 
+            //connessione al db? 
         }
 
         [TearDown]

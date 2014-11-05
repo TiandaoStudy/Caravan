@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using Finsa.Caravan.DataModel.Security;
+using Finsa.Caravan.DataAccess;
 
 namespace UnitTests.DataAccess
 {
@@ -18,7 +20,7 @@ namespace UnitTests.DataAccess
         [SetUp]
         public void Init()
         {
-            //connessione al db 
+            //clear DB e inserisci applicazione
         }
 
         [TearDown]
@@ -32,28 +34,27 @@ namespace UnitTests.DataAccess
         [Test]
         public void Users_Insert2Users_ReturnsListOfUsers()
         {
-            string name_user1= "pippo";
-            string login_user1 = "blabla1";
-            string name_user2 = "pluto";
-            string login_user2 = "blabla2";
-            string appName = "mio_test";
-
-            //creare 2 oggetti SecUser
-            //var user1 = new SecUser();
-            //creare App con "appName"
             
-            //chiamare AddUser passando i parametri creati
-            //AddUser(appName,)
+            string appName = "mio_test";//da commentare
+           
+            var user1 = new SecUser();
+            var user2 = new SecUser();
+      
+            Db.Security.AddUser(appName,user1);
+            Db.Security.AddUser(appName,user2);
             
-            //richiamare il metodo da testare (Users)
-            //IEnumerable<SecUser> retValue = Users(appName);
-            //Assert.That(retValue.Count(),IsEqualTo(2));
+            IEnumerable<SecUser> retValue = Db.Security.Users(appName);
+            Assert.That(retValue.Count(),Is.EqualTo(2));            
             
         }
 
         [Test]
         public void Users_NoUsers_ReturnsNull()
         {
+            string appName = "mio_test"; //da commentare
+
+            IEnumerable<SecUser> retValue = Db.Security.Users(appName);
+            Assert.That(retValue, Is.EqualTo(null));
 
         }
 
@@ -62,6 +63,7 @@ namespace UnitTests.DataAccess
         public void Users_NullAppName_ThrowsArgumentNullException()
         {
 
+            Db.Security.Users(null);
         }
 
         #endregion
@@ -70,7 +72,17 @@ namespace UnitTests.DataAccess
         [Test]
         public void User_ValidArgs_ReturnsUser()
         {
+            string appName = "mio_test"; //da commentare
+            SecUser user1 = new SecUser();
+            user1.FirstName = "pippo";
+            user1.Login = "blabla";
+            
+            Db.Security.AddUser(appName,user1);
 
+           var u= Db.Security.User(appName,user1.Login);
+
+            Assert.That(u.FirstName,Is.EqualTo("pippo"));
+            Assert.That(u.Login,Is.EqualTo("blabla"));
         }
 
         [Test]
@@ -79,13 +91,6 @@ namespace UnitTests.DataAccess
         {
 
         }
-
-        //[Test]
-        //[ExpectedException(typeof(ArgumentException))]
-        //public void User_NotExistingAppName_ThrowsArgumentException()
-        //{
-
-        //}
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -101,6 +106,37 @@ namespace UnitTests.DataAccess
         [Test]
         public void AddUser_ValidArgs_InsertOk()
         {
+            string name_user1= "pippo";
+            string login_user1 = "blabla1";
+            string name_user2 = "pluto";
+            string login_user2 = "blabla2";
+            string appName = "mio_test";//da commentare
+            
+            var user1 = new SecUser();
+            var user2 = new SecUser();
+
+            user1.FirstName = name_user1;
+            user1.Login = login_user1;
+
+            user2.FirstName = name_user2;
+            user2.Login = login_user2;
+
+            Db.Security.AddUser(appName,user1);
+            Db.Security.AddUser(appName,user2);
+
+            //verifico che sia stato inserito user1
+            var q = (from c in Db.Security.Users(appName) 
+                     where ((c.FirstName==user1.FirstName) && (c.Login == user1.Login)) select c);
+
+            Assert.That(q.First().FirstName,Is.EqualTo("pippo"));
+            Assert.That(q.First().Login, Is.EqualTo("blabla1"));
+
+            //verifico che sia stato inserito correttamente user2
+            var q2 = (from c in Db.Security.Users(appName) 
+                      where ((c.FirstName==user2.FirstName) && (c.Login == user2.Login)) select c);
+
+            Assert.That(q2.First().FirstName,Is.EqualTo("pluto"));
+            Assert.That(q2.First().Login, Is.EqualTo("blabla2"));
 
         }
 
@@ -180,5 +216,38 @@ namespace UnitTests.DataAccess
         }
 
         #endregion
+
+        #region Groups_Tests
+
+        [Test]
+        public void Groups_ValidArgs_ReturnsListOfGroups()
+        {
+
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Groups_NullAppName_ThrowsArgumentNullException()
+        {
+
+        }
+
+        #endregion
+
+        #region Group_Tests
+
+        [Test]
+        public void Group_ValidArgs_ReturnsASecGroupObject()
+        {
+
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void 
+        
+
+        #endregion
+
     }
 }
