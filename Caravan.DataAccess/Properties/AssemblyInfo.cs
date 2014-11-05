@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -42,3 +43,4 @@ using System.Runtime.InteropServices;
 // Attributes added to allow stronger development.
 
 [assembly: CLSCompliant(true)]
+[assembly: InternalsVisibleTo("UnitTests.DataAccess")]

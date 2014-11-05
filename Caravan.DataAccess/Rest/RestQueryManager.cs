@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Finsa.Caravan.DataModel;
+using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel.Security;
 
 namespace Finsa.Caravan.DataAccess.Rest
 {
-   internal sealed class RestQueryManager : IQueryManager
+   internal sealed class RestQueryManager : QueryManagerBase
    {
-      public IEnumerable<SecGroup> Groups(string appName, string queryString)
+      protected override IEnumerable<SecGroup> QueryGroups(string appName, string queryString)
       {
          throw new NotImplementedException();
       }
