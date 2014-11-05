@@ -1,5 +1,6 @@
 ﻿using System;
 using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.DataModel.Security;
 using NUnit.Framework;
 
 namespace UnitTests.DataAccess
@@ -11,6 +12,7 @@ namespace UnitTests.DataAccess
       public void Init()
       {
          Db.ClearAllTablesUseOnlyInsideUnitTestsPlease();
+         Db.Security.AddApp(new SecApp {Name = "test-app-1", Description = "Test Application 1"});
       }
 
       [TearDown]

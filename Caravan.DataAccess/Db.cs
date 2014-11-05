@@ -146,6 +146,7 @@ namespace Finsa.Caravan.DataAccess
             {
                ctx.LogEntries.RemoveRange(ctx.LogEntries.ToList());
                ctx.LogSettings.RemoveRange(ctx.LogSettings.ToList());
+               ctx.SecApps.RemoveRange(ctx.SecApps.ToList());
                ctx.SaveChanges();
             }
             catch

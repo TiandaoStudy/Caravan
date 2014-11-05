@@ -11,6 +11,11 @@ namespace Finsa.Caravan.DataAccess.Dummy
          throw new System.NotImplementedException();
       }
 
+      protected override SecApp DoAddApp(SecApp app)
+      {
+         throw new System.NotImplementedException();
+      }
+
       protected override IEnumerable<SecGroup> GetGroups(string appName, string groupName)
       {
          throw new System.NotImplementedException();

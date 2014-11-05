@@ -26,6 +26,13 @@ namespace Finsa.Caravan.DataAccess.Core
          return GetApps(appName.ToLowerOrEmpty()).FirstOrDefault();
       }
 
+      public SecApp AddApp(SecApp app)
+      {
+         Raise<ArgumentNullException>.IfIsNull(app);
+         Raise<ArgumentException>.IfIsEmpty(app.Name);
+         return DoAddApp(app);
+      }
+
       #endregion
 
       #region Groups
@@ -248,6 +255,8 @@ namespace Finsa.Caravan.DataAccess.Core
       #region Abstract Methods
 
       protected abstract IEnumerable<SecApp> GetApps(string appName);
+
+      protected abstract SecApp DoAddApp(SecApp app);
 
       protected abstract IEnumerable<SecGroup> GetGroups(string appName, string groupName);
 
