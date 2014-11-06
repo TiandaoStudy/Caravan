@@ -152,14 +152,47 @@ namespace Finsa.Caravan.DataAccess.Core
          }
       }
 
+      public void AddUserToGroup(string appName, string userLogin, string groupName)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfIsEmpty(userLogin);
+         Raise<ArgumentException>.IfIsEmpty(groupName);
+         try
+         {
+            if (!DoAddUserToGroup(appName, userLogin, groupName))
+            {
+               throw new UserExistingException();
+            }
+         }
+         catch (Exception ex)
+         {
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, "Adding an user to a group");
+            throw;
+         }
+      }
+
+      public void RemoveUserFromGroup(string appName, string userLogin, string groupName)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfIsEmpty(userLogin);
+         Raise<ArgumentException>.IfIsEmpty(groupName);
+         try
+         {
+            if (!DoRemoveUserFromGroup(appName, userLogin, groupName))
+            {
+               throw new UserNotFoundException();
+            }
+         }
+         catch (Exception ex)
+         {
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, "Removing an user from a group");
+            throw;
+         }
+      }
+
       #endregion
 
       #region Contexts
-
-      public IList<SecContext> Contexts()
-      {
-         return GetContexts(null);
-      }
 
       public IList<SecContext> Contexts(string appName)
       {
@@ -170,11 +203,6 @@ namespace Finsa.Caravan.DataAccess.Core
       #endregion
 
       #region Objects
-
-      public IList<SecObject> Objects()
-      {
-         return GetObjects(null, null);
-      }
 
       public IList<SecObject> Objects(string appName)
       {
@@ -314,6 +342,10 @@ namespace Finsa.Caravan.DataAccess.Core
       protected abstract bool DoRemoveUser(string appName, string userLogin);
 
       protected abstract bool DoUpdateUser(string appName, string userLogin, SecUser newUser);
+
+      protected abstract bool DoAddUserToGroup(string appName, string userLogin, string groupName);
+
+      protected abstract bool DoRemoveUserFromGroup(string appName, string userLogin, string groupName);
 
       protected abstract IList<SecContext> GetContexts(string appName);
 

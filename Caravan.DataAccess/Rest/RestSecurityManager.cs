@@ -57,6 +57,16 @@ namespace Finsa.Caravan.DataAccess.Rest
          throw new NotImplementedException();
       }
 
+      protected override bool DoAddUserToGroup(string appName, string userLogin, string groupName)
+      {
+         throw new NotImplementedException();
+      }
+
+      protected override bool DoRemoveUserFromGroup(string appName, string userLogin, string groupName)
+      {
+         throw new NotImplementedException();
+      }
+
       protected override IList<SecContext> GetContexts(string appName)
       {
          throw new NotImplementedException();
