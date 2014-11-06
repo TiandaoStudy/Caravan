@@ -8,7 +8,7 @@ namespace Finsa.Caravan.DataAccess.Core
 {
    internal abstract class DbContextBase : CaravanDbContext<DbContextBase>
    {
-      protected DbContextBase() : base(Db.Manager.CreateConnection(), true)
+      internal DbContextBase() : base(Db.Manager.CreateConnection(), true)
       {
       }
 

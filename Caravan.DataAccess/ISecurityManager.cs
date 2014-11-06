@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Finsa.Caravan.DataModel.Security;
 
 namespace Finsa.Caravan.DataAccess
@@ -10,6 +11,15 @@ namespace Finsa.Caravan.DataAccess
       IEnumerable<SecApp> Apps();
 
       SecApp App(string appName);
+
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      /// <param name="app"></param>
+      /// <exception cref="ArgumentNullException">
+      ///   <paramref name="app"/> is null.
+      /// </exception>
+      SecApp AddApp(SecApp app);
 
       #endregion
 

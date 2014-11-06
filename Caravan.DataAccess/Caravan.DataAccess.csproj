@@ -36,7 +36,11 @@
   <PropertyGroup>
     <PostBuildEvent>IF EXIST $(SolutionDir)NuGetPackager.DataAccess (
     copy $(TargetDir)Finsa.Caravan.DataAccess.* "$(SolutionDir)NuGetPackager.DataAccess/lib/net40"
-)</PostBuildEvent>
+)
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime">
@@ -91,6 +95,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Data.SQLite.Core.MSIL.1.0.94.0\lib\net40\System.Data.SQLite.dll</HintPath>
     </Reference>
+    <Reference Include="System.Data.SqlServerCe">
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe.Entity">
+      <HintPath>..\packages\EntityFramework.SqlServerCompact.4.3.6\lib\net40\System.Data.SqlServerCe.Entity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.IO">
       <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\net40\System.IO.dll</HintPath>
     </Reference>
@@ -100,6 +112,7 @@
     <Reference Include="System.Threading.Tasks">
       <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\net40\System.Threading.Tasks.dll</HintPath>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -138,12 +151,15 @@
     <Compile Include="Sql\SqlServerCe\SqlServerCeDbManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="ClassDiagram.cd" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="README.md" />
+    <None Include="Sql\SqlServerCe\Scripts\Tables.sqlce" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Caravan.Helpers\Caravan.Helpers.csproj">
@@ -172,9 +188,6 @@
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_app.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_context.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_security.sql" />
-    <Content Include="Sql\SqlServerCe\Scripts\Tables\caravan_log.sql" />
-    <Content Include="Sql\SqlServerCe\Scripts\Tables\caravan_log_settings.sql" />
-    <Content Include="Sql\SqlServerCe\Scripts\Tables\caravan_sec_app.sql" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Sql\Postgres\" />

@@ -51,12 +51,19 @@ nav {
       border-radius: 0px;
 
       .navbar-brand {
+         display: inline-block;
          font-size: 20px;
 
          .logo {
+            float: left;
             margin-right: 5px;
             width: 24px;
             height: 24px;
+         }
+
+         .navbar-brand-description {
+            float: left;
+            margin-left: @image-margin;
          }
       }
    }

@@ -3,31 +3,31 @@ using System.Data.Entity;
 
 namespace Finsa.Caravan.DataAccess
 {
+   public static class CaravanDbContext
+   {
+      public static void Init<TCtx>() where TCtx : DbContext
+      {
+         Database.SetInitializer<TCtx>(null);
+      }
+   }
+
    public abstract class CaravanDbContext<TCtx> : DbContext where TCtx : CaravanDbContext<TCtx>
    {
       protected CaravanDbContext()
       {
-         Init();
       }
 
       protected CaravanDbContext(DbConnection existingConnection, bool contextOwnsConnection) : base(existingConnection, contextOwnsConnection)
       {
-         Init();
       }
 
       protected CaravanDbContext(string nameOrConnectionString) : base(nameOrConnectionString)
       {
-         Init();
       }
 
       public DbTransaction BeginTransaction()
       {
          return Database.Connection.BeginTransaction();
-      }
-
-      private static void Init()
-      {
-         Database.SetInitializer<TCtx>(null);
       }
    }
 }

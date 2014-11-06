@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -16,10 +15,10 @@ namespace Finsa.Caravan.DataAccess
 {
    public static class Db
    {
-      private static readonly ILogManager LogManagerInstance;
-      private static readonly IQueryManager QueryManagerInstance;
+      private static readonly LogManagerBase LogManagerInstance;
+      private static readonly QueryManagerBase QueryManagerInstance;
       private static readonly ISecurityManager SecurityManagerInstance;
-      private static readonly IDbManager DbManagerInstance;
+      private static readonly DbManagerBase DbManagerInstance;
       private static readonly Func<DbContextBase> DbContextGenerator;
 
       static Db()
@@ -63,6 +62,8 @@ namespace Finsa.Caravan.DataAccess
          }
       }
 
+      #region Public Properties
+
       public static IDbManager Manager
       {
          get { return DbManagerInstance; }
@@ -83,20 +84,7 @@ namespace Finsa.Caravan.DataAccess
          get { return SecurityManagerInstance; }
       }
 
-      internal static DbContextBase CreateReadContext()
-      {
-         var ctx = DbContextGenerator();
-         ctx.Database.Initialize(false); 
-         ctx.Configuration.ProxyCreationEnabled = false;
-         return ctx;
-      }
-
-      internal static DbContextBase CreateWriteContext()
-      {
-         var ctx = DbContextGenerator();
-         ctx.Database.Initialize(false); 
-         return ctx;
-      }
+      #endregion
 
       #region Context Generators
 
@@ -130,6 +118,42 @@ namespace Finsa.Caravan.DataAccess
          });
 
          return list;
+      }
+
+      internal static DbContextBase CreateReadContext()
+      {
+         var ctx = DbContextGenerator();
+         ctx.Database.Initialize(false);
+         ctx.Database.Connection.Open();
+         ctx.Configuration.ProxyCreationEnabled = false;
+         return ctx;
+      }
+
+      internal static DbContextBase CreateWriteContext()
+      {
+         var ctx = DbContextGenerator();
+         ctx.Database.Initialize(false);
+         ctx.Database.Connection.Open();
+         return ctx;
+      }
+
+      internal static void ClearAllTablesUseOnlyInsideUnitTestsPlease()
+      {
+         using (var ctx = CreateWriteContext())
+         {
+            var trx = ctx.BeginTransaction();
+            try
+            {
+               ctx.LogEntries.RemoveRange(ctx.LogEntries.ToList());
+               ctx.LogSettings.RemoveRange(ctx.LogSettings.ToList());
+               ctx.SecApps.RemoveRange(ctx.SecApps.ToList());
+               ctx.SaveChanges();
+            }
+            catch
+            {
+               trx.Rollback();
+            }
+         }
       }
    }
 }

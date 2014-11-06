@@ -8,6 +8,11 @@ namespace Finsa.Caravan.DataAccess.Sql.SqlServerCe
 {
    internal sealed class SqlServerCeDbContext : DbContextBase
    {
+      static SqlServerCeDbContext()
+      {
+         CaravanDbContext.Init<SqlServerCeDbContext>();
+      }
+
       protected override void OnModelCreating(DbModelBuilder mb)
       {
          base.OnModelCreating(mb);
@@ -58,6 +63,7 @@ namespace Finsa.Caravan.DataAccess.Sql.SqlServerCe
          mb.Entity<SecGroup>().Property(x => x.Name).HasColumnName("CGRP_NAME");
          mb.Entity<SecGroup>().Property(x => x.Description).HasColumnName("CGRP_DESCRIPTION");
          mb.Entity<SecGroup>().Property(x => x.IsAdmin).HasColumnName("CGRP_ADMIN");
+         mb.Entity<SecGroup>().Property(x => x.Notes).HasColumnName("CGRP_NOTES");
 
          // SecGroup(N) <-> SecApp(1)
          mb.Entity<SecGroup>()

@@ -13,7 +13,7 @@ namespace Finsa.Caravan.DataAccess.Rest
          throw new NotImplementedException();
       }
 
-      protected override IEnumerable<LogEntry> GetLogs(string appName, LogType? logType)
+      protected override IList<LogEntry> GetLogs(string appName, LogType? logType)
       {
          throw new NotImplementedException();
       }

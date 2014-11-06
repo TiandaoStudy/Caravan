@@ -13,7 +13,7 @@ namespace Finsa.Caravan.DataAccess.Dummy
          throw new System.NotImplementedException();
       }
 
-      protected override IEnumerable<LogEntry> GetLogs(string appName, LogType? logType)
+      protected override IList<LogEntry> GetLogs(string appName, LogType? logType)
       {
          return ReadOnlyList.Empty<LogEntry>();
       }

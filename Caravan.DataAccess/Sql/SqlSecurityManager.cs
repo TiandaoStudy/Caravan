@@ -23,6 +23,17 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
+      protected override SecApp DoAddApp(SecApp app)
+      {
+         using (var ctx = Db.CreateWriteContext())
+         {
+            app.Id = (ctx.SecApps.Max(a => (long?) a.Id) ?? -1) + 1;
+            ctx.SecApps.Add(app);
+            ctx.SaveChanges();
+            return app;
+         }
+      }
+
       #endregion
 
       #region Groups
@@ -133,7 +144,6 @@ namespace Finsa.Caravan.DataAccess.Sql
                ctx.SecUsers.Add(secUser);
             }
             ctx.SaveChanges();
-            trx.Commit();
          }
       }
 

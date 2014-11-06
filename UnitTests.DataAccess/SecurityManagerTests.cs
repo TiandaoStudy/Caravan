@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.DataAccess;
@@ -12,15 +11,11 @@ namespace UnitTests.DataAccess
     [TestFixture]
     class SecurityManagerTests
     {
-        public SecurityManagerTests()
-        {
-
-        }
-
         [SetUp]
         public void Init()
         {
-            //clear DB e inserisci applicazione
+           Db.ClearAllTablesUseOnlyInsideUnitTestsPlease();
+           Db.Security.AddApp(new SecApp {Name = "mio_test", Description = "Test Application 1"});
         }
 
         [TearDown]
@@ -272,10 +267,6 @@ namespace UnitTests.DataAccess
         {
 
         }
-
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void 
         
 
         #endregion

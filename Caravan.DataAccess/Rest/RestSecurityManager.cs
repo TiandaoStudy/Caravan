@@ -12,6 +12,11 @@ namespace Finsa.Caravan.DataAccess.Rest
          throw new NotImplementedException();
       }
 
+      protected override SecApp DoAddApp(SecApp app)
+      {
+         throw new NotImplementedException();
+      }
+
       protected override IEnumerable<SecGroup> GetGroups(string appName, string groupName)
       {
          throw new NotImplementedException();

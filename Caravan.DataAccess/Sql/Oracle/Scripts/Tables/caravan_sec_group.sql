@@ -7,6 +7,7 @@ CREATE TABLE mydb.caravan_sec_group
    , cgrp_name        NVARCHAR2(50)   NOT NULL
    , cgrp_description NVARCHAR2(150)  NOT NULL
    , cgrp_admin       NUMBER(1)       NOT NULL
+   , cgrp_notes       NVARCHAR2(2000) NOT NULL
    , CHECK (cgrp_name = lower(cgrp_name)) ENABLE
    , CONSTRAINT pk_caravan_sec_group PRIMARY KEY (cgrp_id, capp_id) USING INDEX TABLESPACE dati_base_index ENABLE
    , CONSTRAINT uk_caravan_sec_group UNIQUE (cgrp_name, capp_id) USING INDEX TABLESPACE dati_base_index ENABLE
