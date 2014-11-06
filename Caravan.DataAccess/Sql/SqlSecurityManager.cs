@@ -144,7 +144,6 @@ namespace Finsa.Caravan.DataAccess.Sql
                ctx.SecUsers.Add(secUser);
             }
             ctx.SaveChanges();
-            trx.Commit();
          }
       }
 
