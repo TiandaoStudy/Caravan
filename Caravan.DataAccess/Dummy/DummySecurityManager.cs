@@ -6,37 +6,37 @@ namespace Finsa.Caravan.DataAccess.Dummy
 {
    public sealed class DummySecurityManager : SecurityManagerBase<DummySecurityManager>
    {
-      protected override IEnumerable<SecApp> GetApps(string appName)
+      protected override IList<SecApp> GetApps(string appName)
       {
          throw new System.NotImplementedException();
       }
 
-      protected override SecApp DoAddApp(SecApp app)
+      protected override bool DoAddApp(SecApp app)
       {
          throw new System.NotImplementedException();
       }
 
-      protected override IEnumerable<SecGroup> GetGroups(string appName, string groupName)
+      protected override IList<SecGroup> GetGroups(string appName, string groupName)
       {
          throw new System.NotImplementedException();
       }
 
-      protected override void DoAddGroup(string appName, SecGroup newGroup)
+      protected override bool DoAddGroup(string appName, SecGroup newGroup)
       {
          throw new System.NotImplementedException();
       }
 
-      protected override void DoRemoveGroup(string appName, string groupName)
+      protected override bool DoRemoveGroup(string appName, string groupName)
       {
          throw new System.NotImplementedException();
       }
 
-      protected override void DoUpdateGroup(string appName, string groupName, SecGroup newGroup)
+      protected override bool DoUpdateGroup(string appName, string groupName, SecGroup newGroup)
       {
          throw new System.NotImplementedException();
       }
 
-      protected override IEnumerable<SecUser> GetUsers(string appName, string userLogin)
+      protected override IList<SecUser> GetUsers(string appName, string userLogin)
       {
          throw new System.NotImplementedException();
       }
@@ -56,12 +56,12 @@ namespace Finsa.Caravan.DataAccess.Dummy
          throw new System.NotImplementedException();
       }
 
-      protected override IEnumerable<SecContext> GetContexts(string appName)
+      protected override IList<SecContext> GetContexts(string appName)
       {
          throw new System.NotImplementedException();
       }
 
-      protected override IEnumerable<SecObject> GetObjects(string appName, string contextName)
+      protected override IList<SecObject> GetObjects(string appName, string contextName)
       {
          throw new System.NotImplementedException();
       }
@@ -73,12 +73,12 @@ namespace Finsa.Caravan.DataAccess.Dummy
          throw new System.NotImplementedException();
       }
 
-      protected override void DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+      protected override bool DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
       {
          throw new System.NotImplementedException();
       }
 
-      protected override void DoRemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)
+      protected override bool DoRemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)
       {
          throw new System.NotImplementedException();
       }

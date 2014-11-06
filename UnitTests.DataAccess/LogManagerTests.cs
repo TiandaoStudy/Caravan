@@ -8,11 +8,17 @@ namespace UnitTests.DataAccess
    [TestFixture]
    public class LogManagerTests
    {
+      private SecApp _myApp;
+      private SecApp _myApp2;
+
       [SetUp]
       public void Init()
       {
          Db.ClearAllTablesUseOnlyInsideUnitTestsPlease();
-         Db.Security.AddApp(new SecApp {Name = "test-app-1", Description = "Test Application 1"});
+           _myApp = new SecApp {Name = "mio_test", Description = "Test Application 1"};
+           Db.Security.AddApp(_myApp);
+           _myApp2 = new SecApp {Name = "mio_test2", Description = "Test Application 2"};
+           Db.Security.AddApp(_myApp2);
       }
 
       [TearDown]

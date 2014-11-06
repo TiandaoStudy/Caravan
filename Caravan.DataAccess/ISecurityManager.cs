@@ -13,7 +13,7 @@ namespace Finsa.Caravan.DataAccess
       /// 
       /// </summary>
       /// <returns></returns>
-      IEnumerable<SecApp> Apps();
+      IList<SecApp> Apps();
 
       /// <summary>
       /// 
@@ -32,7 +32,7 @@ namespace Finsa.Caravan.DataAccess
       /// <exception cref="ArgumentNullException">
       ///   <paramref name="app"/> is null.
       /// </exception>
-      SecApp AddApp(SecApp app);
+      void AddApp(SecApp app);
 
       #endregion
 
@@ -46,7 +46,7 @@ namespace Finsa.Caravan.DataAccess
       /// <exception cref="ArgumentException">
       ///   <paramref name="appName"/> is null or empty.
       /// </exception>
-      IEnumerable<SecGroup> Groups(string appName);
+      IList<SecGroup> Groups(string appName);
 
       /// <summary>
       /// 
@@ -94,7 +94,7 @@ namespace Finsa.Caravan.DataAccess
 
       #region Users
 
-      IEnumerable<SecUser> Users(string appName);
+      IList<SecUser> Users(string appName);
 
       /// <summary>
       /// 
@@ -148,19 +148,19 @@ namespace Finsa.Caravan.DataAccess
 
       #region Contexts
 
-      IEnumerable<SecContext> Contexts();
+      IList<SecContext> Contexts();
 
-      IEnumerable<SecContext> Contexts(string appName);
+      IList<SecContext> Contexts(string appName);
 
       #endregion
 
       #region Objects
 
-      IEnumerable<SecObject> Objects();
+      IList<SecObject> Objects();
 
-      IEnumerable<SecObject> Objects(string appName);
+      IList<SecObject> Objects(string appName);
 
-      IEnumerable<SecObject> Objects(string appName, string contextName);
+      IList<SecObject> Objects(string appName, string contextName);
 
       #endregion
 

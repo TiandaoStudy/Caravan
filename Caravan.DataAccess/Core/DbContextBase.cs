@@ -38,10 +38,5 @@ namespace Finsa.Caravan.DataAccess.Core
             dbSet.Remove(item);
          }
       }
-
-      internal static string ToLowerOrEmpty(this string str)
-      {
-         return str == null ? String.Empty : str.ToLower();
-      }
    }
 }
