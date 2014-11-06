@@ -23,7 +23,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       #endregion
 
-      public override LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
+      public override LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
          IEnumerable<CKeyValuePair<string, string>> args)
       {
          try

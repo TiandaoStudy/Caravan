@@ -20,8 +20,10 @@ namespace UnitTests.DataAccess
         public void Init()
         {
            Db.ClearAllTablesUseOnlyInsideUnitTestsPlease();
-           _myApp = Db.Security.AddApp(new SecApp {Name = "mio_test", Description = "Test Application 1"});
-           _myApp2 = Db.Security.AddApp(new SecApp { Name = "mio_test2", Description = "Test Application 2" });
+           _myApp = new SecApp {Name = "mio_test", Description = "Test Application 1"};
+           Db.Security.AddApp(_myApp);
+           _myApp2 = new SecApp {Name = "mio_test2", Description = "Test Application 2"};
+           Db.Security.AddApp(_myApp2);
         }
 
         [TearDown]

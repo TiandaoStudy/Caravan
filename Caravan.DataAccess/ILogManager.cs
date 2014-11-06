@@ -26,7 +26,7 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="context"></param>
       /// <param name="args"></param>
       /// <returns></returns>
-      LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null);
+      LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null);
       
       /// <summary>
       ///   TODO
@@ -117,6 +117,21 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="function"></param>
       /// <returns></returns>
       LogResult LogError<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null,
+         string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled);
+
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      /// <typeparam name="TCodeUnit"></typeparam>
+      /// <param name="shortMessage"></param>
+      /// <param name="longMessage"></param>
+      /// <param name="context"></param>
+      /// <param name="args"></param>
+      /// <param name="applicationName"></param>
+      /// <param name="userName"></param>
+      /// <param name="function"></param>
+      /// <returns></returns>
+      Task<LogResult> LogErrorAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null,
          string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled);
 
       /// <summary>
@@ -244,6 +259,20 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="userName"></param>
       /// <param name="function"></param>
       /// <returns></returns>
+      Task<LogResult> LogErrorAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, 
+         string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled);
+
+      /// <summary>
+      ///   TODO
+      /// </summary>
+      /// <typeparam name="TCodeUnit"></typeparam>
+      /// <param name="exception"></param>
+      /// <param name="context"></param>
+      /// <param name="args"></param>
+      /// <param name="applicationName"></param>
+      /// <param name="userName"></param>
+      /// <param name="function"></param>
+      /// <returns></returns>
       LogResult LogFatal<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, 
          string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled);
 
@@ -262,6 +291,9 @@ namespace Finsa.Caravan.DataAccess
       /// </summary>
       /// <param name="appName"></param>
       /// <returns></returns>
+      /// <exception cref="ArgumentException">
+      ///   <paramref name="appName"/> is null or empty.
+      /// </exception>
       IList<LogEntry> Logs(string appName);
 
       /// <summary>
@@ -269,6 +301,9 @@ namespace Finsa.Caravan.DataAccess
       /// </summary>
       /// <param name="logType"></param>
       /// <returns></returns>
+      /// <exception cref="ArgumentException">
+      ///   <paramref name="logType"/> is not a valid <see cref="LogType"/>.
+      /// </exception>
       IList<LogEntry> Logs(LogType logType);
 
       /// <summary>
@@ -277,6 +312,10 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="appName"></param>
       /// <param name="logType"></param>
       /// <returns></returns>
+      /// <exception cref="ArgumentException">
+      ///   <paramref name="appName"/> is null or empty.
+      ///   <paramref name="logType"/> is not a valid <see cref="LogType"/>.
+      /// </exception>
       IList<LogEntry> Logs(string appName, LogType logType);
 
       #endregion
@@ -294,6 +333,9 @@ namespace Finsa.Caravan.DataAccess
       /// </summary>
       /// <param name="appName"></param>
       /// <returns></returns>
+      /// <exception cref="ArgumentException">
+      ///   <paramref name="appName"/> is null or empty.
+      /// </exception>
       IList<LogSettings> LogSettings(string appName);
 
       /// <summary>
@@ -301,6 +343,9 @@ namespace Finsa.Caravan.DataAccess
       /// </summary>
       /// <param name="logType"></param>
       /// <returns></returns>
+      /// <exception cref="ArgumentException">
+      ///   <paramref name="logType"/> is not a valid <see cref="LogType"/>.
+      /// </exception>
       IList<LogSettings> LogSettings(LogType logType);
 
       /// <summary>
@@ -309,6 +354,10 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="appName"></param>
       /// <param name="logType"></param>
       /// <returns></returns>
+      /// <exception cref="ArgumentException">
+      ///   <paramref name="appName"/> is null or empty.
+      ///   <paramref name="logType"/> is not a valid <see cref="LogType"/>.
+      /// </exception>
       LogSettings LogSettings(string appName, LogType logType);
 
       #endregion

@@ -63,9 +63,9 @@ namespace Finsa.Caravan.DataAccess {
         /// <summary>
         ///   Looks up a localized string similar to Group has not been specified or it does not exist..
         /// </summary>
-        internal static string Sql_SqlSecurityManager_MissingGroup {
+        internal static string Core_SecurityManagerBase_GroupNotFound {
             get {
-                return ResourceManager.GetString("Sql_SqlSecurityManager_MissingGroup", resourceCulture);
+                return ResourceManager.GetString("Core_SecurityManagerBase_GroupNotFound", resourceCulture);
             }
         }
     }

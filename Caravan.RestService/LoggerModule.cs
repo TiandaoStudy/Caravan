@@ -72,7 +72,7 @@ namespace Finsa.Caravan.RestService
          {
             return LogResult.Failure(ex);
          }
-         return Db.Logger.Log(e.Type, e.App.Name, e.UserLogin, e.CodeUnit, e.Function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments);
+         return Db.Logger.LogRaw(e.Type, e.App.Name, e.UserLogin, e.CodeUnit, e.Function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments);
       }
 
       private static LogEntry PrepareEntry(LogEntry entry, string appName, LogType? logType)
