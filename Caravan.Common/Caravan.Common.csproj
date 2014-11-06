@@ -58,6 +58,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Configuration.cs" />
+    <Compile Include="DataModel\Exceptions\GroupExistingException.cs" />
+    <Compile Include="DataModel\Exceptions\GroupNotFoundException.cs" />
+    <Compile Include="DataModel\Exceptions\UserExistingException.cs" />
+    <Compile Include="DataModel\Exceptions\UserNotFoundException.cs" />
     <Compile Include="DataModel\Formatting\TextAlignment.cs" />
     <Compile Include="DataModel\Logging\LogEntry.cs" />
     <Compile Include="DataModel\Logging\LogResult.cs" />

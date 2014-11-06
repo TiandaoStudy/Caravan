@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Finsa.Caravan.DataModel.Exceptions;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.Diagnostics;
 
@@ -79,21 +80,29 @@ namespace Finsa.Caravan.DataAccess.Core
       public IEnumerable<SecUser> Users(string appName)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
-         return GetUsers(appName.ToLowerOrEmpty(), String.Empty);
+         return GetUsers(appName.ToLower(), null);
       }
 
       public SecUser User(string appName, string userLogin)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(userLogin);
-         return GetUsers(appName.ToLowerOrEmpty(), userLogin.ToLowerOrEmpty()).FirstOrDefault();
+         var user = GetUsers(appName.ToLower(), userLogin.ToLower()).FirstOrDefault();
+         if (user == null)
+         {
+            throw new UserNotFoundException();
+         }
+         return user;
       }
 
       public void AddUser(string appName, SecUser newUser)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsNull(newUser);
-         DoAddUser(appName, newUser);
+         if (!DoAddUser(appName, newUser))
+         {
+            throw new UserExistingException();
+         }
       }
 
       public void RemoveUser(string appName, string userLogin)
@@ -268,7 +277,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
       protected abstract IEnumerable<SecUser> GetUsers(string appName, string userLogin);
 
-      protected abstract void DoAddUser(string appName, SecUser newUser);
+      protected abstract bool DoAddUser(string appName, SecUser newUser);
 
       protected abstract void DoRemoveUser(string appName, string userLogin);
 

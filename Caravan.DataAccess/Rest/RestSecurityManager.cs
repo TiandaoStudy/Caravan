@@ -42,7 +42,7 @@ namespace Finsa.Caravan.DataAccess.Rest
          throw new NotImplementedException();
       }
 
-      protected override void DoAddUser(string appName, SecUser newUser)
+      protected override bool DoAddUser(string appName, SecUser newUser)
       {
          throw new NotImplementedException();
       }

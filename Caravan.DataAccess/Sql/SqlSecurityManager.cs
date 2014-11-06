@@ -114,36 +114,52 @@ namespace Finsa.Caravan.DataAccess.Sql
       {
          using (var ctx = Db.CreateReadContext())
          {
-            return (from u in ctx.SecUsers.Include(u => u.App).Include("Groups.Users")
-                    where appName == null || u.App.Name == appName
-                    where userLogin == null || u.Login == userLogin
-                    orderby u.Login, u.App.Name
-                    select u).ToList();
+            var q = ctx.SecUsers.Include(u => u.App).Include("Groups.Users");
+            if (appName != null)
+            {
+               q = q.Where(u => u.App.Name == appName);
+            }
+            if (userLogin != null)
+            {
+               q = q.Where(u => u.Login == userLogin);
+            }
+            return q.OrderBy(u => u.Login).ThenBy(u => u.App.Name).ToList();
          }
       }
 
-      protected override void DoAddUser(string appName, SecUser newUser)
+      protected override bool DoAddUser(string appName, SecUser newUser)
       {
          using (var ctx = Db.CreateWriteContext())
-         using (var trx = ctx.BeginTransaction())
          {
-            if (!ctx.SecUsers.Any(u => u.AppId == newUser.AppId && u.Login == newUser.Login))
+            var trx = ctx.BeginTransaction();
+            try
             {
-               var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).First();
-               var secUser = new SecUser
+               var added = false;
+               if (!ctx.SecUsers.Any(u => u.AppId == newUser.AppId && u.Login == newUser.Login))
                {
-                  Id = (ctx.SecUsers.Where(us => us.AppId == appId).Max(us => (long?)us.Id) ?? -1) + 1,
-                  AppId = appId,
-                  Login = newUser.Login,
-                  FirstName= newUser.FirstName,
-                  LastName= newUser.LastName,
-                  App= newUser.App,
-                  Active= newUser.Active,
-                  Email= newUser.Email
-               };
-               ctx.SecUsers.Add(secUser);
+                  var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).First();
+                  var secUser = new SecUser
+                  {
+                     Id = (ctx.SecUsers.Where(u => u.AppId == appId).Max(us => (long?) us.Id) ?? -1) + 1,
+                     AppId = appId,
+                     Login = newUser.Login,
+                     FirstName = newUser.FirstName,
+                     LastName = newUser.LastName,
+                     App = newUser.App,
+                     Active = newUser.Active,
+                     Email = newUser.Email
+                  };
+                  ctx.SecUsers.Add(secUser);
+                  added = true;
+               }
+               ctx.SaveChanges();
+               return added;
             }
-            ctx.SaveChanges();
+            catch
+            {
+               trx.Rollback();
+               throw;
+            }
          }
       }
 

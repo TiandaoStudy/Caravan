@@ -41,7 +41,7 @@ namespace Finsa.Caravan.DataAccess.Dummy
          throw new System.NotImplementedException();
       }
 
-      protected override void DoAddUser(string appName, SecUser newUser)
+      protected override bool DoAddUser(string appName, SecUser newUser)
       {
          throw new System.NotImplementedException();
       }
