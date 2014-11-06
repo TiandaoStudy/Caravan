@@ -138,18 +138,9 @@ namespace Finsa.Caravan.DataAccess.Sql
                if (!ctx.SecUsers.Any(u => u.AppId == newUser.AppId && u.Login == newUser.Login))
                {
                   var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).First();
-                  var secUser = new SecUser
-                  {
-                     Id = (ctx.SecUsers.Where(u => u.AppId == appId).Max(us => (long?) us.Id) ?? -1) + 1,
-                     AppId = appId,
-                     Login = newUser.Login,
-                     FirstName = newUser.FirstName,
-                     LastName = newUser.LastName,
-                     App = newUser.App,
-                     Active = newUser.Active,
-                     Email = newUser.Email
-                  };
-                  ctx.SecUsers.Add(secUser);
+                  newUser.Id = (ctx.SecUsers.Where(u => u.AppId == appId).Max(us => (long?) us.Id) ?? -1) + 1;
+                  newUser.AppId = appId;
+                  ctx.SecUsers.Add(newUser);
                   added = true;
                }
                ctx.SaveChanges();
@@ -163,18 +154,29 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-      protected override void DoRemoveUser(string appName, string userLogin)
+      protected override bool DoRemoveUser(string appName, string userLogin)
       {
          using (var ctx = Db.CreateWriteContext())
-         using (var trx = ctx.BeginTransaction())
          {
-            var user = ctx.SecUsers.FirstOrDefault(us => us.App.Name == appName.ToLower() && us.Login == userLogin.ToLower());
-            if (user != null)
+            var trx = ctx.BeginTransaction();
+            try
             {
-               ctx.SecUsers.Remove(user);
+               var removed = false;
+               var user = ctx.SecUsers.FirstOrDefault(us => us.App.Name == appName.ToLower() && us.Login == userLogin.ToLower());
+               if (user != null)
+               {
+                  ctx.SecUsers.Remove(user);
+                  removed = true;
+               }
+               ctx.SaveChanges();
+               return removed;
             }
-            ctx.SaveChanges();
-            trx.Commit();
+            catch
+            {
+               trx.Rollback();
+               // Db.Logger
+               throw;
+            }
          }
       }
 

@@ -99,6 +99,7 @@ namespace Finsa.Caravan.DataAccess.Core
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsNull(newUser);
+         Raise<ArgumentException>.IfIsEmpty(newUser.Login);
          if (!DoAddUser(appName, newUser))
          {
             throw new UserExistingException();
@@ -109,7 +110,10 @@ namespace Finsa.Caravan.DataAccess.Core
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(userLogin);
-         DoRemoveUser(appName, userLogin);
+         if (!DoRemoveUser(appName, userLogin))
+         {
+            throw new UserNotFoundException();
+         }
       }
 
       public void UpdateUser(string appName, string userLogin, SecUser newUser)
@@ -117,6 +121,7 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(userLogin);
          Raise<ArgumentException>.IfIsNull(newUser);
+         Raise<ArgumentException>.IfIsEmpty(newUser.Login);
          DoUpdateUser(appName, userLogin, newUser);
       }
 
@@ -279,7 +284,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
       protected abstract bool DoAddUser(string appName, SecUser newUser);
 
-      protected abstract void DoRemoveUser(string appName, string userLogin);
+      protected abstract bool DoRemoveUser(string appName, string userLogin);
 
       protected abstract void DoUpdateUser(string appName, string userLogin, SecUser newUser);
 
