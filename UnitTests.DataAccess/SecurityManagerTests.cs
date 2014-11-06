@@ -57,13 +57,13 @@ namespace UnitTests.DataAccess
         {
             
             IEnumerable<SecUser> retValue = Db.Security.Users(_myApp.Name);
-            Assert.That(retValue, Is.EqualTo(null));
+            Assert.That(retValue.Count(), Is.EqualTo(0));
 
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
-        public void Users_NullAppName_ThrowsArgumentNullException()
+        public void Users_NullAppName_ThrowsArgumentException()
         {
             Db.Security.Users(null);
         }
@@ -186,7 +186,7 @@ namespace UnitTests.DataAccess
         public void AddUser_UserLoginAlreadyPresent_ThrowsException()
         {
            var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
-           var user2 = new SecUser { FirstName = "pluto", Login = "blabla2" };
+           var user2 = new SecUser { FirstName = "pluto", Login = "blabla1" };
 
             Db.Security.AddUser(_myApp.Name, user1);
             Db.Security.AddUser(_myApp.Name, user2);
@@ -271,7 +271,7 @@ namespace UnitTests.DataAccess
        [ExpectedException(typeof (UserNotFoundException))]
        public void RemoveUser_UserNotFound_ThrowsUserNotFoundException()
        {
-          var user1 = new SecUser { FirstName = "pippo", Login = "" };
+          var user1 = new SecUser { FirstName = "pippo", Login = "sarav" };
 
           Db.Security.RemoveUser(_myApp.Name, user1.Login);
        }
@@ -289,7 +289,7 @@ namespace UnitTests.DataAccess
 
            user1.Login = "updatedLogin"; 
 
-           Db.Security.UpdateUser(_myApp.Name,user1.Login,user1);
+           Db.Security.UpdateUser(_myApp.Name,"blabla",user1);
 
            var q = (from u in Db.Security.Users(_myApp.Name)
                     where u.Id == user1.Id && u.Login == user1.Login select u).ToList();

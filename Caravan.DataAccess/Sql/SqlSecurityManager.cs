@@ -135,9 +135,9 @@ namespace Finsa.Caravan.DataAccess.Sql
             try
             {
                var added = false;
-               if (!ctx.SecUsers.Any(u => u.AppId == newUser.AppId && u.Login == newUser.Login))
+               var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).First();
+               if (!ctx.SecUsers.Any(u => u.AppId == appId && u.Login == newUser.Login))
                {
-                  var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).First();
                   newUser.Id = (ctx.SecUsers.Where(u => u.AppId == appId).Max(us => (long?) us.Id) ?? -1) + 1;
                   newUser.AppId = appId;
                   ctx.SecUsers.Add(newUser);
@@ -180,22 +180,32 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-      protected override void DoUpdateUser(string appName, string userLogin, SecUser newUser)
+      protected override bool DoUpdateUser(string appName, string userLogin, SecUser newUser)
       {
          using (var ctx = Db.CreateWriteContext())
-         using (var trx = ctx.BeginTransaction())
          {
-            var user = ctx.SecUsers.FirstOrDefault(us => us.App.Name == appName.ToLower() && us.Login == userLogin.ToLower());
-            if (user != null)
+            var trx = ctx.BeginTransaction();
+            try
             {
-               user.FirstName = newUser.FirstName;
-               user.LastName = newUser.LastName;
-               user.Email = newUser.Email;
-               user.Login = newUser.Login;
-               user.Active = newUser.Active;
+               var updated = false;
+               var user = ctx.SecUsers.FirstOrDefault(us => us.App.Name == appName.ToLower() && us.Login == userLogin.ToLower());
+               if (user != null)
+               {
+                  user.FirstName = newUser.FirstName;
+                  user.LastName = newUser.LastName;
+                  user.Email = newUser.Email;
+                  user.Login = newUser.Login;
+                  user.Active = newUser.Active;
+                  updated = true;
+               }
+               ctx.SaveChanges();
+               return updated;
             }
-            ctx.SaveChanges();
-            trx.Commit();
+            catch
+            {
+               trx.Rollback();
+               throw;
+            }
          }
       }
 

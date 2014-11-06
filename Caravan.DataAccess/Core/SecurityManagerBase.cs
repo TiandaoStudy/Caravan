@@ -98,7 +98,7 @@ namespace Finsa.Caravan.DataAccess.Core
       public void AddUser(string appName, SecUser newUser)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsNull(newUser);
+         Raise<ArgumentNullException>.IfIsNull(newUser);
          Raise<ArgumentException>.IfIsEmpty(newUser.Login);
          if (!DoAddUser(appName, newUser))
          {
@@ -120,9 +120,12 @@ namespace Finsa.Caravan.DataAccess.Core
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(userLogin);
-         Raise<ArgumentException>.IfIsNull(newUser);
+         Raise<ArgumentNullException>.IfIsNull(newUser);
          Raise<ArgumentException>.IfIsEmpty(newUser.Login);
-         DoUpdateUser(appName, userLogin, newUser);
+         if (!DoUpdateUser(appName, userLogin, newUser))
+         {
+            throw new UserNotFoundException();
+         }
       }
 
       #endregion
@@ -286,7 +289,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
       protected abstract bool DoRemoveUser(string appName, string userLogin);
 
-      protected abstract void DoUpdateUser(string appName, string userLogin, SecUser newUser);
+      protected abstract bool DoUpdateUser(string appName, string userLogin, SecUser newUser);
 
       protected abstract IEnumerable<SecContext> GetContexts(string appName);
 
