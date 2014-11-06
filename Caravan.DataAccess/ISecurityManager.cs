@@ -20,6 +20,9 @@ namespace Finsa.Caravan.DataAccess
       /// </summary>
       /// <param name="appName"></param>
       /// <returns></returns>
+      /// <exception cref="AppNotFoundException">
+      ///   There is no app with given <paramref name="appName"/>.
+      /// </exception>
       /// <exception cref="ArgumentException">
       ///   <paramref name="appName"/> is null or empty.
       /// </exception>
@@ -29,8 +32,14 @@ namespace Finsa.Caravan.DataAccess
       ///   TODO
       /// </summary>
       /// <param name="app"></param>
+      /// <exception cref="AppExistingException">
+      ///   There is already an app with given <paramref name="appName"/>.
+      /// </exception>
       /// <exception cref="ArgumentNullException">
       ///   <paramref name="app"/> is null.
+      /// </exception>
+      /// <exception cref="ArgumentException">
+      ///   <paramref name="app.Name"/> is null or empty.
       /// </exception>
       void AddApp(SecApp app);
 
@@ -55,7 +64,7 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="groupName"></param>
       /// <returns></returns>
       /// <exception cref="ArgumentException">
-      ///   <paramref name="appName"/> is null or empty.
+      ///   <paramref name="appName"/> or <paramref name="groupName"/> are null or empty.
       /// </exception>
       SecGroup Group(string appName, string groupName);
 
@@ -65,7 +74,10 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="appName"></param>
       /// <param name="newGroup"></param>
       /// <exception cref="ArgumentException">
-      ///   <paramref name="appName"/> is null or empty.
+      ///   <paramref name="appName"/> or <paramref name="newGroup.Name"/> are null or empty.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">
+      ///   <paramref name="newGroup"/> is null.
       /// </exception>
       void AddGroup(string appName, SecGroup newGroup);
 
@@ -75,7 +87,7 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="appName"></param>
       /// <param name="groupName"></param>
       /// <exception cref="ArgumentException">
-      ///   <paramref name="appName"/> is null or empty.
+      ///   <paramref name="appName"/> or <paramref name="groupName"/> are null or empty.
       /// </exception>
       void RemoveGroup(string appName, string groupName);
 
@@ -86,7 +98,7 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="groupName"></param>
       /// <param name="newGroup"></param>
       /// <exception cref="ArgumentException">
-      ///   <paramref name="appName"/> is null or empty.
+      ///   <paramref name="appName"/>, <paramref name="groupName"/> or <paramref name="newGroup.Name"/> are null or empty.
       /// </exception>
       void UpdateGroup(string appName, string groupName, SecGroup newGroup);
 
@@ -143,6 +155,8 @@ namespace Finsa.Caravan.DataAccess
       ///   <paramref name="appName"/> is null or empty.
       /// </exception>
       void UpdateUser(string appName, string userLogin, SecUser newUser);
+
+      //void AddUserToGroup();
 
       #endregion
 
