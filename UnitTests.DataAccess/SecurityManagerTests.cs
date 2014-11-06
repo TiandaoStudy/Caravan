@@ -300,7 +300,7 @@ namespace UnitTests.DataAccess
                     where u.Id == user1.Id && u.Login == user1.Login select u).ToList();
 
            Assert.That(q.Count(),Is.EqualTo(1));
-           Assert.That(q.First().Login, Is.EqualTo("updatedLogin"));
+           Assert.That(q.First().Login, Is.EqualTo("updatedLogin".ToLower()));
 
            var q2 = (from u in Db.Security.Users(_myApp.Name) 
                      where u.Id==user1.Id && u.Login == "blabla" select u).ToList();
@@ -332,7 +332,7 @@ namespace UnitTests.DataAccess
 
           user1.Login = "bobobo";
 
-          Db.Security.UpdateUser(_myApp.Name,user1.Login,user1);
+          Db.Security.UpdateUser(_myApp.Name,"blabla",user1);
 
        }
 

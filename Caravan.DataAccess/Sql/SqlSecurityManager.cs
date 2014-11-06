@@ -122,28 +122,23 @@ namespace Finsa.Caravan.DataAccess.Sql
       {
          using (var ctx = Db.CreateWriteContext())
          {
-            var trx = ctx.BeginTransaction();
-            try
+            ctx.BeginTransaction();
+            var updated = false;
+            var grp = ctx.SecGroups.FirstOrDefault(g => g.App.Name == appName && g.Name == groupName);
+            if (grp != null)
             {
-               var updated = false;
-               var grp = ctx.SecGroups.FirstOrDefault(g => g.App.Name == appName && g.Name == groupName);
-               if (grp != null)
+               if (grp.Name != newGroup.Name && ctx.SecGroups.Any(g => g.AppId == grp.AppId && g.Name == newGroup.Name))
                {
-                  grp.Name = newGroup.Name;
-                  grp.Description = newGroup.Description ?? String.Empty;
-                  grp.IsAdmin = newGroup.IsAdmin;
-                  grp.Notes = newGroup.Notes ?? String.Empty;
-                  updated = true;
+                  throw new GroupExistingException();
                }
-               ctx.SaveChanges();
-               return updated;
+               grp.Name = newGroup.Name;
+               grp.Description = newGroup.Description ?? String.Empty;
+               grp.IsAdmin = newGroup.IsAdmin;
+               grp.Notes = newGroup.Notes ?? String.Empty;
+               updated = true;
             }
-            catch (Exception ex)
-            {
-               trx.Rollback();
-               Db.Logger.LogErrorAsync<SqlSecurityManager>(ex, "Updating a group");
-               throw;
-            }
+            ctx.SaveChanges();
+            return updated;
          }
       }
 
@@ -226,29 +221,24 @@ namespace Finsa.Caravan.DataAccess.Sql
       {
          using (var ctx = Db.CreateWriteContext())
          {
-            var trx = ctx.BeginTransaction();
-            try
+            ctx.BeginTransaction();
+            var updated = false;
+            var user = ctx.SecUsers.FirstOrDefault(u => u.App.Name == appName && u.Login == userLogin);
+            if (user != null)
             {
-               var updated = false;
-               var user = ctx.SecUsers.FirstOrDefault(us => us.App.Name == appName && us.Login == userLogin);
-               if (user != null)
+               if (userLogin != newUser.Login && ctx.SecUsers.Any(u => u.AppId == user.AppId && u.Login == newUser.Login))
                {
-                  user.FirstName = newUser.FirstName;
-                  user.LastName = newUser.LastName;
-                  user.Email = newUser.Email;
-                  user.Login = newUser.Login;
-                  user.Active = newUser.Active;
-                  updated = true;
+                  throw new UserExistingException();
                }
-               ctx.SaveChanges();
-               return updated;
+               user.FirstName = newUser.FirstName;
+               user.LastName = newUser.LastName;
+               user.Email = newUser.Email;
+               user.Login = newUser.Login;
+               user.Active = newUser.Active;
+               updated = true;
             }
-            catch (Exception ex)
-            {
-               trx.Rollback();
-               Db.Logger.LogErrorAsync<SqlSecurityManager>(ex, "Updating an user");
-               throw;
-            }
+            ctx.SaveChanges();
+            return updated;
          }
       }
 
