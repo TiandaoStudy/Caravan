@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel.Security;
-using Finsa.Caravan.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
@@ -81,10 +80,10 @@ namespace Finsa.Caravan.DataAccess.Sql
                ctx.SaveChanges();
                return added;
             }
-            catch
+            catch (Exception ex)
             {
                trx.Rollback();
-               // TODO LOG
+               Db.Logger.LogErrorAsync<SqlSecurityManager>(ex, "Adding a new group");
                throw;
             }
          }
@@ -107,9 +106,10 @@ namespace Finsa.Caravan.DataAccess.Sql
                ctx.SaveChanges();
                return removed;
             }
-            catch
+            catch (Exception ex)
             {
                trx.Rollback();
+               Db.Logger.LogErrorAsync<SqlSecurityManager>(ex, "Removing a group");
                throw;
             }
          }
@@ -134,9 +134,10 @@ namespace Finsa.Caravan.DataAccess.Sql
                ctx.SaveChanges();
                return updated;
             }
-            catch
+            catch (Exception ex)
             {
                trx.Rollback();
+               Db.Logger.LogErrorAsync<SqlSecurityManager>(ex, "Updating a group");
                throw;
             }
          }
@@ -170,8 +171,8 @@ namespace Finsa.Caravan.DataAccess.Sql
             var trx = ctx.BeginTransaction();
             try
             {
-               var added = false;
                var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).First();
+               var added = false;
                if (!ctx.SecUsers.Any(u => u.AppId == appId && u.Login == newUser.Login))
                {
                   newUser.Id = (ctx.SecUsers.Where(u => u.AppId == appId).Max(us => (long?) us.Id) ?? -1) + 1;
@@ -182,9 +183,10 @@ namespace Finsa.Caravan.DataAccess.Sql
                ctx.SaveChanges();
                return added;
             }
-            catch
+            catch (Exception ex)
             {
                trx.Rollback();
+               Db.Logger.LogErrorAsync<SqlSecurityManager>(ex, "Adding a new user");
                throw;
             }
          }
@@ -207,10 +209,10 @@ namespace Finsa.Caravan.DataAccess.Sql
                ctx.SaveChanges();
                return removed;
             }
-            catch
+            catch (Exception ex)
             {
                trx.Rollback();
-               // Db.Logger
+               Db.Logger.LogErrorAsync<SqlSecurityManager>(ex, "Removing an user");
                throw;
             }
          }
@@ -237,9 +239,10 @@ namespace Finsa.Caravan.DataAccess.Sql
                ctx.SaveChanges();
                return updated;
             }
-            catch
+            catch (Exception ex)
             {
                trx.Rollback();
+               Db.Logger.LogErrorAsync<SqlSecurityManager>(ex, "Updating an user");
                throw;
             }
          }

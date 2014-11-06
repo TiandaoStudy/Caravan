@@ -49,6 +49,12 @@ namespace Finsa.Caravan.DataAccess.Core
          return Log<TCodeUnit>(LogType.Error, applicationName, userName, function, shortMessage, longMessage, context, args);
       }
 
+      public Task<LogResult> LogErrorAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled,
+         string function = LogEntry.AutomaticallyFilled)
+      {
+         return Task.Factory.StartNew(() => LogError<TCodeUnit>(shortMessage, longMessage, context, args, applicationName, userName, function));
+      }
+
       public LogResult LogFatal<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null,
          string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled)
       {
@@ -87,6 +93,11 @@ namespace Finsa.Caravan.DataAccess.Core
          string userName = LogEntry.AutomaticallyFilled, [CallerMemberName] string function = LogEntry.AutomaticallyFilled)
       {
          return Log<TCodeUnit>(LogType.Error, applicationName, userName, function, exception, context, args);
+      }
+
+      public Task<LogResult> LogErrorAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled, string userName = LogEntry.AutomaticallyFilled, string function = LogEntry.AutomaticallyFilled)
+      {
+         return Task.Factory.StartNew(() => LogError<TCodeUnit>(exception, context, args, applicationName, userName, function));
       }
 
       public LogResult LogFatal<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null, string applicationName = LogEntry.AutomaticallyFilled,
@@ -145,7 +156,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
       #endregion
 
-      public abstract LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
+      public abstract LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
          IEnumerable<CKeyValuePair<string, string>> args);
 
       protected abstract IList<LogEntry> GetLogs(string appName, LogType? logType);
@@ -164,7 +175,7 @@ namespace Finsa.Caravan.DataAccess.Core
          {
             return LogResult.Failure(ex);
          }
-         return Log(type, GetCurrentAppName(appName), GetCurrentUserName(userName), typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
+         return LogRaw(type, GetCurrentAppName(appName), GetCurrentUserName(userName), typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
       }
 
       public LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, Exception exception, string context, IEnumerable<CKeyValuePair<string, string>> args)
@@ -178,7 +189,7 @@ namespace Finsa.Caravan.DataAccess.Core
          {
             return LogResult.Failure(ex);
          }
-         return Log(type, GetCurrentAppName(appName), GetCurrentUserName(userName), codeUnit, function, exception.Message, exception.StackTrace, context, args);
+         return LogRaw(type, GetCurrentAppName(appName), GetCurrentUserName(userName), codeUnit, function, exception.Message, exception.StackTrace, context, args);
       }
 
       private LogResult Log<TCodeUnit>(LogType type, string appName, string userName, string function, Exception exception, string context, IEnumerable<CKeyValuePair<string, string>> args)
@@ -192,7 +203,7 @@ namespace Finsa.Caravan.DataAccess.Core
          {
             return LogResult.Failure(ex);
          }
-         return Log(type, GetCurrentAppName(appName), GetCurrentUserName(userName), typeof(TCodeUnit).FullName, function, exception.Message, exception.StackTrace, context, args);
+         return LogRaw(type, GetCurrentAppName(appName), GetCurrentUserName(userName), typeof(TCodeUnit).FullName, function, exception.Message, exception.StackTrace, context, args);
       }
 
       private static Exception FindInnermostException(Exception exception)
