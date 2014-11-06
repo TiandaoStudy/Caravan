@@ -398,8 +398,8 @@ namespace UnitTests.DataAccess
         [Test]
         public void Groups_ValidArgs_ReturnsListOfGroups()
         {
-           var group1 = new SecGroup();
-           var group2 = new SecGroup();
+           var group1 = new SecGroup() {Name = "g1"};
+           var group2 = new SecGroup() {Name = "g2"};
 
            Db.Security.AddGroup(_myApp.Name,group1);
            Db.Security.AddGroup(_myApp.Name,group2);

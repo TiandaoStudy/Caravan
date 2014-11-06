@@ -74,6 +74,8 @@ namespace Finsa.Caravan.DataAccess.Sql
                {
                   newGroup.Id = (ctx.SecGroups.Where(g => g.AppId == appId).Max(g => (long?) g.Id) ?? -1) + 1;
                   newGroup.AppId = appId;
+                  newGroup.Description = newGroup.Description ?? String.Empty;
+                  newGroup.Notes = newGroup.Notes ?? String.Empty;
                   ctx.SecGroups.Add(newGroup);
                   added = true;
                }
@@ -127,8 +129,9 @@ namespace Finsa.Caravan.DataAccess.Sql
                if (grp != null)
                {
                   grp.Name = newGroup.Name;
-                  grp.Description = newGroup.Description;
+                  grp.Description = newGroup.Description ?? String.Empty;
                   grp.IsAdmin = newGroup.IsAdmin;
+                  grp.Notes = newGroup.Notes ?? String.Empty;
                   updated = true;
                }
                ctx.SaveChanges();

@@ -90,6 +90,7 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(groupName);
          Raise<ArgumentNullException>.IfIsNull(newGroup);
+         Raise<ArgumentException>.IfIsEmpty(newGroup.Name);
          if (!DoUpdateGroup(appName, groupName, newGroup))
          {
             throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);   
