@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using Finsa.Caravan.DataModel.Security;
+using Finsa.Caravan.DataModel.Exceptions;
 using Finsa.Caravan.DataAccess;
 
 namespace UnitTests.DataAccess
@@ -11,12 +12,15 @@ namespace UnitTests.DataAccess
     [TestFixture]
     class SecurityManagerTests
     {
-        private SecApp _myApp;
+       private SecApp _myApp;
+       private SecApp _myApp2;
+
         [SetUp]
         public void Init()
         {
            Db.ClearAllTablesUseOnlyInsideUnitTestsPlease();
            _myApp = Db.Security.AddApp(new SecApp {Name = "mio_test", Description = "Test Application 1"});
+           _myApp2 = Db.Security.AddApp(new SecApp { Name = "mio_test2", Description = "Test Application 2" });
         }
 
         [TearDown]
@@ -31,17 +35,23 @@ namespace UnitTests.DataAccess
         public void Users_Insert2Users_ReturnsListOfUsers()
         {
            
-            var user1 = new SecUser();
-            var user2 = new SecUser();
-      
-            Db.Security.AddUser(_myApp.Name,user1);
+            var user1 = new SecUser {FirstName = "pippo", Login = "blabla"};
+            var user2 = new SecUser {FirstName = "pluto", Login = "blabla2"};
+
+            Db.Security.AddUser(_myApp.Name, user1);
             Db.Security.AddUser(_myApp.Name, user2);
 
             IEnumerable<SecUser> retValue = Db.Security.Users(_myApp.Name);
-            Assert.That(retValue.Count(),Is.EqualTo(2));            
+            Assert.That(retValue.Count(),Is.EqualTo(2));
+
+            var q = (from user in Db.Security.Users(_myApp2.Name) 
+                     where (user.Login==user1.Login || user.Login==user2.Login) select user).ToList();
+           
+            Assert.That(q.Count(),Is.EqualTo(0));
             
         }
 
+       
         [Test]
         public void Users_NoUsers_ReturnsNull()
         {
@@ -81,6 +91,7 @@ namespace UnitTests.DataAccess
            Assert.That(u.Login,Is.EqualTo("blabla"));
         }
 
+       
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void User_NullAppName_ThrowsArgumentException()
@@ -146,7 +157,32 @@ namespace UnitTests.DataAccess
         }
 
         [Test]
-        [ExpectedException]//inserire il tipo di eccezione aspettata: la duplicazione è sulla login?
+        public void AddUser_InsertSameUserInDifferentApps_InsertOk()
+        {
+           var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
+           
+           Db.Security.AddUser(_myApp.Name, user1);
+           Db.Security.AddUser(_myApp2.Name, user1);
+
+           var q = (from c in Db.Security.Users(_myApp.Name)
+                    where ((c.FirstName == user1.FirstName) && (c.Login == user1.Login))
+                    select c).ToList();
+
+           Assert.That(q.First().FirstName, Is.EqualTo("pippo"));
+           Assert.That(q.First().Login, Is.EqualTo("blabla1"));
+
+           //verifico che sia stato inserito correttamente user2
+           var q2 = (from c in Db.Security.Users(_myApp2.Name)
+                     where ((c.FirstName == user1.FirstName) && (c.Login == user1.Login))
+                     select c).ToList();
+
+           Assert.That(q2.First().FirstName, Is.EqualTo("pippo"));
+           Assert.That(q2.First().Login, Is.EqualTo("blabla1"));
+
+        }
+
+        [Test]
+        [ExpectedException(typeof(UserExistingException))]
         public void AddUser_UserLoginAlreadyPresent_ThrowsException()
         {
            var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
@@ -219,8 +255,6 @@ namespace UnitTests.DataAccess
         [ExpectedException(typeof(ArgumentException))]
         public void RemoveUser_NullUserLogin_ThrowsArgumentException()
         {
-           var user1 = new SecUser { FirstName = "pippo"};
-
            Db.Security.RemoveUser(_myApp.Name, null);
         }
 
@@ -232,6 +266,15 @@ namespace UnitTests.DataAccess
 
            Db.Security.RemoveUser(_myApp.Name, user1.Login);
         }
+
+       [Test]
+       [ExpectedException(typeof (UserNotFoundException))]
+       public void RemoveUser_UserNotFound_ThrowsUserNotFoundException()
+       {
+          var user1 = new SecUser { FirstName = "pippo", Login = "" };
+
+          Db.Security.RemoveUser(_myApp.Name, user1.Login);
+       }
 
         #endregion
 
@@ -261,8 +304,8 @@ namespace UnitTests.DataAccess
         }
 
        [Test]
-       [ExpectedException]
-       public void UpdateUser_UserNotExisting_ThrowsException()
+       [ExpectedException(typeof(UserNotFoundException))]
+        public void UpdateUser_UserNotExisting_ThrowsUserNotFoundException()
        {
           var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
 
@@ -270,32 +313,77 @@ namespace UnitTests.DataAccess
 
           Db.Security.UpdateUser(_myApp.Name, user1.Login, user1);
 
-          var q = (from u in Db.Security.Users(_myApp.Name)
-                   where u.Id == user1.Id && u.Login == user1.Login
-                   select u).ToList();
+       }
 
-          
+       [Test]
+       [ExpectedException(typeof (UserExistingException))]
+       public void UpdateUser_UserUpdatedAlreadyExisting_ThrowsUserExistingException()
+       {
+          var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
+          var user2 = new SecUser { FirstName = "pluto", Login = "bobobo", Email = "test2@email.it" };
+
+          Db.Security.AddUser(_myApp.Name,user1);
+          Db.Security.AddUser(_myApp.Name,user2);
+
+          user1.Login = "bobobo";
+
+          Db.Security.UpdateUser(_myApp.Name,user1.Login,user1);
+
        }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void UpdateUser_NullAppName_ThrowsArgumentNullException()
         {
+           var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
 
+           user1.Login = "updatedLogin";
+
+           Db.Security.UpdateUser(null, user1.Login, user1);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void UpdateUser_EmptyAppName_ThrowsArgumentNullException()
+        {
+           var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
+
+           user1.Login = "updatedLogin";
+
+           Db.Security.UpdateUser("", user1.Login, user1);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void UpdateUser_NullUserLogin_ThrowsArgumentNullException()
         {
+           var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
 
+           user1.Login = null;
+
+           Db.Security.UpdateUser(_myApp.Name, user1.Login, user1);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
+        public void UpdateUser_EmptyUserLogin_ThrowsArgumentNullException()
+        {
+           var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
+
+           user1.Login = "";
+
+           Db.Security.UpdateUser(_myApp.Name, user1.Login, user1);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void UpdateUser_NullNewUserArg_ThrowsArgumentNullException()
         {
+           var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
 
+           user1.Login = "blobloblo";
+
+           Db.Security.UpdateUser(_myApp.Name, user1.Login, null);
         }
 
         #endregion
@@ -309,8 +397,8 @@ namespace UnitTests.DataAccess
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Groups_NullAppName_ThrowsArgumentNullException()
+        [ExpectedException(typeof(ArgumentException))]
+        public void Groups_NullAppName_ThrowsArgumentException()
         {
 
         }
