@@ -1,0 +1,349 @@
+﻿/*******************************************************************************
+  VARIABLES
+*******************************************************************************/
+
+@import "Bootstrap/variables.less";
+@import (reference) "bootstrap-reference.less";
+
+@brand-font-size: 20px;
+@brand-logo-size: 24px;
+
+@image-margin: 5px;
+@top-margin: @navbar-height + 15px;
+
+/*******************************************************************************
+  TOP LEVEL
+*******************************************************************************/
+
+body {
+   margin: 0;
+   padding: 0;
+   background-color: @btn-primary-color;
+   background-image: url(../Images/pattern.png);
+}
+
+nav {
+   .navbar-default {
+      .navbar-brand {
+         display: inline-block;
+         font-size: @brand-font-size;
+
+         .logo {
+            float: left;
+            margin-right: @image-margin;
+            width: @brand-logo-size;
+            height: @brand-logo-size;
+         }
+
+         .navbar-brand-description {
+            float: left;
+            margin-left: @image-margin;
+         }
+      }
+   }
+}
+
+.padded-icon {
+   margin-right: @image-margin;
+   text-decoration: none !important;
+}
+
+/*******************************************************************************
+  BOOTSTRAP TUNING
+*******************************************************************************/
+
+input[type='checkbox'], input[type='radio'] {
+   margin-right: @image-margin;
+}
+
+// Labels inside checkbox lists and tables
+td label {
+   font-weight: normal !important;
+}
+
+/*******************************************************************************
+  PAGE STYLES
+*******************************************************************************/
+
+#main-page-container {
+   margin-top: @top-margin;
+}
+
+.page-working-area {
+   min-height: @navbar-height * 10;
+}
+
+/*******************************************************************************
+  POPUP STYLES
+*******************************************************************************/
+
+/*******************************************************************************
+  HALF COLUMNS
+*******************************************************************************/
+
+.col-xs-0-5 {
+   .col-xs-1;
+   width: 0.5*100/12%;
+}
+
+.col-xs-1-5 {
+    .col-xs-1;
+    width: 1.5*100/12%;
+}
+
+.col-xs-2-5 {
+    .col-xs-1;
+    width: 2.5*100/12%;
+}
+
+.col-xs-3-5 {
+    .col-xs-1;
+    width: 3.5*100/12%;
+}
+
+.col-xs-4-5 {
+    .col-xs-1;
+    width: 4.5*100/12%;
+}
+
+.col-xs-5-5 {
+    .col-xs-1;
+    width: 5.5*100/12%;
+}
+
+.col-xs-6-5 {
+    .col-xs-1;
+    width: 6.5*100/12%;
+}
+
+.col-xs-7-5 {
+    .col-xs-1;
+    width: 7.5*100/12%;
+}
+
+.col-xs-8-5 {
+    .col-xs-1;
+    width: 8.5*100/12%;
+}
+
+.col-xs-9-5 {
+    .col-xs-1;
+    width: 9.5*100/12%;
+}
+
+.col-xs-10-5 {
+    .col-xs-1;
+    width: 10.5*100/12%;
+}
+
+.col-xs-11-5 {
+    .col-xs-1;
+    width: 11.5*100/12%;
+}
+
+@media (min-width: 768px) {
+    .col-sm-0-5 {
+        .col-sm-1;
+        width: 0.5*100/12%;
+    }
+
+    .col-sm-1-5 {
+        .col-sm-1;
+        width: 1.5*100/12%;
+    }
+
+    .col-sm-2-5 {
+        .col-sm-1;
+        width: 2.5*100/12%;
+    }
+
+    .col-sm-3-5 {
+        .col-sm-1;
+        width: 3.5*100/12%;
+    }
+
+    .col-sm-4-5 {
+        .col-sm-1;
+        width: 4.5*100/12%;
+    }
+
+    .col-sm-5-5 {
+        .col-sm-1;
+        width: 5.5*100/12%;
+    }
+
+    .col-sm-6-5 {
+        .col-sm-1;
+        width: 6.5*100/12%;
+    }
+
+    .col-sm-7-5 {
+        .col-sm-1;
+        width: 7.5*100/12%;
+    }
+
+    .col-sm-8-5 {
+        .col-sm-1;
+        width: 8.5*100/12%;
+    }
+
+    .col-sm-9-5 {
+        .col-sm-1;
+        width: 9.5*100/12%;
+    }
+
+    .col-sm-10-5 {
+        .col-sm-1;
+        width: 10.5*100/12%;
+    }
+
+    .col-sm-11-5 {
+        .col-sm-1;
+        width: 11.5*100/12%;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-0-5 {
+        .col-md-1;
+        width: 0.5*100/12%;
+    }
+
+    .col-md-1-5 {
+        .col-md-1;
+        width: 1.5*100/12%;
+    }
+
+    .col-md-2-5 {
+        .col-md-1;
+        width: 2.5*100/12%;
+    }
+
+    .col-md-3-5 {
+        .col-md-1;
+        width: 3.5*100/12%;
+    }
+
+    .col-md-4-5 {
+        .col-md-1;
+        width: 4.5*100/12%;
+    }
+
+    .col-md-5-5 {
+        .col-md-1;
+        width: 5.5*100/12%;
+    }
+
+    .col-md-6-5 {
+        .col-md-1;
+        width: 6.5*100/12%;
+    }
+
+    .col-md-7-5 {
+        .col-md-1;
+        width: 7.5*100/12%;
+    }
+
+    .col-md-8-5 {
+        .col-md-1;
+        width: 8.5*100/12%;
+    }
+
+    .col-md-9-5 {
+        .col-md-1;
+        width: 9.5*100/12%;
+    }
+
+    .col-md-10-5 {
+        .col-md-1;
+        width: 10.5*100/12%;
+    }
+
+    .col-md-11-5 {
+        .col-md-1;
+        width: 11.5*100/12%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-lg-0-5 {
+        .col-lg-1;
+        width: 0.5*100/12%;
+    }
+
+    .col-lg-1-5 {
+        .col-lg-1;
+        width: 1.5*100/12%;
+    }
+
+    .col-lg-2-5 {
+        .col-lg-1;
+        width: 2.5*100/12%;
+    }
+
+    .col-lg-3-5 {
+        .col-lg-1;
+        width: 3.5*100/12%;
+    }
+
+    .col-lg-4-5 {
+        .col-lg-1;
+        width: 4.5*100/12%;
+    }
+
+    .col-lg-5-5 {
+        .col-lg-1;
+        width: 5.5*100/12%;
+    }
+
+    .col-lg-6-5 {
+        .col-lg-1;
+        width: 6.5*100/12%;
+    }
+
+    .col-lg-7-5 {
+        .col-lg-1;
+        width: 7.5*100/12%;
+    }
+
+    .col-lg-8-5 {
+        .col-lg-1;
+        width: 8.5*100/12%;
+    }
+
+    .col-lg-9-5 {
+        .col-lg-1;
+        width: 9.5*100/12%;
+    }
+
+    .col-lg-10-5 {
+        .col-lg-1;
+        width: 10.5*100/12%;
+    }
+
+    .col-lg-11-5 {
+        .col-lg-1;
+        width: 11.5*100/12%;
+    }
+}
+
+/*******************************************************************************
+  VERTICAL SEARCH
+*******************************************************************************/
+
+.vertical-search-criterium {
+   margin-bottom: @image-margin * 2;
+
+   .control-label {
+      .label;
+      .label-primary;
+      cursor: pointer;
+      font-size: 100%;
+      font-weight: normal !important;
+      margin-bottom: @image-margin * 1.25;
+   }
+   
+   .collapse {
+      margin-top: @image-margin;
+   }
+}
