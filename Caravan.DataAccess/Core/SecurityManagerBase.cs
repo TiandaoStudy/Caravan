@@ -69,7 +69,8 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentNullException>.IfIsNull(newGroup);
          Raise<ArgumentException>.IfIsEmpty(newGroup.Name);
-         if (!DoAddGroup(appName, newGroup))
+         newGroup.Name = newGroup.Name.ToLower();
+         if (!DoAddGroup(appName.ToLower(), newGroup))
          {
             throw new GroupExistingException();
          }
@@ -79,7 +80,7 @@ namespace Finsa.Caravan.DataAccess.Core
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(groupName);
-         if (!DoRemoveGroup(appName, groupName))
+         if (!DoRemoveGroup(appName.ToLower(), groupName.ToLower()))
          {
             throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);   
          }
@@ -90,9 +91,19 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(groupName);
          Raise<ArgumentNullException>.IfIsNull(newGroup);
-         if (!DoUpdateGroup(appName, groupName, newGroup))
+         Raise<ArgumentException>.IfIsEmpty(newGroup.Name);
+         try
          {
-            throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);   
+            newGroup.Name = newGroup.Name.ToLower();
+            if (!DoUpdateGroup(appName.ToLower(), groupName.ToLower(), newGroup))
+            {
+               throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);   
+            }
+         }
+         catch (Exception ex)
+         {
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, "Updating a group");
+            throw;
          }
       }
 
@@ -123,7 +134,8 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentNullException>.IfIsNull(newUser);
          Raise<ArgumentException>.IfIsEmpty(newUser.Login);
-         if (!DoAddUser(appName, newUser))
+         newUser.Login = newUser.Login.ToLower();
+         if (!DoAddUser(appName.ToLower(), newUser))
          {
             throw new UserExistingException();
          }
@@ -133,7 +145,7 @@ namespace Finsa.Caravan.DataAccess.Core
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(userLogin);
-         if (!DoRemoveUser(appName, userLogin))
+         if (!DoRemoveUser(appName.ToLower(), userLogin))
          {
             throw new UserNotFoundException();
          }
@@ -145,20 +157,62 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsEmpty(userLogin);
          Raise<ArgumentNullException>.IfIsNull(newUser);
          Raise<ArgumentException>.IfIsEmpty(newUser.Login);
-         if (!DoUpdateUser(appName, userLogin, newUser))
+         try
          {
-            throw new UserNotFoundException();
+            newUser.Login = newUser.Login.ToLower();
+            if (!DoUpdateUser(appName.ToLower(), userLogin.ToLower(), newUser))
+            {
+               throw new UserNotFoundException();
+            }
+         }
+         catch (Exception ex)
+         {
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, "Updating an user");
+            throw;
+         }
+      }
+
+      public void AddUserToGroup(string appName, string userLogin, string groupName)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfIsEmpty(userLogin);
+         Raise<ArgumentException>.IfIsEmpty(groupName);
+         try
+         {
+            if (!DoAddUserToGroup(appName.ToLower(), userLogin.ToLower(), groupName.ToLower()))
+            {
+               throw new UserExistingException();
+            }
+         }
+         catch (Exception ex)
+         {
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, "Adding an user to a group");
+            throw;
+         }
+      }
+
+      public void RemoveUserFromGroup(string appName, string userLogin, string groupName)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfIsEmpty(userLogin);
+         Raise<ArgumentException>.IfIsEmpty(groupName);
+         try
+         {
+            if (!DoRemoveUserFromGroup(appName.ToLower(), userLogin.ToLower(), groupName.ToLower()))
+            {
+               throw new UserNotFoundException();
+            }
+         }
+         catch (Exception ex)
+         {
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, "Removing an user from a group");
+            throw;
          }
       }
 
       #endregion
 
       #region Contexts
-
-      public IList<SecContext> Contexts()
-      {
-         return GetContexts(null);
-      }
 
       public IList<SecContext> Contexts(string appName)
       {
@@ -169,11 +223,6 @@ namespace Finsa.Caravan.DataAccess.Core
       #endregion
 
       #region Objects
-
-      public IList<SecObject> Objects()
-      {
-         return GetObjects(null, null);
-      }
 
       public IList<SecObject> Objects(string appName)
       {
@@ -313,6 +362,10 @@ namespace Finsa.Caravan.DataAccess.Core
       protected abstract bool DoRemoveUser(string appName, string userLogin);
 
       protected abstract bool DoUpdateUser(string appName, string userLogin, SecUser newUser);
+
+      protected abstract bool DoAddUserToGroup(string appName, string userLogin, string groupName);
+
+      protected abstract bool DoRemoveUserFromGroup(string appName, string userLogin, string groupName);
 
       protected abstract IList<SecContext> GetContexts(string appName);
 

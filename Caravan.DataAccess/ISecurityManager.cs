@@ -156,22 +156,38 @@ namespace Finsa.Caravan.DataAccess
       /// </exception>
       void UpdateUser(string appName, string userLogin, SecUser newUser);
 
-      //void AddUserToGroup();
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="appName"></param>
+      /// <param name="userLogin"></param>
+      /// <param name="groupName"></param>
+      /// <exception cref="ArgumentException">
+      ///   <paramref name="appName"/>, <paramref name="userLogin"/> or <paramref name="groupName"/> are null or empty.
+      /// </exception>
+      void AddUserToGroup(string appName, string userLogin, string groupName);
+
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="appName"></param>
+      /// <param name="userLogin"></param>
+      /// <param name="groupName"></param>
+      /// <exception cref="ArgumentException">
+      ///   <paramref name="appName"/>, <paramref name="userLogin"/> or <paramref name="groupName"/> are null or empty.
+      /// </exception>
+      void RemoveUserFromGroup(string appName, string userLogin, string groupName);
 
       #endregion
 
       #region Contexts
-
-      IList<SecContext> Contexts();
 
       IList<SecContext> Contexts(string appName);
 
       #endregion
 
       #region Objects
-
-      IList<SecObject> Objects();
-
+      
       IList<SecObject> Objects(string appName);
 
       IList<SecObject> Objects(string appName, string contextName);

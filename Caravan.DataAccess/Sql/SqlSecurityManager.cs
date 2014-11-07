@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.DataModel.Exceptions;
 using Finsa.Caravan.DataModel.Security;
 
 namespace Finsa.Caravan.DataAccess.Sql
@@ -74,6 +75,8 @@ namespace Finsa.Caravan.DataAccess.Sql
                {
                   newGroup.Id = (ctx.SecGroups.Where(g => g.AppId == appId).Max(g => (long?) g.Id) ?? -1) + 1;
                   newGroup.AppId = appId;
+                  newGroup.Description = newGroup.Description ?? String.Empty;
+                  newGroup.Notes = newGroup.Notes ?? String.Empty;
                   ctx.SecGroups.Add(newGroup);
                   added = true;
                }
@@ -119,27 +122,23 @@ namespace Finsa.Caravan.DataAccess.Sql
       {
          using (var ctx = Db.CreateWriteContext())
          {
-            var trx = ctx.BeginTransaction();
-            try
+            ctx.BeginTransaction();
+            var updated = false;
+            var grp = ctx.SecGroups.FirstOrDefault(g => g.App.Name == appName && g.Name == groupName);
+            if (grp != null)
             {
-               var updated = false;
-               var grp = ctx.SecGroups.FirstOrDefault(g => g.App.Name == appName && g.Name == groupName);
-               if (grp != null)
+               if (grp.Name != newGroup.Name && ctx.SecGroups.Any(g => g.AppId == grp.AppId && g.Name == newGroup.Name))
                {
-                  grp.Name = newGroup.Name;
-                  grp.Description = newGroup.Description;
-                  grp.IsAdmin = newGroup.IsAdmin;
-                  updated = true;
+                  throw new GroupExistingException();
                }
-               ctx.SaveChanges();
-               return updated;
+               grp.Name = newGroup.Name;
+               grp.Description = newGroup.Description ?? String.Empty;
+               grp.IsAdmin = newGroup.IsAdmin;
+               grp.Notes = newGroup.Notes ?? String.Empty;
+               updated = true;
             }
-            catch (Exception ex)
-            {
-               trx.Rollback();
-               Db.Logger.LogErrorAsync<SqlSecurityManager>(ex, "Updating a group");
-               throw;
-            }
+            ctx.SaveChanges();
+            return updated;
          }
       }
 
@@ -222,29 +221,62 @@ namespace Finsa.Caravan.DataAccess.Sql
       {
          using (var ctx = Db.CreateWriteContext())
          {
-            var trx = ctx.BeginTransaction();
-            try
+            ctx.BeginTransaction();
+            var updated = false;
+            var user = ctx.SecUsers.FirstOrDefault(u => u.App.Name == appName && u.Login == userLogin);
+            if (user != null)
             {
-               var updated = false;
-               var user = ctx.SecUsers.FirstOrDefault(us => us.App.Name == appName && us.Login == userLogin);
-               if (user != null)
+               if (userLogin != newUser.Login && ctx.SecUsers.Any(u => u.AppId == user.AppId && u.Login == newUser.Login))
                {
-                  user.FirstName = newUser.FirstName;
-                  user.LastName = newUser.LastName;
-                  user.Email = newUser.Email;
-                  user.Login = newUser.Login;
-                  user.Active = newUser.Active;
-                  updated = true;
+                  throw new UserExistingException();
                }
-               ctx.SaveChanges();
-               return updated;
+               user.FirstName = newUser.FirstName;
+               user.LastName = newUser.LastName;
+               user.Email = newUser.Email;
+               user.Login = newUser.Login;
+               user.Active = newUser.Active;
+               updated = true;
             }
-            catch (Exception ex)
+            ctx.SaveChanges();
+            return updated;
+         }
+      }
+
+      protected override bool DoAddUserToGroup(string appName, string userLogin, string groupName)
+      {
+         using (var ctx = Db.CreateWriteContext())
+         {
+            ctx.BeginTransaction();
+            var appId = GetAppIdByName(ctx, appName);
+            var user = GetUserByLogin(ctx, appId, userLogin);
+            var group = GetGroupByName(ctx, appId, groupName);
+            var added = false;
+            if (!group.Users.Contains(user))
             {
-               trx.Rollback();
-               Db.Logger.LogErrorAsync<SqlSecurityManager>(ex, "Updating an user");
-               throw;
+               group.Users.Add(user);
+               added = true;
             }
+            ctx.SaveChanges();
+            return added;
+         }
+      }
+
+      protected override bool DoRemoveUserFromGroup(string appName, string userLogin, string groupName)
+      {
+         using (var ctx = Db.CreateWriteContext())
+         {
+            ctx.BeginTransaction();
+            var appId = GetAppIdByName(ctx, appName);
+            var user = GetUserByLogin(ctx, appId, userLogin);
+            var group = GetGroupByName(ctx, appId, groupName);
+            var removed = false;
+            if (group.Users.Contains(user))
+            {
+               group.Users.Remove(user);
+               removed = true;
+            }
+            ctx.SaveChanges();
+            return removed;
          }
       }
 
@@ -401,6 +433,40 @@ namespace Finsa.Caravan.DataAccess.Sql
                throw;
             }
          }
+      }
+
+      #endregion
+
+      #region Private Methods
+
+      private static long GetAppIdByName(DbContextBase ctx, string appName)
+      {
+         var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => (long?) a.Id).FirstOrDefault();
+         if (appId == null)
+         {
+            throw new AppNotFoundException();
+         }
+         return appId.Value;
+      }
+
+      private static SecGroup GetGroupByName(DbContextBase ctx, long appId, string groupName)
+      {
+         var group = ctx.SecGroups.FirstOrDefault(g => g.AppId == appId && g.Name == groupName);
+         if (group == null)
+         {
+            throw new UserNotFoundException();
+         }
+         return group;
+      }
+
+      private static SecUser GetUserByLogin(DbContextBase ctx, long appId, string userLogin)
+      {
+         var user = ctx.SecUsers.FirstOrDefault(u => u.AppId == appId && u.Login == userLogin);
+         if (user == null)
+         {
+            throw new UserNotFoundException();
+         }
+         return user;
       }
 
       #endregion
