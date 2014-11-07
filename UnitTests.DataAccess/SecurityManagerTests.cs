@@ -391,8 +391,103 @@ namespace UnitTests.DataAccess
 
            Db.Security.UpdateUser(_myApp.Name, user1.Login, null);
         }
-
         #endregion
+
+        #region AddUserToGroup_Tests
+
+        [Test]
+       public void AddUserToGroup_ValidArgs_UserAddedInCorrectGroup()
+       {
+          var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
+          var group1 = new SecGroup {Name = "mygroup"};
+          var group2 = new SecGroup { Name = "mygroup2" };
+          Db.Security.AddUser(_myApp.Name,user1);
+          Db.Security.AddGroup(_myApp.Name,group1);
+          Db.Security.AddGroup(_myApp.Name, group2);
+          Db.Security.AddUserToGroup(_myApp.Name,user1.Login,group1.Name);
+           
+           user1 = Db.Security.User(_myApp.Name, user1.Login);
+           group1 = Db.Security.Group(_myApp.Name, group1.Name);
+           group2 = Db.Security.Group(_myApp.Name, group2.Name);
+
+           Assert.True(user1.Groups.Contains(group1));
+           Assert.False(user1.Groups.Contains(group2));
+           Assert.AreEqual(1, user1.Groups.Count);
+
+           Assert.True(group1.Users.Contains(user1));
+           Assert.False(group2.Users.Contains(user1));
+           Assert.AreEqual(1, group1.Users.Count);
+           Assert.AreEqual(0, group2.Users.Count);
+
+       }
+       
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void AddUserToGroup_NullAppName_ThrowsArgumentException()
+       {
+          var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
+          var group1 = new SecGroup { Name = "mygroup" };
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddUserToGroup(null, user1.Login, group1.Name);
+       }
+
+       [Test]
+       [ExpectedException(typeof(ArgumentException))]
+       public void AddUserToGroup_EmptyAppName_ThrowsArgumentException()
+       {
+          var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
+          var group1 = new SecGroup { Name = "mygroup" };
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddUserToGroup("", user1.Login, group1.Name);
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void AddUserToGroup_NullUserLogin_ThrowsArgumentException()
+       {
+          var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
+          var group1 = new SecGroup { Name = "mygroup" };
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddUserToGroup(_myApp.Name, null, group1.Name);
+       }
+
+       [Test]
+       [ExpectedException(typeof(ArgumentException))]
+       public void AddUserToGroup_EmptyUserLogin_ThrowsArgumentException()
+       {
+          var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
+          var group1 = new SecGroup { Name = "mygroup" };
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddUserToGroup(_myApp.Name, "", group1.Name);
+       }
+
+       [Test]
+       [ExpectedException(typeof(ArgumentException))]
+       public void AddUserToGroup_NullGroupName_ThrowsArgumentException()
+       {
+          var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
+          var group1 = new SecGroup { Name = "mygroup" };
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddUserToGroup(_myApp.Name, user1.Login, null);
+       }
+
+       [Test]
+       [ExpectedException(typeof(ArgumentException))]
+       public void AddUserToGroup_EmptyGroupName_ThrowsArgumentException()
+       {
+          var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
+          var group1 = new SecGroup { Name = "mygroup" };
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddUserToGroup(_myApp.Name, user1.Login, "");
+       }
+
+       #endregion
 
         #region Groups_Tests
 
@@ -737,25 +832,418 @@ namespace UnitTests.DataAccess
          [Test]
          public void Apps_ValidArgs_ReturnlistOfApps()
          {
-            var q = (from a in Db.Security.Apps() select a).ToList();
+            var a = Db.Security.Apps();
 
-            Assert.That(q.Count(),Is.EqualTo(2));
-            Assert.That(q.Contains(_myApp));
-            Assert.That(q.Contains(_myApp2));
+            Assert.That(a.Count(),Is.EqualTo(2));
+            Assert.That(a.Contains(_myApp));
+            Assert.That(a.Contains(_myApp2));
          }
 
          #endregion
 
          #region App_Tests
 
+       [Test]
+       public void App_ValidArgs_ReturnsApp()
+       {
+          var a = Db.Security.App(_myApp.Name);
+          Assert.That(a,Is.Not.Null);
+          Assert.That(a.Name, Is.EqualTo("mio_test"));
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void App_NullAppName_ThrowsArgumentException()
+       {
+           Db.Security.App(null);
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void App_EmptyAppName_ThrowsArgumentException()
+       {
+          Db.Security.App("");
+       }
 
          #endregion
 
          #region AddApp_Tests
 
+       [Test]
+       public void AddApp_ValidArgs_AppAdded()
+       {
+          var newApp = new SecApp() {Name = "AddedApp", Description = "my new application"};
+          Db.Security.AddApp(newApp);
+          var a = Db.Security.Apps();
+          Assert.That(a.Contains(newApp));
+       }
+
+       [Test]
+       [ExpectedException(typeof (AppExistingException))]
+       public void AddApp_AlreadyExistingAppName_ThrowsAppExistingException()
+       {
+          var newApp = new SecApp() { Name = "mio_test", Description = "my new application" };
+          Db.Security.AddApp(newApp);
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentNullException))]
+       public void AddApp_NullApp_ThrowsArgumentNullException()
+       {
+          Db.Security.AddApp(null);
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void AddApp_EmptyAppName_ThrowsArgumentException()
+       {
+          var newApp = new SecApp() { Name = "", Description = "my new application" };
+          Db.Security.AddApp(newApp);
+       }
+
          #endregion
 
-     
+       #region Contexts_Tests
+
+       [Test]
+       //!!!!DA VERIFICARE!!!!-----------------------
+       public void Contexts_ValidArgs_ReturnslistOfContexts() //null groupName
+       {
+          var c1 = new SecContext {Name = "c1", Description = "context1"};
+          var c2 = new SecContext {Name = "c2", Description = "context2"};
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          var user1 = new SecUser {FirstName = "user1", Login = "myLogin"};
+          var group1 = new SecGroup {Name = "my_group"};
+
+          Db.Security.AddUser(_myApp.Name,user1);
+          Db.Security.AddGroup(_myApp.Name,group1);
+
+          Db.Security.AddEntry(_myApp.Name,c1,obj1,user1.Login,null);
+          Db.Security.AddEntry(_myApp.Name,c2,obj1,user1.Login,null);
+
+          var l = Db.Security.Contexts(_myApp.Name);
+
+          Assert.That(l.Count(),Is.EqualTo(2));
+          Assert.That(l.Contains(c1));
+          Assert.That(l.Contains(c2));
+       }
+
+       [Test]
+       public void Contexts_ValidArgs1_ReturnslistOfContexts() //EmptyGroupName
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var c2 = new SecContext { Name = "c2", Description = "context2" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+          var group1 = new SecGroup { Name = "my_group" };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, "");
+          Db.Security.AddEntry(_myApp.Name, c2, obj1, user1.Login, "");
+
+          var l = Db.Security.Contexts(_myApp.Name);
+
+          Assert.That(l.Count(), Is.EqualTo(2));
+          Assert.That(l.Contains(c1));
+          Assert.That(l.Contains(c2));
+       }
+
+       [Test]
+       public void Contexts_ValidArgs2_ReturnslistOfContexts() //Empty Userlogin
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var c2 = new SecContext { Name = "c2", Description = "context2" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+          var group1 = new SecGroup { Name = "my_group" };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, "", group1.Name);
+          Db.Security.AddEntry(_myApp.Name, c2, obj1, "", group1.Name);
+
+          var l = Db.Security.Contexts(_myApp.Name);
+
+          Assert.That(l.Count(), Is.EqualTo(2));
+          Assert.That(l.Contains(c1));
+          Assert.That(l.Contains(c2));
+       }
+
+       [Test]
+       public void Contexts_ValidArgs3_ReturnslistOfContexts() //Null Userlogin
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var c2 = new SecContext { Name = "c2", Description = "context2" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+          var group1 = new SecGroup { Name = "my_group" };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+          Db.Security.AddEntry(_myApp.Name, c2, obj1, null, group1.Name);
+
+          var l = Db.Security.Contexts(_myApp.Name);
+
+          Assert.That(l.Count(), Is.EqualTo(2));
+          Assert.That(l.Contains(c1));
+          Assert.That(l.Contains(c2));
+       }
+
+
+       [Test]
+       public void Contexts_NotExistingContext_ReturnsZero()
+       {
+         
+          var l = Db.Security.Contexts(_myApp.Name);
+
+          Assert.That(l.Count(), Is.EqualTo(0));
+          
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void Contexts_NullAppName_ThrowsArgumentException()
+       {
+          Db.Security.Contexts(null);
+       }
+
+       [Test]
+       [ExpectedException(typeof(ArgumentException))]
+       public void Contexts_EmptyAppName_ThrowsArgumentException()
+       {
+          Db.Security.Contexts("");
+       }
+       
+       #endregion
+
+       #region Objects_Tests
+
+       [Test]
+       public void Objects_ValidArgs_ReturnsListOfObjects()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+          var group1 = new SecGroup { Name = "my_group" };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+
+          var l = Db.Security.Objects(_myApp.Name);
+
+          Assert.That(l.Count(),Is.EqualTo(1));
+
+          var l1 = Db.Security.Objects(_myApp2.Name);
+
+          Assert.That(l1.Count(),Is.EqualTo(0));
+
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void Objects_NullAppName_ThrowsArgumentException()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { App = _myApp, Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin"};
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name,group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+
+          Db.Security.Objects(null);
+       }
+
+
+       
+
+       [Test]
+       [ExpectedException(typeof(ArgumentException))]
+       public void Objects_EmptyAppName_ThrowsArgumentException()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup {Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+
+          Db.Security.Objects("");
+       }
+
+       [Test]
+       [ExpectedException(typeof(ArgumentException))]
+       public void Objects_NotExistingAppName_ThrowsArgumentException()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+
+          Db.Security.Objects("_app");
+       }
+
+       [Test]
+       [ExpectedException(typeof(ArgumentException))]
+       public void Objects_NotExistingContextName_ThrowsArgumentException()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+
+          Db.Security.Objects(_myApp.Name,"cra");
+       }
+
+       #endregion
+
+       #region Entries_tests
+
+       [Test]
+       public void Entries_validArgs_ReturnsListOfEntries()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+
+          var l = Db.Security.Entries(_myApp.Name, c1.Name);
+
+          Assert.That(l.Count(),Is.EqualTo(1));
+
+       }
+
+       [Test]
+       public void Entries_NoEntries_ReturnsZero()
+       {
+            var c1 = new SecContext { Name = "c1", Description = "context1" };
+            var group1 = new SecGroup { Name = "my_group" };
+            var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+
+            Db.Security.AddUser(_myApp.Name, user1);
+            Db.Security.AddGroup(_myApp.Name, group1);
+          
+            var l = Db.Security.Entries(_myApp.Name, c1.Name);
+
+            Assert.That(l.Count(), Is.EqualTo(0));
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void Entries_NullAppName_throwsArgumentException()
+       {
+          
+       }
+
+       [Test]
+       [ExpectedException(typeof(ArgumentException))]
+       public void Entries_EmptyAppName_throwsArgumentException()
+       {
+
+       }
+
+       [Test]
+       [ExpectedException(typeof(ArgumentException))]
+       public void Entries_NullContextName_throwsArgumentException()
+       {
+
+       }
+
+       [Test]
+       [ExpectedException(typeof(ArgumentException))]
+       public void Entries_EmptyContextName_throwsArgumentException()
+       {
+
+       }
+
+       #endregion
+
 
     }
 }
