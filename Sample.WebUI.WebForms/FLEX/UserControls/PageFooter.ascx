@@ -6,7 +6,10 @@
       <div class="container-fluid">
          
          <div class="navbar-header">
-            <a href="http://www.finsa.it" class="navbar-brand"><img src='<%= Head.FlexPath %>/Images/logo-finsa.png' class='logo-finsa' alt='Logo' />Finsa S.p.A.</a>
+            <a href="http://www.finsa.it" class="navbar-brand">
+               <img src='<%= Head.FlexPath %>/Images/logo-finsa.png' class='logo-finsa' alt='Logo Finsa' />
+               <span class="navbar-brand-description">Finsa S.p.A.</span>
+            </a>
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#pageFooter-collapse">
                <span class="icon-bar"></span>
                <span class="icon-bar"></span>
