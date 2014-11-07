@@ -7426,6 +7426,13 @@ td label {
   font-weight: normal !important;
 }
 /*******************************************************************************
+  JQUERY UI TUNING
+*******************************************************************************/
+.ui-menu,
+.ui-state-focus {
+  margin: 0px !important;
+}
+/*******************************************************************************
   MENU BAR
 *******************************************************************************/
 nav .navbar-default {
@@ -7450,13 +7457,19 @@ footer .navbar-default {
   min-height: 10px !important;
 }
 footer .navbar-default .navbar-brand {
+  display: inline-block;
   padding-top: 5px !important;
   padding-bottom: 5px !important;
   height: 10px !important;
 }
 footer .navbar-default .navbar-brand .logo-finsa {
+  float: left;
   margin-right: 5px;
   height: 18px;
+}
+footer .navbar-default .navbar-brand .navbar-brand-description {
+  float: left;
+  margin-left: 5px;
 }
 footer .navbar-default .navbar-nav > li > a {
   padding-top: 5px !important;

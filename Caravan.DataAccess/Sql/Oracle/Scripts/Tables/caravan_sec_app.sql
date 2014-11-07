@@ -4,8 +4,8 @@
 CREATE TABLE mydb.caravan_sec_app
 (
      capp_id          NUMBER          NOT NULL 
-   , capp_name        NVARCHAR2(30)   NOT NULL
-   , capp_description NVARCHAR2(100)  NOT NULL
+   , capp_name        NVARCHAR2(2000)   NOT NULL
+   , capp_description NVARCHAR2(2000)  NOT NULL
    , CHECK (capp_name = lower(capp_name)) ENABLE
    , CONSTRAINT pk_caravan_sec_app PRIMARY KEY (capp_id) USING INDEX TABLESPACE dati_base_index ENABLE
    , CONSTRAINT uk_caravan_sec_app UNIQUE (capp_name) USING INDEX TABLESPACE dati_base_index ENABLE

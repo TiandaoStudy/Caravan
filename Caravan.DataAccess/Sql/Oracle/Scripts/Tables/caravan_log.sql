@@ -6,32 +6,32 @@ CREATE TABLE mydb.caravan_log
    , clog_date         DATE DEFAULT SYSDATE NOT NULL 
    , clos_type         NVARCHAR2(5)         NOT NULL
    , capp_id           NUMBER               NOT NULL
-   , clog_user         NVARCHAR2(30)
-   , clog_code_unit    NVARCHAR2(100)       NOT NULL
-   , clog_function     NVARCHAR2(100)       NOT NULL
-   , clog_short_msg    NVARCHAR2(400)       NOT NULL
+   , clog_user         NVARCHAR2(2000)
+   , clog_code_unit    NVARCHAR2(2000)      NOT NULL
+   , clog_function     NVARCHAR2(2000)      NOT NULL
+   , clog_short_msg    NVARCHAR2(2000)      NOT NULL
    , clog_long_msg     NVARCHAR2(2000)
-   , clog_context      NVARCHAR2(400)
-   , clog_key_0        NVARCHAR2(100)
-   , clog_value_0      NVARCHAR2(400)
-   , clog_key_1        NVARCHAR2(100) 
-   , clog_value_1      NVARCHAR2(400)
-   , clog_key_2        NVARCHAR2(100) 
-   , clog_value_2      NVARCHAR2(400)
-   , clog_key_3        NVARCHAR2(100) 
-   , clog_value_3      NVARCHAR2(400) 
-   , clog_key_4        NVARCHAR2(100) 
-   , clog_value_4      NVARCHAR2(400) 
-   , clog_key_5        NVARCHAR2(100) 
-   , clog_value_5      NVARCHAR2(400) 
-   , clog_key_6        NVARCHAR2(100) 
-   , clog_value_6      NVARCHAR2(400) 
-   , clog_key_7        NVARCHAR2(100) 
-   , clog_value_7      NVARCHAR2(400) 
-   , clog_key_8        NVARCHAR2(100) 
-   , clog_value_8      NVARCHAR2(400) 
-   , clog_key_9        NVARCHAR2(100)
-   , clog_value_9      NVARCHAR2(400)
+   , clog_context      NVARCHAR2(2000)
+   , clog_key_0        NVARCHAR2(2000)
+   , clog_value_0      NVARCHAR2(2000)
+   , clog_key_1        NVARCHAR2(2000) 
+   , clog_value_1      NVARCHAR2(2000)
+   , clog_key_2        NVARCHAR2(2000) 
+   , clog_value_2      NVARCHAR2(2000)
+   , clog_key_3        NVARCHAR2(2000) 
+   , clog_value_3      NVARCHAR2(2000) 
+   , clog_key_4        NVARCHAR2(2000) 
+   , clog_value_4      NVARCHAR2(2000) 
+   , clog_key_5        NVARCHAR2(2000) 
+   , clog_value_5      NVARCHAR2(2000) 
+   , clog_key_6        NVARCHAR2(2000) 
+   , clog_value_6      NVARCHAR2(2000) 
+   , clog_key_7        NVARCHAR2(2000) 
+   , clog_value_7      NVARCHAR2(2000) 
+   , clog_key_8        NVARCHAR2(2000) 
+   , clog_value_8      NVARCHAR2(2000) 
+   , clog_key_9        NVARCHAR2(2000)
+   , clog_value_9      NVARCHAR2(2000)
    , CHECK (clog_user is null or clog_user = lower(clog_user)) ENABLE
    , CHECK (clog_code_unit = lower(clog_code_unit)) ENABLE
    , CHECK (clog_function = lower(clog_function)) ENABLE
