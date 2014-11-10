@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CodeProject.DeepXmlSerializer">
-      <HintPath>..\packages\CodeProject.DeepXmlSerializer.0.1.5\lib\net40-client\CodeProject.DeepXmlSerializer.dll</HintPath>
-    </Reference>
     <Reference Include="CodeProject.ObjectPool">
       <HintPath>..\packages\CodeProject.ObjectPool.1.0.6\lib\net40\CodeProject.ObjectPool.dll</HintPath>
     </Reference>
@@ -54,7 +51,7 @@
       <HintPath>..\packages\PommaLabs.GRAMPA.1.2.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
     <Reference Include="PommaLabs.KVLite">
-      <HintPath>..\packages\PommaLabs.KVLite.0.6.3\lib\net45\PommaLabs.KVLite.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.KVLite.0.6.4\lib\net45\PommaLabs.KVLite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
