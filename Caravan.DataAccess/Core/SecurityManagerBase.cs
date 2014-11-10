@@ -283,7 +283,8 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsNull(secObject);
          Raise<ArgumentException>.IfIsEmpty(secObject.Name);
          Raise<ArgumentException>.If(String.IsNullOrWhiteSpace(userLogin) && String.IsNullOrWhiteSpace(groupName));
-         Raise<ArgumentException>.If(!String.IsNullOrWhiteSpace(userLogin) && !String.IsNullOrWhiteSpace(groupName));
+         Raise<ArgumentException>.If(!String.IsNullOrWhiteSpace(userLogin) && groupName != null);
+         Raise<ArgumentException>.If(!String.IsNullOrWhiteSpace(groupName) && userLogin != null);
 
          const string logShort = "Security entry for object '{0}' in context '{1}' has been added for '{2}'";
          const string logCtx = "Adding a new security entry";
