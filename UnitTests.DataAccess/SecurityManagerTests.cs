@@ -187,6 +187,23 @@ namespace UnitTests.DataAccess
 
         }
 
+       [Test]
+       public void AddUser_LogIncremented_ReturnOK()
+       {
+          var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
+
+          var l = Db.Logger.Logs(_myApp.Name);
+
+          Db.Security.AddUser(_myApp.Name, user1);
+
+          var l1 = Db.Logger.Logs(_myApp.Name);
+
+          Assert.That(l1.Count(), Is.EqualTo(l.Count()+1));
+
+          
+
+       }
+
         [Test]
         [ExpectedException(typeof(UserExistingException))]
         public void AddUser_UserLoginAlreadyPresent_ThrowsException()
@@ -237,6 +254,23 @@ namespace UnitTests.DataAccess
            var q = (from u in Db.Security.Users(_myApp.Name) where u.Login == user1.Login select u).ToList();
 
            Assert.That(q.Count(),Is.EqualTo(0));
+        }
+
+        [Test]
+        public void RemoveUser_LogIncremented_ReturnOK()
+        {
+           var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
+
+           Db.Security.AddUser(_myApp.Name, user1);
+
+           var l = Db.Logger.Logs(_myApp.Name);
+
+           Db.Security.RemoveUser(_myApp.Name,user1.Login);
+
+           var l1 = Db.Logger.Logs(_myApp.Name);
+
+           Assert.That(l1.Count(), Is.EqualTo(l.Count() + 1));
+
         }
 
         [Test]
@@ -307,6 +341,25 @@ namespace UnitTests.DataAccess
                      where u.Id==user1.Id && u.Login == "blabla" select u).ToList();
            Assert.That(q2.Count,Is.EqualTo(0));
            
+        }
+
+        [Test]
+        public void UdateUser_LogIncremented_ReturnOK()
+        {
+           var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
+
+           Db.Security.AddUser(_myApp.Name, user1);
+
+           var l = Db.Logger.Logs(_myApp.Name);
+
+           user1.Login = "updatedLogin";
+
+           Db.Security.UpdateUser(_myApp.Name, "blabla", user1);
+
+           var l1 = Db.Logger.Logs(_myApp.Name);
+
+           Assert.That(l1.Count(), Is.EqualTo(l.Count() + 1));
+
         }
 
        [Test]
@@ -906,7 +959,7 @@ namespace UnitTests.DataAccess
        #region Contexts_Tests
 
        [Test]
-       //!!!!DA VERIFICARE!!!!-----------------------
+       
        public void Contexts_ValidArgs_ReturnslistOfContexts() //null groupName
        {
           var c1 = new SecContext {Name = "c1", Description = "context1"};
@@ -1601,13 +1654,7 @@ namespace UnitTests.DataAccess
              Type = "button"
           };
 
-          //var obj2 = new SecObject
-          //{
-          //   Name = "obj2",
-          //   Description = "oggetto2",
-          //   Type = "button"
-          //};
-
+         
           Db.Security.AddUser(_myApp.Name, user1);
           Db.Security.AddUser(_myApp.Name, user2);
           Db.Security.AddGroup(_myApp.Name, group1);
@@ -1774,14 +1821,14 @@ namespace UnitTests.DataAccess
        }
 
        [Test]
-       [ExpectedException(typeof (UserExistingException))]
-       public void AddEntry_UserAlreadyExisting_Throws()//same context,App,obj; different user and obj
+       [ExpectedException(typeof (GroupExistingException))]
+       public void AddEntry_GroupAlreadyExisting_Throws()//same context,App,obj,group;
        {
           var c1 = new SecContext { Name = "c1", Description = "context1" };
           var group1 = new SecGroup { Name = "my_group" };
+          var group2 = new SecGroup { Name = "my_group2" };
           var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
-          var user2 = new SecUser { FirstName = "user2", Login = "myLogin2" };
-
+          
           var obj1 = new SecObject
           {
              Name = "obj1",
@@ -1789,24 +1836,18 @@ namespace UnitTests.DataAccess
              Type = "button"
           };
 
-          var obj2 = new SecObject
-          {
-             Name = "obj2",
-             Description = "oggetto2",
-             Type = "button"
-          };
-
+        
           Db.Security.AddUser(_myApp.Name, user1);
-          Db.Security.AddUser(_myApp.Name, user2);
+          Db.Security.AddGroup(_myApp.Name, group2);
           Db.Security.AddGroup(_myApp.Name, group1);
-          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
-          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group2.Name);
 
        }
 
        [Test]
-       [ExpectedException(typeof(AppExistingException))]
-       public void AddEntry_InsertTwiceTheSameEntry_Throws()//same app,context,obj, user
+       [ExpectedException(typeof(UserExistingException))]
+       public void AddEntry_UserAlreadyExisting_Throws()//same app,context,obj, user
        {
           var c1 = new SecContext { Name = "c1", Description = "context1" };
           var group1 = new SecGroup { Name = "my_group" };
@@ -1862,6 +1903,271 @@ namespace UnitTests.DataAccess
           
 
 
+       }
+
+       #endregion
+
+       #region RemoveEntry_Tests
+
+       [Test]
+       public void RemoveEntry_ValidArgs_EntryRemoved()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+          var user2 = new SecUser { FirstName = "user2", Login = "myLogin2" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          var obj2 = new SecObject
+          {
+             Name = "obj2",
+             Description = "oggetto2",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddUser(_myApp.Name, user2);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+          Db.Security.AddEntry(_myApp.Name, c1, obj2, user1.Login, null);
+        
+          Db.Security.RemoveEntry(_myApp.Name,c1.Name,obj1.Name,user1.Login,group1.Name);
+          Db.Security.RemoveEntry(_myApp.Name, c1.Name, obj2.Name, user1.Login, group1.Name);
+
+          var l = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name);
+          Assert.That(l.Count(),Is.EqualTo(0));
+
+          var l1 = Db.Security.Entries(_myApp.Name, c1.Name, obj2.Name);
+          Assert.That(l1.Count(), Is.EqualTo(0));
+
+       }
+
+       [Test]
+       [ExpectedException(typeof(ArgumentException))]
+       public void RemoveEntry_NullAppName_Throws()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+         
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+
+          Db.Security.RemoveEntry(null, c1.Name, obj1.Name, user1.Login, group1.Name);
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void RemoveEntry_EmptyAppName_Throws()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+
+          Db.Security.RemoveEntry("", c1.Name, obj1.Name, user1.Login, group1.Name);
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void RemoveEntry_NullContextName_Throws()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+
+          Db.Security.RemoveEntry(_myApp.Name, null, obj1.Name, user1.Login, group1.Name);
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void RemoveEntryEmptyContextName_Throws()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+
+          Db.Security.RemoveEntry(_myApp.Name, "", obj1.Name, user1.Login, group1.Name);
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void RemoveEntry_EmptyObjectName_Throws()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+
+          Db.Security.RemoveEntry(_myApp.Name, c1.Name, "", user1.Login, group1.Name);
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void RemoveEntry_NullObjectName_Throws()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+
+          Db.Security.RemoveEntry(_myApp.Name, c1.Name, null, user1.Login, group1.Name);
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void RemoveEntry_NullUserLogin_Throws()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+
+          Db.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, null, group1.Name);
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void RemoveEntry_EmptyUserLogin_Throws()
+       {
+
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+
+          Db.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, "", group1.Name);
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void RemoveEntry_NullGroupName_Throws()
+       {
+
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+
+          Db.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, user1.Login, null);
+       }
+
+       [Test]
+       [ExpectedException(typeof (ArgumentException))]
+       public void RemoveEntry_EmptyGroupName_Throws()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+
+          Db.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, user1.Login, "");
        }
 
        #endregion
