@@ -360,6 +360,14 @@ namespace Finsa.Caravan.DataAccess
       /// </exception>
       LogSettings LogSettings(string appName, LogType logType);
 
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="appName"></param>
+      /// <param name="logType"></param>
+      /// <param name="settings"></param>
+      void AddSettings(string appName, LogType logType, LogSettings settings);
+
       #endregion
    }
 }

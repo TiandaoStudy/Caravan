@@ -123,5 +123,10 @@ namespace Finsa.Caravan.DataAccess.Sql
             return q.OrderBy(s => s.App.Name).ThenBy(s => s.TypeId).ToLogAndList();
          }
       }
+
+      protected override void DoAddSettings(string appName, LogType logType, LogSettings settings)
+      {
+         throw new NotImplementedException();
+      }
    }
 }

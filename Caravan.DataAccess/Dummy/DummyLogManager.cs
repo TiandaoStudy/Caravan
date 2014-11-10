@@ -21,5 +21,10 @@ namespace Finsa.Caravan.DataAccess.Dummy
       {
          return ReadOnlyList.Empty<LogSettings>();
       }
+
+      protected override void DoAddSettings(string appName, LogType logType, LogSettings settings)
+      {
+         throw new System.NotImplementedException();
+      }
    }
 }
