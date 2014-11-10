@@ -1202,13 +1202,10 @@ namespace UnitTests.DataAccess
           Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-          string[] groups = {group1.Name};
-
-
           var l = Db.Security.Entries(_myApp.Name, c1.Name);
-          var l1 = Db.Security.Entries(_myApp.Name,c1.Name,obj1.Name);
-          var l2 = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name, groups);
-          var l3 = Db.Security.Entries(_myApp.Name, c1.Name, user1.Login, groups);
+          var l1 = Db.Security.EntriesForObject(_myApp.Name,c1.Name,obj1.Name);
+          var l2 = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name);
+          var l3 = Db.Security.Entries(_myApp.Name, c1.Name, user1.Login);
           
           Assert.That(l.Count(),Is.EqualTo(2));
           Assert.That(l3.Count(), Is.EqualTo(1));
@@ -1307,7 +1304,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddGroup(_myApp.Name, group1);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-         Db.Security.Entries(_myApp.Name, c1.Name,"");
+         Db.Security.EntriesForObject(_myApp.Name, c1.Name,"");
           
        }
 
@@ -1330,7 +1327,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddGroup(_myApp.Name, group1);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-          Db.Security.Entries(_myApp.Name, c1.Name, null);
+          Db.Security.EntriesForObject(_myApp.Name, c1.Name, null);
 
        }
 
@@ -1353,9 +1350,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddGroup(_myApp.Name, group1);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-          string[] groups = {group1.Name};
-
-          Db.Security.Entries(_myApp.Name, c1.Name, "",groups);
+          Db.Security.Entries(_myApp.Name, c1.Name, "");
 
        }
 
@@ -1378,9 +1373,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddGroup(_myApp.Name, group1);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-          string[] groups = { group1.Name };
-
-          Db.Security.Entries(_myApp.Name, c1.Name, null, groups);
+          Db.Security.Entries(_myApp.Name, c1.Name, null);
 
        }
 
@@ -1403,9 +1396,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddGroup(_myApp.Name, group1);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-          string[] groups = {};
-
-          Db.Security.Entries(_myApp.Name, c1.Name, user1.Login , groups);
+          Db.Security.Entries(_myApp.Name, c1.Name, user1.Login);
 
        }
        [Test]
@@ -1427,7 +1418,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddGroup(_myApp.Name, group1);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-         Db.Security.Entries(_myApp.Name, c1.Name, user1.Login, null);
+         Db.Security.Entries(_myApp.Name, c1.Name, user1.Login);
 
        }
 
@@ -1450,9 +1441,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddGroup(_myApp.Name, group1);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-          string[] groups = { group1.Name };
-
-          Db.Security.Entries(_myApp.Name, c1.Name,obj1.Name, "", groups);
+          Db.Security.EntriesForObject(_myApp.Name, c1.Name,obj1.Name, "");
 
        }
 
@@ -1475,9 +1464,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddGroup(_myApp.Name, group1);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-          string[] groups = { group1.Name };
-
-          Db.Security.Entries(_myApp.Name, c1.Name,obj1.Name, null, groups);
+          Db.Security.EntriesForObject(_myApp.Name, c1.Name,obj1.Name, null);
 
        }
 
@@ -1500,9 +1487,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddGroup(_myApp.Name, group1);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-          string[] groups = { };
-
-          Db.Security.Entries(_myApp.Name, c1.Name,obj1.Name, user1.Login, groups);
+          Db.Security.EntriesForObject(_myApp.Name, c1.Name,obj1.Name, user1.Login);
 
        }
        [Test]
@@ -1524,7 +1509,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddGroup(_myApp.Name, group1);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-          Db.Security.Entries(_myApp.Name, c1.Name,obj1.Name, user1.Login, null);
+          Db.Security.EntriesForObject(_myApp.Name, c1.Name,obj1.Name, user1.Login);
 
        }
 
@@ -1601,29 +1586,21 @@ namespace UnitTests.DataAccess
              Type = "button"
           };
 
-          //var obj2 = new SecObject
-          //{
-          //   Name = "obj2",
-          //   Description = "oggetto2",
-          //   Type = "button"
-          //};
-
           Db.Security.AddUser(_myApp.Name, user1);
           Db.Security.AddUser(_myApp.Name, user2);
           Db.Security.AddGroup(_myApp.Name, group1);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, user2.Login, null);
 
-          var l = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name);
+          var l = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj1.Name);
 
           Assert.That(l.Count(),Is.EqualTo(2));
 
-          string[] groups = {group1.Name};
-          var l1 = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name, user1.Login, groups);
+          var l1 = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj1.Name, user1.Login);
 
           Assert.That(l1.Count(),Is.EqualTo(1));
 
-          var l2 = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name, user2.Login, groups);
+          var l2 = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj1.Name, user2.Login);
 
           Assert.That(l2.Count(),Is.EqualTo(1));
           
@@ -1657,8 +1634,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
           Db.Security.AddEntry(_myApp.Name, c1, obj2, user1.Login, null);
 
-          string[] groups = {group1.Name };
-          var l1 = Db.Security.Entries(_myApp.Name, c1.Name, user1.Login, groups);
+          var l1 = Db.Security.Entries(_myApp.Name, c1.Name, user1.Login);
 
           Assert.That(l1.Count(), Is.EqualTo(2));
          
@@ -1685,7 +1661,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group2.Name);
 
-         var l1 = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name);
+         var l1 = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj1.Name);
 
           Assert.That(l1.Count(), Is.EqualTo(2));
        }
@@ -1719,13 +1695,13 @@ namespace UnitTests.DataAccess
 
           Assert.That(l1.Count(), Is.EqualTo(2));
 
-          var l2 = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name);
+          var l2 = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj1.Name);
 
           Assert.That(l2.Count(), Is.EqualTo(1));
 
           Assert.That(l2.First().Group.Name, Is.EqualTo("my_group"));
 
-          var l3 = Db.Security.Entries(_myApp.Name, c1.Name, obj2.Name);
+          var l3 = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj2.Name);
 
           Assert.That(l3.Count(), Is.EqualTo(1));
 
@@ -1855,8 +1831,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
           Db.Security.AddEntry(_myApp.Name, c1, obj2, user1.Login, null);
 
-          string[] groups = {};
-          var l = Db.Security.Entries(_myApp.Name, c1.Name, user1.Login, groups);
+          var l = Db.Security.Entries(_myApp.Name, c1.Name, user1.Login);
           
           Assert.That(l.Count(),Is.EqualTo(2));
           

@@ -78,7 +78,7 @@ namespace Finsa.Caravan.DataAccess.Dummy
 
       #region Entries
 
-      protected override IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin, string[] groupNames)
+      protected override IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin)
       {
          throw new System.NotImplementedException();
       }

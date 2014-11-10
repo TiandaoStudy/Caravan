@@ -198,11 +198,11 @@ namespace Finsa.Caravan.DataAccess
 
       IList<SecEntry> Entries(string appName, string contextName);
 
-      IList<SecEntry> Entries(string appName, string contextName, string userLogin, string[] groupNames);
+      IList<SecEntry> Entries(string appName, string contextName, string userLogin);
 
-      IList<SecEntry> Entries(string appName, string contextName, string objectName);
+      IList<SecEntry> EntriesForObject(string appName, string contextName, string objectName);
 
-      IList<SecEntry> Entries(string appName, string contextName, string objectName, string userLogin, string[] groupNames);
+      IList<SecEntry> EntriesForObject(string appName, string contextName, string objectName, string userLogin);
 
       void AddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName);
 

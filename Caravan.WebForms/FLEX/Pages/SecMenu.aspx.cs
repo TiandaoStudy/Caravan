@@ -87,7 +87,7 @@ namespace FLEX.Web.Pages
 
       protected void TreeView1_SelectedNodeChanged(object sender, EventArgs args)
       {
-         var entries = Db.Security.Entries(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, "menu", TreeView1.SelectedValue);
+         var entries = Db.Security.EntriesForObject(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, "menu", TreeView1.SelectedValue);
          var blockedUsers = entries.Where(e => e.User != null).Select(e => e.User).ToList();
          var blockedGroups = entries.Where(e => e.Group != null).Select(e => e.Group).ToList();
          var allowedUsers = Db.Security.Users(Finsa.Caravan.Common.Configuration.Instance.ApplicationName).Except(blockedUsers).ToList();

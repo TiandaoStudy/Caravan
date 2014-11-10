@@ -79,7 +79,7 @@ namespace Finsa.Caravan.DataAccess.Rest
 
       #region Entries
 
-      protected override IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin, string[] groupNames)
+      protected override IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin)
       {
          throw new NotImplementedException();
       }

@@ -322,14 +322,16 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       #region Entries
 
-      protected override IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin, string[] groupNames)
+      protected override IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin)
       {
          using (var ctx = Db.CreateReadContext())
          {
+            var appId = GetAppIdByName(ctx, appName);
+            
             var q = ctx.SecEntries.Include(e => e.App).Include(e => e.Context).Include(e => e.Object).Include(e => e.User).Include(e => e.Group);
             if (appName != null)
             {
-               q = q.Where(e => e.App.Name == appName);
+               q = q.Where(e => e.AppId == appId);
             }
             if (contextName != null)
             {
@@ -341,11 +343,9 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
             if (userLogin != null)
             {
-               q = q.Where(e => e.User.Login == userLogin);
-            }
-            if (groupNames.Length != 0)
-            {
-               q = q.Where(e => groupNames.Contains(e.Group.Name));
+               var user = GetUserByLoginWithGroups(ctx, appId, userLogin);
+               var groupIds = user.Groups.Select(g => g.Id).ToList();
+               q = q.Where(e => e.UserId == user.Id || groupIds.Contains(e.Group.Id));
             }
             return q.OrderBy(e => e.Object.Name).ToList();
          }
@@ -471,6 +471,16 @@ namespace Finsa.Caravan.DataAccess.Sql
       private static SecUser GetUserByLogin(DbContextBase ctx, long appId, string userLogin)
       {
          var user = ctx.SecUsers.FirstOrDefault(u => u.AppId == appId && u.Login == userLogin);
+         if (user == null)
+         {
+            throw new UserNotFoundException();
+         }
+         return user;
+      }
+
+      private static SecUser GetUserByLoginWithGroups(DbContextBase ctx, long appId, string userLogin)
+      {
+         var user = ctx.SecUsers.Include(u => u.Groups).FirstOrDefault(u => u.AppId == appId && u.Login == userLogin);
          if (user == null)
          {
             throw new UserNotFoundException();
