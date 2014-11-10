@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<AjaxLookupData xmlns="FLEX.Web.XmlSettings.AjaxLookup">
+  <LookupBy>
+    <SuggestionField>Schl_Description</SuggestionField>
+    <KeyField>Schl_Id</KeyField>
+    <DescriptionField>Schl_Description</DescriptionField>
+    <SortField>Schl_Description</SortField>
+    <LookupQuery>
+      select Schl_Id, Schl_Description
+      from School
+      where Schl_Description like '%{:UserQuery:}%'
+    </LookupQuery>
+  </LookupBy>
+</AjaxLookupData>
