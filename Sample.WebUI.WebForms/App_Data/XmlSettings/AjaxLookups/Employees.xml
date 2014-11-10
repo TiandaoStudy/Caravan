@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<AjaxLookupData xmlns="FLEX.Web.XmlSettings.AjaxLookup">
+  <LookupBy>
+    <SuggestionField>Emp_Name</SuggestionField>
+    <KeyField>Emp_Id</KeyField>
+    <DescriptionField>Emp_Title</DescriptionField>
+    <SortField>Emp_Name</SortField>
+    <LookupQuery>
+      SELECT [Employee ID] AS Emp_Id, [Last Name] + ' ' + [First Name] AS Emp_Name, Title AS Emp_Title
+      FROM Employees
+      WHERE LOWER([Last Name] + ' ' + [First Name]) LIKE LOWER('%{:UserQuery:}%')
+    </LookupQuery>
+  </LookupBy>
+</AjaxLookupData>
