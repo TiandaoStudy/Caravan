@@ -154,6 +154,15 @@ namespace Finsa.Caravan.DataAccess.Core
          return GetLogSettings(appName.ToLower(), logType).FirstOrDefault();
       }
 
+      public void AddSettings(string appName, LogType logType, LogSettings settings)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
+         Raise<ArgumentNullException>.IfIsNull(settings);
+         Raise<ArgumentOutOfRangeException>.If(settings.Days < 1 || settings.MaxEntries < 1);
+         DoAddSettings(appName.ToLower(), logType, settings);
+      }
+
       #endregion
 
       public abstract LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
@@ -162,6 +171,8 @@ namespace Finsa.Caravan.DataAccess.Core
       protected abstract IList<LogEntry> GetLogs(string appName, LogType? logType);
 
       protected abstract IList<LogSettings> GetLogSettings(string appName, LogType? logType);
+
+      protected abstract void DoAddSettings(string appName, LogType logType, LogSettings settings);
 
       #region Shortcuts
 

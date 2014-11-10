@@ -21,5 +21,10 @@ namespace Finsa.Caravan.DataAccess.Rest
       {
          throw new NotImplementedException();
       }
+
+      protected override void DoAddSettings(string appName, LogType logType, LogSettings settings)
+      {
+         throw new NotImplementedException();
+      }
    }
 }
