@@ -372,7 +372,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
       protected abstract IList<SecObject> GetObjects(string appName, string contextName);
 
-      protected abstract IList<SecEntry> GetEntries(string appName, string contextName, string objectType, string userLogin, string[] groupNames);
+      protected abstract IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin, string[] groupNames);
 
       protected abstract bool DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName);
 

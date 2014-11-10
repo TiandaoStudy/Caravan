@@ -510,9 +510,7 @@
     <Content Include="FLEX\Pages\ReportViewer.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\Pages\LogSearch.aspx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="FLEX\Pages\LogSearch.aspx" />
     <Content Include="FLEX\Pages\ErrorHandler.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -622,9 +620,7 @@
     <Content Include="FLEX\UserControls\LongTextContainer.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\UserControls\PageFooter.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="FLEX\UserControls\PageFooter.ascx" />
     <Content Include="FLEX\UserControls\ExportList.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -980,9 +976,7 @@
     <Content Include="FLEX\UserControls\Ajax\OnOffSwitch.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\UserControls\MenuBar.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="FLEX\UserControls\MenuBar.ascx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ErrorMessages.resx">
