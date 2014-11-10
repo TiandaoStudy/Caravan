@@ -37,6 +37,7 @@ namespace UnitTests.DataAccess
       [ExpectedException(typeof (ArgumentNullException))]
       public void LogSettings_NullAppNameValidLogType_ThrowsArgumentNullException()
       {
+
       }
 
       [Test]
