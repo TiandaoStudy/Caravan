@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.Extensions;
 using FLEX.Web.Pages;
@@ -30,7 +31,19 @@ namespace FLEX.WebForms.Pages
       protected void fdtgLogs_DataSourceUpdating(object sender, EventArgs args)
       {
          // This should not catch any exception, others will do.
-         fdtgLogs.DataSource = Db.Logger.Logs(Finsa.Caravan.Common.Configuration.Instance.ApplicationName).ToDataTable();
+         fdtgLogs.DataSource = (
+            from l in Db.Logger.Logs(Finsa.Caravan.Common.Configuration.Instance.ApplicationName)
+            select new
+            {
+               l.Id,
+               l.Date,
+               l.UserLogin,
+               Type = l.Type.ToString(),
+               l.CodeUnit,
+               l.Function,
+               l.ShortMessage,
+               l.LongMessage
+            }).ToDataTable();
       }
 
       protected void btnRefresh_Click(object sender, EventArgs args)
