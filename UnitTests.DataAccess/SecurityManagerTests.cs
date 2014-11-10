@@ -344,7 +344,7 @@ namespace UnitTests.DataAccess
         }
 
         [Test]
-        public void UdateUser_LogIncremented_ReturnOK()
+        public void UpdateUser_LogIncremented_ReturnOK()
         {
            var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
 
@@ -1257,13 +1257,11 @@ namespace UnitTests.DataAccess
 
           var l = Db.Security.Entries(_myApp.Name, c1.Name);
           var l1 = Db.Security.EntriesForObject(_myApp.Name,c1.Name,obj1.Name);
-          var l2 = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name);
           var l3 = Db.Security.Entries(_myApp.Name, c1.Name, user1.Login);
           
           Assert.That(l.Count(),Is.EqualTo(2));
           Assert.That(l3.Count(), Is.EqualTo(1));
-          Assert.That(l1.Count(), Is.EqualTo(1));
-          Assert.That(l2.Count(), Is.EqualTo(1)); 
+          Assert.That(l1.Count(), Is.EqualTo(2));
 
        }
 
@@ -1879,8 +1877,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
           Db.Security.AddEntry(_myApp.Name, c1, obj2, user1.Login, null);
 
-          string[] groups = {};
-          var l = Db.Security.Entries(_myApp.Name, c1.Name, user1.Login, groups);
+          var l = Db.Security.Entries(_myApp.Name, c1.Name, user1.Login);
           
           Assert.That(l.Count(),Is.EqualTo(2));
           
