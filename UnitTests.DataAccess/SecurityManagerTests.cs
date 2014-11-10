@@ -1184,7 +1184,7 @@ namespace UnitTests.DataAccess
        #region Entries_tests
 
        [Test]
-       public void Entries_validArgs_ReturnsListOfEntries()
+       public void Entries_validArgs_ReturnsListOfEntries()//associo un gruppo e un utente allo stesso oggetto
        {
           var c1 = new SecContext { Name = "c1", Description = "context1" };
           var group1 = new SecGroup { Name = "my_group" };
@@ -1200,6 +1200,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddUser(_myApp.Name, user1);
           Db.Security.AddGroup(_myApp.Name, group1);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
           string[] groups = {group1.Name};
 
@@ -1209,10 +1210,10 @@ namespace UnitTests.DataAccess
           var l2 = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name, groups);
           var l3 = Db.Security.Entries(_myApp.Name, c1.Name, user1.Login, groups);
           
-          Assert.That(l.Count(),Is.EqualTo(1));
+          Assert.That(l.Count(),Is.EqualTo(2));
+          Assert.That(l3.Count(), Is.EqualTo(1));
           Assert.That(l1.Count(), Is.EqualTo(1));
           Assert.That(l2.Count(), Is.EqualTo(1)); 
-          Assert.That(l3.Count(), Is.EqualTo(1));
 
        }
 
@@ -1586,6 +1587,153 @@ namespace UnitTests.DataAccess
        }
 
        [Test]
+       public void AddEntry_Insert2DifferentUsersOnTheSameObject_EntryAdded()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+          var user2 = new SecUser { FirstName = "user2", Login = "myLogin2" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          //var obj2 = new SecObject
+          //{
+          //   Name = "obj2",
+          //   Description = "oggetto2",
+          //   Type = "button"
+          //};
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddUser(_myApp.Name, user2);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user2.Login, null);
+
+          var l = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name);
+
+          Assert.That(l.Count(),Is.EqualTo(2));
+
+          string[] groups = {group1.Name};
+          var l1 = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name, user1.Login, groups);
+
+          Assert.That(l1.Count(),Is.EqualTo(1));
+
+          var l2 = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name, user2.Login, groups);
+
+          Assert.That(l2.Count(),Is.EqualTo(1));
+          
+       }
+
+       [Test]
+       public void AddEntry_InsertTheSameUserOnDifferentObjects_EntryAdded()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+          //var user2 = new SecUser { FirstName = "user2", Login = "myLogin2" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          var obj2 = new SecObject
+          {
+             Name = "obj2",
+             Description = "oggetto2",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+         // Db.Security.AddUser(_myApp.Name, user2);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+          Db.Security.AddEntry(_myApp.Name, c1, obj2, user1.Login, null);
+
+          string[] groups = {group1.Name };
+          var l1 = Db.Security.Entries(_myApp.Name, c1.Name, user1.Login, groups);
+
+          Assert.That(l1.Count(), Is.EqualTo(2));
+         
+       }
+
+       [Test]
+       public void AddEntry_InsertDifferentGroupsOnTheSameObject_EntryAdded()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var group2 = new SecGroup {Name = "group2"};
+          
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          
+         Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddGroup(_myApp.Name, group2);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group2.Name);
+
+         var l1 = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name);
+
+          Assert.That(l1.Count(), Is.EqualTo(2));
+       }
+
+       [Test]
+       public void AddEntry_InsertTheSameGroupOnDifferentObjects_EntryAdded()
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          var obj2 = new SecObject
+          {
+             Name = "obj2",
+             Description = "oggetto2",
+             Type = "button"
+          };
+
+         
+         Db.Security.AddGroup(_myApp.Name, group1);
+         Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+         Db.Security.AddEntry(_myApp.Name, c1, obj2, null, group1.Name);
+          
+          var l1 = Db.Security.Entries(_myApp.Name, c1.Name);
+
+          Assert.That(l1.Count(), Is.EqualTo(2));
+
+          var l2 = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name);
+
+          Assert.That(l2.Count(), Is.EqualTo(1));
+
+          Assert.That(l2.First().Group.Name, Is.EqualTo("my_group"));
+
+          var l3 = Db.Security.Entries(_myApp.Name, c1.Name, obj2.Name);
+
+          Assert.That(l3.Count(), Is.EqualTo(1));
+
+          Assert.That(l3.First().Group.Name, Is.EqualTo("my_group"));
+
+       }
+
+       [Test]
        [ExpectedException(typeof (ArgumentException))]
        public void AddEntry_EmptyUserLogin_Throws()
        {
@@ -1625,6 +1773,96 @@ namespace UnitTests.DataAccess
           Db.Security.AddEntry(_myApp.Name, c1, obj1,user1.Login, "");
        }
 
+       [Test]
+       [ExpectedException(typeof (UserExistingException))]
+       public void AddEntry_UserAlreadyExisting_Throws()//same context,App,obj; different user and obj
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+          var user2 = new SecUser { FirstName = "user2", Login = "myLogin2" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          var obj2 = new SecObject
+          {
+             Name = "obj2",
+             Description = "oggetto2",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddUser(_myApp.Name, user2);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+
+       }
+
+       [Test]
+       [ExpectedException(typeof(AppExistingException))]
+       public void AddEntry_InsertTwiceTheSameEntry_Throws()//same app,context,obj, user
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+          
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+          
+          Db.Security.AddUser(_myApp.Name, user1);
+          
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+
+       }
+
+       [Test]
+       public void AddEntry_InsertTwiceTheSameUserDifferentObject_EntriesAdded()//same context and App; different object
+       {
+          var c1 = new SecContext { Name = "c1", Description = "context1" };
+          var group1 = new SecGroup { Name = "my_group" };
+          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
+          var user2 = new SecUser { FirstName = "user2", Login = "myLogin2" };
+
+          var obj1 = new SecObject
+          {
+             Name = "obj1",
+             Description = "oggetto1",
+             Type = "button"
+          };
+
+          var obj2 = new SecObject
+          {
+             Name = "obj2",
+             Description = "oggetto2",
+             Type = "button"
+          };
+
+          Db.Security.AddUser(_myApp.Name, user1);
+          Db.Security.AddUser(_myApp.Name, user2);
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+          Db.Security.AddEntry(_myApp.Name, c1, obj2, user1.Login, null);
+
+          string[] groups = {};
+          var l = Db.Security.Entries(_myApp.Name, c1.Name, user1.Login, groups);
+          
+          Assert.That(l.Count(),Is.EqualTo(2));
+          
+
+
+       }
 
        #endregion
 
