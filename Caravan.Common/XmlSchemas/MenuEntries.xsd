@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="Finsa.Caravan.XmlSchemas.MenuEntries" xmlns="Finsa.Caravan.XmlSchemas.MenuEntries">
+   <xs:element name="Item">
+      <xs:complexType mixed="true">
+         <xs:sequence>
+            <xs:element name="Group" minOccurs="0">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element ref="Item" maxOccurs="unbounded" minOccurs="0"></xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="Layout" use="optional" />
+               </xs:complexType>
+            </xs:element>
+         </xs:sequence>
+         <xs:attribute type="xs:string" name="ID" use="required" />
+         <xs:attribute type="xs:string" name="Caption" use="required" />
+         <xs:attribute type="xs:string" name="Enabled" use="optional" />
+         <xs:attribute type="xs:string" name="ClientCall" use="optional" />
+         <xs:attribute type="xs:string" name="Type" use="optional" />
+         <xs:attribute type="xs:string" name="URL" use="optional" />
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Menu">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="Group">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element ref="Item" maxOccurs="unbounded" minOccurs="0"></xs:element>
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+         </xs:sequence>
+         <xs:attribute type="xs:string" name="Layout" use="required" />
+         <xs:attribute type="xs:string" name="OpenOnClick" use="required" />
+      </xs:complexType>
+   </xs:element>
+</xs:schema>
