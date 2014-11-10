@@ -26,6 +26,7 @@
    <flex:NumericSpinner runat="server" ID="flexNumSpinner" MinValue="0" MaxValue="100" DecimalCount="0" Step="1" />        
    <flex:CollapsibleCheckBoxList runat="server" ID="flexABC" MaxVisibleItemCount="2" />
    <flex:ImageButton runat="server" ID="btnError" ButtonClass="btn btn-warning" ButtonText="Error"  OnClick="OnClick_Error" />
+   <flex:ImageButton runat="server" ID="btnLog" ButtonClass="btn btn-success" ButtonText="Log"  OnClick="OnClick_Log" />
    
    <flex:MultiSelect runat="server" ID="flexMultipleSelect"></flex:MultiSelect>
    
