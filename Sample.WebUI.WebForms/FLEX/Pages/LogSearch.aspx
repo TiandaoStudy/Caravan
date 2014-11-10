@@ -9,9 +9,10 @@
 </asp:Content>
 
 <asp:Content runat="server" ID="aspGridContent" ContentPlaceHolderID="gridContent">
-   <flex:DataGrid runat="server" ID="fdtgLogs" DefaultSortExpression="EntryDate" DefaultSortDirection="Descending" OnDataSourceUpdating="fdtgLogs_DataSourceUpdating">
+   <flex:DataGrid runat="server" ID="fdtgLogs" DefaultSortExpression="Date" DefaultSortDirection="Descending" OnDataSourceUpdating="fdtgLogs_DataSourceUpdating">
       <Columns>
-         <asp:BoundField DataField="EntryDate" HeaderText="Entry Date" SortExpression="EntryDate" Visible="true" />
+         <asp:BoundField DataField="Date" HeaderText="Date" SortExpression="Date" Visible="true" />
+         <asp:BoundField DataField="UserLogin" HeaderText="User Login" SortExpression="UserLogin" Visible="true" />
          <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" Visible="true" />
          <asp:BoundField DataField="CodeUnit" HeaderText="Package or Class" SortExpression="CodeUnit" Visible="true" />
          <asp:BoundField DataField="Function" HeaderText="Function" SortExpression="Function" Visible="true" />

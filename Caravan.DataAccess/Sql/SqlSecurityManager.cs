@@ -303,14 +303,26 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override IList<SecObject> GetObjects(string appName, string contextName)
       {
-         throw new NotImplementedException();
+         using (var ctx = Db.CreateReadContext())
+         {
+            var q = ctx.SecObjects.Include(o => o.SecEntries);
+            if (appName != null)
+            {
+               q = q.Where(o => o.App.Name == appName);
+            }
+            if (contextName != null)
+            {
+               q = q.Where(o => o.Context.Name == contextName);
+            }
+            return q.OrderBy(o => o.App.Name).ThenBy(o => o.Context.Name).ThenBy(o => o.Name).ToList();
+         }
       }
 
       #endregion
 
       #region Entries
 
-      protected override IList<SecEntry> GetEntries(string appName, string contextName, string objectType, string userLogin, string[] groupNames)
+      protected override IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin, string[] groupNames)
       {
          using (var ctx = Db.CreateReadContext())
          {
@@ -323,9 +335,9 @@ namespace Finsa.Caravan.DataAccess.Sql
             {
                q = q.Where(e => e.Context.Name == contextName);
             }
-            if (objectType != null)
+            if (objectName != null)
             {
-               q = q.Where(e => e.Object.Type == objectType);
+               q = q.Where(e => e.Object.Name == objectName);
             }
             if (userLogin != null)
             {
@@ -348,10 +360,16 @@ namespace Finsa.Caravan.DataAccess.Sql
             var dbContext = ctx.SecContexts.FirstOrDefault(c => c.AppId == appId && c.Name == secContext.Name);
             if (dbContext == null)
             {
-               secContext.Id = (ctx.SecContexts.Where(o => o.AppId == appId).Max(o => (long?) o.Id) ?? -1) + 1;
-               secContext.AppId = appId;
-               ctx.SecContexts.Add(secContext);
-               dbContext = secContext;
+               dbContext = new SecContext
+               {
+                  // Key
+                  Id = (ctx.SecContexts.Where(o => o.AppId == appId).Max(o => (long?) o.Id) ?? -1) + 1,
+                  AppId = appId,
+                  // Other properties
+                  Name = secContext.Name,
+                  Description = secContext.Description
+               };
+               ctx.SecContexts.Add(dbContext);
             }
             else
             {
@@ -362,9 +380,11 @@ namespace Finsa.Caravan.DataAccess.Sql
             {
                dbObject = new SecObject
                {
+                  // Key
                   Id = (ctx.SecObjects.Where(o => o.AppId == appId && o.ContextId == dbContext.Id).Max(o => (long?) o.Id) ?? -1) + 1,
                   AppId = appId,
                   ContextId = dbContext.Id,
+                  // Other properties
                   Name = secObject.Name,
                   Description = secObject.Description,
                   Type = secObject.Type

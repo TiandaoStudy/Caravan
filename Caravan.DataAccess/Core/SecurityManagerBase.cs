@@ -283,6 +283,7 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsNull(secObject);
          Raise<ArgumentException>.IfIsEmpty(secObject.Name);
          Raise<ArgumentException>.If(String.IsNullOrWhiteSpace(userLogin) && String.IsNullOrWhiteSpace(groupName));
+         Raise<ArgumentException>.If(!String.IsNullOrWhiteSpace(userLogin) && !String.IsNullOrWhiteSpace(groupName));
 
          const string logShort = "Security entry for object '{0}' in context '{1}' has been added for '{2}'";
          const string logCtx = "Adding a new security entry";
@@ -371,7 +372,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
       protected abstract IList<SecObject> GetObjects(string appName, string contextName);
 
-      protected abstract IList<SecEntry> GetEntries(string appName, string contextName, string objectType, string userLogin, string[] groupNames);
+      protected abstract IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin, string[] groupNames);
 
       protected abstract bool DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName);
 

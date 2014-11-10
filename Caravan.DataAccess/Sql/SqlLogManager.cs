@@ -33,8 +33,9 @@ namespace Finsa.Caravan.DataAccess.Sql
             Raise<ArgumentOutOfRangeException>.If(argsList.Length > MaxArgumentCount);
 
             using (var ctx = Db.CreateWriteContext())
-            using (var trx = ctx.BeginTransaction())
             {
+               ctx.BeginTransaction();
+
                var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
                var typeId = type.ToString().ToLower();
                var settings = ctx.LogSettings.First(s => s.AppId == appId && s.TypeId == typeId);
@@ -78,7 +79,6 @@ namespace Finsa.Caravan.DataAccess.Sql
                }
                
                ctx.SaveChanges();
-               trx.Commit();
                return LogResult.Success;
             }
          }

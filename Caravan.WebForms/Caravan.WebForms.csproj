@@ -42,6 +42,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\ClosedXML.0.75.0\lib\net40-client\ClosedXML.dll</HintPath>
     </Reference>
+    <Reference Include="CodeProject.DeepXmlSerializer">
+      <HintPath>..\packages\CodeProject.DeepXmlSerializer.0.1.5\lib\net40-client\CodeProject.DeepXmlSerializer.dll</HintPath>
+    </Reference>
     <Reference Include="CodeProject.ObjectPool, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CodeProject.ObjectPool.1.0.6\lib\net40\CodeProject.ObjectPool.dll</HintPath>
@@ -86,9 +89,9 @@
     <Reference Include="PommaLabs.GRAMPA">
       <HintPath>..\packages\PommaLabs.GRAMPA.1.2.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.KVLite, Version=0.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PommaLabs.KVLite, Version=0.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.KVLite.0.5.3\lib\net40\PommaLabs.KVLite.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.KVLite.0.6.3\lib\net40\PommaLabs.KVLite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -507,9 +510,7 @@
     <Content Include="FLEX\Pages\ReportViewer.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\Pages\LogSearch.aspx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="FLEX\Pages\LogSearch.aspx" />
     <Content Include="FLEX\Pages\ErrorHandler.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -619,9 +620,7 @@
     <Content Include="FLEX\UserControls\LongTextContainer.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\UserControls\PageFooter.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="FLEX\UserControls\PageFooter.ascx" />
     <Content Include="FLEX\UserControls\ExportList.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -977,9 +976,7 @@
     <Content Include="FLEX\UserControls\Ajax\OnOffSwitch.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\UserControls\MenuBar.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="FLEX\UserControls\MenuBar.ascx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ErrorMessages.resx">

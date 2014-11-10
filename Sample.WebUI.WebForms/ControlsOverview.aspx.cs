@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using Finsa.Caravan;
+using Finsa.Caravan.DataAccess;
 using FLEX.Common.Web;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
@@ -50,6 +52,22 @@ namespace FLEX.Sample.WebUI
          try
          {
             throw new ArgumentException("OKKK");
+         }
+         catch (Exception ex)
+         {
+            Master.ErrorHandler.CatchException(ex);
+         }
+      }
+
+      public void OnClick_Log(object sender, EventArgs args) 
+      {
+         try
+         {
+            Db.Logger.LogInfo<ControlsOverview>("Click!", "Clicked on the log button", "Page", new[]
+            {
+               CKeyValuePair.Create("arg1", "1"),
+               CKeyValuePair.Create("arg2", "two")
+            });
          }
          catch (Exception ex)
          {

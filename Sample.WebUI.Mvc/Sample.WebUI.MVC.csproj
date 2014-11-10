@@ -42,6 +42,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CodeProject.DeepXmlSerializer">
+      <HintPath>..\packages\CodeProject.DeepXmlSerializer.0.1.5\lib\net40-client\CodeProject.DeepXmlSerializer.dll</HintPath>
+    </Reference>
     <Reference Include="CodeProject.ObjectPool, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CodeProject.ObjectPool.1.0.6\lib\net40\CodeProject.ObjectPool.dll</HintPath>
@@ -75,8 +78,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="PommaLabs.KVLite">
-      <HintPath>..\packages\PommaLabs.KVLite.0.5.3\lib\net451\PommaLabs.KVLite.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\PommaLabs.KVLite.0.6.3\lib\net451\PommaLabs.KVLite.dll</HintPath>
     </Reference>
     <Reference Include="RazorGenerator.Mvc">
       <HintPath>..\packages\RazorGenerator.Mvc.2.2.3\lib\net40\RazorGenerator.Mvc.dll</HintPath>

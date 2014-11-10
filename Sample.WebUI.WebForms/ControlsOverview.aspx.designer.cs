@@ -67,6 +67,15 @@ namespace FLEX.Sample.WebUI {
         protected global::FLEX.Web.UserControls.Ajax.ImageButton btnError;
         
         /// <summary>
+        /// btnLog control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FLEX.Web.UserControls.Ajax.ImageButton btnLog;
+        
+        /// <summary>
         /// flexMultipleSelect control.
         /// </summary>
         /// <remarks>
