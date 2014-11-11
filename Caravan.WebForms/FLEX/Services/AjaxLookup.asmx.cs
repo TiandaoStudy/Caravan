@@ -58,9 +58,14 @@ namespace FLEX.Web.Services
       {
          var lookupData = LoadAjaxLookupData(xmlLookup, lookupBy);
          var lookupQuery = ProcessQuery(lookupData, userQuery, queryFilter);
-         using (var resultData = Db.Manager.OpenConnection().Query(lookupQuery).ToDataTable())
+         var resultData = Db.Manager.OpenConnection().Query(lookupQuery).ToList();
+         if (resultData.Count == 0)
          {
-            return ProcessData(lookupData, resultData);
+            return new List<Result>();
+         }
+         using (var resultTable = resultData.ToDataTable())
+         {
+            return ProcessData(lookupData, resultTable);
          }
       }
 
