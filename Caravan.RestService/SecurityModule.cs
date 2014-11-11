@@ -4,6 +4,7 @@ using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataModel.Rest;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.RestService.Core;
+using Finsa.Caravan.RestService.Properties;
 using Finsa.Caravan.XmlSchemas.MenuEntries;
 
 namespace Finsa.Caravan.RestService
@@ -29,7 +30,7 @@ namespace Finsa.Caravan.RestService
          
          Post["/{appName}"] = p =>
          {
-            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            StartSafeResponse<dynamic>(Settings.Default.LongCacheTimeoutInSeconds);
             return RestResponse.Success(new SecAppSingle {App = Db.Security.App(p.appName)});
          };
 
@@ -39,7 +40,7 @@ namespace Finsa.Caravan.RestService
          
          Post["/{appName}/contexts"] = p =>
          {
-            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            StartSafeResponse<dynamic>(Settings.Default.LongCacheTimeoutInSeconds);
             var contexts = Db.Security.Contexts(p.appName);
             return RestResponse.Success(new SecContextList {Contexts = contexts});
          };
@@ -50,7 +51,7 @@ namespace Finsa.Caravan.RestService
 
          Post["/{appName}/entries/{contextName}"] = p =>
          {
-            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            StartSafeResponse<dynamic>(Settings.Default.LongCacheTimeoutInSeconds);
             var entries = Db.Security.Entries(p.appName, p.contextName);
             return RestResponse.Success(new SecEntryList {Entries = entries});
          };
@@ -75,14 +76,14 @@ namespace Finsa.Caravan.RestService
 
          Post["/{appName}/groups"] = p =>
          {
-            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            StartSafeResponse<dynamic>(Settings.Default.LongCacheTimeoutInSeconds);
             var groups = Db.Security.Groups(p.appName);
             return RestResponse.Success(new SecGroupList {Groups = groups});
          };
 
          Post["/{appName}/groups/{groupName}"] = p =>
          {
-            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            StartSafeResponse<dynamic>(Settings.Default.LongCacheTimeoutInSeconds);
             var group = Db.Security.Group(p.appName, p.groupName);
             return RestResponse.Success(new SecGroupSingle {Group = group});
          };
@@ -114,7 +115,7 @@ namespace Finsa.Caravan.RestService
 
          Post["/{appName}/objects"] = p =>
          {
-            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            StartSafeResponse<dynamic>(Settings.Default.LongCacheTimeoutInSeconds);
             var objects = Db.Security.Objects(p.appName);
             return RestResponse.Success(new SecObjectList {Objects = objects});
          };
@@ -125,14 +126,14 @@ namespace Finsa.Caravan.RestService
 
          Post["/{appName}/users"] = p =>
          {
-            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            StartSafeResponse<dynamic>(Settings.Default.LongCacheTimeoutInSeconds);
             var users = Db.Security.Users(p.appName);
             return RestResponse.Success(new SecUserList {Users = users});
          };
 
          Post["/{appName}/users/{userLogin}"] = p =>
          {
-            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            StartSafeResponse<dynamic>(Settings.Default.LongCacheTimeoutInSeconds);
             var user = Db.Security.User(p.appName, p.userLogin);
             return RestResponse.Success(new SecUserSingle {User = user});
          };

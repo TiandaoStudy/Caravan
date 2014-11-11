@@ -4,6 +4,7 @@ using Finsa.Caravan.DataModel.Logging;
 using Finsa.Caravan.DataModel.Rest;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.RestService.Core;
+using Finsa.Caravan.RestService.Properties;
 
 namespace Finsa.Caravan.RestService
 {
@@ -49,14 +50,14 @@ namespace Finsa.Caravan.RestService
 
          Post["/{appName}/settings"] = p =>
          {
-            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            StartSafeResponse<dynamic>(Settings.Default.LongCacheTimeoutInSeconds);
             var settings = Db.Logger.LogSettings(p.appName);
             return RestResponse.Success(new LogSettingsList {Settings = settings});
          };
 
          Post["/{appName}/settings/{logType}"] = p =>
          {
-            StartSafeResponse<dynamic>(Configuration.LongCacheTimeoutInSeconds);
+            StartSafeResponse<dynamic>(Settings.Default.LongCacheTimeoutInSeconds);
             var settings = Db.Logger.LogSettings(p.appName, SafeParseLogType(p.logType));
             return RestResponse.Success(new LogSettingsSingle {Settings = settings});
          };
