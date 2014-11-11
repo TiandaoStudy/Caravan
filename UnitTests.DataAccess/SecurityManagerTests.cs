@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using NUnit.Framework;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.DataModel.Exceptions;
@@ -198,6 +199,7 @@ namespace UnitTests.DataAccess
 
           var l1 = Db.Logger.Logs(_myApp.Name);
 
+          WaitForLogger();
           Assert.That(l1.Count(), Is.EqualTo(l.Count()+1));
 
           
@@ -1430,51 +1432,6 @@ namespace UnitTests.DataAccess
 
        [Test]
        [ExpectedException(typeof(ArgumentException))]
-       public void Entries_EmptyGroupsName_Throws()
-       {
-          var c1 = new SecContext { Name = "c1", Description = "context1" };
-          var group1 = new SecGroup { Name = "my_group" };
-          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
-
-          var obj1 = new SecObject
-          {
-             Name = "obj1",
-             Description = "oggetto1",
-             Type = "button"
-          };
-
-          Db.Security.AddUser(_myApp.Name, user1);
-          Db.Security.AddGroup(_myApp.Name, group1);
-          Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
-
-          Db.Security.Entries(_myApp.Name, c1.Name, user1.Login);
-
-       }
-       [Test]
-       [ExpectedException(typeof(ArgumentException))]
-       public void Entries_NullGroupsName_Throws()
-       {
-          var c1 = new SecContext { Name = "c1", Description = "context1" };
-          var group1 = new SecGroup { Name = "my_group" };
-          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
-
-          var obj1 = new SecObject
-          {
-             Name = "obj1",
-             Description = "oggetto1",
-             Type = "button"
-          };
-
-          Db.Security.AddUser(_myApp.Name, user1);
-          Db.Security.AddGroup(_myApp.Name, group1);
-          Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
-
-         Db.Security.Entries(_myApp.Name, c1.Name, user1.Login);
-
-       }
-
-       [Test]
-       [ExpectedException(typeof(ArgumentException))]
        public void Entries_EmptyUserLoginAsFourthParam_Throws()
        {
           var c1 = new SecContext { Name = "c1", Description = "context1" };
@@ -1516,51 +1473,6 @@ namespace UnitTests.DataAccess
           Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
           Db.Security.EntriesForObject(_myApp.Name, c1.Name,obj1.Name, null);
-
-       }
-
-       [Test]
-       [ExpectedException(typeof(ArgumentException))]
-       public void Entries_EmptyGroupsNameAsFifthParam_Throws()
-       {
-          var c1 = new SecContext { Name = "c1", Description = "context1" };
-          var group1 = new SecGroup { Name = "my_group" };
-          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
-
-          var obj1 = new SecObject
-          {
-             Name = "obj1",
-             Description = "oggetto1",
-             Type = "button"
-          };
-
-          Db.Security.AddUser(_myApp.Name, user1);
-          Db.Security.AddGroup(_myApp.Name, group1);
-          Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
-
-          Db.Security.EntriesForObject(_myApp.Name, c1.Name,obj1.Name, user1.Login);
-
-       }
-       [Test]
-       [ExpectedException(typeof(ArgumentException))]
-       public void Entries_NullGroupsNameAsFifthParam_Throws()
-       {
-          var c1 = new SecContext { Name = "c1", Description = "context1" };
-          var group1 = new SecGroup { Name = "my_group" };
-          var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
-
-          var obj1 = new SecObject
-          {
-             Name = "obj1",
-             Description = "oggetto1",
-             Type = "button"
-          };
-
-          Db.Security.AddUser(_myApp.Name, user1);
-          Db.Security.AddGroup(_myApp.Name, group1);
-          Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
-
-          Db.Security.EntriesForObject(_myApp.Name, c1.Name,obj1.Name, user1.Login);
 
        }
 
@@ -1802,12 +1714,11 @@ namespace UnitTests.DataAccess
        }
 
        [Test]
-       [ExpectedException(typeof (GroupExistingException))]
+       [ExpectedException(typeof (EntryExistingException))]
        public void AddEntry_GroupAlreadyExisting_Throws()//same context,App,obj,group;
        {
           var c1 = new SecContext { Name = "c1", Description = "context1" };
           var group1 = new SecGroup { Name = "my_group" };
-          var group2 = new SecGroup { Name = "my_group2" };
           var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
           
           var obj1 = new SecObject
@@ -1819,15 +1730,14 @@ namespace UnitTests.DataAccess
 
         
           Db.Security.AddUser(_myApp.Name, user1);
-          Db.Security.AddGroup(_myApp.Name, group2);
           Db.Security.AddGroup(_myApp.Name, group1);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
-          Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group2.Name);
+          Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
        }
 
        [Test]
-       [ExpectedException(typeof(UserExistingException))]
+       [ExpectedException(typeof(EntryExistingException))]
        public void AddEntry_UserAlreadyExisting_Throws()//same app,context,obj, user
        {
           var c1 = new SecContext { Name = "c1", Description = "context1" };
@@ -2152,6 +2062,9 @@ namespace UnitTests.DataAccess
 
        #endregion
 
-
+       private void WaitForLogger()
+       {
+          Thread.Sleep(2000);
+       }
     }
 }

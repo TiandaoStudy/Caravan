@@ -133,10 +133,22 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentNullException>.IfIsNull(newUser);
          Raise<ArgumentException>.IfIsEmpty(newUser.Login);
-         newUser.Login = newUser.Login.ToLower();
-         if (!DoAddUser(appName.ToLower(), newUser))
+
+         const string logCtx = "Adding a new user";
+
+         try
          {
-            throw new UserExistingException();
+            newUser.Login = newUser.Login.ToLower();
+            if (!DoAddUser(appName.ToLower(), newUser))
+            {
+               throw new UserExistingException();
+            }
+            Db.Logger.LogWarnAsync<TSec>("ADDED USER", context: logCtx, applicationName: appName);
+         }
+         catch (Exception ex)
+         {
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, applicationName: appName);
+            throw;
          }
       }
 
@@ -156,6 +168,9 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsEmpty(userLogin);
          Raise<ArgumentNullException>.IfIsNull(newUser);
          Raise<ArgumentException>.IfIsEmpty(newUser.Login);
+
+         const string logCtx = "Updating an user";
+         
          try
          {
             newUser.Login = newUser.Login.ToLower();
@@ -163,10 +178,11 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                throw new UserNotFoundException();
             }
+            Db.Logger.LogWarnAsync<TSec>("UPDATED USER", context: logCtx, applicationName: appName);
          }
          catch (Exception ex)
          {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, "Updating an user");
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, applicationName: appName);
             throw;
          }
       }
@@ -185,7 +201,7 @@ namespace Finsa.Caravan.DataAccess.Core
          }
          catch (Exception ex)
          {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, "Adding an user to a group");
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, "Adding an user to a group", applicationName: appName);
             throw;
          }
       }
@@ -204,7 +220,7 @@ namespace Finsa.Caravan.DataAccess.Core
          }
          catch (Exception ex)
          {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, "Removing an user from a group");
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, "Removing an user from a group", applicationName: appName);
             throw;
          }
       }
@@ -298,12 +314,15 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                groupName = groupName.ToLower();
             }
-            DoAddEntry(appName.ToLower(), secContext, secObject, userLogin, groupName);
+            if (!DoAddEntry(appName.ToLower(), secContext, secObject, userLogin, groupName))
+            {
+               throw new EntryExistingException();
+            }
             Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, secObject.Name, secContext.Name, userLogin ?? groupName), context: logCtx, applicationName: appName);
          }
          catch (Exception ex)
          {
-            Db.Logger.LogWarnAsync<TSec>(ex, logCtx);
+            Db.Logger.LogWarnAsync<TSec>(ex, logCtx, applicationName: appName);
             throw;
          }
       }
@@ -333,7 +352,7 @@ namespace Finsa.Caravan.DataAccess.Core
          }
          catch (Exception ex)
          {
-            Db.Logger.LogWarnAsync<TSec>(ex, logCtx);
+            Db.Logger.LogWarnAsync<TSec>(ex, logCtx, applicationName: appName);
             throw;
          }
       }
