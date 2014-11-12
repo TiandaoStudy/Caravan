@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Web;
+using Finsa.Caravan.DataModel.Exceptions;
 using Finsa.Caravan.DataModel.Logging;
 using Finsa.Caravan.Diagnostics;
 
@@ -160,7 +161,22 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
          Raise<ArgumentNullException>.IfIsNull(settings);
          Raise<ArgumentOutOfRangeException>.If(settings.Days < 1 || settings.MaxEntries < 1);
-         DoAddSettings(appName.ToLower(), logType, settings);
+         if (!DoAddSettings(appName.ToLower(), logType, settings))
+         {
+            throw new SettingsExistingException();   
+         }
+      }
+
+      public void UpdateSettings(string appName, LogType logType, LogSettings settings)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
+         Raise<ArgumentNullException>.IfIsNull(settings);
+         Raise<ArgumentOutOfRangeException>.If(settings.Days < 1 || settings.MaxEntries < 1);
+         if (!DoUpdateSettings(appName.ToLower(), logType, settings))
+         {
+            throw new SettingsNotFoundException();
+         }
       }
 
       #endregion
@@ -172,7 +188,9 @@ namespace Finsa.Caravan.DataAccess.Core
 
       protected abstract IList<LogSettings> GetLogSettings(string appName, LogType? logType);
 
-      protected abstract void DoAddSettings(string appName, LogType logType, LogSettings settings);
+      protected abstract bool DoAddSettings(string appName, LogType logType, LogSettings settings);
+
+      protected abstract bool DoUpdateSettings(string appName, LogType logType, LogSettings settings);
 
       #region Shortcuts
 

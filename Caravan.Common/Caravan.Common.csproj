@@ -63,6 +63,8 @@
     <Compile Include="DataModel\Exceptions\EntryExistingException.cs" />
     <Compile Include="DataModel\Exceptions\GroupExistingException.cs" />
     <Compile Include="DataModel\Exceptions\GroupNotFoundException.cs" />
+    <Compile Include="DataModel\Exceptions\SettingsExistingException.cs" />
+    <Compile Include="DataModel\Exceptions\SettingsNotFoundException.cs" />
     <Compile Include="DataModel\Exceptions\UserExistingException.cs" />
     <Compile Include="DataModel\Exceptions\UserNotFoundException.cs" />
     <Compile Include="DataModel\Formatting\TextAlignment.cs" />
