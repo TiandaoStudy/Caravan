@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using Finsa.Caravan.DataModel.Logging;
 using NUnit.Framework;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.DataModel.Exceptions;
@@ -17,7 +18,8 @@ namespace UnitTests.DataAccess
     {
        private SecApp _myApp;
        private SecApp _myApp2;
-
+       private LogSettings _settingError = null;
+      
         [SetUp]
         public void Init()
         {
@@ -26,6 +28,13 @@ namespace UnitTests.DataAccess
            Db.Security.AddApp(_myApp);
            _myApp2 = new SecApp {Name = "mio_test2", Description = "Test Application 2"};
            Db.Security.AddApp(_myApp2);
+           _settingError = new LogSettings() {Days = 30, Enabled = 1, MaxEntries = 100};
+
+           Db.Logger.AddSettings(_myApp.Name,LogType.Error, _settingError);
+           Db.Logger.AddSettings(_myApp.Name,LogType.Fatal, _settingError);
+           Db.Logger.AddSettings(_myApp.Name,LogType.Info, _settingError);
+           Db.Logger.AddSettings(_myApp.Name,LogType.Debug, _settingError);
+           Db.Logger.AddSettings(_myApp.Name,LogType.Warn, _settingError);
         }
 
         [TearDown]
@@ -197,9 +206,9 @@ namespace UnitTests.DataAccess
 
           Db.Security.AddUser(_myApp.Name, user1);
 
-          var l1 = Db.Logger.Logs(_myApp.Name);
 
           WaitForLogger();
+          var l1 = Db.Logger.Logs(_myApp.Name);
           Assert.That(l1.Count(), Is.EqualTo(l.Count()+1));
 
           
@@ -352,12 +361,13 @@ namespace UnitTests.DataAccess
 
            Db.Security.AddUser(_myApp.Name, user1);
 
+           WaitForLogger();
            var l = Db.Logger.Logs(_myApp.Name);
 
            user1.Login = "updatedLogin";
 
-           Db.Security.UpdateUser(_myApp.Name, "blabla", user1);
-
+           Db.Security.UpdateUser(_myApp.Name, "blabla1", user1);
+           WaitForLogger();
            var l1 = Db.Logger.Logs(_myApp.Name);
 
            Assert.That(l1.Count(), Is.EqualTo(l.Count() + 1));
@@ -1827,13 +1837,13 @@ namespace UnitTests.DataAccess
           Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
           Db.Security.AddEntry(_myApp.Name, c1, obj2, user1.Login, null);
         
-          Db.Security.RemoveEntry(_myApp.Name,c1.Name,obj1.Name,user1.Login,group1.Name);
-          Db.Security.RemoveEntry(_myApp.Name, c1.Name, obj2.Name, user1.Login, group1.Name);
+          Db.Security.RemoveEntry(_myApp.Name,c1.Name,obj1.Name,user1.Login,null);
+          Db.Security.RemoveEntry(_myApp.Name, c1.Name, obj2.Name, user1.Login, null);
 
-          var l = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name);
+          var l = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj1.Name);
           Assert.That(l.Count(),Is.EqualTo(0));
 
-          var l1 = Db.Security.Entries(_myApp.Name, c1.Name, obj2.Name);
+          var l1 = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj2.Name);
           Assert.That(l1.Count(), Is.EqualTo(0));
 
        }
@@ -1945,7 +1955,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddGroup(_myApp.Name, group1);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-          Db.Security.RemoveEntry(_myApp.Name, c1.Name, "", user1.Login, group1.Name);
+          Db.Security.RemoveEntry(_myApp.Name, c1.Name, "", user1.Login, null);
        }
 
        [Test]
@@ -1967,12 +1977,11 @@ namespace UnitTests.DataAccess
           Db.Security.AddGroup(_myApp.Name, group1);
           Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-          Db.Security.RemoveEntry(_myApp.Name, c1.Name, null, user1.Login, group1.Name);
+          Db.Security.RemoveEntry(_myApp.Name, c1.Name, null, user1.Login, null);
        }
 
        [Test]
-       [ExpectedException(typeof (ArgumentException))]
-       public void RemoveEntry_NullUserLogin_Throws()
+       public void RemoveEntry_NullUserLogin_EntryDeleted()
        {
           var c1 = new SecContext { Name = "c1", Description = "context1" };
           var group1 = new SecGroup { Name = "my_group" };
@@ -2016,8 +2025,7 @@ namespace UnitTests.DataAccess
        }
 
        [Test]
-       [ExpectedException(typeof (ArgumentException))]
-       public void RemoveEntry_NullGroupName_Throws()
+       public void RemoveEntry_NullGroupName_EntryDeleted()
        {
 
           var c1 = new SecContext { Name = "c1", Description = "context1" };
@@ -2059,12 +2067,12 @@ namespace UnitTests.DataAccess
 
           Db.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, user1.Login, "");
        }
-
+       
        #endregion
 
-       private void WaitForLogger()
+       private static void WaitForLogger()
        {
-          Thread.Sleep(2000);
+          Thread.Sleep(5000);
        }
     }
 }

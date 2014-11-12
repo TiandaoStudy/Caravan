@@ -23,7 +23,8 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       #endregion
 
-      public override LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
+      public override LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function,
+         string shortMessage, string longMessage, string context,
          IEnumerable<CKeyValuePair<string, string>> args)
       {
          try
@@ -43,9 +44,9 @@ namespace Finsa.Caravan.DataAccess.Sql
                // We delete logs older than "settings.Days"
                var minDate = DateTime.Now.Subtract(TimeSpan.FromDays(settings.Days));
                var oldLogs = from l in ctx.LogEntries
-                             where l.AppId == appId && l.TypeId == typeId
-                             where l.Date < minDate
-                             select l;
+                  where l.AppId == appId && l.TypeId == typeId
+                  where l.Date < minDate
+                  select l;
                ctx.LogEntries.RemoveRange(oldLogs);
 
                // We delete enough entries to preserve the upper limit
@@ -53,9 +54,9 @@ namespace Finsa.Caravan.DataAccess.Sql
                if (logCount >= settings.MaxEntries)
                {
                   var olderLogs = (from l in ctx.LogEntries
-                                   where l.AppId == appId && l.TypeId == typeId
-                                   orderby l.Date ascending 
-                                   select l).Take(logCount - settings.MaxEntries + 1);
+                     where l.AppId == appId && l.TypeId == typeId
+                     orderby l.Date ascending
+                     select l).Take(logCount - settings.MaxEntries + 1);
                   ctx.LogEntries.RemoveRange(olderLogs);
                }
 
@@ -77,7 +78,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                      Arguments = argsList
                   });
                }
-               
+
                ctx.SaveChanges();
                return LogResult.Success;
             }
@@ -134,15 +135,13 @@ namespace Finsa.Caravan.DataAccess.Sql
             var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
             var typeId = logType.ToString().ToLower();
 
-            if (!ctx.LogSettings.Any(s => s.AppId == appId && s.Type == logType))
+            if (!ctx.LogSettings.Any(s => s.AppId == appId && s.TypeId == typeId))
             {
                var newSetting = new LogSettings()
                {
-                  App = settings.App,
                   AppId = appId,
                   Days = settings.Days,
                   Enabled = settings.Enabled,
-                  LogEntries = settings.LogEntries,
                   MaxEntries = settings.MaxEntries,
                   TypeId = typeId
                };
@@ -151,14 +150,40 @@ namespace Finsa.Caravan.DataAccess.Sql
                added = true;
             }
 
-           ctx.SaveChanges();
+            ctx.SaveChanges();
             return added;
          }
       }
 
       protected override bool DoUpdateSettings(string appName, LogType logType, LogSettings settings)
       {
-         throw new NotImplementedException();
+         using (var ctx = Db.CreateWriteContext())
+         {
+            ctx.BeginTransaction();
+
+            var update = false;
+            var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
+            var typeId = logType.ToString().ToLower();
+
+            var settingToUpdate = ctx.LogSettings.First(s => s.AppId == appId && s.TypeId == typeId);
+
+            if (settingToUpdate != null)
+            {
+               settingToUpdate.App = settings.App;
+               settingToUpdate.AppId = appId;
+               settingToUpdate.Days = settings.Days;
+               settingToUpdate.Enabled = settings.Enabled;
+               settingToUpdate.LogEntries = settings.LogEntries;
+               settingToUpdate.MaxEntries = settings.MaxEntries;
+               settingToUpdate.Type = logType;
+               settingToUpdate.TypeId = typeId;
+
+               update = true;
+            }
+
+            ctx.SaveChanges();
+            return update;
+         }
       }
    }
 }

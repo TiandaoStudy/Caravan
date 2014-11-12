@@ -141,22 +141,15 @@ namespace Finsa.Caravan.DataAccess
       {
          using (var ctx = CreateWriteContext())
          {
-            var trx = ctx.BeginTransaction();
-            try
-            {
-               ctx.LogEntries.RemoveRange(ctx.LogEntries.ToList());
-               ctx.LogSettings.RemoveRange(ctx.LogSettings.ToList());
-               ctx.SecObjects.RemoveRange(ctx.SecObjects.ToList());
-               ctx.SecContexts.RemoveRange(ctx.SecContexts.ToList());
-               ctx.SecUsers.RemoveRange(ctx.SecUsers.ToList());
-               ctx.SecGroups.RemoveRange(ctx.SecGroups.ToList());
-               ctx.SecApps.RemoveRange(ctx.SecApps.ToList());
-               ctx.SaveChanges();
-            }
-            catch
-            {
-               trx.Rollback();
-            }
+            ctx.BeginTransaction();
+            ctx.LogEntries.RemoveRange(ctx.LogEntries.ToList());
+            ctx.LogSettings.RemoveRange(ctx.LogSettings.ToList());
+            ctx.SecObjects.RemoveRange(ctx.SecObjects.ToList());
+            ctx.SecContexts.RemoveRange(ctx.SecContexts.ToList());
+            ctx.SecUsers.RemoveRange(ctx.SecUsers.ToList());
+            ctx.SecGroups.RemoveRange(ctx.SecGroups.ToList());
+            ctx.SecApps.RemoveRange(ctx.SecApps.ToList());
+            ctx.SaveChanges();
          }
       }
    }
