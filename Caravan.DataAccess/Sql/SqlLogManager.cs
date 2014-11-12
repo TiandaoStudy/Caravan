@@ -128,5 +128,10 @@ namespace Finsa.Caravan.DataAccess.Sql
       {
          throw new NotImplementedException();
       }
+
+      protected override bool DoUpdateSettings(string appName, LogType logType, LogSettings settings)
+      {
+         throw new NotImplementedException();
+      }
    }
 }
