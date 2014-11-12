@@ -122,7 +122,9 @@
          $('.workingArea').hide();
          window.setTimeout(function() {
             $('.workingArea').show();
-            centerMainContainer();
+            if (settings.isPage) {
+               centerMainContainer();
+            }
          }, 100);
       });
    </script>

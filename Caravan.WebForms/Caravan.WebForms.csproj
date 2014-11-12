@@ -692,7 +692,9 @@
     <Content Include="FLEX\UserControls\Ajax\ImageButton.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\UserControls\Ajax\DatePicker.ascx" />
+    <Content Include="FLEX\UserControls\Ajax\DatePicker.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="FLEX\Scripts\bootstrap-datepicker.js" />
     <Content Include="FLEX\Scripts\bootstrap-datepicker.min.js">
       <DependentUpon>bootstrap-datepicker.js</DependentUpon>
@@ -1006,7 +1008,8 @@
   <PropertyGroup>
     <PostBuildEvent>IF EXIST $(SolutionDir)NuGetPackager.WebForms (
     :: FONTS
-    del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Fonts
+    RD /S /Q $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Fonts
+    MD $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Fonts
     copy $(ProjectDir)\FLEX\Fonts\*.* $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Fonts
     
     :: IMAGES
@@ -1029,12 +1032,13 @@
     
     :: SCRIPTS
     del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Scripts
-    copy $(ProjectDir)\FLEX\Scripts\*.js $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Scripts
+    copy $(ProjectDir)\FLEX\Scripts\*.min.js $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Scripts
     copy $(ProjectDir)\FLEX\Scripts\*.map $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Scripts
 
     :: STYLES
-    del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Styles
-    copy $(ProjectDir)\FLEX\Styles\*.css $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Styles\*.css
+    RD /S /Q $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Styles
+    MD $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Styles
+    copy $(ProjectDir)\FLEX\Styles\*.min.css $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Styles
     
     :: USER CONTROLS
     del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\UserControls
