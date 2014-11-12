@@ -124,9 +124,20 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-      protected override void DoAddSettings(string appName, LogType logType, LogSettings settings)
+      protected override bool DoAddSettings(string appName, LogType logType, LogSettings settings)
       {
-         throw new NotImplementedException();
+         using (var ctx = Db.CreateWriteContext())
+         {
+            var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
+            var typeId = logType.ToString().ToLower();
+            
+            ctx.LogSettings.Add(new LogSettings()
+            {
+              
+            });
+            ctx.SaveChanges();
+
+         }
       }
 
       protected override bool DoUpdateSettings(string appName, LogType logType, LogSettings settings)
