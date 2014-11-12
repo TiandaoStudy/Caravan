@@ -1,0 +1,56 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="CustomView.master.cs" Inherits="FLEX.Web.MasterPages.CustomView" MasterPageFile="~/FLEX/MasterPages/Base.Master" %>
+<%@ MasterType VirtualPath="../MasterPages/Base.Master"%>
+
+<asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">
+   <script type="text/javascript">
+      var hasPageVisibleHandlers = <%= HasPageVisibleHandlers.ToString().ToLower() %>;
+
+      $(document).ready(function() {
+         $("#pageTitle").html(document.title);
+      });
+   </script>
+    
+   <asp:ContentPlaceHolder ID="headContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="aspUpperContent" ContentPlaceHolderID="upperContent" runat="server">
+   <asp:ContentPlaceHolder ID="upperContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="aspMainContent" ContentPlaceHolderID="mainContent" runat="server">
+   <!-- Start Custom Content -->
+   <div id="divCustomContent" class="col-xs-12">
+      <div class="panel panel-primary">
+         <div class="panel-heading">
+            <strong id="pageTitle" class="panel-title"></strong>
+         </div>
+         
+         <div class="workingArea">
+            <asp:ContentPlaceHolder ID="customContent" runat="server"></asp:ContentPlaceHolder>
+         </div>
+         
+         <div class="panel-footer clearfix">
+            <div class="row">
+               <div class="text-left btn-row col-xs-4">
+                  <asp:ContentPlaceHolder ID="leftButtonsContent" runat="server"></asp:ContentPlaceHolder>
+               </div>
+               <div class="text-center btn-row col-xs-4">
+                  <asp:ContentPlaceHolder ID="centerButtonsContent" runat="server"></asp:ContentPlaceHolder>
+               </div>
+               <div class="text-right btn-row col-xs-4">
+                  <asp:ContentPlaceHolder ID="rightButtonsContent" runat="server"></asp:ContentPlaceHolder>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- End Custom Content -->
+</asp:Content>
+
+<asp:Content ID="aspLowerContent" ContentPlaceHolderID="lowerContent" runat="server">
+   <asp:ContentPlaceHolder ID="lowerContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="aspHiddenContent" ContentPlaceHolderID="hiddenContent" runat="server">
+   <asp:ContentPlaceHolder ID="hiddenContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
