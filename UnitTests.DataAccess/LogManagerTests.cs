@@ -37,6 +37,7 @@ namespace UnitTests.DataAccess
       {
       }
 
+      #region Log Settings
       [Test]
       [ExpectedException(typeof (ArgumentException))]
       public void LogSettings_NullAppNameValidLogType_ThrowsArgumentException()
@@ -80,7 +81,7 @@ namespace UnitTests.DataAccess
       }
 
       [Test]
-      public void UpdateSetting_ValidArgs_SettingAdded()
+      public void UpdateSetting_ValidArgs_SettingUpdated()
       {
          var update = new LogSettings { Days = 40, Enabled = 1,MaxEntries = 50};
          Db.Logger.UpdateSettings(_myApp.Name,LogType.Info,update);
@@ -90,5 +91,41 @@ namespace UnitTests.DataAccess
          Assert.That(q.First().MaxEntries,Is.EqualTo(50));
          Assert.That(q.First().Days,Is.EqualTo(40));
       }
+
+      [Test]
+      [ExpectedException(typeof (ArgumentException))]
+      public void UpdateSetting_EmptyAppName_Throws()
+      {
+         var update = new LogSettings { Days = 40, Enabled = 1, MaxEntries = 50 };
+         Db.Logger.UpdateSettings("", LogType.Info, update);
+      }
+
+      [Test]
+      [ExpectedException(typeof (ArgumentNullException))]
+      public void Updatesettings_NullSetting_throws()
+      {
+         Db.Logger.UpdateSettings(_myApp.Name, LogType.Info, null);
+      }
+
+      #endregion
+
+      #region Logging Methods
+
+      //LogResult Log(LogType type, string appName, string userName, string codeUnit, string function, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<CKeyValuePair<string, string>> args = null);
+
+      [Test]
+      public void Log_validArgs_()
+      {
+         
+      }
+
+      [Test]
+      [ExpectedException(typeof (ArgumentNullException))]
+      public void Log_NullException_Throws()
+      {
+         var res = Db.Logger.Log(LogType.Info, "", "", "", "", null);
+      }
+     
+      #endregion
    }
 }

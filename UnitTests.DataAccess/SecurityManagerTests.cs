@@ -361,12 +361,13 @@ namespace UnitTests.DataAccess
 
            Db.Security.AddUser(_myApp.Name, user1);
 
+           WaitForLogger();
            var l = Db.Logger.Logs(_myApp.Name);
 
            user1.Login = "updatedLogin";
 
-           Db.Security.UpdateUser(_myApp.Name, "blabla", user1);
-
+           Db.Security.UpdateUser(_myApp.Name, "blabla1", user1);
+           WaitForLogger();
            var l1 = Db.Logger.Logs(_myApp.Name);
 
            Assert.That(l1.Count(), Is.EqualTo(l.Count() + 1));
@@ -1836,13 +1837,13 @@ namespace UnitTests.DataAccess
           Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
           Db.Security.AddEntry(_myApp.Name, c1, obj2, user1.Login, null);
         
-          Db.Security.RemoveEntry(_myApp.Name,c1.Name,obj1.Name,user1.Login,group1.Name);
-          Db.Security.RemoveEntry(_myApp.Name, c1.Name, obj2.Name, user1.Login, group1.Name);
+          Db.Security.RemoveEntry(_myApp.Name,c1.Name,obj1.Name,user1.Login,null);
+          Db.Security.RemoveEntry(_myApp.Name, c1.Name, obj2.Name, user1.Login, null);
 
-          var l = Db.Security.Entries(_myApp.Name, c1.Name, obj1.Name);
+          var l = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj1.Name);
           Assert.That(l.Count(),Is.EqualTo(0));
 
-          var l1 = Db.Security.Entries(_myApp.Name, c1.Name, obj2.Name);
+          var l1 = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj2.Name);
           Assert.That(l1.Count(), Is.EqualTo(0));
 
        }
@@ -2024,7 +2025,6 @@ namespace UnitTests.DataAccess
        }
 
        [Test]
-       [ExpectedException(typeof (ArgumentException))]
        public void RemoveEntry_NullGroupName_EntryDeleted()
        {
 
@@ -2067,7 +2067,7 @@ namespace UnitTests.DataAccess
 
           Db.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, user1.Login, "");
        }
-
+       
        #endregion
 
        private static void WaitForLogger()
