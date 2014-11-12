@@ -90,7 +90,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             ctx.BeginTransaction();
             var removed = false;
             var appId = GetAppIdByName(ctx, appName);
-            var grp = ctx.SecGroups.FirstOrDefault(g => g.App.Id == appId && g.Name == groupName);
+            var grp = ctx.SecGroups.FirstOrDefault(g => g.AppId == appId && g.Name == groupName);
             if (grp != null)
             {
                ctx.SecGroups.Remove(grp);
