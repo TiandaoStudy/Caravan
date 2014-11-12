@@ -65,7 +65,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                {
                   ctx.LogEntries.Add(new LogEntry
                   {
-                     Id = (ctx.LogEntries.Max(e => (long?) e.Id) ?? -1) + 1,
+                     Id = (ctx.LogEntries.Where(e => e.AppId == appId).Max(e => (long?) e.Id) ?? -1) + 1,
                      Date = DateTime.Now,
                      AppId = appId,
                      TypeId = typeId,
