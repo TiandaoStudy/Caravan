@@ -128,15 +128,31 @@ namespace Finsa.Caravan.DataAccess.Sql
       {
          using (var ctx = Db.CreateWriteContext())
          {
+            ctx.BeginTransaction();
+
+            var added = false;
             var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
             var typeId = logType.ToString().ToLower();
-            
-            ctx.LogSettings.Add(new LogSettings()
-            {
-              
-            });
-            ctx.SaveChanges();
 
+            if (!ctx.LogSettings.Any(s => s.AppId == appId && s.Type == logType))
+            {
+               var newSetting = new LogSettings()
+               {
+                  App = settings.App,
+                  AppId = appId,
+                  Days = settings.Days,
+                  Enabled = settings.Enabled,
+                  LogEntries = settings.LogEntries,
+                  MaxEntries = settings.MaxEntries,
+                  TypeId = typeId
+               };
+
+               ctx.LogSettings.Add(newSetting);
+               added = true;
+            }
+
+           ctx.SaveChanges();
+            return added;
          }
       }
 
