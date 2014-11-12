@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<flex:LookupData xmlns:flex="FLEX.Web.XmlSettings.Lookup" DefaultSort="Gend_Description" 
+                 AllowCancel="false" DisableFirstSearch="true">
+  <flex:DataColumns>
+    <!--Zero or more repetitions:-->
+    <flex:DataColumn>
+      <flex:Type>string</flex:Type>
+      <flex:DataField>string</flex:DataField>
+      <flex:SortExpression>string</flex:SortExpression>
+      <flex:HeaderText>string</flex:HeaderText>
+      <flex:ReturnElement>string</flex:ReturnElement>
+      <flex:DataType>string</flex:DataType>
+      <flex:Width>1</flex:Width>
+    </flex:DataColumn>
+  </flex:DataColumns>
+  <flex:LookupQuery>
+    select Gend_Id, Gend_Description from Gender
+  </flex:LookupQuery>
+</flex:LookupData>
