@@ -333,6 +333,8 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsEmpty(contextName);
          Raise<ArgumentException>.IfIsEmpty(objectName);
          Raise<ArgumentException>.If(String.IsNullOrWhiteSpace(userLogin) && String.IsNullOrWhiteSpace(groupName));
+         Raise<ArgumentException>.If(!String.IsNullOrWhiteSpace(userLogin) && groupName != null);
+         Raise<ArgumentException>.If(!String.IsNullOrWhiteSpace(groupName) && userLogin != null);
 
          const string logShort = "Security entry for object '{0}' in context '{1}' has been removed for '{2}'";
          const string logCtx = "Removing a security entry";
