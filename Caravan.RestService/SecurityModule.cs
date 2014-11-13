@@ -2,7 +2,6 @@
 using System.IO;
 using System.Web;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.DataModel.Rest;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.RestService.Core;
 using Finsa.Caravan.RestService.Properties;
@@ -42,16 +41,8 @@ namespace Finsa.Caravan.RestService
           */
 
          Post["/{appName}/entries/{contextName}"] = p => SafeResponse<dynamic>(p, Settings.Default.LongCacheTimeoutInSeconds, (Func<dynamic, dynamic, dynamic>) GetEntries);
-
-         Put["/{appName}/entries/{contextName}"] = p =>
-         {
-            var secEntry = StartSafeResponse<SecEntrySingle>(NotCached).Entry;
-         };
-
-         Delete["/{appName}/entries/{contextName}"] = p =>
-         {
-            var secEntry = StartSafeResponse<SecEntrySingle>(NotCached).Entry;
-         };
+         Put["/{appName}/entries/{contextName}"] = p => SafeResponse<SecEntrySingle>(p, NotCached, (Func<dynamic, SecEntrySingle, dynamic>) AddEntry);
+         Delete["/{appName}/entries/{contextName}"] = p => SafeResponse<SecEntrySingle>(p, NotCached, (Func<dynamic, SecEntrySingle, dynamic>) RemoveEntry);
 
          /*
           * Groups
