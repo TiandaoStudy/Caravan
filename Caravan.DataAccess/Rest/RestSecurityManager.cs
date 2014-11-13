@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel.Security;
+using Newtonsoft.Json;
+using RestSharp;
 
 namespace Finsa.Caravan.DataAccess.Rest
 {
@@ -39,12 +41,39 @@ namespace Finsa.Caravan.DataAccess.Rest
 
       protected override IList<SecUser> GetUsers(string appName, string userLogin)
       {
-         throw new NotImplementedException();
+         var client = new RestClient("http://localhost/Caravan.RestService/security");
+         var request = new RestRequest("{appName}/users/{userLogin}", Method.POST);
+         request.AddUrlSegment("appName", appName);
+         if (userLogin != null)
+         {
+            request.AddUrlSegment("userLogin", userLogin);
+         }
+         request.AddJsonBody(new {Auth = "AA", Body = new object()});
+         var response = client.Execute<DataModel.Rest.RestResponse<SecUserSingle>>(request);
+
+         return (IList<SecUser>)(response.Data.Body.User);
       }
 
       protected override bool DoAddUser(string appName, SecUser newUser)
       {
-         throw new NotImplementedException();
+         var client = new RestClient("http://localhost/Caravan.RestService/security");
+         var request = new RestRequest("{appName}", Method.POST);
+         
+         var added = false;
+         
+         
+         request.AddUrlSegment("appName", appName);
+         request.AddUrlSegment("userLogin", newUser.Login);
+
+         //verificare se esiste l'app
+         request.AddJsonBody(new { Auth = "AA", Body = appName });
+
+         //verificare se l'utente esiste già
+            
+         added = true;
+         
+
+         return added;
       }
 
       protected override bool DoRemoveUser(string appName, string userLogin)
