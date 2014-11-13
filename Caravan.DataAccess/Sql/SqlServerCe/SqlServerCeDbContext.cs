@@ -190,8 +190,7 @@ namespace Finsa.Caravan.DataAccess.Sql.SqlServerCe
           ************************************************/
 
          mb.Entity<LogEntry>().ToTable("CARAVAN_LOG", DataAccess.Configuration.Instance.OracleUser);
-         mb.Entity<LogEntry>().HasKey(x => x.Id);
-         mb.Entity<LogEntry>().Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+         mb.Entity<LogEntry>().HasKey(x => new { x.Id, x.AppId });
 
          mb.Entity<LogEntry>().Property(x => x.Id).HasColumnName("CLOG_ID");
          mb.Entity<LogEntry>().Property(x => x.AppId).HasColumnName("CAPP_ID");

@@ -119,10 +119,12 @@
       // Put here to solve a nasty issue with Chrome, which can be found in version 38.
       // If possible, REMOVE this redundant line of code.
       $(document).ready(function() {
-         $('.workingArea').hide();
+         $('#mainContainer').hide();
          window.setTimeout(function() {
-            $('.workingArea').show();
-            centerMainContainer();
+            $('#mainContainer').show();
+            if (settings.isPage) {
+               centerMainContainer();
+            }
          }, 100);
       });
    </script>
