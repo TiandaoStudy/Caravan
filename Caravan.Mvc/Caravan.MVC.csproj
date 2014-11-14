@@ -638,7 +638,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>1948</DevelopmentServerPort>
+          <DevelopmentServerPort>55525</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:51185/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

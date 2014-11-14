@@ -40,6 +40,15 @@ namespace Finsa.Caravan.WebForms.Pages {
         protected global::System.Web.UI.WebControls.TextBox txtGrpDescr;
         
         /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Label1;
+        
+        /// <summary>
         /// chkAdmin control.
         /// </summary>
         /// <remarks>
@@ -47,6 +56,24 @@ namespace Finsa.Caravan.WebForms.Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkAdmin;
+        
+        /// <summary>
+        /// txtNotes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNotes;
+        
+        /// <summary>
+        /// crvnMultiSelectUsersGroups control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FLEX.Web.UserControls.Ajax.MultiSelect crvnMultiSelectUsersGroups;
         
         /// <summary>
         /// btxExit control.

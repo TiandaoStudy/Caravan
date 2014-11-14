@@ -9,6 +9,7 @@ using Finsa.Caravan.Diagnostics;
 using Finsa.Caravan.Extensions;
 using FLEX.Common.Web;
 using FLEX.Web.Pages;
+using System.Data;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -34,6 +35,13 @@ namespace Finsa.Caravan.WebForms.Pages
 
       protected override void RegisterSearchCriteria(SearchCriteria criteria)
       {
+          SearchCriteria.RegisterControl(crvnGroupsLkp, "CGRP_NAME");
+          SearchCriteria.CriteriaChanged += SearchCriteria_CriteriaChanged;
+      }
+
+      private void SearchCriteria_CriteriaChanged(SearchCriteria searchCriteria, SearchCriteriaChangedArgs args)
+      {
+          fdtgGroups.UpdateDataSource();
       }
 
       #endregion
@@ -42,10 +50,23 @@ namespace Finsa.Caravan.WebForms.Pages
 
       protected void fdtgGroups_DataSourceUpdating(object sender, EventArgs args)
       {
-         // This should not catch any exception, others will do.
-         var groups = (from g in DataAccess.Db.Security.Groups(Common.Configuration.Instance.ApplicationName)
-                       select new SecGroup {Id = g.Id, Name = g.Name, Description = g.Description, IsAdmin = g.IsAdmin})
-                       .ToDataTable();
+          var groups = new DataTable();
+          if(SearchCriteria["CGRP_NAME"].Count > 0)
+          {
+              var groupName = SearchCriteria["CGRP_NAME"][0];
+              // This should not catch any exception, others will do.
+              groups = (from g in DataAccess.Db.Security.Groups(Common.Configuration.Instance.ApplicationName)
+                            select new SecGroup { Id = g.Id, Name = g.Name, Description = g.Description, IsAdmin = g.IsAdmin, Notes = g.Notes }).Where(x => x.Name == groupName.ToString())
+                            .ToDataTable();
+          }
+
+          else
+          {
+                   groups = (from g in DataAccess.Db.Security.Groups(Common.Configuration.Instance.ApplicationName)
+                    select new SecGroup { Id = g.Id, Name = g.Name, Description = g.Description, IsAdmin = g.IsAdmin, Notes = g.Notes })
+                           .ToDataTable();
+          }
+
          fdtgGroups.DataSource = groups;
       }
 

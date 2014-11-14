@@ -13,6 +13,15 @@ namespace Finsa.Caravan.WebForms.Pages {
     public partial class SecGroupList {
         
         /// <summary>
+        /// crvnGroupsLkp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FLEX.Web.UserControls.Ajax.AutoSuggest crvnGroupsLkp;
+        
+        /// <summary>
         /// fdtgGroups control.
         /// </summary>
         /// <remarks>
