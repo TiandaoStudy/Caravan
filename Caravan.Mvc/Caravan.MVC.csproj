@@ -60,15 +60,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\PommaLabs.GRAMPA.1.2.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.KVLite, Version=0.6.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.KVLite.0.6.4\lib\net451\PommaLabs.KVLite.dll</HintPath>
+    <Reference Include="PommaLabs.KVLite">
+      <HintPath>..\packages\PommaLabs.KVLite.0.6.5\lib\net451\PommaLabs.KVLite.dll</HintPath>
     </Reference>
     <Reference Include="RazorGenerator.Mvc">
       <HintPath>..\packages\RazorGenerator.Mvc.2.2.3\lib\net40\RazorGenerator.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\packages\RestSharp.105.0.0\lib\net4\RestSharp.dll</HintPath>
+    <Reference Include="RestSharp, Version=105.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.SQLite">
@@ -638,7 +638,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>1948</DevelopmentServerPort>
+          <DevelopmentServerPort>55525</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:51185/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
