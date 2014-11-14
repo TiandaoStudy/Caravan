@@ -47,7 +47,7 @@ namespace Finsa.Caravan.DataModel.Security
       {
          if (ReferenceEquals(null, obj)) return false;
          if (ReferenceEquals(this, obj)) return true;
-         if (obj.GetType() != this.GetType()) return false;
+         if (obj.GetType() != GetType()) return false;
          return Equals((SecGroup)obj);
       }
 
@@ -73,14 +73,74 @@ namespace Finsa.Caravan.DataModel.Security
    }
 
    [Serializable]
-   public class SecGroupSingle
+   public class SecGroupSingle : IEquatable<SecGroupSingle>
    {
       public SecGroup Group { get; set; } 
+
+      public bool Equals(SecGroupSingle other)
+      {
+         if (ReferenceEquals(null, other)) return false;
+         if (ReferenceEquals(this, other)) return true;
+         return Group.Equals(other.Group);
+      }
+
+      public override bool Equals(object obj)
+      {
+         if (ReferenceEquals(null, obj)) return false;
+         if (ReferenceEquals(this, obj)) return true;
+         if (obj.GetType() != GetType()) return false;
+         return Equals((SecGroupSingle) obj);
+      }
+
+      public override int GetHashCode()
+      {
+         return Group.GetHashCode();
+      }
+
+      public static bool operator ==(SecGroupSingle left, SecGroupSingle right)
+      {
+         return Equals(left, right);
+      }
+
+      public static bool operator !=(SecGroupSingle left, SecGroupSingle right)
+      {
+         return !Equals(left, right);
+      }
    }
 
    [Serializable]
-   public class SecGroupList
+   public class SecGroupList : IEquatable<SecGroupList>
    {
       public IEnumerable<SecGroup> Groups { get; set; } 
+
+      public bool Equals(SecGroupList other)
+      {
+         if (ReferenceEquals(null, other)) return false;
+         if (ReferenceEquals(this, other)) return true;
+         return Groups.Equals(other.Groups);
+      }
+
+      public override bool Equals(object obj)
+      {
+         if (ReferenceEquals(null, obj)) return false;
+         if (ReferenceEquals(this, obj)) return true;
+         if (obj.GetType() != GetType()) return false;
+         return Equals((SecGroupList) obj);
+      }
+
+      public override int GetHashCode()
+      {
+         return Groups.GetHashCode();
+      }
+
+      public static bool operator ==(SecGroupList left, SecGroupList right)
+      {
+         return Equals(left, right);
+      }
+
+      public static bool operator !=(SecGroupList left, SecGroupList right)
+      {
+         return !Equals(left, right);
+      }
    }
 }

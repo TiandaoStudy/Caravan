@@ -35,9 +35,20 @@ namespace Finsa.Caravan.DataAccess.Core
       {
          Raise<ArgumentNullException>.IfIsNull(app);
          Raise<ArgumentException>.IfIsEmpty(app.Name);
-         if (!DoAddApp(app))
+
+         const string logCtx = "Adding a new app";
+
+         try
          {
-            throw new AppExistingException();
+            if (!DoAddApp(app))
+            {
+               throw new AppExistingException();
+            }
+         }
+         catch (Exception ex)
+         {
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx);
+            throw;
          }
       }
 
@@ -68,20 +79,45 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentNullException>.IfIsNull(newGroup);
          Raise<ArgumentException>.IfIsEmpty(newGroup.Name);
-         newGroup.Name = newGroup.Name.ToLower();
-         if (!DoAddGroup(appName.ToLower(), newGroup))
+
+         const string logCtx = "Adding a new group";
+
+         try
          {
-            throw new GroupExistingException();
+            newGroup.Name = newGroup.Name.ToLower();
+            if (!DoAddGroup(appName.ToLower(), newGroup))
+            {
+               throw new GroupExistingException();
+            }
+            Db.Logger.LogWarnAsync<TSec>("ADDED GROUP", context: logCtx, applicationName: appName);
          }
+         catch (Exception ex)
+         {
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, applicationName: appName);
+            throw;
+         }
+
       }
 
       public void RemoveGroup(string appName, string groupName)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(groupName);
-         if (!DoRemoveGroup(appName.ToLower(), groupName.ToLower()))
+
+         const string logCtx = "Removing a group";
+
+         try
          {
-            throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);   
+            if (!DoRemoveGroup(appName.ToLower(), groupName.ToLower()))
+            {
+               throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);   
+            }
+            Db.Logger.LogWarnAsync<TSec>("REMOVED GROUP", context: logCtx, applicationName: appName);
+         }
+         catch (Exception ex)
+         {
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, applicationName: appName);
+            throw;
          }
       }
 
@@ -91,6 +127,9 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsEmpty(groupName);
          Raise<ArgumentNullException>.IfIsNull(newGroup);
          Raise<ArgumentException>.IfIsEmpty(newGroup.Name);
+
+         const string logCtx = "Updating a group";
+
          try
          {
             newGroup.Name = newGroup.Name.ToLower();
@@ -98,10 +137,11 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);   
             }
+            Db.Logger.LogWarnAsync<TSec>("UPDATED GROUP", context: logCtx, applicationName: appName);
          }
          catch (Exception ex)
          {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, "Updating a group");
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, applicationName: appName);
             throw;
          }
       }
@@ -156,9 +196,21 @@ namespace Finsa.Caravan.DataAccess.Core
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(userLogin);
-         if (!DoRemoveUser(appName.ToLower(), userLogin))
+
+         const string logCtx = "Removing an user";
+
+         try
          {
-            throw new UserNotFoundException();
+            if (!DoRemoveUser(appName.ToLower(), userLogin))
+            {
+               throw new UserNotFoundException();
+            }
+            Db.Logger.LogWarnAsync<TSec>("REMOVED USER", context: logCtx, applicationName: appName);
+         }
+         catch (Exception ex)
+         {
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, applicationName: appName);
+            throw;
          }
       }
 
@@ -192,16 +244,20 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(userLogin);
          Raise<ArgumentException>.IfIsEmpty(groupName);
+         
+         const string logCtx = "Adding an user to a group";
+
          try
          {
             if (!DoAddUserToGroup(appName.ToLower(), userLogin.ToLower(), groupName.ToLower()))
             {
                throw new UserExistingException();
             }
+            Db.Logger.LogWarnAsync<TSec>("ADDED USER TO GROUP", context: logCtx, applicationName: appName);
          }
          catch (Exception ex)
          {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, "Adding an user to a group", applicationName: appName);
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, applicationName: appName);
             throw;
          }
       }
@@ -211,16 +267,20 @@ namespace Finsa.Caravan.DataAccess.Core
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfIsEmpty(userLogin);
          Raise<ArgumentException>.IfIsEmpty(groupName);
+         
+         const string logCtx = "Removing an user from a group";
+
          try
          {
             if (!DoRemoveUserFromGroup(appName.ToLower(), userLogin.ToLower(), groupName.ToLower()))
             {
                throw new UserNotFoundException();
             }
+            Db.Logger.LogWarnAsync<TSec>("REMOVED USER FROM GROUP", context: logCtx, applicationName: appName);
          }
          catch (Exception ex)
          {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, "Removing an user from a group", applicationName: appName);
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, applicationName: appName);
             throw;
          }
       }

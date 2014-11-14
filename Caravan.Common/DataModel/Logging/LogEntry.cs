@@ -7,7 +7,7 @@ using Newtonsoft.Json.Converters;
 namespace Finsa.Caravan.DataModel.Logging
 {
    [Serializable]
-   public class LogEntry
+   public class LogEntry : IEquatable<LogEntry>
    {
       public const string AutomaticallyFilled = "Automatically filled parameter";
       public const string NotSpecified = "...";
@@ -227,17 +227,110 @@ namespace Finsa.Caravan.DataModel.Logging
             }
          }
       }
+
+      public bool Equals(LogEntry other)
+      {
+         if (ReferenceEquals(null, other)) return false;
+         if (ReferenceEquals(this, other)) return true;
+         return Id == other.Id && AppId == other.AppId;
+      }
+
+      public override bool Equals(object obj)
+      {
+         if (ReferenceEquals(null, obj)) return false;
+         if (ReferenceEquals(this, obj)) return true;
+         if (obj.GetType() != GetType()) return false;
+         return Equals((LogEntry) obj);
+      }
+
+      public override int GetHashCode()
+      {
+         unchecked
+         {
+            return (Id.GetHashCode()*397) ^ AppId.GetHashCode();
+         }
+      }
+
+      public static bool operator ==(LogEntry left, LogEntry right)
+      {
+         return Equals(left, right);
+      }
+
+      public static bool operator !=(LogEntry left, LogEntry right)
+      {
+         return !Equals(left, right);
+      }
    }
 
    [Serializable]
-   public class LogEntrySingle
+   public class LogEntrySingle : IEquatable<LogEntrySingle>
    {
-      public LogEntry Entry { get; set; } 
+      public LogEntry Entry { get; set; }
+
+      public bool Equals(LogEntrySingle other)
+      {
+         if (ReferenceEquals(null, other)) return false;
+         if (ReferenceEquals(this, other)) return true;
+         return Entry.Equals(other.Entry);
+      }
+
+      public override bool Equals(object obj)
+      {
+         if (ReferenceEquals(null, obj)) return false;
+         if (ReferenceEquals(this, obj)) return true;
+         if (obj.GetType() != GetType()) return false;
+         return Equals((LogEntrySingle) obj);
+      }
+
+      public override int GetHashCode()
+      {
+         return Entry.GetHashCode();
+      }
+
+      public static bool operator ==(LogEntrySingle left, LogEntrySingle right)
+      {
+         return Equals(left, right);
+      }
+
+      public static bool operator !=(LogEntrySingle left, LogEntrySingle right)
+      {
+         return !Equals(left, right);
+      } 
    }
 
    [Serializable]
-   public class LogEntryList
+   public class LogEntryList : IEquatable<LogEntryList>
    {
       public IEnumerable<LogEntry> Entries { get; set; } 
+
+      public bool Equals(LogEntryList other)
+      {
+         if (ReferenceEquals(null, other)) return false;
+         if (ReferenceEquals(this, other)) return true;
+         return Entries.Equals(other.Entries);
+      }
+
+      public override bool Equals(object obj)
+      {
+         if (ReferenceEquals(null, obj)) return false;
+         if (ReferenceEquals(this, obj)) return true;
+         if (obj.GetType() != GetType()) return false;
+         return Equals((LogEntryList) obj);
+      }
+
+      public override int GetHashCode()
+      {
+         return Entries.GetHashCode();
+      }
+
+      public static bool operator ==(LogEntryList left, LogEntryList right)
+      {
+         return Equals(left, right);
+      }
+
+      public static bool operator !=(LogEntryList left, LogEntryList right)
+      {
+         return !Equals(left, right);
+      }
    }
 }

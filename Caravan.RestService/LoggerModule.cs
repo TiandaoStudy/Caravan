@@ -1,7 +1,6 @@
 ﻿using System;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataModel.Logging;
-using Finsa.Caravan.DataModel.Rest;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.RestService.Core;
 using Finsa.Caravan.RestService.Properties;
@@ -16,51 +15,51 @@ namespace Finsa.Caravan.RestService
           * Entries
           */
 
-         Post["/{appName}/entries"] = p =>
-         {
-            StartSafeResponse<dynamic>(NotCached);
-            var entries = Db.Logger.Logs(p.appName);
-            return RestResponse.Success(new LogEntryList {Entries = entries});
-         };
-         
-         Post["/{appName}/entries/{logType}"] = p =>
-         {
-            StartSafeResponse<dynamic>(NotCached);
-            var entries = Db.Logger.Logs(p.appName, SafeParseLogType(p.logType));
-            return RestResponse.Success(new LogEntryList {Entries = entries});
-         };
-         
-         Put["/{appName}/entries"] = p =>
-         {
-            var entry = StartSafeResponse<LogEntrySingle>(NotCached);
-            var result = Log(entry.Entry, p.appName, null);
-            return RestResponse.FromLogResult(result);
-         };
-
-         Put["/{appName}/entries/{logType}"] = p =>
-         {
-            var entry = StartSafeResponse<LogEntrySingle>(NotCached);
-            var result = Log(entry.Entry, p.appName, ParseLogType(p.logType));
-            return RestResponse.FromLogResult(result);
-         };
+         Post["/{appName}/entries"] = p => SafeResponse<dynamic>(p, NotCached, (Func<dynamic, dynamic, dynamic>) GetEntriesAll);
+         Post["/{appName}/entries/{logType}"] = p => SafeResponse<dynamic>(p, NotCached, (Func<dynamic, dynamic, dynamic>) GetEntriesForType);
+         Put["/{appName}/entries"] = p => SafeResponse<LogEntrySingle>(p, NotCached, (Func<dynamic, LogEntrySingle, dynamic>) AddEntry);
+         Put["/{appName}/entries/{logType}"] = p => SafeResponse<LogEntrySingle>(p, NotCached, (Func<dynamic, LogEntrySingle, dynamic>) AddEntryForType);
          
          /*
           * Settings
           */
 
-         Post["/{appName}/settings"] = p =>
-         {
-            StartSafeResponse<dynamic>(Settings.Default.LongCacheTimeoutInSeconds);
-            var settings = Db.Logger.LogSettings(p.appName);
-            return RestResponse.Success(new LogSettingsList {Settings = settings});
-         };
+         Post["/{appName}/settings"] = p => SafeResponse<dynamic>(p, Settings.Default.LongCacheTimeoutInSeconds, (Func<dynamic, dynamic, dynamic>) GetSettingsList);
+         Post["/{appName}/settings/{logType}"] = p => SafeResponse<dynamic>(p, Settings.Default.LongCacheTimeoutInSeconds, (Func<dynamic, dynamic, dynamic>) GetSettingsSingle);
+      }
+      
+      private static dynamic GetEntriesAll(dynamic p, dynamic body)
+      {
+         var entries = Db.Logger.Logs(p.appName);
+         return new LogEntryList {Entries = entries};
+      }
+      
+      private static dynamic GetEntriesForType(dynamic p, dynamic body)
+      {
+         var entries = Db.Logger.Logs(p.appName, SafeParseLogType(p.logType));
+         return new LogEntryList {Entries = entries};
+      }
+      
+      private static dynamic AddEntry(dynamic p, LogEntrySingle body)
+      {
+         return Log(body.Entry, p.appName, null);
+      }
+      
+      private static dynamic AddEntryForType(dynamic p, LogEntrySingle body)
+      {
+         return Log(body.Entry, p.appName, ParseLogType(p.logType));
+      }
 
-         Post["/{appName}/settings/{logType}"] = p =>
-         {
-            StartSafeResponse<dynamic>(Settings.Default.LongCacheTimeoutInSeconds);
-            var settings = Db.Logger.LogSettings(p.appName, SafeParseLogType(p.logType));
-            return RestResponse.Success(new LogSettingsSingle {Settings = settings});
-         };
+      private static dynamic GetSettingsList(dynamic p, dynamic body)
+      {
+         var settings = Db.Logger.LogSettings(p.appName);
+         return new LogSettingsList {Settings = settings};
+      }
+
+      private static dynamic GetSettingsSingle(dynamic p, dynamic body)
+      {
+         var settings = Db.Logger.LogSettings(p.appName, SafeParseLogType(p.logType));
+         return new LogSettingsSingle {Settings = settings};
       }
 
       private static LogResult Log(LogEntry e, string appName, LogType? logType)

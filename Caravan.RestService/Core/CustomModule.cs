@@ -2,9 +2,7 @@
 using System.IO;
 using Finsa.Caravan.DataModel.Logging;
 using Finsa.Caravan.DataModel.Rest;
-using Finsa.Caravan.Extensions;
 using Nancy;
-using Nancy.Responses;
 using Newtonsoft.Json;
 using PommaLabs.KVLite.Nancy;
 
@@ -13,6 +11,7 @@ namespace Finsa.Caravan.RestService.Core
    public abstract class CustomModule : NancyModule
    {
       protected const int NotCached = -1;
+      protected const string Success = "OK";
 
       protected CustomModule()
       {
@@ -20,6 +19,28 @@ namespace Finsa.Caravan.RestService.Core
 
       protected CustomModule(string modulePath) : base(modulePath)
       {
+      }
+
+      protected dynamic SafeResponse<TBody>(dynamic parameters, int cacheSeconds, Func<dynamic, TBody, dynamic> handler)
+      {
+         try
+         {
+            var parsedBody = ParseBody<TBody>();
+            ApplySecurity(parsedBody.Auth);
+            if (cacheSeconds != NotCached)
+            {
+               Context.EnableOutputCache(cacheSeconds);
+            }
+            else
+            {
+               Context.DisableOutputCache();
+            }
+            return RestResponse.Success(handler(parameters, parsedBody.Body));
+         }
+         catch (Exception ex)
+         {
+            return RestResponse.Failure(ex);
+         }
       }
 
       protected RestRequest<TBody> ParseBody<TBody>()
@@ -40,21 +61,6 @@ namespace Finsa.Caravan.RestService.Core
       {
          LogType logType;
          return Enum.TryParse(logTypeString, true, out logType) ? logType : LogType.Info;
-      }
-
-      protected TBody StartSafeResponse<TBody>(int cacheSeconds)
-      {
-         var parsedBody = ParseBody<TBody>();
-         ApplySecurity(parsedBody.Auth);
-         if (cacheSeconds != NotCached)
-         {
-            Context.EnableOutputCache(cacheSeconds);
-         }
-         else
-         {
-            Context.DisableOutputCache();
-         }
-         return parsedBody.Body;
       }
 
       private void ApplySecurity(dynamic auth)

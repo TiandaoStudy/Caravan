@@ -45,7 +45,7 @@ CREATE TABLE mydb.caravan_log
    , CHECK (clog_key_7 is null or clog_key_7 = lower(clog_key_7)) ENABLE
    , CHECK (clog_key_8 is null or clog_key_8 = lower(clog_key_8)) ENABLE
    , CHECK (clog_key_9 is null or clog_key_9 = lower(clog_key_9)) ENABLE
-   , CONSTRAINT pk_caravan_log PRIMARY KEY (clog_id) USING INDEX TABLESPACE dati_base_index ENABLE
+   , CONSTRAINT pk_caravan_log PRIMARY KEY (clog_id, capp_id) USING INDEX TABLESPACE dati_base_index ENABLE
    , CONSTRAINT fk_crvnlog_crvnlogsettings FOREIGN KEY (clos_type, capp_id) REFERENCES mydb.caravan_log_settings (clos_type, capp_id) ON DELETE CASCADE ENABLE
 )
 TABLESPACE dati_base;
