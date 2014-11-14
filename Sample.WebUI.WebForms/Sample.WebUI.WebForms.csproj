@@ -152,6 +152,7 @@
       <Link>SqlServerTypes\x86\SqlServerSpatial110.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\XmlSettings\AjaxLookups\Groups.xml" />
     <Content Include="App_Data\XmlSettings\AjaxLookups\Customers.xml" />
     <Content Include="App_Data\XmlSettings\AjaxLookups\Employees.xml" />
     <Content Include="App_Data\XmlSettings\DynamicReports\SampleReport.xml" />
