@@ -83,64 +83,28 @@ namespace Finsa.Caravan.WebForms.Pages
 
       #region Buttons
 
-      //protected void hiddenSave_OnTriggered(object sender, EventArgs e)
-      //{
-      //   try
-      //   {
-      //      if (Mode == NewMode)
-      //      {
-      //         var newGroup = new SecGroup { Name = txtGrpName.Text, Description = txtGrpDescr.Text, Notes = txtNotes.Text, IsAdmin = chkAdmin.Checked ? 1 : 0 };
-      //         Db.Security.AddGroup(Common.Configuration.Instance.ApplicationName, newGroup);
+      protected void hiddenSave_OnTriggered(object sender, EventArgs e)
+      {
+          try
+          {
+              if (Mode == NewMode)
+              {
+                  var newUser = new SecUser { FirstName = txtFirstName.Text, LastName = txtLastName.Text, Email = txtEmail.Text, Active = chkIsActive.Checked ? 1 : 0 };
+                  Db.Security.AddUser(Common.Configuration.Instance.ApplicationName, newUser);
 
-      //         foreach (DataRow oDrR in crvnMultiSelectUsersGroups.RightDataTable.Rows)
-      //         {
-      //            if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
-      //            {
-      //               Db.Security.AddUserToGroup(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, oDrR["Login"].ToString(), newGroup.Name);
-      //            }
-      //         }
-
-      //         foreach (DataRow oDrL in crvnMultiSelectUsersGroups.LeftDataTable.Rows)
-      //         {
-      //            if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
-      //            {
-      //               Db.Security.RemoveUserFromGroup(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, oDrL["Login"].ToString(), newGroup.Name);
-      //            }
-      //         }
-              
-            
-      //      }
-      //      else if (Mode == EditMode)
-      //      {
-             
-
-      //         foreach (DataRow oDrR in crvnMultiSelectUsersGroups.RightDataTable.Rows)
-      //         {
-      //            if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
-      //            {
-      //               Db.Security.AddUserToGroup(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, oDrR["Login"].ToString(), GroupName);
-      //            }
-      //         }
-
-      //         foreach (DataRow oDrL in crvnMultiSelectUsersGroups.LeftDataTable.Rows)
-      //         {
-      //            if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
-      //            {
-      //               Db.Security.RemoveUserFromGroup(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, oDrL["Login"].ToString(), GroupName);
-      //            }
-      //         }
-
-
-      //         var newGroup = new SecGroup { Name = txtGrpName.Text, Description = txtGrpDescr.Text, Notes= txtNotes.Text ,IsAdmin = chkAdmin.Checked ? 1 : 0 };
-      //         Db.Security.UpdateGroup(Common.Configuration.Instance.ApplicationName, GroupName, newGroup);
-      //      }
-      //      Master.RegisterCloseScript(this);
-      //   }
-      //   catch (Exception ex)
-      //   {
-      //      ErrorHandler.CatchException(ex);
-      //   }
-      //}
+              }
+              else if (Mode == EditMode)
+              {
+                  var newUser= new SecUser { FirstName = txtFirstName.Text, LastName = txtLastName.Text, Email = txtEmail.Text, Active = chkIsActive.Checked ? 1 : 0, Login = Login };
+                  Db.Security.UpdateUser(Common.Configuration.Instance.ApplicationName, Login, newUser);
+              }
+              Master.RegisterCloseScript(this);
+          }
+          catch (Exception ex)
+          {
+              ErrorHandler.CatchException(ex);
+          }
+      }
 
       #endregion
    }
