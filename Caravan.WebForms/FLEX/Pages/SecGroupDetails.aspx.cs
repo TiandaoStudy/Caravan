@@ -35,7 +35,7 @@ namespace Finsa.Caravan.WebForms.Pages
             }
             else if (Mode == EditMode)
             {
-               GroupName = Request["groupName"];
+               GroupName = Request["login"];
                Raise<ArgumentException>.IfIsEmpty(GroupName);
                LoadForEdit(GroupName);
             }

@@ -182,7 +182,21 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="FLEX\Pages\SecGroupList.aspx.designer.cs">
-      <DependentUpon>SecGroupList.aspx</DependentUpon>
+      <DependentUpon>SecGroupList.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\Pages\SecUsersDetails.aspx.cs">
+      <DependentUpon>SecUsersDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\SecUsersDetails.aspx.designer.cs">
+      <DependentUpon>SecUsersDetails.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\Pages\SecUsersList.aspx.cs">
+      <DependentUpon>SecUsersList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\SecUsersList.aspx.designer.cs">
+      <DependentUpon>SecUsersList.aspx</DependentUpon>
     </Compile>
     <Compile Include="FLEX\Pages\ReportViewer.aspx.cs">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
@@ -500,7 +514,11 @@
     <Content Include="FLEX\Pages\SecGroupDetails.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\Pages\SecGroupList.aspx">
+    <Content Include="FLEX\Pages\SecGroupList.aspx" />
+    <Content Include="FLEX\Pages\SecUsersDetails.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\Pages\SecUsersList.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\Pages\ReportViewer.aspx">
@@ -512,9 +530,7 @@
     <Content Include="FLEX\Pages\ErrorHandler.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\Pages\SecMenu.aspx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="FLEX\Pages\SecMenu.aspx" />
     <Content Include="FLEX\Pages\Templates\Popup.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
