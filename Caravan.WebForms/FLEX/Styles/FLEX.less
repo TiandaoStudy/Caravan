@@ -1,0 +1,647 @@
+﻿@import "Bootstrap/variables.less";
+@import (less) "Bootstrap.css";
+@import (less) "Bootstrap-plugins.css";
+
+/*******************************************************************************
+  VARIABLES
+*******************************************************************************/
+
+@footer-padding: 5px;
+@footer-min-height: 10px;
+@on-off-width: 48px;
+
+@image-margin: 5px;
+
+/*******************************************************************************
+  TOP LEVEL
+*******************************************************************************/
+
+body {
+   margin: 0;
+   padding: 0;
+   background-color: @btn-primary-bg;
+   background-image: url(../Images/pattern.png);
+}
+
+.padded-icon {
+   margin-right: @image-margin;
+   text-decoration: none !important;
+}
+
+/*******************************************************************************
+  BOOTSTRAP TUNING
+*******************************************************************************/
+
+input[type='checkbox'], input[type='radio'] {
+   margin-right: @image-margin;
+}
+
+// Labels inside checkbox lists and tables
+td label {
+   font-weight: normal !important;
+}
+
+/*******************************************************************************
+  JQUERY UI TUNING
+*******************************************************************************/
+
+.ui-menu, .ui-state-focus {
+   margin: 0px !important;
+}
+
+/*******************************************************************************
+  MENU BAR
+*******************************************************************************/
+
+nav {
+   .navbar-default {
+      font-size: 14px;
+      border-radius: 0px;
+
+      .navbar-brand {
+         display: inline-block;
+         font-size: 20px;
+
+         .logo {
+            float: left;
+            margin-right: @image-margin;
+            width: 24px;
+            height: 24px;
+         }
+
+         .navbar-brand-description {
+            float: left;
+            margin-left: @image-margin;
+         }
+      }
+   }
+}
+
+footer {
+   .navbar-default {
+      min-height: @footer-min-height !important;
+   }
+
+   .navbar-default .navbar-brand {
+      display: inline-block;
+      padding-top: @footer-padding !important;
+      padding-bottom: @footer-padding !important;
+      height: @footer-min-height !important;
+
+      .logo-finsa {
+         float: left;
+         margin-right: @image-margin;
+         height: 18px;
+      }
+
+      .navbar-brand-description {
+         float: left;
+         margin-left: @image-margin;
+      }
+   }
+
+   .navbar-default .navbar-nav > li > a {
+      padding-top: @footer-padding !important;
+      padding-bottom: @footer-padding !important;
+   }
+
+      .navbar-default .navbar-nav > li > a:hover, footer .navbar-default .navbar-nav > li > a:focus {
+      }
+
+   .navbar-default .navbar-nav > .active > a, footer .navbar-default .navbar-nav > .open > a, footer .navbar-default .navbar-nav > .open > a:hover, footer .navbar-default .navbar-nav > .open > a:focus {
+   }
+
+      .navbar-default .navbar-nav > .active > a:hover, footer .navbar-default .navbar-nav > .active > a:focus {
+      }
+
+   .dropdown-menu > li > a {
+   }
+
+      .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+      }
+
+   .navbar-default .navbar-nav > .dropdown > a .caret {
+   }
+
+   footer .navbar-default .navbar-nav > .dropdown > a:hover .caret {
+   }
+
+   footer .navbar-default .navbar-nav > .dropdown > a .caret {
+   }
+
+   footer .navbar-default .navbar-nav > .dropdown > a:hover .caret {
+   }
+}
+
+/*******************************************************************************
+  MAIN FORM
+*******************************************************************************/
+
+.panel-body {
+   overflow-y: auto;
+}
+
+.workingArea {
+   height: 490px;
+   overflow-y: auto;
+}
+
+.panel-heading {
+   padding: 5px 10px;
+}
+
+.form-control {
+   padding-top: 1px;
+   padding-bottom: 1px;
+   height: 23px;
+}
+
+.radio, .checkbox {
+   margin-bottom: 3px;
+}
+
+.pagination {
+   margin-top: 8px;
+   margin-bottom: 8px;
+}
+
+.btn-row {
+   .btn {
+      margin-left: 3px;
+   }
+}
+
+   .btn-row > .btn-group {
+      .btn {
+         margin-left: 3px;
+      }
+   }
+
+/*******************************************************************************
+  HALF COLUMNS
+*******************************************************************************/
+
+.col-xs-0-5 {
+   .col-xs-1;
+   width: 0.5*100/12%;
+}
+
+.col-xs-1-5 {
+   .col-xs-1;
+   width: 1.5*100/12%;
+}
+
+.col-xs-2-5 {
+   .col-xs-1;
+   width: 2.5*100/12%;
+}
+
+.col-xs-3-5 {
+   .col-xs-1;
+   width: 3.5*100/12%;
+}
+
+.col-xs-4-5 {
+   .col-xs-1;
+   width: 4.5*100/12%;
+}
+
+.col-xs-5-5 {
+   .col-xs-1;
+   width: 5.5*100/12%;
+}
+
+.col-xs-6-5 {
+   .col-xs-1;
+   width: 6.5*100/12%;
+}
+
+.col-xs-7-5 {
+   .col-xs-1;
+   width: 7.5*100/12%;
+}
+
+.col-xs-8-5 {
+   .col-xs-1;
+   width: 8.5*100/12%;
+}
+
+.col-xs-9-5 {
+   .col-xs-1;
+   width: 9.5*100/12%;
+}
+
+.col-xs-10-5 {
+   .col-xs-1;
+   width: 10.5*100/12%;
+}
+
+.col-xs-11-5 {
+   .col-xs-1;
+   width: 11.5*100/12%;
+}
+
+@media (min-width: 768px) {
+   .col-sm-0-5 {
+      .col-sm-1;
+      width: 0.5*100/12%;
+   }
+
+   .col-sm-1-5 {
+      .col-sm-1;
+      width: 1.5*100/12%;
+   }
+
+   .col-sm-2-5 {
+      .col-sm-1;
+      width: 2.5*100/12%;
+   }
+
+   .col-sm-3-5 {
+      .col-sm-1;
+      width: 3.5*100/12%;
+   }
+
+   .col-sm-4-5 {
+      .col-sm-1;
+      width: 4.5*100/12%;
+   }
+
+   .col-sm-5-5 {
+      .col-sm-1;
+      width: 5.5*100/12%;
+   }
+
+   .col-sm-6-5 {
+      .col-sm-1;
+      width: 6.5*100/12%;
+   }
+
+   .col-sm-7-5 {
+      .col-sm-1;
+      width: 7.5*100/12%;
+   }
+
+   .col-sm-8-5 {
+      .col-sm-1;
+      width: 8.5*100/12%;
+   }
+
+   .col-sm-9-5 {
+      .col-sm-1;
+      width: 9.5*100/12%;
+   }
+
+   .col-sm-10-5 {
+      .col-sm-1;
+      width: 10.5*100/12%;
+   }
+
+   .col-sm-11-5 {
+      .col-sm-1;
+      width: 11.5*100/12%;
+   }
+}
+
+@media (min-width: 992px) {
+   .col-md-0-5 {
+      .col-md-1;
+      width: 0.5*100/12%;
+   }
+
+   .col-md-1-5 {
+      .col-md-1;
+      width: 1.5*100/12%;
+   }
+
+   .col-md-2-5 {
+      .col-md-1;
+      width: 2.5*100/12%;
+   }
+
+   .col-md-3-5 {
+      .col-md-1;
+      width: 3.5*100/12%;
+   }
+
+   .col-md-4-5 {
+      .col-md-1;
+      width: 4.5*100/12%;
+   }
+
+   .col-md-5-5 {
+      .col-md-1;
+      width: 5.5*100/12%;
+   }
+
+   .col-md-6-5 {
+      .col-md-1;
+      width: 6.5*100/12%;
+   }
+
+   .col-md-7-5 {
+      .col-md-1;
+      width: 7.5*100/12%;
+   }
+
+   .col-md-8-5 {
+      .col-md-1;
+      width: 8.5*100/12%;
+   }
+
+   .col-md-9-5 {
+      .col-md-1;
+      width: 9.5*100/12%;
+   }
+
+   .col-md-10-5 {
+      .col-md-1;
+      width: 10.5*100/12%;
+   }
+
+   .col-md-11-5 {
+      .col-md-1;
+      width: 11.5*100/12%;
+   }
+}
+
+@media (min-width: 1200px) {
+   .col-lg-0-5 {
+      .col-lg-1;
+      width: 0.5*100/12%;
+   }
+
+   .col-lg-1-5 {
+      .col-lg-1;
+      width: 1.5*100/12%;
+   }
+
+   .col-lg-2-5 {
+      .col-lg-1;
+      width: 2.5*100/12%;
+   }
+
+   .col-lg-3-5 {
+      .col-lg-1;
+      width: 3.5*100/12%;
+   }
+
+   .col-lg-4-5 {
+      .col-lg-1;
+      width: 4.5*100/12%;
+   }
+
+   .col-lg-5-5 {
+      .col-lg-1;
+      width: 5.5*100/12%;
+   }
+
+   .col-lg-6-5 {
+      .col-lg-1;
+      width: 6.5*100/12%;
+   }
+
+   .col-lg-7-5 {
+      .col-lg-1;
+      width: 7.5*100/12%;
+   }
+
+   .col-lg-8-5 {
+      .col-lg-1;
+      width: 8.5*100/12%;
+   }
+
+   .col-lg-9-5 {
+      .col-lg-1;
+      width: 9.5*100/12%;
+   }
+
+   .col-lg-10-5 {
+      .col-lg-1;
+      width: 10.5*100/12%;
+   }
+
+   .col-lg-11-5 {
+      .col-lg-1;
+      width: 11.5*100/12%;
+   }
+}
+
+/*******************************************************************************
+  VERTICAL SEARCH
+*******************************************************************************/
+
+.vertical-search-criterium {
+}
+
+   .vertical-search-criterium .control-label {
+      .label;
+      .label-primary;
+      cursor: pointer;
+      font-size: 100%;
+      margin-bottom: 3px;
+   }
+
+   .vertical-search-criterium .collapse {
+      margin-top: 7px;
+   }
+
+   .vertical-search-criterium .input-group {
+      margin-top: 0px;
+   }
+
+.vertical-search-update-progress {
+   width: 15%;
+   height: 15%;
+   margin-top: 5%;
+}
+
+#btnCriteriaPlaceholder {
+   padding-top: 20%;
+   font-size: 18px;
+}
+
+/*******************************************************************************
+  MODAL
+*******************************************************************************/
+
+@modal-radius: 3px;
+
+#modal-overlay {
+   background: #000;
+   height: 100%;
+   left: 0;
+   -moz-opacity: 0.30;
+   -webkit-opacity: 0.30;
+   -ms-filter: alpha(opacity=30);
+   filter: alpha(opacity=30);
+   opacity: 0.30;
+   position: absolute;
+   top: 0;
+   width: 100%;
+   z-index: 1489; // Less than modal-container
+   overflow: hidden;
+}
+
+#modal-container {
+   background: #fff;
+   border: 0px;
+   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+   height: auto;
+   position: absolute;
+   z-index: 1490;
+   border-radius: @modal-radius;
+}
+
+   #modal-container iframe {
+      border-bottom-left-radius: @modal-radius;
+      border-bottom-right-radius: @modal-radius;
+   }
+
+#modal-header {
+   background-color: @btn-primary-bg;
+   height: 32px;
+   padding-top: 5px;
+   overflow: hidden;
+   clear: both;
+   border-top-left-radius: @modal-radius;
+   border-top-right-radius: @modal-radius;
+}
+
+   #modal-header .close {
+      .close;
+      color: white;
+      opacity: 0.75;
+      text-decoration: none;
+   }
+
+#modal-header-title {
+   .text-left;
+   color: white;
+   font-size: 15px;
+   margin-left: 10px;
+   float: left;
+}
+
+.modal-close {
+   .text-right;
+   color: white;
+   font-size: 15px;
+   float: right;
+   display: normal;
+   visibility: visible;
+   margin-right: 10px;
+}
+
+#modal-content {
+   display: block;
+   z-index: 1491; // More than modal-container
+   border-bottom-left-radius: @modal-radius;
+   border-bottom-right-radius: @modal-radius;
+}
+
+#modalWindowFrame {
+   border: none;
+}
+
+/*******************************************************************************
+  AUTO SUGGEST
+*******************************************************************************/
+
+.ui-autocomplete-loading {
+   background: white url('../Images/progress-circle.gif') right 1% center no-repeat;
+   background-size: 5% auto;
+}
+
+/*******************************************************************************
+  DATE PICKER
+*******************************************************************************/
+
+.datepicker-input {
+   height: 26px;
+}
+
+/*******************************************************************************
+  DATA GRID
+*******************************************************************************/
+
+.datagrid {
+   td, th {
+      border: 1px solid #ddd !important;
+   }
+}
+
+.datagrid-info {
+   float: left;
+   margin-left: 5px;
+   margin-top: 10px;
+}
+
+.datagrid-pager {
+   margin-right: 5px;
+}
+
+.datagrid-not-sorted {
+   background-image: url(../Images/sort_both.png);
+   background-repeat: no-repeat;
+   background-position: right;
+}
+
+.datagrid-sort-asc {
+   background-image: url(../Images/sort_asc.png);
+   background-repeat: no-repeat;
+   background-position: right;
+}
+
+.datagrid-sort-desc {
+   background-image: url(../Images/sort_desc.png);
+   background-repeat: no-repeat;
+   background-position: right;
+}
+
+/*******************************************************************************
+  LONG TEXT CONTAINER
+*******************************************************************************/
+
+.long-text-ctn-label {
+   .text-primary;
+   cursor: pointer;
+   margin-bottom: 0px;
+   text-decoration: none;
+}
+
+/*******************************************************************************
+  NUMERIC SPINNER
+*******************************************************************************/
+
+@bootstrap-touchspin-btn-height: 24px;
+@bootstrap-touchspin-btn-width: 24px;
+
+.bootstrap-touchspin-up, .bootstrap-touchspin-down, .bootstrap-touchspin-prefix {
+   padding: 0px !important;
+   height: @bootstrap-touchspin-btn-height;
+   width: @bootstrap-touchspin-btn-width;
+}
+
+.numeric-spinner-input {
+   height: @bootstrap-touchspin-btn-height;
+}
+
+.numeric-spinner-apply {
+   padding: 0px !important;
+   height: @bootstrap-touchspin-btn-height;
+   width: @bootstrap-touchspin-btn-width;
+}
+
+/*******************************************************************************
+  ON OFF SWITCH
+*******************************************************************************/
+
+.btn-on {
+   width: @on-off-width;
+}
+
+.btn-off {
+   width: @on-off-width;
+   margin-left: 0px;
+}
