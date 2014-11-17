@@ -24,7 +24,7 @@ namespace Finsa.Caravan.WebForms
             // since that string it stored on the cache itself and we do not want conflicts, right?
             PersistentCache.DefaultInstance.VacuumAsync();
 
-            Application.Add("TRACK_USER_LIST", new Dictionary<string, object>());
+            Application.Add("TRACK_USER_LIST", new Dictionary<string, SessionTracker>());
         }
 
         public static void Application_End(object sender, EventArgs args, HttpApplicationState Application)
@@ -73,7 +73,7 @@ namespace Finsa.Caravan.WebForms
               //Recupero le informazioni relative al client collegato
               _st.FillData();
               //Leggo la lista degli utenti collegati
-              Dictionary<string, object> _userList = (Dictionary<string, object>)Application.Get("TRACK_USER_LIST");
+              Dictionary<string, SessionTracker> _userList = (Dictionary<string, SessionTracker>)Application.Get("TRACK_USER_LIST");
               //Aggiungo il nuovo utente
               _userList.Add(SessionID, _st);
               //Salvo i dati
@@ -95,11 +95,15 @@ namespace Finsa.Caravan.WebForms
             try
             {
                 //Leggo la lista degli utenti collegati
-                Dictionary<string, object> _userList = (Dictionary<string, object>)Application.Get("TRACK_USER_LIST");
-                //Aggiungo il nuovo utente
-                _userList.Remove(SessionID);
-                //Salvo i dati
-                Application["TRACK_USER_LIST"] = _userList;
+                Dictionary<string, SessionTracker> _userList = (Dictionary<string, SessionTracker>)Application.Get("TRACK_USER_LIST");
+              
+                if(_userList.ContainsKey(SessionID))
+                {
+                   _userList.Remove(SessionID);
+                    //Salvo i dati
+                    Application["TRACK_USER_LIST"] = _userList;
+                }
+         
             }
             catch (Exception)
             {
@@ -112,9 +116,9 @@ namespace Finsa.Caravan.WebForms
 
         }
 
-        public static void Application_AuthenticateRequest(object sender, EventArgs e, HttpApplicationState Application, HttpCookieCollection Cookies,string userName)
+        public static void Application_AuthenticateRequest(object sender, EventArgs e, HttpApplicationState Application, HttpCookie Cookies,string userName)
         {
-            if (Cookies["TRACK_COOKIE"] != null)
+            if (Cookies != null)
             {
                 // Blocco l'oggetto applicazione per sincronizzare gli accessi
                 Application.Lock();
@@ -122,15 +126,16 @@ namespace Finsa.Caravan.WebForms
                 {
 
                     //Leggo la lista degli utenti collegati
-                    Dictionary<string, object> _userList  = (Dictionary<string, object>)Application.Get("TRACK_USER_LIST");
+                    Dictionary<string, SessionTracker> _userList = (Dictionary<string, SessionTracker>)Application.Get("TRACK_USER_LIST");
                     //Leggo i dati relativi all'utente
-                    SessionTracker _st = (SessionTracker)_userList[Cookies["TRACK_COOKIE"].Value];
+                   
                     //Se trovo l'utente, aggiorno i dati
-                   if(_st != null)
+                    if (_userList.ContainsKey(Cookies.Value))
                    {
+                       SessionTracker _st = (SessionTracker)_userList[Cookies.Value];
                        _st.LastVisit = DateTime.Now;
                        _st.Login = userName;
-                       _userList[Cookies["TRACK_COOKIE"].Value]= _st;
+                       _userList[Cookies.Value]= _st;
                        //Salvo i dati
                        Application["TRACK_USER_LIST"] = _userList;
                    }
