@@ -87,7 +87,7 @@
 </asp:Content>
 
 <asp:Content ID="aspSearchContent" ContentPlaceHolderID="searchContent" runat="server">
-     <crvn:AutoSuggest ID="crvnUsersLkp" XmlLookup="Users" LookupBy="Curs_Name_LastName" MenuWidth="250" MenuMaxHeight="300" DoPostBack="true" runat="server"  QueryFilter="users_filter()" runat="server" PlaceHolder="Name LastName"/>
+     <crvn:AutoSuggest ID="crvnUsersLkp" XmlLookup="Users" LookupBy="Curs_Name_LastName" MenuWidth="250" MenuMaxHeight="300" DoPostBack="true" runat="server"  QueryFilter="users_filter()" PlaceHolder="Name LastName"/>
      <crvn:CollapsibleCheckBoxList ID="crvnActive" runat="server" MaxVisibleItemCount="2" DoPostBack="true" />
 </asp:Content>
 

@@ -191,6 +191,13 @@
     <Compile Include="FLEX\Pages\SecUsersDetails.aspx.designer.cs">
       <DependentUpon>SecUsersDetails.aspx.cs</DependentUpon>
     </Compile>
+    <Compile Include="FLEX\Pages\ConnectedUsers.aspx.cs">
+      <DependentUpon>ConnectedUsers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\ConnectedUsers.aspx.designer.cs">
+      <DependentUpon>ConnectedUsers.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FLEX\Pages\SecUsersList.aspx.cs">
       <DependentUpon>SecUsersList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -518,6 +525,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\Pages\SecUsersDetails.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\Pages\ConnectedUsers.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\Pages\SecUsersList.aspx">

@@ -40,33 +40,6 @@ namespace Finsa.Caravan.WebForms.Pages {
         protected global::FLEX.WebForms.UserControls.DataGrid fdtgUsers;
         
         /// <summary>
-        /// btnEdit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnEdit;
-        
-        /// <summary>
-        /// btnDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnDelete;
-        
-        /// <summary>
-        /// chkActive control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkActive;
-        
-        /// <summary>
         /// hiddenRefresh control.
         /// </summary>
         /// <remarks>
