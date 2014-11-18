@@ -7,6 +7,7 @@
 <%@ Register TagPrefix="flex" TagName="NumericSpinner" Src="~/FLEX/UserControls/Ajax/NumericSpinner.ascx" %>
 <%@ Register TagPrefix="flex" TagName="OnOffSwitch" Src="~/FLEX/UserControls/Ajax/OnOffSwitch.ascx" %>
 <%@ Register TagPrefix="flex" TagName="FileUpload" Src="~/FLEX/UserControls/FileUpload.ascx" %>
+<%@ Register TagPrefix="crvn" TagName="MultipleFileUpload" Src="~/FLEX/UserControls/MultipleFileUpload.ascx" %>
 <%@ Register TagPrefix="flex" TagName="MultiSelect" Src="~/FLEX/UserControls/Ajax/MultiSelect.ascx" %>
 
 <asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">
@@ -32,6 +33,7 @@
    
    <flex:NumericSpinner runat="server" ID="flexIgnoredSpinner" />
    <flex:FileUpload runat="server" ID="flexFileUpload" Title="Browse" />
+   <crvn:MultipleFileUpload runat="server" ID="crvnMultipleFileUpload" />
    
 </asp:Content>
 
