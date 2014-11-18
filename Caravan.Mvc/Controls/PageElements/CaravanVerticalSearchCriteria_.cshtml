@@ -1,0 +1,22 @@
+﻿@* Generator: MvcHelper *@
+@* Namespace: Finsa.Caravan.Mvc.Controls.PageElements *@
+
+@using System.Web.Mvc
+@using Finsa.Caravan.Mvc.Controls.PageElements
+
+@helper CaravanVerticalSearchCriteria(this HtmlHelper htmlHelper, IEnumerable<CaravanVerticalSearchCriteriumOptions> spec)
+{
+   var i = 0;
+   foreach (var s in spec)
+   {
+      <li class="vertical-search-criterium form-group" id="search-criterium-1">
+         <label class="control-label" data-toggle="collapse" data-target="#search-criterium-collapse-@i" onclick=" onSearchCriteriumCollapsing(@i); ">
+            <i id="icr@(i)" class="glyphicon glyphicon-chevron-up padded-icon"></i>@s.Label
+         </label>
+         <div id="search-criterium-collapse-@i" class="collapse in">
+            @s.Control()
+         </div>
+      </li>
+      ++i;
+   }
+}
