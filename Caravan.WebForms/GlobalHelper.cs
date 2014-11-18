@@ -96,14 +96,10 @@ namespace Finsa.Caravan.WebForms
             {
                 //Leggo la lista degli utenti collegati
                 Dictionary<string, SessionTracker> _userList = (Dictionary<string, SessionTracker>)Application.Get("TRACK_USER_LIST");
-              
-                if(_userList.ContainsKey(SessionID))
-                {
-                   _userList.Remove(SessionID);
-                    //Salvo i dati
-                    Application["TRACK_USER_LIST"] = _userList;
-                }
-         
+                //Aggiungo il nuovo utente
+                _userList.Remove(SessionID);
+                //Salvo i dati
+                Application["TRACK_USER_LIST"] = _userList;
             }
             catch (Exception)
             {
@@ -116,9 +112,9 @@ namespace Finsa.Caravan.WebForms
 
         }
 
-        public static void Application_AuthenticateRequest(object sender, EventArgs e, HttpApplicationState Application, HttpCookie Cookies,string userName)
+        public static void Application_AuthenticateRequest(object sender, EventArgs e, HttpApplicationState Application, HttpCookieCollection Cookies,string userName)
         {
-            if (Cookies != null)
+            if (Cookies["TRACK_COOKIE"] != null)
             {
                 // Blocco l'oggetto applicazione per sincronizzare gli accessi
                 Application.Lock();
@@ -128,14 +124,13 @@ namespace Finsa.Caravan.WebForms
                     //Leggo la lista degli utenti collegati
                     Dictionary<string, SessionTracker> _userList = (Dictionary<string, SessionTracker>)Application.Get("TRACK_USER_LIST");
                     //Leggo i dati relativi all'utente
-                   
+                    SessionTracker _st = (SessionTracker)_userList[Cookies["TRACK_COOKIE"].Value];
                     //Se trovo l'utente, aggiorno i dati
-                    if (_userList.ContainsKey(Cookies.Value))
+                   if(_st != null)
                    {
-                       SessionTracker _st = (SessionTracker)_userList[Cookies.Value];
                        _st.LastVisit = DateTime.Now;
                        _st.Login = userName;
-                       _userList[Cookies.Value]= _st;
+                       _userList[Cookies["TRACK_COOKIE"].Value]= _st;
                        //Salvo i dati
                        Application["TRACK_USER_LIST"] = _userList;
                    }
