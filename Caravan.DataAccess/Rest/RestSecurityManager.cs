@@ -20,9 +20,10 @@ namespace Finsa.Caravan.DataAccess.Rest
          request.AddJsonBody(new RestRequest<object> {Auth = "AA", Body = new object()});
 
          var response = client.Execute<DataModel.Rest.RestResponse<SecAppSingle>>(request);
-       
 
-         return (IList<SecApp>)(response.Data.Body.App);
+         var apps = new List<SecApp> {response.Data.Body.App};
+
+         return apps;
 
         
       }
@@ -75,7 +76,9 @@ namespace Finsa.Caravan.DataAccess.Rest
 
          var response = client.Execute<DataModel.Rest.RestResponse<SecGroupSingle>>(request);
 
-         return (IList<SecGroup>)response.Data.Body;
+         var groups = new List<SecGroup> {response.Data.Body.Group};
+
+         return groups;
       }
 
       protected override bool DoAddGroup(string appName, SecGroup newGroup)
@@ -190,7 +193,9 @@ namespace Finsa.Caravan.DataAccess.Rest
          request.AddJsonBody(new RestRequest<SecUserSingle> {Auth = "AA", Body = null});
          var response = client.Execute<DataModel.Rest.RestResponse<SecUserSingle>>(request);
 
-         return (IList<SecUser>)(response.Data.Body.User);
+         var users = new List<SecUser> {response.Data.Body.User};
+
+         return users;
       }
 
       protected override bool DoAddUser(string appName, SecUser newUser)
@@ -306,24 +311,88 @@ namespace Finsa.Caravan.DataAccess.Rest
 
          var response = client.Execute<DataModel.Rest.RestResponse<SecContextSingle>>(request);
 
-         return (IList<SecContext>) response.Data.Body;
+         var contexts = new List<SecContext> { response.Data.Body.Context};
+            
+         return contexts ;
       }
 
       protected override IList<SecObject> GetObjects(string appName, string contextName)
       {
-         throw new NotImplementedException();
+         var client = new RestClient("http://localhost/Caravan.RestService/security");
+         var request = new RestRequest("{appName}/objects", Method.POST);
+
+         request.AddUrlSegment("appName", appName);
+         request.AddJsonBody(new RestRequest<dynamic> {Auth = "AA", Body = new object()});
+
+         var response = client.Execute<DataModel.Rest.RestResponse<SecObjectSingle>>(request);
+
+         var objs = new List<SecObject> { response.Data.Body.Object};
+         
+         return  objs;
+      
       }
 
       #region Entries
 
       protected override IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin)
       {
-         throw new NotImplementedException();
+         var client = new RestClient("http://localhost/Caravan.RestService/security");
+         IRestRequest request;
+
+         try
+         {
+            if (objectName == null)
+            {
+               request = new RestRequest("{appName}/entries/{contextName}/", Method.POST);
+               request.AddUrlSegment("appName", appName);
+               request.AddUrlSegment("contextName", contextName);
+            }
+            else
+            {
+               request = new RestRequest("{appName}/entries/{contextName}/{objectName}", Method.POST);
+               request.AddUrlSegment("appName", appName);
+               request.AddUrlSegment("contextName", contextName);
+               request.AddUrlSegment("objectName", objectName);
+            }
+
+            request.AddJsonBody(new RestRequest<dynamic> {Auth = "AA", Body = new object()});
+            
+         }
+         catch (ArgumentException e)
+         {
+            
+            throw new Exception(e.Message);
+         }
+
+         var response = client.Execute<DataModel.Rest.RestResponse<SecEntrySingle>>(request);
+
+         var entries = new List<SecEntry>{response.Data.Body.Entry};
+         
+         return entries;
+
       }
 
       protected override bool DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
       {
-         throw new NotImplementedException();
+         var client = new RestClient("http://localhost/Caravan.RestService/security");
+         var request = new RestRequest("{appName}/entries", Method.PUT);
+         try
+         {
+            request.AddUrlSegment("appName", appName);
+            request.AddJsonBody(new RestRequest<SecEntrySingle>
+            {
+               Auth = "AA",
+               Body = new SecEntrySingle {Entry = new SecEntry {Context = secContext, Object = secObject}}
+            });
+
+            var response = client.Execute<DataModel.Rest.RestResponse<SecEntrySingle>>(request);
+         }
+         catch (Exception e)
+         {
+
+            throw new Exception(e.Message);
+         }
+         return true;
       }
 
       protected override bool DoRemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)

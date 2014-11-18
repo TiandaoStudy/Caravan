@@ -41,7 +41,8 @@ namespace Finsa.Caravan.RestService
           */
 
          Post["/{appName}/entries/{contextName}"] = p => SafeResponse<dynamic>(p, Settings.Default.LongCacheTimeoutInSeconds, (Func<dynamic, dynamic, dynamic>) GetEntries);
-         Put["/{appName}/entries/{contextName}"] = p => SafeResponse<SecEntrySingle>(p, NotCached, (Func<dynamic, SecEntrySingle, dynamic>) AddEntry);
+         Post["/{appName}/entries/{contextName}/{objectName}"] = p => SafeResponse<dynamic>(p, Settings.Default.LongCacheTimeoutInSeconds, (Func<dynamic, dynamic, dynamic>) GetEntries);
+         Put["/{appName}/entries"] = p => SafeResponse<SecEntrySingle>(p, NotCached, (Func<dynamic, SecEntrySingle, dynamic>) AddEntry);
          Delete["/{appName}/entries/{contextName}"] = p => SafeResponse<SecEntrySingle>(p, NotCached, (Func<dynamic, SecEntrySingle, dynamic>) RemoveEntry);
 
          /*
@@ -84,7 +85,9 @@ namespace Finsa.Caravan.RestService
 
       private static dynamic GetEntries(dynamic p, dynamic body)
       {
-         var entries = Db.Security.Entries(p.appName, p.contextName);
+         var entries = (p.objectName == null)
+            ? Db.Security.Entries(p.appName, p.contextName)
+            : Db.Security.EntriesForObject(p.appName, p.contextName, p.objectName);
          return new SecEntryList {Entries = entries};
       }
 
