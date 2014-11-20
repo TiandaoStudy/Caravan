@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataModel.Logging;
 using Finsa.Caravan.DataModel.Rest;
 using Nancy;
@@ -69,6 +70,23 @@ namespace Finsa.Caravan.RestService.Core
          {
             throw new Exception("INVALID AUTH");
          }
+      }
+   }
+
+   internal sealed class TestAuthManager : IAuthManager
+   {
+      public AuthResult Authenticate(dynamic authObject)
+      {
+         if (authObject == null || authObject.Length == 0)
+         {
+            return new AuthResult {IsValid = false, Message = "INVALID AUTH"};
+         }
+         if (authObject == "_TEST_TOKEN_")
+         {
+            // Only for unit tests!!!
+            Db.ChangeDataAccessKindUseOnlyForUnitTestsPlease();
+         }
+         return new AuthResult {IsValid = true, Message = "Authenticated"};
       }
    }
 }

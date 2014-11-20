@@ -43,4 +43,5 @@ using System.Runtime.InteropServices;
 // Attributes added to allow stronger development.
 
 [assembly: CLSCompliant(true)]
+[assembly: InternalsVisibleTo("Finsa.Caravan.RestService")]
 [assembly: InternalsVisibleTo("UnitTests.DataAccess")]
