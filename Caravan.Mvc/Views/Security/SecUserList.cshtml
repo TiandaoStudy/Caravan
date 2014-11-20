@@ -1,0 +1,61 @@
+﻿@using Finsa.Caravan.DataModel
+@using Finsa.Caravan.DataModel.Formatting
+@using Finsa.Caravan.Mvc.Controllers
+@using Finsa.Caravan.Mvc.Controls.DataVisualization
+@using Finsa.Caravan.Mvc.Controls.PageElements
+@using Finsa.Caravan.Mvc.Controls.ValueHolders
+
+@model Finsa.Caravan.Mvc.ViewModels.Security.SecUserList
+
+@{
+   Layout = "~/Caravan.Mvc/Views/Shared/Pages/VerticalSearchLayout.cshtml";
+}
+
+@section ScriptSection {
+
+}
+
+@section SearchCriteriaSection {
+   @Html.CaravanVerticalSearchCriteria(new List<CaravanVerticalSearchCriteriumOptions>
+   {
+      new CaravanVerticalSearchCriteriumOptions
+      {
+         Label = "User", Control = () => Html.JQuerySelect2(new JQuerySelect2Options
+         {
+            ID = "group_id",
+            DataSourceUrl = SecurityController.CaravanQueryService + "groups",
+            PlaceHolder = "Name or ID",
+            QueryBuilder = "getGroupsByNameOrID",
+            DataMapper = "mapGroupsForSelect2",
+            AllowClear = true
+         })
+      },
+   })
+}
+
+@section DataGridSection {
+   @Ajax.BootstrapTable(new BootstrapTableOptions
+   {
+      ID = "tblUsers",
+      Items = Model.Users,
+      Columns = new []
+      {
+         new BootstrapTableColumnOptions
+         {
+            ID = "userId", 
+            Header = "ID", 
+            Sortable = true, 
+            HorizontalAlignment = HorizonalTextAlignment.Right, 
+            Control = x => x.Id
+         },
+         new BootstrapTableColumnOptions
+         {
+            ID = "userFirstName", 
+            Header = "FirstName", 
+            Sortable = true, 
+            HorizontalAlignment = HorizonalTextAlignment.Left, 
+            Control = x => x.FirstName
+         },
+      }
+   })
+}
