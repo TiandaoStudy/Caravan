@@ -13,7 +13,7 @@ namespace Finsa.Caravan.Mvc.Controls.PageElements
       public static string GetMenuFromService(AjaxHelper ajaxHelper)
       {
          var client = new RestClient("http://localhost/Caravan.RestService");
-         var request = new RestRequest("security/menu", Method.GET);
+         var request = new RestRequest("menu", Method.GET);
 
          Menu menu;
          var response = client.Execute(request);

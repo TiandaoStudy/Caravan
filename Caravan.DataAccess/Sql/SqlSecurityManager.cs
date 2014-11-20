@@ -58,7 +58,7 @@ namespace Finsa.Caravan.DataAccess.Sql
       {
          using (var ctx = Db.CreateReadContext())
          {
-            var q = ctx.SecGroups.Include(g => g.App).Include("Users.Groups");
+            var q = ctx.SecGroups.Include(g => g.App).Include(g => g.Users);
             if (appName != null)
             {
                q = q.Where(g => g.App.Name == appName);
@@ -142,7 +142,7 @@ namespace Finsa.Caravan.DataAccess.Sql
       {
          using (var ctx = Db.CreateReadContext())
          {
-            var q = ctx.SecUsers.Include(u => u.App).Include("Groups.Users");
+            var q = ctx.SecUsers.Include(u => u.App).Include(u => u.Groups);
             if (appName != null)
             {
                q = q.Where(u => u.App.Name == appName);

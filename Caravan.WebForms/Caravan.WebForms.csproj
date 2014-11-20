@@ -182,7 +182,28 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="FLEX\Pages\SecGroupList.aspx.designer.cs">
-      <DependentUpon>SecGroupList.aspx</DependentUpon>
+      <DependentUpon>SecGroupList.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\Pages\SecUsersDetails.aspx.cs">
+      <DependentUpon>SecUsersDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\SecUsersDetails.aspx.designer.cs">
+      <DependentUpon>SecUsersDetails.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\Pages\ConnectedUsers.aspx.cs">
+      <DependentUpon>ConnectedUsers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\ConnectedUsers.aspx.designer.cs">
+      <DependentUpon>ConnectedUsers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FLEX\Pages\SecUsersList.aspx.cs">
+      <DependentUpon>SecUsersList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\Pages\SecUsersList.aspx.designer.cs">
+      <DependentUpon>SecUsersList.aspx</DependentUpon>
     </Compile>
     <Compile Include="FLEX\Pages\ReportViewer.aspx.cs">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
@@ -318,6 +339,13 @@
     </Compile>
     <Compile Include="FLEX\UserControls\ControlBase.cs">
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\MultipleFileUpload.ascx.cs">
+      <DependentUpon>MultipleFileUpload.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\MultipleFileUpload.ascx.designer.cs">
+      <DependentUpon>MultipleFileUpload.ascx</DependentUpon>
     </Compile>
     <Compile Include="FLEX\UserControls\PopupExitButton.ascx.cs">
       <DependentUpon>PopupExitButton.ascx</DependentUpon>
@@ -503,6 +531,15 @@
     <Content Include="FLEX\Pages\SecGroupList.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Content Include="FLEX\Pages\SecUsersDetails.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\Pages\ConnectedUsers.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="FLEX\Pages\SecUsersList.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="FLEX\Pages\ReportViewer.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -512,9 +549,7 @@
     <Content Include="FLEX\Pages\ErrorHandler.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\Pages\SecMenu.aspx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="FLEX\Pages\SecMenu.aspx" />
     <Content Include="FLEX\Pages\Templates\Popup.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -609,6 +644,9 @@
     <Content Include="FLEX\UserControls\Ajax\SearchButton.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Content Include="FLEX\UserControls\MultipleFileUpload.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="FLEX\UserControls\PopupExitButton.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -636,7 +674,6 @@
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
-    <None Include="app.config" />
     <None Include="CHANGELOG.md" />
     <None Include="FLEX\Fonts\foundation-icons.eot" />
     <None Include="FLEX\Fonts\foundation-icons.ttf" />
@@ -652,9 +689,7 @@
     <Content Include="FLEX\Pages\AjaxLookup.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\Pages\CacheOverview.aspx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="FLEX\Pages\CacheOverview.aspx" />
     <Content Include="FLEX\Pages\Lookup.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -703,9 +738,7 @@
       <DependentUpon>bootstrap.js</DependentUpon>
     </Content>
     <Content Include="FLEX\Fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="FLEX\MasterPages\Base.Master">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="FLEX\MasterPages\Base.Master" />
     <Content Include="FLEX\Scripts\html5shiv.js" />
     <Content Include="FLEX\Scripts\html5shiv.min.js">
       <DependentUpon>html5shiv.js</DependentUpon>
@@ -789,9 +822,7 @@
     <Content Include="FLEX\MasterPages\Popup.Master">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\MasterPages\Head.Master">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="FLEX\MasterPages\Head.Master" />
     <Content Include="FLEX\MasterPages\MultiSelect.Master">
       <SubType>ASPXCodeBehind</SubType>
     </Content>

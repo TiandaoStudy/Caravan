@@ -24,21 +24,22 @@ namespace Finsa.Caravan.WebForms.Pages
       {
          try
          {
-            Mode = Request["mode"];
-            Raise<ArgumentException>.IfIsEmpty(Mode, "Page mode cannot be empty");
-            Mode = Mode.ToLower();
-            Raise<ArgumentException>.IfNot(Mode == NewMode || Mode == EditMode, "Invalid mode value");
+                 Mode = Request["mode"];
+                 Raise<ArgumentException>.IfIsEmpty(Mode, "Page mode cannot be empty");
+                 Mode = Mode.ToLower();
+                 Raise<ArgumentException>.IfNot(Mode == NewMode || Mode == EditMode, "Invalid mode value");
 
-            if (Mode == NewMode)
-            {
-               LoadForNew();
-            }
-            else if (Mode == EditMode)
-            {
-               GroupName = Request["groupName"];
-               Raise<ArgumentException>.IfIsEmpty(GroupName);
-               LoadForEdit(GroupName);
-            }
+                 if (Mode == NewMode)
+                 {
+                     LoadForNew();
+                 }
+                 else if (Mode == EditMode)
+                 {
+                     GroupName = Request["groupName"];
+                     Raise<ArgumentException>.IfIsEmpty(GroupName);
+                     LoadForEdit(GroupName);
+                 }
+           
          }
          catch (Exception ex)
          {
