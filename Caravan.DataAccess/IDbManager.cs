@@ -30,7 +30,6 @@ namespace Finsa.Caravan.DataAccess
 
    public enum DataAccessKind
    {
-      Dummy,
       Oracle,
       Postgres,
       Rest,

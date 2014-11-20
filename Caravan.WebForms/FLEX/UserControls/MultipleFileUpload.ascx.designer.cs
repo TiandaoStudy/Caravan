@@ -7,120 +7,90 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FLEX.Sample.WebUI {
+namespace Finsa.Caravan.WebForms.UserControls {
     
     
-    public partial class ControlsOverview {
+    public partial class MultipleFileUpload {
         
         /// <summary>
-        /// flexEnabledSwitch control.
+        /// pnlParent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.OnOffSwitch flexEnabledSwitch;
+        protected global::System.Web.UI.WebControls.Panel pnlParent;
         
         /// <summary>
-        /// flexEmplByName control.
+        /// pnlFiles control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.AutoSuggest flexEmplByName;
+        protected global::System.Web.UI.WebControls.Panel pnlFiles;
         
         /// <summary>
-        /// flexYearPicker control.
+        /// IpFile control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.DatePicker flexYearPicker;
+        protected global::System.Web.UI.WebControls.FileUpload IpFile;
         
         /// <summary>
-        /// flexNumSpinner control.
+        /// pnlListBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.NumericSpinner flexNumSpinner;
+        protected global::System.Web.UI.WebControls.Panel pnlListBox;
         
         /// <summary>
-        /// flexABC control.
+        /// pnlButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.CollapsibleCheckBoxList flexABC;
+        protected global::System.Web.UI.WebControls.Panel pnlButton;
         
         /// <summary>
-        /// btnError control.
+        /// btnAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.ImageButton btnError;
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnAdd;
         
         /// <summary>
-        /// btnLog control.
+        /// btnClear control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.ImageButton btnLog;
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnClear;
         
         /// <summary>
-        /// flexMultipleSelect control.
+        /// btnUpload control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.MultiSelect flexMultipleSelect;
+        protected global::System.Web.UI.WebControls.Button btnUpload;
         
         /// <summary>
-        /// flexIgnoredSpinner control.
+        /// lblCaption control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.NumericSpinner flexIgnoredSpinner;
-        
-        /// <summary>
-        /// flexFileUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FLEX.Web.UserControls.FileUpload flexFileUpload;
-        
-        /// <summary>
-        /// crvnMultipleFileUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UserControl crvnMultipleFileUpload;
-        
-        /// <summary>
-        /// Master property.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated property.
-        /// </remarks>
-        public new FLEX.Web.MasterPages.CustomView Master {
-            get {
-                return ((FLEX.Web.MasterPages.CustomView)(base.Master));
-            }
-        }
+        protected global::System.Web.UI.WebControls.Label lblCaption;
     }
 }

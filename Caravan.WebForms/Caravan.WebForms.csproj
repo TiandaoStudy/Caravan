@@ -347,6 +347,13 @@
     <Compile Include="FLEX\UserControls\ControlBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="FLEX\UserControls\MultipleFileUpload.ascx.cs">
+      <DependentUpon>MultipleFileUpload.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FLEX\UserControls\MultipleFileUpload.ascx.designer.cs">
+      <DependentUpon>MultipleFileUpload.ascx</DependentUpon>
+    </Compile>
     <Compile Include="FLEX\UserControls\PopupExitButton.ascx.cs">
       <DependentUpon>PopupExitButton.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -649,6 +656,9 @@
     <Content Include="FLEX\UserControls\Ajax\SearchButton.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Content Include="FLEX\UserControls\MultipleFileUpload.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="FLEX\UserControls\PopupExitButton.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -676,7 +686,6 @@
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
-    <None Include="app.config" />
     <None Include="CHANGELOG.md" />
     <None Include="FLEX\Fonts\foundation-icons.eot" />
     <None Include="FLEX\Fonts\foundation-icons.ttf" />

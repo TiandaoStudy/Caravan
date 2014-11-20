@@ -1,15 +1,21 @@
-﻿@using Finsa.Caravan.Mvc.Controls.PageElements
+﻿@using System.Data
+@using Finsa.Caravan.Mvc.Controls.PageElements
 @using Finsa.Caravan.Mvc.Controls.ValueHolders
+@using Finsa.Caravan.Mvc.Controls.DataVisualization
+@using Finsa.Caravan.Testing
 @model dynamic
 
 @{
    ViewBag.Title = "title";
    Layout = "~/Caravan.Mvc/Views/Shared/Pages/VerticalSearchLayout.cshtml";
+   ViewBag.DataColumns = new[] { "A", "B", "C" };
+   var gen = new RandomDataTableGenerator(ViewBag.DataColumns);
+   ViewBag.DataSource = gen.GenerateDataTable(5000);
 }
 
 @section SearchCriteriaSection {
 
-   @Html.FlexVerticalSearchCriteria(new List<CaravanVerticalSearchCriteriumOptions>
+   @Html.CaravanVerticalSearchCriteria(new List<CaravanVerticalSearchCriteriumOptions>
    {
       new CaravanVerticalSearchCriteriumOptions
       {
@@ -28,5 +34,40 @@
 
 @section DataGridSection {
 
-<h2>title</h2>
+   @Ajax.BootstrapTable(new BootstrapTableOptions()
+   {
+      ShowExportButton = true,
+      ShowPagination = true,
+      ShowSearchBox = true,
+      Items = ((DataTable) ViewBag.DataSource).Rows.Cast<DataRow>().Select(x => x.ItemArray),
+      Columns = new List<BootstrapTableColumnOptions>() 
+      {
+         new BootstrapTableColumnOptions{
+            Header = "A",
+            HorizontalAlignment = Finsa.Caravan.DataModel.Formatting.HorizonalTextAlignment.Left,
+            Sortable = false,
+            VerticalAlignment = Finsa.Caravan.DataModel.Formatting.VerticalTextAlignment.Middle,
+            Control = (x) => LabelExtensions.Label(Html, x[0])
+         },
+        
+         new BootstrapTableColumnOptions{
+            Header = "B",
+            HorizontalAlignment = Finsa.Caravan.DataModel.Formatting.HorizonalTextAlignment.Left,
+            Sortable = false,
+            VerticalAlignment = Finsa.Caravan.DataModel.Formatting.VerticalTextAlignment.Middle,
+            Control = (x) => Html.Label("")
+         },
+        
+         new BootstrapTableColumnOptions{
+            Header = "C",
+            HorizontalAlignment = Finsa.Caravan.DataModel.Formatting.HorizonalTextAlignment.Left,
+            Sortable = false,
+            VerticalAlignment = Finsa.Caravan.DataModel.Formatting.VerticalTextAlignment.Middle,
+            Control = (x) => Html.Label("")
+         }
+      }
+   })
+ 
+   <h2>title</h2>
+
 }

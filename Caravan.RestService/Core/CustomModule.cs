@@ -35,7 +35,7 @@ namespace Finsa.Caravan.RestService.Core
             {
                Context.DisableOutputCache();
             }
-            return RestResponse.Success(handler(parameters, parsedBody.Body));
+            return handler(parameters, parsedBody.Body);
          }
          catch (Exception ex)
          {

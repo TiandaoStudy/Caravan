@@ -126,7 +126,6 @@
     <Compile Include="Core\LogManagerBase.cs" />
     <Compile Include="Core\QueryManagerBase.cs" />
     <Compile Include="Core\SecurityManagerBase.cs" />
-    <Compile Include="Dummy\DummyQueryManager.cs" />
     <Compile Include="ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -136,8 +135,6 @@
     <Compile Include="Rest\RestQueryManager.cs" />
     <Compile Include="Sql\SqlQueryManager.cs" />
     <Compile Include="Sql\SqlServerCe\SqlServerCeDbContext.cs" />
-    <Compile Include="Dummy\DummyLogManager.cs" />
-    <Compile Include="Dummy\DummySecurityManager.cs" />
     <Compile Include="ILogManager.cs" />
     <Compile Include="Db.cs" />
     <Compile Include="IDbManager.cs" />
@@ -152,9 +149,6 @@
     <Compile Include="Sql\SqlServerCe\SqlServerCeDbManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="ClassDiagram.cd" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

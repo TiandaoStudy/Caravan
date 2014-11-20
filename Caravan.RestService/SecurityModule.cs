@@ -2,10 +2,13 @@
 using System.IO;
 using System.Web;
 using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.DataModel.Exceptions;
+using Finsa.Caravan.DataModel.Rest;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.RestService.Core;
 using Finsa.Caravan.RestService.Properties;
 using Finsa.Caravan.XmlSchemas.MenuEntries;
+using Nancy;
 
 namespace Finsa.Caravan.RestService
 {
@@ -13,21 +16,10 @@ namespace Finsa.Caravan.RestService
    {
       public SecurityModule() : base("security")
       {
-         // DA TOGLIERE!!!
-         Get["/menu"] = p =>
-         {
-            var xml = File.ReadAllText(HttpContext.Current.Server.MapPath("~/bin/MenuBar.xml"));
-            using (var stream = new StringReader(xml))
-            {
-               Menu.DeserializeFrom(stream);
-            }
-            return xml;
-         };
-
          /*
           * Apps
           */
-         
+         Post[""] = p => SafeResponse<dynamic>(p, Settings.Default.LongCacheTimeoutInSeconds, (Func<dynamic, dynamic, dynamic>) GetApps);
          Post["/{appName}"] = p => SafeResponse<dynamic>(p, Settings.Default.LongCacheTimeoutInSeconds, (Func<dynamic, dynamic, dynamic>) GetApp);
 
          /*
@@ -41,9 +33,10 @@ namespace Finsa.Caravan.RestService
           */
 
          Post["/{appName}/entries/{contextName}"] = p => SafeResponse<dynamic>(p, Settings.Default.LongCacheTimeoutInSeconds, (Func<dynamic, dynamic, dynamic>) GetEntries);
+         Post["/{appName}/entries"] = p => SafeResponse<SecEntrySingle>(p, NotCached, (Func<dynamic, SecEntrySingle, dynamic>)GetEntries);
          Post["/{appName}/entries/{contextName}/{objectName}"] = p => SafeResponse<dynamic>(p, Settings.Default.LongCacheTimeoutInSeconds, (Func<dynamic, dynamic, dynamic>) GetEntries);
          Put["/{appName}/entries"] = p => SafeResponse<SecEntrySingle>(p, NotCached, (Func<dynamic, SecEntrySingle, dynamic>) AddEntry);
-         Delete["/{appName}/entries/{contextName}"] = p => SafeResponse<SecEntrySingle>(p, NotCached, (Func<dynamic, SecEntrySingle, dynamic>) RemoveEntry);
+         Delete["/{appName}/entries/{contextName}/{objectName}"] = p => SafeResponse<SecEntrySingle>(p, NotCached, (Func<dynamic, SecEntrySingle, dynamic>)RemoveEntry);
 
          /*
           * Groups
@@ -70,11 +63,23 @@ namespace Finsa.Caravan.RestService
          Put["/{appName}/users"] = p => SafeResponse<SecUserSingle>(p, NotCached, (Func<dynamic, SecUserSingle, dynamic>) AddUser);
          Patch["/{appName}/users/{userLogin}"] = p => SafeResponse<SecUserSingle>(p, NotCached, (Func<dynamic, SecUserSingle, dynamic>) UpdateUser);
          Delete["/{appName}/users/{userLogin}"] = p => SafeResponse<dynamic>(p, NotCached, (Func<dynamic, dynamic, dynamic>) RemoveUser);
+
+         /* UserToGroup
+          *
+          */
+         Put["/{appName}/users/{userLogin}/{groupName}"] = p => SafeResponse<SecUserSingle>(p, NotCached, (Func<dynamic, SecUserSingle, dynamic>) AddUserToGroup);
+         Delete["/{appName}/users/{userLogin}/{groupName}"] = p => SafeResponse<SecUserSingle>(p, NotCached, (Func<dynamic, SecUserSingle, dynamic>) RemoveUserFromGroup);
       }
 
       private static dynamic GetApp(dynamic p, dynamic body)
       {
          return new SecAppSingle {App = Db.Security.App(p.appName)};
+      }
+
+      private static dynamic GetApps(dynamic p, dynamic body)
+      {
+         var apps = Db.Security.Apps();
+         return new SecAppList {Apps = apps };
       }
 
       private static dynamic GetContexts(dynamic p, dynamic body)
@@ -94,14 +99,22 @@ namespace Finsa.Caravan.RestService
       private static dynamic AddEntry(dynamic p, SecEntrySingle body)
       {
          var secEntry = body.Entry;
-         Db.Security.AddEntry(p.appName, secEntry.Context, secEntry.Object, secEntry.User.Login, secEntry.Group.Name);
+         if (secEntry.User.Login != null)
+         {
+            Db.Security.AddEntry(p.appName, secEntry.Context, secEntry.Object, secEntry.User.Login, null);
+         }
+         else
+         {
+            Db.Security.AddEntry(p.appName, secEntry.Context, secEntry.Object, null, secEntry.Group.Name);
+         }
+         
          return Success;
       }
 
       private static dynamic RemoveEntry(dynamic p, SecEntrySingle body)
       {
          var secEntry = body.Entry;
-         Db.Security.RemoveEntry(p.appName, p.contextName, secEntry.Object.Name, secEntry.User.Login, secEntry.Group.Name);
+         Db.Security.RemoveEntry(p.appName, p.contextName, p.objectName, secEntry.User.Login, secEntry.Group.Name);
          return Success;
       }
 
@@ -155,7 +168,18 @@ namespace Finsa.Caravan.RestService
 
       private static dynamic AddUser(dynamic p, SecUserSingle body)
       {
-         Db.Security.AddUser(p.appName, body.User);
+         try
+         {
+            Db.Security.AddUser(p.appName, body.User);
+         }
+         catch (AppNotFoundException ex)
+         {
+            return ErrorResponse(HttpStatusCode.NotFound, ex.Message);
+         }
+         catch (UserExistingException ex)
+         {
+            return ErrorResponse(HttpStatusCode.Conflict, ex.Message);
+         }
          return Success;
       }
 
@@ -169,6 +193,25 @@ namespace Finsa.Caravan.RestService
       {
          Db.Security.RemoveUser(p.appName, p.userLogin);
          return Success;
+      }
+
+      private static dynamic AddUserToGroup(dynamic p, SecUserSingle body)
+      {
+         Db.Security.AddUserToGroup(p.appName, p.userLogin, p.groupName);
+         return Success;
+      }
+
+      private static dynamic RemoveUserFromGroup(dynamic p, SecUserSingle body)
+      {
+         Db.Security.RemoveUserFromGroup(p.appName, p.userLogin, p.groupName);
+         return Success;
+      }
+
+      private static Response ErrorResponse(HttpStatusCode statusCode, string errorMessage)
+      {
+         var response = (Response) errorMessage;
+         response.StatusCode = statusCode;
+         return response;
       }
    }
 }

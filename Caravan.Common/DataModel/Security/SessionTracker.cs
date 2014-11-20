@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Web;
 
@@ -53,19 +52,8 @@ namespace Finsa.Caravan.DataModel.Security
 
         public void FillData() 
         {
-       
-            this._userHostAddress = HttpContext.Current.Request.UserHostAddress;
-            if (this._userHostAddress == "::1")
-            {
-                this._userHostAddress = "localhost";
-            }
-        
-            this._userHostName = HttpContext.Current.Request.UserHostName;
-            if (this._userHostName == "::1")
-            {
-                this._userHostName = "localhost";
-            }
-
+            this._userHostAddress = HttpContext.Current.Request.UserHostAddress.ToString();
+            this._userHostName = HttpContext.Current.Request.UserHostName.ToString();
             this._lastVisit = DateTime.Now;
         }
     }
