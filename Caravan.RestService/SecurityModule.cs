@@ -114,7 +114,16 @@ namespace Finsa.Caravan.RestService
       private static dynamic RemoveEntry(dynamic p, SecEntrySingle body)
       {
          var secEntry = body.Entry;
-         Db.Security.RemoveEntry(p.appName, p.contextName, p.objectName, secEntry.User.Login, secEntry.Group.Name);
+
+         if (secEntry.User.Login != null)
+         {
+            Db.Security.RemoveEntry(p.appName, p.contextName, p.objectName, secEntry.User.Login,null);
+         }
+         else
+         {
+            Db.Security.RemoveEntry(p.appName, p.contextName, p.objectName, null, secEntry.Group.Name);
+         }
+         
          return Success;
       }
 

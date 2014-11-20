@@ -475,6 +475,9 @@ namespace Finsa.Caravan.DataAccess.Rest
          try
          {
             request.AddUrlSegment("appName", appName);
+            request.AddUrlSegment("contextName", contextName);
+            request.AddUrlSegment("objectName", objectName);
+
             if (userLogin != null)
             {
                request.AddJsonBody(new RestRequest<SecEntrySingle>
@@ -482,8 +485,6 @@ namespace Finsa.Caravan.DataAccess.Rest
                   Auth = "AA",
                   Body = new SecEntrySingle { 
                      Entry = new SecEntry {
-                        Context  = new SecContext{Name = contextName}, 
-                        Object = new SecObject{Name = objectName},
                         User = new SecUser { Login = userLogin } 
                      } 
                   }
@@ -494,12 +495,8 @@ namespace Finsa.Caravan.DataAccess.Rest
                request.AddJsonBody(new RestRequest<SecEntrySingle>
                {
                   Auth = "AA",
-                  Body = new SecEntrySingle
-                  {
-                     Entry = new SecEntry
-                     {
-                        Context = new SecContext { Name = contextName },
-                        Object = new SecObject { Name = objectName },
+                  Body = new SecEntrySingle{
+                     Entry = new SecEntry{
                         Group = new SecGroup { Name = groupName}
                      }
                   }
