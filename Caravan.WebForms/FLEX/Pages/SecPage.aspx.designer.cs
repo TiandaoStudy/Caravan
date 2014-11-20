@@ -7,136 +7,127 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Finsa.Caravan.WebForms.Pages {
+namespace FLEX.Web.Pages {
     
     
-    public partial class SecGroupDetails {
+    public partial class SecPage {
         
         /// <summary>
-        /// txtGrpId control.
+        /// UpdatePanel2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtGrpId;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
         
         /// <summary>
-        /// txtGrpName control.
+        /// TreeView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtGrpName;
+        protected global::System.Web.UI.WebControls.TreeView TreeView1;
         
         /// <summary>
-        /// rqtxtGrpName control.
+        /// li_0 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rqtxtGrpName;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl li_0;
         
         /// <summary>
-        /// txtGrpDescr control.
+        /// aUsers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtGrpDescr;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor aUsers;
         
         /// <summary>
-        /// rqtxtGrpDescr control.
+        /// li_1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rqtxtGrpDescr;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl li_1;
         
         /// <summary>
-        /// Label1 control.
+        /// aGroups control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Label1;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor aGroups;
         
         /// <summary>
-        /// chkAdmin control.
+        /// phUsers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkAdmin;
+        protected global::System.Web.UI.WebControls.PlaceHolder phUsers;
         
         /// <summary>
-        /// txtNotes control.
+        /// UpdatePanel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNotes;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
-        /// btnAddUsersToGroup control.
+        /// flexMultipleSelectUsers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.ImageButton btnAddUsersToGroup;
+        protected global::FLEX.Web.UserControls.Ajax.MultiSelect flexMultipleSelectUsers;
         
         /// <summary>
-        /// crvnMultiSelectUsersGroups control.
+        /// phGroups control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.MultiSelect crvnMultiSelectUsersGroups;
+        protected global::System.Web.UI.WebControls.PlaceHolder phGroups;
         
         /// <summary>
-        /// btxExit control.
+        /// UpdatePanel3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.ImageButton btxExit;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel3;
         
         /// <summary>
-        /// btxSave control.
+        /// flexMultiSelectGroups control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.ImageButton btxSave;
+        protected global::FLEX.Web.UserControls.Ajax.MultiSelect flexMultiSelectGroups;
         
         /// <summary>
-        /// hiddenSave control.
+        /// btnSave control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.HiddenTrigger hiddenSave;
-        
-        /// <summary>
-        /// hiddenAddUserToGroup control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::FLEX.Web.UserControls.Ajax.HiddenTrigger hiddenAddUserToGroup;
+        protected global::System.Web.UI.WebControls.Button btnSave;
         
         /// <summary>
         /// Master property.
@@ -144,9 +135,9 @@ namespace Finsa.Caravan.WebForms.Pages {
         /// <remarks>
         /// Auto-generated property.
         /// </remarks>
-        public new FLEX.Web.MasterPages.Popup Master {
+        public new FLEX.Web.MasterPages.VerticalSearch Master {
             get {
-                return ((FLEX.Web.MasterPages.Popup)(base.Master));
+                return ((FLEX.Web.MasterPages.VerticalSearch)(base.Master));
             }
         }
     }

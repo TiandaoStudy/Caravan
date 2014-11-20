@@ -12,6 +12,7 @@ using FLEX.Web.Pages;
 using System.Data;
 using System.Collections.Generic;
 
+
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
 
@@ -62,7 +63,7 @@ namespace Finsa.Caravan.WebForms.Pages
           var users = new DataTable();
           var active = 0;
           var userLogin = "";
-          if (SearchCriteria["CUSR_LOGIN"].Count > 0 && SearchCriteria["Active"].Count > 0)
+          if (SearchCriteria["CUSR_LOGIN"].Count > 0 && SearchCriteria["Active"].Count == 1)
           {
               userLogin = SearchCriteria["CUSR_LOGIN"][0];
               active = crvnActive.SelectedValues[0] == "Y" ? 1 : 0;
@@ -85,7 +86,7 @@ namespace Finsa.Caravan.WebForms.Pages
               return;
           }
 
-          else if (SearchCriteria["Active"].Count > 0)
+          else if (SearchCriteria["Active"].Count == 1)
           {
               active = crvnActive.SelectedValues[0] == "Y" ? 1 : 0;
               users = (from us in DataAccess.Db.Security.Users(Common.Configuration.Instance.ApplicationName)
@@ -151,6 +152,25 @@ namespace Finsa.Caravan.WebForms.Pages
          {
             ErrorHandler.CatchException(ex);
          }
+      }
+
+
+      protected void crvnExportList_DataSourceNeeded(object sender, EventArgs e)
+      {
+          try
+          {
+            crvnExportList.SetDataSource(fdtgUsers, "Users", new FLEX.Web.UserControls.ExportList.ColumnData[]{
+                                            new FLEX.Web.UserControls.ExportList.ColumnData{Index=1,Name="Id", Type=FLEX.Web.UserControls.ExportList.ColumnType.Column},
+                                            new FLEX.Web.UserControls.ExportList.ColumnData{Index=2,Name="FirstName", Type=FLEX.Web.UserControls.ExportList.ColumnType.Column},
+                                            new FLEX.Web.UserControls.ExportList.ColumnData{Index=3,Name="LastName", Type=FLEX.Web.UserControls.ExportList.ColumnType.Column},
+                                            new FLEX.Web.UserControls.ExportList.ColumnData{Index=4,Name="Login", Type=FLEX.Web.UserControls.ExportList.ColumnType.Column},
+                                            new FLEX.Web.UserControls.ExportList.ColumnData{Index=5,Name="Email", Type=FLEX.Web.UserControls.ExportList.ColumnType.Column},
+                                            new FLEX.Web.UserControls.ExportList.ColumnData{Index=7,Name="Active", Type=FLEX.Web.UserControls.ExportList.ColumnType.Column}});
+          }
+          catch (Exception ex)
+          {
+              ErrorHandler.CatchException(ex);
+          }
       }
 
       #endregion

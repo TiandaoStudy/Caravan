@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataAccess.Dummy;
 using Finsa.Caravan.DataAccess.Rest;
 using Finsa.Caravan.DataAccess.Sql;
 using Finsa.Caravan.DataAccess.Sql.Oracle;

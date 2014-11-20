@@ -149,9 +149,6 @@ namespace UnitTests.DataAccess
          var q = Db.Logger.Logs(LogType.Error).Where(l => l.Function == "logwithcodeunit_validargs");
 
          Assert.That(q.Count(),Is.EqualTo(1));
-
-
-         
       }
 
       [Test]

@@ -12,16 +12,25 @@ namespace Finsa.Caravan.DataAccess.Sql
    {
       #region Apps
 
-      protected override IList<SecApp> GetApps(string appName)
+      protected override IList<SecApp> GetApps()
       {
          using (var ctx = Db.CreateReadContext())
          {
-            var q = ctx.SecApps.Include("Users.Groups").Include("Groups.Users").Include("Contexts.Objects").Include(a => a.LogSettings);
+            var q = ctx.SecApps.Include(a => a.Users).Include(a => a.Groups).Include("Contexts.Objects").Include(a => a.LogSettings);
+            return q.OrderBy(a => a.Name).ToLogAndList();
+         }
+      }
+
+     protected override SecApp GetApp(string appName)
+      {
+         using (var ctx = Db.CreateReadContext())
+         {
+            var q = ctx.SecApps.Include(a => a.Users).Include(a => a.Groups).Include("Contexts.Objects").Include(a => a.LogSettings);
             if (appName != null)
             {
                q = q.Where(a => a.Name == appName);
             }
-            return q.OrderBy(a => a.Name).ToLogAndList();
+            return q.First();
          }
       }
 

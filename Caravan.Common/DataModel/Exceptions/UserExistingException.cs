@@ -13,20 +13,21 @@ namespace Finsa.Caravan.DataModel.Exceptions
       //    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
       //
 
-      public UserExistingException()
+      public UserExistingException() : base(TheMessage)
       {
       }
 
-      public UserExistingException(string message) : base(message)
-      {
-      }
-
-      public UserExistingException(string message, Exception inner) : base(message, inner)
+      public UserExistingException(Exception inner) : base(TheMessage, inner)
       {
       }
 
       protected UserExistingException(SerializationInfo info, StreamingContext context) : base(info, context)
       {
+      }
+
+      public static string TheMessage
+      {
+         get { return "Utente non trovato"; }
       }
    }
 }

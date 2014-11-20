@@ -17,7 +17,8 @@ namespace Finsa.Caravan.Mvc.Controls.PageElements
 
          Menu menu;
          var response = client.Execute(request);
-         var content = response.Content; // raw content as string
+         //var content = response.Content; // raw content as string
+         var content = File.ReadAllText(@"C:\Progetti\FINSA\FLEX\Caravan.RestService\MenuBar.xml"); // raw content as string
          using (var stream = new StringReader(HttpUtility.HtmlDecode(content)))
          {
             menu = Menu.DeserializeFrom(stream);
