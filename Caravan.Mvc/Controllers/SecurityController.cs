@@ -28,5 +28,23 @@ namespace Finsa.Caravan.Mvc.Controllers
          };
          return PartialView();
       }
+
+      public ActionResult SecUserList()
+      {
+          var viewModel = new SecUserList
+          {
+              Users = Db.Security.Users(Common.Configuration.Instance.ApplicationName)
+          };
+          return View(viewModel);
+      }
+
+      public ActionResult SecUserList_Table()
+      {
+          var viewModel = new SecUserList
+          {
+              Users = Db.Security.Users(Common.Configuration.Instance.ApplicationName)
+          };
+          return PartialView();
+      }
    }
 }

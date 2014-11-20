@@ -11,6 +11,7 @@
       <Item ID="Item7" Caption="Security">
          <Group Layout="Vertical">
             <Item ID="Item70" Caption="Groups" URL="Security/SecGroupList" />
+            <Item ID="Item71" Caption="Users" URL="Security/SecUserList" />
          </Group>
       </Item>
       <Item ID="Item8" Caption="Tools">

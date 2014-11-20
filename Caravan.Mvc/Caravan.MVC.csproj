@@ -485,6 +485,7 @@
     </Compile>
     <Compile Include="GlobalHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Security\SecUserList.cs" />
     <Compile Include="ViewModels\Security\SecGroupList.cs" />
     <Compile Include="Views\Shared\CoreLayoutHelper.cs" />
   </ItemGroup>
@@ -593,6 +594,7 @@
     <Content Include="Scripts\tableExport.min.js.map">
       <DependentUpon>tableExport.js</DependentUpon>
     </Content>
+    <Content Include="Views\Security\SecUserList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
