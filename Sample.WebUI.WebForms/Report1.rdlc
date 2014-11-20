@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Body>
+    <ReportItems>
+      <Textbox Name="Textbox1">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Prova</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox1</rd:DefaultName>
+        <Top>1.45203cm</Top>
+        <Left>3.17183cm</Left>
+        <Height>1.87cm</Height>
+        <Width>5.09292cm</Width>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="TypeId">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!TypeId.Value, "DataSet1")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>TypeId</rd:DefaultName>
+        <Top>1.9812cm</Top>
+        <Left>11.37391cm</Left>
+        <Height>0.6cm</Height>
+        <Width>2.5cm</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Tablix Name="Tablix3">
+        <TablixCorner>
+          <TablixCornerRows>
+            <TablixCornerRow>
+              <TablixCornerCell>
+                <CellContents>
+                  <Textbox Name="Textbox16">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>Entry Date</Value>
+                            <Style />
+                          </TextRun>
+                        </TextRuns>
+                        <Style />
+                      </Paragraph>
+                    </Paragraphs>
+                    <rd:DefaultName>Textbox16</rd:DefaultName>
+                    <Style>
+                      <Border>
+                        <Color>LightGrey</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                  </Textbox>
+                </CellContents>
+              </TablixCornerCell>
+            </TablixCornerRow>
+          </TablixCornerRows>
+        </TablixCorner>
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>2.5cm</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="EntryDate2">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!EntryDate.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>EntryDate2</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <Group Name="EntryDate">
+                <GroupExpressions>
+                  <GroupExpression>=Fields!EntryDate.Value</GroupExpression>
+                </GroupExpressions>
+              </Group>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!EntryDate.Value</Value>
+                </SortExpression>
+              </SortExpressions>
+              <TablixHeader>
+                <Size>0.6cm</Size>
+                <CellContents>
+                  <Textbox Name="EntryDate">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>=Fields!EntryDate.Value</Value>
+                            <Style />
+                          </TextRun>
+                        </TextRuns>
+                        <Style />
+                      </Paragraph>
+                    </Paragraphs>
+                    <rd:DefaultName>EntryDate</rd:DefaultName>
+                    <Style>
+                      <Border>
+                        <Color>LightGrey</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                  </Textbox>
+                </CellContents>
+              </TablixHeader>
+            </TablixMember>
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <Group Name="EntryDate1">
+                <GroupExpressions>
+                  <GroupExpression>=Fields!EntryDate.Value</GroupExpression>
+                </GroupExpressions>
+              </Group>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!EntryDate.Value</Value>
+                </SortExpression>
+              </SortExpressions>
+              <TablixHeader>
+                <Size>2.5cm</Size>
+                <CellContents>
+                  <Textbox Name="EntryDate1">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>=Fields!EntryDate.Value</Value>
+                            <Style />
+                          </TextRun>
+                        </TextRuns>
+                        <Style />
+                      </Paragraph>
+                    </Paragraphs>
+                    <rd:DefaultName>EntryDate1</rd:DefaultName>
+                    <Style>
+                      <Border>
+                        <Color>LightGrey</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                  </Textbox>
+                </CellContents>
+              </TablixHeader>
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>DataSet2</DataSetName>
+        <Top>4.81224cm</Top>
+        <Left>3.19828cm</Left>
+        <Height>1.2cm</Height>
+        <Width>5cm</Width>
+        <ZIndex>2</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
+    </ReportItems>
+    <Height>3.96875in</Height>
+    <Style />
+  </Body>
+  <Width>6.5in</Width>
+  <Page>
+    <PageHeader>
+      <Height>2.54cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Image Name="Image2">
+          <Source>Embedded</Source>
+          <Value>logofinsa</Value>
+          <Sizing>FitProportional</Sizing>
+          <Top>0.47307cm</Top>
+          <Left>0.60537cm</Left>
+          <Height>1.5cm</Height>
+          <Width>1.5cm</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Image>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageHeader>
+    <PageFooter>
+      <Height>3.06917cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageFooter>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>2cm</LeftMargin>
+    <RightMargin>2cm</RightMargin>
+    <TopMargin>2cm</TopMargin>
+    <BottomMargin>2cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="Dapper">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>c6e538fc-6ee2-4915-bfa2-4a2fa46020a7</rd:DataSourceID>
+    </DataSource>
+    <DataSource Name="FLEXDataOracle">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>c9b6079a-eabd-4a59-9e0e-b6e4b9c6a88a</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Query>
+        <DataSourceName>Dapper</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="TypeId">
+          <DataField>TypeId</DataField>
+          <rd:TypeName>System.Object</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>Dapper</rd:DataSetName>
+        <rd:TableName>AssemblyNeutralAttribute</rd:TableName>
+        <rd:ObjectDataSourceSelectMethod>GetCustomAttributes</rd:ObjectDataSourceSelectMethod>
+        <rd:ObjectDataSourceSelectMethodSignature>System.Attribute[] GetCustomAttributes(System.Reflection.MemberInfo, System.Type)</rd:ObjectDataSourceSelectMethodSignature>
+        <rd:ObjectDataSourceType>Dapper.AssemblyNeutralAttribute, Dapper, Version=1.29.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+      </rd:DataSetInfo>
+    </DataSet>
+    <DataSet Name="DataSet2">
+      <Query>
+        <DataSourceName>FLEXDataOracle</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="EntryDate">
+          <DataField>EntryDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Type">
+          <DataField>Type</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Application">
+          <DataField>Application</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CodeUnit">
+          <DataField>CodeUnit</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Function">
+          <DataField>Function</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ShortMessage">
+          <DataField>ShortMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="LongMessage">
+          <DataField>LongMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Context">
+          <DataField>Context</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Key0">
+          <DataField>Key0</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Value0">
+          <DataField>Value0</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Key1">
+          <DataField>Key1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Value1">
+          <DataField>Value1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Key2">
+          <DataField>Key2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Value2">
+          <DataField>Value2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Key3">
+          <DataField>Key3</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Value3">
+          <DataField>Value3</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Key4">
+          <DataField>Key4</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Value4">
+          <DataField>Value4</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Key5">
+          <DataField>Key5</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Value5">
+          <DataField>Value5</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Key6">
+          <DataField>Key6</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Value6">
+          <DataField>Value6</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Key7">
+          <DataField>Key7</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Value7">
+          <DataField>Value7</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Key8">
+          <DataField>Key8</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Value8">
+          <DataField>Value8</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Key9">
+          <DataField>Key9</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Value9">
+          <DataField>Value9</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>FLEX.Data.Oracle</rd:DataSetName>
+        <rd:TableName>OracleDbLogger</rd:TableName>
+        <rd:ObjectDataSourceSelectMethod>RetrieveCurrentApplicationLogs</rd:ObjectDataSourceSelectMethod>
+        <rd:ObjectDataSourceType>FLEX.Data.Oracle.OracleDbLogger, FLEX.Data, Version=0.9.20.2, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+      </rd:DataSetInfo>
+    </DataSet>
+  </DataSets>
+  <EmbeddedImages>
+    <EmbeddedImage Name="logofinsa">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>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</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>0d87adbb-4961-4f36-ac02-a8f5cf57e6a3</rd:ReportID>
+</Report>
