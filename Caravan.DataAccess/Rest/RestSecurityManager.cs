@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel.Exceptions;
 using Finsa.Caravan.DataModel.Rest;
@@ -11,12 +12,12 @@ namespace Finsa.Caravan.DataAccess.Rest
 {
    public sealed class RestSecurityManager : SecurityManagerBase<RestSecurityManager>
    {
-      protected override IList<SecApp> GetApps(string appName)
+      protected override IList<SecApp> GetApps()
       {
          var client = new RestClient("http://localhost/Caravan.RestService/security");
-         var request = new RestRequest("{appName}", Method.POST);
+         var request = new RestRequest("", Method.POST);
          
-         request.AddUrlSegment("appName", appName);
+         //request.AddUrlSegment("appName", appName);
          request.AddJsonBody(new RestRequest<object> {Auth = "AA", Body = new object()});
 
          var response = client.Execute<DataModel.Rest.RestResponse<SecAppSingle>>(request);
@@ -27,6 +28,20 @@ namespace Finsa.Caravan.DataAccess.Rest
 
         
       }
+
+      protected override SecApp GetApp(string appName)
+      {
+         var client = new RestClient("http://localhost/Caravan.RestService/security");
+         var request = new RestRequest("{appName}", Method.POST);
+
+         request.AddUrlSegment("appName", appName);
+         request.AddJsonBody(new RestRequest<object> { Auth = "AA", Body = new object() });
+
+         var response = client.Execute<DataModel.Rest.RestResponse<SecAppSingle>>(request);
+
+         return response.Data.Body.App;
+      }
+
 
       protected override bool DoAddApp(SecApp app)
       {
@@ -222,6 +237,11 @@ namespace Finsa.Caravan.DataAccess.Rest
                }
             });
             var response =client.Execute<DataModel.Rest.RestResponse<SecUserSingle>>(request);
+
+            if (response.StatusCode == HttpStatusCode.Conflict)
+            {
+               throw new UserExistingException();
+            }
          }
          catch (AppNotFoundException e)
          {
@@ -293,12 +313,54 @@ namespace Finsa.Caravan.DataAccess.Rest
 
       protected override bool DoAddUserToGroup(string appName, string userLogin, string groupName)
       {
-         throw new NotImplementedException();
+         var client = new RestClient("http://localhost/Caravan.RestService/security");
+         var request = new RestRequest("{appName}/users/{userLogin}/{groupName}", Method.PUT);
+         try
+         {
+            request.AddUrlSegment("appName", appName);
+            request.AddUrlSegment("userLogin", userLogin);
+            request.AddUrlSegment("groupName", groupName);
+            request.AddJsonBody(new RestRequest<dynamic> {Auth = "AA", Body = new object()});
+
+            var response = client.Execute<DataModel.Rest.RestResponse<SecUserSingle>>(request);
+         }
+         catch (UserExistingException e)
+         {
+
+            throw new Exception(e.Message);
+         }
+         catch (GroupNotFoundException e)
+         {
+            throw new Exception(e.Message);
+         }
+         
+         return true;
       }
 
       protected override bool DoRemoveUserFromGroup(string appName, string userLogin, string groupName)
       {
-         throw new NotImplementedException();
+         var client = new RestClient("http://localhost/Caravan.RestService/security");
+         var request = new RestRequest("{appName}/users/{userLogin}/{groupName}", Method.DELETE);
+         try
+         {
+            request.AddUrlSegment("appName", appName);
+            request.AddUrlSegment("userLogin", userLogin);
+            request.AddUrlSegment("groupName", groupName);
+            request.AddJsonBody(new RestRequest<dynamic> { Auth = "AA", Body = new object() });
+
+            var response = client.Execute<DataModel.Rest.RestResponse<SecUserSingle>>(request);
+         }
+         catch (UserNotFoundException e)
+         {
+
+            throw new Exception(e.Message);
+         }
+         catch (GroupNotFoundException e)
+         {
+            throw new Exception(e.Message);
+         }
+
+         return true;
       }
 
       protected override IList<SecContext> GetContexts(string appName)
@@ -379,15 +441,26 @@ namespace Finsa.Caravan.DataAccess.Rest
          try
          {
             request.AddUrlSegment("appName", appName);
-            request.AddJsonBody(new RestRequest<SecEntrySingle>
+            if (userLogin!= null)
             {
-               Auth = "AA",
-               Body = new SecEntrySingle {Entry = new SecEntry {Context = secContext, Object = secObject}}
-            });
-
+               request.AddJsonBody(new RestRequest<SecEntrySingle>
+               {
+                  Auth = "AA",
+                  Body = new SecEntrySingle { Entry = new SecEntry { Context = secContext, Object = secObject, User = new SecUser { Login = userLogin } } }
+               });
+            }
+            else
+            {
+               request.AddJsonBody(new RestRequest<SecEntrySingle>
+               {
+                  Auth = "AA",
+                  Body = new SecEntrySingle { Entry = new SecEntry { Context = secContext, Object = secObject, Group = new SecGroup{Name = groupName}} }
+               });
+            }
+            
             var response = client.Execute<DataModel.Rest.RestResponse<SecEntrySingle>>(request);
          }
-         catch (Exception e)
+         catch (EntryExistingException e)
          {
 
             throw new Exception(e.Message);
@@ -397,7 +470,65 @@ namespace Finsa.Caravan.DataAccess.Rest
 
       protected override bool DoRemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)
       {
-         throw new NotImplementedException();
+         var client = new RestClient("http://localhost/Caravan.RestService/security");
+         var request = new RestRequest("{appName}/entries/{contextName}/{objectName}", Method.DELETE);
+         try
+         {
+            request.AddUrlSegment("appName", appName);
+            if (userLogin != null)
+            {
+               request.AddJsonBody(new RestRequest<SecEntrySingle>
+               {
+                  Auth = "AA",
+                  Body = new SecEntrySingle { 
+                     Entry = new SecEntry {
+                        Context  = new SecContext{Name = contextName}, 
+                        Object = new SecObject{Name = objectName},
+                        User = new SecUser { Login = userLogin } 
+                     } 
+                  }
+               });
+            }
+            else
+            {
+               request.AddJsonBody(new RestRequest<SecEntrySingle>
+               {
+                  Auth = "AA",
+                  Body = new SecEntrySingle
+                  {
+                     Entry = new SecEntry
+                     {
+                        Context = new SecContext { Name = contextName },
+                        Object = new SecObject { Name = objectName },
+                        Group = new SecGroup { Name = groupName}
+                     }
+                  }
+               });
+            }
+
+            var response = client.Execute(request).Content;
+
+            try
+            {
+               var entry = JsonConvert.DeserializeObject<DataModel.Rest.RestResponse<SecEntrySingle>>(response);
+            }
+            catch
+            {
+               var error = JsonConvert.DeserializeObject<DataModel.Rest.RestResponse<FailureBody>>(response);
+               if (error != null && error.Body.Exception != null)
+               {
+                  throw error.Body.Exception;
+               }
+               throw new Exception("BOH");
+            }
+            
+         }
+         catch (EntryExistingException e)
+         {
+
+            throw new Exception(e.Message);
+         }
+         return true;
       }
 
       #endregion

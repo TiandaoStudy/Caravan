@@ -49,6 +49,19 @@ namespace Finsa.Caravan.DataModel.Rest
          };
       }
 
+      public static RestResponse<FailureBody> Failure(HttpStatusCode statusCode, string errorMessage)
+      {
+         return new RestResponse<FailureBody>
+         {
+            StatusCode = statusCode,
+            Body = new FailureBody
+            {
+               Description = errorMessage,
+               Exception = null
+            }
+         };
+      }
+
       public static dynamic FromLogResult(LogResult result)
       {
          return result.Succeeded ? (dynamic) Success("OK") : Failure(result.Exception);

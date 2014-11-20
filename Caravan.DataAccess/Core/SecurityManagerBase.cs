@@ -17,13 +17,13 @@ namespace Finsa.Caravan.DataAccess.Core
 
       public IList<SecApp> Apps()
       {
-         return GetApps(null);
+         return GetApps();
       }
 
       public SecApp App(string appName)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
-         var app = GetApps(appName.ToLower()).FirstOrDefault();
+         var app = GetApp(appName.ToLower());
          if (app == null)
          {
             throw new AppNotFoundException();
@@ -319,8 +319,12 @@ namespace Finsa.Caravan.DataAccess.Core
       public IList<SecEntry> Entries(string appName, string contextName)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(contextName);
-         return GetEntries(appName.ToLower(), contextName.ToLower(), null, null);
+         //Raise<ArgumentException>.IfIsEmpty(contextName);
+         if (contextName!=null)
+         {
+            return GetEntries(appName.ToLower(), contextName.ToLower(), null, null);
+         }
+         return GetEntries(appName.ToLower(), null, null, null);
       }
 
       public IList<SecEntry> Entries(string appName, string contextName, string userLogin)
@@ -423,7 +427,9 @@ namespace Finsa.Caravan.DataAccess.Core
 
       #region Abstract Methods
 
-      protected abstract IList<SecApp> GetApps(string appName);
+      protected abstract IList<SecApp> GetApps();
+
+      protected abstract SecApp GetApp(string appName);
 
       protected abstract bool DoAddApp(SecApp app);
 

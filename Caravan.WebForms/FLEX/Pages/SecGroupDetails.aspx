@@ -8,9 +8,20 @@
    <title>Group Details</title>
    
    <script type="text/javascript">
-      function saveGroup() {
-         triggerAsyncPostBack("<%= hiddenSave.Trigger.ClientID %>");
-      }
+       function saveGroup() {
+           if (Page_ClientValidate("mainValidationSummary"))
+           {
+               triggerAsyncPostBack("<%= hiddenSave.Trigger.ClientID %>");
+           }
+ 
+       }
+
+       function mostraMultiSelectUsersGroups() {
+           triggerAsyncPostBack("<%= hiddenAddUserToGroup.Trigger.ClientID %>");
+           document.getElementById('divMultiSelect').style.display = 'block';
+           document.getElementById('divAddUsersToGroup').style.display = 'none';
+          
+       }
    </script>
 </asp:Content>
 
@@ -29,11 +40,13 @@
          <label class="control-label col-xs-1 text-right">Name</label>
          <div class="col-xs-2">
              <asp:TextBox runat="server" ID="txtGrpName" />
+             <asp:RequiredFieldValidator ID="rqtxtGrpName" ControlToValidate="txtGrpName" Display="None" ErrorMessage="Name is a required field"	Runat="server" ValidationGroup="mainValidationSummary"></asp:RequiredFieldValidator>
          </div>
 
          <label class="control-label col-xs-2 text-right">Description</label>
          <div class="col-xs-2">
             <asp:TextBox runat="server" ID="txtGrpDescr" />
+             <asp:RequiredFieldValidator ID="rqtxtGrpDescr" ControlToValidate="txtGrpDescr" Display="None" ErrorMessage="Description is a required field"	Runat="server" ValidationGroup="mainValidationSummary"></asp:RequiredFieldValidator>
          </div>
 
 
@@ -50,9 +63,14 @@
          </div>
        </div>
 
-       <div class="row form-group">
-            <crvn:MultiSelect runat="server" ID="crvnMultiSelectUsersGroups"></crvn:MultiSelect>
+
+       <div class="row form-group" id="divAddUsersToGroup">
+            <crvn:ImageButton runat="server" ID="btnAddUsersToGroup" ButtonClass="btn btn-primary" ButtonText="Add users to group" IconClass="glyphicon glyphicon-plus" OnClientClick="mostraMultiSelectUsersGroups(); return false;" />
       </div>
+
+       <div class="row form-group"  style="display:none" id="divMultiSelect">
+           <crvn:MultiSelect runat="server" ID="crvnMultiSelectUsersGroups"></crvn:MultiSelect>
+       </div>
    </div>
 
      
@@ -62,10 +80,11 @@
 </asp:Content>
 
 <asp:Content ID="aspRightButtonsContent" ContentPlaceHolderID="buttonsContent" runat="server">
-   <crvn:ImageButton runat="server" ID="btxExit" ButtonClass="btn btn-primary" ButtonText="Exit" IconClass="glyphicon glyphicon-remove" OnClientClick="closeWindow(); return false;" />
-   <crvn:ImageButton runat="server" ID="btxSave" ButtonClass="btn btn-success" ButtonText="Save & Exit" IconClass="glyphicon glyphicon-floppy-disk" OnClientClick="saveGroup(); return false;" />
+   <crvn:ImageButton runat="server" ID="btxExit" ButtonClass="btn btn-primary" ButtonText="Exit" IconClass="glyphicon glyphicon-remove" OnClientClick="closeWindow(); return false;"  />
+   <crvn:ImageButton runat="server" ID="btxSave" ButtonClass="btn btn-success" ButtonText="Save & Exit" IconClass="glyphicon glyphicon-floppy-disk" OnClientClick="saveGroup(); return false;" CausesValidation="true" ValidationGroup="mainValidationSummary" UseSubmitBehavior="false"/>
 </asp:Content>
 
 <asp:Content ID="aspHiddenContent" ContentPlaceHolderID="hiddenContent" runat="server">
    <crvn:HiddenTrigger runat="server" ID="hiddenSave" OnTriggered="hiddenSave_OnTriggered" />
+   <crvn:HiddenTrigger runat="server" ID="hiddenAddUserToGroup" OnTriggered="hiddenAddUserToGroup_OnTriggered" />
 </asp:Content>

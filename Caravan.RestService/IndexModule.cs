@@ -24,6 +24,11 @@ namespace Finsa.Caravan.RestService
              Context.EnableOutputCache(30);
              return View["index"];
          };
+         Get["/api"] = _ =>
+         {
+            Context.EnableOutputCache(30);
+            return View["api"];
+         };
          Get["/query"] = _ => FormatterExtensions.AsJson(Response, TestData.AsQueryable().LinqToQuerystring((IDictionary<string, object>) Context.Request.Query));
          // DA TOGLIERE!!!
          Get["/menu"] = p =>

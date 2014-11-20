@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataAccess.Dummy;
 using Finsa.Caravan.DataAccess.Rest;
 using Finsa.Caravan.DataAccess.Sql;
 using Finsa.Caravan.DataAccess.Sql.Oracle;
@@ -25,11 +24,6 @@ namespace Finsa.Caravan.DataAccess
       {
          switch (Configuration.Instance.DataAccessKind)
          {
-            case DataAccessKind.Dummy:
-               LogManagerInstance = new DummyLogManager();
-               QueryManagerInstance = new DummyQueryManager();
-               SecurityManagerInstance = new DummySecurityManager();
-               break;
             case DataAccessKind.Oracle:
                DbManagerInstance = new OracleDbManager();
                DbContextGenerator = OracleDbContextGenerator;
