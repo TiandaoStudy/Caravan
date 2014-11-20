@@ -14,11 +14,11 @@ namespace Finsa.Caravan.DataAccess
 {
    public static class Db
    {
-      private static LogManagerBase LogManagerInstance;
-      private static QueryManagerBase QueryManagerInstance;
-      private static ISecurityManager SecurityManagerInstance;
-      private static DbManagerBase DbManagerInstance;
-      private static Func<DbContextBase> DbContextGenerator;
+      private static LogManagerBase _logManagerInstance;
+      private static QueryManagerBase _queryManagerInstance;
+      private static ISecurityManager _securityManagerInstance;
+      private static DbManagerBase _dbManagerInstance;
+      private static Func<DbContextBase> _dbContextGenerator;
 
       static Db()
       {
@@ -29,22 +29,22 @@ namespace Finsa.Caravan.DataAccess
 
       public static IDbManager Manager
       {
-         get { return DbManagerInstance; }
+         get { return _dbManagerInstance; }
       }
 
       public static ILogManager Logger
       {
-         get { return LogManagerInstance; }
+         get { return _logManagerInstance; }
       }
 
       public static IQueryManager Query
       {
-         get { return QueryManagerInstance; }
+         get { return _queryManagerInstance; }
       }
 
       public static ISecurityManager Security
       {
-         get { return SecurityManagerInstance; }
+         get { return _securityManagerInstance; }
       }
 
       #endregion
@@ -85,7 +85,7 @@ namespace Finsa.Caravan.DataAccess
 
       internal static DbContextBase CreateReadContext()
       {
-         var ctx = DbContextGenerator();
+         var ctx = _dbContextGenerator();
          ctx.Database.Initialize(false);
          ctx.Database.Connection.Open();
          ctx.Configuration.ProxyCreationEnabled = false;
@@ -94,7 +94,7 @@ namespace Finsa.Caravan.DataAccess
 
       internal static DbContextBase CreateWriteContext()
       {
-         var ctx = DbContextGenerator();
+         var ctx = _dbContextGenerator();
          ctx.Database.Initialize(false);
          ctx.Database.Connection.Open();
          return ctx;
@@ -132,39 +132,34 @@ namespace Finsa.Caravan.DataAccess
       {
          switch (kind)
          {
-            case DataAccessKind.Dummy:
-               LogManagerInstance = new DummyLogManager();
-               QueryManagerInstance = new DummyQueryManager();
-               SecurityManagerInstance = new DummySecurityManager();
-               break;
             case DataAccessKind.Oracle:
-               DbManagerInstance = new OracleDbManager();
-               DbContextGenerator = OracleDbContextGenerator;
-               LogManagerInstance = new SqlLogManager();
-               QueryManagerInstance = new SqlQueryManager();
-               SecurityManagerInstance = new SqlSecurityManager();
+               _dbManagerInstance = new OracleDbManager();
+               _dbContextGenerator = OracleDbContextGenerator;
+               _logManagerInstance = new SqlLogManager();
+               _queryManagerInstance = new SqlQueryManager();
+               _securityManagerInstance = new SqlSecurityManager();
                break;
             case DataAccessKind.Postgres:
-               LogManagerInstance = new SqlLogManager();
-               QueryManagerInstance = new SqlQueryManager();
-               SecurityManagerInstance = new SqlSecurityManager();
+               _logManagerInstance = new SqlLogManager();
+               _queryManagerInstance = new SqlQueryManager();
+               _securityManagerInstance = new SqlSecurityManager();
                break;
             case DataAccessKind.Rest:
-               LogManagerInstance = new RestLogManager();
-               QueryManagerInstance = new RestQueryManager();
-               SecurityManagerInstance = new RestSecurityManager();
+               _logManagerInstance = new RestLogManager();
+               _queryManagerInstance = new RestQueryManager();
+               _securityManagerInstance = new RestSecurityManager();
                break;
             case DataAccessKind.SqlServer:
-               LogManagerInstance = new SqlLogManager();
-               QueryManagerInstance = new SqlQueryManager();
-               SecurityManagerInstance = new SqlSecurityManager();
+               _logManagerInstance = new SqlLogManager();
+               _queryManagerInstance = new SqlQueryManager();
+               _securityManagerInstance = new SqlSecurityManager();
                break;
             case DataAccessKind.SqlServerCe:
-               DbManagerInstance = new SqlServerCeDbManager();
-               DbContextGenerator = SqlServerCeDbContextGenerator;
-               LogManagerInstance = new SqlLogManager();
-               QueryManagerInstance = new SqlQueryManager();
-               SecurityManagerInstance = new SqlSecurityManager();
+               _dbManagerInstance = new SqlServerCeDbManager();
+               _dbContextGenerator = SqlServerCeDbContextGenerator;
+               _logManagerInstance = new SqlLogManager();
+               _queryManagerInstance = new SqlQueryManager();
+               _securityManagerInstance = new SqlSecurityManager();
                break;
          }
       }

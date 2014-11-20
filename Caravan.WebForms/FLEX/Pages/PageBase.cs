@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using FLEX.Web.MasterPages;
 using FLEX.Web.UserControls;
 using PommaLabs.KVLite.Web;
@@ -25,12 +24,6 @@ namespace FLEX.Web.Pages
       private const int MaxIdValue = 9999999;
 
       private static readonly Random Random = new Random();
-
-      #endregion
-
-      #region Fields
-
-      private readonly string _id;
 
       #endregion
 
@@ -75,19 +68,9 @@ namespace FLEX.Web.Pages
 
       #region IPage Members
 
-      public UserControls.Ajax.ErrorHandler ErrorHandler
-      {
-         get { return MasterPage.ErrorHandler; }
-      }
-
       public bool HasPageVisibleHandlers
       {
          get { return MasterPage.HasPageVisibleHandlers; }
-      }
-
-      public HtmlForm MainForm
-      {
-         get { return MasterPage.MainForm; }
       }
 
       public MenuBar MenuBar
@@ -98,11 +81,6 @@ namespace FLEX.Web.Pages
       public PageFooter PageFooter
       {
          get { return MasterPage.PageFooter; }
-      }
-
-      public ScriptManager ScriptManager
-      {
-         get { return MasterPage.ScriptManager; }
       }
 
       public event EventHandler Page_Visible;
