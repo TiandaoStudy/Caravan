@@ -37,6 +37,7 @@ namespace Finsa.Caravan.WebForms.Pages
       protected override void RegisterSearchCriteria(SearchCriteria criteria)
       {
           SearchCriteria.RegisterControl(crvnUsersLkp, "CUSR_LOGIN");
+          SearchCriteria.CriteriaChanged += SearchCriteria_CriteriaChanged;
       }
 
       private void SearchCriteria_CriteriaChanged(SearchCriteria searchCriteria, SearchCriteriaChangedArgs args)
@@ -85,7 +86,7 @@ namespace Finsa.Caravan.WebForms.Pages
          else
          {
 
-             foreach (var item in _userList)
+            foreach (var item in _userList.Where(u => u.Value.Login != null))
              {
                  _tableUsers.Rows.Add(item.Value.Login, item.Value.UserHostName, item.Value.UserHostAddress, item.Value.LastVisit);
              }

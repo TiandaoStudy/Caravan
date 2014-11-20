@@ -59,34 +59,36 @@ namespace Finsa.Caravan.WebForms.Pages
          }
 
          txtGrpId.Text = @"Automatically filled";
+      }
 
-         var allowedUsers = Db.Security.Users(Finsa.Caravan.Common.Configuration.Instance.ApplicationName).ToList();
+      private void MostraMultiSelectForNew() 
+      {
+          var allowedUsers = Db.Security.Users(Finsa.Caravan.Common.Configuration.Instance.ApplicationName);
 
-         //Users
-         DataTable _tableLeft = new DataTable();
-         _tableLeft.Columns.Add("Id", typeof(int));
-         _tableLeft.Columns.Add("Login", typeof(string));
-         _tableLeft.Columns.Add("FirstName", typeof(string));
-         _tableLeft.Columns.Add("LastName", typeof(string));
-
-
-         DataTable _tableRight = new DataTable();
-         _tableRight.Columns.Add("Id", typeof(int));
-         _tableRight.Columns.Add("Login", typeof(string));
-         _tableRight.Columns.Add("FirstName", typeof(string));
-         _tableRight.Columns.Add("LastName", typeof(string));
+          //Users
+          DataTable _tableLeft = new DataTable();
+          _tableLeft.Columns.Add("Id", typeof(int));
+          _tableLeft.Columns.Add("Login", typeof(string));
+          _tableLeft.Columns.Add("FirstName", typeof(string));
+          _tableLeft.Columns.Add("LastName", typeof(string));
 
 
-         foreach (var item in allowedUsers)
-         {
-            _tableLeft.Rows.Add(item.Id, item.Login, item.FirstName, item.LastName);
-         }
+          DataTable _tableRight = new DataTable();
+          _tableRight.Columns.Add("Id", typeof(int));
+          _tableRight.Columns.Add("Login", typeof(string));
+          _tableRight.Columns.Add("FirstName", typeof(string));
+          _tableRight.Columns.Add("LastName", typeof(string));
 
-         crvnMultiSelectUsersGroups.SetLeftDataSource(_tableLeft);
-         crvnMultiSelectUsersGroups.SetRightDataSource(_tableRight);
-         crvnMultiSelectUsersGroups.LeftPanelTitle = "Available Users";
-         crvnMultiSelectUsersGroups.RightPanelTitle = "Chosen Users";
 
+          foreach (var item in allowedUsers)
+          {
+              _tableLeft.Rows.Add(item.Id, item.Login, item.FirstName, item.LastName);
+          }
+
+          crvnMultiSelectUsersGroups.SetLeftDataSource(_tableLeft);
+          crvnMultiSelectUsersGroups.SetRightDataSource(_tableRight);
+          crvnMultiSelectUsersGroups.LeftPanelTitle = "Available Users";
+          crvnMultiSelectUsersGroups.RightPanelTitle = "Chosen Users";
       }
 
       private void LoadForEdit(string groupName)
@@ -95,46 +97,56 @@ namespace Finsa.Caravan.WebForms.Pages
          {
             return;
          }
-
+      
          var group = Db.Security.Group(Common.Configuration.Instance.ApplicationName, groupName);
          Raise<ArgumentException>.IfIsNull(group, "Given group name does not exist");
+
+         ViewState["group"] =group; 
 
          txtGrpId.Text = group.Id.ToString(CultureInfo.InvariantCulture);
          txtGrpName.Text = group.Name;
          txtGrpDescr.Text = group.Description;
          txtNotes.Text = group.Notes;
          chkAdmin.Checked = group.IsAdmin == 1;
+      }
 
-         var blockedUsersToGroup = group.Users.ToList();
-         var allowedUsers = Db.Security.Users(Finsa.Caravan.Common.Configuration.Instance.ApplicationName).Except(blockedUsersToGroup).ToList();
+      private void MostraMultiSelectForEdit()
+      {
+          if (ViewState["group"] != null)
+          {
 
-         //Users
-         DataTable _tableLeft = new DataTable();
-         _tableLeft.Columns.Add("Id", typeof(int));
-         _tableLeft.Columns.Add("Login", typeof(string));
-         _tableLeft.Columns.Add("FirstName", typeof(string));
-         _tableLeft.Columns.Add("LastName", typeof(string));
+              var blockedUsersToGroup = ((SecGroup)ViewState["group"]).Users;
+              var allowedUsers = Db.Security.Users(Common.Configuration.Instance.ApplicationName).Except(blockedUsersToGroup);
 
-         DataTable _tableRight = new DataTable();
-         _tableRight.Columns.Add("Id", typeof(int));
-         _tableRight.Columns.Add("Login", typeof(string));
-         _tableRight.Columns.Add("FirstName", typeof(string));
-         _tableRight.Columns.Add("LastName", typeof(string));
+              //Users
+              DataTable _tableLeft = new DataTable();
+              _tableLeft.Columns.Add("Id", typeof(int));
+              _tableLeft.Columns.Add("Login", typeof(string));
+              _tableLeft.Columns.Add("FirstName", typeof(string));
+              _tableLeft.Columns.Add("LastName", typeof(string));
 
-         foreach (var item in allowedUsers)
-         {
-             _tableLeft.Rows.Add(item.Id, item.Login, item.FirstName, item.LastName);
-         }
+              DataTable _tableRight = new DataTable();
+              _tableRight.Columns.Add("Id", typeof(int));
+              _tableRight.Columns.Add("Login", typeof(string));
+              _tableRight.Columns.Add("FirstName", typeof(string));
+              _tableRight.Columns.Add("LastName", typeof(string));
 
-         foreach (var item in blockedUsersToGroup)
-         {
-             _tableRight.Rows.Add(item.Id, item.Login, item.FirstName, item.LastName);
-         }
+              foreach (var item in allowedUsers)
+              {
+                  _tableLeft.Rows.Add(item.Id, item.Login, item.FirstName, item.LastName);
+              }
 
-         crvnMultiSelectUsersGroups.SetLeftDataSource(_tableLeft);
-         crvnMultiSelectUsersGroups.SetRightDataSource(_tableRight);
-         crvnMultiSelectUsersGroups.LeftPanelTitle = "Available Users";
-         crvnMultiSelectUsersGroups.RightPanelTitle = "Chosen Users";
+              foreach (var item in blockedUsersToGroup)
+              {
+                  _tableRight.Rows.Add(item.Id, item.Login, item.FirstName, item.LastName);
+              }
+
+              crvnMultiSelectUsersGroups.SetLeftDataSource(_tableLeft);
+              crvnMultiSelectUsersGroups.SetRightDataSource(_tableRight);
+              crvnMultiSelectUsersGroups.LeftPanelTitle = "Available Users";
+              crvnMultiSelectUsersGroups.RightPanelTitle = "Chosen Users";
+          }
+
       }
 
       #region Buttons
@@ -143,49 +155,54 @@ namespace Finsa.Caravan.WebForms.Pages
       {
          try
          {
+        
+
             if (Mode == NewMode)
             {
                var newGroup = new SecGroup { Name = txtGrpName.Text, Description = txtGrpDescr.Text, Notes = txtNotes.Text, IsAdmin = chkAdmin.Checked ? 1 : 0 };
                Db.Security.AddGroup(Common.Configuration.Instance.ApplicationName, newGroup);
 
-               foreach (DataRow oDrR in crvnMultiSelectUsersGroups.RightDataTable.Rows)
+               if (crvnMultiSelectUsersGroups.RightDataTable != null) 
                {
-                  if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
-                  {
-                     Db.Security.AddUserToGroup(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, oDrR["Login"].ToString(), newGroup.Name);
-                  }
-               }
+                   foreach (DataRow oDrR in crvnMultiSelectUsersGroups.RightDataTable.Rows)
+                   {
+                       if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
+                       {
+                           Db.Security.AddUserToGroup(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, oDrR["Login"].ToString(), newGroup.Name);
+                       }
+                   }
 
-               foreach (DataRow oDrL in crvnMultiSelectUsersGroups.LeftDataTable.Rows)
-               {
-                  if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
-                  {
-                     Db.Security.RemoveUserFromGroup(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, oDrL["Login"].ToString(), newGroup.Name);
-                  }
+                   foreach (DataRow oDrL in crvnMultiSelectUsersGroups.LeftDataTable.Rows)
+                   {
+                       if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
+                       {
+                           Db.Security.RemoveUserFromGroup(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, oDrL["Login"].ToString(), newGroup.Name);
+                       }
+                   }
                }
-              
             
             }
             else if (Mode == EditMode)
             {
-             
 
-               foreach (DataRow oDrR in crvnMultiSelectUsersGroups.RightDataTable.Rows)
-               {
-                  if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
-                  {
-                     Db.Security.AddUserToGroup(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, oDrR["Login"].ToString(), GroupName);
-                  }
-               }
+                if (crvnMultiSelectUsersGroups.RightDataTable != null) 
+                {
+                    foreach (DataRow oDrR in crvnMultiSelectUsersGroups.RightDataTable.Rows)
+                    {
+                        if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
+                        {
+                            Db.Security.AddUserToGroup(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, oDrR["Login"].ToString(), GroupName);
+                        }
+                    }
 
-               foreach (DataRow oDrL in crvnMultiSelectUsersGroups.LeftDataTable.Rows)
-               {
-                  if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
-                  {
-                     Db.Security.RemoveUserFromGroup(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, oDrL["Login"].ToString(), GroupName);
-                  }
-               }
-
+                    foreach (DataRow oDrL in crvnMultiSelectUsersGroups.LeftDataTable.Rows)
+                    {
+                        if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
+                        {
+                            Db.Security.RemoveUserFromGroup(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, oDrL["Login"].ToString(), GroupName);
+                        }
+                    }
+                }
 
                var newGroup = new SecGroup { Name = txtGrpName.Text, Description = txtGrpDescr.Text, Notes= txtNotes.Text ,IsAdmin = chkAdmin.Checked ? 1 : 0 };
                Db.Security.UpdateGroup(Common.Configuration.Instance.ApplicationName, GroupName, newGroup);
@@ -196,6 +213,30 @@ namespace Finsa.Caravan.WebForms.Pages
          {
             ErrorHandler.CatchException(ex);
          }
+      }
+
+      protected void hiddenAddUserToGroup_OnTriggered(object sender, EventArgs e)
+      {
+          try
+          {
+              if (Mode == NewMode)
+              {
+
+                  MostraMultiSelectForNew();
+
+              }
+              else if (Mode == EditMode)
+              {
+
+                  MostraMultiSelectForEdit();
+                
+              }
+            
+          }
+          catch (Exception ex)
+          {
+              ErrorHandler.CatchException(ex);
+          }
       }
 
       #endregion

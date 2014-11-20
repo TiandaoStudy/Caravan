@@ -40,6 +40,15 @@ namespace Finsa.Caravan.WebForms.Pages {
         protected global::FLEX.WebForms.UserControls.DataGrid fdtgUsers;
         
         /// <summary>
+        /// crvnExportList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FLEX.Web.UserControls.ExportList crvnExportList;
+        
+        /// <summary>
         /// hiddenRefresh control.
         /// </summary>
         /// <remarks>
