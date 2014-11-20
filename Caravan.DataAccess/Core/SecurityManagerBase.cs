@@ -316,15 +316,17 @@ namespace Finsa.Caravan.DataAccess.Core
 
       #region Entries
 
+      public IList<SecEntry> Entries(string appName)
+      {
+         Raise<ArgumentException>.IfIsEmpty(appName);
+         return GetEntries(appName.ToLower(), null, null, null);
+      }
+
       public IList<SecEntry> Entries(string appName, string contextName)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
-         //Raise<ArgumentException>.IfIsEmpty(contextName);
-         if (contextName!=null)
-         {
-            return GetEntries(appName.ToLower(), contextName.ToLower(), null, null);
-         }
-         return GetEntries(appName.ToLower(), null, null, null);
+         Raise<ArgumentException>.IfIsEmpty(contextName);
+         return GetEntries(appName.ToLower(), contextName.ToLower(), null, null);
       }
 
       public IList<SecEntry> Entries(string appName, string contextName, string userLogin)

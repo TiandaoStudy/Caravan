@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Rest;
 using Finsa.Caravan.DataAccess.Sql;
@@ -109,18 +110,26 @@ namespace Finsa.Caravan.DataAccess
 
       internal static void ClearAllTablesUseOnlyInsideUnitTestsPlease()
       {
+         using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
          using (var ctx = CreateWriteContext())
          {
-            ctx.BeginTransaction();
             ctx.LogEntries.RemoveRange(ctx.LogEntries.ToList());
+            ctx.SaveChanges();
             ctx.LogSettings.RemoveRange(ctx.LogSettings.ToList());
+            ctx.SaveChanges();
             ctx.SecEntries.RemoveRange(ctx.SecEntries.ToList());
+            ctx.SaveChanges();
             ctx.SecObjects.RemoveRange(ctx.SecObjects.ToList());
+            ctx.SaveChanges();
             ctx.SecContexts.RemoveRange(ctx.SecContexts.ToList());
+            ctx.SaveChanges();
             ctx.SecUsers.RemoveRange(ctx.SecUsers.ToList());
+            ctx.SaveChanges();
             ctx.SecGroups.RemoveRange(ctx.SecGroups.ToList());
+            ctx.SaveChanges();
             ctx.SecApps.RemoveRange(ctx.SecApps.ToList());
             ctx.SaveChanges();
+            trx.Complete();
          }
       }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Transactions;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel.Logging;
 using Finsa.Caravan.Diagnostics;
@@ -32,11 +33,10 @@ namespace Finsa.Caravan.DataAccess.Sql
             Raise<ArgumentException>.IfIsEmpty(codeUnit);
             var argsList = (args == null) ? new CKeyValuePair<string, string>[0] : args.ToArray();
             Raise<ArgumentOutOfRangeException>.If(argsList.Length > MaxArgumentCount);
-
+            
+            using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
             using (var ctx = Db.CreateWriteContext())
             {
-               ctx.BeginTransaction();
-
                var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
                var typeId = type.ToString().ToLower();
                var settings = ctx.LogSettings.First(s => s.AppId == appId && s.TypeId == typeId);
@@ -80,6 +80,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                }
 
                ctx.SaveChanges();
+               trx.Complete();
                return LogResult.Success;
             }
          }
