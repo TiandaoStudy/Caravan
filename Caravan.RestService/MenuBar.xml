@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Menu xmlns="Finsa.Caravan.XmlSchemas.MenuEntries" Layout="Horizontal" OpenOnClick="False">
+   <Group>
+      <Item ID="Item1" Caption="Functions" Enabled="True">
+         <Group Layout="Vertical">
+            <Item ID="Item2" Caption="Customers List" URL="Home/Search" />
+            <Item ID="Item3" Caption="Employee List" URL="Home/CV" />
+         </Group>
+      </Item>
+      <Item ID="Item7" Caption="Security">
+         <Group Layout="Vertical">
+            <Item ID="Item70" Caption="Groups" URL="Security/SecGroupList" />
+            <Item ID="Item71" Caption="Users" URL="Security/SecUserList" />
+         </Group>
+      </Item>
+      <Item ID="Item8" Caption="Tools">
+         <Group Layout="Vertical">
+            <Item ID="Item83" Caption="Code Editor" URL="Tools/CodeEditor" />
+            <Item ID="Item84" Caption="Log Search" URL="Tools/LogSearch" />
+            <Item ID="Item85" Caption="Cache Overview" URL="Tools/CacheOverview" />
+         </Group>
+      </Item>
+      <Item ID="Item112" Caption="Manual" ClientCall="window.open('http://www.bing.it/')" />
+   </Group>
+</Menu>
