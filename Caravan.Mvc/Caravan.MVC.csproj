@@ -1,0 +1,696 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DAA22A2C-A101-4F71-B4E1-F0DB283A642C}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Finsa.Caravan.Mvc</RootNamespace>
+    <AssemblyName>Finsa.Caravan.Mvc</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CodeProject.ObjectPool">
+      <HintPath>..\packages\CodeProject.ObjectPool.1.0.6\lib\net40\CodeProject.ObjectPool.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.37.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Dapper.1.38\lib\net45\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MvcCheckBoxList">
+      <HintPath>..\packages\MvcCheckBoxList.1.4.4.5\lib\net45\MvcCheckBoxList.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PommaLabs.GRAMPA, Version=0.18.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PommaLabs.GRAMPA.1.2.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+    </Reference>
+    <Reference Include="PommaLabs.KVLite">
+      <HintPath>..\packages\PommaLabs.KVLite.0.6.5\lib\net451\PommaLabs.KVLite.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorGenerator.Mvc">
+      <HintPath>..\packages\RazorGenerator.Mvc.2.2.3\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.Core.MSIL.1.0.94.0\lib\net451\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebActivatorEx.2.0.5\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Fonts\fontawesome-webfont.svg" />
+    <Content Include="Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="bower.json" />
+    <Content Include="Fonts\_tMhxyW6i8lbI7YsUdFlGA.eot" />
+    <Content Include="Fonts\_xyN3apAT_yRRDeqB3sPRg.woff" />
+    <Content Include="Fonts\fontawesome-webfont.eot" />
+    <Content Include="Fonts\fontawesome-webfont.ttf" />
+    <Content Include="Fonts\fontawesome-webfont.woff" />
+    <Content Include="Fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Controls\DataVisualization\BootstrapTable_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BootstrapTable_.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Controls\Dummy_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Dummy_.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Controls\PageElements\CaravanMenuBar_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>CaravanMenuBar_.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Controls\PageElements\CaravanPageFooter_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>CaravanPageFooter_.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Controls\PageElements\CaravanPageHeader_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>CaravanPageHeader_.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Controls\PageElements\CaravanVerticalSearchCriteria_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>CaravanVerticalSearchCriteria_.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Controls\ValueHolders\BootstrapDatePicker_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BootstrapDatePicker_.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Controls\ValueHolders\BootstrapSwitch_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BootstrapSwitch_.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Controls\ValueHolders\CaravanCheckBoxList_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>CaravanCheckBoxList_.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Controls\ValueHolders\JQueryAutoComplete_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>JQueryAutoComplete_.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Controls\ValueHolders\JQueryDatePicker_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>JQueryDatePicker_.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Controls\ValueHolders\JQuerySelect2_.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>JQuerySelect2_.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="KVLite\x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KVLite\x86\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\autocomplete-defs.js">
+      <DependentUpon>autocomplete-defs.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\autocomplete-defs.min.js">
+      <DependentUpon>autocomplete-defs.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\backbone.min.js.map">
+      <DependentUpon>backbone.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\base64.coffee" />
+    <Content Include="Scripts\base64.min.js.map">
+      <DependentUpon>base64.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap-datepicker.min.js.map">
+      <DependentUpon>bootstrap-datepicker.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap-hover-dropdown.min.js.map">
+      <DependentUpon>bootstrap-hover-dropdown.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap-maxlength.min.js.map">
+      <DependentUpon>bootstrap-maxlength.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap-switch.min.js.map">
+      <DependentUpon>bootstrap-switch.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap-table-export.js" />
+    <Content Include="Scripts\bootstrap-table-export.min.js">
+      <DependentUpon>bootstrap-table-export.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap-table.min.js.map">
+      <DependentUpon>bootstrap-table.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap.min.js.map">
+      <DependentUpon>bootstrap.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\flex.coffee" />
+    <Content Include="Scripts\html5shiv.min.js.map">
+      <DependentUpon>html5shiv.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap-table-export.min.js.map">
+      <DependentUpon>bootstrap-table-export.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\autocomplete-defs.coffee" />
+    <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Images\jquery-ui\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Images\jquery-ui\ui-bg_flat_100_3071A9_40x100.png" />
+    <Content Include="Images\jquery-ui\ui-bg_flat_100_428bca_40x100.png" />
+    <Content Include="Images\jquery-ui\ui-bg_flat_100_f2dede_40x100.png" />
+    <Content Include="Images\jquery-ui\ui-bg_flat_100_fcf8e3_40x100.png" />
+    <Content Include="Images\jquery-ui\ui-bg_flat_100_ffffff_40x100.png" />
+    <Content Include="Images\jquery-ui\ui-icons_222222_256x240.png" />
+    <Content Include="Images\jquery-ui\ui-icons_454545_256x240.png" />
+    <Content Include="Images\jquery-ui\ui-icons_8a6d3b_256x240.png" />
+    <Content Include="Images\jquery-ui\ui-icons_a94442_256x240.png" />
+    <Content Include="Images\jquery-ui\ui-icons_FFF_256x240.png" />
+    <Content Include="Images\pattern.png" />
+    <Content Include="Images\select2-spinner.gif" />
+    <Content Include="Images\select2.png" />
+    <Content Include="Images\select2x2.png" />
+    <Content Include="Scripts\backbone.js" />
+    <Content Include="Scripts\backbone.min.js">
+      <DependentUpon>backbone.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\base64.js">
+      <DependentUpon>base64.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\base64.min.js">
+      <DependentUpon>base64.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap-datepicker.min.js">
+      <DependentUpon>bootstrap-datepicker.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap-hover-dropdown.js" />
+    <Content Include="Scripts\bootstrap-hover-dropdown.min.js">
+      <DependentUpon>bootstrap-hover-dropdown.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap-maxlength.js" />
+    <Content Include="Scripts\bootstrap-maxlength.min.js">
+      <DependentUpon>bootstrap-maxlength.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap-switch.js" />
+    <Content Include="Scripts\bootstrap-switch.min.js">
+      <DependentUpon>bootstrap-switch.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap-table.js" />
+    <Content Include="Scripts\bootstrap-table.min.js">
+      <DependentUpon>bootstrap-table.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js">
+      <DependentUpon>bootstrap.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\flex.js">
+      <DependentUpon>flex.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\flex.min.js">
+      <DependentUpon>flex.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\html5shiv.js" />
+    <Content Include="Scripts\html5shiv.min.js">
+      <DependentUpon>html5shiv.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.min.js">
+      <DependentUpon>jquery-ui.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery.base64.js" />
+    <Content Include="Scripts\jquery.base64.min.js">
+      <DependentUpon>jquery.base64.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js">
+      <DependentUpon>respond.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\select2.js" />
+    <Content Include="Scripts\select2.min.js">
+      <DependentUpon>select2.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\spin.js" />
+    <Content Include="Scripts\spin.min.js" />
+    <Content Include="Scripts\tableExport.js" />
+    <Content Include="Scripts\tableExport.min.js">
+      <DependentUpon>tableExport.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\underscore.js" />
+    <Content Include="Scripts\underscore.min.js">
+      <DependentUpon>underscore.js</DependentUpon>
+    </Content>
+    <Content Include="Styles\bootstrap-datepicker3.css" />
+    <Content Include="Styles\bootstrap-datepicker3.min.css">
+      <DependentUpon>bootstrap-datepicker3.css</DependentUpon>
+    </Content>
+    <Content Include="Styles\bootstrap-reference.css">
+      <DependentUpon>bootstrap-reference.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\bootstrap-reference.min.css">
+      <DependentUpon>bootstrap-reference.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\bootstrap-switch.css" />
+    <Content Include="Styles\bootstrap-switch.min.css">
+      <DependentUpon>bootstrap-switch.css</DependentUpon>
+    </Content>
+    <Content Include="Styles\bootstrap-table.css" />
+    <Content Include="Styles\bootstrap-table.min.css">
+      <DependentUpon>bootstrap-table.css</DependentUpon>
+    </Content>
+    <Content Include="Styles\bootstrap.css">
+      <DependentUpon>bootstrap.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\bootstrap.min.css">
+      <DependentUpon>bootstrap.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\Bootstrap\variables.css">
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\Bootstrap\variables.min.css">
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\flex.css">
+      <DependentUpon>flex.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\flex.min.css">
+      <DependentUpon>flex.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\font-awesome.css" />
+    <Content Include="Styles\font-awesome.min.css">
+      <DependentUpon>font-awesome.css</DependentUpon>
+    </Content>
+    <Content Include="Styles\Fonts.css">
+      <DependentUpon>fonts.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\Fonts.min.css">
+      <DependentUpon>fonts.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\jquery-ui.css">
+      <DependentUpon>jquery-ui.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\jquery-ui.min.css">
+      <DependentUpon>jquery-ui.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\select2-bootstrap.css" />
+    <Content Include="Styles\select2-bootstrap.min.css">
+      <DependentUpon>select2-bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="Styles\select2.css" />
+    <Content Include="Styles\select2.min.css">
+      <DependentUpon>select2.css</DependentUpon>
+    </Content>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="Controllers\CaravanController.cs" />
+    <Compile Include="Controllers\SecurityController.cs" />
+    <Compile Include="Controls\ControlOptionsBase.cs" />
+    <Compile Include="Controls\DataVisualization\BootstrapTableOptions.cs" />
+    <Compile Include="Controls\DataVisualization\BootstrapTable_.generated.cs">
+      <DependentUpon>BootstrapTable_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\Dummy_.generated.cs">
+      <DependentUpon>Dummy_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\PageElements\CaravanMenuBarHelper.cs" />
+    <Compile Include="Controls\PageElements\CaravanMenuBar_.generated.cs">
+      <DependentUpon>CaravanMenuBar_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\PageElements\CaravanPageFooter_.generated.cs">
+      <DependentUpon>CaravanPageFooter_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\PageElements\CaravanPageHeader_.generated.cs">
+      <DependentUpon>CaravanPageHeader_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\PageElements\CaravanVerticalSearchCriteriaOptions.cs" />
+    <Compile Include="Controls\PageElements\CaravanVerticalSearchCriteria_.generated.cs">
+      <DependentUpon>CaravanVerticalSearchCriteria_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\ValueHolders\BootstrapDatePickerOptions.cs" />
+    <Compile Include="Controls\ValueHolders\BootstrapDatePicker_.generated.cs">
+      <DependentUpon>BootstrapDatePicker_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\ValueHolders\BootstrapSwitchOptions.cs" />
+    <Compile Include="Controls\ValueHolders\BootstrapSwitch_.generated.cs">
+      <DependentUpon>BootstrapSwitch_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\ValueHolders\CaravanCheckBoxList_.generated.cs">
+      <DependentUpon>CaravanCheckBoxList_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\ValueHolders\JQueryAutoCompleteOptions.cs" />
+    <Compile Include="Controls\ValueHolders\JQueryAutoComplete_.generated.cs">
+      <DependentUpon>JQueryAutoComplete_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\ValueHolders\JQueryDatePickerOptions.cs" />
+    <Compile Include="Controls\ValueHolders\JQueryDatePicker_.generated.cs">
+      <DependentUpon>JQueryDatePicker_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\ValueHolders\JQuerySelect2Options.cs" />
+    <Compile Include="Controls\ValueHolders\JQuerySelect2_.generated.cs">
+      <DependentUpon>JQuerySelect2_.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controls\ValueHolders\ValueHolderOptionsBase.cs" />
+    <Compile Include="ErrorMessages.Designer.cs">
+      <DependentUpon>ErrorMessages.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Security\SecUserList.cs" />
+    <Compile Include="ViewModels\Security\SecGroupList.cs" />
+    <Compile Include="Views\Shared\CoreLayoutHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Scripts\jquery-2.1.1.min.map" />
+    <Content Include="Styles\bootstrap-reference.less" />
+    <Content Include="Styles\bootstrap.less" />
+    <Content Include="Styles\Bootstrap\alerts.less" />
+    <Content Include="Styles\Bootstrap\badges.less" />
+    <Content Include="Styles\Bootstrap\bootstrap.less" />
+    <Content Include="Styles\Bootstrap\breadcrumbs.less" />
+    <Content Include="Styles\Bootstrap\button-groups.less" />
+    <Content Include="Styles\Bootstrap\buttons.less" />
+    <Content Include="Styles\Bootstrap\carousel.less" />
+    <Content Include="Styles\Bootstrap\close.less" />
+    <Content Include="Styles\Bootstrap\code.less" />
+    <Content Include="Styles\Bootstrap\component-animations.less" />
+    <Content Include="Styles\Bootstrap\dropdowns.less" />
+    <Content Include="Styles\Bootstrap\forms.less" />
+    <Content Include="Styles\Bootstrap\glyphicons.less" />
+    <Content Include="Styles\Bootstrap\grid.less" />
+    <Content Include="Styles\Bootstrap\input-groups.less" />
+    <Content Include="Styles\Bootstrap\jumbotron.less" />
+    <Content Include="Styles\Bootstrap\labels.less" />
+    <Content Include="Styles\Bootstrap\list-group.less" />
+    <Content Include="Styles\Bootstrap\media.less" />
+    <Content Include="Styles\Bootstrap\mixins.less" />
+    <Content Include="Styles\Bootstrap\mixins\alerts.less" />
+    <Content Include="Styles\Bootstrap\mixins\background-variant.less" />
+    <Content Include="Styles\Bootstrap\mixins\border-radius.less" />
+    <Content Include="Styles\Bootstrap\mixins\buttons.less" />
+    <Content Include="Styles\Bootstrap\mixins\center-block.less" />
+    <Content Include="Styles\Bootstrap\mixins\clearfix.less" />
+    <Content Include="Styles\Bootstrap\mixins\forms.less" />
+    <Content Include="Styles\Bootstrap\mixins\gradients.less" />
+    <Content Include="Styles\Bootstrap\mixins\grid-framework.less" />
+    <Content Include="Styles\Bootstrap\mixins\grid.less" />
+    <Content Include="Styles\Bootstrap\mixins\hide-text.less" />
+    <Content Include="Styles\Bootstrap\mixins\image.less" />
+    <Content Include="Styles\Bootstrap\mixins\labels.less" />
+    <Content Include="Styles\Bootstrap\mixins\list-group.less" />
+    <Content Include="Styles\Bootstrap\mixins\nav-divider.less" />
+    <Content Include="Styles\Bootstrap\mixins\nav-vertical-align.less" />
+    <Content Include="Styles\Bootstrap\mixins\opacity.less" />
+    <Content Include="Styles\Bootstrap\mixins\pagination.less" />
+    <Content Include="Styles\Bootstrap\mixins\panels.less" />
+    <Content Include="Styles\Bootstrap\mixins\progress-bar.less" />
+    <Content Include="Styles\Bootstrap\mixins\reset-filter.less" />
+    <Content Include="Styles\Bootstrap\mixins\resize.less" />
+    <Content Include="Styles\Bootstrap\mixins\responsive-visibility.less" />
+    <Content Include="Styles\Bootstrap\mixins\size.less" />
+    <Content Include="Styles\Bootstrap\mixins\tab-focus.less" />
+    <Content Include="Styles\Bootstrap\mixins\table-row.less" />
+    <Content Include="Styles\Bootstrap\mixins\text-emphasis.less" />
+    <Content Include="Styles\Bootstrap\mixins\text-overflow.less" />
+    <Content Include="Styles\Bootstrap\mixins\vendor-prefixes.less" />
+    <Content Include="Styles\Bootstrap\modals.less" />
+    <Content Include="Styles\Bootstrap\navbar.less" />
+    <Content Include="Styles\Bootstrap\navs.less" />
+    <Content Include="Styles\Bootstrap\normalize.less" />
+    <Content Include="Styles\Bootstrap\pager.less" />
+    <Content Include="Styles\Bootstrap\pagination.less" />
+    <Content Include="Styles\Bootstrap\panels.less" />
+    <Content Include="Styles\Bootstrap\popovers.less" />
+    <Content Include="Styles\Bootstrap\print.less" />
+    <Content Include="Styles\Bootstrap\progress-bars.less" />
+    <Content Include="Styles\Bootstrap\responsive-embed.less" />
+    <Content Include="Styles\Bootstrap\responsive-utilities.less" />
+    <Content Include="Styles\Bootstrap\scaffolding.less" />
+    <Content Include="Styles\Bootstrap\tables.less" />
+    <Content Include="Styles\Bootstrap\theme.less" />
+    <Content Include="Styles\Bootstrap\thumbnails.less" />
+    <Content Include="Styles\Bootstrap\tooltip.less" />
+    <Content Include="Styles\Bootstrap\type.less" />
+    <Content Include="Styles\Bootstrap\utilities.less" />
+    <Content Include="Styles\Bootstrap\variables.less" />
+    <Content Include="Styles\Bootstrap\wells.less" />
+    <Content Include="Styles\flex.less" />
+    <Content Include="Styles\fonts.less" />
+    <Content Include="Styles\jquery-ui.less" />
+    <Content Include="Scripts\jquery-ui.min.js.map">
+      <DependentUpon>jquery-ui.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\respond.min.js.map">
+      <DependentUpon>respond.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\select2.min.js.map">
+      <DependentUpon>select2.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\underscore.min.js.map">
+      <DependentUpon>underscore.js</DependentUpon>
+    </Content>
+    <Content Include="Views\Shared\CoreLayout.cshtml" />
+    <Content Include="Views\Shared\Modals\ModalLayout.cshtml" />
+    <Content Include="Views\Shared\Pages\PageLayout.cshtml" />
+    <Content Include="Views\Shared\Pages\VerticalSearchLayout.cshtml" />
+    <Content Include="Views\Shared\Web.config" />
+    <Content Include="Views\Security\SecGroupList.cshtml" />
+    <Content Include="Scripts\jquery.base64.min.js.map">
+      <DependentUpon>jquery.base64.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\tableExport.min.js.map">
+      <DependentUpon>tableExport.js</DependentUpon>
+    </Content>
+    <Content Include="Views\Security\SecUserList.cshtml" />
+    <Content Include="Views\Security\ConnectedUsers.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Images\select2\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ErrorMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Caravan.Common\Caravan.Common.csproj">
+      <Project>{11904ED0-33D2-4005-8766-B1E393A32EA7}</Project>
+      <Name>Caravan.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Caravan.DataAccess\Caravan.DataAccess.csproj">
+      <Project>{418B2D91-D53E-49BF-98FC-66DA9490DC37}</Project>
+      <Name>Caravan.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Caravan.Helpers\Caravan.Helpers.csproj">
+      <Project>{ceff687b-7817-4326-9310-ab655407b610}</Project>
+      <Name>Caravan.Helpers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>55525</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:51185/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>:: FONTS - NuGet Packager
+:: FONTS - Sample Web UI
+copy $(ProjectDir)\Fonts\*.* $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Fonts
+
+:: IMAGES - NuGet Packager
+:: IMAGES - Sample Web UI
+copy $(ProjectDir)\Images\*.* $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Images
+
+:: LAYOUTS - NuGet Packager
+:: LAYOUTS - Sample Web UI
+copy $(ProjectDir)\Views\web.config $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Views
+copy $(ProjectDir)\Views\Security\*.cshtml $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Views\Security
+copy $(ProjectDir)\Views\Shared\*.cshtml $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Views\Shared
+copy $(ProjectDir)\Views\Shared\Modals\*.cshtml $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Views\Shared\Modals
+copy $(ProjectDir)\Views\Shared\Pages\*.cshtml $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Views\Shared\Pages
+
+:: SCRIPTS - NuGet Packager
+:: SCRIPTS - Sample Web UI
+copy $(ProjectDir)\Scripts\*.min.js $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Scripts
+copy $(ProjectDir)\Scripts\*.map $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Scripts
+
+:: STYLES - NuGet Packager
+:: STYLES - Sample Web UI
+copy $(ProjectDir)\Styles\*.min.css $(SolutionDir)\Sample.WebUI.Mvc\Caravan.Mvc\Styles</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
