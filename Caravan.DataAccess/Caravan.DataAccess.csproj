@@ -23,6 +23,7 @@
     <DefineConstants>TRACE;DEBUG;USETHROWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Finsa.Caravan.DataAccess.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,7 +36,8 @@
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>IF EXIST $(SolutionDir)NuGetPackager.DataAccess (
-    copy $(TargetDir)Finsa.Caravan.DataAccess.* "$(SolutionDir)NuGetPackager.DataAccess/lib/net40"
+    copy $(TargetDir)Finsa.Caravan.DataAccess.dll "$(SolutionDir)NuGetPackager.DataAccess/lib/net40"
+    copy $(TargetDir)Finsa.Caravan.DataAccess.xml "$(SolutionDir)NuGetPackager.DataAccess/lib/net40"
 )
     if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
     xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"

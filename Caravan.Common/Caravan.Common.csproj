@@ -23,6 +23,7 @@
     <DefineConstants>TRACE;DEBUG;USETHROWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Finsa.Caravan.Common.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -123,7 +124,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>IF EXIST $(SolutionDir)NuGetPackager.Common (
-    copy $(TargetDir)Finsa.Caravan.Common.* "$(SolutionDir)NuGetPackager.Common/lib/net40"
+    copy $(TargetDir)Finsa.Caravan.Common.dll "$(SolutionDir)NuGetPackager.Common/lib/net40"
+    copy $(TargetDir)Finsa.Caravan.Common.xml "$(SolutionDir)NuGetPackager.Common/lib/net40"
 )</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
