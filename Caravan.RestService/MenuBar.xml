@@ -19,6 +19,7 @@
             <Item ID="Item83" Caption="Code Editor" URL="Tools/CodeEditor" />
             <Item ID="Item84" Caption="Log Search" URL="Tools/LogSearch" />
             <Item ID="Item85" Caption="Cache Overview" URL="Tools/CacheOverview" />
+           <Item ID="Item86" Caption="Connected Users" URL="Security/ConnectedUsers" />
          </Group>
       </Item>
       <Item ID="Item112" Caption="Manual" ClientCall="window.open('http://www.bing.it/')" />

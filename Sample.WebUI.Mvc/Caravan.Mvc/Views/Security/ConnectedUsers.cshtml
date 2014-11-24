@@ -9,7 +9,7 @@
 @model Finsa.Caravan.Mvc.ViewModels.Security.SecUserList
 
 @{
-   Layout = "~/Caravan.Mvc/Views/Shared/Pages/VerticalSearchLayout.cshtml";
+    Layout = "~/Caravan.Mvc/Views/Shared/Pages/VerticalSearchLayout.cshtml";
 }
 
 @section ScriptSection {
@@ -17,7 +17,7 @@
 }
 
 @section SearchCriteriaSection {
-   @Html.CaravanVerticalSearchCriteria(new List<CaravanVerticalSearchCriteriumOptions>
+    @Html.CaravanVerticalSearchCriteria(new List<CaravanVerticalSearchCriteriumOptions>
    {
       new CaravanVerticalSearchCriteriumOptions
       {
@@ -35,50 +35,50 @@
 }
 
 @section DataGridSection {
-   @Ajax.BootstrapTable(new BootstrapTableOptions
+    @Ajax.BootstrapTable(new BootstrapTableOptions
    {
-      ID = "tblUsers",
-      Items = Model.Users,
-      Columns = new []
+       ID = "tblUsers",
+       Items = Model.Users,
+       Columns = new[]
       {
          new BootstrapTableColumnOptions
          {
-            ID = "userId", 
-            Header = "ID", 
-            Sortable = true, 
-            HorizontalAlignment = HorizonalTextAlignment.Right, 
+            ID = "userId",
+            Header = "ID",
+            Sortable = true,
+            HorizontalAlignment = HorizonalTextAlignment.Right,
             Control = x => x.Id
          },
          new BootstrapTableColumnOptions
          {
-            ID = "userFirstName", 
-            Header = "FirstName", 
-            Sortable = true, 
-            HorizontalAlignment = HorizonalTextAlignment.Left, 
+            ID = "userFirstName",
+            Header = "FirstName",
+            Sortable = true,
+            HorizontalAlignment = HorizonalTextAlignment.Left,
             Control = x => x.FirstName
          },
          new BootstrapTableColumnOptions
          {
-            ID = "userLastName", 
-            Header = "LastName", 
-            Sortable = true, 
-            HorizontalAlignment = HorizonalTextAlignment.Left, 
+            ID = "userLastName",
+            Header = "LastName",
+            Sortable = true,
+            HorizontalAlignment = HorizonalTextAlignment.Left,
             Control = x => x.LastName
          },
          new BootstrapTableColumnOptions
          {
-            ID = "userLogin", 
-            Header = "Login", 
-            Sortable = true, 
-            HorizontalAlignment = HorizonalTextAlignment.Left, 
+            ID = "userLogin",
+            Header = "Login",
+            Sortable = true,
+            HorizontalAlignment = HorizonalTextAlignment.Left,
             Control = x => x.Login
-         },         
+         },
          new BootstrapTableColumnOptions
          {
-            ID = "userEmail", 
-            Header = "Email", 
-            Sortable = true, 
-            HorizontalAlignment = HorizonalTextAlignment.Left, 
+            ID = "userEmail",
+            Header = "Email",
+            Sortable = true,
+            HorizontalAlignment = HorizonalTextAlignment.Left,
             Control = x => x.Email
          },
          new BootstrapTableColumnOptions{
