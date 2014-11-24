@@ -595,6 +595,7 @@
       <DependentUpon>tableExport.js</DependentUpon>
     </Content>
     <Content Include="Views\Security\SecUserList.cshtml" />
+    <Content Include="Views\Security\ConnectedUsers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

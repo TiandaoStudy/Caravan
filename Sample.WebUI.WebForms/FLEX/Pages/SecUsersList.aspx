@@ -6,6 +6,7 @@
 <%@ Register TagPrefix="crvn" TagName="ImageButton" Src="~/FLEX/UserControls/Ajax/ImageButton.ascx" %>
 <%@ Register TagPrefix="crvn" TagName="AutoSuggest" Src="~/FLEX/UserControls/Ajax/AutoSuggest.ascx" %>
 <%@ Register TagPrefix="crvn" TagName="CollapsibleCheckBoxList" Src="~/FLEX/UserControls/Ajax/CollapsibleCheckBoxList.ascx" %>
+<%@ Register TagPrefix="crvn" TagName="ExportList" Src="~/FLEX/UserControls/ExportList.ascx" %>
 
 <asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">
    <title>User Management</title>
@@ -116,9 +117,16 @@
          <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email" />
          <asp:TemplateField HeaderText="Active" SortExpression="Active">
             <ItemTemplate>
-               <asp:CheckBox ID="chkActive" runat="server" Enabled="False" Checked='<%# Eval("Active").Equals(1) %>' />
+               <asp:CheckBox ID="chkActive" runat="server"  Enabled="False" Checked='<%# Eval("Active").Equals(1) %>' />
             </ItemTemplate>
          </asp:TemplateField>
+
+         <asp:TemplateField visible="false">
+            <ItemTemplate>
+               <asp:Label ID="lbActive" runat="server" Text=  '<%# Eval("Active").Equals(1)? "Yes":"No" %>'   />
+            </ItemTemplate>
+         </asp:TemplateField>
+        
       </Columns>
    </crvn:DataGrid>
 </asp:Content>
@@ -129,6 +137,7 @@
 
 <asp:Content ID="aspRightButtonsContent" ContentPlaceHolderID="rightButtonsContent" runat="server">
   <%-- <crvn:ImageButton runat="server" ID="btnInsert" ButtonClass="btn btn-success" ButtonText="Insert" IconClass="glyphicon glyphicon-plus" OnClientClick="return insertGroup();" />--%>
+   <crvn:ExportList runat="server" ID="crvnExportList" OnDataSourceNeeded="crvnExportList_DataSourceNeeded" ReportName="UserManagement"></crvn:ExportList> 
 </asp:Content>
 
 <asp:Content ID="aspLowerContent" ContentPlaceHolderID="lowerContent" runat="server">
