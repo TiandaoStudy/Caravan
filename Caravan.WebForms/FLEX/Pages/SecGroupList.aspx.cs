@@ -117,6 +117,23 @@ namespace Finsa.Caravan.WebForms.Pages
          }
       }
 
+      protected void crvnExportList_DataSourceNeeded(object sender, EventArgs e)
+      {
+          try
+          {
+              crvnExportList.SetDataSource(fdtgGroups, "Groups", new FLEX.Web.UserControls.ExportList.ColumnData[]{
+                                            new FLEX.Web.UserControls.ExportList.ColumnData{Index=1,Name="Id", Type=FLEX.Web.UserControls.ExportList.ColumnType.Column},
+                                            new FLEX.Web.UserControls.ExportList.ColumnData{Index=2,Name="Name", Type=FLEX.Web.UserControls.ExportList.ColumnType.Column},
+                                            new FLEX.Web.UserControls.ExportList.ColumnData{Index=3,Name="Description", Type=FLEX.Web.UserControls.ExportList.ColumnType.Column},
+                                            new FLEX.Web.UserControls.ExportList.ColumnData{Index=4,Name="Notes", Type=FLEX.Web.UserControls.ExportList.ColumnType.Column},
+                                            new FLEX.Web.UserControls.ExportList.ColumnData{Index=6,Name="IsAdmin", Type=FLEX.Web.UserControls.ExportList.ColumnType.Column}});
+          }
+          catch (Exception ex)
+          {
+              ErrorHandler.CatchException(ex);
+          }
+      }
+
       #endregion
    }
 }

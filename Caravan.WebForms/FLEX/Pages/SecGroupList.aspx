@@ -5,6 +5,7 @@
 <%@ Register TagPrefix="crvn" TagName="HiddenTrigger" Src="~/FLEX/UserControls/Ajax/HiddenTrigger.ascx" %>
 <%@ Register TagPrefix="crvn" TagName="ImageButton" Src="~/FLEX/UserControls/Ajax/ImageButton.ascx" %>
 <%@ Register TagPrefix="crvn" TagName="AutoSuggest" Src="~/FLEX/UserControls/Ajax/AutoSuggest.ascx" %>
+<%@ Register TagPrefix="crvn" TagName="ExportList" Src="~/FLEX/UserControls/ExportList.ascx" %>
 
 <asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">
    <title>Group Management</title>
@@ -105,6 +106,13 @@
                <asp:CheckBox ID="chkAdmin" runat="server" Enabled="False" Checked='<%# Eval("IsAdmin").Equals(1) %>' />
             </ItemTemplate>
          </asp:TemplateField>
+
+         <asp:TemplateField visible="false">
+            <ItemTemplate>
+               <asp:Label ID="lbAdmin" runat="server" Text=  '<%# Eval("IsAdmin").Equals(1)? "Yes":"No" %>'   />
+            </ItemTemplate>
+         </asp:TemplateField>
+
       </Columns>
    </crvn:DataGrid>
 </asp:Content>
@@ -115,6 +123,7 @@
 
 <asp:Content ID="aspRightButtonsContent" ContentPlaceHolderID="rightButtonsContent" runat="server">
    <crvn:ImageButton runat="server" ID="btnInsert" ButtonClass="btn btn-success" ButtonText="Insert" IconClass="glyphicon glyphicon-plus" OnClientClick="return insertGroup();" />
+   <crvn:ExportList runat="server" ID="crvnExportList" OnDataSourceNeeded="crvnExportList_DataSourceNeeded" ReportName="GroupManagement"></crvn:ExportList> 
 </asp:Content>
 
 <asp:Content ID="aspLowerContent" ContentPlaceHolderID="lowerContent" runat="server">

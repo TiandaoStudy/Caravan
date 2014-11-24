@@ -292,10 +292,11 @@ namespace FLEX.Web.UserControls.Ajax
 
          for (var i = 2; i < aLeftRow.Cells.Count; i++)
          {
-            _dataRigthToAddRow[i - 2] = aLeftRow.Cells[i].Text;
-            _dataRigthOriginaleToAddRow[i - 2] = aLeftRow.Cells[i].Text;
-            _dataLeftRowToRemove[i - 2] = aLeftRow.Cells[i].Text;
-            _dataLeftOriginaleRowToRemove[i - 2] = aLeftRow.Cells[i].Text;
+
+             _dataRigthToAddRow[i - 2] = aLeftRow.Cells[i].Text == "&nbsp;" ? null : aLeftRow.Cells[i].Text;
+             _dataRigthOriginaleToAddRow[i - 2] = aLeftRow.Cells[i].Text == "&nbsp;" ? null : aLeftRow.Cells[i].Text;
+             _dataLeftRowToRemove[i - 2] = aLeftRow.Cells[i].Text == "&nbsp;" ? null : aLeftRow.Cells[i].Text;
+             _dataLeftOriginaleRowToRemove[i - 2] = aLeftRow.Cells[i].Text == "&nbsp;" ? null : aLeftRow.Cells[i].Text;
          }
 
          _tableRight.Rows.Add(_dataRigthToAddRow);
@@ -323,7 +324,7 @@ namespace FLEX.Web.UserControls.Ajax
             {
                if (i == _dataLeftRowToRemove.ItemArray.Length - 1)
                {
-                  if (_dataLeftRowToRemove.ItemArray[i] is DBNull)
+                   if (_dataLeftRowToRemove.ItemArray[i] is DBNull)
                   {
                      _expr_filter += _dataLeftRowToRemove.Table.Columns[i].ColumnName + " is NULL";
                   }
@@ -336,9 +337,9 @@ namespace FLEX.Web.UserControls.Ajax
                }
                else
                {
-                  if (_dataLeftRowToRemove.ItemArray[i] is DBNull)
+                   if (_dataLeftRowToRemove.ItemArray[i] is DBNull)
                   {
-                     _expr_filter += _dataLeftRowToRemove.Table.Columns[i].ColumnName + " is NULL and";
+                     _expr_filter += _dataLeftRowToRemove.Table.Columns[i].ColumnName + " is NULL and ";
                   }
                   else
                   {
@@ -412,10 +413,10 @@ namespace FLEX.Web.UserControls.Ajax
 
          for (var i = 2; i < aRightRow.Cells.Count; i++)
          {
-            _dataRigthRowToRemove[i - 2] = aRightRow.Cells[i].Text;
-            _dataRigthOriginaleRowToRemove[i - 2] = aRightRow.Cells[i].Text;
-            _dataLeftRowToAdd[i - 2] = aRightRow.Cells[i].Text;
-            _dataLeftOriginaleRowToAdd[i - 2] = aRightRow.Cells[i].Text;
+             _dataRigthRowToRemove[i - 2] = aRightRow.Cells[i].Text == "&nbsp;" ? null : aRightRow.Cells[i].Text;
+             _dataRigthOriginaleRowToRemove[i - 2] = aRightRow.Cells[i].Text == "&nbsp;" ? null : aRightRow.Cells[i].Text;
+             _dataLeftRowToAdd[i - 2] = aRightRow.Cells[i].Text == "&nbsp;" ? null : aRightRow.Cells[i].Text;
+             _dataLeftOriginaleRowToAdd[i - 2] = aRightRow.Cells[i].Text == "&nbsp;" ? null : aRightRow.Cells[i].Text;
          }
 
          _tableLeft.Rows.Add(_dataLeftRowToAdd);
@@ -427,7 +428,7 @@ namespace FLEX.Web.UserControls.Ajax
 
          if (_dataRigthRowToRemove.ItemArray.Length == 1)
          {
-            if (_dataRigthRowToRemove.ItemArray[0] is DBNull)
+             if (_dataRigthRowToRemove.ItemArray[0] is DBNull)
             {
                _expr_filter += _dataRigthRowToRemove.Table.Columns[0].ColumnName + " is NULL";
             }
@@ -443,7 +444,7 @@ namespace FLEX.Web.UserControls.Ajax
             {
                if (i == _dataRigthRowToRemove.ItemArray.Length - 1)
                {
-                  if (_dataRigthRowToRemove.ItemArray[i] is DBNull)
+                   if (_dataRigthRowToRemove.ItemArray[i] is DBNull)
                   {
                      _expr_filter += _dataRigthRowToRemove.Table.Columns[i].ColumnName + " is NULL";
                   }
@@ -455,9 +456,9 @@ namespace FLEX.Web.UserControls.Ajax
                }
                else
                {
-                  if (_dataRigthRowToRemove.ItemArray[i] is DBNull)
+                   if (_dataRigthRowToRemove.ItemArray[i] is DBNull)
                   {
-                     _expr_filter += _dataRigthRowToRemove.Table.Columns[i].ColumnName + " is NULL and";
+                     _expr_filter += _dataRigthRowToRemove.Table.Columns[i].ColumnName + " is NULL and ";
                   }
                   else
                   {
