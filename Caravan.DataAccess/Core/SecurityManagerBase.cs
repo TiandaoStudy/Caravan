@@ -89,11 +89,11 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                throw new GroupExistingException();
             }
-            Db.Logger.LogWarnAsync<TSec>("ADDED GROUP", context: logCtx, applicationName: appName);
+            Db.Logger.LogWarnAsync<TSec>("ADDED GROUP", context: logCtx, appName: appName);
          }
          catch (Exception ex)
          {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, applicationName: appName);
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, appName: appName);
             throw;
          }
 
@@ -112,11 +112,11 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);   
             }
-            Db.Logger.LogWarnAsync<TSec>("REMOVED GROUP", context: logCtx, applicationName: appName);
+            Db.Logger.LogWarnAsync<TSec>("REMOVED GROUP", context: logCtx, appName: appName);
          }
          catch (Exception ex)
          {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, applicationName: appName);
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, appName: appName);
             throw;
          }
       }
@@ -137,11 +137,11 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);   
             }
-            Db.Logger.LogWarnAsync<TSec>("UPDATED GROUP", context: logCtx, applicationName: appName);
+            Db.Logger.LogWarnAsync<TSec>("UPDATED GROUP", context: logCtx, appName: appName);
          }
          catch (Exception ex)
          {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, applicationName: appName);
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, appName: appName);
             throw;
          }
       }
@@ -183,11 +183,11 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                throw new UserExistingException();
             }
-            Db.Logger.LogWarnAsync<TSec>("ADDED USER", context: logCtx, applicationName: appName);
+            Db.Logger.LogWarnAsync<TSec>("ADDED USER", context: logCtx, appName: appName);
          }
          catch (Exception ex)
          {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, applicationName: appName);
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, appName: appName);
             throw;
          }
       }
@@ -205,11 +205,11 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                throw new UserNotFoundException();
             }
-            Db.Logger.LogWarnAsync<TSec>("REMOVED USER", context: logCtx, applicationName: appName);
+            Db.Logger.LogWarnAsync<TSec>("REMOVED USER", context: logCtx, appName: appName);
          }
          catch (Exception ex)
          {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, applicationName: appName);
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, appName: appName);
             throw;
          }
       }
@@ -230,11 +230,11 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                throw new UserNotFoundException();
             }
-            Db.Logger.LogWarnAsync<TSec>("UPDATED USER", context: logCtx, applicationName: appName);
+            Db.Logger.LogWarnAsync<TSec>("UPDATED USER", context: logCtx, appName: appName);
          }
          catch (Exception ex)
          {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, applicationName: appName);
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, appName: appName);
             throw;
          }
       }
@@ -253,11 +253,11 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                throw new UserExistingException();
             }
-            Db.Logger.LogWarnAsync<TSec>("ADDED USER TO GROUP", context: logCtx, applicationName: appName);
+            Db.Logger.LogWarnAsync<TSec>("ADDED USER TO GROUP", context: logCtx, appName: appName);
          }
          catch (Exception ex)
          {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, applicationName: appName);
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, appName: appName);
             throw;
          }
       }
@@ -276,11 +276,11 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                throw new UserNotFoundException();
             }
-            Db.Logger.LogWarnAsync<TSec>("REMOVED USER FROM GROUP", context: logCtx, applicationName: appName);
+            Db.Logger.LogWarnAsync<TSec>("REMOVED USER FROM GROUP", context: logCtx, appName: appName);
          }
          catch (Exception ex)
          {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, applicationName: appName);
+            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, appName: appName);
             throw;
          }
       }
@@ -384,11 +384,11 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                throw new EntryExistingException();
             }
-            Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, secObject.Name, secContext.Name, userLogin ?? groupName), context: logCtx, applicationName: appName);
+            Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, secObject.Name, secContext.Name, userLogin ?? groupName), context: logCtx, appName: appName);
          }
          catch (Exception ex)
          {
-            Db.Logger.LogWarnAsync<TSec>(ex, logCtx, applicationName: appName);
+            Db.Logger.LogWarnAsync<TSec>(ex, logCtx, appName: appName);
             throw;
          }
       }
@@ -416,11 +416,11 @@ namespace Finsa.Caravan.DataAccess.Core
                groupName = groupName.ToLower();
             }
             DoRemoveEntry(appName.ToLower(), contextName.ToLower(), objectName.ToLower(), userLogin, groupName);
-            Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, objectName.ToLower(), contextName.ToLower(), userLogin ?? groupName), context: logCtx, applicationName: appName);
+            Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, objectName.ToLower(), contextName.ToLower(), userLogin ?? groupName), context: logCtx, appName: appName);
          }
          catch (Exception ex)
          {
-            Db.Logger.LogWarnAsync<TSec>(ex, logCtx, applicationName: appName);
+            Db.Logger.LogWarnAsync<TSec>(ex, logCtx, appName: appName);
             throw;
          }
       }

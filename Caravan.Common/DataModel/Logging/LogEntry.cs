@@ -9,7 +9,7 @@ namespace Finsa.Caravan.DataModel.Logging
    [Serializable]
    public class LogEntry : IEquatable<LogEntry>
    {
-      public const string AutomaticallyFilled = "Automatically filled parameter";
+      public const string AutoFilled = "Automatically filled parameter";
       public const string NotSpecified = "...";
 
       private CKeyValuePair<string, string>[] _cachedArguments;

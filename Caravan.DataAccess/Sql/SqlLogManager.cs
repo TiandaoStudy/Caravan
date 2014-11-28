@@ -128,10 +128,9 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override bool DoAddSettings(string appName, LogType logType, LogSettings settings)
       {
+         using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
          using (var ctx = Db.CreateWriteContext())
          {
-            ctx.BeginTransaction();
-
             var added = false;
             var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
             var typeId = logType.ToString().ToLower();
@@ -152,16 +151,16 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
 
             ctx.SaveChanges();
+            trx.Complete();
             return added;
          }
       }
 
       protected override bool DoUpdateSettings(string appName, LogType logType, LogSettings settings)
       {
+         using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
          using (var ctx = Db.CreateWriteContext())
          {
-            ctx.BeginTransaction();
-
             var update = false;
             var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
             var typeId = logType.ToString().ToLower();
@@ -183,6 +182,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
 
             ctx.SaveChanges();
+            trx.Complete();
             return update;
          }
       }
