@@ -14,7 +14,7 @@
     <RootNamespace>Finsa.Caravan.RestService</RootNamespace>
     <AssemblyName>Finsa.Caravan.RestService</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -170,6 +170,7 @@
     </Compile>
     <Compile Include="QueryModule.cs" />
     <Compile Include="SecurityModule.cs" />
+    <Compile Include="TestingModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -220,7 +221,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>57810</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/Caravan.RestService</IISUrl>
+          <IISUrl>http://localhost:57810/Caravan.RestService</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

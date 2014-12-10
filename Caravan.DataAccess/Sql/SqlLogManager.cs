@@ -14,13 +14,8 @@ namespace Finsa.Caravan.DataAccess.Sql
    {
       #region Constants
 
-      private const int MaxUserNameLength = 30;
-      private const int MaxCodeUnitLength = 100;
-      private const int MaxFunctionLength = 100;
-      private const int MaxShortMessageLength = 400;
-      private const int MaxLongMessageLength = 2000;
-      private const int MaxContextLength = 400;
       private const int MaxArgumentCount = 10;
+      private const int MaxStringLength = 2000;
 
       #endregion
 
@@ -69,12 +64,12 @@ namespace Finsa.Caravan.DataAccess.Sql
                      Date = DateTime.Now,
                      AppId = appId,
                      TypeId = typeId,
-                     UserLogin = userName.Truncate(MaxUserNameLength).ToLower(),
-                     CodeUnit = codeUnit.Truncate(MaxCodeUnitLength).ToLower(),
-                     Function = function.Truncate(MaxFunctionLength).ToLower(),
-                     ShortMessage = shortMessage.Truncate(MaxShortMessageLength),
-                     LongMessage = longMessage.Truncate(MaxLongMessageLength),
-                     Context = context.Truncate(MaxContextLength),
+                     UserLogin = userName.Truncate(MaxStringLength).ToLower(),
+                     CodeUnit = codeUnit.Truncate(MaxStringLength).ToLower(),
+                     Function = function.Truncate(MaxStringLength).ToLower(),
+                     ShortMessage = shortMessage.Truncate(MaxStringLength),
+                     LongMessage = longMessage, // Not truncated, because it should be a CLOB.
+                     Context = context.Truncate(MaxStringLength),
                      Arguments = argsList
                   });
                }

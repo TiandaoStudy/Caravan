@@ -49,5 +49,14 @@ namespace Finsa.Caravan.RestService.Properties {
                 return ((short)(this["LongCacheTimeoutInSeconds"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AllowUnitTesting {
+            get {
+                return ((bool)(this["AllowUnitTesting"]));
+            }
+        }
     }
 }

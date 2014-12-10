@@ -81,7 +81,7 @@ namespace Finsa.Caravan.RestService.Core
          {
             return new AuthResult {IsValid = false, Message = "INVALID AUTH"};
          }
-         if (authObject == "_TEST_TOKEN_")
+         if (authObject == DataAccess.Properties.Settings.Default.RestTestAuthObject)
          {
             // Only for unit tests!!!
             Db.ChangeDataAccessKindUseOnlyForUnitTestsPlease();

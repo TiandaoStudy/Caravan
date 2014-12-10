@@ -1,13 +1,9 @@
 ﻿using System;
-using System.IO;
-using System.Web;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataModel.Exceptions;
-using Finsa.Caravan.DataModel.Rest;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.RestService.Core;
 using Finsa.Caravan.RestService.Properties;
-using Finsa.Caravan.XmlSchemas.MenuEntries;
 using Nancy;
 
 namespace Finsa.Caravan.RestService
@@ -19,13 +15,14 @@ namespace Finsa.Caravan.RestService
          /*
           * Apps
           */
+
          Post[""] = p => SafeResponse<dynamic>(p, Settings.Default.LongCacheTimeoutInSeconds, (Func<dynamic, dynamic, dynamic>) GetApps);
          Post["/{appName}"] = p => SafeResponse<dynamic>(p, Settings.Default.LongCacheTimeoutInSeconds, (Func<dynamic, dynamic, dynamic>) GetApp);
 
          /*
           * Contexts
           */
-         
+
          Post["/{appName}/contexts"] = p => SafeResponse<dynamic>(p, Settings.Default.LongCacheTimeoutInSeconds, (Func<dynamic, dynamic, dynamic>) GetContexts);
 
          /*
@@ -33,10 +30,10 @@ namespace Finsa.Caravan.RestService
           */
 
          Post["/{appName}/entries/{contextName}"] = p => SafeResponse<dynamic>(p, Settings.Default.LongCacheTimeoutInSeconds, (Func<dynamic, dynamic, dynamic>) GetEntries);
-         Post["/{appName}/entries"] = p => SafeResponse<SecEntrySingle>(p, NotCached, (Func<dynamic, SecEntrySingle, dynamic>)GetEntries);
+         Post["/{appName}/entries"] = p => SafeResponse<SecEntrySingle>(p, NotCached, (Func<dynamic, SecEntrySingle, dynamic>) GetEntries);
          Post["/{appName}/entries/{contextName}/{objectName}"] = p => SafeResponse<dynamic>(p, Settings.Default.LongCacheTimeoutInSeconds, (Func<dynamic, dynamic, dynamic>) GetEntries);
          Put["/{appName}/entries"] = p => SafeResponse<SecEntrySingle>(p, NotCached, (Func<dynamic, SecEntrySingle, dynamic>) AddEntry);
-         Delete["/{appName}/entries/{contextName}/{objectName}"] = p => SafeResponse<SecEntrySingle>(p, NotCached, (Func<dynamic, SecEntrySingle, dynamic>)RemoveEntry);
+         Delete["/{appName}/entries/{contextName}/{objectName}"] = p => SafeResponse<SecEntrySingle>(p, NotCached, (Func<dynamic, SecEntrySingle, dynamic>) RemoveEntry);
 
          /*
           * Groups
@@ -64,9 +61,10 @@ namespace Finsa.Caravan.RestService
          Patch["/{appName}/users/{userLogin}"] = p => SafeResponse<SecUserSingle>(p, NotCached, (Func<dynamic, SecUserSingle, dynamic>) UpdateUser);
          Delete["/{appName}/users/{userLogin}"] = p => SafeResponse<dynamic>(p, NotCached, (Func<dynamic, dynamic, dynamic>) RemoveUser);
 
-         /* UserToGroup
-          *
+         /* 
+          * Users and Groups
           */
+
          Put["/{appName}/users/{userLogin}/{groupName}"] = p => SafeResponse<SecUserSingle>(p, NotCached, (Func<dynamic, SecUserSingle, dynamic>) AddUserToGroup);
          Delete["/{appName}/users/{userLogin}/{groupName}"] = p => SafeResponse<SecUserSingle>(p, NotCached, (Func<dynamic, SecUserSingle, dynamic>) RemoveUserFromGroup);
       }
@@ -79,7 +77,7 @@ namespace Finsa.Caravan.RestService
       private static dynamic GetApps(dynamic p, dynamic body)
       {
          var apps = Db.Security.Apps();
-         return new SecAppList {Apps = apps };
+         return new SecAppList {Apps = apps};
       }
 
       private static dynamic GetContexts(dynamic p, dynamic body)
@@ -107,7 +105,7 @@ namespace Finsa.Caravan.RestService
          {
             Db.Security.AddEntry(p.appName, secEntry.Context, secEntry.Object, null, secEntry.Group.Name);
          }
-         
+
          return Success;
       }
 
@@ -117,13 +115,13 @@ namespace Finsa.Caravan.RestService
 
          if (secEntry.User.Login != null)
          {
-            Db.Security.RemoveEntry(p.appName, p.contextName, p.objectName, secEntry.User.Login,null);
+            Db.Security.RemoveEntry(p.appName, p.contextName, p.objectName, secEntry.User.Login, null);
          }
          else
          {
             Db.Security.RemoveEntry(p.appName, p.contextName, p.objectName, null, secEntry.Group.Name);
          }
-         
+
          return Success;
       }
 
