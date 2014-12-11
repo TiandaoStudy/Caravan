@@ -1,10 +1,10 @@
 ﻿using System;
-using System.IO;
 using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.DataAccess.Properties;
 using Finsa.Caravan.DataModel.Logging;
 using Finsa.Caravan.DataModel.Rest;
 using Nancy;
-using Newtonsoft.Json;
+using Nancy.ModelBinding;
 using PommaLabs.KVLite.Nancy;
 
 namespace Finsa.Caravan.RestService.Core
@@ -26,7 +26,7 @@ namespace Finsa.Caravan.RestService.Core
       {
          try
          {
-            var parsedBody = ParseBody<TBody>();
+            var parsedBody = this.Bind<RestRequest<TBody>>();
             ApplySecurity(parsedBody.Auth);
             if (cacheSeconds != NotCached)
             {
@@ -41,14 +41,6 @@ namespace Finsa.Caravan.RestService.Core
          catch (Exception ex)
          {
             return RestResponse.Failure(ex);
-         }
-      }
-
-      protected RestRequest<TBody> ParseBody<TBody>()
-      {
-         using (var streamReader = new StreamReader(Context.Request.Body))
-         {
-            return JsonConvert.DeserializeObject<RestRequest<TBody>>(streamReader.ReadToEnd());
          }
       }
 
@@ -81,7 +73,7 @@ namespace Finsa.Caravan.RestService.Core
          {
             return new AuthResult {IsValid = false, Message = "INVALID AUTH"};
          }
-         if (authObject == DataAccess.Properties.Settings.Default.RestTestAuthObject)
+         if (authObject == Settings.Default.RestTestAuthObject)
          {
             // Only for unit tests!!!
             Db.ChangeDataAccessKindUseOnlyForUnitTestsPlease();
