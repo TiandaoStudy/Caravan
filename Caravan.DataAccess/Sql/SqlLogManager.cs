@@ -99,7 +99,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                var logTypeString = logType.ToString().ToLower();
                q = q.Where(s => s.TypeId == logTypeString);
             }
-            return q.OrderBy(s => s.App.Name).ThenBy(s => s.TypeId).ThenByDescending(s => s.Date).ToList();
+            return q.OrderBy(s => s.App.Name).ThenByDescending(s => s.Date).ToList();
          }
       }
 
@@ -132,7 +132,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
             if (!ctx.LogSettings.Any(s => s.AppId == appId && s.TypeId == typeId))
             {
-               var newSetting = new LogSettings()
+               var newSetting = new LogSettings
                {
                   AppId = appId,
                   Days = settings.Days,
