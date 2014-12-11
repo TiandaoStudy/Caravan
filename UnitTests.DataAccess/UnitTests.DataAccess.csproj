@@ -34,7 +34,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CodeProject.ObjectPool">
-      <HintPath>..\packages\CodeProject.ObjectPool.1.0.6\lib\net40\CodeProject.ObjectPool.dll</HintPath>
+      <HintPath>..\packages\CodeProject.ObjectPool.1.0.8\lib\net40\CodeProject.ObjectPool.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.38\lib\net40\Dapper.dll</HintPath>
