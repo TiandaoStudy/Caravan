@@ -99,7 +99,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                var logTypeString = logType.ToString().ToLower();
                q = q.Where(s => s.TypeId == logTypeString);
             }
-            return q.OrderBy(s => s.App.Name).ThenByDescending(s => s.Date).ToList();
+            return q.OrderBy(s => s.Id).ThenByDescending(s => s.Date).ToList();
          }
       }
 
