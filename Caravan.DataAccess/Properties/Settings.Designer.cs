@@ -31,5 +31,14 @@ namespace Finsa.Caravan.DataAccess.Properties {
                 return ((string)(this["RestTestAuthObject"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int DefaultSaveChangesRetryCount {
+            get {
+                return ((int)(this["DefaultSaveChangesRetryCount"]));
+            }
+        }
     }
 }

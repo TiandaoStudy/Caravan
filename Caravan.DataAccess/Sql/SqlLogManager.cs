@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Transactions;
 using Finsa.Caravan.DataAccess.Core;
@@ -74,7 +76,25 @@ namespace Finsa.Caravan.DataAccess.Sql
                   });
                }
 
-               ctx.SaveChanges();
+               ctx.SaveConcurrentChanges((c, ex) =>
+               {
+                  c.UndoChanges();
+                  c.LogEntries.Add(new LogEntry
+                  {
+                     Id = (c.LogEntries.Where(e => e.AppId == appId).Max(e => (long?) e.Id) ?? -1) + 1,
+                     Date = DateTime.Now,
+                     AppId = appId,
+                     TypeId = typeId,
+                     UserLogin = userName.Truncate(MaxStringLength).ToLower(),
+                     CodeUnit = codeUnit.Truncate(MaxStringLength).ToLower(),
+                     Function = function.Truncate(MaxStringLength).ToLower(),
+                     ShortMessage = shortMessage.Truncate(MaxStringLength),
+                     LongMessage = longMessage, // Not truncated, because it should be a CLOB.
+                     Context = context.Truncate(MaxStringLength),
+                     Arguments = argsList
+                  });
+               });
+               
                trx.Complete();
                return LogResult.Success;
             }
