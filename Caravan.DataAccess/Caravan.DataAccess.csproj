@@ -23,6 +23,7 @@
     <DefineConstants>TRACE;DEBUG;USETHROWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Finsa.Caravan.DataAccess.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,7 +36,8 @@
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>IF EXIST $(SolutionDir)NuGetPackager.DataAccess (
-    copy $(TargetDir)Finsa.Caravan.DataAccess.* "$(SolutionDir)NuGetPackager.DataAccess/lib/net40"
+    copy $(TargetDir)Finsa.Caravan.DataAccess.dll "$(SolutionDir)NuGetPackager.DataAccess/lib/net40"
+    copy $(TargetDir)Finsa.Caravan.DataAccess.xml "$(SolutionDir)NuGetPackager.DataAccess/lib/net40"
 )
     if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
     xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
@@ -46,10 +48,9 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="CodeProject.ObjectPool, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CodeProject.ObjectPool, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CodeProject.ObjectPool.1.0.6\lib\net40\CodeProject.ObjectPool.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\CodeProject.ObjectPool.1.0.8\lib\net40\CodeProject.ObjectPool.dll</HintPath>
     </Reference>
     <Reference Include="Dapper, Version=1.38.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -132,6 +133,11 @@
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="IQueryManager.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Rest\RestQueryManager.cs" />
     <Compile Include="Sql\SqlQueryManager.cs" />
     <Compile Include="Sql\SqlServerCe\SqlServerCeDbContext.cs" />
@@ -149,9 +155,14 @@
     <Compile Include="Sql\SqlServerCe\SqlServerCeDbManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="ClassDiagram.cd" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="README.md" />
     <None Include="Sql\SqlServerCe\Scripts\Tables.sqlce" />

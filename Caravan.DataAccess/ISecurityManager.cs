@@ -196,6 +196,8 @@ namespace Finsa.Caravan.DataAccess
 
       #region Entries
 
+      IList<SecEntry> Entries(string appName);
+
       IList<SecEntry> Entries(string appName, string contextName);
 
       IList<SecEntry> Entries(string appName, string contextName, string userLogin);

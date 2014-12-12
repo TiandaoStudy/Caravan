@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("FLEX.Common")]
+[assembly: AssemblyTitle("Finsa.Caravan.Common")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Finsa S.p.A.")]
-[assembly: AssemblyProduct("FLEX.Common")]
+[assembly: AssemblyProduct("Finsa.Caravan.Common")]
 [assembly: AssemblyCopyright("Copyright © Finsa S.p.A. 2014-2024")]
 [assembly: AssemblyTrademark("Finsa S.p.A.")]
 [assembly: AssemblyCulture("")]
@@ -37,12 +37,12 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("0.16.0.0")]
-[assembly: AssemblyFileVersion("0.16.0.0")]
+[assembly: AssemblyVersion("1.0.3")]
+[assembly: AssemblyFileVersion("1.0.3")]
 
 // Attributes added to allow stronger development.
 
 [assembly: CLSCompliant(true)]
-[assembly: InternalsVisibleTo("FLEX.DataAccess")]
+[assembly: InternalsVisibleTo("Finsa.Caravan.DataAccess")]
 [assembly: InternalsVisibleTo("FLEX.Web.WebForms")]
 [assembly: InternalsVisibleTo("UnitTests.Common")]

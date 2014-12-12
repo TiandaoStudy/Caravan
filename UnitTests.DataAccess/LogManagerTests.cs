@@ -115,7 +115,7 @@ namespace UnitTests.DataAccess
       [Test]
       public void Log_validArgs_()
       {
-         var res = Db.Logger.Log(LogType.Info, _myApp.Name, "", "UnitTests.DataAccess.LogManagerTests", "Log_validArgs_", new Exception() );
+         var res = Db.Logger.LogRaw(LogType.Info, _myApp.Name, "", "UnitTests.DataAccess.LogManagerTests", "Log_validArgs_", new Exception() );
          Assert.True(res.Succeeded);
 
          var q = Db.Logger.Logs(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests");
@@ -128,14 +128,14 @@ namespace UnitTests.DataAccess
       [Test]
       public void Log_NullException_ReturnsFalse()
       {
-         var res = Db.Logger.Log(LogType.Info, "", "", "", "", null);
+         var res = Db.Logger.LogRaw(LogType.Info, "", "", "", "", exception: null);
          Assert.That(res.Succeeded,Is.EqualTo(false));
       }
 
       [Test]
       public void Log_EmptyCodeUnit_ReturnsFalse()
       {
-         var res = Db.Logger.Log(LogType.Info, "", "", "", "", new Exception());
+         var res = Db.Logger.LogRaw(LogType.Info, "", "", "", "", new Exception());
         Assert.False(res.Succeeded);
       
       }

@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Transactions;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel.Logging;
 using Finsa.Caravan.Diagnostics;
@@ -13,13 +16,8 @@ namespace Finsa.Caravan.DataAccess.Sql
    {
       #region Constants
 
-      private const int MaxUserNameLength = 30;
-      private const int MaxCodeUnitLength = 100;
-      private const int MaxFunctionLength = 100;
-      private const int MaxShortMessageLength = 400;
-      private const int MaxLongMessageLength = 2000;
-      private const int MaxContextLength = 400;
       private const int MaxArgumentCount = 10;
+      private const int MaxStringLength = 2000;
 
       #endregion
 
@@ -32,11 +30,10 @@ namespace Finsa.Caravan.DataAccess.Sql
             Raise<ArgumentException>.IfIsEmpty(codeUnit);
             var argsList = (args == null) ? new CKeyValuePair<string, string>[0] : args.ToArray();
             Raise<ArgumentOutOfRangeException>.If(argsList.Length > MaxArgumentCount);
-
+            
+            using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
             using (var ctx = Db.CreateWriteContext())
             {
-               ctx.BeginTransaction();
-
                var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
                var typeId = type.ToString().ToLower();
                var settings = ctx.LogSettings.First(s => s.AppId == appId && s.TypeId == typeId);
@@ -69,17 +66,36 @@ namespace Finsa.Caravan.DataAccess.Sql
                      Date = DateTime.Now,
                      AppId = appId,
                      TypeId = typeId,
-                     UserLogin = userName.Truncate(MaxUserNameLength).ToLower(),
-                     CodeUnit = codeUnit.Truncate(MaxCodeUnitLength).ToLower(),
-                     Function = function.Truncate(MaxFunctionLength).ToLower(),
-                     ShortMessage = shortMessage.Truncate(MaxShortMessageLength),
-                     LongMessage = longMessage.Truncate(MaxLongMessageLength),
-                     Context = context.Truncate(MaxContextLength),
+                     UserLogin = userName.Truncate(MaxStringLength).ToLower(),
+                     CodeUnit = codeUnit.Truncate(MaxStringLength).ToLower(),
+                     Function = function.Truncate(MaxStringLength).ToLower(),
+                     ShortMessage = shortMessage.Truncate(MaxStringLength),
+                     LongMessage = longMessage, // Not truncated, because it should be a CLOB.
+                     Context = context.Truncate(MaxStringLength),
                      Arguments = argsList
                   });
                }
 
-               ctx.SaveChanges();
+               ctx.SaveConcurrentChanges((c, ex) =>
+               {
+                  c.UndoChanges();
+                  c.LogEntries.Add(new LogEntry
+                  {
+                     Id = (c.LogEntries.Where(e => e.AppId == appId).Max(e => (long?) e.Id) ?? -1) + 1,
+                     Date = DateTime.Now,
+                     AppId = appId,
+                     TypeId = typeId,
+                     UserLogin = userName.Truncate(MaxStringLength).ToLower(),
+                     CodeUnit = codeUnit.Truncate(MaxStringLength).ToLower(),
+                     Function = function.Truncate(MaxStringLength).ToLower(),
+                     ShortMessage = shortMessage.Truncate(MaxStringLength),
+                     LongMessage = longMessage, // Not truncated, because it should be a CLOB.
+                     Context = context.Truncate(MaxStringLength),
+                     Arguments = argsList
+                  });
+               });
+               
+               trx.Complete();
                return LogResult.Success;
             }
          }
@@ -103,7 +119,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                var logTypeString = logType.ToString().ToLower();
                q = q.Where(s => s.TypeId == logTypeString);
             }
-            return q.OrderBy(s => s.App.Name).ThenBy(s => s.TypeId).ThenByDescending(s => s.Date).ToList();
+            return q.OrderBy(s => s.Id).ThenByDescending(s => s.Date).ToList();
          }
       }
 
@@ -127,17 +143,16 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override bool DoAddSettings(string appName, LogType logType, LogSettings settings)
       {
+         using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
          using (var ctx = Db.CreateWriteContext())
          {
-            ctx.BeginTransaction();
-
             var added = false;
             var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
             var typeId = logType.ToString().ToLower();
 
             if (!ctx.LogSettings.Any(s => s.AppId == appId && s.TypeId == typeId))
             {
-               var newSetting = new LogSettings()
+               var newSetting = new LogSettings
                {
                   AppId = appId,
                   Days = settings.Days,
@@ -151,16 +166,16 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
 
             ctx.SaveChanges();
+            trx.Complete();
             return added;
          }
       }
 
       protected override bool DoUpdateSettings(string appName, LogType logType, LogSettings settings)
       {
+         using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
          using (var ctx = Db.CreateWriteContext())
          {
-            ctx.BeginTransaction();
-
             var update = false;
             var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
             var typeId = logType.ToString().ToLower();
@@ -182,6 +197,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
 
             ctx.SaveChanges();
+            trx.Complete();
             return update;
          }
       }

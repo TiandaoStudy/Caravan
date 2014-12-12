@@ -8,12 +8,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Finsa.Caravan.RestService.Properties {
+namespace Finsa.Caravan.DataAccess.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
         
@@ -25,37 +25,19 @@ namespace Finsa.Caravan.RestService.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("60")]
-        public short ShortCacheTimeoutInSeconds {
+        [global::System.Configuration.DefaultSettingValueAttribute("_TEST_TOKEN_")]
+        public string RestTestAuthObject {
             get {
-                return ((short)(this["ShortCacheTimeoutInSeconds"]));
+                return ((string)(this["RestTestAuthObject"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("180")]
-        public short MediumCacheTimeoutInSeconds {
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int DefaultSaveChangesRetryCount {
             get {
-                return ((short)(this["MediumCacheTimeoutInSeconds"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("600")]
-        public short LongCacheTimeoutInSeconds {
-            get {
-                return ((short)(this["LongCacheTimeoutInSeconds"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool AllowUnitTesting {
-            get {
-                return ((bool)(this["AllowUnitTesting"]));
+                return ((int)(this["DefaultSaveChangesRetryCount"]));
             }
         }
     }

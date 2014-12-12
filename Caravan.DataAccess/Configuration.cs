@@ -27,13 +27,21 @@ namespace Finsa.Caravan.DataAccess
          get
          {
             var cachedConnectionString = PersistentCache.DefaultInstance.Get(CachePartitionName, ConnectionStringKey) as string;
-            if (!String.IsNullOrWhiteSpace(cachedConnectionString))
+            var configConnectionString = this[ConnectionStringKey] as string;
+            if (String.IsNullOrWhiteSpace(configConnectionString))
             {
+               // If connection string is not in the configuration file, then return the cached one, even if empty.
                return cachedConnectionString;
             }
-            var configConnectionString = this[ConnectionStringKey] as string;
-            ConnectionString = configConnectionString;
-            return ConnectionString;
+            Db.Manager.ElaborateConnectionString(ref configConnectionString);
+            if (configConnectionString == cachedConnectionString)
+            {
+               // Connection string has _not_ changed, return the cached one.
+               return cachedConnectionString;
+            }
+            // Connection string _has_ changed, update the cached one.
+            PersistentCache.DefaultInstance.AddStatic(CachePartitionName, ConnectionStringKey, configConnectionString);
+            return configConnectionString;
          }
          set
          {

@@ -10,7 +10,6 @@ CREATE TABLE mydb.caravan_log
    , clog_code_unit    NVARCHAR2(2000)      NOT NULL
    , clog_function     NVARCHAR2(2000)      NOT NULL
    , clog_short_msg    NVARCHAR2(2000)      NOT NULL
-   , clog_long_msg     NVARCHAR2(2000)
    , clog_context      NVARCHAR2(2000)
    , clog_key_0        NVARCHAR2(2000)
    , clog_value_0      NVARCHAR2(2000)
@@ -32,6 +31,7 @@ CREATE TABLE mydb.caravan_log
    , clog_value_8      NVARCHAR2(2000) 
    , clog_key_9        NVARCHAR2(2000)
    , clog_value_9      NVARCHAR2(2000)
+   , clog_long_msg     CLOB
    , CHECK (clog_user is null or clog_user = lower(clog_user)) ENABLE
    , CHECK (clog_code_unit = lower(clog_code_unit)) ENABLE
    , CHECK (clog_function = lower(clog_function)) ENABLE

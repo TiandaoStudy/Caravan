@@ -2,7 +2,6 @@
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using Finsa.Caravan.Extensions;
-using FLEX.Common;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -25,7 +24,7 @@ namespace FLEX.Web.UserControls.Ajax
          get { return updPanel; }
       }
 
-      public bool Visible { get; set; }
+      public override bool Visible { get; set; }
 
       public void ActivateFullPostBack()
       {
