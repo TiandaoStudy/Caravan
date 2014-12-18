@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Transactions;
 using Finsa.Caravan.DataAccess.Core;
@@ -119,7 +117,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                var logTypeString = logType.ToString().ToLower();
                q = q.Where(s => s.TypeId == logTypeString);
             }
-            return q.OrderBy(s => s.Id).ThenByDescending(s => s.Date).ToList();
+            return q.OrderByDescending(s => s.Id).ThenByDescending(s => s.Date).ToList();
          }
       }
 

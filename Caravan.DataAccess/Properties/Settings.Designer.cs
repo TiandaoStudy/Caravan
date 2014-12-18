@@ -40,5 +40,14 @@ namespace Finsa.Caravan.DataAccess.Properties {
                 return ((int)(this["DefaultSaveChangesRetryCount"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PersistConnectionString {
+            get {
+                return ((bool)(this["PersistConnectionString"]));
+            }
+        }
     }
 }

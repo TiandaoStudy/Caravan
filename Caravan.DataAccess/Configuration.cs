@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using Finsa.Caravan.DataAccess.Properties;
 using PommaLabs.KVLite;
 
 namespace Finsa.Caravan.DataAccess
@@ -26,8 +27,13 @@ namespace Finsa.Caravan.DataAccess
       {
          get
          {
-            var cachedConnectionString = PersistentCache.DefaultInstance.Get(CachePartitionName, ConnectionStringKey) as string;
+            var cache = Settings.Default.PersistConnectionString
+               ? PersistentCache.DefaultInstance as ICache
+               : VolatileCache.DefaultInstance;
+
+            var cachedConnectionString = cache.Get(CachePartitionName, ConnectionStringKey) as string;
             var configConnectionString = this[ConnectionStringKey] as string;
+            
             if (String.IsNullOrWhiteSpace(configConnectionString))
             {
                // If connection string is not in the configuration file, then return the cached one, even if empty.
@@ -40,13 +46,17 @@ namespace Finsa.Caravan.DataAccess
                return cachedConnectionString;
             }
             // Connection string _has_ changed, update the cached one.
-            PersistentCache.DefaultInstance.AddStatic(CachePartitionName, ConnectionStringKey, configConnectionString);
+            cache.AddStatic(CachePartitionName, ConnectionStringKey, configConnectionString);
             return configConnectionString;
          }
          set
          {
+            var cache = Settings.Default.PersistConnectionString
+               ? PersistentCache.DefaultInstance as ICache
+               : VolatileCache.DefaultInstance;
+
             Db.Manager.ElaborateConnectionString(ref value);
-            PersistentCache.DefaultInstance.AddStatic(CachePartitionName, ConnectionStringKey, value);
+            cache.AddStatic(CachePartitionName, ConnectionStringKey, value);
          }
       }
 

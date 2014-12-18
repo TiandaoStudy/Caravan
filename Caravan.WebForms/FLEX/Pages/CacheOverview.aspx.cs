@@ -34,8 +34,8 @@ namespace FLEX.WebForms.Pages
          try
          {
             // Applico una pulizia sicura della cache persistente, per evitare che le voci importanti vadano perse.
-            PersistentCache.DefaultInstance.Clear(CacheReadMode.ConsiderExpirationDate);
-            VolatileCache.DefaultInstance.Clear(CacheReadMode.IgnoreExpirationDate);
+            PersistentCache.DefaultInstance.Clear(CacheReadMode.ExcludeExpiredItems);
+            VolatileCache.DefaultInstance.Clear(CacheReadMode.ExcludeExpiredItems);
             // Aggiorno la fonte dati sottostante la griglia.
             fdtgCache.UpdateDataSource();
          }
