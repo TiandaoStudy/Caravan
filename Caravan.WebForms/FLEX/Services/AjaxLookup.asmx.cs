@@ -9,13 +9,13 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using System.Xml;
 using Dapper;
-using Finsa.Caravan;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.Diagnostics;
-using Finsa.Caravan.Extensions;
-using Finsa.Caravan.Text;
 using FLEX.Web.XmlSettings.AjaxLookup;
+using PommaLabs;
+using PommaLabs.Diagnostics;
+using PommaLabs.Extensions;
 using PommaLabs.KVLite;
+using PommaLabs.Text;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -74,7 +74,7 @@ namespace FLEX.Web.Services
       private static AjaxLookupDataLookupBy LoadAjaxLookupData(string xmlLookup, string lookupBy)
       {
          // At first, we create the relative path for our XML.
-         var xmlPath = Path.Combine(WebForms.Configuration.Instance.AjaxLookupsXmlPath, xmlLookup + Constants.XmlExtension);
+         var xmlPath = Path.Combine(WebForms.Configuration.Instance.AjaxLookupsXmlPath, xmlLookup + Constants.FileExtensions.Xml);
 
          // And then we make it absolute to our server.
          xmlPath = HttpContext.Current.Server.MapPath(xmlPath);

@@ -248,10 +248,6 @@
       <Project>{418b2d91-d53e-49bf-98fc-66da9490dc37}</Project>
       <Name>Caravan.DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Caravan.Helpers\Caravan.Helpers.csproj">
-      <Project>{ceff687b-7817-4326-9310-ab655407b610}</Project>
-      <Name>Caravan.Helpers</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Caravan.Mvc\Caravan.Mvc.csproj">
       <Project>{daa22a2c-a101-4f71-b4e1-f0db283a642c}</Project>
       <Name>Caravan.Mvc</Name>

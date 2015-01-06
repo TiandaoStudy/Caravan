@@ -8,13 +8,14 @@ using System.Web.UI.WebControls;
 using Dapper;
 using Finsa.Caravan;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.Diagnostics;
-using Finsa.Caravan.Extensions;
-using Finsa.Caravan.Xml;
 using FLEX.Common.Web;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 using Newtonsoft.Json;
+using PommaLabs;
+using PommaLabs.Diagnostics;
+using PommaLabs.Extensions;
+using PommaLabs.Xml;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -43,8 +44,8 @@ namespace FLEX.WebForms.Pages
 
       #region Instance Fields
 
-      private readonly List<CKeyValuePair<ISearchControl, string>> _searchControls = new List<CKeyValuePair<ISearchControl, string>>();
-      private CPair<string, CommandType> _queryInfo; 
+      private readonly List<GKeyValuePair<ISearchControl, string>> _searchControls = new List<GKeyValuePair<ISearchControl, string>>();
+      private GPair<string, CommandType> _queryInfo; 
 
       #endregion
 
@@ -98,7 +99,7 @@ namespace FLEX.WebForms.Pages
 
       private void BuildPage(string reportName)
       {
-         var reportXmlPath = Server.MapPath(Path.Combine(Configuration.Instance.DynamicReportsFolder, reportName + Constants.XmlExtension));
+         var reportXmlPath = Server.MapPath(Path.Combine(Configuration.Instance.DynamicReportsFolder, reportName + Constants.FileExtensions.Xml));
          dynamic reportXml = DynamicXml.Load(reportXmlPath);
 
          _queryInfo = RetrieveQueryInfo(reportXml.Query);
@@ -151,10 +152,10 @@ namespace FLEX.WebForms.Pages
 
       #region Query Handling
 
-      private static CPair<string, CommandType> RetrieveQueryInfo(dynamic querySpec)
+      private static GPair<string, CommandType> RetrieveQueryInfo(dynamic querySpec)
       {
          var commandType = StringExtensions.ToEnumOrDefault(querySpec.Type, CommandType.Text);
-         return CPair.Create(querySpec.Code, commandType);
+         return GPair.Create(querySpec.Code, commandType);
       }
 
       #endregion
@@ -187,7 +188,7 @@ namespace FLEX.WebForms.Pages
          var placeHolder = e.Item.FindControl("plhSearchCriterium") as PlaceHolder;
          var control = ControlBuilders[paramSpec.ControlType](this, paramSpec);
          placeHolder.Controls.Add(control);
-         _searchControls.Add(CPair.Create(control as ISearchControl, paramSpec.UniqueName));
+         _searchControls.Add(GPair.Create(control as ISearchControl, paramSpec.UniqueName));
       }
 
       private static Control BuildSearchCriteria_AutoSuggest(Page page, dynamic paramSpec)
@@ -212,7 +213,7 @@ namespace FLEX.WebForms.Pages
          switch ((string) paramSpec.DataSourceType)
          {
             case "JSON":
-               var list = JsonConvert.DeserializeObject<IList<CPair<string, string>>>(paramSpec.DataSource);
+               var list = JsonConvert.DeserializeObject<IList<GPair<string, string>>>(paramSpec.DataSource);
                checkBoxList.SetDataSource(list);
                break;
             case "SQL":

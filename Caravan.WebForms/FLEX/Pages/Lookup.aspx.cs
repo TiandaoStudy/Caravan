@@ -4,11 +4,11 @@ using System.IO;
 using System.Web;
 using System.Xml;
 using Dapper;
-using Finsa.Caravan;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.Diagnostics;
-using Finsa.Caravan.Extensions;
 using FLEX.Web.XmlSettings.Lookup;
+using PommaLabs;
+using PommaLabs.Diagnostics;
+using PommaLabs.Extensions;
 using PommaLabs.KVLite;
 
 // ReSharper disable CheckNamespace
@@ -36,7 +36,7 @@ namespace FLEX.Web.Pages
       private static LookupData LoadLookupData(string lookup)
       {
          // At first, we create the relative path for our XML.
-         var xmlPath = Path.Combine(WebForms.Configuration.Instance.LookupsXmlPath, lookup + Constants.XmlExtension);
+         var xmlPath = Path.Combine(WebForms.Configuration.Instance.LookupsXmlPath, lookup + Constants.FileExtensions.Xml);
 
          // And then we make it absolute to our server.
          xmlPath = HttpContext.Current.Server.MapPath(xmlPath);

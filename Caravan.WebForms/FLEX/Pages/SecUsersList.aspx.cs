@@ -2,15 +2,13 @@
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.DataModel;
 using Finsa.Caravan.DataModel.Security;
-using Finsa.Caravan.Diagnostics;
-using Finsa.Caravan.Extensions;
 using FLEX.Common.Web;
 using FLEX.Web.Pages;
 using System.Data;
 using System.Collections.Generic;
+using PommaLabs.Diagnostics;
+using PommaLabs.Extensions;
 
 
 // ReSharper disable CheckNamespace
@@ -33,9 +31,9 @@ namespace Finsa.Caravan.WebForms.Pages
 
       protected override void FillSearchCriteria()
       {
-          var active = new List<CKeyValuePair<String, String>>();
-          active.Add(CKeyValuePair.Create("Active", "Y"));
-          active.Add(CKeyValuePair.Create("Inactive", "N"));
+          var active = new List<KeyValuePair<String, String>>();
+          active.Add(KeyValuePair.Create("Active", "Y"));
+          active.Add(KeyValuePair.Create("Inactive", "N"));
           crvnActive.SetDataSource(active);
 
           //Valore di default per "Active": "Y"

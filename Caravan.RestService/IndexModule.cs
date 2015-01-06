@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -12,9 +13,9 @@ namespace Finsa.Caravan.RestService
 {
    public sealed class IndexModule : CustomModule
    {
-       private static readonly IList<CPair<int, string>> TestData = new [] {
-           CPair.Create(1, "AAA"),
-           CPair.Create(2, "BBB")
+       private static readonly IList<Tuple<int, string>> TestData = new [] {
+           Tuple.Create(1, "AAA"),
+           Tuple.Create(2, "BBB")
        }; 
 
       public IndexModule()

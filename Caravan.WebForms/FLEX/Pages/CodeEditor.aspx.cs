@@ -4,7 +4,7 @@ using System.IO;
 using System.Web;
 using System.Web.UI.WebControls;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.Text;
+using PommaLabs.Text;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

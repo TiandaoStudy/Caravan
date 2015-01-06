@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Finsa.Caravan;
 
 namespace FLEX.Extensions.TestDataAccess
@@ -57,22 +58,22 @@ namespace FLEX.Extensions.TestDataAccess
             };
         }
 
-        private static IEnumerable<CPair<int, int>> TestCandidatesSchools()
+        private static IEnumerable<Tuple<int, int>> TestCandidatesSchools()
         {
             return new[]
             {
-                CPair.Create(0, 6), // Davide Paparella, Scuola Media Inferiore
-                CPair.Create(1, 6), // Diana Martinez Gonzalez, Scuola Media InferioreCorso di Laurea in Informatica
-                CPair.Create(1, 0), // Diana Martinez Gonzalez, Corso di Laurea in Informatica
+                Tuple.Create(0, 6), // Davide Paparella, Scuola Media Inferiore
+                Tuple.Create(1, 6), // Diana Martinez Gonzalez, Scuola Media InferioreCorso di Laurea in Informatica
+                Tuple.Create(1, 0), // Diana Martinez Gonzalez, Corso di Laurea in Informatica
             };
         }
 
-        private static IEnumerable<CPair<int, int>> TestCandidatesGender()
+        private static IEnumerable<Tuple<int, int>> TestCandidatesGender()
         {
             return new[]
             {
-                CPair.Create(0, 1), // Davide Paparella, Male
-                CPair.Create(1, 0), // Diana Martinez Gonzalez, Female
+                Tuple.Create(0, 1), // Davide Paparella, Male
+                Tuple.Create(1, 0), // Diana Martinez Gonzalez, Female
             };
         }
     }

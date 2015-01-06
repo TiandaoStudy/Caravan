@@ -638,10 +638,6 @@
       <Project>{418B2D91-D53E-49BF-98FC-66DA9490DC37}</Project>
       <Name>Caravan.DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Caravan.Helpers\Caravan.Helpers.csproj">
-      <Project>{ceff687b-7817-4326-9310-ab655407b610}</Project>
-      <Name>Caravan.Helpers</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

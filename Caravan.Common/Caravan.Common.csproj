@@ -40,6 +40,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PommaLabs.GRAMPA">
+      <HintPath>..\packages\PommaLabs.GRAMPA.2.1.2\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -88,6 +91,7 @@
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
     <Compile Include="IO\BufferedIO.cs" />
+    <Compile Include="KeyValuePair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestService\IAuthManager.cs" />
     <Compile Include="WebForms\ISearchControl.cs" />
@@ -113,12 +117,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Caravan.Helpers\Caravan.Helpers.csproj">
-      <Project>{ceff687b-7817-4326-9310-ab655407b610}</Project>
-      <Name>Caravan.Helpers</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

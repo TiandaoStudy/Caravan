@@ -7,7 +7,7 @@ namespace Finsa.Caravan.DataAccess.Rest
 {
    public sealed class RestLogManager : LogManagerBase
    {
-      public override LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<CKeyValuePair<string, string>> args)
+      public override LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
       {
          throw new NotImplementedException();
       }

@@ -4,7 +4,7 @@ using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using Finsa.Caravan.DataAccess.Properties;
-using Finsa.Caravan.Extensions;
+using PommaLabs.Extensions;
 
 namespace Finsa.Caravan.DataAccess
 {

@@ -68,8 +68,8 @@ namespace UnitTests.DataAccess
       {
          var result = Db.Logger.LogInfo<LogManagerTests>("pino", "pino pino", "test", new[]
          {
-            CKeyValuePair.Create("arg1", "1"),
-            CKeyValuePair.Create("arg2", "2"),
+            KeyValuePair.Create("arg1", "1"),
+            KeyValuePair.Create("arg2", "2"),
          });
 
          var q = Db.Logger.Logs(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests" && l.ShortMessage == "pino").ToList();

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Finsa.Caravan.DataModel;
 using Finsa.Caravan.DataModel.Security;
-using Finsa.Caravan.Diagnostics;
+using PommaLabs.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
 {

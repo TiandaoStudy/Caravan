@@ -10,7 +10,7 @@ using Finsa.Caravan.DataAccess.Rest;
 using Finsa.Caravan.DataAccess.Sql;
 using Finsa.Caravan.DataAccess.Sql.Oracle;
 using Finsa.Caravan.DataAccess.Sql.SqlServerCe;
-using Finsa.Caravan.Diagnostics;
+using PommaLabs.Diagnostics;
 using RestSharp;
 
 namespace Finsa.Caravan.DataAccess
@@ -94,7 +94,7 @@ namespace Finsa.Caravan.DataAccess
          var milliseconds = stopwatch.ElapsedMilliseconds;
          Logger.LogDebugAsync<IDbManager>("EF generated query", logEntry, "Logging and timing the query", new[]
          {
-            CKeyValuePair.Create("milliseconds", milliseconds.ToString(CultureInfo.InvariantCulture))
+            KeyValuePair.Create("milliseconds", milliseconds.ToString(CultureInfo.InvariantCulture))
          });
 
          return list;

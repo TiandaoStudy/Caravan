@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Finsa.Caravan;
 
 namespace FLEX.WebForms
 {
@@ -12,7 +11,7 @@ namespace FLEX.WebForms
       /// 
       /// </summary>
       /// <returns></returns>
-      IList<CKeyValuePair<string, string>> GetFooterInfo();
+      IList<KeyValuePair<string, string>> GetFooterInfo();
 
       /// <summary>
       /// 

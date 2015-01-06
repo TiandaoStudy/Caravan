@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Finsa.Caravan.DataModel.Exceptions;
 using Finsa.Caravan.DataModel.Security;
-using Finsa.Caravan.Diagnostics;
+using PommaLabs.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
 {

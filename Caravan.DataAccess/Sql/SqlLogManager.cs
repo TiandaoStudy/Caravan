@@ -5,8 +5,8 @@ using System.Linq;
 using System.Transactions;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel.Logging;
-using Finsa.Caravan.Diagnostics;
-using Finsa.Caravan.Extensions;
+using PommaLabs.Diagnostics;
+using PommaLabs.Extensions;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
@@ -21,12 +21,12 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       public override LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function,
          string shortMessage, string longMessage, string context,
-         IEnumerable<CKeyValuePair<string, string>> args)
+         IEnumerable<KeyValuePair<string, string>> args)
       {
          try
          {
             Raise<ArgumentException>.IfIsEmpty(codeUnit);
-            var argsList = (args == null) ? new CKeyValuePair<string, string>[0] : args.ToArray();
+            var argsList = (args == null) ? new KeyValuePair<string, string>[0] : args.ToArray();
             Raise<ArgumentOutOfRangeException>.If(argsList.Length > MaxArgumentCount);
             
             using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
