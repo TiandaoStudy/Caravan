@@ -100,6 +100,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Mvc", "Caravan.Mvc\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.DataAccess", "UnitTests.DataAccess\UnitTests.DataAccess.csproj", "{B41960F5-4A94-4AFA-8AF6-9B368787D846}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GRAMPA (.NET40)", "Subrepositories\PommaLabs.GRAMPA\GRAMPA (.NET40)\GRAMPA (.NET40).csproj", "{858F0EF8-452E-4835-A77D-7616B231C505}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -176,6 +178,10 @@ Global
 		{B41960F5-4A94-4AFA-8AF6-9B368787D846}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B41960F5-4A94-4AFA-8AF6-9B368787D846}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B41960F5-4A94-4AFA-8AF6-9B368787D846}.Release|Any CPU.Build.0 = Release|Any CPU
+		{858F0EF8-452E-4835-A77D-7616B231C505}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{858F0EF8-452E-4835-A77D-7616B231C505}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{858F0EF8-452E-4835-A77D-7616B231C505}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{858F0EF8-452E-4835-A77D-7616B231C505}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
