@@ -40,6 +40,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PommaLabs.GRAMPA, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PommaLabs.GRAMPA.2.1.2\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -114,12 +118,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Subrepositories\PommaLabs.GRAMPA\GRAMPA %28.NET40%29\GRAMPA %28.NET40%29.csproj">
-      <Project>{858f0ef8-452e-4835-a77d-7616b231c505}</Project>
-      <Name>GRAMPA %28.NET40%29</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
