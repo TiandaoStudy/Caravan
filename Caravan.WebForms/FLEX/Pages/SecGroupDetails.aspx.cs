@@ -62,7 +62,7 @@ namespace Finsa.Caravan.WebForms.Pages
 
       private void MostraMultiSelectForNew() 
       {
-          var allowedUsers = Db.Security.Users(Finsa.Caravan.Common.Configuration.Instance.ApplicationName);
+         var allowedUsers = Db.Security.Users(Common.Properties.Settings.Default.ApplicationName);
 
           //Users
           DataTable _tableLeft = new DataTable();
@@ -97,7 +97,7 @@ namespace Finsa.Caravan.WebForms.Pages
             return;
          }
       
-         var group = Db.Security.Group(Common.Configuration.Instance.ApplicationName, groupName);
+         var group = Db.Security.Group(Common.Properties.Settings.Default.ApplicationName, groupName);
          Raise<ArgumentException>.IfIsNull(group, "Given group name does not exist");
 
          ViewState["group"] =group; 
@@ -115,7 +115,7 @@ namespace Finsa.Caravan.WebForms.Pages
           {
 
               var blockedUsersToGroup = ((SecGroup)ViewState["group"]).Users;
-              var allowedUsers = Db.Security.Users(Common.Configuration.Instance.ApplicationName).Except(blockedUsersToGroup);
+              var allowedUsers = Db.Security.Users(Common.Properties.Settings.Default.ApplicationName).Except(blockedUsersToGroup);
 
               //Users
               DataTable _tableLeft = new DataTable();
@@ -159,7 +159,7 @@ namespace Finsa.Caravan.WebForms.Pages
             if (Mode == NewMode)
             {
                var newGroup = new SecGroup { Name = txtGrpName.Text, Description = txtGrpDescr.Text, Notes = txtNotes.Text, IsAdmin = chkAdmin.Checked ? 1 : 0 };
-               Db.Security.AddGroup(Common.Configuration.Instance.ApplicationName, newGroup);
+               Db.Security.AddGroup(Common.Properties.Settings.Default.ApplicationName, newGroup);
 
                if (crvnMultiSelectUsersGroups.RightDataTable != null) 
                {
@@ -167,7 +167,7 @@ namespace Finsa.Caravan.WebForms.Pages
                    {
                        if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
                        {
-                           Db.Security.AddUserToGroup(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, oDrR["Login"].ToString(), newGroup.Name);
+                           Db.Security.AddUserToGroup(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, oDrR["Login"].ToString(), newGroup.Name);
                        }
                    }
 
@@ -175,7 +175,7 @@ namespace Finsa.Caravan.WebForms.Pages
                    {
                        if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
                        {
-                           Db.Security.RemoveUserFromGroup(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, oDrL["Login"].ToString(), newGroup.Name);
+                           Db.Security.RemoveUserFromGroup(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, oDrL["Login"].ToString(), newGroup.Name);
                        }
                    }
                }
@@ -190,7 +190,7 @@ namespace Finsa.Caravan.WebForms.Pages
                     {
                         if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
                         {
-                            Db.Security.AddUserToGroup(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, oDrR["Login"].ToString(), GroupName);
+                            Db.Security.AddUserToGroup(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, oDrR["Login"].ToString(), GroupName);
                         }
                     }
 
@@ -198,13 +198,13 @@ namespace Finsa.Caravan.WebForms.Pages
                     {
                         if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
                         {
-                            Db.Security.RemoveUserFromGroup(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, oDrL["Login"].ToString(), GroupName);
+                            Db.Security.RemoveUserFromGroup(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, oDrL["Login"].ToString(), GroupName);
                         }
                     }
                 }
 
                var newGroup = new SecGroup { Name = txtGrpName.Text, Description = txtGrpDescr.Text, Notes= txtNotes.Text ,IsAdmin = chkAdmin.Checked ? 1 : 0 };
-               Db.Security.UpdateGroup(Common.Configuration.Instance.ApplicationName, GroupName, newGroup);
+               Db.Security.UpdateGroup(Common.Properties.Settings.Default.ApplicationName, GroupName, newGroup);
             }
             Master.RegisterCloseScript(this);
          }

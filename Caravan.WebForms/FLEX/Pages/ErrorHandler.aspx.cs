@@ -17,7 +17,7 @@ namespace FLEX.Web.Pages
            string[] ErrorArray= new string[3];
            btnPrint.Attributes["onclick"]= "return openReportViewer('REPORT=StampaErrorHandler');";
 
-           txtTitle.Text = Configuration.Instance.ApplicationName;
+           txtTitle.Text = Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName;
 
            //Per errore potrei chiamare la pagina e la sessione è vuota
            if (Session[WebForms.Configuration.ExceptionSessionKey] == null) 

@@ -86,11 +86,11 @@ namespace FLEX.Web.Pages
 
       protected void TreeView1_SelectedNodeChanged(object sender, EventArgs args)
       {
-         var entries = Db.Security.EntriesForObject(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, "menu", TreeView1.SelectedValue);
+         var entries = Db.Security.EntriesForObject(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, "menu", TreeView1.SelectedValue);
          var blockedUsers = entries.Where(e => e.User != null).Select(e => e.User).ToList();
          var blockedGroups = entries.Where(e => e.Group != null).Select(e => e.Group).ToList();
-         var allowedUsers = Db.Security.Users(Finsa.Caravan.Common.Configuration.Instance.ApplicationName).Except(blockedUsers).ToList();
-         var allowedGroups = Db.Security.Groups(Finsa.Caravan.Common.Configuration.Instance.ApplicationName).Except(blockedGroups).ToList();
+         var allowedUsers = Db.Security.Users(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName).Except(blockedUsers).ToList();
+         var allowedGroups = Db.Security.Groups(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName).Except(blockedGroups).ToList();
 
          //Users
          DataTable _tableLeft = new DataTable();
@@ -169,7 +169,7 @@ namespace FLEX.Web.Pages
          {
             if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
             {
-               Db.Security.AddEntry(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, secContext, secObject, oDrR["Login"].ToString(), null);
+               Db.Security.AddEntry(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, secContext, secObject, oDrR["Login"].ToString(), null);
             }
          }
 
@@ -177,7 +177,7 @@ namespace FLEX.Web.Pages
          {
             if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
             {
-               Db.Security.RemoveEntry(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, secContext.Name, secObject.Name, oDrL["Login"].ToString(), null);
+               Db.Security.RemoveEntry(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, secContext.Name, secObject.Name, oDrL["Login"].ToString(), null);
             }
          }
         
@@ -186,7 +186,7 @@ namespace FLEX.Web.Pages
          {
             if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
             {
-               Db.Security.AddEntry(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, secContext, secObject, null, oDrR["Name"].ToString());
+               Db.Security.AddEntry(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, secContext, secObject, null, oDrR["Name"].ToString());
             }
          }
 
@@ -194,7 +194,7 @@ namespace FLEX.Web.Pages
          {
             if (oDrR[MultiSelect.FlagCrud].ToString() == "R")
             {
-               Db.Security.RemoveEntry(Finsa.Caravan.Common.Configuration.Instance.ApplicationName, secContext.Name, secObject.Name, null, oDrR["Name"].ToString());
+               Db.Security.RemoveEntry(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, secContext.Name, secObject.Name, null, oDrR["Name"].ToString());
             }
          }
 

@@ -32,7 +32,7 @@ namespace FLEX.WebForms.Pages
       {
          // This should not catch any exception, others will do.
          fdtgLogs.DataSource = (
-            from l in Db.Logger.Logs(Finsa.Caravan.Common.Configuration.Instance.ApplicationName)
+            from l in Db.Logger.Logs(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName)
             select new
             {
                l.Id,

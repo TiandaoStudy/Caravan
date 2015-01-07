@@ -8,14 +8,14 @@ namespace Finsa.Caravan.Mvc.Controllers
    {
       public static string CaravanQueryService
       {
-         get { return DataAccess.Configuration.Instance.CaravanRestServiceUrl + "query/" + Common.Configuration.Instance.ApplicationName + "/"; }
+         get { return DataAccess.Configuration.Instance.CaravanRestServiceUrl + "query/" + Common.Properties.Settings.Default.ApplicationName + "/"; }
       }
 
       public ActionResult SecGroupList()
       {
          var viewModel = new SecGroupList
          {
-            Groups = Db.Security.Groups(Common.Configuration.Instance.ApplicationName)
+            Groups = Db.Security.Groups(Common.Properties.Settings.Default.ApplicationName)
          };
          return View(viewModel);
       }
@@ -24,7 +24,7 @@ namespace Finsa.Caravan.Mvc.Controllers
       {
          var viewModel = new SecGroupList
          {
-            Groups = Db.Security.Groups(Common.Configuration.Instance.ApplicationName)
+            Groups = Db.Security.Groups(Common.Properties.Settings.Default.ApplicationName)
          };
          return PartialView();
       }
@@ -33,7 +33,7 @@ namespace Finsa.Caravan.Mvc.Controllers
       {
           var viewModel = new SecUserList
           {
-              Users = Db.Security.Users(Common.Configuration.Instance.ApplicationName)
+             Users = Db.Security.Users(Common.Properties.Settings.Default.ApplicationName)
           };
           return View(viewModel);
       }
@@ -42,7 +42,7 @@ namespace Finsa.Caravan.Mvc.Controllers
       {
           var viewModel = new SecUserList
           {
-              Users = Db.Security.Users(Common.Configuration.Instance.ApplicationName)
+             Users = Db.Security.Users(Common.Properties.Settings.Default.ApplicationName)
           };
           return PartialView();
       }
@@ -51,7 +51,7 @@ namespace Finsa.Caravan.Mvc.Controllers
       {
           var viewModel = new SecUserList
           {
-              Users = Db.Security.Users(Common.Configuration.Instance.ApplicationName)
+             Users = Db.Security.Users(Common.Properties.Settings.Default.ApplicationName)
           };
           return View(viewModel);
       }
@@ -60,7 +60,7 @@ namespace Finsa.Caravan.Mvc.Controllers
       {
           var viewModel = new SecUserList
           {
-              Users = Db.Security.Users(Common.Configuration.Instance.ApplicationName)
+             Users = Db.Security.Users(Common.Properties.Settings.Default.ApplicationName)
           };
           return PartialView();
       }

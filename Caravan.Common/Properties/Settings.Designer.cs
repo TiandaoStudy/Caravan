@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Finsa.Caravan.DataAccess.Properties {
+namespace Finsa.Caravan.Common.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -25,37 +25,19 @@ namespace Finsa.Caravan.DataAccess.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("_TEST_TOKEN_")]
-        public string RestTestAuthObject {
+        [global::System.Configuration.DefaultSettingValueAttribute("my_caravan_app")]
+        public string ApplicationName {
             get {
-                return ((string)(this["RestTestAuthObject"]));
+                return ((string)(this["ApplicationName"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public int DefaultSaveChangesRetryCount {
+        [global::System.Configuration.DefaultSettingValueAttribute("My Wow Caravan App")]
+        public string ApplicationDescription {
             get {
-                return ((int)(this["DefaultSaveChangesRetryCount"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool PersistConnectionString {
-            get {
-                return ((bool)(this["PersistConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Oracle")]
-        public string DataAccessKind {
-            get {
-                return ((string)(this["DataAccessKind"]));
+                return ((string)(this["ApplicationDescription"]));
             }
         }
     }

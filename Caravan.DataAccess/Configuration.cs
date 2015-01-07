@@ -20,7 +20,6 @@ namespace Finsa.Caravan.DataAccess
       #region Common Settings
 
       private const string ConnectionStringKey = "ConnectionString";
-      private const string DataAccessKindKey = "DataAccessKind";
 
       [ConfigurationProperty(ConnectionStringKey, IsRequired = false)]
       public string ConnectionString
@@ -58,12 +57,6 @@ namespace Finsa.Caravan.DataAccess
             Db.Manager.ElaborateConnectionString(ref value);
             cache.AddStatic(CachePartitionName, ConnectionStringKey, value);
          }
-      }
-
-      [ConfigurationProperty(DataAccessKindKey, IsRequired = true)]
-      public DataAccessKind DataAccessKind
-      {
-         get { return (DataAccessKind) this[DataAccessKindKey]; }
       }
 
       #endregion
@@ -120,7 +113,7 @@ namespace Finsa.Caravan.DataAccess
       /// </summary>
       internal string CurrentAppName
       {
-         get { return _currentAppName ?? Common.Configuration.Instance.ApplicationName; }
+         get { return _currentAppName ?? Common.Properties.Settings.Default.ApplicationName; }
          set { _currentAppName = value.ToLower(); }
       }
 

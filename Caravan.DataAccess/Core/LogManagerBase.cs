@@ -292,7 +292,7 @@ namespace Finsa.Caravan.DataAccess.Core
       {
          if (String.IsNullOrWhiteSpace(appName) || appName == LogEntry.AutoFilled)
          {
-            return Common.Configuration.Instance.ApplicationName;
+            return Common.Properties.Settings.Default.ApplicationName;
          }
          return appName;
       }

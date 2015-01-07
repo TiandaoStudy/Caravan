@@ -11,5 +11,8 @@
     <Setting Name="PersistConnectionString" Type="System.Boolean" Scope="Application">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="DataAccessKind" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Oracle</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

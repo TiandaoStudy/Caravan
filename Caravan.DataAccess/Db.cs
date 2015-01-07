@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -28,7 +29,15 @@ namespace Finsa.Caravan.DataAccess
 
       static Db()
       {
-         SetDataAccessKind(Configuration.Instance.DataAccessKind);
+         DataAccessKind accessKind;
+         if (Enum.TryParse(Settings.Default.DataAccessKind, true, out accessKind))
+         {
+            SetDataAccessKind(accessKind);
+         }
+         else
+         {
+            throw new ConfigurationErrorsException();
+         }
       }
 
       #region Public Properties - Instances
