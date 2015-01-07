@@ -202,6 +202,12 @@
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_app.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_context.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_security.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\caravan_security_id.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\caravan_sec_object_id.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\caravan_sec_group_id.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\caravan_sec_context_id.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\caravan_sec_user_id.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\caravan_sec_app_id.sql" />
     <Content Include="Sql\Oracle\Scripts\Triggers\caravan_log_id.sql" />
   </ItemGroup>
   <ItemGroup>
