@@ -60,7 +60,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                {
                   ctx.LogEntries.Add(new LogEntry
                   {
-                     Id = (ctx.LogEntries.Where(e => e.AppId == appId).Max(e => (long?) e.Id) ?? -1) + 1,
+                     Id = 0,
                      Date = DateTime.Now,
                      AppId = appId,
                      TypeId = typeId,
@@ -74,25 +74,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                   });
                }
 
-               ctx.SaveConcurrentChanges((c, ex) =>
-               {
-                  c.UndoChanges();
-                  c.LogEntries.Add(new LogEntry
-                  {
-                     Id = (c.LogEntries.Where(e => e.AppId == appId).Max(e => (long?) e.Id) ?? -1) + 1,
-                     Date = DateTime.Now,
-                     AppId = appId,
-                     TypeId = typeId,
-                     UserLogin = userName.Truncate(MaxStringLength).ToLower(),
-                     CodeUnit = codeUnit.Truncate(MaxStringLength).ToLower(),
-                     Function = function.Truncate(MaxStringLength).ToLower(),
-                     ShortMessage = shortMessage.Truncate(MaxStringLength),
-                     LongMessage = longMessage, // Not truncated, because it should be a CLOB.
-                     Context = context.Truncate(MaxStringLength),
-                     Arguments = argsList
-                  });
-               });
-               
+               ctx.SaveChanges();
                trx.Complete();
                return LogResult.Success;
             }

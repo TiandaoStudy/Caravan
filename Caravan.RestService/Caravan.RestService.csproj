@@ -107,6 +107,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.SQLite">
       <HintPath>..\packages\System.Data.SQLite.Core.MSIL.1.0.94.0\lib\net45\System.Data.SQLite.dll</HintPath>
@@ -128,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\nancy-logo.png" />
+    <Content Include="Global.asax" />
     <Content Include="KVLite\x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -167,6 +169,9 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Core\CustomModule.cs" />
     <Compile Include="Core\CustomJsonSerializer.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="IndexModule.cs" />
     <Compile Include="LoggerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

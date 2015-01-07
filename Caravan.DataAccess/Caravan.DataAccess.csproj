@@ -202,6 +202,7 @@
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_app.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_context.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_security.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\caravan_log_id.sql" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Sql\Postgres\" />

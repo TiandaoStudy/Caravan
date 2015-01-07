@@ -134,7 +134,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Database\TestDatabase.sdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="KVLite\x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

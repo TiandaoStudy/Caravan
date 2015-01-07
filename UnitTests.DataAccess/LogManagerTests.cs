@@ -87,7 +87,7 @@ namespace UnitTests.DataAccess
          var update = new LogSettings { Days = 40, Enabled = 1,MaxEntries = 50};
          Db.Logger.UpdateSettings(_myApp.Name,LogType.Info,update);
 
-         var q = Db.Logger.LogSettings(_myApp.Name).Where(s => s.AppId == update.AppId && s.Type==LogType.Info).ToList();
+         var q = Db.Logger.LogSettings(_myApp.Name).Where(s => s.AppId == _myApp.Id && s.Type==LogType.Info).ToList();
          Assert.That(q.Count, Is.EqualTo(1));
          Assert.That(q.First().MaxEntries,Is.EqualTo(50));
          Assert.That(q.First().Days,Is.EqualTo(40));
