@@ -1,5 +1,6 @@
 using System.Data.Common;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.DataAccess.Properties;
 
 namespace Finsa.Caravan.DataAccess.Sql.SqlServerCe
 {
@@ -20,7 +21,7 @@ namespace Finsa.Caravan.DataAccess.Sql.SqlServerCe
 		public override DbConnection CreateConnection()
 		{
 			var connection = DbFactory.CreateConnection();
-			connection.ConnectionString = Configuration.Instance.ConnectionString;
+			connection.ConnectionString = Settings.Default.ConnectionString;
 			return connection;
 		}
 	}

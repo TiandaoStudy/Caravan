@@ -14,5 +14,17 @@
     <Setting Name="DataAccessKind" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Oracle</Value>
     </Setting>
+    <Setting Name="OracleStatementCacheSize" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="OracleUser" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">mydb</Value>
+    </Setting>
+    <Setting Name="RestServiceUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">finsa.caravan.it/</Value>
+    </Setting>
+    <Setting Name="ConnectionString" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

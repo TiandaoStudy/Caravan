@@ -20,7 +20,7 @@ namespace Finsa.Caravan.Mvc
          // Sets the default connection string, if variable has a value.
          if (!String.IsNullOrWhiteSpace(connectionString))
          {
-            DataAccess.Configuration.Instance.ConnectionString = connectionString;
+            Db.ConnectionString = connectionString;
          }
 
          // Run vacuum on the persistent cache. It should be put AFTER the connection string is set,

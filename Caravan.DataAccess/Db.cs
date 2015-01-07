@@ -13,6 +13,7 @@ using Finsa.Caravan.DataAccess.Sql;
 using Finsa.Caravan.DataAccess.Sql.Oracle;
 using Finsa.Caravan.DataAccess.Sql.SqlServerCe;
 using PommaLabs.Diagnostics;
+using PommaLabs.KVLite;
 using RestSharp;
 
 namespace Finsa.Caravan.DataAccess
@@ -22,6 +23,9 @@ namespace Finsa.Caravan.DataAccess
    /// </summary>
    public static class Db
    {
+      private const string CachePartitionName = "Caravan.DataAccess";
+      private const string ConnectionStringKey = "ConnectionString";
+
       private static LogManagerBase _logManagerInstance;
       private static QueryManagerBase _queryManagerInstance;
       private static ISecurityManager _securityManagerInstance;
@@ -75,6 +79,43 @@ namespace Finsa.Caravan.DataAccess
       public static dynamic RestAuthObject { get; set; }
 
       #endregion
+
+      public static string ConnectionString
+      {
+         get
+         {
+            var cache = Settings.Default.PersistConnectionString
+               ? PersistentCache.DefaultInstance as ICache
+               : VolatileCache.DefaultInstance;
+
+            var cachedConnectionString = cache.Get(CachePartitionName, ConnectionStringKey) as string;
+            var configConnectionString = Settings.Default.ConnectionString;
+
+            if (String.IsNullOrWhiteSpace(configConnectionString))
+            {
+               // If connection string is not in the configuration file, then return the cached one, even if empty.
+               return cachedConnectionString;
+            }
+            Manager.ElaborateConnectionString(ref configConnectionString);
+            if (configConnectionString == cachedConnectionString)
+            {
+               // Connection string has _not_ changed, return the cached one.
+               return cachedConnectionString;
+            }
+            // Connection string _has_ changed, update the cached one.
+            cache.AddStatic(CachePartitionName, ConnectionStringKey, configConnectionString);
+            return configConnectionString;
+         }
+         set
+         {
+            var cache = Settings.Default.PersistConnectionString
+               ? PersistentCache.DefaultInstance as ICache
+               : VolatileCache.DefaultInstance;
+
+            Manager.ElaborateConnectionString(ref value);
+            cache.AddStatic(CachePartitionName, ConnectionStringKey, value);
+         }
+      }
 
       #region DbContext Generators
 
@@ -167,7 +208,7 @@ namespace Finsa.Caravan.DataAccess
                }
                break;
             case DataAccessKind.Rest:
-               var client = new RestClient(Configuration.Instance.ConnectionString);
+               var client = new RestClient(Settings.Default.RestServiceUrl);
                var request = new RestRequest("testing/clearAllTablesUseOnlyInsideUnitTestsPlease", Method.POST);
                client.Execute(request);
                break;

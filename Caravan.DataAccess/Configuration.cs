@@ -8,7 +8,6 @@ namespace Finsa.Caravan.DataAccess
    public sealed class Configuration : ConfigurationSection
    {
       private const string SectionName = "Finsa.Caravan.DataAccess";
-      private const string CachePartitionName = "Caravan.DataAccess";
 
       private static readonly Configuration CachedInstance = ConfigurationManager.GetSection(SectionName) as Configuration;
 
@@ -17,92 +16,6 @@ namespace Finsa.Caravan.DataAccess
          get { return CachedInstance; }
       }
 
-      #region Common Settings
-
-      private const string ConnectionStringKey = "ConnectionString";
-
-      [ConfigurationProperty(ConnectionStringKey, IsRequired = false)]
-      public string ConnectionString
-      {
-         get
-         {
-            var cache = Settings.Default.PersistConnectionString
-               ? PersistentCache.DefaultInstance as ICache
-               : VolatileCache.DefaultInstance;
-
-            var cachedConnectionString = cache.Get(CachePartitionName, ConnectionStringKey) as string;
-            var configConnectionString = this[ConnectionStringKey] as string;
-            
-            if (String.IsNullOrWhiteSpace(configConnectionString))
-            {
-               // If connection string is not in the configuration file, then return the cached one, even if empty.
-               return cachedConnectionString;
-            }
-            Db.Manager.ElaborateConnectionString(ref configConnectionString);
-            if (configConnectionString == cachedConnectionString)
-            {
-               // Connection string has _not_ changed, return the cached one.
-               return cachedConnectionString;
-            }
-            // Connection string _has_ changed, update the cached one.
-            cache.AddStatic(CachePartitionName, ConnectionStringKey, configConnectionString);
-            return configConnectionString;
-         }
-         set
-         {
-            var cache = Settings.Default.PersistConnectionString
-               ? PersistentCache.DefaultInstance as ICache
-               : VolatileCache.DefaultInstance;
-
-            Db.Manager.ElaborateConnectionString(ref value);
-            cache.AddStatic(CachePartitionName, ConnectionStringKey, value);
-         }
-      }
-
-      #endregion
-
-      #region Oracle Specific
-
-      private const string OracleStatementCacheSizeKey = "OracleStatementCacheSize";
-      private const string OracleUserKey = "OracleUser";
-
-      [ConfigurationProperty(OracleStatementCacheSizeKey, IsRequired = false, DefaultValue = 10)]
-      public int OracleStatementCacheSize
-      {
-         get { return Convert.ToInt32(this[OracleStatementCacheSizeKey]); }
-      }
-
-      [ConfigurationProperty(OracleUserKey, IsRequired = false, DefaultValue = "")]
-      public string OracleUser
-      {
-         get { return this[OracleUserKey] as string; }
-      }
-
-      #endregion
-
-      #region Postgres Specific
-
-      #endregion
-
-      #region Rest Specific
-
-      private const string CaravanRestServiceUrlKey = "CaravanRestServiceUrl";
-
-      [ConfigurationProperty(CaravanRestServiceUrlKey, IsRequired = false, DefaultValue = "")]
-      public string CaravanRestServiceUrl
-      {
-         get
-         {
-            var url = this[CaravanRestServiceUrlKey] as string;
-            if (!String.IsNullOrWhiteSpace(url) && !url.EndsWith("/"))
-            {
-               return url + "/";
-            }
-            return url;
-         }
-      }
-
-      #endregion
 
       #region Internal Settings
 

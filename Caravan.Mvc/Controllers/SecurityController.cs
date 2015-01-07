@@ -8,7 +8,7 @@ namespace Finsa.Caravan.Mvc.Controllers
    {
       public static string CaravanQueryService
       {
-         get { return DataAccess.Configuration.Instance.CaravanRestServiceUrl + "query/" + Common.Properties.Settings.Default.ApplicationName + "/"; }
+         get { return DataAccess.Properties.Settings.Default.RestServiceUrl + "query/" + Common.Properties.Settings.Default.ApplicationName + "/"; }
       }
 
       public ActionResult SecGroupList()

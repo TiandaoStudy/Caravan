@@ -18,7 +18,7 @@ namespace Finsa.Caravan.WebForms
       public static void Application_Start(object sender, EventArgs args, string connectionString, HttpApplicationState Application)
       {
          // Sets the default connection string.
-         DataAccess.Configuration.Instance.ConnectionString = connectionString;
+         Db.ConnectionString = connectionString;
 
          // Run vacuum on the persistent cache. It should be put AFTER the connection string is set,
          // since that string it stored on the cache itself and we do not want conflicts, right?

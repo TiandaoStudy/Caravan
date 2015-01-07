@@ -5,6 +5,7 @@ using Finsa.Caravan.Common.DataModel.Exceptions;
 using Finsa.Caravan.Common.DataModel.Rest;
 using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.DataAccess.Properties;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -630,7 +631,7 @@ namespace Finsa.Caravan.DataAccess.Rest
 
       private static RestClient CreateClient()
       {
-         return new RestClient(Configuration.Instance.ConnectionString + "/security");
+         return new RestClient(Settings.Default.RestServiceUrl + "/security");
       }
 
       #endregion
