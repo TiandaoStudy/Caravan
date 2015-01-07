@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.DataModel.Security;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 using PommaLabs.Diagnostics;

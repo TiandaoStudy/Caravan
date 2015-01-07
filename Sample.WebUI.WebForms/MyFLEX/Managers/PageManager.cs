@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web;
 using Finsa.Caravan;
+using Finsa.Caravan.Common;
 using FLEX.Sample.WebUI.Reports;
 using FLEX.WebForms;
 

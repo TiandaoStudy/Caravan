@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.UI.WebControls;
-using Finsa.Caravan.DataModel.Security;
+using Finsa.Caravan.Common.DataModel.Security;
 using FLEX.Common.Web;
 using FLEX.Web.Pages;
 using System.Data;

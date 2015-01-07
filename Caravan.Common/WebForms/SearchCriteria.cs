@@ -17,7 +17,94 @@ namespace FLEX.Common.Web
 
       public event Action<SearchCriteria, SearchCriteriaChangedArgs> CriteriaChanged;
 
-      public event Action ClearingCriteria; 
+      public event Action ClearingCriteria;
+
+      public void ClearCriteria(object sender, EventArgs args)
+      {
+         foreach (var ctrl in _observedControls.Values.Where(c => c.Enabled.HasValue && c.Enabled.Value))
+         {
+            ctrl.ClearContents();
+         }
+         if (ClearingCriteria != null)
+         {
+            ClearingCriteria();
+         }
+         if (CriteriaChanged != null)
+         {
+            CriteriaChanged(this, new SearchCriteriaChangedArgs());
+         }
+      }
+
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="control"></param>
+      /// <param name="key"></param>
+      public void RegisterControl(ISearchControl control, string key)
+      {
+         Raise<ArgumentNullException>.IfIsNull(control);
+         Raise<ArgumentException>.IfIsEmpty(key);
+
+         key = key.ToLower();
+         if (_observedControls.ContainsKey(key))
+         {
+            // Control is already observed, we need to update the references.
+            var ctrl = _observedControls[key];
+            control.CopySelectedValuesFrom(ctrl);
+            _observedControls[key] = control;
+         }
+         else
+         {
+            _observedControls.Add(key, control);
+         }
+         control.ValueSelected += UpdateCriteria;
+      }
+
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="value"></param>
+      /// <param name="key"></param>
+      public void RegisterValue(string value, string key)
+      {
+         Raise<ArgumentException>.IfIsEmpty(key);
+
+         var searchControl = new FakeSearchControl(value);
+         key = key.ToLower();
+         if (_observedControls.ContainsKey(key))
+         {
+            // Control is already observed, we need to update the references.
+            _observedControls[key] = searchControl;
+         }
+         else
+         {
+            _observedControls.Add(key, searchControl);
+         }
+      }
+
+      private void UpdateCriteria(ISearchControl searchControl, SearchCriteriaSelectedArgs args)
+      {
+         Raise<ArgumentNullException>.IfIsNull(searchControl);
+
+         if (CriteriaChanged != null)
+         {
+            CriteriaChanged(this, new SearchCriteriaChangedArgs());
+         }
+      }
+
+      #region IEnumerable Members
+
+      public IEnumerator<SearchCriteriaItem> GetEnumerator()
+      {
+         return _observedControls.Select(x => new SearchCriteriaItem {Key = x.Key, Values = x.Value.SelectedValues}).GetEnumerator();
+      }
+
+      IEnumerator IEnumerable.GetEnumerator()
+      {
+         return GetEnumerator();
+      }
+
+      #endregion
 
       #region Public Properties
 
@@ -54,93 +141,6 @@ namespace FLEX.Common.Web
 
       #endregion
 
-      public void ClearCriteria(object sender, EventArgs args)
-      {
-         foreach (var ctrl in _observedControls.Values.Where(c => c.Enabled.HasValue && c.Enabled.Value))
-         {
-            ctrl.ClearContents();
-         }
-         if (ClearingCriteria != null)
-         {
-            ClearingCriteria();
-         }
-         if (CriteriaChanged != null)
-         {
-            CriteriaChanged(this, new SearchCriteriaChangedArgs());
-         }
-      }
-
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="control"></param>
-      /// <param name="key"></param>
-      public void RegisterControl(ISearchControl control, string key)
-      {
-         Raise<ArgumentNullException>.IfIsNull(control);
-         Raise<ArgumentException>.IfIsEmpty(key);
-         
-         key = key.ToLower();
-         if (_observedControls.ContainsKey(key))
-         {
-            // Control is already observed, we need to update the references.
-            var ctrl = _observedControls[key];
-            control.CopySelectedValuesFrom(ctrl);
-            _observedControls[key] = control;
-         }
-         else
-         {
-            _observedControls.Add(key, control);
-         }
-         control.ValueSelected += UpdateCriteria;
-      }
-
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="value"></param>
-      /// <param name="key"></param>
-      public void RegisterValue(string value, string key)
-      {
-         Raise<ArgumentException>.IfIsEmpty(key);
-         
-         var searchControl = new FakeSearchControl(value);
-         key = key.ToLower();
-         if (_observedControls.ContainsKey(key))
-         {
-            // Control is already observed, we need to update the references.
-            _observedControls[key] = searchControl;
-         }
-         else
-         {
-            _observedControls.Add(key, searchControl);
-         }
-      }
-
-      #region IEnumerable Members
-
-      public IEnumerator<SearchCriteriaItem> GetEnumerator()
-      {
-         return _observedControls.Select(x => new SearchCriteriaItem {Key = x.Key, Values = x.Value.SelectedValues}).GetEnumerator();
-      }
-
-      IEnumerator IEnumerable.GetEnumerator()
-      {
-         return GetEnumerator();
-      }
-
-      #endregion
-
-      private void UpdateCriteria(ISearchControl searchControl, SearchCriteriaSelectedArgs args)
-      {
-         Raise<ArgumentNullException>.IfIsNull(searchControl);
-
-         if (CriteriaChanged != null)
-         {
-            CriteriaChanged(this, new SearchCriteriaChangedArgs());
-         }
-      }
-
       private sealed class FakeSearchControl : ISearchControl
       {
          private readonly string _value;
@@ -169,9 +169,9 @@ namespace FLEX.Common.Web
          {
             get { return ReadOnlyList.Create(_value); }
          }
-         
+
          public event Action<ISearchControl, SearchCriteriaSelectedArgs> ValueSelected;
-         
+
          public void ClearContents()
          {
             throw new InvalidOperationException("FakeSearchControl is readonly");

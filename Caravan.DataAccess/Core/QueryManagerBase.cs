@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Finsa.Caravan.DataModel.Security;
+using Finsa.Caravan.Common.DataModel.Security;
 using PommaLabs.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core

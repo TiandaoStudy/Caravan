@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Transactions;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Properties;
 using Finsa.Caravan.DataAccess.Rest;

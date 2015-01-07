@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataModel.Logging;
-using Finsa.Caravan.DataModel.Security;
 
 namespace Finsa.Caravan.DataAccess.Sql.SqlServerCe
 {

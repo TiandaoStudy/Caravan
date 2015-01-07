@@ -84,10 +84,10 @@
     <Compile Include="DataModel\Security\SecObject.cs" />
     <Compile Include="DataModel\Security\SecUser.cs" />
     <Compile Include="DataModel\Security\SessionTracker.cs" />
-    <Compile Include="Finsa.Caravan.XmlSchemas.MenuEntries.Item.cs">
+    <Compile Include="Finsa.Caravan.Common.XmlSchemas.MenuEntries.Item.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
-    <Compile Include="Finsa.Caravan.XmlSchemas.MenuEntries.Menu.cs">
+    <Compile Include="Finsa.Caravan.Common.XmlSchemas.MenuEntries.Menu.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
     <Compile Include="KeyValuePair.cs" />

@@ -2,32 +2,32 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Finsa.Caravan.DataModel.Security
+namespace Finsa.Caravan.Common.DataModel.Security
 {
    [Serializable]
    public class SecObject : IEquatable<SecObject>
    {
       [JsonProperty(Order = 0)]
       public long Id { get; set; }
-      
+
       [JsonIgnore]
       public long ContextId { get; set; }
-      
+
       [JsonIgnore]
       public SecContext Context { get; set; }
 
       [JsonIgnore]
       public long AppId { get; set; }
-      
+
       [JsonIgnore]
       public SecApp App { get; set; }
-      
+
       [JsonProperty(Order = 1)]
       public string Name { get; set; }
-      
+
       [JsonProperty(Order = 2)]
       public string Description { get; set; }
-      
+
       [JsonProperty(Order = 3)]
       public string Type { get; set; }
 
@@ -53,7 +53,7 @@ namespace Finsa.Caravan.DataModel.Security
       {
          unchecked
          {
-            int hashCode = Id.GetHashCode();
+            var hashCode = Id.GetHashCode();
             hashCode = (hashCode*397) ^ ContextId.GetHashCode();
             hashCode = (hashCode*397) ^ AppId.GetHashCode();
             return hashCode;
@@ -74,7 +74,7 @@ namespace Finsa.Caravan.DataModel.Security
    [Serializable]
    public class SecObjectSingle : IEquatable<SecObjectSingle>
    {
-      public SecObject Object { get; set; } 
+      public SecObject Object { get; set; }
 
       public bool Equals(SecObjectSingle other)
       {
@@ -140,6 +140,6 @@ namespace Finsa.Caravan.DataModel.Security
       public static bool operator !=(SecObjectList left, SecObjectList right)
       {
          return !Equals(left, right);
-      } 
+      }
    }
 }

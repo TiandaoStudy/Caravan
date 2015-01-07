@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
+using Finsa.Caravan.Common.DataModel.Logging;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataModel.Logging;
 using PommaLabs.Diagnostics;
 using PommaLabs.Extensions;
 

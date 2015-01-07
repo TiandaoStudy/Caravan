@@ -4,8 +4,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Web;
-using Finsa.Caravan.DataModel.Exceptions;
-using Finsa.Caravan.DataModel.Logging;
+using Finsa.Caravan.Common.DataModel.Exceptions;
+using Finsa.Caravan.Common.DataModel.Logging;
 using PommaLabs.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core

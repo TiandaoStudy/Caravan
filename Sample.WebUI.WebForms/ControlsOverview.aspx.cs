@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using Finsa.Caravan;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess;
 using FLEX.Common.Web;
 using FLEX.Web.Pages;

@@ -2,9 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Finsa.Caravan;
+using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.DataModel.Logging;
-using Finsa.Caravan.DataModel.Security;
 using NUnit.Framework;
 
 namespace UnitTests.DataAccess

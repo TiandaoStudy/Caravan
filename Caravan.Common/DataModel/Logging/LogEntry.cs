@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Finsa.Caravan.DataModel.Security;
+using Finsa.Caravan.Common.DataModel.Security;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Finsa.Caravan.DataModel.Logging
+namespace Finsa.Caravan.Common.DataModel.Logging
 {
    [Serializable]
    public class LogEntry : IEquatable<LogEntry>
@@ -13,45 +13,45 @@ namespace Finsa.Caravan.DataModel.Logging
       public const string NotSpecified = "...";
 
       private KeyValuePair<string, string>[] _cachedArguments;
-      
+
       [JsonProperty(Order = 0)]
       public long Id { get; set; }
 
       [JsonProperty(Order = 1)]
       public long AppId { get; set; }
-      
+
       [JsonIgnore]
       public SecApp App { get; set; }
-      
+
       [JsonProperty(Order = 3)]
       public DateTime Date { get; set; }
-      
+
       [JsonProperty(Order = 4)]
       public string UserLogin { get; set; }
-      
+
       [JsonProperty(Order = 5)]
       public string CodeUnit { get; set; }
-      
+
       [JsonProperty(Order = 6)]
       public string Function { get; set; }
-      
+
       [JsonProperty(Order = 7)]
       public string ShortMessage { get; set; }
-      
+
       [JsonProperty(Order = 8)]
       public string LongMessage { get; set; }
-      
+
       [JsonProperty(Order = 9)]
       public string Context { get; set; }
 
       [JsonIgnore]
       public LogSettings LogSettings { get; set; }
-      
+
       [JsonIgnore]
       public string TypeId { get; set; }
-      
+
       [JsonProperty(Order = 2)]
-      [JsonConverter(typeof(StringEnumConverter))]
+      [JsonConverter(typeof (StringEnumConverter))]
       public LogType Type
       {
          get
@@ -62,48 +62,67 @@ namespace Finsa.Caravan.DataModel.Logging
          }
          set { TypeId = value.ToString().ToLower(); }
       }
-      
+
       [JsonIgnore]
       public string Key0 { get; set; }
+
       [JsonIgnore]
       public string Value0 { get; set; }
+
       [JsonIgnore]
       public string Key1 { get; set; }
+
       [JsonIgnore]
       public string Value1 { get; set; }
+
       [JsonIgnore]
       public string Key2 { get; set; }
+
       [JsonIgnore]
       public string Value2 { get; set; }
+
       [JsonIgnore]
       public string Key3 { get; set; }
+
       [JsonIgnore]
       public string Value3 { get; set; }
+
       [JsonIgnore]
       public string Key4 { get; set; }
+
       [JsonIgnore]
       public string Value4 { get; set; }
+
       [JsonIgnore]
       public string Key5 { get; set; }
+
       [JsonIgnore]
       public string Value5 { get; set; }
+
       [JsonIgnore]
       public string Key6 { get; set; }
+
       [JsonIgnore]
       public string Value6 { get; set; }
+
       [JsonIgnore]
       public string Key7 { get; set; }
+
       [JsonIgnore]
       public string Value7 { get; set; }
+
       [JsonIgnore]
       public string Key8 { get; set; }
+
       [JsonIgnore]
       public string Value8 { get; set; }
+
       [JsonIgnore]
       public string Key9 { get; set; }
+
       [JsonIgnore]
       public string Value9 { get; set; }
-      
+
       [JsonProperty(Order = 10)]
       public KeyValuePair<string, string>[] Arguments
       {
@@ -173,7 +192,7 @@ namespace Finsa.Caravan.DataModel.Logging
             {
                return;
             }
-            
+
             // Argument cache is not invalidated.
             _cachedArguments = null;
 
@@ -295,13 +314,13 @@ namespace Finsa.Caravan.DataModel.Logging
       public static bool operator !=(LogEntrySingle left, LogEntrySingle right)
       {
          return !Equals(left, right);
-      } 
+      }
    }
 
    [Serializable]
    public class LogEntryList : IEquatable<LogEntryList>
    {
-      public IEnumerable<LogEntry> Entries { get; set; } 
+      public IEnumerable<LogEntry> Entries { get; set; }
 
       public bool Equals(LogEntryList other)
       {

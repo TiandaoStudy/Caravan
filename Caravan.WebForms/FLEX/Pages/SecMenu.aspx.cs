@@ -3,10 +3,11 @@ using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI.WebControls;
+using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess;
 using System.Xml;
 using FLEX.Web.UserControls.Ajax;
-using Finsa.Caravan.DataModel.Security;
+
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
 

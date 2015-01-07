@@ -1,4 +1,4 @@
-﻿namespace Finsa.Caravan.RestService
+﻿namespace Finsa.Caravan.Common.RestService
 {
    public interface IAuthManager
    {

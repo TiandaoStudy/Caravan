@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using Finsa.Caravan.RestService.Core;
-using Finsa.Caravan.XmlSchemas.MenuEntries;
+using Finsa.Caravan.Common.XmlSchemas.MenuEntries;
 using LinqToQuerystring.Nancy;
 using Nancy;
 using PommaLabs.KVLite.Nancy;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataModel.Security;
 using LinqToQuerystring;
 
 namespace Finsa.Caravan.DataAccess.Sql

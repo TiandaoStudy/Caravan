@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Finsa.Caravan.DataModel.Exceptions
+namespace Finsa.Caravan.Common.DataModel.Exceptions
 {
    [Serializable]
    public class UserExistingException : Exception
@@ -17,7 +17,7 @@ namespace Finsa.Caravan.DataModel.Exceptions
       {
       }
 
-      public UserExistingException(string message): base(TheMessage)
+      public UserExistingException(string message) : base(TheMessage)
       {
       }
 

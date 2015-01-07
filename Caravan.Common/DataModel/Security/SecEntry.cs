@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Finsa.Caravan.DataModel.Security
+namespace Finsa.Caravan.Common.DataModel.Security
 {
    [Serializable]
    public class SecEntry : IEquatable<SecEntry>
@@ -65,7 +65,7 @@ namespace Finsa.Caravan.DataModel.Security
    [Serializable]
    public class SecEntrySingle : IEquatable<SecEntrySingle>
    {
-      public SecEntry Entry { get; set; } 
+      public SecEntry Entry { get; set; }
 
       public bool Equals(SecEntrySingle other)
       {
@@ -131,6 +131,6 @@ namespace Finsa.Caravan.DataModel.Security
       public static bool operator !=(SecEntryList left, SecEntryList right)
       {
          return !Equals(left, right);
-      } 
+      }
    }
 }

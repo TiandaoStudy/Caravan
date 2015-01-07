@@ -1,4 +1,5 @@
 ﻿@using System.Data
+@using Finsa.Caravan.Common.DataModel.Formatting
 @using Finsa.Caravan.Mvc.Controls.PageElements
 @using Finsa.Caravan.Mvc.Controls.ValueHolders
 @using Finsa.Caravan.Mvc.Controls.DataVisualization
@@ -44,25 +45,25 @@
       {
          new BootstrapTableColumnOptions{
             Header = "A",
-            HorizontalAlignment = Finsa.Caravan.DataModel.Formatting.HorizonalTextAlignment.Left,
+            HorizontalAlignment = HorizonalTextAlignment.Left,
             Sortable = false,
-            VerticalAlignment = Finsa.Caravan.DataModel.Formatting.VerticalTextAlignment.Middle,
+            VerticalAlignment = VerticalTextAlignment.Middle,
             Control = (x) => LabelExtensions.Label(Html, x[0])
          },
         
          new BootstrapTableColumnOptions{
             Header = "B",
-            HorizontalAlignment = Finsa.Caravan.DataModel.Formatting.HorizonalTextAlignment.Left,
+            HorizontalAlignment = HorizonalTextAlignment.Left,
             Sortable = false,
-            VerticalAlignment = Finsa.Caravan.DataModel.Formatting.VerticalTextAlignment.Middle,
+            VerticalAlignment = VerticalTextAlignment.Middle,
             Control = (x) => Html.Label("")
          },
         
          new BootstrapTableColumnOptions{
             Header = "C",
-            HorizontalAlignment = Finsa.Caravan.DataModel.Formatting.HorizonalTextAlignment.Left,
+            HorizontalAlignment = HorizonalTextAlignment.Left,
             Sortable = false,
-            VerticalAlignment = Finsa.Caravan.DataModel.Formatting.VerticalTextAlignment.Middle,
+            VerticalAlignment = VerticalTextAlignment.Middle,
             Control = (x) => Html.Label("")
          }
       }

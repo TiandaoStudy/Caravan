@@ -1,33 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using Finsa.Caravan.DataModel.Logging;
+using Finsa.Caravan.Common.DataModel.Logging;
 using Newtonsoft.Json;
 
-namespace Finsa.Caravan.DataModel.Security
+namespace Finsa.Caravan.Common.DataModel.Security
 {
    [Serializable]
    public class SecApp : IEquatable<SecApp>
    {
       [JsonProperty(Order = 0)]
       public long Id { get; set; }
-      
+
       [JsonProperty(Order = 1)]
       public string Name { get; set; }
-      
+
       [JsonProperty(Order = 2)]
       public string Description { get; set; }
-      
+
       [JsonProperty(Order = 3)]
       public virtual ICollection<SecUser> Users { get; set; }
-      
+
       [JsonProperty(Order = 4)]
       public virtual ICollection<SecGroup> Groups { get; set; }
-      
+
       [JsonProperty(Order = 5)]
       public virtual ICollection<SecContext> Contexts { get; set; }
-      
+
       [JsonIgnore]
-      public virtual ICollection<SecObject> Objects { get; set; } 
+      public virtual ICollection<SecObject> Objects { get; set; }
 
       [JsonProperty(Order = 6)]
       public virtual ICollection<LogSettings> LogSettings { get; set; }
@@ -50,7 +50,7 @@ namespace Finsa.Caravan.DataModel.Security
          if (ReferenceEquals(null, obj)) return false;
          if (ReferenceEquals(this, obj)) return true;
          if (obj.GetType() != GetType()) return false;
-         return Equals((SecApp)obj);
+         return Equals((SecApp) obj);
       }
 
       public override int GetHashCode()
@@ -86,7 +86,7 @@ namespace Finsa.Caravan.DataModel.Security
          if (ReferenceEquals(null, obj)) return false;
          if (ReferenceEquals(this, obj)) return true;
          if (obj.GetType() != GetType()) return false;
-         return Equals((SecAppSingle)obj);
+         return Equals((SecAppSingle) obj);
       }
 
       public override int GetHashCode()
@@ -108,7 +108,7 @@ namespace Finsa.Caravan.DataModel.Security
    [Serializable]
    public class SecAppList : IEquatable<SecAppList>
    {
-      public IEnumerable<SecApp> Apps { get; set; } 
+      public IEnumerable<SecApp> Apps { get; set; }
 
       public bool Equals(SecAppList other)
       {

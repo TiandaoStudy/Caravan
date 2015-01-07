@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Finsa.Caravan.Common.DataModel.Logging;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataModel.Logging;
 
 namespace Finsa.Caravan.DataAccess.Rest
 {

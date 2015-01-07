@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Finsa.Caravan.DataModel.Exceptions;
-using Finsa.Caravan.DataModel.Security;
+using Finsa.Caravan.Common.DataModel.Exceptions;
+using Finsa.Caravan.Common.DataModel.Security;
 using PommaLabs.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
