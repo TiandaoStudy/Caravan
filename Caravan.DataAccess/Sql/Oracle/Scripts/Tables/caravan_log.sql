@@ -67,6 +67,8 @@ COMMENT ON COLUMN mydb.caravan_log.clog_value_0 IS 'Valore del parametro opziona
 CREATE INDEX mydb.idx_caravan_log_date ON mydb.caravan_log (clog_date DESC);
 CREATE INDEX mydb.idx_caravan_log_settings ON mydb.caravan_log (clos_type, capp_id);
 
+create sequence mydb.caravan_log_seq;
+
 -- DROP da fare per la transizione da FLEX_LOG:
 --> pck_flex_log
 --> flex_log

@@ -16,6 +16,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       private const int MaxArgumentCount = 10;
       private const int MaxStringLength = 2000;
+      private const int NoId = 0;
 
       #endregion
 
@@ -60,7 +61,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                {
                   ctx.LogEntries.Add(new LogEntry
                   {
-                     Id = 0,
+                     Id = NoId,
                      Date = DateTime.Now,
                      AppId = appId,
                      TypeId = typeId,
