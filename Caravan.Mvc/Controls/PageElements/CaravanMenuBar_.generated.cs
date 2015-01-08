@@ -148,7 +148,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "/Images/logo-menubar.png\' c
 
 
 #line 104 "..\..\Controls\PageElements\CaravanMenuBar_.cshtml"
-              WebViewPage.WriteTo(@__razor_helper_writer, Configuration.Instance.ApplicationDescription);
+              WebViewPage.WriteTo(@__razor_helper_writer, Finsa.Caravan.Common.Properties.Settings.Default.ApplicationDescription);
 
 #line default
 #line hidden

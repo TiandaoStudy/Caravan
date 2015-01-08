@@ -1,6 +1,6 @@
 ﻿using System;
-using Finsa.Caravan.Collections;
 using NUnit.Framework;
+using PommaLabs.Collections.ReadOnly;
 
 namespace UnitTests.Common
 {

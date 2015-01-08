@@ -2,9 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Finsa.Caravan;
+using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.DataModel.Logging;
-using Finsa.Caravan.DataModel.Security;
 using NUnit.Framework;
 
 namespace UnitTests.DataAccess
@@ -68,8 +69,8 @@ namespace UnitTests.DataAccess
       {
          var result = Db.Logger.LogInfo<LogManagerTests>("pino", "pino pino", "test", new[]
          {
-            CKeyValuePair.Create("arg1", "1"),
-            CKeyValuePair.Create("arg2", "2"),
+            KeyValuePair.Create("arg1", "1"),
+            KeyValuePair.Create("arg2", "2"),
          });
 
          var q = Db.Logger.Logs(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests" && l.ShortMessage == "pino").ToList();
@@ -87,7 +88,7 @@ namespace UnitTests.DataAccess
          var update = new LogSettings { Days = 40, Enabled = 1,MaxEntries = 50};
          Db.Logger.UpdateSettings(_myApp.Name,LogType.Info,update);
 
-         var q = Db.Logger.LogSettings(_myApp.Name).Where(s => s.AppId == update.AppId && s.Type==LogType.Info).ToList();
+         var q = Db.Logger.LogSettings(_myApp.Name).Where(s => s.AppId == _myApp.Id && s.Type==LogType.Info).ToList();
          Assert.That(q.Count, Is.EqualTo(1));
          Assert.That(q.First().MaxEntries,Is.EqualTo(50));
          Assert.That(q.First().Days,Is.EqualTo(40));

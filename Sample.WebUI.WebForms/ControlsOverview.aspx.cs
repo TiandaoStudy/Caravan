@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using Finsa.Caravan;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess;
 using FLEX.Common.Web;
 using FLEX.Web.Pages;
@@ -65,8 +66,8 @@ namespace FLEX.Sample.WebUI
          {
             Db.Logger.LogInfo<ControlsOverview>("Click!", "Clicked on the log button", "Page", new[]
             {
-               CKeyValuePair.Create("arg1", "1"),
-               CKeyValuePair.Create("arg2", "two")
+               KeyValuePair.Create("arg1", "1"),
+               KeyValuePair.Create("arg2", "two")
             });
          }
          catch (Exception ex)

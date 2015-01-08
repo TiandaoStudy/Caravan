@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Transactions;
+using Finsa.Caravan.Common.DataModel.Logging;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataModel.Logging;
-using Finsa.Caravan.Diagnostics;
-using Finsa.Caravan.Extensions;
+using PommaLabs.Diagnostics;
+using PommaLabs.Extensions;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
@@ -18,17 +16,18 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       private const int MaxArgumentCount = 10;
       private const int MaxStringLength = 2000;
+      private const int NoId = 0;
 
       #endregion
 
       public override LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function,
          string shortMessage, string longMessage, string context,
-         IEnumerable<CKeyValuePair<string, string>> args)
+         IEnumerable<KeyValuePair<string, string>> args)
       {
          try
          {
             Raise<ArgumentException>.IfIsEmpty(codeUnit);
-            var argsList = (args == null) ? new CKeyValuePair<string, string>[0] : args.ToArray();
+            var argsList = (args == null) ? new KeyValuePair<string, string>[0] : args.ToArray();
             Raise<ArgumentOutOfRangeException>.If(argsList.Length > MaxArgumentCount);
             
             using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
@@ -62,7 +61,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                {
                   ctx.LogEntries.Add(new LogEntry
                   {
-                     Id = (ctx.LogEntries.Where(e => e.AppId == appId).Max(e => (long?) e.Id) ?? -1) + 1,
+                     Id = NoId,
                      Date = DateTime.Now,
                      AppId = appId,
                      TypeId = typeId,
@@ -76,25 +75,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                   });
                }
 
-               ctx.SaveConcurrentChanges((c, ex) =>
-               {
-                  c.UndoChanges();
-                  c.LogEntries.Add(new LogEntry
-                  {
-                     Id = (c.LogEntries.Where(e => e.AppId == appId).Max(e => (long?) e.Id) ?? -1) + 1,
-                     Date = DateTime.Now,
-                     AppId = appId,
-                     TypeId = typeId,
-                     UserLogin = userName.Truncate(MaxStringLength).ToLower(),
-                     CodeUnit = codeUnit.Truncate(MaxStringLength).ToLower(),
-                     Function = function.Truncate(MaxStringLength).ToLower(),
-                     ShortMessage = shortMessage.Truncate(MaxStringLength),
-                     LongMessage = longMessage, // Not truncated, because it should be a CLOB.
-                     Context = context.Truncate(MaxStringLength),
-                     Arguments = argsList
-                  });
-               });
-               
+               ctx.SaveChanges();
                trx.Complete();
                return LogResult.Success;
             }
@@ -119,7 +100,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                var logTypeString = logType.ToString().ToLower();
                q = q.Where(s => s.TypeId == logTypeString);
             }
-            return q.OrderBy(s => s.Id).ThenByDescending(s => s.Date).ToList();
+            return q.OrderByDescending(s => s.Id).ThenByDescending(s => s.Date).ToList();
          }
       }
 

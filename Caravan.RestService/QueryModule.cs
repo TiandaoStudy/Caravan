@@ -1,5 +1,5 @@
-﻿using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.DataModel.Security;
+﻿using Finsa.Caravan.Common.DataModel.Security;
+using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.RestService.Core;
 
 namespace Finsa.Caravan.RestService

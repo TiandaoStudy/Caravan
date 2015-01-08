@@ -1,8 +1,9 @@
 ﻿using System;
+using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.DataModel.Rest;
+using Finsa.Caravan.Common.RestService;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataAccess.Properties;
-using Finsa.Caravan.DataModel.Logging;
-using Finsa.Caravan.DataModel.Rest;
 using Nancy;
 using Nancy.ModelBinding;
 using PommaLabs.KVLite.Nancy;

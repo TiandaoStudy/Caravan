@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using Finsa.Caravan.DataModel.Logging;
-using Finsa.Caravan.DataModel.Security;
+using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.DataModel.Security;
 
 namespace Finsa.Caravan.DataAccess.Core
 {

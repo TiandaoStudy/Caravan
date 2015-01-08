@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Finsa.Caravan.DataModel.Security
+namespace Finsa.Caravan.Common.DataModel.Security
 {
    [Serializable]
    public class SecContext : IEquatable<SecContext>
@@ -26,7 +26,7 @@ namespace Finsa.Caravan.DataModel.Security
       public virtual ICollection<SecObject> Objects { get; set; }
 
       [JsonIgnore]
-      public virtual ICollection<SecEntry> SecEntries { get; set; } 
+      public virtual ICollection<SecEntry> SecEntries { get; set; }
 
       public bool Equals(SecContext other)
       {

@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Finsa.Caravan.Common.DataModel.Exceptions;
+using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataModel.Exceptions;
-using Finsa.Caravan.DataModel.Security;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
    public sealed class SqlSecurityManager : SecurityManagerBase<SqlSecurityManager>
    {
+      private const int NoId = 0;
+
       #region Apps
 
       protected override IList<SecApp> GetApps()
@@ -26,14 +28,10 @@ namespace Finsa.Caravan.DataAccess.Sql
          using (var ctx = Db.CreateReadContext())
          {
             var q = ctx.SecApps.Include(a => a.Users).Include(a => a.Groups).Include("Contexts.Objects").Include(a => a.LogSettings);
-            //if (appName != null)
-            //{
-            //   q = q.Where(a => a.Name == appName);
-            //}
-            var appId = GetAppIdByName(ctx,appName);
-            
-            q = q.Where(a => a.Id == appId);
-            
+            if (appName != null)
+            {
+               q = q.Where(a => a.Name == appName);
+            }
             return q.First();
          }
       }
@@ -45,7 +43,6 @@ namespace Finsa.Caravan.DataAccess.Sql
             var added = false;
             if (!ctx.SecApps.Any(a => a.Name == app.Name))
             {
-               app.Id = (ctx.SecApps.Max(a => (long?) a.Id) ?? -1) + 1;
                ctx.SecApps.Add(app);
                added = true;
             }
@@ -84,7 +81,6 @@ namespace Finsa.Caravan.DataAccess.Sql
             var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).First();
             if (!ctx.SecGroups.Any(g => g.AppId == appId && g.Name == newGroup.Name))
             {
-               newGroup.Id = (ctx.SecGroups.Where(g => g.AppId == appId).Max(g => (long?) g.Id) ?? -1) + 1;
                newGroup.AppId = appId;
                newGroup.Description = newGroup.Description ?? String.Empty;
                newGroup.Notes = newGroup.Notes ?? String.Empty;
@@ -165,7 +161,6 @@ namespace Finsa.Caravan.DataAccess.Sql
             var added = false;
             if (!ctx.SecUsers.Any(u => u.AppId == appId && u.Login == newUser.Login))
             {
-               newUser.Id = (ctx.SecUsers.Where(u => u.AppId == appId).Max(us => (long?) us.Id) ?? -1) + 1;
                newUser.AppId = appId;
                ctx.SecUsers.Add(newUser);
                added = true;
@@ -337,16 +332,13 @@ namespace Finsa.Caravan.DataAccess.Sql
             var dbContext = ctx.SecContexts.FirstOrDefault(c => c.AppId == appId && c.Name == secContext.Name);
             if (dbContext == null)
             {
-               dbContext = new SecContext
-               {
-                  // Key
-                  Id = (ctx.SecContexts.Where(o => o.AppId == appId).Max(o => (long?) o.Id) ?? -1) + 1,
-                  AppId = appId,
-                  // Other properties
-                  Name = secContext.Name,
-                  Description = secContext.Description
-               };
-               ctx.SecContexts.Add(dbContext);
+               secContext.Id = NoId;
+               secContext.AppId = appId;
+               secContext.App = null;
+               secContext.Objects = null;
+               secContext.SecEntries = null;
+               ctx.SecContexts.Add(secContext);
+               dbContext = secContext;
             }
             else
             {
@@ -355,18 +347,14 @@ namespace Finsa.Caravan.DataAccess.Sql
             var dbObject = ctx.SecObjects.FirstOrDefault(o => o.AppId == appId && o.ContextId == dbContext.Id && o.Name == secObject.Name);
             if (dbObject == null)
             {
-               dbObject = new SecObject
-               {
-                  // Key
-                  Id = (ctx.SecObjects.Where(o => o.AppId == appId && o.ContextId == dbContext.Id).Max(o => (long?) o.Id) ?? -1) + 1,
-                  AppId = appId,
-                  ContextId = dbContext.Id,
-                  // Other properties
-                  Name = secObject.Name,
-                  Description = secObject.Description,
-                  Type = secObject.Type
-               };
-               ctx.SecObjects.Add(dbObject);
+               secObject.Id = NoId;
+               secObject.AppId = appId;
+               secObject.App = null;
+               secObject.ContextId = dbContext.Id;
+               secObject.Context = null;
+               secObject.SecEntries = null;
+               ctx.SecObjects.Add(secObject);
+               dbObject = secObject;
             }
             else
             {
@@ -391,7 +379,6 @@ namespace Finsa.Caravan.DataAccess.Sql
             {
                var secEntry = new SecEntry
                {
-                  Id = (ctx.SecEntries.Where(e => e.AppId == appId).Max(e => (long?) e.Id) ?? -1) + 1,
                   AppId = appId,
                   UserId = userId,
                   GroupId = groupId,

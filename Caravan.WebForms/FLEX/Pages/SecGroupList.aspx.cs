@@ -2,14 +2,12 @@
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.DataModel;
-using Finsa.Caravan.DataModel.Security;
-using Finsa.Caravan.Diagnostics;
-using Finsa.Caravan.Extensions;
+using Finsa.Caravan.Common.DataModel.Security;
 using FLEX.Common.Web;
 using FLEX.Web.Pages;
 using System.Data;
+using PommaLabs.Diagnostics;
+using PommaLabs.Extensions;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -55,14 +53,14 @@ namespace Finsa.Caravan.WebForms.Pages
           {
               var groupName = SearchCriteria["CGRP_NAME"][0];
               // This should not catch any exception, others will do.
-              groups = (from g in DataAccess.Db.Security.Groups(Common.Configuration.Instance.ApplicationName)
+              groups = (from g in DataAccess.Db.Security.Groups(Common.Properties.Settings.Default.ApplicationName)
                             select new SecGroup { Id = g.Id, Name = g.Name, Description = g.Description, IsAdmin = g.IsAdmin, Notes = g.Notes }).Where(x => x.Name == groupName.ToString())
                             .ToDataTable();
           }
 
           else
           {
-                   groups = (from g in DataAccess.Db.Security.Groups(Common.Configuration.Instance.ApplicationName)
+             groups = (from g in DataAccess.Db.Security.Groups(Common.Properties.Settings.Default.ApplicationName)
                     select new SecGroup { Id = g.Id, Name = g.Name, Description = g.Description, IsAdmin = g.IsAdmin, Notes = g.Notes })
                            .ToDataTable();
           }
@@ -108,7 +106,7 @@ namespace Finsa.Caravan.WebForms.Pages
          {
             var groupName = groupNameToBeDeleted.Value;
             Raise<ArgumentException>.IfIsEmpty(groupName);
-            DataAccess.Db.Security.RemoveGroup(Common.Configuration.Instance.ApplicationName, groupName);
+            DataAccess.Db.Security.RemoveGroup(Common.Properties.Settings.Default.ApplicationName, groupName);
             fdtgGroups.UpdateDataSource();
          }
          catch (Exception ex)

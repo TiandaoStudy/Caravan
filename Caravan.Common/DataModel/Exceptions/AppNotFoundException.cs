@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Finsa.Caravan.DataModel.Exceptions
+namespace Finsa.Caravan.Common.DataModel.Exceptions
 {
    [Serializable]
    public class AppNotFoundException : Exception

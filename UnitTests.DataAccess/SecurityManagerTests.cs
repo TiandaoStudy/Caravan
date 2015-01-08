@@ -4,10 +4,10 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
-using Finsa.Caravan.DataModel.Logging;
+using Finsa.Caravan.Common.DataModel.Exceptions;
+using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.DataModel.Security;
 using NUnit.Framework;
-using Finsa.Caravan.DataModel.Security;
-using Finsa.Caravan.DataModel.Exceptions;
 using Finsa.Caravan.DataAccess;
 
 namespace UnitTests.DataAccess
@@ -1030,7 +1030,7 @@ namespace UnitTests.DataAccess
           Db.Security.AddGroup(_myApp.Name, group1);
 
           Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
-          Db.Security.AddEntry(_myApp.Name, c2, obj1, user1.Login, null);
+          Db.Security.AddEntry(_myApp.Name, c2, obj1, group1.Name, null);
 
           var l = Db.Security.Contexts(_myApp.Name);
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Finsa.Caravan.DataModel.Exceptions
+namespace Finsa.Caravan.Common.DataModel.Exceptions
 {
    [Serializable]
    public class GroupNotFoundException : Exception
@@ -13,7 +13,7 @@ namespace Finsa.Caravan.DataModel.Exceptions
       //    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
       //
 
-      public GroupNotFoundException():base(TheMessage)
+      public GroupNotFoundException() : base(TheMessage)
       {
       }
 

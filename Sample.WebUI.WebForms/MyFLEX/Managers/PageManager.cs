@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web;
 using Finsa.Caravan;
+using Finsa.Caravan.Common;
 using FLEX.Sample.WebUI.Reports;
 using FLEX.WebForms;
 
@@ -9,11 +10,11 @@ namespace FLEX.Sample.WebUI.MyFLEX.Managers
 {
    public sealed class PageManager : IPageManager
    {
-      public IList<CKeyValuePair<string, string>> GetFooterInfo()
+      public IList<KeyValuePair<string, string>> GetFooterInfo()
       {
-         return new List<CKeyValuePair<string, string>>
+         return new List<KeyValuePair<string, string>>
          {
-            CKeyValuePair.Create("Host", HttpContext.Current.Server.MachineName)
+            KeyValuePair.Create("Host", HttpContext.Current.Server.MachineName)
          };
       }
 
