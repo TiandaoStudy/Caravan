@@ -133,7 +133,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CaravanDbContext.cs" />
-    <Compile Include="Configuration.cs" />
     <Compile Include="Core\DbContextBase.cs" />
     <Compile Include="Core\DbManagerBase.cs" />
     <Compile Include="Core\LogManagerBase.cs" />

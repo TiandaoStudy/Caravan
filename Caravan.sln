@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Coding Standards", "Coding 
 		Documentation\Coding Standards\CSharp.pdf = Documentation\Coding Standards\CSharp.pdf
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.WebForms", "NuGetPackager.WebForms\NuGetPackager.WebForms.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet Packager (WebForms)", "NuGetPackager.WebForms\NuGet Packager (WebForms).csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
 	ProjectSection(ProjectDependencies) = postProject
 		{407B5921-9039-4D0D-A40A-36A19C251CDC} = {407B5921-9039-4D0D-A40A-36A19C251CDC}
 	EndProjectSection
@@ -30,7 +30,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.WebForms", "UnitT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Common", "UnitTests.Common\UnitTests.Common.csproj", "{4F1024FA-992F-442C-B32F-E4BE589D5EF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Common", "NuGetPackager.Common\NuGetPackager.Common.csproj", "{BBCDDB1C-8127-4623-B40B-5109DE5A63EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet Packager (Common)", "NuGetPackager.Common\NuGet Packager (Common).csproj", "{BBCDDB1C-8127-4623-B40B-5109DE5A63EF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{11904ED0-33D2-4005-8766-B1E393A32EA7} = {11904ED0-33D2-4005-8766-B1E393A32EA7}
 	EndProjectSection
@@ -66,7 +66,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{349512
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess", "Caravan.DataAccess\Caravan.DataAccess.csproj", "{418B2D91-D53E-49BF-98FC-66DA9490DC37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.DataAccess", "NuGetPackager.DataAccess\NuGetPackager.DataAccess.csproj", "{BD471427-A76A-4764-94C1-08C8C3BC1379}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet Packager (DataAccess)", "NuGetPackager.DataAccess\NuGet Packager (DataAccess).csproj", "{BD471427-A76A-4764-94C1-08C8C3BC1379}"
 	ProjectSection(ProjectDependencies) = postProject
 		{418B2D91-D53E-49BF-98FC-66DA9490DC37} = {418B2D91-D53E-49BF-98FC-66DA9490DC37}
 	EndProjectSection
