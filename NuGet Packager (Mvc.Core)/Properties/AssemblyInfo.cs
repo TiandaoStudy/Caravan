@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Finsa.Caravan.Mvc.Core")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("NuGet_Packager__Mvc.Core_")]
+[assembly: AssemblyDescription("Project template made by EyeCatch (http://www.eyecatch.no/)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Finsa.Caravan.Mvc.Core")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2014")]
+[assembly: AssemblyProduct("NuGet_Packager__Mvc.Core_")]
+[assembly: AssemblyCopyright("Copyright © Microsoft 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1adc81aa-2e46-427f-8bb1-ccd730d23929")]
+[assembly: Guid("5b586874-8d3e-4137-9ba8-e982413416d5")]
 
 // Version information for an assembly consists of the following four values:
 //

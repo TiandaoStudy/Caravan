@@ -251,7 +251,6 @@
       <DependentUpon>bootstrap-table-export.js</DependentUpon>
     </Content>
     <Content Include="Scripts\autocomplete-defs.coffee" />
-    <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Images\jquery-ui\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Images\jquery-ui\ui-bg_flat_100_3071A9_40x100.png" />
     <Content Include="Images\jquery-ui\ui-bg_flat_100_428bca_40x100.png" />
@@ -311,8 +310,9 @@
     <Content Include="Scripts\html5shiv.min.js">
       <DependentUpon>html5shiv.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\jquery-2.1.1.js" />
-    <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.3.js" />
+    <Content Include="Scripts\jquery-2.1.3.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery-ui.min.js">
       <DependentUpon>jquery-ui.js</DependentUpon>
@@ -501,7 +501,6 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Scripts\jquery-2.1.1.min.map" />
     <Content Include="Styles\bootstrap-reference.less" />
     <Content Include="Styles\bootstrap.less" />
     <Content Include="Styles\Bootstrap\alerts.less" />
@@ -603,6 +602,7 @@
     </Content>
     <Content Include="Views\Security\SecUserList.cshtml" />
     <Content Include="Views\Security\ConnectedUsers.cshtml" />
+    <Content Include="Scripts\jquery-2.1.3.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

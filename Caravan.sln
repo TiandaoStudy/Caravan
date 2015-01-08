@@ -79,7 +79,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.RestService", "Sampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Database", "Sample.Database\Sample.Database.csproj", "{956E7461-AC0F-4E81-B57D-F84689D1BE9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebApi", "Caravan.WebApi\Caravan.WebApi.csproj", "{27D82597-28B1-4441-8C42-0A220C38C4D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Mvc.Core", "Caravan.WebApi\Caravan.Mvc.Core.csproj", "{27D82597-28B1-4441-8C42-0A220C38C4D8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataModel", "Sample.DataModel\Sample.DataModel.csproj", "{33A9CD5A-87C6-4BB3-B304-4DC6411BEF4F}"
 EndProject
@@ -99,6 +99,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Mvc", "Caravan.Mvc\Caravan.Mvc.csproj", "{DAA22A2C-A101-4F71-B4E1-F0DB283A642C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests (DataAccess)", "UnitTests.DataAccess\Unit Tests (DataAccess).csproj", "{B41960F5-4A94-4AFA-8AF6-9B368787D846}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet Packager (Mvc.Core)", "NuGet Packager (Mvc.Core)\NuGet Packager (Mvc.Core).csproj", "{EE783385-E6CC-4F01-BCCC-DAB9C6DBDE55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet Packager (Mvc)", "NuGet Packager (Mvc)\NuGet Packager (Mvc).csproj", "{4C5D3154-679D-4794-A60E-04CBB31BE0F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -176,6 +180,14 @@ Global
 		{B41960F5-4A94-4AFA-8AF6-9B368787D846}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B41960F5-4A94-4AFA-8AF6-9B368787D846}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B41960F5-4A94-4AFA-8AF6-9B368787D846}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE783385-E6CC-4F01-BCCC-DAB9C6DBDE55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE783385-E6CC-4F01-BCCC-DAB9C6DBDE55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE783385-E6CC-4F01-BCCC-DAB9C6DBDE55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE783385-E6CC-4F01-BCCC-DAB9C6DBDE55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C5D3154-679D-4794-A60E-04CBB31BE0F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C5D3154-679D-4794-A60E-04CBB31BE0F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C5D3154-679D-4794-A60E-04CBB31BE0F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C5D3154-679D-4794-A60E-04CBB31BE0F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

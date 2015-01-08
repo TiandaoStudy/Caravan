@@ -34,6 +34,7 @@ namespace Finsa.Caravan.DataAccess
       Postgres = 1,
       Rest = 2,
       SqlServer = 3,
-      SqlServerCe = 4
+      SqlServerCe = 4,
+      MongoDb = 5
    }
 }
