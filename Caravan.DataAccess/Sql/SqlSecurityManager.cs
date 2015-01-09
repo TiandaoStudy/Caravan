@@ -78,7 +78,8 @@ namespace Finsa.Caravan.DataAccess.Sql
          {
             ctx.BeginTransaction();
             var added = false;
-            var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).First();
+            var appId = GetAppIdByName(ctx, appName);
+            //var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).First();
             if (!ctx.SecGroups.Any(g => g.AppId == appId && g.Name == newGroup.Name))
             {
                newGroup.AppId = appId;
@@ -116,7 +117,8 @@ namespace Finsa.Caravan.DataAccess.Sql
          {
             ctx.BeginTransaction();
             var updated = false;
-            var grp = ctx.SecGroups.FirstOrDefault(g => g.App.Name == appName && g.Name == groupName);
+            var appId = GetAppIdByName(ctx, appName);
+            var grp = ctx.SecGroups.FirstOrDefault(g => g.App.Id == appId && g.Name == groupName);
             if (grp != null)
             {
                if (grp.Name != newGroup.Name && ctx.SecGroups.Any(g => g.AppId == grp.AppId && g.Name == newGroup.Name))
@@ -328,7 +330,8 @@ namespace Finsa.Caravan.DataAccess.Sql
          using (var ctx = Db.CreateWriteContext())
          {
             ctx.BeginTransaction();
-            var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).First();
+            var appId = GetAppIdByName(ctx, appName);
+            //var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).First();
             var dbContext = ctx.SecContexts.FirstOrDefault(c => c.AppId == appId && c.Name == secContext.Name);
             if (dbContext == null)
             {

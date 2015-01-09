@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common.CommandTrees;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using System.Threading.Tasks;
 using Finsa.Caravan.Common.DataModel.Exceptions;
 using Finsa.Caravan.Common.DataModel.Logging;
 using Finsa.Caravan.Common.DataModel.Security;
@@ -12,9 +14,7 @@ using Finsa.Caravan.DataAccess;
 
 namespace UnitTests.DataAccess
 {
-
-    [TestFixture]
-    class SecurityManagerTests
+   class SecurityManagerTests : TestBase
     {
        private SecApp _myApp;
        private SecApp _myApp2;
@@ -172,6 +172,28 @@ namespace UnitTests.DataAccess
 
         }
 
+        [TestCase(Small)]
+        [TestCase(Medium)]
+        [TestCase(Large)]
+        public void AddUser_ValidArgs_InsertOk_Async(int userCount)
+        {
+           Parallel.ForEach(Enumerable.Range(1, userCount), i =>
+           {
+              var user = new SecUser { FirstName = "pippo" + i, Login = "blabla" + i };
+              Db.Security.AddUser(_myApp.Name, user);
+           });
+
+           for (var i = 1; i <= userCount; ++i)
+           {
+              //verifico che sia stato inserito user
+              var q = (from c in Db.Security.Users(_myApp.Name)
+                       where ((c.FirstName == "pippo" + i) && (c.Login == "blabla" + i))
+                       select c).FirstOrDefault();
+
+              Assert.IsNotNull(q);
+           }
+        }
+
         [Test]
         public void AddUser_InsertSameUserInDifferentApps_InsertOk()
         {
@@ -211,8 +233,6 @@ namespace UnitTests.DataAccess
           var l1 = Db.Logger.Logs(_myApp.Name);
           Assert.That(l1.Count(), Is.EqualTo(l.Count()+1));
 
-          
-
        }
 
         [Test]
@@ -224,6 +244,25 @@ namespace UnitTests.DataAccess
 
             Db.Security.AddUser(_myApp.Name, user1);
             Db.Security.AddUser(_myApp.Name, user2);
+        }
+      
+        [Test]
+        public void AddUser_UserLoginAlreadyPresent_ThrowsException_Async()
+        {
+           var failCount = 0;
+           Parallel.ForEach(Enumerable.Range(1, 2), i =>
+           {
+              var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
+              try
+              {
+                 Db.Security.AddUser(_myApp.Name, user1);
+              }
+              catch (UserExistingException)
+              {
+                 failCount++;
+              }
+           });
+           Assert.AreEqual(1, failCount, "UserLoginAlreadyPresent");
         }
 
         [Test]
@@ -265,6 +304,29 @@ namespace UnitTests.DataAccess
            var q = (from u in Db.Security.Users(_myApp.Name) where u.Login == user1.Login select u).ToList();
 
            Assert.That(q.Count(),Is.EqualTo(0));
+        }
+      
+      [TestCase(Small)]
+      [TestCase(Medium)]
+      [TestCase(Large)]
+      public void RemoveUser_ValidArgs_RemoveUser_Async(int userCount)
+        {
+
+           Parallel.ForEach(Enumerable.Range(1, userCount), i =>
+              {
+                 var user = new SecUser { FirstName = "pippo" + i, Login = "blabla" + i };
+                 Db.Security.AddUser(_myApp.Name, user);
+                 Db.Security.RemoveUser(_myApp.Name, user.Login);
+              });
+
+           for (var i = 1; i <= userCount; ++i)
+           {
+              //verifico che siano stati eliminati tutti gli user
+              var q = (from u in Db.Security.Users(_myApp.Name) where u.Login == "blabla" + i select u).ToList();
+
+              Assert.IsEmpty(q);
+           }
+           
         }
 
         [Test]
@@ -356,6 +418,42 @@ namespace UnitTests.DataAccess
            
         }
 
+      [TestCase(Small)]
+      [TestCase(Medium)]
+      [TestCase(Large)]
+        public void UpdateUser_ValidArgs_UserUpdated_Async(int userCount)
+      {
+        
+           Parallel.ForEach(Enumerable.Range(1, userCount), i =>
+           {
+              var user = new SecUser { FirstName = "pippo" + i, Login = "blabla" + i, Email = "test@email.it" +i};
+              Db.Security.AddUser(_myApp.Name, user);
+
+              user.Login = "updatedLogin" + i;
+
+              Db.Security.UpdateUser(_myApp.Name, "blabla" + i, user);
+
+           });
+
+           for (var i = 1; i <= userCount; ++i)
+           {
+              //verifico che sia stato aggiornato user
+              var q = (from u in Db.Security.Users(_myApp.Name)
+                       where u.Login == ("updatedLogin" + i).ToLower()
+                       select u).ToList();
+
+              Assert.That(q.Count(), Is.EqualTo(1));
+              Assert.That(q.First().Login, Is.EqualTo(("updatedLogin" + i).ToLower()));
+
+              //verifico che non sia più presente l'utente con login "blabla" (vecchia login)
+              var q2 = (from u in Db.Security.Users(_myApp.Name)
+                        where u.Login == "blabla" + i 
+                        select u).ToList();
+
+              Assert.That(q2.Count, Is.EqualTo(0));
+           }
+        }
+
         [Test]
         public void UpdateUser_LogIncremented_ReturnOK()
         {
@@ -388,6 +486,30 @@ namespace UnitTests.DataAccess
 
        }
 
+       [TestCase(Small)]
+       [TestCase(Medium)]
+       [TestCase(Large)]
+       public void UpdateUser_UserNotExisting_ThrowsUserNotFoundException_Async(int userCount)
+         {
+            var failCount = 0;
+            Parallel.ForEach(Enumerable.Range(1, userCount), i =>
+            {
+               var user1 = new SecUser { FirstName = "pippo" + i, Login = "blabla1"+i };
+               try
+               {
+                  Db.Security.AddUser(_myApp.Name, user1);
+                  Db.Security.RemoveUser(_myApp.Name, user1.Login);
+                  Db.Security.UpdateUser(_myApp.Name, user1.Login, user1);
+               }
+               catch (UserNotFoundException)
+               {
+                  failCount++;
+               }
+            });
+            Assert.AreEqual(userCount, failCount, "UserNotFound");
+           
+         }
+
        [Test]
        [ExpectedException(typeof (UserExistingException))]
        public void UpdateUser_UserUpdatedAlreadyExisting_ThrowsUserExistingException()
@@ -403,6 +525,32 @@ namespace UnitTests.DataAccess
           Db.Security.UpdateUser(_myApp.Name,"blabla",user1);
 
        }
+
+      [Test]
+      public void UpdateUser_UserUpdatedAlreadyExisting_ThrowsUserExistingException_Async()
+      {
+         var failCount = 0;
+         var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
+         var user2 = new SecUser { FirstName = "pluto", Login = "bobobo", Email = "test2@email.it" };
+         Db.Security.AddUser(_myApp.Name, user1);
+         Db.Security.AddUser(_myApp.Name, user2);
+
+         Parallel.ForEach(Enumerable.Range(1, 1), i =>
+         {
+            try
+            {
+               user1.Login = "bobobo";
+               Db.Security.UpdateUser(_myApp.Name, "blabla1", user1);
+            }
+            catch (UserExistingException)
+            {
+               failCount++;
+            }
+         });
+         Assert.AreEqual(1, failCount, "UserLoginAlreadyPresent");
+
+
+      }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
@@ -462,7 +610,7 @@ namespace UnitTests.DataAccess
 
         #region AddUserToGroup_Tests
 
-        [Test]
+       [Test]
        public void AddUserToGroup_ValidArgs_UserAddedInCorrectGroup()
        {
           var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
@@ -486,6 +634,44 @@ namespace UnitTests.DataAccess
            Assert.AreEqual(1, group1.Users.Count);
            Assert.AreEqual(0, group2.Users.Count);
 
+       }
+
+        [TestCase(Small)]
+        [TestCase(Medium)]
+        [TestCase(Large)]
+       public void AddUserToGroup_ValidArgs_UserAddedInCorrectGroup_Async(int userCount)
+        {
+
+          
+
+          var group1 = new SecGroup { Name = "mygroup" };
+          var group2 = new SecGroup { Name = "mygroup2" };
+          Db.Security.AddGroup(_myApp.Name, group1);
+          Db.Security.AddGroup(_myApp.Name, group2);
+
+           Parallel.ForEach(Enumerable.Range(1, userCount), i =>
+           {
+              var user1 = new SecUser { FirstName = "pippo" + i, Login = "blabla" + i };
+             
+              Db.Security.AddUser(_myApp.Name, user1);
+             
+              Db.Security.AddUserToGroup(_myApp.Name, user1.Login, group1.Name);
+             
+           });
+           group1 = Db.Security.Group(_myApp.Name, group1.Name);
+           group2 = Db.Security.Group(_myApp.Name, group2.Name);
+           Assert.AreEqual(userCount, group1.Users.Count);
+           Assert.AreEqual(0, group2.Users.Count);
+           
+           for (var i = 1; i <= userCount; ++i)
+           {
+              var q =
+                 (from u in Db.Security.Users(_myApp.Name) where u.Login == ("blabla" + i) select u.Groups).ToList();
+              Assert.That(q.Count, Is.EqualTo(1));
+              Assert.True(q.First().Contains(group1));
+              Assert.False(q.First().Contains(group2));
+
+           }
        }
        
        [Test]
@@ -561,8 +747,8 @@ namespace UnitTests.DataAccess
         [Test]
         public void Groups_ValidArgs_ReturnsListOfGroups()
         {
-           var group1 = new SecGroup() {Name = "g1"};
-           var group2 = new SecGroup() {Name = "g2"};
+           var group1 = new SecGroup {Name = "g1"};
+           var group2 = new SecGroup {Name = "g2"};
 
            Db.Security.AddGroup(_myApp.Name,group1);
            Db.Security.AddGroup(_myApp.Name,group2);
@@ -574,6 +760,30 @@ namespace UnitTests.DataAccess
            Assert.That(retValue2.Count(),Is.EqualTo(0));
 
         }
+         [TestCase(Small)]
+         [TestCase(Medium)]
+         [TestCase(Large)]
+       public void Groups_ValidArgs_ReturnsListOfGroups_Async(int userCount)
+         {
+            Parallel.ForEach(Enumerable.Range(1, userCount), i =>
+            {
+               var group = new SecGroup { Name = "g1"+i };
+               Db.Security.AddGroup(_myApp.Name, group);
+            });
+
+            for (var i = 1; i <= userCount; ++i)
+            {
+               var q = Db.Security.Groups(_myApp.Name).Where(g => g.Name == ("g1" + i));
+               Assert.IsNotNull(q.FirstOrDefault());
+            }
+           
+            var retValue = Db.Security.Groups(_myApp.Name);
+              Assert.That(retValue.Count(),Is.EqualTo(userCount));
+
+              var retValue2 = Db.Security.Groups(_myApp2.Name);
+              Assert.That(retValue2.Count(),Is.EqualTo(0));
+
+           }
 
        [Test]
        public void Groups_NoGroups_ReturnsNoGroups()
@@ -614,6 +824,25 @@ namespace UnitTests.DataAccess
            Assert.That(ret.Name, Is.EqualTo("my_group"));
            Assert.That(ret,Is.Not.Null);
 
+        }
+      
+      [TestCase(Small)]
+      [TestCase(Medium)]
+      [TestCase(Large)]
+        public void Group_ValidArgs_ReturnsOK_Async(int userCount)
+        {
+           Parallel.ForEach(Enumerable.Range(1, userCount), i =>
+           {
+              var group = new SecGroup { Name = "g1" + i };
+              Db.Security.AddGroup(_myApp.Name, group);
+           });
+
+         for (var i = 1; i <= userCount; ++i)
+         {
+            var ret = Db.Security.Group(_myApp.Name, "g1" + i);
+            Assert.That(ret, Is.Not.Null);
+         }
+        
         }
 
        [Test]
@@ -690,6 +919,28 @@ namespace UnitTests.DataAccess
           Assert.That(q3.Count(),Is.EqualTo(0));
        }
 
+      [TestCase(Small)]
+      [TestCase(Medium)]
+      [TestCase(Large)]
+       public void AddGroup_validArgs_InsertCorrectGroup_Async(int groupCount)
+      {
+         Parallel.ForEach(Enumerable.Range(1, groupCount), i =>
+         {
+            var group = new SecGroup { Name = "my_group"+i };
+            Db.Security.AddGroup(_myApp.Name, group);
+         });
+
+         for (var i = 1; i <= groupCount; ++i)
+         {
+            var q1 = (from g in Db.Security.Groups(_myApp.Name)
+                      where g.Name == "my_group" + i
+                      select g).ToList();
+
+            Assert.IsNotNull(q1.FirstOrDefault());
+            Assert.That(q1.Count,Is.EqualTo(1));
+         }
+       }
+
        [Test]
        public void AddGroup_InsertSameGroupInDifferentApps_ReturnsOK()
        {
@@ -715,6 +966,28 @@ namespace UnitTests.DataAccess
           Db.Security.AddGroup(_myApp.Name, group1);
 
           Db.Security.AddGroup(_myApp.Name, group2);
+       }
+
+       [Test]
+       public void AddGroup_GroupAlreadyExisting_ThrowsGroupExistingException_Async()
+       {
+          var failCount = 0;
+          try
+          {
+             Parallel.ForEach(Enumerable.Range(1, 2), i =>
+             {
+                var group = new SecGroup { Name = "my_group" };
+                Db.Security.AddGroup(_myApp.Name, group);
+             });
+          }
+          catch (Exception exception)
+          {
+
+             failCount++;
+          }
+
+          Assert.AreEqual(1, failCount, "_GroupAlreadyExisting");
+         
        }
 
        [Test]
@@ -755,6 +1028,28 @@ namespace UnitTests.DataAccess
           var q = (from g in Db.Security.Groups(_myApp.Name) where g.Name == group1.Name select g).ToList();
 
           Assert.That(q.Count(),Is.EqualTo(0));
+       }
+
+      [TestCase(Small)]
+      [TestCase(Medium)]
+      [TestCase(Large)]
+       public void RemoveGroup_validArgs_RemovedGroup_Async(int groupCount)
+      {
+         Parallel.ForEach(Enumerable.Range(1, groupCount), i =>
+         {
+            var group1 = new SecGroup { Name = "my_group" + i };
+            Db.Security.AddGroup(_myApp.Name, group1);
+
+            Db.Security.RemoveGroup(_myApp.Name, group1.Name);
+            
+         });
+
+         for (var i = 0; i <= groupCount; ++i)
+         {
+            var q = (from g in Db.Security.Groups(_myApp.Name) where g.Name == "my_group" + i select g).ToList();
+
+            Assert.That(q.Count(), Is.EqualTo(0));
+         }
        }
 
        [Test]
@@ -828,6 +1123,34 @@ namespace UnitTests.DataAccess
           Assert.That(q2.Count(), Is.EqualTo(0));
        }
 
+      [TestCase(Small)]
+      [TestCase(Medium)]
+      [TestCase(Large)]
+       public void UpdateGroup_ValidArgs_GroupUpdated_Async(int groupCount)
+       {
+        
+         Parallel.ForEach(Enumerable.Range(1, groupCount), i =>
+         {
+            var group = new SecGroup { Name = "my_group" + i };
+            Db.Security.AddGroup(_myApp.Name, group);
+            group.Name = "updated_group" + i;
+            Db.Security.UpdateGroup(_myApp.Name, "my_group" + i, group);
+
+         });
+
+         for (var i = 1; i <= groupCount; ++i)
+         {
+             var q = (from g in Db.Security.Groups(_myApp.Name)
+                      where g.Name == "updated_group" + i
+                      select g).ToList();
+
+          Assert.That(q.Count(),Is.EqualTo(1));
+          Assert.That(q.First().Name,Is.EqualTo("updated_group"+i));
+
+          Assert.False(q.First().Name == "my_group" + i);
+         }
+       }
+
        [Test]
        [ExpectedException(typeof (GroupNotFoundException))]
        public void UpdateGroup_GroupNotExisting_ThrowsGroupNotFoundException()
@@ -850,6 +1173,29 @@ namespace UnitTests.DataAccess
 
           group1.Name = "updated_group";
           Db.Security.UpdateGroup(_myApp.Name, "my_group", group1);
+       }
+
+       [Test]
+       public void UpdateGroup_AlreadyexistingGroup_ThrowsGroupExistingException_Async()
+       {
+          var failCount = 0;
+          try
+          {
+             Parallel.ForEach(Enumerable.Range(1, 2), i =>
+             {
+                var group1 = new SecGroup { Name = "my_group" };
+                Db.Security.AddGroup(_myApp.Name, group1);
+                group1.Name = "updated_group";
+                Db.Security.UpdateGroup(_myApp.Name, "my_group", group1);
+             });
+          }
+          catch (Exception)
+          {
+             
+             failCount++;
+          }
+
+          Assert.AreEqual(1, failCount, "GroupExisting");
        }
 
        [Test]
@@ -939,10 +1285,31 @@ namespace UnitTests.DataAccess
        [Test]
        public void AddApp_ValidArgs_AppAdded()
        {
-          var newApp = new SecApp() {Name = "AddedApp", Description = "my new application"};
+          var newApp = new SecApp {Name = "AddedApp", Description = "my new application"};
           Db.Security.AddApp(newApp);
           var a = Db.Security.Apps();
           Assert.That(a.Contains(newApp));
+       }
+
+       [TestCase(Small)]
+       [TestCase(Medium)]
+       [TestCase(Large)]
+       public void AddApp_ValidArgs_AppAdded_Async(int appCount)
+       {
+          Parallel.ForEach(Enumerable.Range(1, appCount), i =>
+          {
+             var newApp = new SecApp{ Name = "AddedApp" + i, Description = "my new application" + i };
+             Db.Security.AddApp(newApp);
+             var a = Db.Security.App("AddedApp" + i);
+             Assert.IsNotNull(a);
+          });
+
+          for (var i = 1; i <= appCount; ++i)
+          {
+             var a = Db.Security.Apps().ToList();
+             Assert.AreEqual(appCount+2,a.Count);
+          }
+         
        }
 
        [Test]
@@ -951,6 +1318,29 @@ namespace UnitTests.DataAccess
        {
           var newApp = new SecApp() { Name = "mio_test", Description = "my new application" };
           Db.Security.AddApp(newApp);
+       }
+
+      [Test]
+       public void AddApp_AlreadyExistingAppName_ThrowsAppExistingException_Async()
+      {
+         var failCount = 0;
+         try
+         {
+            Parallel.ForEach(Enumerable.Range(1, 2), i =>
+            {
+               var newApp = new SecApp{ Name = "mio_test", Description = "my new application" };
+               Db.Security.AddApp(newApp);
+            });
+           
+         }
+         catch (Exception)
+         {
+
+            failCount++;
+         }
+
+         Assert.AreEqual(1,failCount,"appAlreadyExist");
+          
        }
 
        [Test]
