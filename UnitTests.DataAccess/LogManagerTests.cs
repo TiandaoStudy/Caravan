@@ -81,6 +81,35 @@ namespace UnitTests.DataAccess
          Assert.That(q.First().Arguments[1].Value, Is.EqualTo("2"));
       }
 
+      [TestCase(Small)]
+      [TestCase(Medium)]
+      [TestCase(Large)]
+      public void LogSettings_ValidArgs_Returns_Async(int logCount)
+      {
+         Parallel.ForEach(Enumerable.Range(1, logCount), i =>
+         {
+            var result = Db.Logger.LogInfo<LogManagerTests>("pino"+i, "pino pino"+i, "test"+i, new[]
+            {
+               KeyValuePair.Create("arg1"+i, "1"+i),
+               KeyValuePair.Create("arg2"+i, "2"+i),
+            });
+            
+         });
+
+         for (var i = 1; i <= logCount; ++i)
+         {
+
+            var q = Db.Logger.Logs(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests" && l.ShortMessage == "pino" + i).ToList();
+
+            Assert.That(q.Count(), Is.EqualTo(1));
+            Assert.That(q.First().Arguments[0].Key, Is.EqualTo("arg1"+i));
+            Assert.That(q.First().Arguments[0].Value, Is.EqualTo("1"+i));
+            Assert.That(q.First().Arguments[1].Key, Is.EqualTo("arg2"+i));
+            Assert.That(q.First().Arguments[1].Value, Is.EqualTo("2"+i));
+         }
+        
+      }
+
       [Test]
       public void UpdateSetting_ValidArgs_SettingUpdated()
       {
@@ -168,6 +197,25 @@ namespace UnitTests.DataAccess
          var q = Db.Logger.Logs(LogType.Debug).Where(l => l.Function == "logdebug_validargs");
 
          Assert.That(q.Count(), Is.EqualTo(1));
+      }
+
+      [TestCase(Small)]
+      [TestCase(Medium)]
+      [TestCase(Large)]
+      public void LogDebug_validArgs_Async(int logCount)
+      {
+         Parallel.ForEach(Enumerable.Range(1, logCount), i =>
+         {
+            var res = Db.Logger.LogDebug<LogManagerTests>(new Exception());
+            Assert.True(res.Succeeded);
+         });
+
+         for (var i = 1; i < logCount; ++i)
+         {
+            var q = Db.Logger.Logs(LogType.Debug).Where(l => l.Function == "logdebug_validargs");
+
+            Assert.That(q.Count(), Is.EqualTo(1));
+         }
       }
 
       [Test]
