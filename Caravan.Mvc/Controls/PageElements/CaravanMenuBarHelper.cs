@@ -3,7 +3,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
-using Finsa.Caravan.XmlSchemas.MenuEntries;
+using Finsa.Caravan.Common.XmlSchemas.MenuEntries;
 using RestSharp;
 
 namespace Finsa.Caravan.Mvc.Controls.PageElements

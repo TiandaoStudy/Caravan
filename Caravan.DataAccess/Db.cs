@@ -1,86 +1,123 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Transactions;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.DataAccess.Properties;
 using Finsa.Caravan.DataAccess.Rest;
 using Finsa.Caravan.DataAccess.Sql;
 using Finsa.Caravan.DataAccess.Sql.Oracle;
 using Finsa.Caravan.DataAccess.Sql.SqlServerCe;
+using PommaLabs.Diagnostics;
+using PommaLabs.KVLite;
+using RestSharp;
 
 namespace Finsa.Caravan.DataAccess
 {
+   /// <summary>
+   ///   Punto di accesso ai dati - logger, security, ecc ecc.
+   /// </summary>
    public static class Db
    {
-      private static readonly LogManagerBase LogManagerInstance;
-      private static readonly QueryManagerBase QueryManagerInstance;
-      private static readonly ISecurityManager SecurityManagerInstance;
-      private static readonly DbManagerBase DbManagerInstance;
-      private static readonly Func<DbContextBase> DbContextGenerator;
+      private const string CachePartitionName = "Caravan.DataAccess";
+      private const string ConnectionStringKey = "ConnectionString";
+
+      private static LogManagerBase _logManagerInstance;
+      private static QueryManagerBase _queryManagerInstance;
+      private static ISecurityManager _securityManagerInstance;
+      private static DbManagerBase _dbManagerInstance;
+      private static Func<DbContextBase> _dbContextGenerator;
 
       static Db()
       {
-         switch (Configuration.Instance.DataAccessKind)
+         DataAccessKind accessKind;
+         if (Enum.TryParse(Settings.Default.DataAccessKind, true, out accessKind))
          {
-            case DataAccessKind.Oracle:
-               DbManagerInstance = new OracleDbManager();
-               DbContextGenerator = OracleDbContextGenerator;
-               LogManagerInstance = new SqlLogManager();
-               QueryManagerInstance = new SqlQueryManager();
-               SecurityManagerInstance = new SqlSecurityManager();
-               break;
-            case DataAccessKind.Postgres:
-               LogManagerInstance = new SqlLogManager();
-               QueryManagerInstance = new SqlQueryManager();
-               SecurityManagerInstance = new SqlSecurityManager();
-               break;
-            case DataAccessKind.Rest:
-               LogManagerInstance = new RestLogManager();
-               QueryManagerInstance = new RestQueryManager();
-               SecurityManagerInstance = new RestSecurityManager();
-               break;
-            case DataAccessKind.SqlServer:
-               LogManagerInstance = new SqlLogManager();
-               QueryManagerInstance = new SqlQueryManager();
-               SecurityManagerInstance = new SqlSecurityManager();
-               break;
-            case DataAccessKind.SqlServerCe:
-               DbManagerInstance = new SqlServerCeDbManager();
-               DbContextGenerator = SqlServerCeDbContextGenerator;
-               LogManagerInstance = new SqlLogManager();
-               QueryManagerInstance = new SqlQueryManager();
-               SecurityManagerInstance = new SqlSecurityManager();
-               break;
+            SetDataAccessKind(accessKind);
+         }
+         else
+         {
+            throw new ConfigurationErrorsException();
          }
       }
 
-      #region Public Properties
+      #region Public Properties - Instances
+
+      public static DataAccessKind AccessKind { get; set; }
 
       public static IDbManager Manager
       {
-         get { return DbManagerInstance; }
+         get { return _dbManagerInstance; }
       }
 
       public static ILogManager Logger
       {
-         get { return LogManagerInstance; }
+         get { return _logManagerInstance; }
       }
 
       public static IQueryManager Query
       {
-         get { return QueryManagerInstance; }
+         get { return _queryManagerInstance; }
       }
 
       public static ISecurityManager Security
       {
-         get { return SecurityManagerInstance; }
+         get { return _securityManagerInstance; }
       }
 
       #endregion
 
-      #region Context Generators
+      #region Public Properties - REST Driver
+
+      /// <summary>
+      ///   Object used to authenticate each REST request.
+      /// </summary>
+      public static dynamic RestAuthObject { get; set; }
+
+      #endregion
+
+      public static string ConnectionString
+      {
+         get
+         {
+            var cache = Settings.Default.PersistConnectionString
+               ? PersistentCache.DefaultInstance as ICache
+               : VolatileCache.DefaultInstance;
+
+            var cachedConnectionString = cache.Get(CachePartitionName, ConnectionStringKey) as string;
+            var configConnectionString = Settings.Default.ConnectionString;
+
+            if (String.IsNullOrWhiteSpace(configConnectionString))
+            {
+               // If connection string is not in the configuration file, then return the cached one, even if empty.
+               return cachedConnectionString;
+            }
+            Manager.ElaborateConnectionString(ref configConnectionString);
+            if (configConnectionString == cachedConnectionString)
+            {
+               // Connection string has _not_ changed, return the cached one.
+               return cachedConnectionString;
+            }
+            // Connection string _has_ changed, update the cached one.
+            cache.AddStatic(CachePartitionName, ConnectionStringKey, configConnectionString);
+            return configConnectionString;
+         }
+         set
+         {
+            var cache = Settings.Default.PersistConnectionString
+               ? PersistentCache.DefaultInstance as ICache
+               : VolatileCache.DefaultInstance;
+
+            Manager.ElaborateConnectionString(ref value);
+            cache.AddStatic(CachePartitionName, ConnectionStringKey, value);
+         }
+      }
+
+      #region DbContext Generators
 
       private static OracleDbContext OracleDbContextGenerator()
       {
@@ -94,6 +131,8 @@ namespace Finsa.Caravan.DataAccess
 
       #endregion
 
+      #region EF Helpers
+
       public static List<T> ToLogAndList<T>(this IQueryable<T> queryable)
       {
          var stopwatch = new Stopwatch();
@@ -101,14 +140,12 @@ namespace Finsa.Caravan.DataAccess
          var list = queryable.ToList();
          stopwatch.Stop();
 
-         Task.Factory.StartNew(() =>
+         // Logging query and execution time.
+         var logEntry = queryable.ToString();
+         var milliseconds = stopwatch.ElapsedMilliseconds;
+         Logger.LogDebugAsync<IDbManager>("EF generated query", logEntry, "Logging and timing the query", new[]
          {
-            var logEntry = queryable.ToString();
-            var milliseconds = stopwatch.ElapsedMilliseconds;
-            Logger.LogDebug<IDbManager>("EF generated query", logEntry, "Logging and timing the query", new[]
-            {
-               CKeyValuePair.Create("milliseconds", milliseconds.ToString(CultureInfo.InvariantCulture))
-            });
+            KeyValuePair.Create("milliseconds", milliseconds.ToString(CultureInfo.InvariantCulture))
          });
 
          return list;
@@ -116,7 +153,7 @@ namespace Finsa.Caravan.DataAccess
 
       internal static DbContextBase CreateReadContext()
       {
-         var ctx = DbContextGenerator();
+         var ctx = _dbContextGenerator();
          ctx.Database.Initialize(false);
          ctx.Database.Connection.Open();
          ctx.Configuration.ProxyCreationEnabled = false;
@@ -125,26 +162,106 @@ namespace Finsa.Caravan.DataAccess
 
       internal static DbContextBase CreateWriteContext()
       {
-         var ctx = DbContextGenerator();
+         var ctx = _dbContextGenerator();
          ctx.Database.Initialize(false);
          ctx.Database.Connection.Open();
          return ctx;
       }
 
+      #endregion
+
+      #region Methods that must be used _ONLY_ inside (or for) Unit Tests
+
+      internal static void ChangeDataAccessKindUseOnlyForUnitTestsPlease()
+      {
+         SetDataAccessKind(DataAccessKind.SqlServerCe);
+      }
+
       internal static void ClearAllTablesUseOnlyInsideUnitTestsPlease()
       {
-         using (var ctx = CreateWriteContext())
+         switch (AccessKind)
          {
-            ctx.BeginTransaction();
-            ctx.LogEntries.RemoveRange(ctx.LogEntries.ToList());
-            ctx.LogSettings.RemoveRange(ctx.LogSettings.ToList());
-            ctx.SecObjects.RemoveRange(ctx.SecObjects.ToList());
-            ctx.SecContexts.RemoveRange(ctx.SecContexts.ToList());
-            ctx.SecUsers.RemoveRange(ctx.SecUsers.ToList());
-            ctx.SecGroups.RemoveRange(ctx.SecGroups.ToList());
-            ctx.SecApps.RemoveRange(ctx.SecApps.ToList());
-            ctx.SaveChanges();
+            case DataAccessKind.Oracle:
+            case DataAccessKind.Postgres:
+            case DataAccessKind.SqlServer:
+            case DataAccessKind.SqlServerCe:
+               using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
+               using (var ctx = CreateWriteContext())
+               {
+                  ctx.LogEntries.RemoveRange(ctx.LogEntries.ToList());
+                  ctx.SaveChanges();
+                  ctx.LogSettings.RemoveRange(ctx.LogSettings.ToList());
+                  ctx.SaveChanges();
+                  ctx.SecEntries.RemoveRange(ctx.SecEntries.ToList());
+                  ctx.SaveChanges();
+                  ctx.SecObjects.RemoveRange(ctx.SecObjects.ToList());
+                  ctx.SaveChanges();
+                  ctx.SecContexts.RemoveRange(ctx.SecContexts.ToList());
+                  ctx.SaveChanges();
+                  ctx.SecUsers.RemoveRange(ctx.SecUsers.ToList());
+                  ctx.SaveChanges();
+                  ctx.SecGroups.RemoveRange(ctx.SecGroups.ToList());
+                  ctx.SaveChanges();
+                  ctx.SecApps.RemoveRange(ctx.SecApps.ToList());
+                  ctx.SaveChanges();
+                  trx.Complete();
+               }
+               break;
+            case DataAccessKind.Rest:
+               var client = new RestClient(Settings.Default.RestServiceUrl);
+               var request = new RestRequest("testing/clearAllTablesUseOnlyInsideUnitTestsPlease", Method.POST);
+               client.Execute(request);
+               break;
          }
       }
+
+      internal static void StartRemoteTestingUseOnlyInsideUnitTestsPlease()
+      {
+         RestAuthObject = Settings.Default.RestTestAuthObject;
+      }
+
+      #endregion
+
+      #region Private Methods
+
+      private static void SetDataAccessKind(DataAccessKind kind)
+      {
+         Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(DataAccessKind), kind));
+         AccessKind = kind;
+         switch (kind)
+         {
+            case DataAccessKind.Oracle:
+               _dbManagerInstance = new OracleDbManager();
+               _dbContextGenerator = OracleDbContextGenerator;
+               _logManagerInstance = new SqlLogManager();
+               _queryManagerInstance = new SqlQueryManager();
+               _securityManagerInstance = new SqlSecurityManager();
+               break;
+            case DataAccessKind.Postgres:
+               _logManagerInstance = new SqlLogManager();
+               _queryManagerInstance = new SqlQueryManager();
+               _securityManagerInstance = new SqlSecurityManager();
+               break;
+            case DataAccessKind.Rest:
+               _logManagerInstance = new RestLogManager();
+               _queryManagerInstance = new RestQueryManager();
+               _securityManagerInstance = new RestSecurityManager();
+               break;
+            case DataAccessKind.SqlServer:
+               _logManagerInstance = new SqlLogManager();
+               _queryManagerInstance = new SqlQueryManager();
+               _securityManagerInstance = new SqlSecurityManager();
+               break;
+            case DataAccessKind.SqlServerCe:
+               _dbManagerInstance = new SqlServerCeDbManager();
+               _dbContextGenerator = SqlServerCeDbContextGenerator;
+               _logManagerInstance = new SqlLogManager();
+               _queryManagerInstance = new SqlQueryManager();
+               _securityManagerInstance = new SqlSecurityManager();
+               break;
+         }
+      }
+
+      #endregion
    }
 }

@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using Finsa.Caravan.RestService.Core;
-using Finsa.Caravan.XmlSchemas.MenuEntries;
+using Finsa.Caravan.Common.XmlSchemas.MenuEntries;
 using LinqToQuerystring.Nancy;
 using Nancy;
 using PommaLabs.KVLite.Nancy;
@@ -12,9 +13,9 @@ namespace Finsa.Caravan.RestService
 {
    public sealed class IndexModule : CustomModule
    {
-       private static readonly IList<CPair<int, string>> TestData = new [] {
-           CPair.Create(1, "AAA"),
-           CPair.Create(2, "BBB")
+       private static readonly IList<Tuple<int, string>> TestData = new [] {
+           Tuple.Create(1, "AAA"),
+           Tuple.Create(2, "BBB")
        }; 
 
       public IndexModule()

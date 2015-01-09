@@ -2,15 +2,14 @@
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.DataModel;
-using Finsa.Caravan.DataModel.Security;
-using Finsa.Caravan.Diagnostics;
-using Finsa.Caravan.Extensions;
+using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.DataModel.Security;
 using FLEX.Common.Web;
 using FLEX.Web.Pages;
 using System.Data;
 using System.Collections.Generic;
+using PommaLabs.Diagnostics;
+using PommaLabs.Extensions;
 
 
 // ReSharper disable CheckNamespace
@@ -33,9 +32,9 @@ namespace Finsa.Caravan.WebForms.Pages
 
       protected override void FillSearchCriteria()
       {
-          var active = new List<CKeyValuePair<String, String>>();
-          active.Add(CKeyValuePair.Create("Active", "Y"));
-          active.Add(CKeyValuePair.Create("Inactive", "N"));
+          var active = new List<KeyValuePair<String, String>>();
+          active.Add(KeyValuePair.Create("Active", "Y"));
+          active.Add(KeyValuePair.Create("Inactive", "N"));
           crvnActive.SetDataSource(active);
 
           //Valore di default per "Active": "Y"
@@ -68,7 +67,7 @@ namespace Finsa.Caravan.WebForms.Pages
               userLogin = SearchCriteria["CUSR_LOGIN"][0];
               active = crvnActive.SelectedValues[0] == "Y" ? 1 : 0;
               // This should not catch any exception, others will do.
-              users = (from us in DataAccess.Db.Security.Users(Common.Configuration.Instance.ApplicationName)
+              users = (from us in DataAccess.Db.Security.Users(Common.Properties.Settings.Default.ApplicationName)
                        select new SecUser { Id = us.Id, FirstName = us.FirstName, LastName = us.LastName, Login = us.Login, Email= us.Email, Active= us.Active }).Where(x => x.Login == userLogin.ToString() && x.Active == active)
                             .ToDataTable();
 
@@ -78,7 +77,7 @@ namespace Finsa.Caravan.WebForms.Pages
           else if (SearchCriteria["CUSR_LOGIN"].Count > 0) 
           {
               userLogin = SearchCriteria["CUSR_LOGIN"][0];
-              users = (from us in DataAccess.Db.Security.Users(Common.Configuration.Instance.ApplicationName)
+              users = (from us in DataAccess.Db.Security.Users(Common.Properties.Settings.Default.ApplicationName)
                        select new SecUser { Id = us.Id, FirstName = us.FirstName, LastName = us.LastName, Login = us.Login, Email = us.Email, Active = us.Active }).Where(x => x.Login == userLogin.ToString())
               .ToDataTable();
 
@@ -89,7 +88,7 @@ namespace Finsa.Caravan.WebForms.Pages
           else if (SearchCriteria["Active"].Count == 1)
           {
               active = crvnActive.SelectedValues[0] == "Y" ? 1 : 0;
-              users = (from us in DataAccess.Db.Security.Users(Common.Configuration.Instance.ApplicationName)
+              users = (from us in DataAccess.Db.Security.Users(Common.Properties.Settings.Default.ApplicationName)
                        select new SecUser { Id = us.Id, FirstName = us.FirstName, LastName = us.LastName, Login = us.Login, Email = us.Email, Active = us.Active }).Where(x => x.Active == active)
                            .ToDataTable();
 
@@ -98,7 +97,7 @@ namespace Finsa.Caravan.WebForms.Pages
           }
           else
           {
-              users = (from us in DataAccess.Db.Security.Users(Common.Configuration.Instance.ApplicationName)
+              users = (from us in DataAccess.Db.Security.Users(Common.Properties.Settings.Default.ApplicationName)
                        select new SecUser { Id = us.Id, FirstName = us.FirstName, LastName = us.LastName, Login = us.Login, Email = us.Email, Active = us.Active })
                           .ToDataTable();
 
@@ -145,7 +144,7 @@ namespace Finsa.Caravan.WebForms.Pages
          {
             var login = loginToBeDeleted.Value;
             Raise<ArgumentException>.IfIsEmpty(login);
-            DataAccess.Db.Security.RemoveUser(Common.Configuration.Instance.ApplicationName, login);
+            DataAccess.Db.Security.RemoveUser(Common.Properties.Settings.Default.ApplicationName, login);
             fdtgUsers.UpdateDataSource();
          }
          catch (Exception ex)

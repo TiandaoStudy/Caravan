@@ -1,4 +1,4 @@
-namespace Finsa.Caravan.DataModel.Formatting
+namespace Finsa.Caravan.Common.DataModel.Formatting
 {
    public enum HorizonalTextAlignment : byte
    {

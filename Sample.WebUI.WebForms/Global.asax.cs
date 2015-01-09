@@ -3,7 +3,6 @@ using System.Configuration;
 using System.Web;
 using Finsa.Caravan.WebForms;
 using System.Collections.Generic;
-using Finsa.Caravan.DataModel.Security;
 
 namespace FLEX.Sample.WebUI
 {

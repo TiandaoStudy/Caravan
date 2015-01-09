@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using Finsa.Caravan.DataModel;
-using Finsa.Caravan.DataModel.Security;
+using Finsa.Caravan.Common.DataModel.Security;
 
 namespace Finsa.Caravan.Mvc.ViewModels.Security
 {

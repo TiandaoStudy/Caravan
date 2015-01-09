@@ -1,8 +1,8 @@
 ﻿using System;
+using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataModel.Exceptions;
-using Finsa.Caravan.DataModel.Logging;
-using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.RestService.Core;
 using Finsa.Caravan.RestService.Properties;
 using Nancy;

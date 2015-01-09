@@ -1,9 +1,11 @@
 ﻿using System;
-using System.IO;
-using Finsa.Caravan.DataModel.Logging;
-using Finsa.Caravan.DataModel.Rest;
+using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.DataModel.Rest;
+using Finsa.Caravan.Common.RestService;
+using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.DataAccess.Properties;
 using Nancy;
-using Newtonsoft.Json;
+using Nancy.ModelBinding;
 using PommaLabs.KVLite.Nancy;
 
 namespace Finsa.Caravan.RestService.Core
@@ -25,7 +27,7 @@ namespace Finsa.Caravan.RestService.Core
       {
          try
          {
-            var parsedBody = ParseBody<TBody>();
+            var parsedBody = this.Bind<RestRequest<TBody>>();
             ApplySecurity(parsedBody.Auth);
             if (cacheSeconds != NotCached)
             {
@@ -40,14 +42,6 @@ namespace Finsa.Caravan.RestService.Core
          catch (Exception ex)
          {
             return RestResponse.Failure(ex);
-         }
-      }
-
-      protected RestRequest<TBody> ParseBody<TBody>()
-      {
-         using (var streamReader = new StreamReader(Context.Request.Body))
-         {
-            return JsonConvert.DeserializeObject<RestRequest<TBody>>(streamReader.ReadToEnd());
          }
       }
 
@@ -69,6 +63,23 @@ namespace Finsa.Caravan.RestService.Core
          {
             throw new Exception("INVALID AUTH");
          }
+      }
+   }
+
+   internal sealed class TestAuthManager : IAuthManager
+   {
+      public AuthResult Authenticate(dynamic authObject)
+      {
+         if (authObject == null || authObject.Length == 0)
+         {
+            return new AuthResult {IsValid = false, Message = "INVALID AUTH"};
+         }
+         if (authObject == Settings.Default.RestTestAuthObject)
+         {
+            // Only for unit tests!!!
+            Db.ChangeDataAccessKindUseOnlyForUnitTestsPlease();
+         }
+         return new AuthResult {IsValid = true, Message = "Authenticated"};
       }
    }
 }

@@ -1,36 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using Finsa.Caravan.DataModel.Security;
+using Finsa.Caravan.Common.DataModel.Security;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Finsa.Caravan.DataModel.Logging
+namespace Finsa.Caravan.Common.DataModel.Logging
 {
    [Serializable]
    public class LogSettings : IEquatable<LogSettings>
    {
       [JsonProperty(Order = 0)]
       public long AppId { get; set; }
-      
+
       [JsonIgnore]
       public SecApp App { get; set; }
-      
+
       [JsonProperty(Order = 2)]
       public int Enabled { get; set; }
-      
+
       [JsonProperty(Order = 3)]
       public int Days { get; set; }
-      
+
       [JsonProperty(Order = 4)]
       public int MaxEntries { get; set; }
 
       [JsonIgnore]
       public virtual ICollection<LogEntry> LogEntries { get; set; }
-         
+
       [JsonIgnore]
       public string TypeId { get; set; }
 
-      [JsonConverter(typeof(StringEnumConverter))]
+      [JsonConverter(typeof (StringEnumConverter))]
       [JsonProperty(Order = 1)]
       public LogType Type
       {
@@ -42,7 +42,7 @@ namespace Finsa.Caravan.DataModel.Logging
          }
          set { TypeId = value.ToString().ToLower(); }
       }
-      
+
       public bool Equals(LogSettings other)
       {
          if (ReferenceEquals(null, other)) return false;
@@ -80,7 +80,7 @@ namespace Finsa.Caravan.DataModel.Logging
    [Serializable]
    public class LogSettingsSingle : IEquatable<LogSettingsSingle>
    {
-      public LogSettings Settings { get; set; } 
+      public LogSettings Settings { get; set; }
 
       public bool Equals(LogSettingsSingle other)
       {
@@ -116,7 +116,7 @@ namespace Finsa.Caravan.DataModel.Logging
    [Serializable]
    public class LogSettingsList : IEquatable<LogSettingsList>
    {
-      public IEnumerable<LogSettings> Settings { get; set; } 
+      public IEnumerable<LogSettings> Settings { get; set; }
 
       public bool Equals(LogSettingsList other)
       {
@@ -152,9 +152,9 @@ namespace Finsa.Caravan.DataModel.Logging
    public enum LogType : byte
    {
       Debug = 0,
-      Info,
-      Warn,
-      Error,
-      Fatal
+      Info = 1,
+      Warn = 2,
+      Error = 3,
+      Fatal = 4
    }
 }

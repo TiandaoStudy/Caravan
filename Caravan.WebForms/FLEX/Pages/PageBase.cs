@@ -1,147 +1,121 @@
-﻿using System;
+﻿using FLEX.Web.MasterPages;
+using FLEX.Web.UserControls;
+using PommaLabs.KVLite.Web;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using FLEX.Web.MasterPages;
-using FLEX.Web.UserControls;
-using PommaLabs.KVLite.Web;
 
-// ReSharper disable CheckNamespace
-// This is the correct namespace, despite the file physical position.
+// ReSharper disable CheckNamespace This is the correct namespace, despite the file physical position.
 
 namespace FLEX.Web.Pages
 // ReSharper restore CheckNamespace
 {
-   public abstract class PageBase : HeadBase, IPage
-   {
-      #region Constants
+    public abstract class PageBase : HeadBase, IPage
+    {
+        #region Constants
 
-      private const string FromIdRequestKey = "from_id";
-      private const string OldIdRequestKey = "old_id";
+        private const string FromIdRequestKey = "from_id";
+        private const string OldIdRequestKey = "old_id";
 
-      private const string IdViewStateKey = "__PAGE_ID__";
-      private const int MinIdValue = 1000000;
-      private const int MaxIdValue = 9999999;
+        private const string IdViewStateKey = "__PAGE_ID__";
+        private const int MinIdValue = 1000000;
+        private const int MaxIdValue = 9999999;
 
-      private static readonly Random Random = new Random();
+        private static readonly Random Random = new Random();
 
-      #endregion
+        #endregion Constants
 
-      #region Fields
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            InitID();
+        }
 
-      private readonly string _id;
+        protected override sealed PageStatePersister PageStatePersister
+        {
+            get { return new ViewStatePersister(this); }
+        }
 
-      #endregion
+        #region Public Properties
 
-      protected override void OnLoad(EventArgs e)
-      {
-         base.OnLoad(e);
-         InitID();
-      }
+        /// <summary>
+        ///   </summary>
+        public string FromID
+        {
+            get { return Request[FromIdRequestKey]; }
+        }
 
-      protected override sealed PageStatePersister PageStatePersister
-      {
-         get { return new PersistentViewStatePersister(this); }
-      }
+        /// <summary>
+        ///   </summary>
+        public string FlexID
+        {
+            get { return (string) ViewState[IdViewStateKey]; }
+        }
 
-      #region Public Properties
+        /// <summary>
+        ///   </summary>
+        public string OldID
+        {
+            get { return Request[OldIdRequestKey]; }
+        }
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public string FromID
-      {
-         get { return Request[FromIdRequestKey]; }
-      }
+        #endregion Public Properties
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public string FlexID
-      {
-         get { return (string) ViewState[IdViewStateKey]; }
-      }
+        #region IPage Members
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public string OldID
-      {
-         get { return Request[OldIdRequestKey]; }
-      }
+        public bool HasPageVisibleHandlers
+        {
+            get { return MasterPage.HasPageVisibleHandlers; }
+        }
 
-      #endregion
+        public MenuBar MenuBar
+        {
+            get { return MasterPage.MenuBar; }
+        }
 
-      #region IPage Members
+        public PageFooter PageFooter
+        {
+            get { return MasterPage.PageFooter; }
+        }
 
-      public UserControls.Ajax.ErrorHandler ErrorHandler
-      {
-         get { return MasterPage.ErrorHandler; }
-      }
+        public event EventHandler Page_Visible;
 
-      public bool HasPageVisibleHandlers
-      {
-         get { return MasterPage.HasPageVisibleHandlers; }
-      }
+        #endregion IPage Members
 
-      public HtmlForm MainForm
-      {
-         get { return MasterPage.MainForm; }
-      }
+        #region Private Methods
 
-      public MenuBar MenuBar
-      {
-         get { return MasterPage.MenuBar; }
-      }
+        private void InitID()
+        {
+            var storedId = ViewState[IdViewStateKey];
+            if (storedId != null)
+            {
+                // ID is already stored, so we can return.
+                return;
+            }
 
-      public PageFooter PageFooter
-      {
-         get { return MasterPage.PageFooter; }
-      }
+            // Locally cached for performance reasons.
+            var oldId = OldID;
+            if (oldId != null)
+            {
+                ViewState[IdViewStateKey] = oldId;
+                return;
+            }
 
-      public ScriptManager ScriptManager
-      {
-         get { return MasterPage.ScriptManager; }
-      }
+            // We generate a new ID, we store it in the view state and then we return.
+            var newId = Random.Next(MinIdValue, MaxIdValue).ToString(CultureInfo.InvariantCulture);
+            ViewState[IdViewStateKey] = newId;
+        }
 
-      public event EventHandler Page_Visible;
+        protected IPage MasterPage
+        {
+            get
+            {
+                Debug.Assert(Master is IPage);
+                return Master as IPage;
+            }
+        }
 
-      #endregion
-
-      #region Private Methods
-
-      private void InitID()
-      {
-         var storedId = ViewState[IdViewStateKey];
-         if (storedId != null)
-         {
-            // ID is already stored, so we can return.
-            return;
-         }
-
-         // Locally cached for performance reasons.
-         var oldId = OldID;
-         if (oldId != null)
-         {
-            ViewState[IdViewStateKey] = oldId;
-            return;
-         }
-
-         // We generate a new ID, we store it in the view state and then we return.
-         var newId = Random.Next(MinIdValue, MaxIdValue).ToString(CultureInfo.InvariantCulture);
-         ViewState[IdViewStateKey] = newId;
-      }
-
-      protected IPage MasterPage
-      {
-         get
-         {
-            Debug.Assert(Master is IPage);
-            return Master as IPage;
-         }
-      }
-
-      #endregion
-   }
+        #endregion Private Methods
+    }
 }

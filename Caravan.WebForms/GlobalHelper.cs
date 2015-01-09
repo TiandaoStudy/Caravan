@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO.Compression;
 using System.Web;
+using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess;
 using PommaLabs.KVLite;
 using System.Collections.Generic;
-using Finsa.Caravan.DataModel.Security;
 
 namespace Finsa.Caravan.WebForms
 {
@@ -18,7 +18,7 @@ namespace Finsa.Caravan.WebForms
       public static void Application_Start(object sender, EventArgs args, string connectionString, HttpApplicationState Application)
       {
          // Sets the default connection string.
-         DataAccess.Configuration.Instance.ConnectionString = connectionString;
+         Db.ConnectionString = connectionString;
 
          // Run vacuum on the persistent cache. It should be put AFTER the connection string is set,
          // since that string it stored on the cache itself and we do not want conflicts, right?

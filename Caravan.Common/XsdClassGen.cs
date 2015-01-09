@@ -7,7 +7,7 @@
 // </auto-generated>
 //-----------------------------------------------------------------------------------------------------
 
-namespace Finsa.Caravan.XmlSchemas.MenuEntries {
+namespace Finsa.Caravan.Common.XmlSchemas.MenuEntries {
     
     
     /// <remarks/>
@@ -15,8 +15,8 @@ namespace Finsa.Caravan.XmlSchemas.MenuEntries {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="Finsa.Caravan.XmlSchemas.MenuEntries")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="Finsa.Caravan.XmlSchemas.MenuEntries", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="Finsa.Caravan.Common.XmlSchemas.MenuEntries")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="Finsa.Caravan.Common.XmlSchemas.MenuEntries", IsNullable=false)]
     public partial class Item {
         
         private ItemGroup groupField;
@@ -128,7 +128,7 @@ namespace Finsa.Caravan.XmlSchemas.MenuEntries {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="Finsa.Caravan.XmlSchemas.MenuEntries")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="Finsa.Caravan.Common.XmlSchemas.MenuEntries")]
     public partial class ItemGroup {
         
         private Item[] itemField;
@@ -163,8 +163,8 @@ namespace Finsa.Caravan.XmlSchemas.MenuEntries {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="Finsa.Caravan.XmlSchemas.MenuEntries")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="Finsa.Caravan.XmlSchemas.MenuEntries", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="Finsa.Caravan.Common.XmlSchemas.MenuEntries")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="Finsa.Caravan.Common.XmlSchemas.MenuEntries", IsNullable=false)]
     public partial class Menu {
         
         private Item[] groupField;

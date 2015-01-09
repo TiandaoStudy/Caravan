@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Finsa.Caravan.Common.DataModel.Logging;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataModel.Exceptions;
-using Finsa.Caravan.DataModel.Logging;
 using Finsa.Caravan.DataModel.Rest;
 using RestSharp;
 
@@ -10,7 +10,7 @@ namespace Finsa.Caravan.DataAccess.Rest
 {
    public sealed class RestLogManager : LogManagerBase
    {
-      public override LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<CKeyValuePair<string, string>> args)
+      public override LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
       {
          var client = new RestClient("http://localhost/Caravan.RestService/security");
          var request = new RestRequest("{appName}/entries", Method.POST);

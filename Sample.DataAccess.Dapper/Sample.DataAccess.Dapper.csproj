@@ -52,9 +52,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -92,6 +92,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="app.config" />
     <None Include="DataModel.edmx.diagram">
       <DependentUpon>DataModel.edmx</DependentUpon>
     </None>
@@ -118,10 +119,6 @@
     <ProjectReference Include="..\Caravan.DataAccess\Caravan.DataAccess.csproj">
       <Project>{418B2D91-D53E-49BF-98FC-66DA9490DC37}</Project>
       <Name>Caravan.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Caravan.Helpers\Caravan.Helpers.csproj">
-      <Project>{CEFF687B-7817-4326-9310-AB655407B610}</Project>
-      <Name>Caravan.Helpers</Name>
     </ProjectReference>
     <ProjectReference Include="..\Caravan.Common\Caravan.Common.csproj">
       <Project>{11904ED0-33D2-4005-8766-B1E393A32EA7}</Project>

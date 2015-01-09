@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Finsa.Caravan;
-using Finsa.Caravan.Collections;
-using Finsa.Caravan.Diagnostics;
 using FLEX.Common.Web;
+using PommaLabs.Collections.ReadOnly;
+using PommaLabs.Diagnostics;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -76,7 +75,7 @@ namespace FLEX.Web.UserControls.Ajax
       ///   A list of values that will be used to fill the checkbox list.
       ///   First item will be used as label, while second item will be used as value.
       /// </param>
-      public void SetDataSource(IList<CKeyValuePair<string, string>> values)
+      public void SetDataSource(IList<KeyValuePair<string, string>> values)
       {
          Raise<ArgumentNullException>.IfIsNull(values);
 

@@ -10,7 +10,6 @@ CREATE TABLE mydb.caravan_log
    , clog_code_unit    NVARCHAR2(2000)      NOT NULL
    , clog_function     NVARCHAR2(2000)      NOT NULL
    , clog_short_msg    NVARCHAR2(2000)      NOT NULL
-   , clog_long_msg     NVARCHAR2(2000)
    , clog_context      NVARCHAR2(2000)
    , clog_key_0        NVARCHAR2(2000)
    , clog_value_0      NVARCHAR2(2000)
@@ -32,6 +31,7 @@ CREATE TABLE mydb.caravan_log
    , clog_value_8      NVARCHAR2(2000) 
    , clog_key_9        NVARCHAR2(2000)
    , clog_value_9      NVARCHAR2(2000)
+   , clog_long_msg     CLOB
    , CHECK (clog_user is null or clog_user = lower(clog_user)) ENABLE
    , CHECK (clog_code_unit = lower(clog_code_unit)) ENABLE
    , CHECK (clog_function = lower(clog_function)) ENABLE
@@ -66,6 +66,8 @@ COMMENT ON COLUMN mydb.caravan_log.clog_value_0 IS 'Valore del parametro opziona
 
 CREATE INDEX mydb.idx_caravan_log_date ON mydb.caravan_log (clog_date DESC);
 CREATE INDEX mydb.idx_caravan_log_settings ON mydb.caravan_log (clos_type, capp_id);
+
+create sequence mydb.caravan_log_seq;
 
 -- DROP da fare per la transizione da FLEX_LOG:
 --> pck_flex_log

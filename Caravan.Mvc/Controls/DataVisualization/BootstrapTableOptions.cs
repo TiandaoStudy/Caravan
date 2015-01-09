@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Finsa.Caravan.DataModel;
-using Finsa.Caravan.DataModel.Formatting;
+using Finsa.Caravan.Common.DataModel.Formatting;
 
 namespace Finsa.Caravan.Mvc.Controls.DataVisualization
 {

@@ -28,12 +28,12 @@ namespace Finsa.Caravan.DataAccess
       DbConnection CreateConnection();
    }
 
-   public enum DataAccessKind
+   public enum DataAccessKind : byte
    {
-      Oracle,
-      Postgres,
-      Rest,
-      SqlServer,
-      SqlServerCe
+      Oracle = 0,
+      Postgres = 1,
+      Rest = 2,
+      SqlServer = 3,
+      SqlServerCe = 4
    }
 }

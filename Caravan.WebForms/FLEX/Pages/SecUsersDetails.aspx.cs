@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Globalization;
+using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.DataModel.Security;
-using Finsa.Caravan.Diagnostics;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
-using System.Collections.Generic;
-using System.Linq;
-using System.Data;
+using PommaLabs.Diagnostics;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -68,7 +65,7 @@ namespace Finsa.Caravan.WebForms.Pages
             return;
          }
 
-         var user = Db.Security.User(Common.Configuration.Instance.ApplicationName, login);
+         var user = Db.Security.User(Common.Properties.Settings.Default.ApplicationName, login);
          Raise<ArgumentException>.IfIsNull(user, "Given user name does not exist");
 
          txtUserId.Text = user.Id.ToString(CultureInfo.InvariantCulture);
@@ -90,13 +87,13 @@ namespace Finsa.Caravan.WebForms.Pages
               if (Mode == NewMode)
               {
                   var newUser = new SecUser { FirstName = txtFirstName.Text, LastName = txtLastName.Text, Email = txtEmail.Text, Active = chkIsActive.Checked ? 1 : 0 };
-                  Db.Security.AddUser(Common.Configuration.Instance.ApplicationName, newUser);
+                  Db.Security.AddUser(Common.Properties.Settings.Default.ApplicationName, newUser);
 
               }
               else if (Mode == EditMode)
               {
                   var newUser= new SecUser { FirstName = txtFirstName.Text, LastName = txtLastName.Text, Email = txtEmail.Text, Active = chkIsActive.Checked ? 1 : 0, Login = Login };
-                  Db.Security.UpdateUser(Common.Configuration.Instance.ApplicationName, Login, newUser);
+                  Db.Security.UpdateUser(Common.Properties.Settings.Default.ApplicationName, Login, newUser);
               }
               Master.RegisterCloseScript(this);
           }

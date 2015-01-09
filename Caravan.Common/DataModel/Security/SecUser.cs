@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Finsa.Caravan.DataModel.Security
+namespace Finsa.Caravan.Common.DataModel.Security
 {
    [Serializable]
    public class SecUser : IEquatable<SecUser>
@@ -12,28 +12,28 @@ namespace Finsa.Caravan.DataModel.Security
 
       [JsonIgnore]
       public long AppId { get; set; }
-      
+
       [JsonIgnore]
       public SecApp App { get; set; }
-      
+
       [JsonProperty(Order = 1)]
       public int Active { get; set; }
-      
+
       [JsonProperty(Order = 2)]
       public string Login { get; set; }
-      
+
       [JsonProperty(Order = 3)]
       public string HashedPassword { get; set; }
-      
+
       [JsonProperty(Order = 4)]
       public string FirstName { get; set; }
-      
+
       [JsonProperty(Order = 5)]
       public string LastName { get; set; }
-      
+
       [JsonProperty(Order = 6)]
       public string Email { get; set; }
-      
+
       [JsonProperty(Order = 7)]
       public virtual ICollection<SecGroup> Groups { get; set; }
 
@@ -54,14 +54,14 @@ namespace Finsa.Caravan.DataModel.Security
          if (ReferenceEquals(null, obj)) return false;
          if (ReferenceEquals(this, obj)) return true;
          if (obj.GetType() != GetType()) return false;
-         return Equals((SecUser)obj);
+         return Equals((SecUser) obj);
       }
 
       public override int GetHashCode()
       {
          unchecked
          {
-            return (Id.GetHashCode() * 397) ^ AppId.GetHashCode();
+            return (Id.GetHashCode()*397) ^ AppId.GetHashCode();
          }
       }
 

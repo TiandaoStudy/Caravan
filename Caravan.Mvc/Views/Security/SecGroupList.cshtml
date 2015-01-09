@@ -1,5 +1,5 @@
-﻿@using Finsa.Caravan.DataModel
-@using Finsa.Caravan.DataModel.Formatting
+﻿@using Finsa.Caravan.Common.DataModel.Formatting
+@using Finsa.Caravan.DataModel
 @using Finsa.Caravan.Mvc.Controllers
 @using Finsa.Caravan.Mvc.Controls.DataVisualization
 @using Finsa.Caravan.Mvc.Controls.PageElements
@@ -56,6 +56,31 @@
             HorizontalAlignment = HorizonalTextAlignment.Left, 
             Control = x => x.Name
          },
+         new BootstrapTableColumnOptions
+         {
+            ID = "grpDescription", 
+            Header = "Description", 
+            Sortable = true, 
+            HorizontalAlignment = HorizonalTextAlignment.Left, 
+            Control = x => x.Description
+         },
+         new BootstrapTableColumnOptions
+         {
+            ID = "grpNotes", 
+            Header = "Notes", 
+            Sortable = true, 
+            HorizontalAlignment = HorizonalTextAlignment.Left, 
+            Control = x => x.Notes
+         },
+         new BootstrapTableColumnOptions
+         {
+            ID = "grpIsAdmin", 
+            Header = "Is Admin", 
+            Sortable = true, 
+            HorizontalAlignment = HorizonalTextAlignment.Left, 
+            VerticalAlignment = VerticalTextAlignment.Middle,
+             Control = (x) => Html.CheckBox("admin",(x.IsAdmin == 1)? true: false, new {disabled="disabled"})
+         },                           
       }
    })
 }

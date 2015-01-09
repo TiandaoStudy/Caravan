@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Net;
-using Finsa.Caravan.DataModel.Logging;
+using Finsa.Caravan.Common.DataModel.Logging;
 using Newtonsoft.Json;
 
-namespace Finsa.Caravan.DataModel.Rest
+namespace Finsa.Caravan.Common.DataModel.Rest
 {
    [Serializable, JsonObject(MemberSerialization.OptIn)]
    public class RestResponse<TBody>
    {
       [JsonProperty(Order = 0)]
       public HttpStatusCode StatusCode { get; set; }
-      
+
       [JsonProperty(Order = 1)]
       public TBody Body { get; set; }
    }
-   
+
    [Serializable, JsonObject(MemberSerialization.OptIn)]
    public class FailureBody
    {
       [JsonProperty(Order = 0)]
       public string Description { get; set; }
-      
+
       [JsonProperty(Order = 1)]
       public Exception Exception { get; set; }
    }

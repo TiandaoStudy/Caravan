@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Coding Standards", "Coding 
 		Documentation\Coding Standards\CSharp.pdf = Documentation\Coding Standards\CSharp.pdf
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.WebForms", "NuGetPackager.WebForms\NuGetPackager.WebForms.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet Packager (WebForms)", "NuGetPackager.WebForms\NuGet Packager (WebForms).csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
 	ProjectSection(ProjectDependencies) = postProject
 		{407B5921-9039-4D0D-A40A-36A19C251CDC} = {407B5921-9039-4D0D-A40A-36A19C251CDC}
 	EndProjectSection
@@ -30,7 +30,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.WebForms", "UnitT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Common", "UnitTests.Common\UnitTests.Common.csproj", "{4F1024FA-992F-442C-B32F-E4BE589D5EF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Common", "NuGetPackager.Common\NuGetPackager.Common.csproj", "{BBCDDB1C-8127-4623-B40B-5109DE5A63EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet Packager (Common)", "NuGetPackager.Common\NuGet Packager (Common).csproj", "{BBCDDB1C-8127-4623-B40B-5109DE5A63EF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{11904ED0-33D2-4005-8766-B1E393A32EA7} = {11904ED0-33D2-4005-8766-B1E393A32EA7}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{816548D1-F582-4AC1-B4F3-E3997F2B4C14}"
 EndProject
@@ -63,7 +66,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{349512
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess", "Caravan.DataAccess\Caravan.DataAccess.csproj", "{418B2D91-D53E-49BF-98FC-66DA9490DC37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.DataAccess", "NuGetPackager.DataAccess\NuGetPackager.DataAccess.csproj", "{BD471427-A76A-4764-94C1-08C8C3BC1379}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet Packager (DataAccess)", "NuGetPackager.DataAccess\NuGet Packager (DataAccess).csproj", "{BD471427-A76A-4764-94C1-08C8C3BC1379}"
 	ProjectSection(ProjectDependencies) = postProject
 		{418B2D91-D53E-49BF-98FC-66DA9490DC37} = {418B2D91-D53E-49BF-98FC-66DA9490DC37}
 	EndProjectSection
@@ -88,15 +91,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External Libraries", "Exter
 		External Libraries\Microsoft.ReportViewer.ProcessingObjectModel.DLL = External Libraries\Microsoft.ReportViewer.ProcessingObjectModel.DLL
 		External Libraries\Microsoft.ReportViewer.WebForms.DLL = External Libraries\Microsoft.ReportViewer.WebForms.DLL
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Helpers", "Caravan.Helpers\Caravan.Helpers.csproj", "{CEFF687B-7817-4326-9310-AB655407B610}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackager.Helpers", "NuGetPackager.Helpers\NuGetPackager.Helpers.csproj", "{860A7A25-C159-487F-BAC5-C46857FC7A40}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CEFF687B-7817-4326-9310-AB655407B610} = {CEFF687B-7817-4326-9310-AB655407B610}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Helpers", "UnitTests.Helpers\UnitTests.Helpers.csproj", "{B5C09213-FF47-4929-8F0D-85AA340AB818}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Architecture", "Architecture", "{E396B46C-8975-4804-8C42-A44285FE8759}"
 EndProject
@@ -174,16 +168,6 @@ Global
 		{0A3419EA-CD95-4262-B84A-B963C87ECCDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A3419EA-CD95-4262-B84A-B963C87ECCDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A3419EA-CD95-4262-B84A-B963C87ECCDF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CEFF687B-7817-4326-9310-AB655407B610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CEFF687B-7817-4326-9310-AB655407B610}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CEFF687B-7817-4326-9310-AB655407B610}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CEFF687B-7817-4326-9310-AB655407B610}.Release|Any CPU.Build.0 = Release|Any CPU
-		{860A7A25-C159-487F-BAC5-C46857FC7A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{860A7A25-C159-487F-BAC5-C46857FC7A40}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{B5C09213-FF47-4929-8F0D-85AA340AB818}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B5C09213-FF47-4929-8F0D-85AA340AB818}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B5C09213-FF47-4929-8F0D-85AA340AB818}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B5C09213-FF47-4929-8F0D-85AA340AB818}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DAA22A2C-A101-4F71-B4E1-F0DB283A642C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DAA22A2C-A101-4F71-B4E1-F0DB283A642C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAA22A2C-A101-4F71-B4E1-F0DB283A642C}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -11,5 +11,11 @@
     <Setting Name="LongCacheTimeoutInSeconds" Type="System.Int16" Scope="Application">
       <Value Profile="(Default)">600</Value>
     </Setting>
+    <Setting Name="AllowUnitTesting" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="LoggerIdentity" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">service</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
