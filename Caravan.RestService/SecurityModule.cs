@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Data;
-using System.IO;
-using System.Web;
-using System.Web.UI;
+using Finsa.Caravan.Common.DataModel.Exceptions;
+using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.DataModel.Exceptions;
-using Finsa.Caravan.DataModel.Rest;
-using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.RestService.Core;
 using Finsa.Caravan.RestService.Properties;
-using Finsa.Caravan.XmlSchemas.MenuEntries;
 using Nancy;
 
 namespace Finsa.Caravan.RestService

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Finsa.Caravan.Common.DataModel.Exceptions;
 using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.DataModel.Rest;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataModel.Exceptions;
-using Finsa.Caravan.DataModel.Rest;
 using RestSharp;
 
 namespace Finsa.Caravan.DataAccess.Rest
@@ -44,7 +44,7 @@ namespace Finsa.Caravan.DataAccess.Rest
 
             request.AddJsonBody(new RestRequest<object> {Auth = "AA", Body = new object()});
 
-            var response = client.Execute<DataModel.Rest.RestResponse<LogSettingsSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<LogSettingsSingle>>(request);
 
             if (response.ErrorException != null)
             {
@@ -88,7 +88,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                }
             });
 
-            var response = client.Execute<DataModel.Rest.RestResponse<LogSettingsSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<LogSettingsSingle>>(request);
 
             if (response.ErrorException != null)
             {
@@ -133,7 +133,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                }
             });
 
-            var response = client.Execute<DataModel.Rest.RestResponse<LogSettingsSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<LogSettingsSingle>>(request);
 
             if (response.ErrorException != null)
             {

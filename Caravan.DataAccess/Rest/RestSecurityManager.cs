@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using Finsa.Caravan.Common.DataModel.Exceptions;
+using Finsa.Caravan.Common.DataModel.Rest;
+using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataModel.Exceptions;
-using Finsa.Caravan.DataModel.Rest;
-using Finsa.Caravan.DataModel.Security;
-using Newtonsoft.Json;
 using RestSharp;
 
 namespace Finsa.Caravan.DataAccess.Rest
@@ -22,7 +21,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             //request.AddUrlSegment("appName", appName);
             request.AddJsonBody(new RestRequest<object> { Auth = "AA", Body = new object() });
 
-            var response = client.Execute<DataModel.Rest.RestResponse<SecAppSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecAppSingle>>(request);
 
             var apps = new List<SecApp> { response.Data.Body.App };
 
@@ -47,7 +46,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             request.AddUrlSegment("appName", appName);
             request.AddJsonBody(new RestRequest<object> { Auth = "AA", Body = new object() });
 
-            var response = client.Execute<DataModel.Rest.RestResponse<SecAppSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecAppSingle>>(request);
 
             if (response.ErrorException != null)
             {
@@ -87,7 +86,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                }
             });
 
-            var response = client.Execute<DataModel.Rest.RestResponse<SecAppSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecAppSingle>>(request);
             if (response.ErrorMessage != null)
             {
                if (response.ErrorMessage == AppExistingException.TheMessage)
@@ -125,7 +124,7 @@ namespace Finsa.Caravan.DataAccess.Rest
 
             request.AddJsonBody(new RestRequest<dynamic> { Auth = "AA", Body = new object() });
 
-            var response = client.Execute<DataModel.Rest.RestResponse<SecGroupSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecGroupSingle>>(request);
 
             if (response.ErrorException != null)
             {
@@ -167,7 +166,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                }
             });
 
-            var response = client.Execute<DataModel.Rest.RestResponse<SecGroupSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecGroupSingle>>(request);
             if (response.ErrorException != null)
             {
                if (response.ErrorMessage == AppNotFoundException.TheMessage)
@@ -198,7 +197,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             request.AddUrlSegment("groupName", groupName);
             request.AddJsonBody(new RestRequest<dynamic> { Auth = "AA", Body = new object() });
 
-            var response = client.Execute<DataModel.Rest.RestResponse<SecGroupSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecGroupSingle>>(request);
             if (response.ErrorException != null)
             {
                if (response.ErrorMessage == AppNotFoundException.TheMessage)
@@ -240,7 +239,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                }
             });
 
-            var response = client.Execute<DataModel.Rest.RestResponse<SecGroupSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecGroupSingle>>(request);
             if (response.ErrorException != null)
             {
                if (response.ErrorMessage == GroupExistingException.TheMessage)
@@ -278,7 +277,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                request.AddUrlSegment("appName", appName);
             }
             request.AddJsonBody(new RestRequest<SecUserSingle> { Auth = "AA", Body = null });
-            var response = client.Execute<DataModel.Rest.RestResponse<SecUserSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecUserSingle>>(request);
 
             if (response.ErrorException != null)
             {
@@ -329,7 +328,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                   }
                }
             });
-            var response = client.Execute<DataModel.Rest.RestResponse<SecUserSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecUserSingle>>(request);
 
             if (response.ErrorException != null)
             {
@@ -362,7 +361,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             request.AddUrlSegment("userLogin", userLogin);
 
             request.AddJsonBody(new {Auth = "AA", Body = new object()});
-            var response = client.Execute<DataModel.Rest.RestResponse<dynamic>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<dynamic>>(request);
 
             if (response.ErrorException != null){
                if (response.StatusCode == HttpStatusCode.NotFound)
@@ -402,7 +401,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                      Email = newUser.Email}
                   }
             });
-            var response = client.Execute<DataModel.Rest.RestResponse<SecUserSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecUserSingle>>(request);
 
             if (response.ErrorException != null)
             {
@@ -440,7 +439,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             request.AddUrlSegment("groupName", groupName);
             request.AddJsonBody(new RestRequest<dynamic> {Auth = "AA", Body = new object()});
 
-            var response = client.Execute<DataModel.Rest.RestResponse<SecUserSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecUserSingle>>(request);
 
             if (response.ErrorException != null)
             {
@@ -470,7 +469,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             request.AddUrlSegment("groupName", groupName);
             request.AddJsonBody(new RestRequest<dynamic> { Auth = "AA", Body = new object() });
 
-            var response = client.Execute<DataModel.Rest.RestResponse<SecUserSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecUserSingle>>(request);
             if (response.ErrorException != null)
             {
                if (response.StatusCode == HttpStatusCode.NotFound)
@@ -499,7 +498,7 @@ namespace Finsa.Caravan.DataAccess.Rest
          request.AddUrlSegment("appName", appName);
          request.AddJsonBody(new RestRequest<dynamic> {Auth = "AA", Body = new object()});
 
-         var response = client.Execute<DataModel.Rest.RestResponse<SecContextSingle>>(request);
+         var response = client.Execute<Common.DataModel.Rest.RestResponse<SecContextSingle>>(request);
 
          if (response.ErrorException != null)
          {
@@ -521,7 +520,7 @@ namespace Finsa.Caravan.DataAccess.Rest
          request.AddUrlSegment("appName", appName);
          request.AddJsonBody(new RestRequest<dynamic> {Auth = "AA", Body = new object()});
 
-         var response = client.Execute<DataModel.Rest.RestResponse<SecObjectSingle>>(request);
+         var response = client.Execute<Common.DataModel.Rest.RestResponse<SecObjectSingle>>(request);
 
          var objs = new List<SecObject> { response.Data.Body.Object};
          
@@ -554,7 +553,7 @@ namespace Finsa.Caravan.DataAccess.Rest
 
             request.AddJsonBody(new RestRequest<dynamic> {Auth = "AA", Body = new object()});
 
-            var response = client.Execute<DataModel.Rest.RestResponse<SecEntrySingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecEntrySingle>>(request);
 
             if (response.ErrorException != null)
             {
@@ -600,7 +599,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                });
             }
 
-            var response = client.Execute<DataModel.Rest.RestResponse<SecEntrySingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecEntrySingle>>(request);
 
             if (response.ErrorException != null)
             {
@@ -655,7 +654,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                });
             }
 
-            var response = client.Execute<DataModel.Rest.RestResponse<SecEntrySingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecEntrySingle>>(request);
             if (response.ErrorException != null)
             {
                if (response.ErrorMessage == AppNotFoundException.TheMessage)
@@ -670,11 +669,11 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
             //try
             //{
-            //   var entry = JsonConvert.DeserializeObject<DataModel.Rest.RestResponse<SecEntrySingle>>(response);
+            //   var entry = JsonConvert.DeserializeObject<Common.DataModel.Rest.RestResponse<SecEntrySingle>>(response);
             //}
             //catch
             //{
-            //   var error = JsonConvert.DeserializeObject<DataModel.Rest.RestResponse<FailureBody>>(response);
+            //   var error = JsonConvert.DeserializeObject<Common.DataModel.Rest.RestResponse<FailureBody>>(response);
             //   if (error != null && error.Body.Exception != null)
             //   {
             //      throw error.Body.Exception;

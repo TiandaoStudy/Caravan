@@ -1,8 +1,8 @@
 ﻿using System;
+using Finsa.Caravan.Common.DataModel.Exceptions;
 using Finsa.Caravan.Common.DataModel.Logging;
 using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.DataModel.Exceptions;
 using Finsa.Caravan.RestService.Core;
 using Finsa.Caravan.RestService.Properties;
 using Nancy;
@@ -44,8 +44,8 @@ namespace Finsa.Caravan.RestService
          {
             if (exception.Message == AppExistingException.TheMessage)
                return ErrorResponse(HttpStatusCode.Conflict, AppExistingException.TheMessage);
-            if(exception.Message == SettingsExistingException.TheMessage)
-               return ErrorResponse(HttpStatusCode.Conflict,SettingsExistingException.TheMessage)
+            if (exception.Message == SettingsExistingException.TheMessage)
+               return ErrorResponse(HttpStatusCode.Conflict, SettingsExistingException.TheMessage);
             return ErrorResponse(HttpStatusCode.BadRequest, exception.Message);
          }
          
@@ -66,7 +66,9 @@ namespace Finsa.Caravan.RestService
             if (exception.Message == SettingsExistingException.TheMessage)
                return ErrorResponse(HttpStatusCode.Conflict, SettingsExistingException.TheMessage);
          }
+         return null; // DA FARE?!?
       }
+
       private static dynamic GetEntriesAll(dynamic p, dynamic body)
       {
          var entries = Db.Logger.Logs(p.appName);
