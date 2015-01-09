@@ -3,11 +3,13 @@ using Finsa.Caravan.DataAccess.Mongo.DataModel.Logging;
 
 namespace Finsa.Caravan.DataAccess.Mongo.DataModel.Security
 {
-   public class MongoSecApp
+   internal class MongoSecApp : MongoDocument
    {
-      public long Id { get; set; }
+      public long AppId { get; set; }
 
       public string Name { get; set; }
+
+      public string Description { get; set; }
 
       public List<MongoLogSettings> LogSettings { get; set; } 
    }

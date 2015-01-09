@@ -213,6 +213,10 @@ namespace Finsa.Caravan.DataAccess
                var request = new RestRequest("testing/clearAllTablesUseOnlyInsideUnitTestsPlease", Method.POST);
                client.Execute(request);
                break;
+            case DataAccessKind.MongoDb:
+               MongoUtilities.GetSecAppCollection().Drop();
+               MongoUtilities.GetSequenceCollection().Drop();
+               break;
          }
       }
 
@@ -232,7 +236,9 @@ namespace Finsa.Caravan.DataAccess
          switch (kind)
          {
             case DataAccessKind.MongoDb:
+               _dbManagerInstance = new MongoDbManager();
                _logManagerInstance = new MongoLogManager();
+               _securityManagerInstance = new MongoSecurityManager();
                break;
             case DataAccessKind.Oracle:
                _dbManagerInstance = new OracleDbManager();

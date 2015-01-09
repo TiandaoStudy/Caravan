@@ -150,9 +150,14 @@
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="IQueryManager.cs" />
+    <Compile Include="Mongo\DataModel\Logging\MongoLogEntry.cs" />
     <Compile Include="Mongo\DataModel\Logging\MongoLogSettings.cs" />
+    <Compile Include="Mongo\DataModel\MongoDocument.cs" />
+    <Compile Include="Mongo\DataModel\MongoSequence.cs" />
     <Compile Include="Mongo\DataModel\Security\MongoSecApp.cs" />
+    <Compile Include="Mongo\MongoDbManager.cs" />
     <Compile Include="Mongo\MongoLogManager.cs" />
+    <Compile Include="Mongo\MongoSecurityManager.cs" />
     <Compile Include="Mongo\MongoUtilities.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -1,6 +1,6 @@
 ﻿namespace Finsa.Caravan.DataAccess.Mongo.DataModel.Logging
 {
-   public class MongoLogSettings
+   internal class MongoLogSettings
    {
       public string Type { get; set; }
    }

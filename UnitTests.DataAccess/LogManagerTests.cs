@@ -52,7 +52,7 @@ namespace UnitTests.DataAccess
       {
          var settings = Db.Logger.LogSettings();
 
-         Assert.That(settings.Count,Is.EqualTo(5));
+         Assert.That(settings.Count, Is.EqualTo(5));
       }
 
       
