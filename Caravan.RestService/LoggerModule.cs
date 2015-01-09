@@ -1,9 +1,11 @@
 ﻿using System;
 using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.DataModel.Exceptions;
 using Finsa.Caravan.DataModel.Logging;
 using Finsa.Caravan.DataModel.Security;
 using Finsa.Caravan.RestService.Core;
 using Finsa.Caravan.RestService.Properties;
+using Nancy;
 
 namespace Finsa.Caravan.RestService
 {
@@ -26,8 +28,45 @@ namespace Finsa.Caravan.RestService
 
          Post["/{appName}/settings"] = p => SafeResponse<dynamic>(p, Settings.Default.LongCacheTimeoutInSeconds, (Func<dynamic, dynamic, dynamic>) GetSettingsList);
          Post["/{appName}/settings/{logType}"] = p => SafeResponse<dynamic>(p, Settings.Default.LongCacheTimeoutInSeconds, (Func<dynamic, dynamic, dynamic>) GetSettingsSingle);
+         Put["/{appName}/settings/{logType}"] =
+            p => SafeResponse<LogSettingsSingle>(p, NotCached, (Func<dynamic, LogSettingsSingle, dynamic>) AddSetting);
+         Patch["/{appName}/settings/{logType}"] = p => SafeResponse<LogSettingsSingle>(p, NotCached, (Func<dynamic, LogSettingsSingle, dynamic>) UpdateSetting);
       }
-      
+
+
+      private static dynamic AddSetting(dynamic p, LogSettingsSingle body)
+      {
+         try
+         {
+            return Db.Logger.AddSettings(p.appName, ParseLogType(p.logType), body.Settings);
+         }
+         catch (Exception exception)
+         {
+            if (exception.Message == AppExistingException.TheMessage)
+               return ErrorResponse(HttpStatusCode.Conflict, AppExistingException.TheMessage);
+            if(exception.Message == SettingsExistingException.TheMessage)
+               return ErrorResponse(HttpStatusCode.Conflict,SettingsExistingException.TheMessage)
+            return ErrorResponse(HttpStatusCode.BadRequest, exception.Message);
+         }
+         
+      }
+
+      private static dynamic UpdateSetting(dynamic p, LogSettingsSingle body)
+      {
+         try
+         {
+            return Db.Logger.UpdateSettings(p.appName, ParseLogType(p.logType), body.Settings);
+         }
+         catch (Exception exception)
+         {
+            if (exception.Message == AppNotFoundException.TheMessage)
+               return ErrorResponse(HttpStatusCode.NotFound, AppNotFoundException.TheMessage);
+            if(exception.Message == SettingsNotFoundException.TheMessage)
+               return ErrorResponse(HttpStatusCode.NotFound, SettingsNotFoundException.TheMessage);
+            if (exception.Message == SettingsExistingException.TheMessage)
+               return ErrorResponse(HttpStatusCode.Conflict, SettingsExistingException.TheMessage);
+         }
+      }
       private static dynamic GetEntriesAll(dynamic p, dynamic body)
       {
          var entries = Db.Logger.Logs(p.appName);
@@ -104,6 +143,13 @@ namespace Finsa.Caravan.RestService
             entry.Type = logType.Value;
          }
          return entry;
+      }
+
+      private static Response ErrorResponse(HttpStatusCode statusCode, string errorMessage)
+      {
+         var response = (Response)errorMessage;
+         response.StatusCode = statusCode;
+         return response;
       }
    }
 }

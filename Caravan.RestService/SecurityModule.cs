@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.IO;
 using System.Web;
 using System.Web.UI;
@@ -123,13 +124,29 @@ namespace Finsa.Caravan.RestService
       private static dynamic AddEntry(dynamic p, SecEntrySingle body)
       {
          var secEntry = body.Entry;
-         if (secEntry.User.Login != null)
+         try
          {
-            Db.Security.AddEntry(p.appName, secEntry.Context, secEntry.Object, secEntry.User.Login, null);
+            if (secEntry.User.Login != null)
+            {
+               Db.Security.AddEntry(p.appName, secEntry.Context, secEntry.Object, secEntry.User.Login, null);
+            }
+            else
+            {
+               Db.Security.AddEntry(p.appName, secEntry.Context, secEntry.Object, null, secEntry.Group.Name);
+            }
          }
-         else
+         catch (Exception exception)
          {
-            Db.Security.AddEntry(p.appName, secEntry.Context, secEntry.Object, null, secEntry.Group.Name);
+            if (exception.Message == AppNotFoundException.TheMessage)
+               return ErrorResponse(HttpStatusCode.NotFound, exception.Message);
+            if (exception.Message == EntryExistingException.TheMessage)
+               return ErrorResponse(HttpStatusCode.Conflict, exception.Message);
+            if (exception.Message == UserNotFoundException.TheMessage)
+               return ErrorResponse(HttpStatusCode.NotFound, exception.Message);
+            if (exception.Message == GroupNotFoundException.TheMessage)
+               return ErrorResponse(HttpStatusCode.NotFound, exception.Message);
+            //eccezioni su object e context???
+            return ErrorResponse(HttpStatusCode.BadRequest, exception.Message);
          }
          
          return Success;
@@ -138,15 +155,29 @@ namespace Finsa.Caravan.RestService
       private static dynamic RemoveEntry(dynamic p, SecEntrySingle body)
       {
          var secEntry = body.Entry;
-
-         if (secEntry.User.Login != null)
+         try
          {
-            Db.Security.RemoveEntry(p.appName, p.contextName, p.objectName, secEntry.User.Login,null);
+            if (secEntry.User.Login != null)
+            {
+               Db.Security.RemoveEntry(p.appName, p.contextName, p.objectName, secEntry.User.Login, null);
+            }
+            else
+            {
+               Db.Security.RemoveEntry(p.appName, p.contextName, p.objectName, null, secEntry.Group.Name);
+            }
          }
-         else
+         catch (Exception exception)
          {
-            Db.Security.RemoveEntry(p.appName, p.contextName, p.objectName, null, secEntry.Group.Name);
+            if (exception.Message == AppNotFoundException.TheMessage)
+               return ErrorResponse(HttpStatusCode.NotFound, exception.Message);
+            if (exception.Message == UserNotFoundException.TheMessage)
+               return ErrorResponse(HttpStatusCode.NotFound, exception.Message);
+            if (exception.Message == GroupNotFoundException.TheMessage)
+               return ErrorResponse(HttpStatusCode.NotFound, exception.Message);
+            //eccezioni su object e context???
+            return ErrorResponse(HttpStatusCode.BadRequest, exception.Message);
          }
+         
          
          return Success;
       }
@@ -187,26 +218,65 @@ namespace Finsa.Caravan.RestService
 
       private static dynamic AddGroup(dynamic p, SecGroupSingle body)
       {
-         Db.Security.AddGroup(p.appName, body.Group);
+         try
+         {
+            Db.Security.AddGroup(p.appName, body.Group);
+         }
+         catch (Exception e)
+         {
+            if (e.Message == GroupExistingException.TheMessage)
+               return ErrorResponse(HttpStatusCode.NotFound, e.Message);
+            if (e.Message == AppNotFoundException.TheMessage)
+               return ErrorResponse(HttpStatusCode.NotFound, e.Message);
+            return ErrorResponse(HttpStatusCode.BadRequest, e.Message);
+         }
          return Success;
       }
 
       private static dynamic UpdateGroup(dynamic p, SecGroupSingle body)
       {
-         Db.Security.UpdateGroup(p.appName, p.groupName, body.Group);
+         try
+         {
+            Db.Security.UpdateGroup(p.appName, p.groupName, body.Group);
+         }
+         catch (Exception e)
+         {
+            if (e.Message == GroupExistingException.TheMessage)
+               return ErrorResponse(HttpStatusCode.Conflict, e.Message);
+            if (e.Message == GroupNotFoundException.TheMessage)
+               return ErrorResponse(HttpStatusCode.NotFound, e.Message);
+            if (e.Message == AppNotFoundException.TheMessage)
+               return ErrorResponse(HttpStatusCode.NotFound, e.Message);
+            return ErrorResponse(HttpStatusCode.BadRequest, e.Message);
+         }
+         
          return Success;
       }
 
       private static dynamic RemoveGroup(dynamic p, dynamic body)
       {
-         Db.Security.RemoveGroup(p.appName, p.groupName);
+         try
+         {
+            Db.Security.RemoveGroup(p.appName, p.groupName);
+         }
+         catch (Exception e)
+         {
+            if (e.Message == GroupNotFoundException.TheMessage)
+               return ErrorResponse(HttpStatusCode.NotFound, e.Message);
+            if (e.Message == AppNotFoundException.TheMessage)
+               return ErrorResponse(HttpStatusCode.NotFound, e.Message);
+            return ErrorResponse(HttpStatusCode.BadRequest, e.Message);
+
+         }
+         
          return Success;
       }
 
       private static dynamic GetObjects(dynamic p, dynamic body)
       {
-         var objects = Db.Security.Objects(p.appName);
-         return new SecObjectList {Objects = objects};
+        var objects = Db.Security.Objects(p.appName);
+        return new SecObjectList { Objects = objects };
+        
       }
 
       private static dynamic GetUsers(dynamic p, dynamic body)
