@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using System.Threading.Tasks;
 using Finsa.Caravan.Common.DataModel.Exceptions;
 using Finsa.Caravan.Common.DataModel.Logging;
 using Finsa.Caravan.Common.DataModel.Security;
@@ -12,9 +13,7 @@ using Finsa.Caravan.DataAccess;
 
 namespace UnitTests.DataAccess
 {
-
-    [TestFixture]
-    class SecurityManagerTests
+   class SecurityManagerTests : TestBase
     {
        private SecApp _myApp;
        private SecApp _myApp2;
@@ -170,6 +169,28 @@ namespace UnitTests.DataAccess
             Assert.That(q2.First().FirstName,Is.EqualTo("pluto"));
             Assert.That(q2.First().Login, Is.EqualTo("blabla2"));
 
+        }
+
+        [TestCase(Small)]
+        [TestCase(Medium)]
+        [TestCase(Large)]
+        public void AddUser_ValidArgs_InsertOk_Async(int userCount)
+        {
+           Parallel.ForEach(Enumerable.Range(1, userCount), i =>
+           {
+              var user = new SecUser { FirstName = "pippo" + i, Login = "blabla" + i };
+              Db.Security.AddUser(_myApp.Name, user);
+           });
+
+           for (var i = 1; i <= userCount; ++i)
+           {
+              //verifico che sia stato inserito user1
+              var q = (from c in Db.Security.Users(_myApp.Name)
+                       where ((c.FirstName == "pippo" + i) && (c.Login == "blabla" + i))
+                       select c).FirstOrDefault();
+
+              Assert.IsNotNull(q);
+           }
         }
 
         [Test]

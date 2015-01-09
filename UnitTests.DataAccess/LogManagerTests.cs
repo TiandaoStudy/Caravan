@@ -10,8 +10,7 @@ using NUnit.Framework;
 
 namespace UnitTests.DataAccess
 {
-   [TestFixture]
-   public class LogManagerTests
+   class LogManagerTests : TestBase
    {
       private SecApp _myApp;
       private SecApp _myApp2;
