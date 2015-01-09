@@ -86,7 +86,7 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-      protected override IList<LogEntry> GetLogs(string appName, LogType? logType)
+      protected override IList<LogEntry> GetLogEntries(string appName, LogType? logType)
       {
          using (var ctx = Db.CreateReadContext())
          {

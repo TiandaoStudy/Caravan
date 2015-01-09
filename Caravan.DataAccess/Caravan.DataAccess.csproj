@@ -150,7 +150,10 @@
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="IQueryManager.cs" />
-    <Compile Include="MongoDb\MongoLogManager.cs" />
+    <Compile Include="Mongo\DataModel\Logging\MongoLogSettings.cs" />
+    <Compile Include="Mongo\DataModel\Security\MongoSecApp.cs" />
+    <Compile Include="Mongo\MongoLogManager.cs" />
+    <Compile Include="Mongo\MongoUtilities.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

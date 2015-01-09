@@ -8,8 +8,8 @@
     <ProjectGuid>{4C5D3154-679D-4794-A60E-04CBB31BE0F9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NuGet_Packager__Mvc_</RootNamespace>
-    <AssemblyName>NuGet Packager %28Mvc%29</AssemblyName>
+    <RootNamespace>NuGetPackager.Mvc</RootNamespace>
+    <AssemblyName>NuGetPackager.Mvc</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>

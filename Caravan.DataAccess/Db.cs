@@ -7,6 +7,7 @@ using System.Linq;
 using System.Transactions;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.DataAccess.Mongo;
 using Finsa.Caravan.DataAccess.Properties;
 using Finsa.Caravan.DataAccess.Rest;
 using Finsa.Caravan.DataAccess.Sql;
@@ -182,7 +183,7 @@ namespace Finsa.Caravan.DataAccess
          switch (AccessKind)
          {
             case DataAccessKind.Oracle:
-            case DataAccessKind.Postgres:
+            case DataAccessKind.PostgreSql:
             case DataAccessKind.SqlServer:
             case DataAccessKind.SqlServerCe:
                using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
@@ -230,6 +231,9 @@ namespace Finsa.Caravan.DataAccess
          AccessKind = kind;
          switch (kind)
          {
+            case DataAccessKind.MongoDb:
+               _logManagerInstance = new MongoLogManager();
+               break;
             case DataAccessKind.Oracle:
                _dbManagerInstance = new OracleDbManager();
                _dbContextGenerator = OracleDbContextGenerator;
@@ -237,7 +241,7 @@ namespace Finsa.Caravan.DataAccess
                _queryManagerInstance = new SqlQueryManager();
                _securityManagerInstance = new SqlSecurityManager();
                break;
-            case DataAccessKind.Postgres:
+            case DataAccessKind.PostgreSql:
                _logManagerInstance = new SqlLogManager();
                _queryManagerInstance = new SqlQueryManager();
                _securityManagerInstance = new SqlSecurityManager();

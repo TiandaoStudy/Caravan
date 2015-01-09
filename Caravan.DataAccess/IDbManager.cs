@@ -31,7 +31,7 @@ namespace Finsa.Caravan.DataAccess
    public enum DataAccessKind : byte
    {
       Oracle = 0,
-      Postgres = 1,
+      PostgreSql = 1,
       Rest = 2,
       SqlServer = 3,
       SqlServerCe = 4,

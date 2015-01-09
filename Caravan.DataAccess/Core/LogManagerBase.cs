@@ -153,26 +153,26 @@ namespace Finsa.Caravan.DataAccess.Core
 
       public IList<LogEntry> Logs()
       {
-         return GetLogs(null, null);
+         return GetLogEntries(null, null);
       }
 
       public IList<LogEntry> Logs(string appName)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
-         return GetLogs(appName.ToLower(), null);
+         return GetLogEntries(appName.ToLower(), null);
       }
 
       public IList<LogEntry> Logs(LogType logType)
       {
          Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-         return GetLogs(null, logType);
+         return GetLogEntries(null, logType);
       }
 
       public IList<LogEntry> Logs(string appName, LogType logType)
       {
          Raise<ArgumentException>.IfIsEmpty(appName);
          Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-         return GetLogs(appName.ToLower(), logType);
+         return GetLogEntries(appName.ToLower(), logType);
       }
 
       public IList<LogSettings> LogSettings()
@@ -228,7 +228,7 @@ namespace Finsa.Caravan.DataAccess.Core
       public abstract LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
          IEnumerable<KeyValuePair<string, string>> args);
 
-      protected abstract IList<LogEntry> GetLogs(string appName, LogType? logType);
+      protected abstract IList<LogEntry> GetLogEntries(string appName, LogType? logType);
 
       protected abstract IList<LogSettings> GetLogSettings(string appName, LogType? logType);
 
