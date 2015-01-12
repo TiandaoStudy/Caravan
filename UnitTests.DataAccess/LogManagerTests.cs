@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Finsa.Caravan;
@@ -204,18 +205,22 @@ namespace UnitTests.DataAccess
       [TestCase(Large)]
       public void LogDebug_validArgs_Async(int logCount)
       {
+        
          Parallel.ForEach(Enumerable.Range(1, logCount), i =>
          {
-            var res = Db.Logger.LogDebug<LogManagerTests>(new Exception());
+            var c1 = new SecContext { Name = "c1" + i, Description = "context1" + i };
+            var res = Db.Logger.LogDebug<LogManagerTests>(new Exception(),c1.Name);
             Assert.True(res.Succeeded);
-         });
-
-         for (var i = 1; i < logCount; ++i)
-         {
-            var q = Db.Logger.Logs(LogType.Debug).Where(l => l.Function == "logdebug_validargs");
+            
+            var q = Db.Logger.Logs(LogType.Debug).Where(l => l.Function == "logdebug_validargs_async" && l.Context == c1.Name).ToList();
 
             Assert.That(q.Count(), Is.EqualTo(1));
-         }
+         });
+         
+         var q1 = Db.Logger.Logs(LogType.Debug).Where(l => l.Function == "logdebug_validargs_async").ToList();
+
+         Assert.That(q1.Count(), Is.EqualTo(logCount));
+        
       }
 
       [Test]
@@ -229,6 +234,27 @@ namespace UnitTests.DataAccess
          Assert.That(q.Count(), Is.EqualTo(1));
       }
 
+      [TestCase(Small)]
+      [TestCase(Medium)]
+      [TestCase(Large)]
+      public void LogError_validArgs_Async(int logCount)
+      {
+         Parallel.ForEach(Enumerable.Range(1, logCount), i =>
+         {
+            var c1 = new SecContext {Name = "c1" + i, Description = "context1" + i};
+            var res = Db.Logger.LogError<LogManagerTests>(new Exception(), c1.Name);
+            Assert.True(res.Succeeded);
+
+            var q = Db.Logger.Logs(LogType.Error).Where(l => l.Function == "logerror_validargs_async" && l.Context == c1.Name);
+
+            Assert.That(q.Count(), Is.EqualTo(1));
+         });
+
+         var q1 = Db.Logger.Logs(LogType.Error).Where(l => l.Function == "logerror_validargs_async");
+         Assert.That(q1.Count(), Is.EqualTo(logCount));
+
+      }
+
       [Test]
       public void LogWarn_validArgs()
       {
@@ -238,6 +264,29 @@ namespace UnitTests.DataAccess
          var q = Db.Logger.Logs(LogType.Warn).Where(l => l.Function == "logwarn_validargs");
 
          Assert.That(q.Count(), Is.EqualTo(1));
+      }
+
+
+      [TestCase(Small)]
+      [TestCase(Medium)]
+      [TestCase(Large)]
+      public void LogWarn_validArgs_Async(int logCount)
+      {
+         Parallel.ForEach(Enumerable.Range(1, logCount), i =>
+         {
+            var c1 = new SecContext { Name = "c1" + i, Description = "context1" + i };
+            var res = Db.Logger.LogWarn<LogManagerTests>(new Exception(),c1.Name);
+            Assert.True(res.Succeeded);
+
+            var q = Db.Logger.Logs(LogType.Warn).Where(l => l.Function == "logwarn_validargs_async" && l.Context == c1.Name);
+
+            Assert.That(q.Count(), Is.EqualTo(1));
+         });
+
+         var q1 = Db.Logger.Logs(LogType.Warn).Where(l => l.Function == "logwarn_validargs_async" );
+
+         Assert.That(q1.Count(), Is.EqualTo(logCount));
+
       }
 
       [Test]
@@ -251,6 +300,27 @@ namespace UnitTests.DataAccess
          Assert.That(q.Count(), Is.EqualTo(1));
       }
 
+      [TestCase(Small)]
+      [TestCase(Medium)]
+      [TestCase(Large)]
+      public void LogInfo_validArgs_Async(int logCount)
+      {
+         Parallel.ForEach(Enumerable.Range(1, logCount), i =>
+         {
+            var c1 = new SecContext { Name = "c1" + i, Description = "context1" + i };
+            var res = Db.Logger.LogInfo<LogManagerTests>(new Exception(),c1.Name);
+            Assert.True(res.Succeeded);
+
+            var q = Db.Logger.Logs(LogType.Info).Where(l => l.Function == "loginfo_validargs_async" && l.Context==c1.Name);
+
+            Assert.That(q.Count(), Is.EqualTo(1));
+         });
+
+         var q1 = Db.Logger.Logs(LogType.Info).Where(l => l.Function == "loginfo_validargs_async");
+         Assert.That(q1.Count(), Is.EqualTo(logCount));
+
+      }
+
       [Test]
       public void LogFatal_validArgs()
       {
@@ -260,6 +330,26 @@ namespace UnitTests.DataAccess
          var q = Db.Logger.Logs(LogType.Fatal).Where(l => l.Function == "logfatal_validargs");
 
          Assert.That(q.Count(), Is.EqualTo(1));
+      }
+
+      [TestCase(Small)]
+      [TestCase(Medium)]
+      [TestCase(Large)]
+      public void LogFatal_validArgs_Async(int logCount)
+      {
+         Parallel.ForEach(Enumerable.Range(1, logCount), i =>
+         {
+            var c1 = new SecContext {Name = "c1" + i, Description = "context1" + i};
+            var res = Db.Logger.LogFatal<LogManagerTests>(new Exception(),c1.Name);
+            Assert.True(res.Succeeded);
+
+            var q = Db.Logger.Logs(LogType.Fatal).Where(l => l.Function == "logfatal_validargs_async" && l.Context == c1.Name);
+
+            Assert.That(q.Count(), Is.EqualTo(1));
+         });
+
+         var q1 = Db.Logger.Logs(LogType.Fatal).Where(l => l.Function == "logfatal_validargs_async");
+         Assert.That(q1.Count(), Is.EqualTo(logCount));
       }
 
       [Test]
