@@ -1,11 +1,11 @@
-﻿using System;
+﻿using PommaLabs.Collections.ReadOnly;
+using PommaLabs.Diagnostics;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using PommaLabs.Collections.ReadOnly;
-using PommaLabs.Diagnostics;
 
-namespace FLEX.Common.Web
+namespace Finsa.Caravan.Common.WebForms
 {
    /// <summary>
    ///   TODO
@@ -36,7 +36,7 @@ namespace FLEX.Common.Web
       }
 
       /// <summary>
-      /// 
+      ///
       /// </summary>
       /// <param name="control"></param>
       /// <param name="key"></param>
@@ -61,7 +61,7 @@ namespace FLEX.Common.Web
       }
 
       /// <summary>
-      /// 
+      ///
       /// </summary>
       /// <param name="value"></param>
       /// <param name="key"></param>
@@ -96,7 +96,7 @@ namespace FLEX.Common.Web
 
       public IEnumerator<SearchCriteriaItem> GetEnumerator()
       {
-         return _observedControls.Select(x => new SearchCriteriaItem {Key = x.Key, Values = x.Value.SelectedValues}).GetEnumerator();
+         return _observedControls.Select(x => new SearchCriteriaItem { Key = x.Key, Values = x.Value.SelectedValues }).GetEnumerator();
       }
 
       IEnumerator IEnumerable.GetEnumerator()
@@ -104,7 +104,7 @@ namespace FLEX.Common.Web
          return GetEnumerator();
       }
 
-      #endregion
+      #endregion IEnumerable Members
 
       #region Public Properties
 
@@ -125,7 +125,7 @@ namespace FLEX.Common.Web
       }
 
       /// <summary>
-      /// 
+      ///
       /// </summary>
       /// <param name="key"></param>
       /// <returns></returns>
@@ -139,7 +139,7 @@ namespace FLEX.Common.Web
          }
       }
 
-      #endregion
+      #endregion Public Properties
 
       private sealed class FakeSearchControl : ISearchControl
       {
@@ -188,6 +188,7 @@ namespace FLEX.Common.Web
    public struct SearchCriteriaItem
    {
       public string Key { get; set; }
+
       public IList<string> Values { get; set; }
    }
 
