@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Finsa.Caravan.WebForms</RootNamespace>
-    <AssemblyName>FLEX.WebForms</AssemblyName>
+    <AssemblyName>Finsa.Caravan.WebForms</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -35,7 +35,7 @@
     <DefineConstants>USETHROWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\FLEX.WebForms.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Finsa.Caravan.WebForms.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClosedXML">
@@ -1060,49 +1060,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>IF EXIST $(SolutionDir)NuGetPackager.WebForms (
-    :: FONTS
-    RD /S /Q $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Fonts
-    MD $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Fonts
-    copy $(ProjectDir)\FLEX\Fonts\*.* $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Fonts
-    
-    :: IMAGES
-    del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Images
-    copy $(ProjectDir)\FLEX\Images\*.* $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Images
-    copy $(ProjectDir)\FLEX\Images\JQueryUI\*.* $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Images\JQueryUI
-    
-    :: MASTER PAGES
-    del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\MasterPages
-    copy $(ProjectDir)\FLEX\MasterPages\*.Master $(SolutionDir)NuGetPackager.WebForms\content\FLEX\MasterPages
-        
-    :: PAGES
-    del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Pages
-    copy $(ProjectDir)\FLEX\Pages\*.aspx $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Pages
-    copy $(ProjectDir)\FLEX\Pages\Templates\*.aspx $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Pages\Templates
-     
-    :: SERVICES
-    del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Services
-    copy $(ProjectDir)\FLEX\Services\*.asmx $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Services
-    
-    :: SCRIPTS
-    del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Scripts
-    copy $(ProjectDir)\FLEX\Scripts\*.min.js $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Scripts
-    copy $(ProjectDir)\FLEX\Scripts\*.map $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Scripts
-
-    :: STYLES
-    RD /S /Q $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Styles
-    MD $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Styles
-    copy $(ProjectDir)\FLEX\Styles\*.min.css $(SolutionDir)NuGetPackager.WebForms\content\FLEX\Styles
-    
-    :: USER CONTROLS
-    del $(SolutionDir)NuGetPackager.WebForms\content\FLEX\UserControls
-    copy $(ProjectDir)\FLEX\UserControls\*.ascx $(SolutionDir)NuGetPackager.WebForms\content\FLEX\UserControls
-    copy $(ProjectDir)\FLEX\UserControls\Ajax\*.ascx $(SolutionDir)NuGetPackager.WebForms\content\FLEX\UserControls\Ajax
-    
-    :: DLL
-    del $(SolutionDir)NuGetPackager.WebForms\lib\net40
-    copy $(TargetDir)FLEX.WebForms.* "$(SolutionDir)NuGetPackager.WebForms/lib/net40"
-)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
