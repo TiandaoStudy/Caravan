@@ -1,0 +1,92 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Popup.Master.cs" Inherits="FLEX.Web.MasterPages.Popup" MasterPageFile="~/FLEX/MasterPages/Head.Master" %>
+<%@ MasterType VirtualPath="~/FLEX/MasterPages/Head.Master" %>
+<%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
+
+<asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">
+   <style type="text/css">
+      body {
+         background-image: none;
+         background-color: white;
+      }
+
+      .container-fluid {
+         padding-top: 20px;
+         padding-left: 20px;
+         padding-right: 20px;
+      }
+
+      .panel {      
+         border: 1px solid #e7e7e7;
+         border-width: 0 1px 4px 1px;
+      }
+
+      #aspnetForm {
+         margin-bottom: 90px;
+      }
+   </style>
+   
+   <script type="text/javascript">
+      // Used in Head.Master
+      settings.isPage = false;
+
+      var onPopupClose = null;
+
+      function checkClose() {
+         var txtDoClose = document.getElementById('<%= txtDoClose.ClientID %>');
+         if (txtDoClose && txtDoClose.value == "CLOSE") {
+            top.returnValue = new Object();
+            top.returnValue.Return = true;
+            if (onPopupClose) {
+               onPopupClose(top.returnValue);
+            }
+            // Timeout is used to avoid issues with IE9
+            setTimeout(function () {
+               closeWindow();
+            }, 100);
+         }
+      }
+
+      $(document).ready(function () {
+         setTimeout(function () {
+            checkClose();
+         }, 0);
+
+         // Validation summary customization
+         var summary = $("#<%= validationSummary.ClientID %>");
+         summary.addClass("alert alert-danger");
+         summary.css({ color: "#ffffff" });
+      });
+   </script>
+
+   <asp:ContentPlaceHolder ID="headContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="aspMainContent" ContentPlaceHolderID="mainContent" runat="server">
+   <!-- Used to close popup after a postback -->
+   <ajax:UpdatePanel ID="closeUpdPanel" runat="server">
+      <ContentTemplate>
+         <asp:TextBox runat="server" CssClass="hidden" ID="txtDoClose" />
+         <script type="text/javascript">
+            setTimeout(function () {
+               checkClose();
+            }, 0);
+         </script>
+      </ContentTemplate>
+   </ajax:UpdatePanel>
+   
+   <div id="mainContainer" class="container-fluid">   
+      <asp:ValidationSummary ID="validationSummary" ValidationGroup="mainValidationSummary" HeaderText="You must fill in the following fields:" DisplayMode="BulletList" EnableClientScript="True" ShowSummary="True" runat="server" />
+
+      <div class="row">
+         <asp:ContentPlaceHolder ID="mainContent" runat="server" />
+      </div>
+
+      <div id="buttonsArea" class="panel-footer text-right navbar-fixed-bottom btn-row">
+         <asp:ContentPlaceHolder ID="buttonsContent" runat="server" />
+      </div>
+   </div>         
+</asp:Content>
+
+<asp:Content ID="aspHiddenContent" ContentPlaceHolderID="hiddenContent" runat="server">
+   <asp:ContentPlaceHolder ID="hiddenContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
