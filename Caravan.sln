@@ -75,6 +75,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External Libraries", "Exter
 		External Libraries\Microsoft.ReportViewer.Common.dll = External Libraries\Microsoft.ReportViewer.Common.dll
 		External Libraries\Microsoft.ReportViewer.ProcessingObjectModel.DLL = External Libraries\Microsoft.ReportViewer.ProcessingObjectModel.DLL
 		External Libraries\Microsoft.ReportViewer.WebForms.DLL = External Libraries\Microsoft.ReportViewer.WebForms.DLL
+		External Libraries\Oracle.ManagedDataAccess.dll = External Libraries\Oracle.ManagedDataAccess.dll
+		External Libraries\Oracle.ManagedDataAccess.EntityFramework.dll = External Libraries\Oracle.ManagedDataAccess.EntityFramework.dll
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Architecture", "Architecture", "{E396B46C-8975-4804-8C42-A44285FE8759}"

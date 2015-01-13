@@ -92,7 +92,7 @@
     </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.121.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\odp.net.managed.121.1.2\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+      <HintPath>..\External Libraries\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
     <Reference Include="PommaLabs.GRAMPA">
       <HintPath>..\packages\PommaLabs.GRAMPA.2.1.2\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
@@ -208,6 +208,7 @@
     <Content Include="KVLite\x86\SQLite.Interop.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Sql\Oracle\Scripts\grants.sql" />
     <Content Include="Sql\Oracle\Scripts\Packages\pck_caravan_log.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_log.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_group.sql" />
