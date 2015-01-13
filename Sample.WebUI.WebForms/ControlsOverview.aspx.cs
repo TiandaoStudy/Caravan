@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using Finsa.Caravan;
 using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.WebForms;
 using Finsa.Caravan.DataAccess;
-using FLEX.Common.Web;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 

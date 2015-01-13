@@ -21,7 +21,7 @@ namespace FLEX.Web.Pages
          if (!Page.IsPostBack)
          {
             ViewState["dictFilesPath"] = _filesPath;
-            var scriptsPath = PommaLabs.Armando.Configuration.Instance.ScriptsPath;
+            var scriptsPath = PommaLabs.Armando.My.MySettings.Default.ScriptsPath;
             var xmlPath = Server.MapPath(WebForms.Configuration.Instance.AjaxLookupsXmlPath);
             var menuPath = Server.MapPath(WebForms.Configuration.Instance.MenuBarXmlPath);
             var files = new Dictionary<string, string> {{"Data Scritps", scriptsPath}, {"Ajax Lookup", xmlPath}, {"Menu", menuPath}};

@@ -1,5 +1,5 @@
 ﻿using System;
-using FLEX.Common.Web;
+using Finsa.Caravan.Common.WebForms;
 
 namespace FLEX.Sample.WebUI
 {
@@ -18,7 +18,7 @@ namespace FLEX.Sample.WebUI
         {
             try
             {
-                labelSelected.Text = sender.SelectedValues[0].ToString();
+                labelSelected.Text = sender.SelectedValues[0];
             }
             catch
             {

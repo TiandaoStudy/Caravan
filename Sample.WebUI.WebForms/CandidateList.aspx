@@ -5,7 +5,7 @@
 <%@ Register TagPrefix="flex" TagName="ImageButton" Src="~/FLEX/UserControls/Ajax/ImageButton.ascx" %>
 <%@ Register TagPrefix="flex" TagName="NumericSpinner" Src="~/FLEX/UserControls/Ajax/NumericSpinner.ascx" %>
 <%@ Register TagPrefix="flex" TagName="OnOffSwitch" Src="~/FLEX/UserControls/Ajax/OnOffSwitch.ascx" %>
-<%@ Register TagPrefix="flex" Namespace="FLEX.WebForms.UserControls" Assembly="FLEX.WebForms" %>
+<%@ Register TagPrefix="flex" Namespace="FLEX.WebForms.UserControls" Assembly="Finsa.Caravan.WebForms" %>
 <%@ Register TagPrefix="flex" TagName="ExportList" Src="~/FLEX/UserControls/ExportList.ascx" %>
 <%@ Register TagPrefix="flex" TagName="LongTextContainer" Src="~/FLEX/UserControls/LongTextContainer.ascx" %>
 
