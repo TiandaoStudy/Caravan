@@ -1,8 +1,10 @@
-﻿using Finsa.Caravan.Common.DataModel.Logging;
+﻿using System.Diagnostics;
+using Finsa.Caravan.Common.DataModel.Logging;
 using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Mongo.DataModel.Logging;
 using Finsa.Caravan.DataAccess.Mongo.DataModel.Security;
+using MongoDB.Bson;
 using MongoDB.Driver.Builders;
 using MongoDB.Driver.Linq;
 using System.Collections.Generic;
@@ -14,18 +16,47 @@ namespace Finsa.Caravan.DataAccess.Mongo
    {
       public override LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
       {
-         throw new System.NotImplementedException();
+         return LogResult.Success;
       }
 
       protected override IList<LogEntry> GetLogEntries(string appName, LogType? logType)
       {
-         throw new System.NotImplementedException();
+         var apps = MongoUtilities.GetSecAppCollection().AsQueryable();
+         Dictionary<ObjectId, MongoSecApp> appMap;
+         if (appName != null)
+         {
+            var app = apps.First(a => a.Name == appName);
+            appMap = new Dictionary<ObjectId, MongoSecApp> {{app.Id, app}};
+         }
+         else
+         {
+            appMap = apps.ToDictionary(a => a.Id, a => a);
+         }
+
+         var logEntries = MongoUtilities.GetLogEntryCollection().AsQueryable();
+         if (appName != null)
+         {
+            Debug.Assert(appMap.Count == 1);
+            var appId = appMap.First().Key;
+            logEntries = logEntries.Where(l => l.AppId == appId);
+         }
+         if (logType != null)
+         {
+            var logTypeStr = logType.ToString().ToLower();
+            logEntries = logEntries.Where(l => l.Type == logTypeStr);
+         }
+
+         return logEntries.AsEnumerable().Select(l => new LogEntry
+         {
+            Id = l.LogId,
+            AppId = appMap[l.AppId].AppId,
+            TypeId = l.Type
+         }).ToList();
       }
 
       protected override IList<LogSettings> GetLogSettings(string appName, LogType? logType)
       {
-         var db = MongoUtilities.GetDatabase();
-         var apps = db.GetCollection<MongoSecApp>(MongoUtilities.SecAppCollection);
+         var apps = MongoUtilities.GetSecAppCollection();
          var query = apps.AsQueryable();
 
          if (appName != null)
@@ -49,15 +80,19 @@ namespace Finsa.Caravan.DataAccess.Mongo
 
       protected override bool DoAddSettings(string appName, LogType logType, LogSettings settings)
       {
-         var db = MongoUtilities.GetDatabase();
-         var apps = db.GetCollection<MongoSecApp>(MongoUtilities.SecAppCollection);
+         // Update preparation
+         var logTypeStr = logType.ToString().ToLower();
          var query = Query<MongoSecApp>.EQ(a => a.Name, appName);
          var update = Update<MongoSecApp>.AddToSet(a => a.LogSettings, new MongoLogSettings
          {
-            Type = logType.ToString().ToLower()
+            Id = MongoUtilities.CreateObjectId(logTypeStr),
+            Type = logTypeStr
          });
-         apps.Update(query, update);
-         return true;
+
+         // Real update
+         var db = MongoUtilities.GetDatabase();
+         var apps = db.GetCollection<MongoSecApp>(MongoUtilities.SecAppCollection);
+         return apps.Update(query, update).Ok;
       }
 
       protected override bool DoUpdateSettings(string appName, LogType logType, LogSettings settings)

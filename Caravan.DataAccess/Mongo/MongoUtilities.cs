@@ -1,8 +1,12 @@
-﻿using Finsa.Caravan.DataAccess.Mongo.DataModel;
+﻿using System.Diagnostics;
+using System.Linq;
+using Finsa.Caravan.DataAccess.Mongo.DataModel;
 using Finsa.Caravan.DataAccess.Mongo.DataModel.Logging;
 using Finsa.Caravan.DataAccess.Mongo.DataModel.Security;
 using Finsa.Caravan.DataAccess.Properties;
+using MongoDB.Bson;
 using MongoDB.Driver;
+using PommaLabs.Extensions;
 
 namespace Finsa.Caravan.DataAccess.Mongo
 {
@@ -15,6 +19,14 @@ namespace Finsa.Caravan.DataAccess.Mongo
       public const string SequenceCollection = "caravan_sequence";
 
       #endregion Constants
+
+      public static ObjectId CreateObjectId<T>(T obj)
+      {
+         var md5 = obj.ToMD5Bytes();
+         var hash12 = md5.Take(12).ToArray();
+         Debug.Assert(hash12.Length == 12);
+         return new ObjectId(hash12);
+      }
 
       public static MongoDatabase GetDatabase()
       {
