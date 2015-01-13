@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LongTextContainer.ascx.cs" Inherits="FLEX.Web.UserControls.LongTextContainer" %>
-<%@ Import Namespace="Finsa.Caravan.Extensions" %>
+<%@ Import Namespace="PommaLabs.Extensions" %>
 
 <label id="shortenedText" class="long-text-ctn-label" runat="server"><%= ShortenedText %></label>
 

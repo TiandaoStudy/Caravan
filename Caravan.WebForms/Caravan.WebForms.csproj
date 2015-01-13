@@ -775,7 +775,9 @@
       <DependentUpon>bootstrap.js</DependentUpon>
     </Content>
     <Content Include="FLEX\Fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="FLEX\MasterPages\Base.Master" />
+    <Content Include="FLEX\MasterPages\Base.Master">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="FLEX\Scripts\html5shiv.js" />
     <Content Include="FLEX\Scripts\html5shiv.min.js">
       <DependentUpon>html5shiv.js</DependentUpon>
@@ -859,7 +861,9 @@
     <Content Include="FLEX\MasterPages\Popup.Master">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\MasterPages\Head.Master" />
+    <Content Include="FLEX\MasterPages\Head.Master">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="FLEX\MasterPages\MultiSelect.Master">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
