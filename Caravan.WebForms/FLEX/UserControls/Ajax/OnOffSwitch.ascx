@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="OnOffSwitch.ascx.cs" Inherits="FLEX.Web.UserControls.Ajax.OnOffSwitch" %>
-<%@ Import Namespace="Finsa.Caravan.Extensions" %>
+<%@ Import Namespace="PommaLabs.Extensions" %>
 <%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
 
 <script type="text/javascript">
