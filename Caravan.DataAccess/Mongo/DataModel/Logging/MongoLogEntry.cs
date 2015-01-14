@@ -6,8 +6,12 @@ namespace Finsa.Caravan.DataAccess.Mongo.DataModel.Logging
    {
       public ObjectId AppId { get; set; }
 
-      public int LogId { get; set; }
+      public long LogId { get; set; }
 
       public string Type { get; set; }
+
+      public string CodeUnit { get; set; }
+
+      public string ShortMessage { get; set; }
    }
 }

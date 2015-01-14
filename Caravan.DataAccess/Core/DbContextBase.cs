@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using Finsa.Caravan.Common.DataModel.Logging;
 using Finsa.Caravan.Common.DataModel.Security;
+using Finsa.Caravan.DataAccess.Sql;
 
 namespace Finsa.Caravan.DataAccess.Core
 {

@@ -2,9 +2,11 @@
 using Finsa.Caravan.Common.DataModel.Logging;
 using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.DataAccess.Mongo.DataModel;
 using Finsa.Caravan.DataAccess.Mongo.DataModel.Logging;
 using Finsa.Caravan.DataAccess.Mongo.DataModel.Security;
 using MongoDB.Bson;
+using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Driver.Linq;
 using System.Collections.Generic;
@@ -14,8 +16,29 @@ namespace Finsa.Caravan.DataAccess.Mongo
 {
    internal sealed class MongoLogManager : LogManagerBase
    {
-      public override LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
+      public override LogResult LogRaw(LogType logType, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
       {
+         var app = MongoUtilities.GetSecAppCollection().AsQueryable().First(a => a.Name == appName);
+
+         var newLogId = MongoUtilities.GetSequenceCollection().FindAndModify(new FindAndModifyArgs
+         {
+            Query = Query<MongoSequence>.Where(s => s.AppId == app.Id && s.CollectionName == MongoUtilities.LogEntryCollection),
+            Update = Update<MongoSequence>.Inc(s => s.LastNumber, 1),
+            VersionReturned = FindAndModifyDocumentVersion.Modified,
+            Upsert = true, // Creates a new document if it does not exist.
+         }).GetModifiedDocumentAs<MongoSequence>().LastNumber;
+
+         var logTypeStr = logType.ToString().ToLower();
+         MongoUtilities.GetLogEntryCollection().Insert(new MongoLogEntry
+         {
+            Id = MongoUtilities.CreateObjectId(newLogId),
+            AppId = app.Id,
+            LogId = newLogId,
+            Type = logTypeStr,
+            ShortMessage = shortMessage,
+            CodeUnit = codeUnit
+         });
+
          return LogResult.Success;
       }
 
@@ -50,7 +73,9 @@ namespace Finsa.Caravan.DataAccess.Mongo
          {
             Id = l.LogId,
             AppId = appMap[l.AppId].AppId,
-            TypeId = l.Type
+            TypeId = l.Type,
+            ShortMessage = l.ShortMessage,
+            CodeUnit = l.CodeUnit
          }).ToList();
       }
 

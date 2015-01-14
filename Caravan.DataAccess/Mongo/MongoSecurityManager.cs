@@ -27,7 +27,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
       {
          var newAppId = MongoUtilities.GetSequenceCollection().FindAndModify(new FindAndModifyArgs
          {
-            Query = Query<MongoSequence>.Where(s => s.AppName == String.Empty && s.CollectionName == MongoUtilities.SecAppCollection),
+            Query = Query<MongoSequence>.Where(s => s.AppId == MongoUtilities.CreateObjectId(-1) && s.CollectionName == MongoUtilities.SecAppCollection),
             Update = Update<MongoSequence>.Inc(s => s.LastNumber, 1),
             VersionReturned = FindAndModifyDocumentVersion.Modified,
             Upsert = true, // Creates a new document if it does not exist.
