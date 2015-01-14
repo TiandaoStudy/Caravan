@@ -206,7 +206,7 @@ namespace FLEX.Extensions.TestDataAccess
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -225,7 +225,7 @@ namespace FLEX.Extensions.TestDataAccess
                 {
                     OnCand_IdChanging(value);
                     ReportPropertyChanging("Cand_Id");
-                    _Cand_Id = StructuralObject.SetValidValue(value);
+                    _Cand_Id = StructuralObject.SetValidValue(value, "Cand_Id");
                     ReportPropertyChanged("Cand_Id");
                     OnCand_IdChanged();
                 }
@@ -250,7 +250,7 @@ namespace FLEX.Extensions.TestDataAccess
             {
                 OnCand_NameChanging(value);
                 ReportPropertyChanging("Cand_Name");
-                _Cand_Name = StructuralObject.SetValidValue(value, false);
+                _Cand_Name = StructuralObject.SetValidValue(value, false, "Cand_Name");
                 ReportPropertyChanged("Cand_Name");
                 OnCand_NameChanged();
             }
@@ -274,7 +274,7 @@ namespace FLEX.Extensions.TestDataAccess
             {
                 OnCand_SurnameChanging(value);
                 ReportPropertyChanging("Cand_Surname");
-                _Cand_Surname = StructuralObject.SetValidValue(value, false);
+                _Cand_Surname = StructuralObject.SetValidValue(value, false, "Cand_Surname");
                 ReportPropertyChanged("Cand_Surname");
                 OnCand_SurnameChanged();
             }
@@ -298,7 +298,7 @@ namespace FLEX.Extensions.TestDataAccess
             {
                 OnCand_EmailChanging(value);
                 ReportPropertyChanging("Cand_Email");
-                _Cand_Email = StructuralObject.SetValidValue(value, false);
+                _Cand_Email = StructuralObject.SetValidValue(value, false, "Cand_Email");
                 ReportPropertyChanged("Cand_Email");
                 OnCand_EmailChanged();
             }
@@ -309,7 +309,6 @@ namespace FLEX.Extensions.TestDataAccess
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -401,7 +400,7 @@ namespace FLEX.Extensions.TestDataAccess
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -420,7 +419,7 @@ namespace FLEX.Extensions.TestDataAccess
                 {
                     OnGend_IdChanging(value);
                     ReportPropertyChanging("Gend_Id");
-                    _Gend_Id = StructuralObject.SetValidValue(value);
+                    _Gend_Id = StructuralObject.SetValidValue(value, "Gend_Id");
                     ReportPropertyChanged("Gend_Id");
                     OnGend_IdChanged();
                 }
@@ -445,7 +444,7 @@ namespace FLEX.Extensions.TestDataAccess
             {
                 OnGend_DescriptionChanging(value);
                 ReportPropertyChanging("Gend_Description");
-                _Gend_Description = StructuralObject.SetValidValue(value, false);
+                _Gend_Description = StructuralObject.SetValidValue(value, false, "Gend_Description");
                 ReportPropertyChanged("Gend_Description");
                 OnGend_DescriptionChanged();
             }
@@ -456,7 +455,6 @@ namespace FLEX.Extensions.TestDataAccess
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -510,7 +508,7 @@ namespace FLEX.Extensions.TestDataAccess
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -529,7 +527,7 @@ namespace FLEX.Extensions.TestDataAccess
                 {
                     OnSchl_IdChanging(value);
                     ReportPropertyChanging("Schl_Id");
-                    _Schl_Id = StructuralObject.SetValidValue(value);
+                    _Schl_Id = StructuralObject.SetValidValue(value, "Schl_Id");
                     ReportPropertyChanged("Schl_Id");
                     OnSchl_IdChanged();
                 }
@@ -554,7 +552,7 @@ namespace FLEX.Extensions.TestDataAccess
             {
                 OnSchl_DescriptionChanging(value);
                 ReportPropertyChanging("Schl_Description");
-                _Schl_Description = StructuralObject.SetValidValue(value, false);
+                _Schl_Description = StructuralObject.SetValidValue(value, false, "Schl_Description");
                 ReportPropertyChanged("Schl_Description");
                 OnSchl_DescriptionChanged();
             }
@@ -565,7 +563,6 @@ namespace FLEX.Extensions.TestDataAccess
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -621,7 +618,7 @@ namespace FLEX.Extensions.TestDataAccess
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -638,7 +635,7 @@ namespace FLEX.Extensions.TestDataAccess
             {
                 OnnameChanging(value);
                 ReportPropertyChanging("name");
-                _name = StructuralObject.SetValidValue(value, false);
+                _name = StructuralObject.SetValidValue(value, false, "name");
                 ReportPropertyChanged("name");
                 OnnameChanged();
             }
@@ -662,7 +659,7 @@ namespace FLEX.Extensions.TestDataAccess
             {
                 Onprincipal_idChanging(value);
                 ReportPropertyChanging("principal_id");
-                _principal_id = StructuralObject.SetValidValue(value);
+                _principal_id = StructuralObject.SetValidValue(value, "principal_id");
                 ReportPropertyChanged("principal_id");
                 Onprincipal_idChanged();
             }
@@ -688,7 +685,7 @@ namespace FLEX.Extensions.TestDataAccess
                 {
                     Ondiagram_idChanging(value);
                     ReportPropertyChanging("diagram_id");
-                    _diagram_id = StructuralObject.SetValidValue(value);
+                    _diagram_id = StructuralObject.SetValidValue(value, "diagram_id");
                     ReportPropertyChanged("diagram_id");
                     Ondiagram_idChanged();
                 }
@@ -713,7 +710,7 @@ namespace FLEX.Extensions.TestDataAccess
             {
                 OnversionChanging(value);
                 ReportPropertyChanging("version");
-                _version = StructuralObject.SetValidValue(value);
+                _version = StructuralObject.SetValidValue(value, "version");
                 ReportPropertyChanged("version");
                 OnversionChanged();
             }
@@ -737,7 +734,7 @@ namespace FLEX.Extensions.TestDataAccess
             {
                 OndefinitionChanging(value);
                 ReportPropertyChanging("definition");
-                _definition = StructuralObject.SetValidValue(value, true);
+                _definition = StructuralObject.SetValidValue(value, true, "definition");
                 ReportPropertyChanged("definition");
                 OndefinitionChanged();
             }
@@ -748,10 +745,8 @@ namespace FLEX.Extensions.TestDataAccess
 
         #endregion
 
-    
     }
 
     #endregion
 
-    
 }
