@@ -1,0 +1,36 @@
+﻿using System.Collections.Generic;
+
+namespace FLEX.WebForms
+{
+   /// <summary>
+   /// 
+   /// </summary>
+   public interface IPageManager
+   {
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <returns></returns>
+      IList<KeyValuePair<string, string>> GetFooterInfo();
+
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="reportName"></param>
+      /// <returns></returns>
+      IReportInitializer GetReportInitializer(string reportName);
+   }
+
+   /// <summary>
+   /// 
+   /// </summary>
+   public interface IReportInitializer
+   {
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="reportViewer"></param>
+      /// <param name="reportParameters"></param>
+      void InitializeReport(Microsoft.Reporting.WebForms.ReportViewer reportViewer, IDictionary<string, object> reportParameters);
+   }
+}
