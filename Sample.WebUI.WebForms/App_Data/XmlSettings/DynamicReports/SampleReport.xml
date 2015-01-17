@@ -1,0 +1,36 @@
+<DynamicReport>
+  <Title>Sample Report</Title>
+  <Description>A sample report, built with FLEX</Description>
+  <Category>Samples</Category>
+  
+  <Variables>
+  
+  </Variables>
+  
+  <Parameters>
+    <Parameter UniqueName="Resource" Label="Resource" ControlType="AutoSuggest" XmlLookup="PROVA" LookupBy="PROVA" Enabled="False" />
+    
+    <Parameter UniqueName="Country" Label="Country" ControlType="AutoSuggest" XmlLookup="Customers" LookupBy="Country" 
+               Enabled="True" MinLengthForHint="1" />
+    
+    <Parameter UniqueName="JsonOptions" Label="JSON Options" ControlType="CheckBoxList" Visible="True"
+               DataSourceType="JSON" DataSource="[{first: 'A', second: 'B'}]" />
+    
+    <Parameter UniqueName="SqlOptions" Label="SQL Options" ControlType="CheckBoxList" 
+               DataSourceType="SQL" DataSource="select 1 as [first], 2 as [second]" ValueColumn="first" LabelColumn="second" />
+  </Parameters>
+  
+  <Columns DefaultSortExpression="Contact Name" DefaultSortDirection="Ascending">
+    <Column Type="Bound" HeaderText="Contact Name" DataField="Contact Name" SortExpression="Contact Name" Visible="True" />
+    <Column Type="Bound" HeaderText="Company Name" DataField="Company Name" />
+    <Column Type="Bound" DataField="Fax" Visible="False" />
+  </Columns>
+  
+  <Query>
+    <Type>Text</Type>
+    <Code>
+      select * from [customers]
+      where (:country is null or lower([country]) = lower(:country)) 
+    </Code>
+  </Query>
+</DynamicReport>
