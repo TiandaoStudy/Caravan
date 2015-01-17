@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("FLEX.WebForms")]
+[assembly: AssemblyTitle("Finsa.Caravan.WebForms")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Finsa S.p.A.")]
-[assembly: AssemblyProduct("FLEX.WebForms")]
+[assembly: AssemblyProduct("Finsa.Caravan.WebForms")]
 [assembly: AssemblyCopyright("Copyright © FINSA S.p.A. 2014-2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -36,7 +36,7 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("0.19.0.1")]
-[assembly: AssemblyFileVersion("0.19.0.1")]
+[assembly: AssemblyVersion("1.3.0")]
+[assembly: AssemblyFileVersion("1.3.0")]
 
 [assembly: InternalsVisibleTo("UnitTests.WebForms")]

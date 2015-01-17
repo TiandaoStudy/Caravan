@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MultiSelect.ascx.cs" Inherits="FLEX.Web.UserControls.Ajax.MultiSelect" %>
 <%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
-<%@ Register TagPrefix="flex" Namespace="FLEX.WebForms.UserControls" Assembly="FLEX.WebForms" %>
+<%@ Register TagPrefix="flex" Namespace="FLEX.WebForms.UserControls" Assembly="Finsa.Caravan.WebForms" %>
 
 <style type="text/css">
    .workingArea { height: 400px; }

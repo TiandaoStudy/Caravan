@@ -4,7 +4,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.DataModel.Security;
-using FLEX.Common.Web;
+using Finsa.Caravan.Common.WebForms;
 using FLEX.Web.Pages;
 using System.Data;
 using System.Collections.Generic;

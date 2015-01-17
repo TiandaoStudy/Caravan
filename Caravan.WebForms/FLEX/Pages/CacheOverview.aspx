@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CacheOverview.aspx.cs" Inherits="FLEX.WebForms.Pages.CacheOverview" MasterPageFile="~/FLEX/MasterPages/DataView.Master" %>
 <%@ MasterType VirtualPath="~/FLEX/MasterPages/DataView.Master"%>
-<%@ Register TagPrefix="flex" Namespace="FLEX.WebForms.UserControls" Assembly="FLEX.WebForms" %>
+<%@ Register TagPrefix="flex" Namespace="FLEX.WebForms.UserControls" Assembly="Finsa.Caravan.WebForms" %>
 <%@ Register TagPrefix="flex" TagName="ImageButton" Src="~/FLEX/UserControls/Ajax/ImageButton.ascx" %>
 
 <asp:Content runat="server" ID="aspHeadContent" ContentPlaceHolderID="headContent">

@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SecUsersList.aspx.cs" Inherits="Finsa.Caravan.WebForms.Pages.SecUsersList" MasterPageFile="~/FLEX/MasterPages/VerticalSearch.Master" %>
 <%@ MasterType VirtualPath="~/FLEX/MasterPages/VerticalSearch.Master"%>
 <%@ Import Namespace="FLEX.Web.MasterPages" %>
-<%@ Register TagPrefix="crvn" Namespace="FLEX.WebForms.UserControls" Assembly="FLEX.WebForms" %>
+<%@ Register TagPrefix="crvn" Namespace="FLEX.WebForms.UserControls" Assembly="Finsa.Caravan.WebForms" %>
 <%@ Register TagPrefix="crvn" TagName="HiddenTrigger" Src="~/FLEX/UserControls/Ajax/HiddenTrigger.ascx" %>
 <%@ Register TagPrefix="crvn" TagName="ImageButton" Src="~/FLEX/UserControls/Ajax/ImageButton.ascx" %>
 <%@ Register TagPrefix="crvn" TagName="AutoSuggest" Src="~/FLEX/UserControls/Ajax/AutoSuggest.ascx" %>

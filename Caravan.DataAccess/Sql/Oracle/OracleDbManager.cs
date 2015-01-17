@@ -42,7 +42,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
       public override DbConnection CreateConnection()
       {
          var connection = DbFactory.CreateConnection();
-         connection.ConnectionString = Settings.Default.ConnectionString;
+         connection.ConnectionString = Db.ConnectionString;
          return connection;
       }
    }

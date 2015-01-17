@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Web.SessionState;
-using FLEX.Common.Web;
+using Finsa.Caravan.Common.WebForms;
 using FLEX.Web.UserControls.Ajax;
 
 // ReSharper disable CheckNamespace

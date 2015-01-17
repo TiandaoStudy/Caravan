@@ -153,6 +153,7 @@ Desktop.ini
 
 ## NuGet
 
+packages/
 *Packager*/*.nupkg
 *Packager*/*.nupkg.bak
 *Packager*/lib

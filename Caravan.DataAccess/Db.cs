@@ -154,9 +154,7 @@ namespace Finsa.Caravan.DataAccess
 
       internal static DbContextBase CreateReadContext()
       {
-         var ctx = _dbContextGenerator();
-         ctx.Database.Initialize(false);
-         ctx.Database.Connection.Open();
+         var ctx = CreateWriteContext();
          ctx.Configuration.ProxyCreationEnabled = false;
          return ctx;
       }
@@ -214,6 +212,7 @@ namespace Finsa.Caravan.DataAccess
                client.Execute(request);
                break;
             case DataAccessKind.MongoDb:
+               MongoUtilities.GetLogEntryCollection().Drop();
                MongoUtilities.GetSecAppCollection().Drop();
                MongoUtilities.GetSequenceCollection().Drop();
                break;

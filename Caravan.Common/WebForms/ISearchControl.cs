@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FLEX.Common.Web
+namespace Finsa.Caravan.Common.WebForms
 {
    /// <summary>
    ///   TODO

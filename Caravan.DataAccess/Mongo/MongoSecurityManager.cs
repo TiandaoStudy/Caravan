@@ -25,23 +25,22 @@ namespace Finsa.Caravan.DataAccess.Mongo
 
       protected override bool DoAddApp(SecApp app)
       {
-         var newAppId = MongoUtilities.GetSequenceCollection().FindAndModify(new FindAndModifyArgs()
+         var newAppId = MongoUtilities.GetSequenceCollection().FindAndModify(new FindAndModifyArgs
          {
-            Query = Query<MongoSequence>.Where(s => s.AppName == String.Empty && s.CollectionName == MongoUtilities.SecAppCollection),
+            Query = Query<MongoSequence>.Where(s => s.AppId == MongoUtilities.CreateObjectId(-1) && s.CollectionName == MongoUtilities.SecAppCollection),
             Update = Update<MongoSequence>.Inc(s => s.LastNumber, 1),
             VersionReturned = FindAndModifyDocumentVersion.Modified,
             Upsert = true, // Creates a new document if it does not exist.
          }).GetModifiedDocumentAs<MongoSequence>().LastNumber;
 
-         MongoUtilities.GetSecAppCollection().Insert(new MongoSecApp
+         return MongoUtilities.GetSecAppCollection().Insert(new MongoSecApp
          {
+            Id = MongoUtilities.CreateObjectId(newAppId),
             AppId = newAppId,
             Name = app.Name,
             Description = app.Description,
             LogSettings = new List<MongoLogSettings>()
-         });
-
-         return true;
+         }).Ok;
       }
 
       protected override IList<SecGroup> GetGroups(string appName, string groupName)
