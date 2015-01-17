@@ -33,8 +33,8 @@ namespace FLEX.WebForms.Pages
             {
                 // Applico una pulizia sicura della cache persistente, per evitare che le voci
                 // importanti vadano perse.
-                PersistentCache.DefaultInstance.Clear(PersistentCacheReadMode.ConsiderExpiryDate);
-                VolatileCache.DefaultInstance.Clear();
+                PersistentCache.DefaultInstance.Clear(CacheReadMode.ConsiderExpiryDate);
+                VolatileCache.DefaultInstance.Clear(CacheReadMode.ConsiderExpiryDate);
                 // Aggiorno la fonte dati sottostante la griglia.
                 fdtgCache.UpdateDataSource();
             }
@@ -59,7 +59,7 @@ namespace FLEX.WebForms.Pages
         protected void fdtgCache_DataSourceUpdating(object sender, EventArgs args)
         {
             // This should not catch any exception, others will do.
-            fdtgCache.DataSource = VolatileCache.DefaultInstance.GetManyItems()
+            fdtgCache.DataSource = VolatileCache.DefaultInstance.PeekManyItems()
                 .Union(PersistentCache.DefaultInstance.PeekManyItems())
                 .Where(x => x.Key != "ConnectionString") // Do not show connection strings...
                 .Select(x => new CacheItem
