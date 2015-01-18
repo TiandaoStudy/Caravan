@@ -14,7 +14,7 @@
     <RootNamespace>FLEX.Sample.WebUI</RootNamespace>
     <AssemblyName>FLEX.Sample.WebUI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -103,9 +103,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\PommaLabs.GRAMPA.2.1.4\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.KVLite, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PommaLabs.KVLite, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.KVLite.1.0.0\lib\net45\PommaLabs.KVLite.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.KVLite.1.2.0\lib\net45\PommaLabs.KVLite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -271,7 +271,19 @@
     <Content Include="Global.asax" />
     <Content Include="Images\Emoticons\cold.png" />
     <Content Include="Images\Emoticons\gettingbeauty.png" />
+    <Content Include="KVLite\x64\Crc32C.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KVLite\x64\Snappy.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="KVLite\x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KVLite\x86\Crc32C.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KVLite\x86\Snappy.Interop.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="KVLite\x86\SQLite.Interop.dll">
@@ -489,7 +501,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>60882</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/Caravan.Sample.WebForms</IISUrl>
+          <IISUrl>http://localhost:60882/Caravan.Sample.WebForms</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
