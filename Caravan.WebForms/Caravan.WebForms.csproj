@@ -96,13 +96,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\PommaLabs.Armando.0.3.3\lib\net40-client\PommaLabs.Armando.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.GRAMPA">
-      <HintPath>..\packages\PommaLabs.GRAMPA.2.1.3\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="PommaLabs.KVLite, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PommaLabs.GRAMPA, Version=2.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.KVLite.1.0.0\lib\net45\PommaLabs.KVLite.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.GRAMPA.2.1.4\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+    </Reference>
+    <Reference Include="PommaLabs.KVLite, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PommaLabs.KVLite.Core.1.3.1\lib\net45\PommaLabs.KVLite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -131,19 +131,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
-    <Compile Include="Finsa.Caravan.WebForms.webMarkupMin.cs">
+    <Compile Include="Finsa.Caravan.WebForms.webMarkupMin.Serialization.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
-    <Compile Include="FLEX.Web.XmlSettings.AjaxLookup.AjaxLookupData.cs">
+    <Compile Include="FLEX.Web.XmlSettings.AjaxLookup.AjaxLookupData.Serialization.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
-    <Compile Include="FLEX.Web.XmlSettings.Lookup.LookupData.cs">
+    <Compile Include="FLEX.Web.XmlSettings.Lookup.LookupData.Serialization.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
-    <Compile Include="FLEX.Web.XmlSettings.MenuBar.Item.cs">
+    <Compile Include="FLEX.Web.XmlSettings.MenuBar.Item.Serialization.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
-    <Compile Include="FLEX.Web.XmlSettings.MenuBar.Menu.cs">
+    <Compile Include="FLEX.Web.XmlSettings.MenuBar.Menu.Serialization.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
     <Compile Include="FLEX\MasterPages\CustomView.Master.cs">
@@ -683,12 +683,6 @@
     </Content>
     <Content Include="FLEX\UserControls\VerticalSearchPlaceHolder.ascx">
       <SubType>ASPXCodeBehind</SubType>
-    </Content>
-    <Content Include="KVLite\x64\SQLite.Interop.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="KVLite\x86\SQLite.Interop.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />

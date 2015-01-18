@@ -47,13 +47,37 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CodeProject.ObjectPool, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CodeProject.ObjectPool.1.3.1\lib\net40-client\CodeProject.ObjectPool.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core">
+      <HintPath>..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.38\lib\net45\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PommaLabs.GRAMPA, Version=2.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PommaLabs.GRAMPA.2.1.4\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+    </Reference>
+    <Reference Include="PommaLabs.KVLite, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PommaLabs.KVLite.Core.1.3.1\lib\net45\PommaLabs.KVLite.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.Core.MSIL.1.0.94.0\lib\net45\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -224,6 +248,14 @@
     <Content Include="Scripts\jquery-2.1.3.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Caravan.Common\Caravan.Common.csproj">
+      <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>
+      <Name>Caravan.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Caravan.DataAccess\Caravan.DataAccess.csproj">
+      <Project>{418b2d91-d53e-49bf-98fc-66da9490dc37}</Project>
+      <Name>Caravan.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Caravan.WebApi\Caravan.Mvc.Core.csproj">
       <Project>{27d82597-28b1-4441-8c42-0a220c38c4d8}</Project>
       <Name>Caravan.Mvc.Core</Name>
