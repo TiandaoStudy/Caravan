@@ -1,4 +1,7 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Web.Http;
+using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.DataAccess;
 
 namespace Caravan.WebService.Controllers
 {
@@ -10,9 +13,9 @@ namespace Caravan.WebService.Controllers
         /// </summary>
         /// <returns>All log entries.</returns>
         [Route("entries")]
-        public int[] GetLogEntries()
+        public IList<LogEntry> GetLogEntries()
         {
-            return new []{1, 2};
+            return Db.Logger.Logs();
         }
     }
 }
