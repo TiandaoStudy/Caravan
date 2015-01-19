@@ -7,6 +7,7 @@ namespace Finsa.Caravan.Mvc.Core
    {
       public static void Application_Start()
       {
+         // Personalizzo le impostazioni del serializzatore JSON.
          GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
          {
             Formatting = Formatting.None,
