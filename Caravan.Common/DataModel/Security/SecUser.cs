@@ -1,43 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace Finsa.Caravan.Common.DataModel.Security
 {
-   [Serializable]
+   [Serializable,DataContract(IsReference = true)]
    public class SecUser : IEquatable<SecUser>
    {
-      [JsonProperty(Order = 0)]
+      [JsonProperty(Order = 0), DataMember(Order = 0)]
       public long Id { get; set; }
 
       [JsonIgnore]
       public long AppId { get; set; }
 
-      [JsonIgnore]
+      [JsonIgnore, IgnoreDataMember]
       public SecApp App { get; set; }
 
-      [JsonProperty(Order = 1)]
+      [JsonProperty(Order = 1), DataMember(Order = 1)]
       public int Active { get; set; }
 
-      [JsonProperty(Order = 2)]
+      [JsonProperty(Order = 2), DataMember(Order = 2)]
       public string Login { get; set; }
 
-      [JsonProperty(Order = 3)]
+      [JsonProperty(Order = 3), DataMember(Order = 3)]
       public string HashedPassword { get; set; }
 
-      [JsonProperty(Order = 4)]
+      [JsonProperty(Order = 4), DataMember(Order = 4)]
       public string FirstName { get; set; }
 
-      [JsonProperty(Order = 5)]
+      [JsonProperty(Order = 5), DataMember(Order = 5)]
       public string LastName { get; set; }
 
-      [JsonProperty(Order = 6)]
+      [JsonProperty(Order = 6), DataMember(Order = 6)]
       public string Email { get; set; }
 
-      [JsonProperty(Order = 7)]
+      [JsonProperty(Order = 7), DataMember(Order = 7)]
       public virtual ICollection<SecGroup> Groups { get; set; }
 
-      [JsonIgnore]
+      [JsonIgnore, IgnoreDataMember]
       public virtual ICollection<SecEntry> SecEntries { get; set; }
 
       #region Equality Members

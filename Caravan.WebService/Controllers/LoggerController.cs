@@ -15,9 +15,13 @@ namespace Caravan.WebService.Controllers
        /// <returns>All log entries.</returns>
 
        [Route("entries")]
-       public IList<LogEntry> GetLogEntries()
+       public SecUser GetUsers()
        {
-          return Db.Logger.Logs();
+          return new SecUser{FirstName = "sarav",Login = "sarav"};
        }
+       //public IList<LogEntry> GetLogEntries()
+       //{
+       //   return Db.Logger.Logs();
+       //}
     }
 }

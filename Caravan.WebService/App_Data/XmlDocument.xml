@@ -481,7 +481,7 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="M:Caravan.WebService.Controllers.LoggerController.GetLogEntries">
+        <member name="M:Caravan.WebService.Controllers.LoggerController.GetUsers">
             <summary>
               Returns all log entries.
             </summary>
