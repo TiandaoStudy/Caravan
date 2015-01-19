@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Finsa.Caravan.Common.DataModel.Security;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace Finsa.Caravan.Common.DataModel.Logging
 {
-   [Serializable]
+   [Serializable, DataContract(IsReference = true)]
    public class LogEntry : IEquatable<LogEntry>
    {
       public const string AutoFilled = "Automatically filled parameter";
@@ -14,43 +15,43 @@ namespace Finsa.Caravan.Common.DataModel.Logging
 
       private KeyValuePair<string, string>[] _cachedArguments;
 
-      [JsonProperty(Order = 0)]
+      [JsonProperty(Order = 0), DataMember(Order = 0)]
       public long Id { get; set; }
 
-      [JsonProperty(Order = 1)]
+      [JsonProperty(Order = 1), DataMember(Order = 1)]
       public long AppId { get; set; }
 
-      [JsonIgnore]
+      [JsonIgnore, IgnoreDataMember]
       public SecApp App { get; set; }
 
-      [JsonProperty(Order = 3)]
+      [JsonProperty(Order = 3), DataMember(Order = 3)]
       public DateTime Date { get; set; }
 
-      [JsonProperty(Order = 4)]
+      [JsonProperty(Order = 4), DataMember(Order = 4)]
       public string UserLogin { get; set; }
 
-      [JsonProperty(Order = 5)]
+      [JsonProperty(Order = 5), DataMember(Order = 5)]
       public string CodeUnit { get; set; }
 
-      [JsonProperty(Order = 6)]
+      [JsonProperty(Order = 6), DataMember(Order = 6)]
       public string Function { get; set; }
 
-      [JsonProperty(Order = 7)]
+      [JsonProperty(Order = 7), DataMember(Order = 7)]
       public string ShortMessage { get; set; }
 
-      [JsonProperty(Order = 8)]
+      [JsonProperty(Order = 8), DataMember(Order = 8)]
       public string LongMessage { get; set; }
 
-      [JsonProperty(Order = 9)]
+      [JsonProperty(Order = 9), DataMember(Order = 9)]
       public string Context { get; set; }
 
-      [JsonIgnore]
+      [JsonIgnore, IgnoreDataMember]
       public LogSettings LogSettings { get; set; }
 
-      [JsonIgnore]
+      [JsonIgnore, IgnoreDataMember]
       public string TypeId { get; set; }
 
-      [JsonProperty(Order = 2)]
+      [JsonProperty(Order = 2), DataMember(Order = 2)]
       [JsonConverter(typeof (StringEnumConverter))]
       public LogType Type
       {
@@ -123,7 +124,7 @@ namespace Finsa.Caravan.Common.DataModel.Logging
       [JsonIgnore]
       public string Value9 { get; set; }
 
-      [JsonProperty(Order = 10)]
+      [JsonProperty(Order = 10), DataMember(Order = 10)]
       public KeyValuePair<string, string>[] Arguments
       {
          get
