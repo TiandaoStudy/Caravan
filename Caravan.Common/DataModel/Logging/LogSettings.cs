@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Finsa.Caravan.Common.DataModel.Security;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace Finsa.Caravan.Common.DataModel.Logging
 {
-   [Serializable]
+   [Serializable, DataContract(IsReference = true)]
    public class LogSettings : IEquatable<LogSettings>
    {
       [JsonProperty(Order = 0)]

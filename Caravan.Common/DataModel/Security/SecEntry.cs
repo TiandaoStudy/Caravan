@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Finsa.Caravan.Common.DataModel.Security
 {
-   [Serializable]
+   [Serializable, DataContract(IsReference = true)]
    public class SecEntry : IEquatable<SecEntry>
    {
       public long Id { get; set; }

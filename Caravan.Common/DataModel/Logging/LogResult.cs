@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace Finsa.Caravan.Common.DataModel.Logging
 {
-   [Serializable]
+   [Serializable, DataContract(IsReference = true)]
    public class LogResult
    {
       public static readonly LogResult Success = new LogResult {Succeeded = true};

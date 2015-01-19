@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Finsa.Caravan.Common.DataModel.Security
 {
-   [Serializable,DataContract(IsReference = true)]
+   [Serializable, DataContract(IsReference = true)]
    public class SecUser : IEquatable<SecUser>
    {
       [JsonProperty(Order = 0), DataMember(Order = 0)]

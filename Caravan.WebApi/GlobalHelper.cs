@@ -12,6 +12,7 @@ namespace Finsa.Caravan.Mvc.Core
          {
             Formatting = Formatting.None,
             NullValueHandling = NullValueHandling.Ignore,
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
          };
       }

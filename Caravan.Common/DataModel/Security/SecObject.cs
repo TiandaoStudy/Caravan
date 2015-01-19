@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace Finsa.Caravan.Common.DataModel.Security
 {
-   [Serializable]
+   [Serializable, DataContract(IsReference = true)]
    public class SecObject : IEquatable<SecObject>
    {
       [JsonProperty(Order = 0)]
