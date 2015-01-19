@@ -36,11 +36,6 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       #endregion
 
-      public DbTransaction BeginTransaction()
-      {
-         return Database.Connection.BeginTransaction();
-      }
-
       public void SaveConcurrentChanges(Action<TCtx, DbUpdateConcurrencyException> onFailure)
       {
          for (var i = 0; i < Settings.Default.DefaultSaveChangesRetryCount; ++i)

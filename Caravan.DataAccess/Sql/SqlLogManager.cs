@@ -30,7 +30,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             var argsList = (args == null) ? new KeyValuePair<string, string>[0] : args.ToArray();
             Raise<ArgumentOutOfRangeException>.If(argsList.Length > MaxArgumentCount);
             
-            using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
+            using (var trx = new TransactionScope())
             using (var ctx = Db.CreateWriteContext())
             {
                var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
@@ -124,7 +124,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override bool DoAddSettings(string appName, LogType logType, LogSettings settings)
       {
-         using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
+         using (var trx = new TransactionScope())
          using (var ctx = Db.CreateWriteContext())
          {
             var added = false;
@@ -154,7 +154,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override bool DoUpdateSettings(string appName, LogType logType, LogSettings settings)
       {
-         using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
+         using (var trx = new TransactionScope())
          using (var ctx = Db.CreateWriteContext())
          {
             var update = false;
