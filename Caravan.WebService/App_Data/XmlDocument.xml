@@ -487,5 +487,38 @@
             </summary>
             <returns>All log entries.</returns>
         </member>
+        <member name="M:Caravan.WebService.Controllers.ValuesController.Get">
+            <summary>
+            Returns all values 
+            </summary>
+            <returns>All values </returns>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.ValuesController.Get(System.Int32)">
+            <summary>
+            Looks up some data from ID 
+            </summary>
+            <param name="id">The id of the data</param>
+            <returns>The value of the data</returns>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.ValuesController.Post(System.String)">
+            <summary>
+            Looks up api from value 
+            </summary>
+            <param name="value">Value of the api</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.ValuesController.Put(System.Int32,System.String)">
+            <summary>
+            Add at the api with id "id", the value "value"
+            </summary>
+            <param name="id">id of the api</param>
+            <param name="value">the value to add</param>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.ValuesController.Delete(System.Int32)">
+            <summary>
+            Delete the api with the Id retrieve from the body
+            </summary>
+            <param name="id">The id of the api to remove</param>
+        </member>
     </members>
 </doc>

@@ -15,6 +15,7 @@ using System.Web.Http;
 #if Handle_PageResultOfT
 using System.Web.Http.OData;
 #endif
+using Finsa.Caravan.Common.DataModel.Logging;
 
 namespace Caravan.WebService.Areas.HelpPage
 {
@@ -78,6 +79,7 @@ namespace Caravan.WebService.Areas.HelpPage
             //// Uncomment the following to correct the sample response when the action returns an HttpResponseMessage with ObjectContent<string>.
             //// The sample will be generated as if the controller named "Values" and action named "Post" were returning a string.
             //config.SetActualResponseType(typeof(string), "Values", "Post");
+            config.SetActualResponseType(typeof(IList<LogEntry>), "Values", "Post");
         }
 
 #if Handle_PageResultOfT
