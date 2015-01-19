@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Transactions;
 using Finsa.Caravan.Common.DataModel.Exceptions;
 using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess.Core;
@@ -156,6 +157,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       protected override bool DoAddUser(string appName, SecUser newUser)
       {
+         using (var trx = new TransactionScope())
          using (var ctx = Db.CreateWriteContext())
          {
             ctx.BeginTransaction();
@@ -168,6 +170,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                added = true;
             }
             ctx.SaveChanges();
+            trx.Complete();
             return added;
          }
       }

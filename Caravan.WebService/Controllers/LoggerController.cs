@@ -15,10 +15,6 @@ namespace Caravan.WebService.Controllers
        /// <returns>All log entries.</returns>
 
        [Route("entries")]
-       //public SecApp GetApps()
-       //{
-       //   return new SecApp{Name = "sara"};
-       //}
        public IList<LogEntry> GetLogEntries()
        {
           return Db.Logger.Logs();
