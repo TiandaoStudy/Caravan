@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FLEX.Extensions.TestDataAccess.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="FLEXExtensionsTestDataAccessStoreContainer">
+          <EntitySet Name="Candidate" EntityType="FLEX.Extensions.TestDataAccess.Store.Candidate" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="CandidateAttended" EntityType="FLEX.Extensions.TestDataAccess.Store.CandidateAttended" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Gender" EntityType="FLEX.Extensions.TestDataAccess.Store.Gender" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="School" EntityType="FLEX.Extensions.TestDataAccess.Store.School" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="sysdiagrams" EntityType="FLEX.Extensions.TestDataAccess.Store.sysdiagrams" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <AssociationSet Name="FK_Candidate_Gender" Association="FLEX.Extensions.TestDataAccess.Store.FK_Candidate_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Candidate" EntitySet="Candidate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Candidate_School" Association="FLEX.Extensions.TestDataAccess.Store.FK_Candidate_School">
+            <End Role="Candidate" EntitySet="Candidate" />
+            <End Role="CandidateAttended" EntitySet="CandidateAttended" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateAttended_School" Association="FLEX.Extensions.TestDataAccess.Store.FK_CandidateAttended_School">
+            <End Role="School" EntitySet="School" />
+            <End Role="CandidateAttended" EntitySet="CandidateAttended" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Candidate">
+          <Key>
+            <PropertyRef Name="Cand_Id" />
+          </Key>
+          <Property Name="Cand_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Cand_Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Cand_Surname" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Cand_Email" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Gend_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CandidateAttended">
+          <Key>
+            <PropertyRef Name="Cand_Id" />
+            <PropertyRef Name="Schl_Id" />
+          </Key>
+          <Property Name="Cand_Id" Type="int" Nullable="false" />
+          <Property Name="Schl_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="Gend_Id" />
+          </Key>
+          <Property Name="Gend_Id" Type="int" Nullable="false" />
+          <Property Name="Gend_Description" Type="nvarchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="School">
+          <Key>
+            <PropertyRef Name="Schl_Id" />
+          </Key>
+          <Property Name="Schl_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Schl_Description" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Candidate_Gender">
+          <End Role="Gender" Type="FLEX.Extensions.TestDataAccess.Store.Gender" Multiplicity="1" />
+          <End Role="Candidate" Type="FLEX.Extensions.TestDataAccess.Store.Candidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="Gend_Id" />
+            </Principal>
+            <Dependent Role="Candidate">
+              <PropertyRef Name="Gend_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Candidate_School">
+          <End Role="Candidate" Type="FLEX.Extensions.TestDataAccess.Store.Candidate" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CandidateAttended" Type="FLEX.Extensions.TestDataAccess.Store.CandidateAttended" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidate">
+              <PropertyRef Name="Cand_Id" />
+            </Principal>
+            <Dependent Role="CandidateAttended">
+              <PropertyRef Name="Cand_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateAttended_School">
+          <End Role="School" Type="FLEX.Extensions.TestDataAccess.Store.School" Multiplicity="1" />
+          <End Role="CandidateAttended" Type="FLEX.Extensions.TestDataAccess.Store.CandidateAttended" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="School">
+              <PropertyRef Name="Schl_Id" />
+            </Principal>
+            <Dependent Role="CandidateAttended">
+              <PropertyRef Name="Schl_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FLEX.Extensions.TestDataAccess" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="DataContext">
+          <EntitySet Name="Schools" EntityType="FLEX.Extensions.TestDataAccess.School" />
+          <EntitySet Name="Candidates" EntityType="FLEX.Extensions.TestDataAccess.Candidate" />
+          <EntitySet Name="sysdiagrams" EntityType="FLEX.Extensions.TestDataAccess.sysdiagram" />
+          <AssociationSet Name="CandidateAttended" Association="FLEX.Extensions.TestDataAccess.CandidateAttended">
+            <End Role="Candidate" EntitySet="Candidates" />
+            <End Role="School" EntitySet="Schools" />
+          </AssociationSet>
+          <EntitySet Name="Genders" EntityType="FLEX.Extensions.TestDataAccess.Gender" />
+          <AssociationSet Name="FK_Candidate_Gender" Association="FLEX.Extensions.TestDataAccess.FK_Candidate_Gender">
+            <End Role="Gender" EntitySet="Genders" />
+            <End Role="Candidate" EntitySet="Candidates" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="School">
+          <Key>
+            <PropertyRef Name="Schl_Id" />
+          </Key>
+          <Property Type="Int32" Name="Schl_Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Schl_Description" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Candidates" Relationship="FLEX.Extensions.TestDataAccess.CandidateAttended" FromRole="School" ToRole="Candidate" />
+        </EntityType>
+        <EntityType Name="Candidate">
+          <Key>
+            <PropertyRef Name="Cand_Id" />
+          </Key>
+          <Property Type="Int32" Name="Cand_Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Cand_Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Cand_Surname" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Cand_Email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Schools" Relationship="FLEX.Extensions.TestDataAccess.CandidateAttended" FromRole="Candidate" ToRole="School" />
+          <NavigationProperty Name="Gender" Relationship="FLEX.Extensions.TestDataAccess.FK_Candidate_Gender" FromRole="Candidate" ToRole="Gender" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Type="String" Name="name" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="principal_id" Nullable="false" />
+          <Property Type="Int32" Name="diagram_id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="version" />
+          <Property Type="Binary" Name="definition" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="CandidateAttended">
+          <End Type="FLEX.Extensions.TestDataAccess.Candidate" Role="Candidate" Multiplicity="*" />
+          <End Type="FLEX.Extensions.TestDataAccess.School" Role="School" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="Gend_Id" />
+          </Key>
+          <Property Type="Int32" Name="Gend_Id" Nullable="false" />
+          <Property Type="String" Name="Gend_Description" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Candidates" Relationship="FLEX.Extensions.TestDataAccess.FK_Candidate_Gender" FromRole="Gender" ToRole="Candidate" />
+        </EntityType>
+        <Association Name="FK_Candidate_Gender">
+          <End Type="FLEX.Extensions.TestDataAccess.Gender" Role="Gender" Multiplicity="1" />
+          <End Type="FLEX.Extensions.TestDataAccess.Candidate" Role="Candidate" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FLEXExtensionsTestDataAccessStoreContainer" CdmEntityContainer="DataContext">
+          <EntitySetMapping Name="Schools">
+            <EntityTypeMapping TypeName="FLEX.Extensions.TestDataAccess.School">
+              <MappingFragment StoreEntitySet="School">
+                <ScalarProperty Name="Schl_Description" ColumnName="Schl_Description" />
+                <ScalarProperty Name="Schl_Id" ColumnName="Schl_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Candidates">
+            <EntityTypeMapping TypeName="FLEX.Extensions.TestDataAccess.Candidate">
+              <MappingFragment StoreEntitySet="Candidate">
+                <ScalarProperty Name="Cand_Email" ColumnName="Cand_Email" />
+                <ScalarProperty Name="Cand_Surname" ColumnName="Cand_Surname" />
+                <ScalarProperty Name="Cand_Name" ColumnName="Cand_Name" />
+                <ScalarProperty Name="Cand_Id" ColumnName="Cand_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="FLEX.Extensions.TestDataAccess.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="CandidateAttended" TypeName="FLEX.Extensions.TestDataAccess.CandidateAttended" StoreEntitySet="CandidateAttended">
+            <EndProperty Name="School">
+              <ScalarProperty Name="Schl_Id" ColumnName="Schl_Id" />
+            </EndProperty>
+            <EndProperty Name="Candidate">
+              <ScalarProperty Name="Cand_Id" ColumnName="Cand_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Genders">
+            <EntityTypeMapping TypeName="FLEX.Extensions.TestDataAccess.Gender">
+              <MappingFragment StoreEntitySet="Gender">
+                <ScalarProperty Name="Gend_Description" ColumnName="Gend_Description" />
+                <ScalarProperty Name="Gend_Id" ColumnName="Gend_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_Candidate_Gender" TypeName="FLEX.Extensions.TestDataAccess.FK_Candidate_Gender" StoreEntitySet="Candidate">
+            <EndProperty Name="Candidate">
+              <ScalarProperty Name="Cand_Id" ColumnName="Cand_Id" />
+            </EndProperty>
+            <EndProperty Name="Gender">
+              <ScalarProperty Name="Gend_Id" ColumnName="Gend_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer>
+    <edmx:Connection>
+      <DesignerInfoPropertySet xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
