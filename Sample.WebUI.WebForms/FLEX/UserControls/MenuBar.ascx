@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MenuBar.ascx.cs" Inherits="FLEX.Web.UserControls.MenuBar" %>
+<%@ Import Namespace="Finsa.Caravan.WebForms.Properties" %>
 <%@ Import Namespace="FLEX.Web.MasterPages" %>
 
 <style>
@@ -115,7 +116,7 @@
                <span class="icon-bar"></span>
                <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#" onclick="<%= FLEX.WebForms.Configuration.Instance.MenuBarBrandClick %>">
+            <a class="navbar-brand" href="#" onclick="<%= Settings.Default.MenuBarBrandClick %>">
                <img src='<%= Head.MyFlexPath %>/Images/logo-menubar.png' class='logo' alt='Logo' />
                <span class="navbar-brand-description"><%= Finsa.Caravan.Common.Properties.Settings.Default.ApplicationDescription %></span>
             </a>
@@ -124,17 +125,17 @@
             <ul class="nav navbar-nav" id="ul_menu" runat="server"></ul>
             <ul class="nav navbar-nav navbar-right">
                <li>
-                  <a href="#" onclick="<%= FLEX.WebForms.Configuration.Instance.MenuBarHomeClick %>">
+                  <a href="#" onclick="<%= Settings.Default.MenuBarHomeClick %>">
                      <span class="glyphicon glyphicon-home padded-icon"></span>Home
                   </a>
                </li>
                <li>
-                  <a href="#" onclick="<%= FLEX.WebForms.Configuration.Instance.MenuBarLogoutClick %>">
+                  <a href="#" onclick="<%= Settings.Default.MenuBarLogoutClick %>">
                      <span class="glyphicon glyphicon-circle-arrow-left padded-icon"></span>Logout
                   </a>
                </li>
                <li>
-                  <a href="#" onclick="<%= FLEX.WebForms.Configuration.Instance.MenuBarInfoClick %>">
+                  <a href="#" onclick="<%= Settings.Default.MenuBarInfoClick %>">
                      <span class="glyphicon glyphicon-info-sign padded-icon"></span>Info
                   </a>
                </li>

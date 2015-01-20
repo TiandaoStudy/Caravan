@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Head.Master.cs" Inherits="FLEX.Web.MasterPages.Head" %>
+<%@ Import Namespace="Finsa.Caravan.WebForms.Properties" %>
 <%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
 <%@ Register TagPrefix="flex" TagName="ErrorHandler" Src="../UserControls/Ajax/ErrorHandler.ascx" %>
 
@@ -50,7 +51,7 @@
          settings.flexPath = "<%= FlexPath %>";
          // Session expiry management
          settings.sessionTimeoutInMilliseconds = <%= (Session.Timeout - 1) * 60 * 1000 %>;
-         settings.sessionExpiredPageUrl = "<%= RootPath + FLEX.WebForms.Configuration.Instance.SessionExpiredPageUrl %>";
+         settings.sessionExpiredPageUrl = "<%= RootPath + Settings.Default.SessionExpiredPageUrl %>";
          settings.rootPath = "<%= RootPath %>";
       </script>
 

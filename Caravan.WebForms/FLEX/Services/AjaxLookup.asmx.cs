@@ -10,6 +10,7 @@ using System.Web.Services;
 using System.Xml;
 using Dapper;
 using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.WebForms.Properties;
 using FLEX.Web.XmlSettings.AjaxLookup;
 using PommaLabs;
 using PommaLabs.Diagnostics;
@@ -74,7 +75,7 @@ namespace FLEX.Web.Services
       private static AjaxLookupDataLookupBy LoadAjaxLookupData(string xmlLookup, string lookupBy)
       {
          // At first, we create the relative path for our XML.
-         var xmlPath = Path.Combine(WebForms.Configuration.Instance.AjaxLookupsXmlPath, xmlLookup + Constants.FileExtensions.Xml);
+         var xmlPath = Path.Combine(Settings.Default.AjaxLookupsXmlPath, xmlLookup + Constants.FileExtensions.Xml);
 
          // And then we make it absolute to our server.
          xmlPath = HttpContext.Current.Server.MapPath(xmlPath);
@@ -101,7 +102,7 @@ namespace FLEX.Web.Services
 
          // We store the lookup data instance inside the cache, and then we return it.
          // We must pay attention to put the type of the lookup inside the key.
-         VolatileCache.DefaultInstance.AddSliding(CachePartition, xmlPath, lookupData, WebForms.Configuration.DefaultIntervalForVolatile);
+         VolatileCache.DefaultInstance.AddSliding(CachePartition, xmlPath, lookupData, Settings.Default.DefaultIntervalForVolatile);
          return lookupData;
       }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.WebForms.Properties;
 using FLEX.Web.XmlSettings.MenuBar;
 using FLEX.WebForms;
 using SecurityManager = FLEX.WebForms.SecurityManager;
@@ -25,7 +26,7 @@ namespace FLEX.Web.UserControls
          {
             // Legge il file XML con il quale si configura la barra del menu.
             var xml = new XmlDocument();
-            xml.Load(Server.MapPath(WebForms.Configuration.Instance.MenuBarXmlPath));
+            xml.Load(Server.MapPath(Settings.Default.MenuBarXmlPath));
            
             var sourceXml = xml.OuterXml;
             sourceXml = SecurityManager.Instance.ApplyMenuSecurity(Context.User, sourceXml);

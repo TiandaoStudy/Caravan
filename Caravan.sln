@@ -56,7 +56,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{349512
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess", "Caravan.DataAccess\Caravan.DataAccess.csproj", "{418B2D91-D53E-49BF-98FC-66DA9490DC37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.WebUI.Mvc", "Sample.WebUI.Mvc\Sample.WebUI.Mvc.csproj", "{A65D507D-03A2-49BE-A056-72AE6964140A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.WebUI.MVC", "Sample.WebUI.Mvc\Sample.WebUI.Mvc.csproj", "{A65D507D-03A2-49BE-A056-72AE6964140A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.RestService", "Caravan.RestService\Caravan.RestService.csproj", "{B4F9C525-5C56-440E-B4C2-972A33D7C8CD}"
 EndProject

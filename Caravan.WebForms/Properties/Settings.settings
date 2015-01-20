@@ -1,56 +1,65 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<SettingsFile CurrentProfile="(Default)" GeneratedClassNamespace="Finsa.Caravan.WebForms.Properties" GeneratedClassName="Settings" xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Finsa.Caravan.WebForms.Properties" GeneratedClassName="Settings">
+  <Profiles />
   <Settings>
     <Setting Name="AjaxLookupsXmlPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">
+				</Value>
     </Setting>
     <Setting Name="ControlsExtendersFolder" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">
+				</Value>
     </Setting>
     <Setting Name="DynamicReportsFolder" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">
+				</Value>
     </Setting>
-    <Setting Name="EnableOutputCompression" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+    <Setting Name="EnableOutputCompression" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="EnableOutputMinification" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+    <Setting Name="EnableOutputMinification" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="EnableSecurity" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+    <Setting Name="EnableSecurity" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="ErrorManagerTypeInfo" Type="System.String" Scope="Application">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LookupsXmlPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">
+				</Value>
     </Setting>
     <Setting Name="MenuBarBrandClick" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="MenuBarHomeClick" Type="System.String" Scope="User" Roaming="false">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">
+				</Value>
     </Setting>
     <Setting Name="MenuBarInfoClick" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">
+				</Value>
     </Setting>
     <Setting Name="MenuBarLogoutClick" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">
+				</Value>
     </Setting>
     <Setting Name="MenuBarXmlPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">
+				</Value>
     </Setting>
     <Setting Name="PageManagerTypeInfo" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">
+				</Value>
     </Setting>
     <Setting Name="SecurityManagerTypeInfo" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">
+				</Value>
     </Setting>
     <Setting Name="SessionExpiredPageUrl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Expired.aspx</Value>
+    </Setting>
+    <Setting Name="MenuBarHomeClick" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">
+				</Value>
     </Setting>
   </Settings>
 </SettingsFile>

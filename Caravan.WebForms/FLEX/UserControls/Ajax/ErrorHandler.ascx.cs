@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Threading;
 using System.Web.UI;
 using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.WebForms.Properties;
 using FLEX.WebForms;
 using PommaLabs.Diagnostics;
 
@@ -30,7 +31,7 @@ namespace FLEX.Web.UserControls.Ajax
          {
             txtSystemErrorCode.Text = locationByte.ToString(CultureInfo.InvariantCulture);
             ex = ElaborateException(ex);
-            Session[WebForms.Configuration.ExceptionSessionKey] = ex;
+            Session[Settings.Default.ExceptionSessionKey] = ex;
             ErrorManager.Instance.LogException(ex, Page);
          }
          catch (Exception inner)

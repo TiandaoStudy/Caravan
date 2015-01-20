@@ -4,6 +4,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Finsa.Caravan.Common.WebForms;
 using Finsa.Caravan.WebForms;
+using Finsa.Caravan.WebForms.Core;
 using PommaLabs.Collections.ReadOnly;
 using PommaLabs.Diagnostics;
 using PommaLabs.Extensions;

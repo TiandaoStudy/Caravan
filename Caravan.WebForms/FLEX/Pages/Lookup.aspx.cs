@@ -5,6 +5,7 @@ using System.Web;
 using System.Xml;
 using Dapper;
 using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.WebForms.Properties;
 using FLEX.Web.XmlSettings.Lookup;
 using PommaLabs;
 using PommaLabs.Diagnostics;
@@ -36,7 +37,7 @@ namespace FLEX.Web.Pages
       private static LookupData LoadLookupData(string lookup)
       {
          // At first, we create the relative path for our XML.
-         var xmlPath = Path.Combine(WebForms.Configuration.Instance.LookupsXmlPath, lookup + Constants.FileExtensions.Xml);
+         var xmlPath = Path.Combine(Settings.Default.LookupsXmlPath, lookup + Constants.FileExtensions.Xml);
 
          // And then we make it absolute to our server.
          xmlPath = HttpContext.Current.Server.MapPath(xmlPath);
@@ -62,7 +63,7 @@ namespace FLEX.Web.Pages
          }
 
          // We store the lookup data instance inside the cache, and then we return it.
-         VolatileCache.DefaultInstance.AddSliding(CachePartition, xmlPath, lookupData, WebForms.Configuration.DefaultIntervalForVolatile);
+         VolatileCache.DefaultInstance.AddSliding(CachePartition, xmlPath, lookupData, Settings.Default.DefaultIntervalForVolatile);
          return lookupData;
       }
 
