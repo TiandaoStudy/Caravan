@@ -508,6 +508,10 @@
     <Compile Include="FLEX\UserControls\Ajax\ErrorHandler.ascx.designer.cs">
       <DependentUpon>ErrorHandler.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <DependentUpon>Settings.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Include="XsdClassGen.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1005,6 +1009,10 @@
     <None Include="FLEX\Styles\FontAwesome.less" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="WebMarkupMin.Configuration.xsd">
       <SubType>Designer</SubType>

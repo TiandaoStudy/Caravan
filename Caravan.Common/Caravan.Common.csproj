@@ -113,6 +113,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="RestService\IAuthManager.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="WebForms\ISearchControl.cs" />
     <Compile Include="WebForms\SearchCriteria.cs" />
     <Compile Include="XsdClassGen.cs">
