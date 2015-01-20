@@ -247,6 +247,10 @@
     <Content Include="MyFLEX\Scripts\Common.min.js">
       <DependentUpon>Common.js</DependentUpon>
     </Content>
+    <Content Include="MyFLEX\Styles\Common.css" />
+    <Content Include="MyFLEX\Styles\Common.min.css">
+      <DependentUpon>Common.css</DependentUpon>
+    </Content>
     <Content Include="Popup.aspx" />
     <Content Include="FLEX\Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="FLEX\Fonts\glyphicons-halflings-regular.ttf" />

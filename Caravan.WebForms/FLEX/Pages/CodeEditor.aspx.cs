@@ -26,7 +26,7 @@ namespace FLEX.Web.Pages
             var scriptsPath = PommaLabs.Armando.My.MySettings.Default.ScriptsPath.MapPath();
             var xmlPath = Server.MapPath(Settings.Default.AjaxLookupsXmlPath);
             var menuPath = Server.MapPath(Settings.Default.MenuBarXmlPath);
-            var files = new Dictionary<string, string> {{"Data Scritps", scriptsPath}, {"Ajax Lookup", xmlPath}, {"Menu", menuPath}};
+            var files = new Dictionary<string, string> {{"Data Scripts", scriptsPath}, {"Ajax Lookup", xmlPath}, {"Menu", menuPath}};
             BuildTreeView(files);
          }
       }
