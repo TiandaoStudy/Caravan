@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<AjaxLookupData xmlns="FLEX.Web.XmlSettings.AjaxLookup">
+  <LookupBy>
+    <SuggestionField>Curs_Name_LastName</SuggestionField>
+    <KeyField>CUSR_LOGIN</KeyField>
+    <DescriptionField>CUSR_LOGIN</DescriptionField>
+    <SortField>Curs_Name_LastName</SortField>
+    <LookupQuery>
+      select CUSR_LOGIN,  (CUSR_FIRST_NAME || ' ' || CUSR_LAST_NAME) as Curs_Name_LastName
+      from ASCESI.CARAVAN_SEC_USER
+      where CAPP_ID= 3 and lower(CUSR_LOGIN || ' ' || CUSR_FIRST_NAME || ' ' || CUSR_LAST_NAME)  like lower('%{:UserQuery:}%') and {:QueryFilter:}
+    </LookupQuery>
+  </LookupBy>
+</AjaxLookupData>

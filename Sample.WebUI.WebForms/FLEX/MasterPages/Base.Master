@@ -1,0 +1,121 @@
+﻿<%@ Master AutoEventWireup="true" CodeBehind="Base.Master.cs" Inherits="FLEX.Web.MasterPages.Base" Language="C#" MasterPageFile="~/FLEX/MasterPages/Head.Master" %>
+<%@ MasterType VirtualPath="~/FLEX/MasterPages/Head.Master"%>
+<%@ Register TagPrefix="flex" TagName="MenuBar" Src="../UserControls/MenuBar.ascx" %>
+<%@ Register TagPrefix="flex" TagName="PageFooter" Src="../UserControls/PageFooter.ascx" %>
+<%@ Register TagPrefix="flex" TagName="HiddenTrigger" Src="../UserControls/Ajax/HiddenTrigger.ascx" %>
+
+<asp:Content ID="aspHeadContent" ContentPlaceHolderID="headContent" runat="server">
+   <style type="text/css">
+      #aspnetForm {
+         padding-left: 60px;
+         padding-right: 60px;
+      }
+      
+      #browser-disclaimer {
+         position: absolute;
+         top: 60px;
+         left: 50%;
+         width: 660px;
+         margin-left: -330px; /* Half width */
+         z-index: 1100;
+      }
+      
+      #browser-disclaimer a {
+         font-size: 28px;
+         text-decoration: none;
+      }
+   </style>
+   
+   <script type="text/javascript">
+      // Used in Head.Master
+      settings.isPage = true;
+
+      var hasPageVisibleHandlers = <%= HasPageVisibleHandlers.ToString().ToLower() %>;
+
+      $(window).resize(function() {
+         if (typeof(centerMainContainer) != "undefined") {
+            centerMainContainer();
+         }
+      });
+   </script>
+   
+   <!-- A place for other pages to put scripts and CSS -->
+   <asp:ContentPlaceHolder ID="headContent" runat="server" />
+   
+   <script type="text/javascript">
+      // This script is put after the head placeholder,
+      // in order for it to be executed after other scripts.
+      $(document).ready(function() {
+         if (hasPageVisibleHandlers) {
+            triggerAsyncPostBack("<%= flexHiddenTrigger.Trigger.ClientID %>");
+         }
+
+         window.setTimeout(function() {
+            // Triggers first resize
+            $(window).resize();
+         }, 100);
+      });
+   </script>
+</asp:Content>
+
+<asp:Content ID="aspMainContent" ContentPlaceHolderID="mainContent" runat="server">
+   <!-- Menu bar, only visible in pages and not in modals -->
+   <flex:MenuBar ID="flexMenuBar" runat="server" />
+   
+   <!--[if lt IE 9]>  
+      <div id="browser-disclaimer" class="container">
+         <div class="alert alert-danger alert-dismissable clearfix">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <div class="pull-left">
+               You are viewing this website using an unsupported browser;<br />
+               therefore, some functionalities may be missing or not working.<br />
+               Please upgrade your browser or change it, in order to enjoy<br />
+               a faster and safer browsing experience.<br />
+               <em>Thank you.</em> 
+            </div>
+            <div class="pull-right text-right">
+               Supported browsers:<br />
+               <a href="https://www.google.com/intl/en/chrome/browser/" title="Google Chrome">
+                  <span class="icomoon icon-chrome"></span>
+               </a>
+               <a href="https://www.mozilla.org/en-US/firefox/new/" title="Mozilla Firefox">
+                  <span class="icomoon icon-firefox"></span>
+               </a>
+               <a href="http://www.opera.com/" title="Opera">
+                  <span class="icomoon icon-opera"></span>
+               </a>
+               <a href="http://windows.microsoft.com/en-US/internet-explorer/download-ie" title="Microsoft Internet Explorer">
+                  <span class="icomoon icon-IE"></span>
+               </a>
+               <p><em><small>
+                  Internet Explorer 8 and older versions<br/>
+                  are NOT supported by this website
+               </small></em></p>
+            </div>
+         </div>
+      </div>
+   <![endif]-->
+
+   <!-- Page "visible" event trigger -->
+   <flex:HiddenTrigger ID="flexHiddenTrigger" runat="server" />
+      
+   <!-- Upper content -->
+   <asp:ContentPlaceHolder ID="upperContent" runat="server" />
+
+   <div id="mainContainer" class="container-fluid">
+      <!-- Main content -->
+      <div class="row">
+         <asp:ContentPlaceHolder ID="mainContent" runat="server" />
+      </div>   
+   </div>
+
+   <!-- Lower content -->
+   <asp:ContentPlaceHolder ID="lowerContent" runat="server" />
+   
+   <!-- Page footer, customized by each project -->
+   <flex:PageFooter ID="flexPageFooter" runat="server" />   
+</asp:Content>
+
+<asp:Content ID="aspHiddenContent" ContentPlaceHolderID="hiddenContent" runat="server">
+   <asp:ContentPlaceHolder ID="hiddenContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>

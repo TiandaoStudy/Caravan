@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Finsa.Caravan.DataAccess.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="RestTestAuthObject" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">_TEST_TOKEN_</Value>
+    </Setting>
+    <Setting Name="DefaultSaveChangesRetryCount" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="PersistConnectionString" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DataAccessKind" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Oracle</Value>
+    </Setting>
+    <Setting Name="OracleStatementCacheSize" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="OracleUser" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">mydb</Value>
+    </Setting>
+    <Setting Name="RestServiceUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">finsa.caravan.it/</Value>
+    </Setting>
+    <Setting Name="ConnectionString" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MongoDbName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">caravan</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
