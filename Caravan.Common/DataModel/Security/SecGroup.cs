@@ -73,9 +73,10 @@ namespace Finsa.Caravan.Common.DataModel.Security
       #endregion
    }
 
-   [Serializable]
+   [Serializable, DataContract(IsReference = true)]
    public class SecGroupSingle : IEquatable<SecGroupSingle>
    {
+      [DataMember]
       public SecGroup Group { get; set; }
 
       public bool Equals(SecGroupSingle other)
@@ -109,9 +110,10 @@ namespace Finsa.Caravan.Common.DataModel.Security
       }
    }
 
-   [Serializable]
+   [Serializable, DataContract(IsReference = true)]
    public class SecGroupList : IEquatable<SecGroupList>
    {
+      [DataMember]
       public IEnumerable<SecGroup> Groups { get; set; }
 
       public bool Equals(SecGroupList other)
