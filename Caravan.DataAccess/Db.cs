@@ -85,11 +85,7 @@ namespace Finsa.Caravan.DataAccess
       {
          get
          {
-            var cache = Settings.Default.PersistConnectionString
-               ? PersistentCache.DefaultInstance as ICache
-               : VolatileCache.DefaultInstance;
-
-            var cachedConnectionString = cache.Get(CachePartitionName, ConnectionStringKey) as string;
+            var cachedConnectionString = Common.Properties.Settings.Default.DefaultCache.Get<string>(CachePartitionName, ConnectionStringKey);
             var configConnectionString = Settings.Default.ConnectionString;
 
             if (String.IsNullOrWhiteSpace(configConnectionString))
@@ -103,18 +99,15 @@ namespace Finsa.Caravan.DataAccess
                // Connection string has _not_ changed, return the cached one.
                return cachedConnectionString;
             }
+
             // Connection string _has_ changed, update the cached one.
-            cache.AddStatic(CachePartitionName, ConnectionStringKey, configConnectionString);
+            Common.Properties.Settings.Default.DefaultCache.AddStatic(CachePartitionName, ConnectionStringKey, configConnectionString);
             return configConnectionString;
          }
          set
          {
-            var cache = Settings.Default.PersistConnectionString
-               ? PersistentCache.DefaultInstance as ICache
-               : VolatileCache.DefaultInstance;
-
             Manager.ElaborateConnectionString(ref value);
-            cache.AddStatic(CachePartitionName, ConnectionStringKey, value);
+            Common.Properties.Settings.Default.DefaultCache.AddStatic(CachePartitionName, ConnectionStringKey, value);
          }
       }
 
