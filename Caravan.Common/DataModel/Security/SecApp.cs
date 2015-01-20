@@ -70,9 +70,10 @@ namespace Finsa.Caravan.Common.DataModel.Security
       }
    }
 
-   [Serializable]
+   [Serializable, DataContract(IsReference = true)]
    public class SecAppSingle : IEquatable<SecAppSingle>
    {
+      [DataMember]
       public SecApp App { get; set; }
 
       public bool Equals(SecAppSingle other)
@@ -106,9 +107,10 @@ namespace Finsa.Caravan.Common.DataModel.Security
       }
    }
 
-   [Serializable]
+   [Serializable, DataContract(IsReference = true)]
    public class SecAppList : IEquatable<SecAppList>
    {
+      [DataMember]
       public IEnumerable<SecApp> Apps { get; set; }
 
       public bool Equals(SecAppList other)

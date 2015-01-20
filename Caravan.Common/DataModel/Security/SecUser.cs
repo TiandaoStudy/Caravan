@@ -79,9 +79,10 @@ namespace Finsa.Caravan.Common.DataModel.Security
       #endregion
    }
 
-   [Serializable]
+   [Serializable,DataContract(IsReference = true)]
    public class SecUserSingle : IEquatable<SecUserSingle>
    {
+      [DataMember]
       public SecUser User { get; set; }
 
       #region Equality Members
@@ -119,9 +120,10 @@ namespace Finsa.Caravan.Common.DataModel.Security
       #endregion
    }
 
-   [Serializable]
+   [Serializable,DataContract(IsReference = true)]
    public class SecUserList : IEquatable<SecUserList>
    {
+      [DataMember]
       public IEnumerable<SecUser> Users { get; set; }
 
       #region Equality Members

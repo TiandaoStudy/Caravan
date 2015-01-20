@@ -7,26 +7,37 @@ namespace Finsa.Caravan.Common.DataModel.Security
    [Serializable, DataContract(IsReference = true)]
    public class SecEntry : IEquatable<SecEntry>
    {
+      [DataMember]
       public long Id { get; set; }
 
+       [DataMember]
       public long AppId { get; set; }
 
+       [DataMember]
       public SecApp App { get; set; }
 
+       [DataMember]
       public long? UserId { get; set; }
 
+       [DataMember]
       public SecUser User { get; set; }
 
+       [DataMember]
       public long? GroupId { get; set; }
 
+       [DataMember]
       public SecGroup Group { get; set; }
 
+       [DataMember]
       public long ContextId { get; set; }
 
+       [DataMember]
       public SecContext Context { get; set; }
 
+       [DataMember]
       public long ObjectId { get; set; }
 
+       [DataMember]
       public SecObject Object { get; set; }
 
       public bool Equals(SecEntry other)
@@ -63,9 +74,10 @@ namespace Finsa.Caravan.Common.DataModel.Security
       }
    }
 
-   [Serializable]
+   [Serializable,DataContract(IsReference = true)]
    public class SecEntrySingle : IEquatable<SecEntrySingle>
    {
+      [DataMember]
       public SecEntry Entry { get; set; }
 
       public bool Equals(SecEntrySingle other)
@@ -99,7 +111,7 @@ namespace Finsa.Caravan.Common.DataModel.Security
       }
    }
 
-   [Serializable]
+   [Serializable,DataContract(IsReference = true)]
    public class SecEntryList : IEquatable<SecEntryList>
    {
       public IEnumerable<SecEntry> Entries { get; set; }
