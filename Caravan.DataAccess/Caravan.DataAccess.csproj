@@ -133,6 +133,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Settings.cs" />
     <Compile Include="Sql\CaravanDbContext.cs" />
     <Compile Include="Core\DbContextBase.cs" />
     <Compile Include="Core\DbManagerBase.cs" />

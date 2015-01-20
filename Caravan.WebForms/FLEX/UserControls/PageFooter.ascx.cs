@@ -1,5 +1,6 @@
 ﻿using System;
 using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.WebForms.Properties;
 using FLEX.WebForms;
 
 // ReSharper disable CheckNamespace
@@ -15,7 +16,7 @@ namespace FLEX.Web.UserControls
          try
          {
             // Footer extender
-            var ext = LoadControl(WebForms.Configuration.Instance.ControlExtendersFolder + "/PageFooter.ascx");
+            var ext = LoadControl(Settings.Default.ControlsExtendersFolder + "/PageFooter.ascx");
             footerExtender.Controls.Add(ext);
 
             // ...

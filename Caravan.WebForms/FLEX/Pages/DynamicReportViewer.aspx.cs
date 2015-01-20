@@ -9,6 +9,7 @@ using Dapper;
 using Finsa.Caravan;
 using Finsa.Caravan.Common.WebForms;
 using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.WebForms.Properties;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 using Newtonsoft.Json;
@@ -54,7 +55,7 @@ namespace FLEX.WebForms.Pages
          try
          {
             // Report name is mandatory.
-            Raise<InvalidOperationException>.IfIsEmpty(Request[ReportNameRequestKey], Finsa.Caravan.WebForms.ErrorMessages.Pages_DynamicReportViewer_MissingReportName);
+            Raise<InvalidOperationException>.IfIsEmpty(Request[ReportNameRequestKey], Finsa.Caravan.WebForms.Core.ErrorMessages.Pages_DynamicReportViewer_MissingReportName);
 
             // Configuration for the VerticalSearch search button.
             Master.SearchButton.Visible = true;
@@ -99,7 +100,7 @@ namespace FLEX.WebForms.Pages
 
       private void BuildPage(string reportName)
       {
-         var reportXmlPath = Server.MapPath(Path.Combine(Configuration.Instance.DynamicReportsFolder, reportName + Constants.FileExtensions.Xml));
+         var reportXmlPath = Server.MapPath(Path.Combine(Settings.Default.DynamicReportsFolder, reportName + Constants.FileExtensions.Xml));
          dynamic reportXml = DynamicXml.Load(reportXmlPath);
 
          _queryInfo = RetrieveQueryInfo(reportXml.Query);

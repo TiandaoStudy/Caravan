@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Finsa.Caravan.Common.WebForms;
+using Finsa.Caravan.WebForms.Properties;
 using PommaLabs.Collections.ReadOnly;
 using PommaLabs.Diagnostics;
 using PommaLabs.Extensions;
@@ -51,9 +52,9 @@ namespace FLEX.Web.UserControls.Ajax
          {
             Raise<InvalidOperationException>.IfNot(HasValues);
             Raise<InvalidOperationException>.IfNot(DateIsValid(txtDate.Text));
-            return DateTime.Parse(txtDate.Text, WebForms.Configuration.CurrentUserCulture, DateTimeStyles.AllowWhiteSpaces);
+            return DateTime.Parse(txtDate.Text, Settings.Default.CurrentUserCulture, DateTimeStyles.AllowWhiteSpaces);
          }
-         set { txtDate.Text = value.ToString("d", WebForms.Configuration.CurrentUserCulture); }
+         set { txtDate.Text = value.ToString("d", Settings.Default.CurrentUserCulture); }
       }
 
       public string StartDate
@@ -130,7 +131,7 @@ namespace FLEX.Web.UserControls.Ajax
          get
          {
             DateTime result;
-            if (HasValues && DateTime.TryParse(txtDate.Text, WebForms.Configuration.CurrentUserCulture, DateTimeStyles.AllowWhiteSpaces, out result))
+            if (HasValues && DateTime.TryParse(txtDate.Text, Settings.Default.CurrentUserCulture, DateTimeStyles.AllowWhiteSpaces, out result))
             {
                return result;
             }
@@ -209,7 +210,7 @@ namespace FLEX.Web.UserControls.Ajax
       private static bool DateIsValid(string dateStr)
       {
          DateTime dt;
-         return DateTime.TryParse(dateStr, WebForms.Configuration.CurrentUserCulture, DateTimeStyles.AllowWhiteSpaces, out dt);
+         return DateTime.TryParse(dateStr, Settings.Default.CurrentUserCulture, DateTimeStyles.AllowWhiteSpaces, out dt);
       }
 
       #endregion

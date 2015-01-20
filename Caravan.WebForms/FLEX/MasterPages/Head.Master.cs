@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using Finsa.Caravan.WebForms.Properties;
 using FLEX.Web.UserControls.Ajax;
 using FLEX.WebForms;
 using WebMarkupMin.Core;
@@ -84,7 +85,7 @@ namespace FLEX.Web.MasterPages
             base.Render(htmlTextWriter);
             var html = htmlTextWriter.InnerWriter.ToString();
 
-            if (Configuration.Instance.EnableOutputMinification)
+            if (Settings.Default.EnableOutputMinification)
             {
                // Minify content of the 'html' variable
                var htmlMinifier = WebMarkupMinContext.Current.Markup.CreateHtmlMinifierInstance();
@@ -118,7 +119,7 @@ namespace FLEX.Web.MasterPages
       {
          var response = HttpContext.Current.Response;
 
-         if (Configuration.Instance.EnableOutputCompression && IsGZipSupported())
+         if (Settings.Default.EnableOutputCompression && IsGZipSupported())
          {
             var acceptEncoding = HttpContext.Current.Request.Headers["Accept-Encoding"];
             if (acceptEncoding.Contains("deflate"))
@@ -142,9 +143,9 @@ namespace FLEX.Web.MasterPages
       public void RedirectIfNotAuthenticated()
       {
          // If user is not authenticated, then we redirect her to the session expired page.
-         if (Configuration.Instance.CheckSecurity && !HttpContext.Current.User.Identity.IsAuthenticated)
+         if (Settings.Default.EnableSecurity && !HttpContext.Current.User.Identity.IsAuthenticated)
          {
-            Response.Redirect(Configuration.Instance.SessionExpiredPageUrl, true);
+            Response.Redirect(Settings.Default.SessionExpiredPageUrl, true);
          }
       }
 

@@ -4,6 +4,7 @@ using System.IO;
 using System.Web;
 using System.Web.UI.WebControls;
 using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.WebForms.Properties;
 using PommaLabs;
 using PommaLabs.Text;
 
@@ -23,8 +24,8 @@ namespace FLEX.Web.Pages
          {
             ViewState["dictFilesPath"] = _filesPath;
             var scriptsPath = PommaLabs.Armando.My.MySettings.Default.ScriptsPath.MapPath();
-            var xmlPath = Server.MapPath(WebForms.Configuration.Instance.AjaxLookupsXmlPath);
-            var menuPath = Server.MapPath(WebForms.Configuration.Instance.MenuBarXmlPath);
+            var xmlPath = Server.MapPath(Settings.Default.AjaxLookupsXmlPath);
+            var menuPath = Server.MapPath(Settings.Default.MenuBarXmlPath);
             var files = new Dictionary<string, string> {{"Data Scritps", scriptsPath}, {"Ajax Lookup", xmlPath}, {"Menu", menuPath}};
             BuildTreeView(files);
          }

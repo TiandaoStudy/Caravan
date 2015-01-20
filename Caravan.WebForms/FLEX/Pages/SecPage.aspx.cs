@@ -6,6 +6,7 @@ using System.Web.UI.WebControls;
 using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess;
 using System.Xml;
+using Finsa.Caravan.WebForms.Properties;
 using FLEX.Web.UserControls.Ajax;
 using System.Web.UI;
 // ReSharper disable CheckNamespace
@@ -62,7 +63,7 @@ namespace FLEX.Web.Pages
           var PageControls = (ControlCollection)Session["9AEC36F0-A991-4f09-A8AD-6BCA5C1A4A39"];
 
          // Legge il file XML
-         docXML.Load(Server.MapPath(WebForms.Configuration.Instance.MenuBarXmlPath));
+          docXML.Load(Server.MapPath(Settings.Default.MenuBarXmlPath));
 
          TreeView1.Nodes.Clear();
          TreeView1.Nodes.Add(new TreeNode(docXML.DocumentElement.Name));

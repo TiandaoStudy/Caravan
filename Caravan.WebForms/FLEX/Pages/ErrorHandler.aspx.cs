@@ -1,6 +1,5 @@
 ﻿using System;
-using Finsa.Caravan;
-using Finsa.Caravan.Common;
+using Finsa.Caravan.WebForms.Properties;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -20,14 +19,14 @@ namespace FLEX.Web.Pages
            txtTitle.Text = Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName;
 
            //Per errore potrei chiamare la pagina e la sessione è vuota
-           if (Session[WebForms.Configuration.ExceptionSessionKey] == null) 
+           if (Session[Settings.Default.ExceptionSessionKey] == null) 
            {
               //Chiudo la finestra
               Response.Write("<script language='javascript'>window.close();</script>");
            }
            else 
            {
-              ex = ((Exception)Session[WebForms.Configuration.ExceptionSessionKey]);
+              ex = ((Exception)Session[Settings.Default.ExceptionSessionKey]);
               if (ex != null) 
               {
                  txtDetail.Text = ex.ToString();
