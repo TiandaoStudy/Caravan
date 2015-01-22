@@ -73,12 +73,13 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.SqlServer.Types.11.0.1\lib\net20\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Finsa.Odp.Net.Unofficial.1.0.0\lib\net45\Oracle.ManagedDataAccess.dll</HintPath>
+    <Reference Include="Oracle.ManagedDataAccess">
+      <HintPath>..\packages\Finsa.Odp.Net.Core.Unofficial.5.0.0\lib\net45\Oracle.ManagedDataAccess.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Oracle.ManagedDataAccess.EntityFramework">
-      <HintPath>..\packages\Finsa.Odp.Net.Unofficial.1.0.0\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
+      <HintPath>..\packages\Finsa.Odp.Net.Core.Unofficial.5.0.0\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -296,6 +297,18 @@
     <Content Include="FLEX\Fonts\octicons.eot" />
     <Content Include="FLEX\Fonts\octicons.ttf" />
     <Content Include="FLEX\Fonts\octicons.woff" />
+    <Content Include="x64\Oracle.ManagedDataAccessDTC.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x64\Oracle.ManagedDataAccessIOP.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\Oracle.ManagedDataAccessDTC.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\Oracle.ManagedDataAccessIOP.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
