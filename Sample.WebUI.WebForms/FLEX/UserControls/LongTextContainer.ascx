@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LongTextContainer.ascx.cs" Inherits="FLEX.Web.UserControls.LongTextContainer" %>
 <%@ Import Namespace="PommaLabs.Extensions" %>
 
-<label id="shortenedText" class="long-text-ctn-label" runat="server"><%= ShortenedText %></label>
+<label id="shortenedText" class="long-text-ctn-label" runat="server"><%= Server.HtmlEncode(ShortenedText) %></label>
 
 <style type="text/css">
    .popover {
@@ -17,7 +17,7 @@
       placement: "auto",
       html: true,
       trigger: "hover",
-      content: <%= Text.ToJavaScriptString() %>,
+      content: <%= Server.HtmlEncode(Text).ToJavaScriptString() %>,
       title: <%= ContainerTitle.ToJavaScriptString() %>
       }).one('click', function() {
          $('#<%= shortenedText.ClientID %>').popover('destroy')
