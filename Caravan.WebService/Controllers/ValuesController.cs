@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using WebApi.OutputCache.V2;
 
 namespace Caravan.WebService.Controllers
 {
@@ -15,7 +16,7 @@ namespace Caravan.WebService.Controllers
        /// Returns all values 
        /// </summary>
        /// <returns>All values </returns>
-      
+      [CacheOutput(ServerTimeSpan = 30)]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
