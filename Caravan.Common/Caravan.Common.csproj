@@ -78,6 +78,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cache.cs" />
     <Compile Include="DataModel\Exceptions\AppExistingException.cs" />
     <Compile Include="DataModel\Exceptions\AppNotFoundException.cs" />
     <Compile Include="DataModel\Exceptions\EntryExistingException.cs" />

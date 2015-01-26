@@ -81,7 +81,7 @@ namespace FLEX.Web.Services
          xmlPath = HttpContext.Current.Server.MapPath(xmlPath);
 
          // If cache contains an instance of the lookup data, we return it.
-         var lookupData = Finsa.Caravan.Common.Properties.Settings.Default.DefaultCache.Get<AjaxLookupDataLookupBy>(CachePartition, xmlPath);
+         var lookupData = Finsa.Caravan.Common.Cache.Instance.Get<AjaxLookupDataLookupBy>(CachePartition, xmlPath);
          if (lookupData != null)
          {
             return lookupData;
@@ -102,7 +102,7 @@ namespace FLEX.Web.Services
 
          // We store the lookup data instance inside the cache, and then we return it.
          // We must pay attention to put the type of the lookup inside the key.
-         Finsa.Caravan.Common.Properties.Settings.Default.DefaultCache.AddSliding(CachePartition, xmlPath, lookupData, Settings.Default.DefaultIntervalForVolatile);
+         Finsa.Caravan.Common.Cache.Instance.AddSliding(CachePartition, xmlPath, lookupData, Settings.Default.DefaultIntervalForVolatile);
          return lookupData;
       }
 

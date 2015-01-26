@@ -1,11 +1,14 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using PommaLabs.Diagnostics;
 
 namespace Finsa.Caravan.Mvc.Core.Links
 {
     /// <summary>
     /// A base class for relation links
     /// </summary>
-    [DataContract]
+    [JsonObject, DataContract]
     public class Link
     {
         [DataMember]
@@ -19,8 +22,8 @@ namespace Finsa.Caravan.Mvc.Core.Links
 
         public Link(string rel, string href, string title = null)
         {
-            Ensure.Argument.NotNullOrEmpty(rel, "rel");
-            Ensure.Argument.NotNullOrEmpty(href, "href");
+            Raise<ArgumentException>.IfIsEmpty(rel);
+            Raise<ArgumentException>.IfIsEmpty(href);
 
             Rel = rel;
             Href = href;

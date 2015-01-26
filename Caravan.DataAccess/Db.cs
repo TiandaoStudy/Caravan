@@ -85,7 +85,7 @@ namespace Finsa.Caravan.DataAccess
       {
          get
          {
-            var cachedConnectionString = Common.Properties.Settings.Default.DefaultCache.Get<string>(CachePartitionName, ConnectionStringKey);
+            var cachedConnectionString = Cache.Instance.Get<string>(CachePartitionName, ConnectionStringKey);
             var configConnectionString = Settings.Default.ConnectionString;
 
             if (String.IsNullOrWhiteSpace(configConnectionString))
@@ -101,13 +101,13 @@ namespace Finsa.Caravan.DataAccess
             }
 
             // Connection string _has_ changed, update the cached one.
-            Common.Properties.Settings.Default.DefaultCache.AddStatic(CachePartitionName, ConnectionStringKey, configConnectionString);
+            Cache.Instance.AddStatic(CachePartitionName, ConnectionStringKey, configConnectionString);
             return configConnectionString;
          }
          set
          {
             Manager.ElaborateConnectionString(ref value);
-            Common.Properties.Settings.Default.DefaultCache.AddStatic(CachePartitionName, ConnectionStringKey, value);
+            Cache.Instance.AddStatic(CachePartitionName, ConnectionStringKey, value);
          }
       }
 
