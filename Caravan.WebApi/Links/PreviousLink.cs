@@ -1,7 +1,8 @@
 ﻿namespace Finsa.Caravan.Mvc.Core.Links
 {
     /// <summary>
-    /// Indicates that the link's context is a part of a series, and that the previous in the series is the link target.
+    ///   Indicates that the link's context is a part of a series, and that the previous in the
+    ///   series is the link target.
     /// </summary>
     public class PreviousLink : Link
     {

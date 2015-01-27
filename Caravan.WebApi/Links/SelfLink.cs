@@ -1,7 +1,7 @@
 ﻿namespace Finsa.Caravan.Mvc.Core.Links
 {
     /// <summary>
-    /// Conveys an identifier for the link's context.
+    ///   Conveys an identifier for the link's context.
     /// </summary>
     public class SelfLink : Link
     {

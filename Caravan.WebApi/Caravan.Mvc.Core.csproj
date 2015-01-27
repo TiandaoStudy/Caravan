@@ -89,6 +89,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enrichers\IResponseEnricher.cs" />
+    <Compile Include="Enrichers\ObjectContentResponseEnricher.cs" />
     <Compile Include="GlobalHelper.cs" />
     <Compile Include="Links\AlternateLink.cs" />
     <Compile Include="Links\CollectionLink.cs" />

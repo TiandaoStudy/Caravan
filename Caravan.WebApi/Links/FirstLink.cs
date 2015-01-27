@@ -1,7 +1,7 @@
 ﻿namespace Finsa.Caravan.Mvc.Core.Links
 {
     /// <summary>
-    /// An IRI that refers to the furthest preceding resource in a series of resources.
+    ///   An IRI that refers to the furthest preceding resource in a series of resources.
     /// </summary>
     public class FirstLink : Link
     {

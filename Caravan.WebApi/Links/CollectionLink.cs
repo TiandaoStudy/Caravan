@@ -1,7 +1,8 @@
 ﻿namespace Finsa.Caravan.Mvc.Core.Links
 {
     /// <summary>
-    /// The target IRI points to a resource which represents the collection resource for the context IRI.
+    ///   The target IRI points to a resource which represents the collection resource for the
+    ///   context IRI.
     /// </summary>
     public class CollectionLink : Link
     {

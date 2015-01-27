@@ -1,12 +1,12 @@
-﻿using System;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using PommaLabs.Diagnostics;
+using System;
+using System.Runtime.Serialization;
 
 namespace Finsa.Caravan.Mvc.Core.Links
 {
     /// <summary>
-    /// A base class for relation links
+    ///   A base class for relation links. See here: https://www.iana.org/assignments/link-relations/link-relations.xhtml.
     /// </summary>
     [JsonObject, DataContract]
     public class Link

@@ -1,7 +1,7 @@
 ﻿namespace Finsa.Caravan.Mvc.Core.Links
 {
     /// <summary>
-    /// Identifies a related resource.
+    ///   Identifies a related resource.
     /// </summary>
     public class RelatedLink : Link
     {

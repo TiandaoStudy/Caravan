@@ -1,7 +1,7 @@
 ﻿namespace Finsa.Caravan.Mvc.Core.Links
 {
     /// <summary>
-    /// Refers to a substitute for this context
+    ///   Refers to a substitute for this context
     /// </summary>
     public class AlternateLink : Link
     {
