@@ -1,0 +1,438 @@
+#%RAML 0.8
+title: caravan
+version: 0.8
+baseUri: http://localhost/Caravan.RestService/security
+/:
+  post:
+    description: Returns a list of all the applications present
+/{appName}:
+  displayName: Applications
+  uriParameters:
+    appName:
+      type: string
+  post:
+    description: Returns the application named "appName"
+    responses:   
+        200:
+          body:
+            application/json:
+              schema: |
+                {
+                  "StatusCode": 200,
+                  "Body":{
+                    "Apps":{
+                      "Id":"long",
+                      "Name":"string",
+                      "Description":"string",
+                      "Users":"[{}]",
+                      "Groups": "[{}]",
+                      "Contexts": "[{}]",
+                      "LogSettings": "[{}]"                                 
+                    }               
+                  }                
+                }              
+  /contexts:
+    displayName: Contexts
+    post:
+      description: Returns all contexts af the application named "appName". No parameter in the body of the request are required. If any, they are ignored.
+      responses:
+        200:
+          body:
+            application/json:
+              schema: |
+                {                  
+                  "Body": {
+                    "Contexts": 
+                    {
+                      "Id": "long",
+                      "Name": "string",
+                      "Description": "string",
+                      "Objects": "[{}]"
+                    }
+                  }
+                }              
+  /entries:
+    description: The entries of the application
+    post:
+      description: Returns all the entries for the application named "appName"
+      responses:   
+        200:
+          body:
+            application/json:
+              schema: |
+                {
+                  "StatusCode": 200,
+                  "Body": {
+                    "Entries": "[{}]"
+                  }
+                }
+    put:
+      description: Add a new entry in the application named "appName". Only one between User login or group name have to be given as parameter. 
+      body:
+        application/json:
+          schema: |
+            {
+              "Auth": "string",
+              "Body": {
+                    "Entry": 
+                    {    
+                      "Context":
+                        { 
+                          "Name": "string",
+                          "Description": "string"
+                        },
+                      "Object":
+                        {
+                          "Name": "string",
+                          "Description": "string",
+                          "Type": "string"
+                        },
+                      "User": 
+                        {
+                          "Login": "string"
+                        },
+                      "Group": 
+                        {
+                          "Name": "string"
+                        }
+                    }
+                  }
+            }      
+      responses:   
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "StatusCode": 200,
+                  "Body": "OK"
+                }      
+              
+              
+    /{contextName}:
+      uriParameters:
+        contextName:
+          type: string  
+      post:
+        description: Returns all the entries referred to the the context named "contextName". No parameters in the body of the request are required. If any, they are ignored. 
+        responses:
+          200:
+            body:
+              application/json:
+                schema: | 
+                  {
+                    "StatusCode": 200,
+                    "Body": {
+                      "Entries": "[{}]"
+                    }
+                  }                  
+      /{objectName}:
+        uriParameters:
+          objectName:
+            type: string 
+        post:
+          description: Returns all the entries of the context "contextName" referred to the object named "objectName". No parameters in the body of the request are required. If any, they are ignored.
+          responses:
+            200:
+              body:
+                application/json:
+                  schema: |
+                    {
+                      "StatusCode": 200,
+                      "Body": {
+                      "Entries": "[{}]"
+                      }
+                    }
+        delete:
+          description: Deletes all the entries of the object "objectName" in the context named "contextName" for the user identified by login (or for the group with name group) given as parameter in the body of the request. (Only one between user login or group name have to be given as parameter in the body of the request). In the schema below is represented a request with user login. In case of group name it is necessary to change "User":{ "Login":"string" } to "Group"{"Name":"string"}
+          body:            
+            application/json:
+              schema: |
+                {                   
+                  "Auth":"string",
+                  "Body":{
+                    "Entry":{
+                      "User":{            
+                        "Login":"string"
+                        }
+                      }
+                  }                  
+                }              
+          responses:      
+            200:
+              body:
+                application/json:
+                  example: |
+                    {
+                      "StatusCode": 200,
+                      "Body": "OK"
+                    }    
+                    
+  /groups:
+    description: Groups of users of the applications named "appName".   
+    post:
+      description: Returns all the groups of users that belong to the application named "appName". No parameteres are required in the body of the request.If any, they are ignored. 
+      responses:
+        200:
+          body:
+            application/json:
+              schema: |
+                {                  
+                  "StatusCode": 200,
+                  "Body": {
+                        "Groups": [
+                        {
+                          "Id": "long",
+                          "Name": "string",
+                          "Description": "string",
+                          "IsAdmin": "bit",
+                          "Users": "[{}]"
+                        }
+                        ]
+                  }
+                }              
+    put:
+      description: Add a new group of users in the application named "appName".
+      body:
+        application/json:
+          schema: |
+            {
+              "Auth":"string",
+              "Body": {
+                      "Group":{
+                          "Name":"string",
+                          "Description":"string",
+                          "Notes":"string"
+                        }
+                      }            
+            }    
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                  {
+                    "StatusCode": 200,
+                    "Body": "OK"
+                  }   
+    /{groupName}:
+      description: The name of the group
+      uriParameters:
+        groupName:
+          type: string
+      post:
+        description: Returns the list of all the groups of users present into the application named "appName". No parameters in the body of the request are required; if any, they are ignored.
+        responses:
+          200:
+            body:
+              application/json:
+                schema: |
+                  {                    
+                    "StatusCode": 200,
+                    "Body": {
+                        "Group": {
+                          "Id": "long",
+                          "Name": "string",
+                          "Description": "string",
+                          "IsAdmin": "bit",
+                          "Users": "[{}]"
+                        }
+                    }
+                  }
+      patch:
+        description: Update data of the group named "groupName",present into the application named "appName", with data given as parameter in the body of the request.
+        body:
+          application/json:
+            schema: |
+              {
+                "Auth":"string",
+                "Body": {
+                      "Group":{
+                          "Name":"string",
+                          "Description":"string",
+                          "Notes":"string"
+                        }
+                    }
+              }
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "StatusCode": 200,
+                    "Body": "OK"
+                  }
+      delete:
+        description: Delete the group named "groupName" from the application named "appName". No parameters are required in the body of the request. If any, they are ignored.
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "StatusCode": 200,
+                    "Body": "OK"
+                  }
+  /objects:
+    post:
+      description: Returns all the objects of the application named "appname". No parameters are required in the body of the request. If any, they are ignored.
+      responses:
+          200:
+            body:
+              application/json:
+                schema: |
+                  {
+                    "StatusCode": 200,
+                    "Body": {
+                        "Objects": [
+                          {
+                            "Id": "long",
+                            "Name": "string",
+                            "Description": "string",
+                            "Type": "string"
+                          }
+                          ]
+                    }
+                  }
+  /users:
+    description: Users of the application named "appName".   
+    post:
+      description: Returns all the users of the application named "appName". No parameters are required in the body of the request. If any, they are ignored.
+      responses:
+        200:
+          body:
+            application/json:
+              schema: |
+                {                                    
+                  "StatusCode": 200,
+                  "Body": {
+                        "Users": {
+                            "Id": "long",
+                            "Active": "bit",
+                            "Login": "string",
+                            "FirstName": "string",
+                            "LastName": "string",
+                            "Groups":"[{}]"
+                        }
+                  }
+                }
+      
+    put:
+      description: Add a new user in the application named "appName" with data insert in the body of the request. Parameter "Active" can be 1 or 0.
+      body:
+        application/json:
+          schema: |
+            {
+              "Aut":"string",
+              "Body": {
+                    "User":{
+                       "FirstName" : "string",
+                       "LastName" : "string",
+                       "Email" : "string",
+                       "Login" : "string",
+                       "Active" : "bit"
+                      }
+                  }
+                }          
+      responses:    
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "StatusCode": 200,
+                  "Body": "OK"
+                }
+    /{userLogin}:  
+      description: The login of the user
+      uriParameters:
+        userLogin:
+          type: string
+      post:
+        description: Returns the user present in the application named "appName", identified by "userLogin".
+        responses:
+          200:
+            body:
+              application/json:
+                schema: |
+                  {
+                      "StatusCode": 200,
+                      "Body": {
+                            "User": {
+                            "Id": "long",
+                            "Active": "bit",
+                            "Login": "string",
+                            "FirstName": "string",
+                            "LastName": "string",
+                            "Email": "string",
+                            "Groups": "[{}]"
+                            }
+                      }
+                  }
+      patch:
+        description: Update data give as parameters in the body of the request, for user present in the application named "appName", identified by "userLogin". All data can be updated.
+        body:
+          application/json:
+            schema: |
+              {
+                "Auth": "string",
+                "Body": {
+                          "User":{
+                          "FirstName" : "string",
+                           "LastName" : "string",
+                           "Email" : "string",
+                           "Login" : "string",
+                           "Active" : "bit"
+                         }
+                       }
+              }
+        responses:    
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "StatusCode": 200,
+                    "Body": "OK"
+                  }
+      delete:
+        description: Delete user from application named "appName" identified by "userlogin". No parameters in the body of the request are required. If any, they are ignored.
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "StatusCode": 200,
+                    "Body": "OK"
+                  }
+      /{groupName}:
+        description: The name of the group.
+        uriParameters:
+          groupName:
+            type: string
+        put:
+          description: Add in application named "appName", the user identified by "userLogin" to the group named "groupName". No parameters in the body of the request are required. If any, they are ignored.
+          responses:
+            200:
+              body:
+                application/json:
+                  example: |
+                    {
+                      "StatusCode": 200,
+                      "Body": "OK"
+                    }   
+        delete:
+          description: Delete user from the application named "appname", that is identified by "userLogin" from the group named "groupName"
+          responses:
+            200:
+              body:
+                application/json:
+                  example: |
+                    {
+                      "StatusCode": 200,
+                      "Body": "OK"
+                    }   
+            
+        

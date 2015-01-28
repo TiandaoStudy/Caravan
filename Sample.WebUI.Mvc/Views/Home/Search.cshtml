@@ -1,0 +1,114 @@
+﻿@using System.Data
+@using Finsa.Caravan.Mvc.Controls.PageElements
+@using Finsa.Caravan.Mvc.Controls.ValueHolders
+@using Finsa.Caravan.Testing
+
+@model dynamic
+
+@{
+   ViewBag.Title = "title";
+   Layout = "~/Caravan.Mvc/Views/Shared/Pages/VerticalSearchLayout.cshtml";
+   ViewBag.DataColumns = new [] {"A", "B", "C", "D", "E", "F", "G"};
+   var gen = new RandomDataTableGenerator(ViewBag.DataColumns);
+   ViewBag.DataSource = gen.GenerateDataTable(5000);
+}
+
+@section ScriptSection {
+   
+}
+
+@section SearchCriteriaSection {
+<script type="text/javascript">
+    function p() {
+        alert("Sucess ");
+    }
+   
+      function onSwitchChanged(event, state) {
+         var criteria = searchCriteria.get("criteria");
+         searchCriteria.set({criteria: [{id: "onoff", value: state}]});
+      }
+
+      function onChangedDate(event) {
+         alert(event.date);
+         var criteria = searchCriteria.get("criteria");
+         searchCriteria.set({ criteria: [{ id: "datepicker", value: event.date }] });
+      }
+
+      $(document).ready(function () {
+         //$('#myTable').DataTable({
+         //   "deferRender": true,
+         //   "processing": true,
+         //   "scrollY": "200px",
+         //   "dom": "provaS"
+         //});
+         $('#myTable').bootstrapTable();
+      });
+   </script>
+
+   @Html.CaravanVerticalSearchCriteria(new List<CaravanVerticalSearchCriteriumOptions>
+   {
+      new CaravanVerticalSearchCriteriumOptions
+      {
+         Label = "Employee", Control = () => Html.JQuerySelect2(new JQuerySelect2Options
+         {
+            ID = "employee_id",
+            DataSourceUrl = "http://localhost/testrestservice/employees/query",
+            PlaceHolder = "Name or ID",
+            QueryBuilder = "getEmployeesByNameOrID",
+            DataMapper = "mapEmployeeForSelect2",
+            AllowClear = true
+         })
+      },
+      new CaravanVerticalSearchCriteriumOptions
+      {
+         Label = "Prova", Control = () => Html.RadioButton("PROVA", 4, true)
+      },
+      new CaravanVerticalSearchCriteriumOptions
+      {
+         Label = "Switch", Control = () => Html.BootstrapSwitch(new BootstrapSwitchOptions {ID="onoff", State = true, OnChange = "onSwitchChanged"})
+      },
+      new CaravanVerticalSearchCriteriumOptions
+      {
+         Label = "Date", Control = () => Html.BootstrapDatePicker(new BootstrapDatePickerOptions {ID="datepicker",   MinView = BootstrapDatePickerOptions.MinViewMode.Days, StartView=BootstrapDatePickerOptions.StartViewMode.Month, ChangeDate="onChangedDate"})
+      }
+   })
+}
+
+@section DataGridSection {
+
+   @*@{Html.RenderAction("InitializeSearchGrid", "Home", new {searchCriteriaJson = ""}); }
+   
+
+   @Html.FlexCheckBoxList(null)*@
+
+   <div id="prova">
+   <table id="myTable" class="table table-striped" data-pagination="true" data-search="true">
+      <thead>
+         <tr>
+            <th data-field="link">Tanti link</th>
+            @foreach (var col in ViewBag.DataColumns)
+            {
+               <th data-field="@col" data-align="right" data-sortable="true">@col</th>
+            }
+         </tr>
+      </thead>
+
+      <tbody>
+         @foreach (DataRow row in ViewBag.DataSource.Rows)
+         {
+            <tr>
+               <td>
+                  @Html.ActionLink("PROVA", "prova", null, new {@class="btn btn-primary"})
+                  @Html.ActionLink("PROVA1", "prova", null, new {@class="btn btn-primary"})
+                  @Html.ActionLink("PROVA2", "prova", null, new {@class="btn btn-primary"})
+               </td>
+               @foreach (var col in ViewBag.DataColumns)
+               {
+                  <td>@row[col]</td>
+               }
+            </tr>
+         }
+      </tbody>
+   </table>
+   </div>
+}
