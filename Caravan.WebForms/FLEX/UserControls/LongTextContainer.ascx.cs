@@ -1,6 +1,6 @@
-﻿using PommaLabs.Diagnostics;
+﻿using PommaLabs;
+using PommaLabs.Diagnostics;
 using System;
-using PommaLabs.Extensions;
 
 // ReSharper disable CheckNamespace This is the correct namespace, despite the file physical position.
 
@@ -21,26 +21,21 @@ namespace FLEX.Web.UserControls
 
         public string Text
         {
-            get { return (string) (ViewState[TextViewStateKey] ?? ""); }
+            get { return (string) (ViewState[TextViewStateKey] ?? Constants.EmptyString); }
             set
             {
                 Raise<ArgumentNullException>.IfIsNull(value, "Text property cannot be null");
                 if (value.Length <= MaxTextLength)
                 {
                     // Nothing to do, text fits the container.
-                    ShortenedText = value.Replace(Environment.NewLine, "");
+                    ShortenedText = value.Replace(Environment.NewLine, Constants.EmptyString);
                 }
                 else
                 {
-                    ShortenedText = value.Substring(0, MaxTextLength).Replace(Environment.NewLine, "") + "...";
+                    ShortenedText = value.Substring(0, MaxTextLength).Replace(Environment.NewLine, Constants.EmptyString) + "...";
                 }
-                ViewState[TextViewStateKey] = value.Replace(Environment.NewLine, "<br/>"); // Text should not have normal line breaks (it is HTML).
+                ViewState[TextViewStateKey] = value;
             }
-        }
-
-        public string EscapedText
-        {
-            get { return Text.HtmlEncode().Replace(Environment.NewLine, "<br/>"); }
         }
 
         #endregion Public Properties

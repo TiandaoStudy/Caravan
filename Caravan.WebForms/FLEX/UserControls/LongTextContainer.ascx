@@ -18,6 +18,7 @@
         placement: "auto",
         html: true,
         trigger: "hover",
+        // Text should not have normal line breaks (it is HTML).
         content: <%= Text.HtmlEncode().Replace(Environment.NewLine, "<br/>").ToJavaScriptString() %>,
         title: <%= ContainerTitle.ToJavaScriptString() %>
     }).one('click', function() {
@@ -27,6 +28,7 @@
         placement: "auto",
         html: true,
         trigger: "click",
+            // Text should not have normal line breaks (it is HTML).
         content: <%= Text.HtmlEncode().Replace(Environment.NewLine, "<br/>").ToJavaScriptString() %>,
         title: <%= ContainerTitle.ToJavaScriptString() %>
         }).popover('show');
