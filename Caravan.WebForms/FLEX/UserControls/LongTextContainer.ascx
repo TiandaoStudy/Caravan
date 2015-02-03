@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LongTextContainer.ascx.cs" Inherits="FLEX.Web.UserControls.LongTextContainer" %>
 <%@ Import Namespace="PommaLabs.Extensions" %>
 
-<a href="#" onclick="window.prompt('Copy to clipboard: Ctrl+C, Enter', <%= Text.ToJavaScriptString(true) %>); return false;"><i class="fa fa-clipboard"></i></a>
+<a href="#" onclick="window.prompt('Copy to clipboard: Ctrl+C, Enter', <%= Text.HtmlEncode().ToJavaScriptString(true) %>); return false;"><i class="fa fa-clipboard"></i></a>
 <label id="shortenedText" class="long-text-ctn-label" runat="server"><%= ShortenedText.HtmlEncode() %></label>
 
 <style type="text/css">
