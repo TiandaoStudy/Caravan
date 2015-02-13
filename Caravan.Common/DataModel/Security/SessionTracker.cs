@@ -17,8 +17,15 @@ namespace Finsa.Caravan.Common.DataModel.Security
 
       public void FillData()
       {
-         UserHostAddress = HttpContext.Current.Request.UserHostAddress;
-         UserHostName = HttpContext.Current.Request.UserHostName;
+         if (HttpContext.Current == null)
+         {
+            UserHostAddress = UserHostName = "unknown";
+         }
+         else
+         {
+            UserHostAddress = HttpContext.Current.Request.UserHostAddress == "::1" ? "localhost" : HttpContext.Current.Request.UserHostAddress;
+            UserHostName = HttpContext.Current.Request.UserHostName == "::1" ? "localhost" : HttpContext.Current.Request.UserHostAddress;
+         }
          LastVisit = DateTime.Now;
       }
    }

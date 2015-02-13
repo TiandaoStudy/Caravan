@@ -1,4 +1,5 @@
-﻿using Finsa.Caravan.Common.DataModel.Security;
+﻿using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess;
 using PommaLabs.KVLite;
 using System;
@@ -25,7 +26,7 @@ namespace Finsa.Caravan.WebForms
 
          // Run vacuum on the persistent cache. It should be put AFTER the connection string is
          // set, since that string it stored on the cache itself and we do not want conflicts, right?
-         if (Common.Properties.Settings.Default.DefaultCache is PersistentCache)
+         if (Cache.Instance is PersistentCache)
          {
             PersistentCache.DefaultInstance.VacuumAsync();
          }

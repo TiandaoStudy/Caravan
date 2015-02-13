@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;USETHROWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -28,7 +28,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;USETHROWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -40,6 +40,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PommaLabs.GRAMPA, Version=2.1.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PommaLabs.GRAMPA.2.1.6\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,6 +53,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -84,7 +89,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enrichers\IResponseEnricher.cs" />
+    <Compile Include="Enrichers\ObjectContentResponseEnricher.cs" />
     <Compile Include="GlobalHelper.cs" />
+    <Compile Include="Links\AlternateLink.cs" />
+    <Compile Include="Links\CollectionLink.cs" />
+    <Compile Include="Links\EditLink.cs" />
+    <Compile Include="Links\EditMediaLink.cs" />
+    <Compile Include="Links\FirstLink.cs" />
+    <Compile Include="Links\LastLink.cs" />
+    <Compile Include="Links\Link.cs" />
+    <Compile Include="Links\NextLink.cs" />
+    <Compile Include="Links\PreviousLink.cs" />
+    <Compile Include="Links\RelatedLink.cs" />
+    <Compile Include="Links\SelfLink.cs" />
     <Compile Include="Results\BsonNetResult.cs" />
     <Compile Include="Results\JsonNetResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,6 +119,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

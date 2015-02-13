@@ -47,7 +47,7 @@ namespace Finsa.Caravan.WebApi.Results
 
             if (Data != null)
             {
-                JsonTextWriter writer = new JsonTextWriter(response.Output) { Formatting = Formatting };
+                var writer = new JsonTextWriter(response.Output) { Formatting = Formatting };
 
                 JsonSerializer serializer = JsonSerializer.Create(SerializerSettings);
                 serializer.Serialize(writer, Data);

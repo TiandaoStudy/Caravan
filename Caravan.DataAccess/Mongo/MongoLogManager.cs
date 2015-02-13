@@ -115,14 +115,28 @@ namespace Finsa.Caravan.DataAccess.Mongo
          });
 
          // Real update
-         var db = MongoUtilities.GetDatabase();
-         var apps = db.GetCollection<MongoSecApp>(MongoUtilities.SecAppCollection);
+         var apps = MongoUtilities.GetSecAppCollection();
          return apps.Update(query, update).Ok;
       }
 
       protected override bool DoUpdateSettings(string appName, LogType logType, LogSettings settings)
       {
-         throw new System.NotImplementedException();
+         // Update preparation
+         var logTypeStr = logType.ToString().ToLower();
+         var docId = MongoUtilities.CreateObjectId(logTypeStr);
+         var query = Query<MongoSecApp>.EQ(a => a.Name, appName);
+         var update = Update<MongoSecApp>.Pull(a => a.LogSettings, new MongoLogSettings
+         {
+            Id = docId
+         }).AddToSet(a => a.LogSettings, new MongoLogSettings
+         {
+            Id = docId,
+            Type = logTypeStr
+         });
+
+         // Real update
+         var apps = MongoUtilities.GetSecAppCollection();
+         return apps.Update(query, update).Ok;
       }
    }
 }
