@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Finsa.WebApi.HelpPage.AnyHost;
+using System.Web;
 using System.Web.Http;
 
 namespace Caravan.WebService
@@ -9,10 +8,10 @@ namespace Caravan.WebService
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
-
-            // Web API routes
-            config.MapHttpAttributeRoutes();
+            // REQUIRED TO ENABLE HELP PAGES :)
+            config.MapHttpAttributeRoutes(new HelpDirectRouteProvider());
+            var xmlDocPath = HttpContext.Current.Server.MapPath(@"~/App_Data/XmlDocument.xml");
+            config.SetDocumentationProvider(new XmlDocumentationProvider(xmlDocPath));
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
