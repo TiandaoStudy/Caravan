@@ -28,6 +28,9 @@ namespace Caravan.WebService.Controllers
         public HelpController()
         {
             Info.MyServiceName = "Caravan.WebService";
+            Info.MyCompanyName = "Finsa S.p.A.";
+            Info.MyCompanyUrl = "http://www.finsa.it/";
+            Info.MyCustomerName = null;
         }
     }
 }
