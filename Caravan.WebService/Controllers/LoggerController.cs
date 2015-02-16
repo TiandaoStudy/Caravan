@@ -1,7 +1,10 @@
-﻿using Finsa.Caravan.Common.DataModel.Logging;
+﻿using System.Linq;
+using Finsa.Caravan.Common.DataModel.Logging;
 using Finsa.Caravan.DataAccess;
 using System.Collections.Generic;
 using System.Web.Http;
+using LinqToQuerystring;
+using LinqToQuerystring.WebApi;
 
 namespace Caravan.WebService.Controllers
 {
@@ -12,10 +15,10 @@ namespace Caravan.WebService.Controllers
         ///   Returns all log entries.
         /// </summary>
         /// <returns>All log entries.</returns>
-        [Route("{appName}/entries")]
-        public IEnumerable<LogEntry> GetEntries(string appName)
+        [Route("{appName}/entries"), LinqToQueryable]
+        public IQueryable<LogEntry> GetEntries(string appName)
         {
-            return Db.Logger.Logs(appName);
+            return Db.Logger.Logs(appName).AsQueryable();
         }
 
         [Route("{appName}/entries/{logType}")]

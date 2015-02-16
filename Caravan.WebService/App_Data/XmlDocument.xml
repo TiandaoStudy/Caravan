@@ -28,6 +28,52 @@
             <param name="appName"></param>
             <param name="l"></param>
         </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.PutLog(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType,Finsa.Caravan.Common.DataModel.Logging.LogEntry)">
+            <summary>
+            
+            </summary>
+            <param name="appName"></param>
+            <param name="logType"></param>
+            <param name="l"></param>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.GetSettings(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="appName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.GetSettings(Finsa.Caravan.Common.DataModel.Logging.LogType)">
+            <summary>
+            Returns all settings of a specified logType
+            </summary>
+            <param name="logType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.PutSetting(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType,Finsa.Caravan.Common.DataModel.Logging.LogSettings)">
+            <summary>
+            Add a new setting 
+            </summary>
+            <param name="appName"></param>
+            <param name="logType"></param>
+            <param name="settings"></param>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.PostSetting(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType,Finsa.Caravan.Common.DataModel.Logging.LogSettings)">
+            <summary>
+            Update the setting of a particular logType
+            </summary>
+            <param name="appName"></param>
+            <param name="logType"></param>
+            <param name="settings"></param>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.DeleteSetting(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType,Finsa.Caravan.Common.DataModel.Logging.LogSettings)">
+            <summary>
+            TODO
+            </summary>
+            <param name="appName"></param>
+            <param name="logType"></param>
+            <param name="settings"></param>
+        </member>
         <member name="M:Caravan.WebService.Controllers.ValuesController.Get">
             <summary>
             Returns all values 
