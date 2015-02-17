@@ -4,7 +4,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
 using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.Properties;
 using Finsa.Caravan.DataAccess.Core;
+using MongoDB.Driver;
 using PommaLabs.Diagnostics;
 using PommaLabs.Extensions;
 
@@ -104,7 +106,26 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-      protected override IList<LogSettings> GetLogSettings(string appName, LogType? logType)
+       protected override bool DoDeleteLog(string appName, int id)
+       {
+           using(var trx = new TransactionScope())
+           using (var ctx = Db.CreateWriteContext())
+           {
+               var deleted = false;
+               var log = ctx.LogEntries.FirstOrDefault(l => l.App.Name == appName && l.Id == id);
+
+               if (log != null)
+               {
+                   ctx.LogEntries.Remove(log);
+                   deleted = true;
+                   ctx.SaveChanges();
+                   trx.Complete();
+               }
+               return deleted;
+           }
+       }
+
+       protected override IList<LogSettings> GetLogSettings(string appName, LogType? logType)
       {
          using (var ctx = Db.CreateReadContext())
          {
@@ -152,7 +173,28 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-      protected override bool DoUpdateSettings(string appName, LogType logType, LogSettings settings)
+       protected override bool DoDeleteSettings(string appName, LogType logType)
+       {
+           using (var trx = new TransactionScope())
+           using (var ctx = Db.CreateWriteContext())
+           {
+               var deleted = false;
+               var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
+               var typeId = logType.ToString().ToLower();
+               var settings = ctx.LogSettings.FirstOrDefault(a => a.AppId == appId && a.TypeId == typeId);
+               
+               if (settings != null)
+               {
+                   ctx.LogSettings.Remove(settings);
+                   deleted = true;
+                   ctx.SaveChanges();
+                   trx.Complete();
+               }
+               return deleted;
+           }
+       }
+
+       protected override bool DoUpdateSettings(string appName, LogType logType, LogSettings settings)
       {
          using (var trx = new TransactionScope())
          using (var ctx = Db.CreateWriteContext())

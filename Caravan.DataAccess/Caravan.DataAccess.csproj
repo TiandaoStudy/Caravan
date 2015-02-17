@@ -187,6 +187,8 @@
     <Compile Include="Rest\RestLogManager.cs" />
     <Compile Include="Rest\RestSecurityManager.cs" />
     <Compile Include="Sql\SqlServerCe\SqlServerCeDbManager.cs" />
+    <Compile Include="Sql\SqlServer\SqlServerDbContext.cs" />
+    <Compile Include="Sql\SqlServer\SqlServerDbManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -201,6 +203,7 @@
     </None>
     <None Include="README.md" />
     <None Include="Sql\SqlServerCe\Scripts\Tables.sqlce" />
+    <None Include="Sql\SqlServer\Scripts\Tables.sqlce" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Caravan.Common\Caravan.Common.csproj">
@@ -230,7 +233,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Sql\Postgres\" />
-    <Folder Include="Sql\SqlServer\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\ErrorMessages.resx">
