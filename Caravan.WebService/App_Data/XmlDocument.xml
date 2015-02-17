@@ -45,6 +45,13 @@
             <param name="logType">Type of log which can be "warn", "info" or "error"</param>
             <param name="log">The log to add</param>
         </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.DeleteLog(System.String,System.Int32)">
+            <summary>
+            Delete log with the specified id in the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="id">The id of the log to delete which can be "warn", "info" or "error"</param>
+        </member>
         <member name="M:Caravan.WebService.Controllers.LoggerController.GetSettings(System.String)">
             <summary>
             Returns all settings of the specified application
@@ -78,11 +85,10 @@
         </member>
         <member name="M:Caravan.WebService.Controllers.LoggerController.DeleteSetting(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType)">
             <summary>
-            TODO
+            Deletes setting of the logtype specified in the specified application 
             </summary>
             <param name="appName">Application name</param>
             <param name="logType">Type of log which can be "warn", "info" or "error"</param>
-            <param name="settings"></param>
         </member>
         <member name="M:Caravan.WebService.Controllers.ValuesController.Get">
             <summary>

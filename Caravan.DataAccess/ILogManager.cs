@@ -436,6 +436,13 @@ namespace Finsa.Caravan.DataAccess
       /// </exception>
       IList<LogEntry> Logs(string appName, LogType logType);
 
+       /// <summary>
+       /// Deletes a log
+       /// </summary>
+       /// <param name="appName"></param>
+       /// <param name="id"></param>
+       string DeleteLog(string appName, int id);
+
       #endregion
 
       #region Log Settings
@@ -498,7 +505,7 @@ namespace Finsa.Caravan.DataAccess
       /// </summary>
       /// <param name="appName">the application</param>
       /// <param name="logType">The logType</param>
-      void DeleteSettings(string appName, LogType logType);
+      string DeleteSettings(string appName, LogType logType);
 
       #endregion
    }

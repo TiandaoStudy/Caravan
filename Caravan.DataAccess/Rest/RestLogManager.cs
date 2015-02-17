@@ -64,7 +64,12 @@ namespace Finsa.Caravan.DataAccess.Rest
          
       }
 
-      protected override bool DoAddSettings(string appName, LogType logType, LogSettings settings)
+       protected override bool DoDeleteLog(string appName, int id)
+       {
+           throw new NotImplementedException();
+       }
+
+       protected override bool DoAddSettings(string appName, LogType logType, LogSettings settings)
       {
          try
          {

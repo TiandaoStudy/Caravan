@@ -203,6 +203,7 @@
     </None>
     <None Include="README.md" />
     <None Include="Sql\SqlServerCe\Scripts\Tables.sqlce" />
+    <None Include="Sql\SqlServer\Scripts\Tables.sqlce" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Caravan.Common\Caravan.Common.csproj">

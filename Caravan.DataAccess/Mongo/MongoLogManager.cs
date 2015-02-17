@@ -79,7 +79,12 @@ namespace Finsa.Caravan.DataAccess.Mongo
          }).ToList();
       }
 
-      protected override IList<LogSettings> GetLogSettings(string appName, LogType? logType)
+       protected override bool DoDeleteLog(string appName, int id)
+       {
+           throw new System.NotImplementedException();
+       }
+
+       protected override IList<LogSettings> GetLogSettings(string appName, LogType? logType)
       {
          var apps = MongoUtilities.GetSecAppCollection();
          var query = apps.AsQueryable();

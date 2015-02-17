@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Net;
+using System.Net.Http;
+using Finsa.Caravan.Common.DataModel.Exceptions;
 using Finsa.Caravan.Common.DataModel.Logging;
 using Finsa.Caravan.DataAccess;
 using System.Collections.Generic;
@@ -59,6 +61,21 @@ namespace Caravan.WebService.Controllers
         }
 
         /// <summary>
+        /// Delete log with the specified id in the specified application
+        /// </summary>
+        /// <param name="appName">The application name</param>
+        /// <param name="id">The id of the log to delete which can be "warn", "info" or "error"</param>
+        [Route("{appName}/entries/{id}")]
+        public HttpResponseMessage DeleteLog(string appName,int id)
+        {
+           var log = Db.Logger.DeleteLog(appName,id);
+           if (log != "OK")
+               return Request.CreateErrorResponse(HttpStatusCode.NotFound, LogNotFoundException.TheMessage);
+           return Request.CreateResponse(HttpStatusCode.OK, log);
+
+        }
+
+        /// <summary>
         /// Returns all settings of the specified application
         /// </summary>
         /// <param name="appName">Application name</param>
@@ -111,16 +128,18 @@ namespace Caravan.WebService.Controllers
         }
 
         /// <summary>
-        /// TODO
+        /// Deletes setting of the logtype specified in the specified application 
         /// </summary>
         /// <param name="appName">Application name</param>
         /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
-        /// <param name="settings"></param>
-
+       
         [Route("{appName}/settings/{logType}")]
-        public void DeleteSetting(string appName, LogType logType)
+        public HttpResponseMessage DeleteSetting(string appName, LogType logType)
         {
-            Db.Logger.DeleteSettings(appName, logType);
+            var setting = Db.Logger.DeleteSettings(appName, logType);
+            if(setting!="OK")
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, LogNotFoundException.TheMessage);
+            return Request.CreateResponse(HttpStatusCode.OK, setting);
         }
 
 

@@ -106,7 +106,26 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-      protected override IList<LogSettings> GetLogSettings(string appName, LogType? logType)
+       protected override bool DoDeleteLog(string appName, int id)
+       {
+           using(var trx = new TransactionScope())
+           using (var ctx = Db.CreateWriteContext())
+           {
+               var deleted = false;
+               var log = ctx.LogEntries.FirstOrDefault(l => l.App.Name == appName && l.Id == id);
+
+               if (log != null)
+               {
+                   ctx.LogEntries.Remove(log);
+                   deleted = true;
+                   ctx.SaveChanges();
+                   trx.Complete();
+               }
+               return deleted;
+           }
+       }
+
+       protected override IList<LogSettings> GetLogSettings(string appName, LogType? logType)
       {
          using (var ctx = Db.CreateReadContext())
          {
@@ -162,10 +181,11 @@ namespace Finsa.Caravan.DataAccess.Sql
                var deleted = false;
                var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
                var typeId = logType.ToString().ToLower();
-               var settings = ctx.LogSettings.Where(a => a.AppId == appId && a.TypeId == typeId).ToList();
-               if (settings.Count!=0)
+               var settings = ctx.LogSettings.FirstOrDefault(a => a.AppId == appId && a.TypeId == typeId);
+               
+               if (settings != null)
                {
-                   ctx.LogSettings.Remove(settings.First());
+                   ctx.LogSettings.Remove(settings);
                    deleted = true;
                    ctx.SaveChanges();
                    trx.Complete();
