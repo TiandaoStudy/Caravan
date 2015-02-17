@@ -153,5 +153,11 @@ namespace Finsa.Caravan.DataAccess.Rest
             throw new Exception(exception.Message);
          }
       }
+
+      
+       protected override bool DoDeleteSettings(string appName, LogType logType)
+       {
+           throw new NotImplementedException();
+       }
    }
 }

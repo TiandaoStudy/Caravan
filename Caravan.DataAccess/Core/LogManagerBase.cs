@@ -210,6 +210,22 @@ namespace Finsa.Caravan.DataAccess.Core
             throw new SettingsExistingException();   
          }
       }
+        public void DeleteSettings(string appName, LogType logType)
+              {
+                 Raise<ArgumentException>.IfIsEmpty(appName);
+                 Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
+
+            if (!DoDeleteSettings(appName, logType))
+            {
+                throw new SettingsNotFoundException();
+            }
+                 //Raise<ArgumentNullException>.IfIsNull(settings);
+                 //Raise<ArgumentOutOfRangeException>.If(settings.Days < 1 || settings.MaxEntries < 1);
+                 //if (!DoAddSettings(appName.ToLower(), logType, settings))
+                 //{
+                 //   throw new SettingsExistingException();   
+                 //}
+              }
 
       public void UpdateSettings(string appName, LogType logType, LogSettings settings)
       {
@@ -233,6 +249,8 @@ namespace Finsa.Caravan.DataAccess.Core
       protected abstract IList<LogSettings> GetLogSettings(string appName, LogType? logType);
 
       protected abstract bool DoAddSettings(string appName, LogType logType, LogSettings settings);
+
+      protected abstract bool DoDeleteSettings(string appName, LogType logType);
 
       protected abstract bool DoUpdateSettings(string appName, LogType logType, LogSettings settings);
 

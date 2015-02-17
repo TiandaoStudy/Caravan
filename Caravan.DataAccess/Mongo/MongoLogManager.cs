@@ -138,5 +138,10 @@ namespace Finsa.Caravan.DataAccess.Mongo
          var apps = MongoUtilities.GetSecAppCollection();
          return apps.Update(query, update).Ok;
       }
+
+       protected override bool DoDeleteSettings(string appName, LogType logType)
+       {
+           throw new System.NotImplementedException();
+       }
    }
 }

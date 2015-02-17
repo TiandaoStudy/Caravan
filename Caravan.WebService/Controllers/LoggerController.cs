@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using Finsa.Caravan.Common.DataModel.Logging;
 using Finsa.Caravan.DataAccess;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Caravan.WebService.Controllers
         /// <summary>
         ///   Returns all log entries.
         /// </summary>
+        /// <param name="appName">Application name</param>
         /// <returns>All log entries.</returns>
         [Route("{appName}/entries"), LinqToQueryable]
         public IQueryable<LogEntry> GetEntries(string appName)
@@ -21,63 +23,75 @@ namespace Caravan.WebService.Controllers
             return Db.Logger.Logs(appName).AsQueryable();
         }
 
-        [Route("{appName}/entries/{logType}")]
-        public IEnumerable<LogEntry> GetEntries(string appName, LogType logType)
+        /// <summary>
+        /// returns all logs of a specified logType 
+        /// </summary>
+        /// <param name="appName">Application name</param>
+        /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+        /// <returns></returns>
+        [Route("{appName}/entries/{logType}"),LinqToQueryable]
+        public IQueryable GetEntries(string appName, LogType logType)
         {
-            return Db.Logger.Logs(appName);
+            return Db.Logger.Logs(appName,logType).AsQueryable();
         }
 
         /// <summary>
-        /// 
+        /// Add a new log with the features specified in the body of the request
         /// </summary>
-        /// <param name="appName"></param>
-        /// <param name="l"></param>
-        [Route("{appName}/entries")]
+        /// <param name="appName">Application name</param>
+        /// <param name="l">The log to add</param>
+        [Route("{appName}/entries"),LinqToQueryable]
         public void PutLog(string appName, [FromBody] LogEntry l)
         {
             Db.Logger.Log<LoggerController>(l.Type, l.ShortMessage, l.LongMessage, l.Context, l.Arguments, appName, l.UserLogin);
         }
 
         /// <summary>
-        /// 
+        /// Add 
         /// </summary>
-        /// <param name="appName"></param>
-        /// <param name="logType"></param>
-        /// <param name="l"></param>
-        [Route("{appName}/entries/{logType}")]
-        public void PutLog(string appName, LogType logType, [FromBody] LogEntry l)
+        /// <param name="appName">Application name</param>
+        /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+        /// <param name="log">The log to add</param>
+        [Route("{appName}/entries/{logType}"),LinqToQueryable]
+        public void PutLog(string appName, LogType logType, [FromBody] LogEntry log)
         {
-            Db.Logger.Log<LoggerController>(l.Type, l.ShortMessage, l.LongMessage, l.Context, l.Arguments, appName, l.UserLogin);
+            Db.Logger.Log<LoggerController>(logType, log.ShortMessage, log.LongMessage, log.Context, log.Arguments, appName, log.UserLogin);
         }
 
         /// <summary>
-        /// 
+        /// Returns all settings of the specified application
         /// </summary>
-        /// <param name="appName"></param>
+        /// <param name="appName">Application name</param>
         /// <returns></returns>
-        [Route("{appName}/settings")]
-        public IEnumerable<LogSettings> GetSettings(string appName)
+        [Route("{appName}/settings"),LinqToQueryable]
+        public IQueryable<LogSettings> GetSettings(string appName)
         {
-            return Db.Logger.LogSettings(appName);
+            return Db.Logger.LogSettings(appName).AsQueryable();
         }
-        
+
         /// <summary>
         /// Returns all settings of a specified logType
         /// </summary>
-        /// <param name="logType"></param>
+        /// <param name="appName"></param>
+        /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
         /// <returns></returns>
         [Route("{appName}/settings/{logType}")]
-        public IEnumerable<LogSettings> GetSettings(LogType logType)
+        public LogSettings GetSettings(string appName, LogType logType)
         {
-            return Db.Logger.LogSettings(logType);
+            var settings = Db.Logger.LogSettings(appName,logType);
+            if (settings == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            return settings;
         }
 
         /// <summary>
-        /// Add a new setting 
+        /// Add a new setting of type = logType
         /// </summary>
-        /// <param name="appName"></param>
-        /// <param name="logType"></param>
-        /// <param name="settings"></param>
+        /// <param name="appName">Application name</param>
+        /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+        /// <param name="settings">The setting to add</param>
         [Route("{appName}/settings/{logType}")]
         public void PutSetting(string appName, LogType logType, [FromBody] LogSettings settings)
         {
@@ -87,9 +101,9 @@ namespace Caravan.WebService.Controllers
         /// <summary>
         /// Update the setting of a particular logType
         /// </summary>
-        /// <param name="appName"></param>
-        /// <param name="logType"></param>
-        /// <param name="settings"></param>
+        /// <param name="appName">Application name</param>
+        /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+        /// <param name="settings">The new data setting </param>
         [Route("{appName}/settings/{logType}")]
         public void PostSetting(string appName, LogType logType, [FromBody] LogSettings settings)
         {
@@ -99,15 +113,17 @@ namespace Caravan.WebService.Controllers
         /// <summary>
         /// TODO
         /// </summary>
-        /// <param name="appName"></param>
-        /// <param name="logType"></param>
+        /// <param name="appName">Application name</param>
+        /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
         /// <param name="settings"></param>
 
         [Route("{appName}/settings/{logType}")]
-        public void DeleteSetting(string appName, LogType logType, [FromBody] LogSettings settings)
+        public void DeleteSetting(string appName, LogType logType)
         {
-            //Db.Logger.DeleteSettings(appName, logType, settings);
+            Db.Logger.DeleteSettings(appName, logType);
         }
+
+
 
 
 

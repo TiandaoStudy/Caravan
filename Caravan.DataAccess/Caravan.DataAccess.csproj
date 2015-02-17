@@ -187,6 +187,8 @@
     <Compile Include="Rest\RestLogManager.cs" />
     <Compile Include="Rest\RestSecurityManager.cs" />
     <Compile Include="Sql\SqlServerCe\SqlServerCeDbManager.cs" />
+    <Compile Include="Sql\SqlServer\SqlServerDbContext.cs" />
+    <Compile Include="Sql\SqlServer\SqlServerDbManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -230,7 +232,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Sql\Postgres\" />
-    <Folder Include="Sql\SqlServer\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\ErrorMessages.resx">

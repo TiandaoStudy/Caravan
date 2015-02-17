@@ -19,59 +19,69 @@
             <summary>
               Returns all log entries.
             </summary>
+            <param name="appName">Application name</param>
             <returns>All log entries.</returns>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.GetEntries(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType)">
+            <summary>
+            returns all logs of a specified logType 
+            </summary>
+            <param name="appName">Application name</param>
+            <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+            <returns></returns>
         </member>
         <member name="M:Caravan.WebService.Controllers.LoggerController.PutLog(System.String,Finsa.Caravan.Common.DataModel.Logging.LogEntry)">
             <summary>
-            
+            Add a new log with the features specified in the body of the request
             </summary>
-            <param name="appName"></param>
-            <param name="l"></param>
+            <param name="appName">Application name</param>
+            <param name="l">The log to add</param>
         </member>
         <member name="M:Caravan.WebService.Controllers.LoggerController.PutLog(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType,Finsa.Caravan.Common.DataModel.Logging.LogEntry)">
             <summary>
-            
+            Add 
             </summary>
-            <param name="appName"></param>
-            <param name="logType"></param>
-            <param name="l"></param>
+            <param name="appName">Application name</param>
+            <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+            <param name="log">The log to add</param>
         </member>
         <member name="M:Caravan.WebService.Controllers.LoggerController.GetSettings(System.String)">
             <summary>
-            
+            Returns all settings of the specified application
             </summary>
-            <param name="appName"></param>
+            <param name="appName">Application name</param>
             <returns></returns>
         </member>
-        <member name="M:Caravan.WebService.Controllers.LoggerController.GetSettings(Finsa.Caravan.Common.DataModel.Logging.LogType)">
+        <member name="M:Caravan.WebService.Controllers.LoggerController.GetSettings(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType)">
             <summary>
             Returns all settings of a specified logType
             </summary>
-            <param name="logType"></param>
+            <param name="appName"></param>
+            <param name="logType">Type of log which can be "warn", "info" or "error"</param>
             <returns></returns>
         </member>
         <member name="M:Caravan.WebService.Controllers.LoggerController.PutSetting(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType,Finsa.Caravan.Common.DataModel.Logging.LogSettings)">
             <summary>
-            Add a new setting 
+            Add a new setting of type = logType
             </summary>
-            <param name="appName"></param>
-            <param name="logType"></param>
-            <param name="settings"></param>
+            <param name="appName">Application name</param>
+            <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+            <param name="settings">The setting to add</param>
         </member>
         <member name="M:Caravan.WebService.Controllers.LoggerController.PostSetting(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType,Finsa.Caravan.Common.DataModel.Logging.LogSettings)">
             <summary>
             Update the setting of a particular logType
             </summary>
-            <param name="appName"></param>
-            <param name="logType"></param>
-            <param name="settings"></param>
+            <param name="appName">Application name</param>
+            <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+            <param name="settings">The new data setting </param>
         </member>
-        <member name="M:Caravan.WebService.Controllers.LoggerController.DeleteSetting(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType,Finsa.Caravan.Common.DataModel.Logging.LogSettings)">
+        <member name="M:Caravan.WebService.Controllers.LoggerController.DeleteSetting(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType)">
             <summary>
             TODO
             </summary>
-            <param name="appName"></param>
-            <param name="logType"></param>
+            <param name="appName">Application name</param>
+            <param name="logType">Type of log which can be "warn", "info" or "error"</param>
             <param name="settings"></param>
         </member>
         <member name="M:Caravan.WebService.Controllers.ValuesController.Get">

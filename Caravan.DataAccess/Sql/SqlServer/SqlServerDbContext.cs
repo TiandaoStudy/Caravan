@@ -5,13 +5,13 @@ using Finsa.Caravan.DataAccess.Properties;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 
-namespace Finsa.Caravan.DataAccess.Sql.SqlServerCe
+namespace Finsa.Caravan.DataAccess.Sql.SqlServer
 {
-    internal sealed class SqlServerCeDbContext : DbContextBase
+    internal sealed class SqlServerDbContext : DbContextBase
     {
-        static SqlServerCeDbContext()
+        static SqlServerDbContext()
         {
-            CaravanDbContext.Init<SqlServerCeDbContext>();
+            CaravanDbContext.Init<SqlServerDbContext>();
         }
 
         protected override void OnModelCreating(DbModelBuilder mb)

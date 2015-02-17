@@ -4,7 +4,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
 using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.Properties;
 using Finsa.Caravan.DataAccess.Core;
+using MongoDB.Driver;
 using PommaLabs.Diagnostics;
 using PommaLabs.Extensions;
 
@@ -152,7 +154,27 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-      protected override bool DoUpdateSettings(string appName, LogType logType, LogSettings settings)
+       protected override bool DoDeleteSettings(string appName, LogType logType)
+       {
+           using (var trx = new TransactionScope())
+           using (var ctx = Db.CreateWriteContext())
+           {
+               var deleted = false;
+               var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
+               var typeId = logType.ToString().ToLower();
+               var settings = ctx.LogSettings.Where(a => a.AppId == appId && a.TypeId == typeId).ToList();
+               if (settings.Count!=0)
+               {
+                   ctx.LogSettings.Remove(settings.First());
+                   deleted = true;
+                   ctx.SaveChanges();
+                   trx.Complete();
+               }
+               return deleted;
+           }
+       }
+
+       protected override bool DoUpdateSettings(string appName, LogType logType, LogSettings settings)
       {
          using (var trx = new TransactionScope())
          using (var ctx = Db.CreateWriteContext())

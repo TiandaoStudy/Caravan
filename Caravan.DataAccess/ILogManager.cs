@@ -493,6 +493,12 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="logType"></param>
       /// <param name="settings"></param>
       void UpdateSettings(string appName, LogType logType, LogSettings settings);
+      /// <summary>
+      /// Deletes a setting with a specificed logType in a specified application
+      /// </summary>
+      /// <param name="appName">the application</param>
+      /// <param name="logType">The logType</param>
+      void DeleteSettings(string appName, LogType logType);
 
       #endregion
    }
