@@ -25,10 +25,19 @@ namespace Finsa.Caravan.DataAccess.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("_TEST_TOKEN_")]
-        public string RestTestAuthObject {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ConnectionString {
             get {
-                return ((string)(this["RestTestAuthObject"]));
+                return ((string)(this["ConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Oracle")]
+        public string DataAccessKind {
+            get {
+                return ((string)(this["DataAccessKind"]));
             }
         }
         
@@ -43,10 +52,10 @@ namespace Finsa.Caravan.DataAccess.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Oracle")]
-        public string DataAccessKind {
+        [global::System.Configuration.DefaultSettingValueAttribute("caravan")]
+        public string MongoDbName {
             get {
-                return ((string)(this["DataAccessKind"]));
+                return ((string)(this["MongoDbName"]));
             }
         }
         
@@ -79,19 +88,19 @@ namespace Finsa.Caravan.DataAccess.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ConnectionString {
+        [global::System.Configuration.DefaultSettingValueAttribute("_TEST_TOKEN_")]
+        public string RestTestAuthObject {
             get {
-                return ((string)(this["ConnectionString"]));
+                return ((string)(this["RestTestAuthObject"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("caravan")]
-        public string MongoDbName {
+        [global::System.Configuration.DefaultSettingValueAttribute("dbo")]
+        public string SqlServerSchema {
             get {
-                return ((string)(this["MongoDbName"]));
+                return ((string)(this["SqlServerSchema"]));
             }
         }
     }
