@@ -2,6 +2,7 @@
 using System.Web.Http;
 using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.Mvc.Core.Models.Security;
 using LinqToQuerystring.WebApi;
 
 namespace Caravan.WebService.Controllers
@@ -13,11 +14,12 @@ namespace Caravan.WebService.Controllers
         /// Returns all the applications
         /// </summary>
         /// <returns>All the applications</returns>
-        [Route(""), LinqToQueryable]
-        public IQueryable<SecApp> GetApps()
+        [Route("", Name = "GetApps"), LinqToQueryable]
+        public IQueryable<LinkedSecApp> GetApps()
         {
-            return Db.Security.Apps().AsQueryable();
+            return Db.Security.Apps().AsQueryable().Select(a => new LinkedSecApp(a, Url));
         }
+
         /// <summary>
         /// Returns all details of the specified application
         /// </summary>

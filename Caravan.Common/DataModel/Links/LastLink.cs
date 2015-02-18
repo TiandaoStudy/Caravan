@@ -1,4 +1,4 @@
-﻿namespace Finsa.Caravan.Mvc.Core.Links
+﻿namespace Finsa.Caravan.Common.DataModel.Links
 {
     /// <summary>
     ///   An IRI that refers to the furthest following resource in a series of resources.

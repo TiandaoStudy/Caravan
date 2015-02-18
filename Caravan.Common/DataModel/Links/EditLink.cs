@@ -1,4 +1,4 @@
-﻿namespace Finsa.Caravan.Mvc.Core.Links
+﻿namespace Finsa.Caravan.Common.DataModel.Links
 {
     /// <summary>
     ///   Refers to a resource that can be used to edit the link's context.

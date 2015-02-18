@@ -3,7 +3,7 @@ using PommaLabs.Diagnostics;
 using System;
 using System.Runtime.Serialization;
 
-namespace Finsa.Caravan.Mvc.Core.Links
+namespace Finsa.Caravan.Common.DataModel.Links
 {
     /// <summary>
     ///   A base class for relation links. See here: https://www.iana.org/assignments/link-relations/link-relations.xhtml.

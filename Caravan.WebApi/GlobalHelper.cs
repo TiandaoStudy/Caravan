@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using AutoMapper;
+using Finsa.Caravan.Common.DataModel.Security;
+using Finsa.Caravan.Mvc.Core.Models.Security;
+using Newtonsoft.Json;
 using System.Web.Http;
 
 namespace Finsa.Caravan.Mvc.Core
@@ -15,6 +18,9 @@ namespace Finsa.Caravan.Mvc.Core
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
+
+            // Linked object mappings.
+            Mapper.CreateMap<SecApp, LinkedSecApp>();
         }
     }
 }

@@ -38,6 +38,12 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="LinqToQuerystring">
       <HintPath>..\packages\LinqToQuerystring.0.7.0.8\lib\net35\LinqToQuerystring.dll</HintPath>
     </Reference>
@@ -109,24 +115,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enrichers\EnrichingHandler.cs" />
-    <Compile Include="Enrichers\HttpConfigurationExtensions.cs" />
-    <Compile Include="Enrichers\IResponseEnricher.cs" />
-    <Compile Include="Enrichers\ObjectContentResponseEnricher.cs" />
-    <Compile Include="Enrichers\Security\SecAppEnricher.cs" />
     <Compile Include="GlobalHelper.cs" />
-    <Compile Include="Links\AlternateLink.cs" />
-    <Compile Include="Links\CollectionLink.cs" />
-    <Compile Include="Links\EditLink.cs" />
-    <Compile Include="Links\EditMediaLink.cs" />
-    <Compile Include="Links\FirstLink.cs" />
-    <Compile Include="Links\LastLink.cs" />
-    <Compile Include="Links\Link.cs" />
-    <Compile Include="Links\Links.cs" />
-    <Compile Include="Links\NextLink.cs" />
-    <Compile Include="Links\PreviousLink.cs" />
-    <Compile Include="Links\RelatedLink.cs" />
-    <Compile Include="Links\SelfLink.cs" />
     <Compile Include="Models\Security\LinkedSecApp.cs" />
     <Compile Include="Results\BsonNetResult.cs" />
     <Compile Include="Results\JsonNetResult.cs" />
@@ -149,7 +138,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Enrichers\Logging\" />
     <Folder Include="Models\Logging\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -162,6 +150,7 @@
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

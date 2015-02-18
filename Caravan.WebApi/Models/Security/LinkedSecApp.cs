@@ -1,17 +1,34 @@
-﻿using Finsa.Caravan.Common.DataModel.Security;
+﻿using System;
+using System.Runtime.Serialization;
+using System.Web.Http.Routing;
+using AutoMapper;
+using Finsa.Caravan.Common.DataModel.Security;
+using Finsa.Caravan.Common.DataModel.Links;
 using Newtonsoft.Json;
-using ApiLinks = Finsa.Caravan.Mvc.Core.Links.Links;
+using ApiLinks = Finsa.Caravan.Common.DataModel.Links.Links;
 
 namespace Finsa.Caravan.Mvc.Core.Models.Security
 {
-    public class LinkedSecApp : SecApp
+    [Serializable, DataContract(IsReference = true)]
+    public sealed class LinkedSecApp : LinkedObject
     {
-        private readonly ApiLinks _links = new ApiLinks();
-
-        [JsonProperty(ApiLinks.JsonPropertyName, Order = ApiLinks.JsonPropertyOrder)]
-        public ApiLinks Links
+        public LinkedSecApp(SecApp secApp, UrlHelper url)
         {
-            get { return _links; }
+            Mapper.Map(secApp, this);
+            Links.AddLink(new SelfLink(url.Link("GetApps", new {})));
         }
+
+        #region SecApp Properties
+
+        [JsonProperty, DataMember]
+        public long Id { get; set; }
+
+        [JsonProperty, DataMember]
+        public string Name { get; set; }
+
+        [JsonProperty, DataMember]
+        public string Description { get; set; }
+
+        #endregion
     }
 }

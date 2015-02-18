@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using PommaLabs.Collections;
 using PommaLabs.Diagnostics;
 
-namespace Finsa.Caravan.Mvc.Core.Links
+namespace Finsa.Caravan.Common.DataModel.Links
 {
     public sealed class Links : IEnumerable<Link>
     {

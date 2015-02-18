@@ -1,4 +1,4 @@
-﻿namespace Finsa.Caravan.Mvc.Core.Links
+﻿namespace Finsa.Caravan.Common.DataModel.Links
 {
     /// <summary>
     ///   Conveys an identifier for the link's context.
