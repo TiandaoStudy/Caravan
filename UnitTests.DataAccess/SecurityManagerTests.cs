@@ -15,7 +15,7 @@ namespace UnitTests.DataAccess
     {
        private SecApp _myApp;
        private SecApp _myApp2;
-       private LogSettings _settingError = null;
+       private LogSetting _settingError = null;
       
         [SetUp]
         public void Init()
@@ -25,7 +25,7 @@ namespace UnitTests.DataAccess
            Db.Security.AddApp(_myApp);
            _myApp2 = new SecApp {Name = "mio_test2", Description = "Test Application 2"};
            Db.Security.AddApp(_myApp2);
-           _settingError = new LogSettings() {Days = 30, Enabled = 1, MaxEntries = 100};
+           _settingError = new LogSetting() {Days = 30, Enabled = 1, MaxEntries = 100};
 
            Db.Logger.AddSettings(_myApp.Name,LogType.Error, _settingError);
            Db.Logger.AddSettings(_myApp.Name,LogType.Fatal, _settingError);

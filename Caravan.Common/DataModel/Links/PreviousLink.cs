@@ -8,8 +8,8 @@
     {
         public const string Relation = "prev";
 
-        public PreviousLink(string href, string title = null)
-            : base(Relation, href, title)
+        public PreviousLink(string href, string method, string title = null)
+            : base(Relation, href, method, title)
         {
         }
     }

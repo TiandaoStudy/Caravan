@@ -169,18 +169,18 @@ namespace Finsa.Caravan.DataAccess.Sql.SqlServerCe
              * LogSettings
              ************************************************/
 
-            mb.Entity<LogSettings>().ToTable("CARAVAN_LOG_SETTINGS", Settings.Default.SqlServerSchema);
-            mb.Entity<LogSettings>().HasKey(x => new { x.AppId, x.TypeId });
+            mb.Entity<LogSetting>().ToTable("CARAVAN_LOG_SETTINGS", Settings.Default.SqlServerSchema);
+            mb.Entity<LogSetting>().HasKey(x => new { x.AppId, x.TypeId });
 
-            mb.Entity<LogSettings>().Property(x => x.AppId).HasColumnName("capp_id");
-            mb.Entity<LogSettings>().Property(x => x.TypeId).HasColumnName("CLOS_TYPE");
-            mb.Entity<LogSettings>().Property(x => x.Enabled).HasColumnName("CLOS_ENABLED");
-            mb.Entity<LogSettings>().Property(x => x.Days).HasColumnName("CLOS_DAYS");
-            mb.Entity<LogSettings>().Property(x => x.MaxEntries).HasColumnName("CLOS_MAX_ENTRIES");
-            mb.Entity<LogSettings>().Ignore(x => x.Type);
+            mb.Entity<LogSetting>().Property(x => x.AppId).HasColumnName("capp_id");
+            mb.Entity<LogSetting>().Property(x => x.TypeId).HasColumnName("CLOS_TYPE");
+            mb.Entity<LogSetting>().Property(x => x.Enabled).HasColumnName("CLOS_ENABLED");
+            mb.Entity<LogSetting>().Property(x => x.Days).HasColumnName("CLOS_DAYS");
+            mb.Entity<LogSetting>().Property(x => x.MaxEntries).HasColumnName("CLOS_MAX_ENTRIES");
+            mb.Entity<LogSetting>().Ignore(x => x.Type);
 
             // LogSettings(N) <-> SecApp(1)
-            mb.Entity<LogSettings>()
+            mb.Entity<LogSetting>()
                .HasRequired<SecApp>(x => x.App)
                .WithMany(x => x.LogSettings)
                .HasForeignKey(x => x.AppId);
@@ -233,7 +233,7 @@ namespace Finsa.Caravan.DataAccess.Sql.SqlServerCe
 
             // LogEntry(N) <-> LogSettings(1)
             mb.Entity<LogEntry>()
-               .HasRequired<LogSettings>(x => x.LogSettings)
+               .HasRequired<LogSetting>(x => x.LogSettings)
                .WithMany(x => x.LogEntries)
                .HasForeignKey(x => new { x.AppId, x.TypeId });
         }

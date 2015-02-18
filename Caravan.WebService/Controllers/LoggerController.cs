@@ -81,7 +81,7 @@ namespace Caravan.WebService.Controllers
         /// <param name="appName">Application name</param>
         /// <returns></returns>
         [Route("{appName}/settings"), LinqToQueryable]
-        public IQueryable<LogSettings> GetSettings(string appName)
+        public IQueryable<LogSetting> GetSettings(string appName)
         {
             return Db.Logger.LogSettings(appName).AsQueryable();
         }
@@ -93,7 +93,7 @@ namespace Caravan.WebService.Controllers
         /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
         /// <returns></returns>
         [Route("{appName}/settings/{logType}")]
-        public LogSettings GetSettings(string appName, LogType logType)
+        public LogSetting GetSettings(string appName, LogType logType)
         {
             var settings = Db.Logger.LogSettings(appName, logType);
             if (settings == null)
@@ -110,7 +110,7 @@ namespace Caravan.WebService.Controllers
         /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
         /// <param name="settings">The setting to add</param>
         [Route("{appName}/settings/{logType}")]
-        public void PutSetting(string appName, LogType logType, [FromBody] LogSettings settings)
+        public void PutSetting(string appName, LogType logType, [FromBody] LogSetting settings)
         {
             Db.Logger.AddSettings(appName, logType, settings);
         }
@@ -122,7 +122,7 @@ namespace Caravan.WebService.Controllers
         /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
         /// <param name="settings">The new data setting</param>
         [Route("{appName}/settings/{logType}")]
-        public void PostSetting(string appName, LogType logType, [FromBody] LogSettings settings)
+        public void PostSetting(string appName, LogType logType, [FromBody] LogSetting settings)
         {
             Db.Logger.UpdateSettings(appName, logType, settings);
         }

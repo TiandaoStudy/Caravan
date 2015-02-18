@@ -15,7 +15,7 @@ namespace UnitTests.DataAccess
    {
       private SecApp _myApp;
       private SecApp _myApp2;
-      private LogSettings _settingError;
+      private LogSetting _settingError;
 
       [SetUp]
       public void Init()
@@ -25,7 +25,7 @@ namespace UnitTests.DataAccess
            Db.Security.AddApp(_myApp);
            _myApp2 = new SecApp {Name = "mio_test2", Description = "Test Application 2"};
            Db.Security.AddApp(_myApp2);
-           _settingError = new LogSettings() { Days = 30, Enabled = 1, MaxEntries = 100 };
+           _settingError = new LogSetting() { Days = 30, Enabled = 1, MaxEntries = 100 };
 
            Db.Logger.AddSettings(_myApp.Name, LogType.Error, _settingError);
            Db.Logger.AddSettings(_myApp.Name, LogType.Fatal, _settingError);
@@ -114,7 +114,7 @@ namespace UnitTests.DataAccess
       [Test]
       public void UpdateSetting_ValidArgs_SettingUpdated()
       {
-         var update = new LogSettings { Days = 40, Enabled = 1,MaxEntries = 50};
+         var update = new LogSetting { Days = 40, Enabled = 1,MaxEntries = 50};
          Db.Logger.UpdateSettings(_myApp.Name,LogType.Info,update);
 
          var q = Db.Logger.LogSettings(_myApp.Name).Where(s => s.AppId == _myApp.Id && s.Type==LogType.Info).ToList();
@@ -127,7 +127,7 @@ namespace UnitTests.DataAccess
       [ExpectedException(typeof (ArgumentException))]
       public void UpdateSetting_EmptyAppName_Throws()
       {
-         var update = new LogSettings { Days = 40, Enabled = 1, MaxEntries = 50 };
+         var update = new LogSetting { Days = 40, Enabled = 1, MaxEntries = 50 };
          Db.Logger.UpdateSettings("", LogType.Info, update);
       }
 

@@ -7,8 +7,8 @@
     {
         public const string Relation = "edit";
 
-        public EditLink(string href, string title = null)
-            : base(Relation, href, title)
+        public EditLink(string href, string method, string title = null)
+            : base(Relation, href, method, title)
         {
         }
     }

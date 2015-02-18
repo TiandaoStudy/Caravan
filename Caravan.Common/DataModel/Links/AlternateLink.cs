@@ -7,8 +7,8 @@
     {
         public const string Relation = "alternate";
 
-        public AlternateLink(string href, string title = null)
-            : base(Relation, href, title)
+        public AlternateLink(string href, string method, string title = null)
+            : base(Relation, href, method, title)
         {
         }
     }

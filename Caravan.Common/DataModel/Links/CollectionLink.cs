@@ -8,8 +8,8 @@
     {
         public const string Relation = "collection";
 
-        public CollectionLink(string href, string title = null)
-            : base(Relation, href, title)
+        public CollectionLink(string href, string method, string title = null)
+            : base(Relation, href, method, title)
         {
         }
     }

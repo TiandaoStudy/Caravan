@@ -105,7 +105,7 @@
     <Compile Include="DataModel\Links\SelfLink.cs" />
     <Compile Include="DataModel\Logging\LogEntry.cs" />
     <Compile Include="DataModel\Logging\LogResult.cs" />
-    <Compile Include="DataModel\Logging\LogSettings.cs" />
+    <Compile Include="DataModel\Logging\LogSetting.cs" />
     <Compile Include="DataModel\Rest\RestRequest.cs" />
     <Compile Include="DataModel\Rest\RestResponse.cs" />
     <Compile Include="DataModel\Security\SecApp.cs" />

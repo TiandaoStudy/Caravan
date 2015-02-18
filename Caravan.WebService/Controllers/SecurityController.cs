@@ -2,7 +2,7 @@
 using System.Web.Http;
 using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.Mvc.Core.Models.Security;
+using Finsa.Caravan.WebApi.Models.Security;
 using LinqToQuerystring.WebApi;
 
 namespace Caravan.WebService.Controllers

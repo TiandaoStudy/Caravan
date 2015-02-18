@@ -31,7 +31,7 @@ namespace Finsa.Caravan.Common.DataModel.Security
         public virtual ICollection<SecObject> Objects { get; set; }
 
         [JsonProperty(Order = 6), DataMember(Order = 6)]
-        public virtual ICollection<LogSettings> LogSettings { get; set; }
+        public virtual ICollection<LogSetting> LogSettings { get; set; }
 
         [JsonIgnore, IgnoreDataMember]
         public virtual ICollection<LogEntry> LogEntries { get; set; }

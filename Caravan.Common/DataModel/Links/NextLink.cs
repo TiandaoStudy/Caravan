@@ -8,8 +8,8 @@
     {
         public const string Relation = "next";
 
-        public NextLink(string href, string title = null)
-            : base(Relation, href, title)
+        public NextLink(string href, string method, string title = null)
+            : base(Relation, href, method, title)
         {
         }
     }

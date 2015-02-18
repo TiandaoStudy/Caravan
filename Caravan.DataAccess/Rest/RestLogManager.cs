@@ -28,7 +28,7 @@ namespace Finsa.Caravan.DataAccess.Rest
          throw new NotImplementedException();
       }
 
-      protected override IList<LogSettings> GetLogSettings(string appName, LogType? logType)
+      protected override IList<LogSetting> GetLogSettings(string appName, LogType? logType)
       {
          try
          {
@@ -44,7 +44,7 @@ namespace Finsa.Caravan.DataAccess.Rest
 
             request.AddJsonBody(new RestRequest<object> {Auth = "AA", Body = new object()});
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<LogSettingsSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<LogSetting>>(request);
 
             if (response.ErrorException != null)
             {
@@ -52,7 +52,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                   throw new AppNotFoundException();
                throw new Exception(response.ErrorMessage);
             }
-            var settings = new List<LogSettings> {response.Data.Body.Settings};
+            var settings = new List<LogSetting> {response.Data.Body};
 
             return settings;
          }
@@ -69,7 +69,7 @@ namespace Finsa.Caravan.DataAccess.Rest
            throw new NotImplementedException();
        }
 
-       protected override bool DoAddSettings(string appName, LogType logType, LogSettings settings)
+       protected override bool DoAddSettings(string appName, LogType logType, LogSetting settings)
       {
          try
          {
@@ -78,22 +78,19 @@ namespace Finsa.Caravan.DataAccess.Rest
 
             request.AddUrlSegment("appName", appName);
             request.AddUrlSegment("logType", logType.ToString()); //?????;
-            request.AddJsonBody(new RestRequest<LogSettingsSingle>
+            request.AddJsonBody(new RestRequest<LogSetting>
             {
                Auth = "AA",
-               Body = new LogSettingsSingle
-               {
-                  Settings = new LogSettings
+               Body = new LogSetting
                   {
                      Days = settings.Days,
                      MaxEntries = settings.MaxEntries,
                      Enabled = settings.Enabled,
                      LogEntries = settings.LogEntries
                   }
-               }
             });
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<LogSettingsSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<LogSetting>>(request);
 
             if (response.ErrorException != null)
             {
@@ -114,7 +111,7 @@ namespace Finsa.Caravan.DataAccess.Rest
          }
       }
 
-      protected override bool DoUpdateSettings(string appName, LogType logType, LogSettings settings)
+      protected override bool DoUpdateSettings(string appName, LogType logType, LogSetting settings)
       {
          try
          {
@@ -123,22 +120,19 @@ namespace Finsa.Caravan.DataAccess.Rest
 
             request.AddUrlSegment("appName", appName);
             request.AddUrlSegment("logType", logType.ToString()); //?????;
-            request.AddJsonBody(new RestRequest<LogSettingsSingle>
+            request.AddJsonBody(new RestRequest<LogSetting>
             {
                Auth = "AA",
-               Body = new LogSettingsSingle
-               {
-                  Settings = new LogSettings
+               Body = new LogSetting
                   {
                      Days = settings.Days,
                      MaxEntries = settings.MaxEntries,
                      Enabled = settings.Enabled,
                      LogEntries = settings.LogEntries
                   }
-               }
             });
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<LogSettingsSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<LogSetting>>(request);
 
             if (response.ErrorException != null)
             {

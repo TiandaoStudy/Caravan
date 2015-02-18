@@ -214,9 +214,9 @@
       <Project>{418b2d91-d53e-49bf-98fc-66da9490dc37}</Project>
       <Name>Caravan.DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Caravan.WebApi\Caravan.Mvc.Core.csproj">
+    <ProjectReference Include="..\Caravan.WebApi\Caravan.WebApi.csproj">
       <Project>{27d82597-28b1-4441-8c42-0a220c38c4d8}</Project>
-      <Name>Caravan.Mvc.Core</Name>
+      <Name>Caravan.WebApi</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

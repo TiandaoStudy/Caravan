@@ -7,8 +7,8 @@
     {
         public const string Relation = "last";
 
-        public LastLink(string href, string title = null)
-            : base(Relation, href, title)
+        public LastLink(string href, string method, string title = null)
+            : base(Relation, href, method, title)
         {
         }
     }

@@ -7,8 +7,8 @@
     {
         public const string Relation = "self";
 
-        public SelfLink(string href, string title = null)
-            : base(Relation, href, title)
+        public SelfLink(string href, string method, string title = null)
+            : base(Relation, href, method, title)
         {
         }
     }

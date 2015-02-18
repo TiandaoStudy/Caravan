@@ -125,7 +125,7 @@ namespace Finsa.Caravan.DataAccess.Sql
            }
        }
 
-       protected override IList<LogSettings> GetLogSettings(string appName, LogType? logType)
+       protected override IList<LogSetting> GetLogSettings(string appName, LogType? logType)
       {
          using (var ctx = Db.CreateReadContext())
          {
@@ -143,7 +143,7 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-      protected override bool DoAddSettings(string appName, LogType logType, LogSettings settings)
+      protected override bool DoAddSettings(string appName, LogType logType, LogSetting settings)
       {
          using (var trx = new TransactionScope())
          using (var ctx = Db.CreateWriteContext())
@@ -154,7 +154,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
             if (!ctx.LogSettings.Any(s => s.AppId == appId && s.TypeId == typeId))
             {
-               var newSetting = new LogSettings
+               var newSetting = new LogSetting
                {
                   AppId = appId,
                   Days = settings.Days,
@@ -194,7 +194,7 @@ namespace Finsa.Caravan.DataAccess.Sql
            }
        }
 
-       protected override bool DoUpdateSettings(string appName, LogType logType, LogSettings settings)
+       protected override bool DoUpdateSettings(string appName, LogType logType, LogSetting settings)
       {
          using (var trx = new TransactionScope())
          using (var ctx = Db.CreateWriteContext())

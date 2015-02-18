@@ -7,8 +7,8 @@
     {
         public const string Relation = "edit-media";
 
-        public EditMediaLink(string href, string title = null)
-            : base(Relation, href, title)
+        public EditMediaLink(string href, string method, string title = null)
+            : base(Relation, href, method, title)
         {
         }
     }

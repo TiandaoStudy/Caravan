@@ -7,8 +7,8 @@
     {
         public const string Relation = "related";
 
-        public RelatedLink(string href, string title = null)
-            : base(Relation, href, title)
+        public RelatedLink(string href, string method, string title = null)
+            : base(Relation, href, method, title)
         {
         }
     }
