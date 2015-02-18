@@ -451,7 +451,7 @@ namespace Finsa.Caravan.DataAccess
       ///   TODO
       /// </summary>
       /// <returns></returns>
-      IList<LogSettings> LogSettings();
+      IList<LogSetting> LogSettings();
 
       /// <summary>
       ///   TODO
@@ -461,7 +461,7 @@ namespace Finsa.Caravan.DataAccess
       /// <exception cref="ArgumentException">
       ///   <paramref name="appName"/> is null or empty.
       /// </exception>
-      IList<LogSettings> LogSettings(string appName);
+      IList<LogSetting> LogSettings(string appName);
 
       /// <summary>
       ///   TODO
@@ -471,7 +471,7 @@ namespace Finsa.Caravan.DataAccess
       /// <exception cref="ArgumentException">
       ///   <paramref name="logType"/> is not a valid <see cref="LogType"/>.
       /// </exception>
-      IList<LogSettings> LogSettings(LogType logType);
+      IList<LogSetting> LogSettings(LogType logType);
 
       /// <summary>
       ///   TODO
@@ -483,7 +483,7 @@ namespace Finsa.Caravan.DataAccess
       ///   <paramref name="appName"/> is null or empty.
       ///   <paramref name="logType"/> is not a valid <see cref="LogType"/>.
       /// </exception>
-      LogSettings LogSettings(string appName, LogType logType);
+      LogSetting LogSettings(string appName, LogType logType);
 
       /// <summary>
       /// 
@@ -491,7 +491,7 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="appName"></param>
       /// <param name="logType"></param>
       /// <param name="settings"></param>
-      void AddSettings(string appName, LogType logType, LogSettings settings);
+      void AddSettings(string appName, LogType logType, LogSetting settings);
 
       /// <summary>
       /// 
@@ -499,7 +499,7 @@ namespace Finsa.Caravan.DataAccess
       /// <param name="appName"></param>
       /// <param name="logType"></param>
       /// <param name="settings"></param>
-      void UpdateSettings(string appName, LogType logType, LogSettings settings);
+      void UpdateSettings(string appName, LogType logType, LogSetting settings);
       /// <summary>
       /// Deletes a setting with a specificed logType in a specified application
       /// </summary>

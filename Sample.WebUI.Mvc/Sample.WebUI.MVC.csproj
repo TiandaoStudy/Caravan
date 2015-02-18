@@ -232,9 +232,9 @@
       <Project>{daa22a2c-a101-4f71-b4e1-f0db283a642c}</Project>
       <Name>Caravan.Mvc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Caravan.WebApi\Caravan.Mvc.Core.csproj">
+    <ProjectReference Include="..\Caravan.WebApi\Caravan.WebApi.csproj">
       <Project>{27d82597-28b1-4441-8c42-0a220c38c4d8}</Project>
-      <Name>Caravan.Mvc.Core</Name>
+      <Name>Caravan.WebApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sample.DataModel\Sample.DataModel.csproj">
       <Project>{33a9cd5a-87c6-4bb3-b304-4dc6411bef4f}</Project>
