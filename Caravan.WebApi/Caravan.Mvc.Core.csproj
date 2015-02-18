@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="Controllers\LoggerControllerBase.cs" />
     <Compile Include="Controllers\SecurityControllerBase.cs" />
+    <Compile Include="Enrichers\EnrichingHandler.cs" />
     <Compile Include="Enrichers\HttpConfigurationExtensions.cs" />
     <Compile Include="Enrichers\IResponseEnricher.cs" />
     <Compile Include="Enrichers\ObjectContentResponseEnricher.cs" />

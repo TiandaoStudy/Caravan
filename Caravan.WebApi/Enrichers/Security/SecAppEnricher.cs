@@ -1,5 +1,4 @@
-﻿using System.Web.Http.Routing;
-using Finsa.Caravan.Mvc.Core.Links;
+﻿using Finsa.Caravan.Mvc.Core.Links;
 using Finsa.Caravan.Mvc.Core.Models.Security;
 
 namespace Finsa.Caravan.Mvc.Core.Enrichers.Security
@@ -8,7 +7,7 @@ namespace Finsa.Caravan.Mvc.Core.Enrichers.Security
     {
         public override void Enrich(LinkedSecApp app)
         {
-            app.Links.AddLink(new SelfLink("aaa"));
+            app.Links.AddLink(new SelfLink(Url.Link("GetApps", new {})));
         }
     }
 }
