@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="FLEX.Web.XmlSettings.AjaxLookup"
+           xmlns="FLEX.Web.XmlSettings.AjaxLookup">
+  <xs:element name="AjaxLookupData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="LookupBy" maxOccurs="unbounded" minOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="SuggestionField" />
+              <!-- The field that will be stored by the control and used for the lookup. -->
+              <xs:element type="xs:string" name="KeyField" />
+              <xs:element type="xs:string" name="DescriptionField" />
+              <xs:element type="xs:string" name="SortField" />
+              <xs:element type="xs:string" name="LookupQuery" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
