@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Caravan.WebService</name>
+    </assembly>
+    <members>
+        <member name="T:Caravan.WebService.Controllers.HelpController">
+            <summary>
+              The HELP controller.
+            </summary>
+            <remarks>Adjust routing prefix according to your own needs.</remarks>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.HelpController.#ctor">
+            <summary>
+              Override here default info.
+            </summary>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.GetEntries(System.String)">
+            <summary>
+              Returns all log entries.
+            </summary>
+            <param name="appName">Application name</param>
+            <returns>All log entries.</returns>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.GetEntries(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType)">
+            <summary>
+              returns all logs of a specified logType
+            </summary>
+            <param name="appName">Application name</param>
+            <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.PutLog(System.String,Finsa.Caravan.Common.DataModel.Logging.LogEntry)">
+            <summary>
+              Add a new log with the features specified in the body of the request
+            </summary>
+            <param name="appName">Application name</param>
+            <param name="log">The log to add</param>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.PutLog(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType,Finsa.Caravan.Common.DataModel.Logging.LogEntry)">
+            <summary>
+              Add
+            </summary>
+            <param name="appName">Application name</param>
+            <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+            <param name="log">The log to add</param>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.DeleteLog(System.String,System.Int32)">
+            <summary>
+              Delete log with the specified id in the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="id">The id of the log to delete which can be "warn", "info" or "error"</param>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.GetSettings(System.String)">
+            <summary>
+              Returns all settings of the specified application
+            </summary>
+            <param name="appName">Application name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.GetSettings(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType)">
+            <summary>
+              Returns all settings of a specified logType
+            </summary>
+            <param name="appName"></param>
+            <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.PutSetting(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType,Finsa.Caravan.Common.DataModel.Logging.LogSettings)">
+            <summary>
+              Add a new setting of type = logType
+            </summary>
+            <param name="appName">Application name</param>
+            <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+            <param name="settings">The setting to add</param>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.PostSetting(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType,Finsa.Caravan.Common.DataModel.Logging.LogSettings)">
+            <summary>
+              Update the setting of a particular logType
+            </summary>
+            <param name="appName">Application name</param>
+            <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+            <param name="settings">The new data setting</param>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.LoggerController.DeleteSetting(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType)">
+            <summary>
+              Deletes setting of the logtype specified in the specified application
+            </summary>
+            <param name="appName">Application name</param>
+            <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.ValuesController.Get">
+            <summary>
+              Returns all values
+            </summary>
+            <returns>All values</returns>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.ValuesController.Get(System.Int32)">
+            <summary>
+              Looks up some data from ID
+            </summary>
+            <param name="id">The id of the data</param>
+            <returns>The value of the data</returns>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.ValuesController.Post(System.String)">
+            <summary>
+              Looks up api from value
+            </summary>
+            <param name="value">Value of the api</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.ValuesController.Put(System.Int32,System.String)">
+            <summary>
+              Add at the api with id "id", the value "value"
+            </summary>
+            <param name="id">id of the api</param>
+            <param name="value">the value to add</param>
+        </member>
+        <member name="M:Caravan.WebService.Controllers.ValuesController.Delete(System.Int32)">
+            <summary>
+              Delete the api with the Id retrieve from the body
+            </summary>
+            <param name="id">The id of the api to remove</param>
+        </member>
+    </members>
+</doc>
