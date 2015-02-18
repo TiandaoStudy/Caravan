@@ -109,6 +109,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enrichers\EnrichingHandler.cs" />
     <Compile Include="Enrichers\HttpConfigurationExtensions.cs" />
     <Compile Include="Enrichers\IResponseEnricher.cs" />
     <Compile Include="Enrichers\ObjectContentResponseEnricher.cs" />

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Net.Http;
+using System.Web;
+using System.Web.Http.Routing;
 
 namespace Finsa.Caravan.Mvc.Core.Enrichers
 {
@@ -9,6 +11,7 @@ namespace Finsa.Caravan.Mvc.Core.Enrichers
     public abstract class ObjectContentResponseEnricher<T> : IResponseEnricher
     {
         private HttpResponseMessage _httpResponse;
+        private UrlHelper _urlHelper;
 
         public virtual bool CanEnrich(Type contentType)
         {
@@ -26,6 +29,7 @@ namespace Finsa.Caravan.Mvc.Core.Enrichers
         HttpResponseMessage IResponseEnricher.Enrich(HttpResponseMessage response)
         {
             _httpResponse = response;
+            _urlHelper = new UrlHelper(response.RequestMessage);
 
             T content;
             if (response.TryGetContentValue(out content))
@@ -39,6 +43,11 @@ namespace Finsa.Caravan.Mvc.Core.Enrichers
         protected HttpRequestMessage Request
         {
             get { return _httpResponse.RequestMessage; }
+        }
+
+        protected UrlHelper Url
+        {
+            get { return _urlHelper; }
         }
     }
 }
