@@ -1,18 +1,21 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using Newtonsoft.Json;
 
 namespace Finsa.Caravan.WebApi.Results
 {
     public sealed class JsonNetResult : ActionResult
     {
         public Encoding ContentEncoding { get; set; }
+
         public string ContentType { get; set; }
+
         public object Data { get; set; }
 
         public JsonSerializerSettings SerializerSettings { get; set; }
+
         public Formatting Formatting { get; set; }
 
         private JsonNetResult()

@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Finsa.Caravan.Common.DataModel.Exceptions
 {
    [Serializable]
-   public class SettingsNotFoundException : Exception
+   public class SettingNotFoundException : Exception
    {
       //
       // For guidelines regarding the creation of new exception types, see
@@ -13,19 +13,19 @@ namespace Finsa.Caravan.Common.DataModel.Exceptions
       //    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
       //
 
-      public SettingsNotFoundException() : base(TheMessage)
+      public SettingNotFoundException() : base(TheMessage)
       {
       }
 
-      public SettingsNotFoundException(string message) : base(message)
+      public SettingNotFoundException(string message) : base(message)
       {
       }
 
-      public SettingsNotFoundException(string message, Exception inner) : base(message, inner)
+      public SettingNotFoundException(string message, Exception inner) : base(message, inner)
       {
       }
 
-      protected SettingsNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
+      protected SettingNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
       {
       }
 
