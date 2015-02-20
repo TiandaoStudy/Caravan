@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Finsa.Caravan.Common.DataModel.Logging;
+using System;
+using System.Activities;
 
 namespace Finsa.Caravan.DataAccess.Activities
 {
-    class LogActivity
+    public sealed class LogActivity : CodeActivity<LogResult>
     {
+        protected override LogResult Execute(CodeActivityContext context)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -219,7 +219,7 @@ namespace Finsa.Caravan.DataAccess.Core
             Raise<ArgumentOutOfRangeException>.If(settings.Days < 1 || settings.MaxEntries < 1);
             if (!DoAddSettings(appName.ToLower(), logType, settings))
             {
-                throw new SettingsExistingException();
+                throw new SettingExistingException();
             }
         }
 
@@ -230,7 +230,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
             if (!DoDeleteSettings(appName, logType))
             {
-                //throw new SettingsNotFoundException();
+                //throw new SettingNotFoundException();
                 return "NOK";
             }
             return "OK";
@@ -244,7 +244,7 @@ namespace Finsa.Caravan.DataAccess.Core
             Raise<ArgumentOutOfRangeException>.If(settings.Days < 1 || settings.MaxEntries < 1);
             if (!DoUpdateSettings(appName.ToLower(), logType, settings))
             {
-                throw new SettingsNotFoundException();
+                throw new SettingNotFoundException();
             }
         }
 

@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Finsa.Caravan.Common.DataModel.Exceptions
 {
    [Serializable]
-   public class SettingsExistingException : Exception
+   public class SettingExistingException : Exception
    {
       //
       // For guidelines regarding the creation of new exception types, see
@@ -13,19 +13,19 @@ namespace Finsa.Caravan.Common.DataModel.Exceptions
       //    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
       //
 
-      public SettingsExistingException() : base(TheMessage)
+      public SettingExistingException() : base(TheMessage)
       {
       }
 
-      public SettingsExistingException(string message) : base(message)
+      public SettingExistingException(string message) : base(message)
       {
       }
 
-      public SettingsExistingException(string message, Exception inner) : base(message, inner)
+      public SettingExistingException(string message, Exception inner) : base(message, inner)
       {
       }
 
-      protected SettingsExistingException(SerializationInfo info, StreamingContext context) : base(info, context)
+      protected SettingExistingException(SerializationInfo info, StreamingContext context) : base(info, context)
       {
       }
 

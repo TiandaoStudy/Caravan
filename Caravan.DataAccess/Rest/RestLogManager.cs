@@ -93,8 +93,8 @@ namespace Finsa.Caravan.DataAccess.Rest
                 {
                     if (response.ErrorMessage == AppExistingException.TheMessage)
                         throw new AppExistingException();
-                    if (response.ErrorMessage == SettingsExistingException.TheMessage)
-                        throw new SettingsExistingException();
+                    if (response.ErrorMessage == SettingExistingException.TheMessage)
+                        throw new SettingExistingException();
                     if (response.ErrorMessage == AppNotFoundException.TheMessage)
                         throw new AppNotFoundException();
                     throw new Exception(response.ErrorMessage);
@@ -134,8 +134,8 @@ namespace Finsa.Caravan.DataAccess.Rest
                 {
                     if (response.ErrorMessage == AppExistingException.TheMessage)
                         throw new AppExistingException();
-                    if (response.ErrorMessage == SettingsExistingException.TheMessage)
-                        throw new SettingsExistingException();
+                    if (response.ErrorMessage == SettingExistingException.TheMessage)
+                        throw new SettingExistingException();
                     if (response.ErrorMessage == AppNotFoundException.TheMessage)
                         throw new AppNotFoundException();
                     throw new Exception(response.ErrorMessage);
