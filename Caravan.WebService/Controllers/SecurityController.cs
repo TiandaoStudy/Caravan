@@ -293,15 +293,13 @@ namespace Caravan.WebService.Controllers
         /// Add a new entry in the specified application withe the specified parameters
         /// </summary>
         /// <param name="appName">The application name</param>
-        /// <param name="context">The context</param>
-        /// <param name="obj">The object</param>
-        /// <param name="userLogin">The user login</param>
-        /// <param name="groupName">The group name</param>
+        /// <param name="entry">The entry to add</param>
         [Route("{appName}/entries/")]
-        public void PutEntry(string appName, [FromBody] SecContext context, [FromBody] SecObject obj, string userLogin,
-            string groupName)
+        public void PutEntry(string appName, [FromBody] SecEntry entry)
         {
-            Db.Security.AddEntry(appName, context,obj,userLogin,groupName);
+            var userLogin = (entry.User == null) ? null : entry.User.Login;
+            var groupName = (entry.Group == null) ? null : entry.Group.Name;
+            Db.Security.AddEntry(appName, entry.Context,entry.Object,userLogin,groupName);
         }
 
         /// <summary>

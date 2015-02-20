@@ -262,15 +262,12 @@
             <param name="userLogin">The user login</param>
             <returns></returns>
         </member>
-        <member name="M:Caravan.WebService.Controllers.SecurityController.PutEntry(System.String,Finsa.Caravan.Common.DataModel.Security.SecContext,Finsa.Caravan.Common.DataModel.Security.SecObject,System.String,System.String)">
+        <member name="M:Caravan.WebService.Controllers.SecurityController.PutEntry(System.String,Finsa.Caravan.Common.DataModel.Security.SecEntry)">
             <summary>
             Add a new entry in the specified application withe the specified parameters
             </summary>
             <param name="appName">The application name</param>
-            <param name="context">The context</param>
-            <param name="obj">The object</param>
-            <param name="userLogin">The user login</param>
-            <param name="groupName">The group name</param>
+            <param name="entry">The entry to add</param>
         </member>
         <member name="M:Caravan.WebService.Controllers.SecurityController.DeleteEntry(System.String,System.String,System.String,System.String,System.String)">
             <summary>
