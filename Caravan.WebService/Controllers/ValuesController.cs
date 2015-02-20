@@ -16,6 +16,7 @@ using WebApi.OutputCache.V2;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
+    [RoutePrefix("values")]
     public sealed class ValuesController : ApiController
     {
         // GET api/values
@@ -26,7 +27,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [CacheOutput(ServerTimeSpan = 30)]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new[] { "value1", "value2" };
         }
 
         // GET api/values/5
