@@ -95,13 +95,12 @@
     <Reference Include="NReco.PdfGenerator">
       <HintPath>..\packages\NReco.PdfGenerator.1.1.5.0\lib\net20\NReco.PdfGenerator.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.ManagedDataAccess">
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Finsa.Odp.Net.Core.Unofficial.5.0.0\lib\net45\Oracle.ManagedDataAccess.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Oracle.ManagedDataAccess.EntityFramework">
       <HintPath>..\packages\Finsa.Odp.Net.Core.Unofficial.5.0.0\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="PommaLabs.GRAMPA, Version=2.1.6.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

@@ -301,18 +301,6 @@
     <Content Include="FLEX\Fonts\octicons.eot" />
     <Content Include="FLEX\Fonts\octicons.ttf" />
     <Content Include="FLEX\Fonts\octicons.woff" />
-    <Content Include="x64\Oracle.ManagedDataAccessDTC.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x64\Oracle.ManagedDataAccessIOP.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x86\Oracle.ManagedDataAccessDTC.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x86\Oracle.ManagedDataAccessIOP.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
