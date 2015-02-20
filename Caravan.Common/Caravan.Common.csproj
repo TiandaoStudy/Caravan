@@ -79,42 +79,42 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache.cs" />
-    <Compile Include="DataModel\Exceptions\AppExistingException.cs" />
-    <Compile Include="DataModel\Exceptions\AppNotFoundException.cs" />
-    <Compile Include="DataModel\Exceptions\EntryExistingException.cs" />
-    <Compile Include="DataModel\Exceptions\GroupExistingException.cs" />
-    <Compile Include="DataModel\Exceptions\GroupNotFoundException.cs" />
-    <Compile Include="DataModel\Exceptions\LogNotFoundException.cs" />
-    <Compile Include="DataModel\Exceptions\SettingExistingException.cs" />
-    <Compile Include="DataModel\Exceptions\SettingNotFoundException.cs" />
-    <Compile Include="DataModel\Exceptions\UserExistingException.cs" />
-    <Compile Include="DataModel\Exceptions\UserNotFoundException.cs" />
-    <Compile Include="DataModel\Formatting\TextAlignment.cs" />
-    <Compile Include="DataModel\Links\AlternateLink.cs" />
-    <Compile Include="DataModel\Links\CollectionLink.cs" />
-    <Compile Include="DataModel\Links\EditLink.cs" />
-    <Compile Include="DataModel\Links\EditMediaLink.cs" />
-    <Compile Include="DataModel\Links\FirstLink.cs" />
-    <Compile Include="DataModel\Links\LastLink.cs" />
-    <Compile Include="DataModel\Links\Link.cs" />
-    <Compile Include="DataModel\Links\LinkedObject.cs" />
-    <Compile Include="DataModel\Links\Links.cs" />
-    <Compile Include="DataModel\Links\NextLink.cs" />
-    <Compile Include="DataModel\Links\PreviousLink.cs" />
-    <Compile Include="DataModel\Links\RelatedLink.cs" />
-    <Compile Include="DataModel\Links\SelfLink.cs" />
-    <Compile Include="DataModel\Logging\LogEntry.cs" />
-    <Compile Include="DataModel\Logging\LogResult.cs" />
-    <Compile Include="DataModel\Logging\LogSetting.cs" />
-    <Compile Include="DataModel\Rest\RestRequest.cs" />
-    <Compile Include="DataModel\Rest\RestResponse.cs" />
-    <Compile Include="DataModel\Security\SecApp.cs" />
-    <Compile Include="DataModel\Security\SecContext.cs" />
-    <Compile Include="DataModel\Security\SecEntry.cs" />
-    <Compile Include="DataModel\Security\SecGroup.cs" />
-    <Compile Include="DataModel\Security\SecObject.cs" />
-    <Compile Include="DataModel\Security\SecUser.cs" />
-    <Compile Include="DataModel\Security\SessionTracker.cs" />
+    <Compile Include="Models\Exceptions\AppExistingException.cs" />
+    <Compile Include="Models\Exceptions\AppNotFoundException.cs" />
+    <Compile Include="Models\Exceptions\EntryExistingException.cs" />
+    <Compile Include="Models\Exceptions\GroupExistingException.cs" />
+    <Compile Include="Models\Exceptions\GroupNotFoundException.cs" />
+    <Compile Include="Models\Exceptions\LogNotFoundException.cs" />
+    <Compile Include="Models\Exceptions\SettingExistingException.cs" />
+    <Compile Include="Models\Exceptions\SettingNotFoundException.cs" />
+    <Compile Include="Models\Exceptions\UserExistingException.cs" />
+    <Compile Include="Models\Exceptions\UserNotFoundException.cs" />
+    <Compile Include="Models\Formatting\TextAlignment.cs" />
+    <Compile Include="Models\Linking\AlternateLink.cs" />
+    <Compile Include="Models\Linking\CollectionLink.cs" />
+    <Compile Include="Models\Linking\EditLink.cs" />
+    <Compile Include="Models\Linking\EditMediaLink.cs" />
+    <Compile Include="Models\Linking\FirstLink.cs" />
+    <Compile Include="Models\Linking\LastLink.cs" />
+    <Compile Include="Models\Linking\Link.cs" />
+    <Compile Include="Models\Linking\LinkedObject.cs" />
+    <Compile Include="Models\Linking\Links.cs" />
+    <Compile Include="Models\Linking\NextLink.cs" />
+    <Compile Include="Models\Linking\PreviousLink.cs" />
+    <Compile Include="Models\Linking\RelatedLink.cs" />
+    <Compile Include="Models\Linking\SelfLink.cs" />
+    <Compile Include="Models\Logging\LogEntry.cs" />
+    <Compile Include="Models\Logging\LogResult.cs" />
+    <Compile Include="Models\Logging\LogSetting.cs" />
+    <Compile Include="Models\Rest\RestRequest.cs" />
+    <Compile Include="Models\Rest\RestResponse.cs" />
+    <Compile Include="Models\Security\SecApp.cs" />
+    <Compile Include="Models\Security\SecContext.cs" />
+    <Compile Include="Models\Security\SecEntry.cs" />
+    <Compile Include="Models\Security\SecGroup.cs" />
+    <Compile Include="Models\Security\SecObject.cs" />
+    <Compile Include="Models\Security\SecUser.cs" />
+    <Compile Include="Models\Security\SessionTracker.cs" />
     <Compile Include="Finsa.Caravan.Common.XmlSchemas.MenuEntries.Item.Serialization.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
@@ -128,7 +128,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="RestService\IAuthManager.cs" />
+    <Compile Include="WebService\IAuthManager.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="WebForms\ISearchControl.cs" />
     <Compile Include="WebForms\SearchCriteria.cs" />

@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.DataModel.Security;
+using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebApi.Models.Security;
 using Newtonsoft.Json;
-using System.Web.Http;
 using Newtonsoft.Json.Serialization;
+using PommaLabs.KVLite;
+using System.Web.Http;
 
 namespace Finsa.Caravan.Mvc.Core
 {
@@ -21,8 +24,18 @@ namespace Finsa.Caravan.Mvc.Core
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
 
-            // Linked object mappings.
+            // Mapping per le risorse dotate di link.
             Mapper.CreateMap<SecApp, LinkedSecApp>();
+
+            // Loggo l'avvio dell'applicazione.
+            Db.Logger.LogInfoAsync<GlobalHelper>("Application started");
+
+            // Run vacuum on the persistent cache. It should be put AFTER the connection string is
+            // set, since that string it stored on the cache itself and we do not want conflicts, right?
+            if (Cache.Instance is PersistentCache)
+            {
+                PersistentCache.DefaultInstance.VacuumAsync();
+            }
         }
     }
 }
