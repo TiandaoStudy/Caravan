@@ -1,22 +1,35 @@
-﻿using System;
+﻿// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
+using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Web.Http;
 using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebApi.Models.Security;
 using LinqToQuerystring.WebApi;
 
-namespace Caravan.WebService.Controllers
+namespace Finsa.Caravan.WebService.Controllers
 {
+    /// <summary>
+    ///   Controller che si occupa della gestione della sicurezza.
+    /// </summary>
     [RoutePrefix("security")]
     public sealed class SecurityController : ApiController
     {
-
         #region App
 
         /// <summary>
-        /// Returns all the applications
+        ///   Returns all the applications
         /// </summary>
         /// <returns>All the applications</returns>
         [Route("", Name = "GetApps"), LinqToQueryable]
@@ -26,7 +39,7 @@ namespace Caravan.WebService.Controllers
         }
 
         /// <summary>
-        /// Returns all details of the specified application
+        ///   Returns all details of the specified application
         /// </summary>
         /// <param name="appName">The application to show</param>
         /// <returns>All the details of the specified application</returns>
@@ -37,7 +50,7 @@ namespace Caravan.WebService.Controllers
         }
 
         /// <summary>
-        /// Insert a new application 
+        ///   Insert a new application
         /// </summary>
         /// <param name="app">The application to insert</param>
         [Route("")]
@@ -46,11 +59,12 @@ namespace Caravan.WebService.Controllers
             Db.Security.AddApp(app);
         }
 
-        #endregion
+        #endregion App
 
         #region User
+
         /// <summary>
-        /// Returns all the users of the specified application
+        ///   Returns all the users of the specified application
         /// </summary>
         /// <param name="appName">Application name</param>
         /// <returns>All the users of the specified application</returns>
@@ -61,30 +75,30 @@ namespace Caravan.WebService.Controllers
         }
 
         /// <summary>
-        /// Add a new user in the specified application
+        ///   Add a new user in the specified application
         /// </summary>
         /// <param name="appName">Application name</param>
         /// <param name="user">The new user to add</param>
         [Route("{appName}/users")]
         public void PostUser(string appName, [FromBody] SecUser user)
         {
-           Db.Security.AddUser(appName,user);
+            Db.Security.AddUser(appName, user);
         }
 
         /// <summary>
-        /// Update the user with the specified userLogin in the specified application
+        ///   Update the user with the specified userLogin in the specified application
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <param name="userLogin">The user login</param>
-        /// <param name="user">The user containing element to update </param>
+        /// <param name="user">The user containing element to update</param>
         [Route("{appName}/users/{userLogin}")]
-        public void PutUser(string appName, string userLogin,[FromBody] SecUser user)
+        public void PutUser(string appName, string userLogin, [FromBody] SecUser user)
         {
             Db.Security.UpdateUser(appName, userLogin, user);
         }
 
         /// <summary>
-        /// Delete the user with the specified user login from the specified application
+        ///   Delete the user with the specified user login from the specified application
         /// </summary>
         /// <param name="appName">the application name</param>
         /// <param name="userLogin">the user login</param>
@@ -95,19 +109,19 @@ namespace Caravan.WebService.Controllers
         }
 
         /// <summary>
-        /// Add a user to a the specified group of the specified application
+        ///   Add a user to a the specified group of the specified application
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <param name="userLogin">The user login of the user to add</param>
         /// <param name="groupName">The group name</param>
         [Route("{appName}/users/{userLogin}/{groupName}")]
-        public void PostUserToGroup(string appName, string userLogin,string groupName)
+        public void PostUserToGroup(string appName, string userLogin, string groupName)
         {
-            Db.Security.AddUserToGroup(appName,userLogin,groupName);
+            Db.Security.AddUserToGroup(appName, userLogin, groupName);
         }
 
         /// <summary>
-        /// Delete the user with the specified login from the specified group
+        ///   Delete the user with the specified login from the specified group
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <param name="userLogin">The user login</param>
@@ -116,25 +130,26 @@ namespace Caravan.WebService.Controllers
         [Route("{appName}/users/{userLogin}/{groupName}")]
         public void DeleteUserToGroup(string appName, string userLogin, string groupName)
         {
-            Db.Security.RemoveUserFromGroup(appName,userLogin,groupName);
+            Db.Security.RemoveUserFromGroup(appName, userLogin, groupName);
         }
 
-        #endregion
+        #endregion User
 
         #region Group
+
         /// <summary>
-        /// Returns all groups of the specified application
+        ///   Returns all groups of the specified application
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <returns></returns>
-        [Route("{appName}/groups"),LinqToQueryable]
+        [Route("{appName}/groups"), LinqToQueryable]
         public IQueryable<SecGroup> GetGroups(string appName)
         {
             return Db.Security.Groups(appName).AsQueryable();
         }
-        
+
         /// <summary>
-        /// Return details on the specified group belong to the specified application
+        ///   Return details on the specified group belong to the specified application
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <param name="groupName">The group name</param>
@@ -146,18 +161,18 @@ namespace Caravan.WebService.Controllers
         }
 
         /// <summary>
-        /// Add a new group to the specified application
+        ///   Add a new group to the specified application
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <param name="group">Group to add</param>
         [Route("{appName}/groups")]
-        public void PostGroup(string appName,[FromBody] SecGroup group)
+        public void PostGroup(string appName, [FromBody] SecGroup group)
         {
-            Db.Security.AddGroup(appName,group);
+            Db.Security.AddGroup(appName, group);
         }
 
         /// <summary>
-        /// Remove the group specified from the application specified 
+        ///   Remove the group specified from the application specified
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <param name="groupName">The group name</param>
@@ -168,7 +183,7 @@ namespace Caravan.WebService.Controllers
         }
 
         /// <summary>
-        /// Update the specified group 
+        ///   Update the specified group
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <param name="groupName">The group name</param>
@@ -176,15 +191,15 @@ namespace Caravan.WebService.Controllers
         [Route("{appName}/groups/{groupName}")]
         public void PutGroup(string appName, string groupName, [FromBody] SecGroup group)
         {
-            Db.Security.UpdateGroup(appName,groupName,group);
-        }   
+            Db.Security.UpdateGroup(appName, groupName, group);
+        }
 
-#endregion
+        #endregion Group
 
         #region Context
 
         /// <summary>
-        /// Returns all contexts of the specified application
+        ///   Returns all contexts of the specified application
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <returns>All contexts of the specified application</returns>
@@ -192,14 +207,14 @@ namespace Caravan.WebService.Controllers
         public IQueryable<SecContext> GetContexts(string appName)
         {
             return Db.Security.Contexts(appName).AsQueryable();
-        } 
+        }
 
-        #endregion
+        #endregion Context
 
         #region Objects
 
         /// <summary>
-        ///  Returns all objects belong to the specified application
+        ///   Returns all objects belong to the specified application
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <returns>All objects belong to the specified application</returns>
@@ -210,7 +225,7 @@ namespace Caravan.WebService.Controllers
         }
 
         /// <summary>
-        /// Returns all objects in the specified context 
+        ///   Returns all objects in the specified context
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <param name="contextName">the context name</param>
@@ -218,15 +233,15 @@ namespace Caravan.WebService.Controllers
         [Route("{appaName}/objects"), LinqToQueryable]
         public IQueryable<SecObject> GetObjects(string appName, string contextName)
         {
-            return Db.Security.Objects(appName,contextName).AsQueryable();
-        } 
+            return Db.Security.Objects(appName, contextName).AsQueryable();
+        }
 
-        #endregion
+        #endregion Objects
 
         #region Entries
 
         /// <summary>
-        /// Returns all entries of the specified application
+        ///   Returns all entries of the specified application
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <returns>All entries of the specified application</returns>
@@ -237,20 +252,19 @@ namespace Caravan.WebService.Controllers
         }
 
         /// <summary>
-        /// Returns all the entries of the specified context
+        ///   Returns all the entries of the specified context
         /// </summary>
         /// <param name="appName">the application name</param>
         /// <param name="contextName">The context name</param>
         /// <returns></returns>
         [Route("{appName}/entries/{contextName}"), LinqToQueryable]
-        public IQueryable<SecEntry> GetEntries(string appName,string contextName)
+        public IQueryable<SecEntry> GetEntries(string appName, string contextName)
         {
-            return Db.Security.Entries(appName,contextName).AsQueryable();
+            return Db.Security.Entries(appName, contextName).AsQueryable();
         }
 
-
         /// <summary>
-        /// Returns all the entries of the specified user
+        ///   Returns all the entries of the specified user
         /// </summary>
         /// <param name="appName">the application name</param>
         /// <param name="contextName">The context name</param>
@@ -263,7 +277,7 @@ namespace Caravan.WebService.Controllers
         }
 
         /// <summary>
-        /// Returns all the entries of the specified object
+        ///   Returns all the entries of the specified object
         /// </summary>
         /// <param name="appName">the application name</param>
         /// <param name="contextName">The context name</param>
@@ -276,7 +290,7 @@ namespace Caravan.WebService.Controllers
         }
 
         /// <summary>
-        /// Returns all the entries of the specified object
+        ///   Returns all the entries of the specified object
         /// </summary>
         /// <param name="appName">the application name</param>
         /// <param name="contextName">The context name</param>
@@ -290,7 +304,7 @@ namespace Caravan.WebService.Controllers
         }
 
         /// <summary>
-        /// Add a new entry in the specified application withe the specified parameters
+        ///   Add a new entry in the specified application withe the specified parameters
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <param name="entry">The entry to add</param>
@@ -299,11 +313,11 @@ namespace Caravan.WebService.Controllers
         {
             var userLogin = (entry.User == null) ? null : entry.User.Login;
             var groupName = (entry.Group == null) ? null : entry.Group.Name;
-            Db.Security.AddEntry(appName, entry.Context,entry.Object,userLogin,groupName);
+            Db.Security.AddEntry(appName, entry.Context, entry.Object, userLogin, groupName);
         }
 
         /// <summary>
-        /// Delete the specified entry from the application
+        ///   Delete the specified entry from the application
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <param name="contextname">The context name</param>
@@ -314,9 +328,9 @@ namespace Caravan.WebService.Controllers
         public void DeleteEntry(string appName, string contextname, string objectName, string userLogin,
             string groupName)
         {
-            Db.Security.RemoveEntry(appName,contextname,objectName,userLogin,groupName);
+            Db.Security.RemoveEntry(appName, contextname, objectName, userLogin, groupName);
         }
 
-        #endregion
+        #endregion Entries
     }
 }

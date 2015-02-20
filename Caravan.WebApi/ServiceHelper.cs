@@ -7,15 +7,19 @@ using Finsa.Caravan.WebApi.Models.Security;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PommaLabs.KVLite;
+using PommaLabs.KVLite.Web.Http;
 
 namespace Finsa.Caravan.WebApi
 {
-    public sealed class GlobalHelper
+    /// <summary>
+    ///   Gestisce alcuni eventi comuni a tutte le applicazioni.
+    /// </summary>
+    public sealed class ServiceHelper
     {
-        public static void Application_Start()
+        public static void OnStart(HttpConfiguration configuration)
         {
             // Personalizzo le impostazioni del serializzatore JSON.
-            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
+            configuration.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 Formatting = Formatting.None,
@@ -28,7 +32,7 @@ namespace Finsa.Caravan.WebApi
             Mapper.CreateMap<SecApp, LinkedSecApp>();
 
             // Loggo l'avvio dell'applicazione.
-            Db.Logger.LogInfoAsync<GlobalHelper>("Application started");
+            Db.Logger.LogInfoAsync<ServiceHelper>("Application started");
 
             // Run vacuum on the persistent cache. It should be put AFTER the connection string is
             // set, since that string it stored on the cache itself and we do not want conflicts, right?
@@ -36,6 +40,9 @@ namespace Finsa.Caravan.WebApi
             {
                 PersistentCache.DefaultInstance.VacuumAsync();
             }
+
+            // Imposta KVLite come gestore della cache di output.
+            ApiOutputCache.RegisterAsCacheOutputProvider(configuration);
         }
     }
 }
