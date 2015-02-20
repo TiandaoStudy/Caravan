@@ -1,0 +1,29 @@
+﻿@* Generator: MvcHelper *@
+@* Namespace: Finsa.Caravan.Mvc.Controls.ValueHolders *@
+
+@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using Finsa.Caravan.Mvc.Controls.ValueHolders
+
+@helper BootstrapDatePicker(this HtmlHelper htmlHelper, BootstrapDatePickerOptions options) {
+
+     <div ID="@options.ID-container" class="input-group date">
+         <input ID="@options.ID" type="text" runat="server" class="form-control" />
+         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+      </div>
+   
+   
+    <script type="text/javascript">
+       $('#@(options.ID)-container').datepicker({
+          format:  "@options.DateFormat",
+          weekStart: 1,
+          startView: @Convert.ToByte(options.StartView),
+          minViewMode:@Convert.ToByte(options.MinView),
+          todayBtn: "linked",
+          autoclose: true,
+          todayHighlight: true
+       }).on('changeDate', function(event) {
+          @(options.ChangeDate)(event);
+             });
+      </script> 
+}
