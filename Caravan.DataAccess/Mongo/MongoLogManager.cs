@@ -84,7 +84,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
            throw new System.NotImplementedException();
        }
 
-       protected override IList<LogSettings> GetLogSettings(string appName, LogType? logType)
+       protected override IList<LogSetting> GetLogSettings(string appName, LogType? logType)
       {
          var apps = MongoUtilities.GetSecAppCollection();
          var query = apps.AsQueryable();
@@ -98,7 +98,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
 
          return (from a in query.AsEnumerable()
                  from s in a.LogSettings.Where(s => logTypeStr == null || s.Type == logTypeStr)
-                 select new LogSettings
+                 select new LogSetting
                  {
                     App = new SecApp
                     {
@@ -108,7 +108,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
                  }).ToList();
       }
 
-      protected override bool DoAddSettings(string appName, LogType logType, LogSettings settings)
+      protected override bool DoAddSettings(string appName, LogType logType, LogSetting settings)
       {
          // Update preparation
          var logTypeStr = logType.ToString().ToLower();
@@ -124,7 +124,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
          return apps.Update(query, update).Ok;
       }
 
-      protected override bool DoUpdateSettings(string appName, LogType logType, LogSettings settings)
+      protected override bool DoUpdateSettings(string appName, LogType logType, LogSetting settings)
       {
          // Update preparation
          var logTypeStr = logType.ToString().ToLower();
