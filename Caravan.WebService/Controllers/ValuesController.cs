@@ -24,7 +24,7 @@ namespace Finsa.Caravan.WebService.Controllers
         ///   Returns all values
         /// </summary>
         /// <returns>All values</returns>
-        [CacheOutput(ServerTimeSpan = 30)]
+        [Route(""), CacheOutput(ServerTimeSpan = 30)]
         public IEnumerable<string> Get()
         {
             return new[] { "value1", "value2" };
@@ -36,6 +36,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <param name="id">The id of the data</param>
         /// <returns>The value of the data</returns>
+        [Route("{id}")]
         public string Get(int id)
         {
             return "value";
@@ -47,6 +48,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <param name="value">Value of the api</param>
         /// <returns></returns>
+        [Route("")]
         public void Post([FromBody]string value)
         {
         }
@@ -57,6 +59,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <param name="id">id of the api</param>
         /// <param name="value">the value to add</param>
+        [Route("{id}")]
         public void Put(int id, [FromBody]string value)
         {
         }
@@ -66,6 +69,7 @@ namespace Finsa.Caravan.WebService.Controllers
         ///   Delete the api with the Id retrieve from the body
         /// </summary>
         /// <param name="id">The id of the api to remove</param>
+        [Route("{id}")]
         public void Delete(int id)
         {
         }
