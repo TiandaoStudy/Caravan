@@ -73,7 +73,7 @@ namespace UnitTests.DataAccess
             KeyValuePair.Create("arg2", "2"),
          });
 
-         var q = Db.Logger.Logs(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests" && l.ShortMessage == "pino").ToList();
+         var q = Db.Logger.Entries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests" && l.ShortMessage == "pino").ToList();
 
          Assert.That(q.Count(),Is.EqualTo(1));
          Assert.That(q.First().Arguments[0].Key, Is.EqualTo("arg1"));
@@ -100,7 +100,7 @@ namespace UnitTests.DataAccess
          for (var i = 1; i <= logCount; ++i)
          {
 
-            var q = Db.Logger.Logs(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests" && l.ShortMessage == "pino" + i).ToList();
+            var q = Db.Logger.Entries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests" && l.ShortMessage == "pino" + i).ToList();
 
             Assert.That(q.Count(), Is.EqualTo(1));
             Assert.That(q.First().Arguments[0].Key, Is.EqualTo("arg1"+i));
@@ -148,10 +148,10 @@ namespace UnitTests.DataAccess
          var res = Db.Logger.LogRaw(LogType.Info, _myApp.Name, "", "UnitTests.DataAccess.LogManagerTests", "Log_validArgs_", new Exception() );
          Assert.True(res.Succeeded);
 
-         var q = Db.Logger.Logs(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests");
+         var q = Db.Logger.Entries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests");
          Assert.That(q.Count(),Is.EqualTo(1));
 
-         var q1 = Db.Logger.Logs(_myApp.Name).Where(l => l.Function == "log_validargs_");
+         var q1 = Db.Logger.Entries(_myApp.Name).Where(l => l.Function == "log_validargs_");
          Assert.That(q1.Count(), Is.EqualTo(1));
       }
 
@@ -176,7 +176,7 @@ namespace UnitTests.DataAccess
          var res = Db.Logger.Log<LogManagerTests>(LogType.Error, new Exception());
           Assert.True(res.Succeeded);
 
-         var q = Db.Logger.Logs(LogType.Error).Where(l => l.Function == "logwithcodeunit_validargs");
+         var q = Db.Logger.Entries(LogType.Error).Where(l => l.Function == "logwithcodeunit_validargs");
 
          Assert.That(q.Count(),Is.EqualTo(1));
       }
@@ -195,7 +195,7 @@ namespace UnitTests.DataAccess
          var res = Db.Logger.LogDebug<LogManagerTests>(new Exception());
          Assert.True(res.Succeeded);
 
-         var q = Db.Logger.Logs(LogType.Debug).Where(l => l.Function == "logdebug_validargs");
+         var q = Db.Logger.Entries(LogType.Debug).Where(l => l.Function == "logdebug_validargs");
 
          Assert.That(q.Count(), Is.EqualTo(1));
       }
@@ -212,12 +212,12 @@ namespace UnitTests.DataAccess
             var res = Db.Logger.LogDebug<LogManagerTests>(new Exception(),c1.Name);
             Assert.True(res.Succeeded);
             
-            var q = Db.Logger.Logs(LogType.Debug).Where(l => l.Function == "logdebug_validargs_async" && l.Context == c1.Name).ToList();
+            var q = Db.Logger.Entries(LogType.Debug).Where(l => l.Function == "logdebug_validargs_async" && l.Context == c1.Name).ToList();
 
             Assert.That(q.Count(), Is.EqualTo(1));
          });
          
-         var q1 = Db.Logger.Logs(LogType.Debug).Where(l => l.Function == "logdebug_validargs_async").ToList();
+         var q1 = Db.Logger.Entries(LogType.Debug).Where(l => l.Function == "logdebug_validargs_async").ToList();
 
          Assert.That(q1.Count(), Is.EqualTo(logCount));
         
@@ -229,7 +229,7 @@ namespace UnitTests.DataAccess
          var res = Db.Logger.LogError<LogManagerTests>(new Exception());
          Assert.True(res.Succeeded);
 
-         var q = Db.Logger.Logs(LogType.Error).Where(l => l.Function == "logerror_validargs");
+         var q = Db.Logger.Entries(LogType.Error).Where(l => l.Function == "logerror_validargs");
 
          Assert.That(q.Count(), Is.EqualTo(1));
       }
@@ -245,12 +245,12 @@ namespace UnitTests.DataAccess
             var res = Db.Logger.LogError<LogManagerTests>(new Exception(), c1.Name);
             Assert.True(res.Succeeded);
 
-            var q = Db.Logger.Logs(LogType.Error).Where(l => l.Function == "logerror_validargs_async" && l.Context == c1.Name);
+            var q = Db.Logger.Entries(LogType.Error).Where(l => l.Function == "logerror_validargs_async" && l.Context == c1.Name);
 
             Assert.That(q.Count(), Is.EqualTo(1));
          });
 
-         var q1 = Db.Logger.Logs(LogType.Error).Where(l => l.Function == "logerror_validargs_async");
+         var q1 = Db.Logger.Entries(LogType.Error).Where(l => l.Function == "logerror_validargs_async");
          Assert.That(q1.Count(), Is.EqualTo(logCount));
 
       }
@@ -261,7 +261,7 @@ namespace UnitTests.DataAccess
          var res = Db.Logger.LogWarn<LogManagerTests>(new Exception());
          Assert.True(res.Succeeded);
 
-         var q = Db.Logger.Logs(LogType.Warn).Where(l => l.Function == "logwarn_validargs");
+         var q = Db.Logger.Entries(LogType.Warn).Where(l => l.Function == "logwarn_validargs");
 
          Assert.That(q.Count(), Is.EqualTo(1));
       }
@@ -278,12 +278,12 @@ namespace UnitTests.DataAccess
             var res = Db.Logger.LogWarn<LogManagerTests>(new Exception(),c1.Name);
             Assert.True(res.Succeeded);
 
-            var q = Db.Logger.Logs(LogType.Warn).Where(l => l.Function == "logwarn_validargs_async" && l.Context == c1.Name);
+            var q = Db.Logger.Entries(LogType.Warn).Where(l => l.Function == "logwarn_validargs_async" && l.Context == c1.Name);
 
             Assert.That(q.Count(), Is.EqualTo(1));
          });
 
-         var q1 = Db.Logger.Logs(LogType.Warn).Where(l => l.Function == "logwarn_validargs_async" );
+         var q1 = Db.Logger.Entries(LogType.Warn).Where(l => l.Function == "logwarn_validargs_async" );
 
          Assert.That(q1.Count(), Is.EqualTo(logCount));
 
@@ -295,7 +295,7 @@ namespace UnitTests.DataAccess
          var res = Db.Logger.LogInfo<LogManagerTests>(new Exception());
          Assert.True(res.Succeeded);
 
-         var q = Db.Logger.Logs(LogType.Info).Where(l => l.Function == "loginfo_validargs");
+         var q = Db.Logger.Entries(LogType.Info).Where(l => l.Function == "loginfo_validargs");
 
          Assert.That(q.Count(), Is.EqualTo(1));
       }
@@ -311,12 +311,12 @@ namespace UnitTests.DataAccess
             var res = Db.Logger.LogInfo<LogManagerTests>(new Exception(),c1.Name);
             Assert.True(res.Succeeded);
 
-            var q = Db.Logger.Logs(LogType.Info).Where(l => l.Function == "loginfo_validargs_async" && l.Context==c1.Name);
+            var q = Db.Logger.Entries(LogType.Info).Where(l => l.Function == "loginfo_validargs_async" && l.Context==c1.Name);
 
             Assert.That(q.Count(), Is.EqualTo(1));
          });
 
-         var q1 = Db.Logger.Logs(LogType.Info).Where(l => l.Function == "loginfo_validargs_async");
+         var q1 = Db.Logger.Entries(LogType.Info).Where(l => l.Function == "loginfo_validargs_async");
          Assert.That(q1.Count(), Is.EqualTo(logCount));
 
       }
@@ -327,7 +327,7 @@ namespace UnitTests.DataAccess
          var res = Db.Logger.LogFatal<LogManagerTests>(new Exception());
          Assert.True(res.Succeeded);
 
-         var q = Db.Logger.Logs(LogType.Fatal).Where(l => l.Function == "logfatal_validargs");
+         var q = Db.Logger.Entries(LogType.Fatal).Where(l => l.Function == "logfatal_validargs");
 
          Assert.That(q.Count(), Is.EqualTo(1));
       }
@@ -343,12 +343,12 @@ namespace UnitTests.DataAccess
             var res = Db.Logger.LogFatal<LogManagerTests>(new Exception(),c1.Name);
             Assert.True(res.Succeeded);
 
-            var q = Db.Logger.Logs(LogType.Fatal).Where(l => l.Function == "logfatal_validargs_async" && l.Context == c1.Name);
+            var q = Db.Logger.Entries(LogType.Fatal).Where(l => l.Function == "logfatal_validargs_async" && l.Context == c1.Name);
 
             Assert.That(q.Count(), Is.EqualTo(1));
          });
 
-         var q1 = Db.Logger.Logs(LogType.Fatal).Where(l => l.Function == "logfatal_validargs_async");
+         var q1 = Db.Logger.Entries(LogType.Fatal).Where(l => l.Function == "logfatal_validargs_async");
          Assert.That(q1.Count(), Is.EqualTo(logCount));
       }
 

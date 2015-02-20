@@ -151,24 +151,24 @@ namespace Finsa.Caravan.DataAccess.Core
             return Task.Factory.StartNew(() => LogFatal<TCodeUnit>(exception, context, args, appName, userName, function));
         }
 
-        public IList<LogEntry> Logs()
+        public IList<LogEntry> Entries()
         {
             return GetLogEntries(null, null);
         }
 
-        public IList<LogEntry> Logs(string appName)
+        public IList<LogEntry> Entries(string appName)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             return GetLogEntries(appName.ToLower(), null);
         }
 
-        public IList<LogEntry> Logs(LogType logType)
+        public IList<LogEntry> Entries(LogType logType)
         {
             Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
             return GetLogEntries(null, logType);
         }
 
-        public IList<LogEntry> Logs(string appName, LogType logType)
+        public IList<LogEntry> Entries(string appName, LogType logType)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));

@@ -449,10 +449,6 @@
       <Project>{407b5921-9039-4d0d-a40a-36a19c251cdc}</Project>
       <Name>Caravan.WebForms</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sample.Database\Sample.Database.csproj">
-      <Project>{956e7461-ac0f-4e81-b57d-f84689d1be9d}</Project>
-      <Name>Sample.Database</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Report1.rdlc" />

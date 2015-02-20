@@ -23,7 +23,7 @@ namespace Caravan.WebService.Controllers
         [Route("{appName}/entries"), LinqToQueryable]
         public IQueryable<LogEntry> GetEntries(string appName)
         {
-            return Db.Logger.Logs(appName).AsQueryable();
+            return Db.Logger.Entries(appName).AsQueryable();
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Caravan.WebService.Controllers
         [Route("{appName}/entries/{logType}"), LinqToQueryable]
         public IQueryable<LogEntry> GetEntries(string appName, LogType logType)
         {
-            return Db.Logger.Logs(appName, logType).AsQueryable();
+            return Db.Logger.Entries(appName, logType).AsQueryable();
         }
 
         /// <summary>

@@ -221,13 +221,13 @@ namespace UnitTests.DataAccess
        {
           var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
 
-          var l = Db.Logger.Logs(_myApp.Name);
+          var l = Db.Logger.Entries(_myApp.Name);
 
           Db.Security.AddUser(_myApp.Name, user1);
 
 
           WaitForLogger();
-          var l1 = Db.Logger.Logs(_myApp.Name);
+          var l1 = Db.Logger.Entries(_myApp.Name);
           Assert.That(l1.Count(), Is.EqualTo(l.Count()+1));
 
        }
@@ -334,12 +334,12 @@ namespace UnitTests.DataAccess
            Db.Security.AddUser(_myApp.Name, user1);
 
            WaitForLogger();
-           var l = Db.Logger.Logs(_myApp.Name);
+           var l = Db.Logger.Entries(_myApp.Name);
 
            Db.Security.RemoveUser(_myApp.Name,user1.Login);
            
            WaitForLogger();
-           var l1 = Db.Logger.Logs(_myApp.Name);
+           var l1 = Db.Logger.Entries(_myApp.Name);
            
            Assert.That(l1.Count(), Is.EqualTo(l.Count() + 1));
 
@@ -459,13 +459,13 @@ namespace UnitTests.DataAccess
            Db.Security.AddUser(_myApp.Name, user1);
 
            WaitForLogger();
-           var l = Db.Logger.Logs(_myApp.Name);
+           var l = Db.Logger.Entries(_myApp.Name);
 
            user1.Login = "updatedLogin";
 
            Db.Security.UpdateUser(_myApp.Name, "blabla1", user1);
            WaitForLogger();
-           var l1 = Db.Logger.Logs(_myApp.Name);
+           var l1 = Db.Logger.Entries(_myApp.Name);
 
            Assert.That(l1.Count(), Is.EqualTo(l.Count() + 1));
 

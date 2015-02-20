@@ -1,4 +1,5 @@
-﻿using Finsa.Caravan.Common.DataModel.Logging;
+﻿using Common.Logging;
+using Finsa.Caravan.Common.DataModel.Logging;
 using System;
 using System.Activities;
 
@@ -8,6 +9,8 @@ namespace Finsa.Caravan.DataAccess.Activities
     {
         protected override LogResult Execute(CodeActivityContext context)
         {
+            LogManager.GetLogger<LogActivity>();
+
             throw new NotImplementedException();
         }
     }

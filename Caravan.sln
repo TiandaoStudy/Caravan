@@ -58,15 +58,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess", "Carav
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.WebUI.Mvc", "Sample.WebUI.Mvc\Sample.WebUI.Mvc.csproj", "{A65D507D-03A2-49BE-A056-72AE6964140A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.RestService", "Sample.RestService\Sample.RestService.csproj", "{1687CDFF-4C23-4DD7-86C1-E277CCFA1D8A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Database", "Sample.Database\Sample.Database.csproj", "{956E7461-AC0F-4E81-B57D-F84689D1BE9D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebApi", "Caravan.WebApi\Caravan.WebApi.csproj", "{27D82597-28B1-4441-8C42-0A220C38C4D8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataModel", "Sample.DataModel\Sample.DataModel.csproj", "{33A9CD5A-87C6-4BB3-B304-4DC6411BEF4F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataAccess.EntityFramework", "Sample.DataAccess.EntityFramework\Sample.DataAccess.EntityFramework.csproj", "{0A3419EA-CD95-4262-B84A-B963C87ECCDF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External Libraries", "External Libraries", "{EEB0F070-8283-4D00-8129-64D81E908DCE}"
 	ProjectSection(SolutionItems) = preProject
@@ -123,14 +117,6 @@ Global
 		{A65D507D-03A2-49BE-A056-72AE6964140A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A65D507D-03A2-49BE-A056-72AE6964140A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A65D507D-03A2-49BE-A056-72AE6964140A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1687CDFF-4C23-4DD7-86C1-E277CCFA1D8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1687CDFF-4C23-4DD7-86C1-E277CCFA1D8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1687CDFF-4C23-4DD7-86C1-E277CCFA1D8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1687CDFF-4C23-4DD7-86C1-E277CCFA1D8A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{956E7461-AC0F-4E81-B57D-F84689D1BE9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{956E7461-AC0F-4E81-B57D-F84689D1BE9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{956E7461-AC0F-4E81-B57D-F84689D1BE9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{956E7461-AC0F-4E81-B57D-F84689D1BE9D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{27D82597-28B1-4441-8C42-0A220C38C4D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{27D82597-28B1-4441-8C42-0A220C38C4D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27D82597-28B1-4441-8C42-0A220C38C4D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -139,10 +125,6 @@ Global
 		{33A9CD5A-87C6-4BB3-B304-4DC6411BEF4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33A9CD5A-87C6-4BB3-B304-4DC6411BEF4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33A9CD5A-87C6-4BB3-B304-4DC6411BEF4F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A3419EA-CD95-4262-B84A-B963C87ECCDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A3419EA-CD95-4262-B84A-B963C87ECCDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A3419EA-CD95-4262-B84A-B963C87ECCDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A3419EA-CD95-4262-B84A-B963C87ECCDF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DAA22A2C-A101-4F71-B4E1-F0DB283A642C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DAA22A2C-A101-4F71-B4E1-F0DB283A642C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAA22A2C-A101-4F71-B4E1-F0DB283A642C}.Release|Any CPU.ActiveCfg = Release|Any CPU
