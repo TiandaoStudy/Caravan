@@ -41,7 +41,7 @@ namespace Caravan.WebService.Controllers
         /// </summary>
         /// <param name="app">The application to insert</param>
         [Route("")]
-        public void PutApp([FromBody]SecApp app)
+        public void PostApp([FromBody]SecApp app)
         {
             Db.Security.AddApp(app);
         }
@@ -66,7 +66,7 @@ namespace Caravan.WebService.Controllers
         /// <param name="appName">Application name</param>
         /// <param name="user">The new user to add</param>
         [Route("{appName}/users")]
-        public void PutUser(string appName, [FromBody] SecUser user)
+        public void PostUser(string appName, [FromBody] SecUser user)
         {
            Db.Security.AddUser(appName,user);
         }
@@ -78,7 +78,7 @@ namespace Caravan.WebService.Controllers
         /// <param name="userLogin">The user login</param>
         /// <param name="user">The user containing element to update </param>
         [Route("{appName}/users/{userLogin}")]
-        public void PostUser(string appName, string userLogin,[FromBody] SecUser user)
+        public void PutUser(string appName, string userLogin,[FromBody] SecUser user)
         {
             Db.Security.UpdateUser(appName, userLogin, user);
         }
@@ -101,7 +101,7 @@ namespace Caravan.WebService.Controllers
         /// <param name="userLogin">The user login of the user to add</param>
         /// <param name="groupName">The group name</param>
         [Route("{appName}/users/{userLogin}/{groupName}")]
-        public void PutUserToGroup(string appName, string userLogin,string groupName)
+        public void PostUserToGroup(string appName, string userLogin,string groupName)
         {
             Db.Security.AddUserToGroup(appName,userLogin,groupName);
         }
@@ -151,7 +151,7 @@ namespace Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <param name="group">Group to add</param>
         [Route("{appName}/groups")]
-        public void PutGroup(string appName,[FromBody] SecGroup group)
+        public void PostGroup(string appName,[FromBody] SecGroup group)
         {
             Db.Security.AddGroup(appName,group);
         }
@@ -174,7 +174,7 @@ namespace Caravan.WebService.Controllers
         /// <param name="groupName">The group name</param>
         /// <param name="group">The group containing element/s to update</param>
         [Route("{appName}/groups/{groupName}")]
-        public void PostGroup(string appName, string groupName, [FromBody] SecGroup group)
+        public void PutGroup(string appName, string groupName, [FromBody] SecGroup group)
         {
             Db.Security.UpdateGroup(appName,groupName,group);
         }   
@@ -295,7 +295,7 @@ namespace Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <param name="entry">The entry to add</param>
         [Route("{appName}/entries/")]
-        public void PutEntry(string appName, [FromBody] SecEntry entry)
+        public void PostEntry(string appName, [FromBody] SecEntry entry)
         {
             var userLogin = (entry.User == null) ? null : entry.User.Login;
             var groupName = (entry.Group == null) ? null : entry.Group.Name;

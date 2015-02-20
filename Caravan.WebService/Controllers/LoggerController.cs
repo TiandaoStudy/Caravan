@@ -44,7 +44,7 @@ namespace Caravan.WebService.Controllers
         /// <param name="appName">Application name</param>
         /// <param name="log">The log to add</param>
         [Route("{appName}/entries")]
-        public void PutLog(string appName, [FromBody] LogEntry log)
+        public void PostLog(string appName, [FromBody] LogEntry log)
         {
             Db.Logger.LogRaw(log.Type, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
         }
@@ -56,7 +56,7 @@ namespace Caravan.WebService.Controllers
         /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
         /// <param name="log">The log to add</param>
         [Route("{appName}/entries/{logType}"), LinqToQueryable]
-        public void PutLog(string appName, LogType logType, [FromBody] LogEntry log)
+        public void PostLog(string appName, LogType logType, [FromBody] LogEntry log)
         {
             Db.Logger.LogRaw(logType, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
         }
@@ -110,7 +110,7 @@ namespace Caravan.WebService.Controllers
         /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
         /// <param name="settings">The setting to add</param>
         [Route("{appName}/settings/{logType}")]
-        public void PutSetting(string appName, LogType logType, [FromBody] LogSetting settings)
+        public void PostSetting(string appName, LogType logType, [FromBody] LogSetting settings)
         {
             Db.Logger.AddSettings(appName, logType, settings);
         }
@@ -122,7 +122,7 @@ namespace Caravan.WebService.Controllers
         /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
         /// <param name="settings">The new data setting</param>
         [Route("{appName}/settings/{logType}")]
-        public void PostSetting(string appName, LogType logType, [FromBody] LogSetting settings)
+        public void PutSetting(string appName, LogType logType, [FromBody] LogSetting settings)
         {
             Db.Logger.UpdateSettings(appName, logType, settings);
         }
