@@ -5,7 +5,7 @@ namespace Finsa.Caravan.DataAccess.Sql.MySql
 {
     public sealed class MySqlDbManager : DbManagerBase
     {
-        private static readonly DbProviderFactory DbFactory = MySql.MySqlDbManager.DbFactory;
+        private static readonly DbProviderFactory DbFactory = global::MySql.Data.MySqlClient.MySqlClientFactory.Instance;
 
         public override DataAccessKind Kind
         {
