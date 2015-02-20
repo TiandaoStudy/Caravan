@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Web.Http;
+using AutoMapper;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.DataModel.Security;
 using Finsa.Caravan.DataAccess;
@@ -6,9 +7,8 @@ using Finsa.Caravan.WebApi.Models.Security;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PommaLabs.KVLite;
-using System.Web.Http;
 
-namespace Finsa.Caravan.Mvc.Core
+namespace Finsa.Caravan.WebApi
 {
     public sealed class GlobalHelper
     {

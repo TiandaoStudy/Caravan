@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Caravan.WebService</name>
+        <name>Finsa.Caravan.WebService</name>
     </assembly>
     <members>
         <member name="T:Caravan.WebService.Controllers.HelpController">
@@ -311,6 +311,16 @@
               Delete the api with the Id retrieve from the body
             </summary>
             <param name="id">The id of the api to remove</param>
+        </member>
+        <member name="T:Caravan.WebService.WebApiApplication">
+            <summary>
+              Contiene varie configurazioni del servizio.
+            </summary>
+        </member>
+        <member name="M:Caravan.WebService.WebApiApplication.Application_Start">
+            <summary>
+              Invocato all'avvio.
+            </summary>
         </member>
     </members>
 </doc>
