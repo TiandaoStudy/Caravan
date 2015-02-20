@@ -72,7 +72,7 @@
             <param name="logType">Type of log which can be "warn", "info" or "error"</param>
             <returns></returns>
         </member>
-        <member name="M:Caravan.WebService.Controllers.LoggerController.PutSetting(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType,Finsa.Caravan.Common.DataModel.Logging.LogSettings)">
+        <member name="M:Caravan.WebService.Controllers.LoggerController.PutSetting(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType,Finsa.Caravan.Common.DataModel.Logging.LogSetting)">
             <summary>
               Add a new setting of type = logType
             </summary>
@@ -80,7 +80,7 @@
             <param name="logType">Type of log which can be "warn", "info" or "error"</param>
             <param name="settings">The setting to add</param>
         </member>
-        <member name="M:Caravan.WebService.Controllers.LoggerController.PostSetting(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType,Finsa.Caravan.Common.DataModel.Logging.LogSettings)">
+        <member name="M:Caravan.WebService.Controllers.LoggerController.PostSetting(System.String,Finsa.Caravan.Common.DataModel.Logging.LogType,Finsa.Caravan.Common.DataModel.Logging.LogSetting)">
             <summary>
               Update the setting of a particular logType
             </summary>

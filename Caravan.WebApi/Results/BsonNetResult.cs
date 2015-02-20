@@ -1,6 +1,6 @@
 ﻿namespace Finsa.Caravan.WebApi.Results
 {
-    class BsonNetResult
+    public sealed class BsonNetResult
     {
     }
 }

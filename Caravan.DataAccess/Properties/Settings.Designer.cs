@@ -103,5 +103,14 @@ namespace Finsa.Caravan.DataAccess.Properties {
                 return ((string)(this["SqlServerSchema"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("mydb")]
+        public string DefaultSqlSchema {
+            get {
+                return ((string)(this["DefaultSqlSchema"]));
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ using Finsa.Caravan.DataAccess.Mongo;
 using Finsa.Caravan.DataAccess.Properties;
 using Finsa.Caravan.DataAccess.Rest;
 using Finsa.Caravan.DataAccess.Sql;
+using Finsa.Caravan.DataAccess.Sql.MySql;
 using Finsa.Caravan.DataAccess.Sql.Oracle;
 using Finsa.Caravan.DataAccess.Sql.SqlServer;
 using Finsa.Caravan.DataAccess.Sql.SqlServerCe;
@@ -113,6 +114,11 @@ namespace Finsa.Caravan.DataAccess
         }
 
         #region DbContext Generators
+
+        private static SqlDbContext SqlDbContextGenerator()
+        {
+            return new SqlDbContext();
+        }
 
         private static OracleDbContext OracleDbContextGenerator()
         {
@@ -239,6 +245,14 @@ namespace Finsa.Caravan.DataAccess
                     _dbManagerInstance = new MongoDbManager();
                     _logManagerInstance = new MongoLogManager();
                     _securityManagerInstance = new MongoSecurityManager();
+                    break;
+
+                case DataAccessKind.MySql:
+                    _dbManagerInstance = new MySqlDbManager();
+                    _dbContextGenerator = SqlDbContextGenerator;
+                    _logManagerInstance = new SqlLogManager();
+                    _queryManagerInstance = new SqlQueryManager();
+                    _securityManagerInstance = new SqlSecurityManager();
                     break;
 
                 case DataAccessKind.Oracle:
