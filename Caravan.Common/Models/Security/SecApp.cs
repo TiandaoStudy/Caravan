@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Finsa.Caravan.Common.DataModel.Logging;
 using Newtonsoft.Json;
+using PommaLabs;
 
 namespace Finsa.Caravan.Common.Models.Security
 {
     [Serializable, DataContract(IsReference = true)]
-    public class SecApp : IEquatable<SecApp>
+    public class SecApp : EquatableObject<SecApp>
     {
         [JsonProperty, DataMember]
         public long Id { get; set; }
@@ -39,108 +40,15 @@ namespace Finsa.Caravan.Common.Models.Security
         [JsonIgnore, IgnoreDataMember]
         public virtual ICollection<SecEntry> SecEntries { get; set; }
 
-        public bool Equals(SecApp other)
+        protected override IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Id == other.Id;
+            yield return GKeyValuePair.Create("Name", Name);
+            yield return GKeyValuePair.Create("Description", Description);
         }
 
-        public override bool Equals(object obj)
+        protected override IEnumerable<object> GetIdentifyingMembers()
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((SecApp) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return Id.GetHashCode();
-        }
-
-        public static bool operator ==(SecApp left, SecApp right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(SecApp left, SecApp right)
-        {
-            return !Equals(left, right);
-        }
-    }
-
-    [Serializable, DataContract(IsReference = true)]
-    public class SecAppSingle : IEquatable<SecAppSingle>
-    {
-        [DataMember]
-        public SecApp App { get; set; }
-
-        public bool Equals(SecAppSingle other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return App.Equals(other.App);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((SecAppSingle) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return App.GetHashCode();
-        }
-
-        public static bool operator ==(SecAppSingle left, SecAppSingle right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(SecAppSingle left, SecAppSingle right)
-        {
-            return !Equals(left, right);
-        }
-    }
-
-    [Serializable, DataContract(IsReference = true)]
-    public class SecAppList : IEquatable<SecAppList>
-    {
-        [DataMember]
-        public IEnumerable<SecApp> Apps { get; set; }
-
-        public bool Equals(SecAppList other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Apps.Equals(other.Apps);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((SecAppList) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return Apps.GetHashCode();
-        }
-
-        public static bool operator ==(SecAppList left, SecAppList right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(SecAppList left, SecAppList right)
-        {
-            return !Equals(left, right);
+            yield return Name;
         }
     }
 }

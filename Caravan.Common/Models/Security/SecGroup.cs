@@ -44,6 +44,7 @@ namespace Finsa.Caravan.Common.Models.Security
 
         protected override IEnumerable<object> GetIdentifyingMembers()
         {
+            yield return App.Name;
             yield return Name;
         }
     }

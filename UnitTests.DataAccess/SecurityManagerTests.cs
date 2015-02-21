@@ -603,12 +603,12 @@ namespace UnitTests.DataAccess
             group1 = Db.Security.Group(_myApp.Name, group1.Name);
             group2 = Db.Security.Group(_myApp.Name, group2.Name);
 
-            Assert.True(user1.Groups.Contains(group1));
-            Assert.False(user1.Groups.Contains(group2));
+            Assert.True(user1.Groups.Any(g => g.Equals(group1)));
+            Assert.False(user1.Groups.Any(g => g.Equals(group2)));
             Assert.AreEqual(1, user1.Groups.Count);
 
-            Assert.True(group1.Users.Contains(user1));
-            Assert.False(group2.Users.Contains(user1));
+            Assert.True(group1.Users.Any(g => g.Equals(user1)));
+            Assert.False(group2.Users.Any(g => g.Equals(user1)));
             Assert.AreEqual(1, group1.Users.Count);
             Assert.AreEqual(0, group2.Users.Count);
         }

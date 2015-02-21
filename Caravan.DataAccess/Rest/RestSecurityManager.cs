@@ -21,9 +21,9 @@ namespace Finsa.Caravan.DataAccess.Rest
             //request.AddUrlSegment("appName", appName);
             request.AddJsonBody(new RestRequest<object> { Auth = "AA", Body = new object() });
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecAppSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecApp>>(request);
 
-            var apps = new List<SecApp> { response.Data.Body.App };
+            var apps = new List<SecApp> { response.Data.Body };
 
             return apps;
 
@@ -46,7 +46,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             request.AddUrlSegment("appName", appName);
             request.AddJsonBody(new RestRequest<object> { Auth = "AA", Body = new object() });
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecAppSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecApp>>(request);
 
             if (response.ErrorException != null)
             {
@@ -55,7 +55,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                throw new Exception(response.ErrorMessage);
             }
 
-            return response.Data.Body.App;
+            return response.Data.Body;
          }
          catch (Exception exception)
          {
@@ -73,20 +73,17 @@ namespace Finsa.Caravan.DataAccess.Rest
             var request = new RestRequest("", Method.PUT);
 
          
-            request.AddJsonBody(new RestRequest<SecAppSingle>
+            request.AddJsonBody(new RestRequest<SecApp>
             {
                Auth = "AA",
-               Body = new SecAppSingle
-               {
-                  App = new SecApp
+               Body =  new SecApp
                   {
                      Description = app.Description,
                      Name = app.Name,
                   }
-               }
             });
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecAppSingle>>(request);
+            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecApp>>(request);
             if (response.ErrorMessage != null)
             {
                if (response.ErrorMessage == AppExistingException.TheMessage)
