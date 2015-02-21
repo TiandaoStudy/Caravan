@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Finsa.Caravan.Common.DataModel.Exceptions;
 using Finsa.Caravan.Common.Models.Security;
+using Finsa.Caravan.Common.Models.Security.Exceptions;
 
 namespace Finsa.Caravan.DataAccess
 {
@@ -18,7 +18,7 @@ namespace Finsa.Caravan.DataAccess
         ///   </summary>
         /// <param name="appName"></param>
         /// <returns></returns>
-        /// <exception cref="AppNotFoundException">There is no app with given <paramref name="appName"/>.</exception>
+        /// <exception cref="SecAppNotFoundException">There is no app with given <paramref name="appName"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
         SecApp App(string appName);
 
@@ -26,7 +26,7 @@ namespace Finsa.Caravan.DataAccess
         ///   TODO
         /// </summary>
         /// <param name="app"></param>
-        /// <exception cref="AppExistingException">
+        /// <exception cref="SecAppExistingException">
         ///   There is already an app with given <paramref name="appName"/>.
         /// </exception>
         /// <exception cref="ArgumentNullException"><paramref name="app"/> is null.</exception>
@@ -96,7 +96,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="userLogin"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
-        /// <exception cref="UserNotFoundException">
+        /// <exception cref="SecUserNotFoundException">
         ///   An user with given login does not exist.
         /// </exception>
         SecUser User(string appName, string userLogin);
@@ -106,7 +106,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="appName"></param>
         /// <param name="newUser"></param>
         /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
-        /// <exception cref="UserExistingException">An user with given login already exists.</exception>
+        /// <exception cref="SecUserExistingException">An user with given login already exists.</exception>
         void AddUser(string appName, SecUser newUser);
 
         /// <summary>

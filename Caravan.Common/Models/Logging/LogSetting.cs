@@ -1,11 +1,11 @@
-﻿using Finsa.Caravan.Common.Models.Security;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Finsa.Caravan.Common.Models.Security;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace Finsa.Caravan.Common.DataModel.Logging
+namespace Finsa.Caravan.Common.Models.Logging
 {
     [Serializable, DataContract(IsReference = true)]
     public class LogSetting : IEquatable<LogSetting>

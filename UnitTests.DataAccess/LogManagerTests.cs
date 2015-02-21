@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
 using NUnit.Framework;
@@ -25,11 +25,11 @@ namespace UnitTests.DataAccess
             Db.Security.AddApp(_myApp2);
             _settingError = new LogSetting() { Days = 30, Enabled = 1, MaxEntries = 100 };
 
-            Db.Logger.AddSettings(_myApp.Name, LogType.Error, _settingError);
-            Db.Logger.AddSettings(_myApp.Name, LogType.Fatal, _settingError);
-            Db.Logger.AddSettings(_myApp.Name, LogType.Info, _settingError);
-            Db.Logger.AddSettings(_myApp.Name, LogType.Debug, _settingError);
-            Db.Logger.AddSettings(_myApp.Name, LogType.Warn, _settingError);
+            Db.Logger.AddSetting(_myApp.Name, LogType.Error, _settingError);
+            Db.Logger.AddSetting(_myApp.Name, LogType.Fatal, _settingError);
+            Db.Logger.AddSetting(_myApp.Name, LogType.Info, _settingError);
+            Db.Logger.AddSetting(_myApp.Name, LogType.Debug, _settingError);
+            Db.Logger.AddSetting(_myApp.Name, LogType.Warn, _settingError);
         }
 
         [TearDown]
@@ -43,13 +43,13 @@ namespace UnitTests.DataAccess
         [ExpectedException(typeof(ArgumentException))]
         public void LogSettings_NullAppNameValidLogType_ThrowsArgumentException()
         {
-            Db.Logger.LogSettings(null, LogType.Error);
+            Db.Logger.Settings(null, LogType.Error);
         }
 
         [Test]
         public void LogSettings_NoArgs_ReturnListOfAllApps()
         {
-            var settings = Db.Logger.LogSettings();
+            var settings = Db.Logger.Settings();
 
             Assert.That(settings.Count, Is.EqualTo(5));
         }
@@ -57,7 +57,7 @@ namespace UnitTests.DataAccess
         [Test]
         public void LogSettings_ValidAppName_ReturnsListForAppName()
         {
-            var settings = Db.Logger.LogSettings(_myApp.Name);
+            var settings = Db.Logger.Settings(_myApp.Name);
 
             Assert.That(settings.Count, Is.EqualTo(5));
         }
@@ -110,9 +110,9 @@ namespace UnitTests.DataAccess
         public void UpdateSetting_ValidArgs_SettingUpdated()
         {
             var update = new LogSetting { Days = 40, Enabled = 1, MaxEntries = 50 };
-            Db.Logger.UpdateSettings(_myApp.Name, LogType.Info, update);
+            Db.Logger.UpdateSetting(_myApp.Name, LogType.Info, update);
 
-            var q = Db.Logger.LogSettings(_myApp.Name).Where(s => s.AppId == _myApp.Id && s.Type == LogType.Info).ToList();
+            var q = Db.Logger.Settings(_myApp.Name).Where(s => s.AppId == _myApp.Id && s.Type == LogType.Info).ToList();
             Assert.That(q.Count, Is.EqualTo(1));
             Assert.That(q.First().MaxEntries, Is.EqualTo(50));
             Assert.That(q.First().Days, Is.EqualTo(40));
@@ -123,14 +123,14 @@ namespace UnitTests.DataAccess
         public void UpdateSetting_EmptyAppName_Throws()
         {
             var update = new LogSetting { Days = 40, Enabled = 1, MaxEntries = 50 };
-            Db.Logger.UpdateSettings("", LogType.Info, update);
+            Db.Logger.UpdateSetting("", LogType.Info, update);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Updatesettings_NullSetting_throws()
         {
-            Db.Logger.UpdateSettings(_myApp.Name, LogType.Info, null);
+            Db.Logger.UpdateSetting(_myApp.Name, LogType.Info, null);
         }
 
         #endregion Log Settings

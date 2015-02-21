@@ -1,14 +1,14 @@
-﻿using Newtonsoft.Json;
-using ApiLinks = Finsa.Caravan.Common.DataModel.Links.Links;
+﻿using Finsa.Caravan.Common.DataModel.Links;
+using Newtonsoft.Json;
 
-namespace Finsa.Caravan.Common.DataModel.Links
+namespace Finsa.Caravan.Common.Models.Linking
 {
     public abstract class LinkedObject
     {
-        private readonly ApiLinks _links = new ApiLinks();
+        private readonly Links _links = new Links();
 
-        [JsonProperty(ApiLinks.JsonPropertyName, Order = ApiLinks.JsonPropertyOrder)]
-        public ApiLinks Links
+        [JsonProperty(Links.JsonPropertyName, Order = Links.JsonPropertyOrder)]
+        public Links Links
         {
             get { return _links; }
         }

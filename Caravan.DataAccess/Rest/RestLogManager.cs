@@ -1,6 +1,7 @@
-﻿using Finsa.Caravan.Common.DataModel.Exceptions;
-using Finsa.Caravan.Common.DataModel.Logging;
-using Finsa.Caravan.Common.DataModel.Rest;
+﻿using Finsa.Caravan.Common.Models.Logging;
+using Finsa.Caravan.Common.Models.Logging.Exceptions;
+using Finsa.Caravan.Common.Models.Rest;
+using Finsa.Caravan.Common.Models.Security.Exceptions;
 using Finsa.Caravan.DataAccess.Core;
 using RestSharp;
 using System;
@@ -20,14 +21,14 @@ namespace Finsa.Caravan.DataAccess.Rest
             throw new NotImplementedException();
         }
 
-        protected override IList<LogEntry> GetLogEntries(string appName, LogType? logType)
+        protected override IList<LogEntry> GetEntries(string appName, LogType? logType)
         {
             var client = new RestClient("http://localhost/Caravan.RestService/security");
             var request = new RestRequest("{appName}/entries/{logType}", Method.POST);
             throw new NotImplementedException();
         }
 
-        protected override IList<LogSetting> GetLogSettings(string appName, LogType? logType)
+        protected override IList<LogSetting> GetSettings(string appName, LogType? logType)
         {
             try
             {
@@ -43,12 +44,12 @@ namespace Finsa.Caravan.DataAccess.Rest
 
                 request.AddJsonBody(new RestRequest<object> { Auth = "AA", Body = new object() });
 
-                var response = client.Execute<Common.DataModel.Rest.RestResponse<LogSetting>>(request);
+                var response = client.Execute<Common.Models.Rest.RestResponse<LogSetting>>(request);
 
                 if (response.ErrorException != null)
                 {
-                    if (response.ErrorMessage == AppNotFoundException.TheMessage)
-                        throw new AppNotFoundException();
+                    if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
+                        throw new SecAppNotFoundException();
                     throw new Exception(response.ErrorMessage);
                 }
                 var settings = new List<LogSetting> { response.Data.Body };
@@ -61,12 +62,12 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override bool DoDeleteLog(string appName, int id)
+        protected override bool DoRemoveEntry(string appName, int logId)
         {
             throw new NotImplementedException();
         }
 
-        protected override bool DoAddSettings(string appName, LogType logType, LogSetting settings)
+        protected override bool DoAddSetting(string appName, LogType logType, LogSetting setting)
         {
             try
             {
@@ -80,23 +81,23 @@ namespace Finsa.Caravan.DataAccess.Rest
                     Auth = "AA",
                     Body = new LogSetting
                        {
-                           Days = settings.Days,
-                           MaxEntries = settings.MaxEntries,
-                           Enabled = settings.Enabled,
-                           LogEntries = settings.LogEntries
+                           Days = setting.Days,
+                           MaxEntries = setting.MaxEntries,
+                           Enabled = setting.Enabled,
+                           LogEntries = setting.LogEntries
                        }
                 });
 
-                var response = client.Execute<Common.DataModel.Rest.RestResponse<LogSetting>>(request);
+                var response = client.Execute<Common.Models.Rest.RestResponse<LogSetting>>(request);
 
                 if (response.ErrorException != null)
                 {
-                    if (response.ErrorMessage == AppExistingException.TheMessage)
-                        throw new AppExistingException();
-                    if (response.ErrorMessage == SettingExistingException.TheMessage)
-                        throw new SettingExistingException();
-                    if (response.ErrorMessage == AppNotFoundException.TheMessage)
-                        throw new AppNotFoundException();
+                    if (response.ErrorMessage == SecAppExistingException.TheMessage)
+                        throw new SecAppExistingException();
+                    if (response.ErrorMessage == LogSettingExistingException.TheMessage)
+                        throw new LogSettingExistingException();
+                    if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
+                        throw new SecAppNotFoundException();
                     throw new Exception(response.ErrorMessage);
                 }
                 return true;
@@ -107,7 +108,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override bool DoUpdateSettings(string appName, LogType logType, LogSetting settings)
+        protected override bool DoUpdateSetting(string appName, LogType logType, LogSetting setting)
         {
             try
             {
@@ -121,23 +122,23 @@ namespace Finsa.Caravan.DataAccess.Rest
                     Auth = "AA",
                     Body = new LogSetting
                        {
-                           Days = settings.Days,
-                           MaxEntries = settings.MaxEntries,
-                           Enabled = settings.Enabled,
-                           LogEntries = settings.LogEntries
+                           Days = setting.Days,
+                           MaxEntries = setting.MaxEntries,
+                           Enabled = setting.Enabled,
+                           LogEntries = setting.LogEntries
                        }
                 });
 
-                var response = client.Execute<Common.DataModel.Rest.RestResponse<LogSetting>>(request);
+                var response = client.Execute<Common.Models.Rest.RestResponse<LogSetting>>(request);
 
                 if (response.ErrorException != null)
                 {
-                    if (response.ErrorMessage == AppExistingException.TheMessage)
-                        throw new AppExistingException();
-                    if (response.ErrorMessage == SettingExistingException.TheMessage)
-                        throw new SettingExistingException();
-                    if (response.ErrorMessage == AppNotFoundException.TheMessage)
-                        throw new AppNotFoundException();
+                    if (response.ErrorMessage == SecAppExistingException.TheMessage)
+                        throw new SecAppExistingException();
+                    if (response.ErrorMessage == LogSettingExistingException.TheMessage)
+                        throw new LogSettingExistingException();
+                    if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
+                        throw new SecAppNotFoundException();
                     throw new Exception(response.ErrorMessage);
                 }
                 return true;
@@ -148,7 +149,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override bool DoDeleteSettings(string appName, LogType logType)
+        protected override bool DoRemoveSetting(string appName, LogType logType)
         {
             throw new NotImplementedException();
         }

@@ -1,7 +1,7 @@
 ﻿using Common.Logging;
-using Finsa.Caravan.Common.DataModel.Logging;
 using System;
 using System.Activities;
+using Finsa.Caravan.Common.Models.Logging;
 
 namespace Finsa.Caravan.DataAccess.Activities
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
-using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Properties;
 using Finsa.Caravan.DataAccess.Core;
 using MongoDB.Driver;
@@ -88,7 +88,7 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-      protected override IList<LogEntry> GetLogEntries(string appName, LogType? logType)
+      protected override IList<LogEntry> GetEntries(string appName, LogType? logType)
       {
          using (var ctx = Db.CreateReadContext())
          {
@@ -106,13 +106,13 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-       protected override bool DoDeleteLog(string appName, int id)
+       protected override bool DoRemoveEntry(string appName, int logId)
        {
            using(var trx = new TransactionScope())
            using (var ctx = Db.CreateWriteContext())
            {
                var deleted = false;
-               var log = ctx.LogEntries.FirstOrDefault(l => l.App.Name == appName && l.Id == id);
+               var log = ctx.LogEntries.FirstOrDefault(l => l.App.Name == appName && l.Id == logId);
 
                if (log != null)
                {
@@ -125,7 +125,7 @@ namespace Finsa.Caravan.DataAccess.Sql
            }
        }
 
-       protected override IList<LogSetting> GetLogSettings(string appName, LogType? logType)
+       protected override IList<LogSetting> GetSettings(string appName, LogType? logType)
       {
          using (var ctx = Db.CreateReadContext())
          {
@@ -143,7 +143,7 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-      protected override bool DoAddSettings(string appName, LogType logType, LogSetting settings)
+      protected override bool DoAddSetting(string appName, LogType logType, LogSetting setting)
       {
          using (var trx = new TransactionScope())
          using (var ctx = Db.CreateWriteContext())
@@ -157,9 +157,9 @@ namespace Finsa.Caravan.DataAccess.Sql
                var newSetting = new LogSetting
                {
                   AppId = appId,
-                  Days = settings.Days,
-                  Enabled = settings.Enabled,
-                  MaxEntries = settings.MaxEntries,
+                  Days = setting.Days,
+                  Enabled = setting.Enabled,
+                  MaxEntries = setting.MaxEntries,
                   TypeId = typeId
                };
 
@@ -173,7 +173,7 @@ namespace Finsa.Caravan.DataAccess.Sql
          }
       }
 
-       protected override bool DoDeleteSettings(string appName, LogType logType)
+       protected override bool DoRemoveSetting(string appName, LogType logType)
        {
            using (var trx = new TransactionScope())
            using (var ctx = Db.CreateWriteContext())
@@ -194,7 +194,7 @@ namespace Finsa.Caravan.DataAccess.Sql
            }
        }
 
-       protected override bool DoUpdateSettings(string appName, LogType logType, LogSetting settings)
+       protected override bool DoUpdateSetting(string appName, LogType logType, LogSetting setting)
       {
          using (var trx = new TransactionScope())
          using (var ctx = Db.CreateWriteContext())
@@ -207,12 +207,12 @@ namespace Finsa.Caravan.DataAccess.Sql
 
             if (settingToUpdate != null)
             {
-               settingToUpdate.App = settings.App;
+               settingToUpdate.App = setting.App;
                settingToUpdate.AppId = appId;
-               settingToUpdate.Days = settings.Days;
-               settingToUpdate.Enabled = settings.Enabled;
-               settingToUpdate.LogEntries = settings.LogEntries;
-               settingToUpdate.MaxEntries = settings.MaxEntries;
+               settingToUpdate.Days = setting.Days;
+               settingToUpdate.Enabled = setting.Enabled;
+               settingToUpdate.LogEntries = setting.LogEntries;
+               settingToUpdate.MaxEntries = setting.MaxEntries;
                settingToUpdate.Type = logType;
                settingToUpdate.TypeId = typeId;
 

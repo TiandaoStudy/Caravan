@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
-namespace Finsa.Caravan.Common.DataModel.Logging
+namespace Finsa.Caravan.Common.Models.Logging
 {
     [Serializable, DataContract(IsReference = true)]
     public class LogResult

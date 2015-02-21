@@ -80,16 +80,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache.cs" />
-    <Compile Include="Models\Exceptions\AppExistingException.cs" />
-    <Compile Include="Models\Exceptions\AppNotFoundException.cs" />
-    <Compile Include="Models\Exceptions\EntryExistingException.cs" />
-    <Compile Include="Models\Exceptions\GroupExistingException.cs" />
-    <Compile Include="Models\Exceptions\GroupNotFoundException.cs" />
-    <Compile Include="Models\Exceptions\LogNotFoundException.cs" />
-    <Compile Include="Models\Exceptions\SettingExistingException.cs" />
-    <Compile Include="Models\Exceptions\SettingNotFoundException.cs" />
-    <Compile Include="Models\Exceptions\UserExistingException.cs" />
-    <Compile Include="Models\Exceptions\UserNotFoundException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecAppExistingException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecAppNotFoundException.cs" />
+    <Compile Include="Models\Logging\Exceptions\LogEntryExistingException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecGroupExistingException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecGroupNotFoundException.cs" />
+    <Compile Include="Models\Logging\Exceptions\LogEntryNotFoundException.cs" />
+    <Compile Include="Models\Logging\Exceptions\LogSettingExistingException.cs" />
+    <Compile Include="Models\Logging\Exceptions\LogSettingNotFoundException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecUserExistingException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecUserNotFoundException.cs" />
     <Compile Include="Models\Formatting\TextAlignment.cs" />
     <Compile Include="Models\Linking\AlternateLink.cs" />
     <Compile Include="Models\Linking\CollectionLink.cs" />

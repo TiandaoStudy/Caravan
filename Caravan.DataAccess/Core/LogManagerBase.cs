@@ -1,12 +1,12 @@
-using Finsa.Caravan.Common.DataModel.Exceptions;
-using Finsa.Caravan.Common.DataModel.Logging;
-using PommaLabs.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Web;
+using Finsa.Caravan.Common.Models.Logging;
+using Finsa.Caravan.Common.Models.Logging.Exceptions;
+using PommaLabs.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
@@ -153,117 +153,112 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public IList<LogEntry> Entries()
         {
-            return GetLogEntries(null, null);
+            return GetEntries(null, null);
         }
 
         public IList<LogEntry> Entries(string appName)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
-            return GetLogEntries(appName.ToLower(), null);
+            return GetEntries(appName.ToLower(), null);
         }
 
         public IList<LogEntry> Entries(LogType logType)
         {
             Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-            return GetLogEntries(null, logType);
+            return GetEntries(null, logType);
         }
 
         public IList<LogEntry> Entries(string appName, LogType logType)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-            return GetLogEntries(appName.ToLower(), logType);
+            return GetEntries(appName.ToLower(), logType);
         }
 
-        public string DeleteLog(string appName, int id)
+        public void RemoveEntry(string appName, int id)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentNullException>.IfIsNull(id);
-
-            if (!DoDeleteLog(appName, id))
+            if (!DoRemoveEntry(appName, id))
             {
-                return "NOK";
-            }
-            return "OK";
-        }
-
-        public IList<LogSetting> LogSettings()
-        {
-            return GetLogSettings(null, null);
-        }
-
-        public IList<LogSetting> LogSettings(string appName)
-        {
-            Raise<ArgumentException>.IfIsEmpty(appName);
-            return GetLogSettings(appName.ToLower(), null);
-        }
-
-        public IList<LogSetting> LogSettings(LogType logType)
-        {
-            Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-            return GetLogSettings(null, logType);
-        }
-
-        public LogSetting LogSettings(string appName, LogType logType)
-        {
-            Raise<ArgumentException>.IfIsEmpty(appName);
-            Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-            return GetLogSettings(appName.ToLower(), logType).FirstOrDefault();
-        }
-
-        public void AddSettings(string appName, LogType logType, LogSetting settings)
-        {
-            Raise<ArgumentException>.IfIsEmpty(appName);
-            Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-            Raise<ArgumentNullException>.IfIsNull(settings);
-            Raise<ArgumentOutOfRangeException>.If(settings.Days < 1 || settings.MaxEntries < 1);
-            if (!DoAddSettings(appName.ToLower(), logType, settings))
-            {
-                throw new SettingExistingException();
+                throw new LogEntryNotFoundException();
             }
         }
 
-        public string DeleteSettings(string appName, LogType logType)
+        public IList<LogSetting> Settings()
         {
-            Raise<ArgumentException>.IfIsEmpty(appName);
-            Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-
-            if (!DoDeleteSettings(appName, logType))
-            {
-                //throw new SettingNotFoundException();
-                return "NOK";
-            }
-            return "OK";
+            return GetSettings(null, null);
         }
 
-        public void UpdateSettings(string appName, LogType logType, LogSetting settings)
+        public IList<LogSetting> Settings(string appName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            return GetSettings(appName.ToLower(), null);
+        }
+
+        public IList<LogSetting> Settings(LogType logType)
+        {
+            Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
+            return GetSettings(null, logType);
+        }
+
+        public LogSetting Settings(string appName, LogType logType)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
-            Raise<ArgumentNullException>.IfIsNull(settings);
-            Raise<ArgumentOutOfRangeException>.If(settings.Days < 1 || settings.MaxEntries < 1);
-            if (!DoUpdateSettings(appName.ToLower(), logType, settings))
+            return GetSettings(appName.ToLower(), logType).FirstOrDefault();
+        }
+
+        public void AddSetting(string appName, LogType logType, LogSetting setting)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
+            Raise<ArgumentNullException>.IfIsNull(setting);
+            Raise<ArgumentOutOfRangeException>.If(setting.Days < 1 || setting.MaxEntries < 1);
+            if (!DoAddSetting(appName.ToLower(), logType, setting))
             {
-                throw new SettingNotFoundException();
+                throw new LogSettingExistingException();
+            }
+        }
+
+        public void RemoveSetting(string appName, LogType logType)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
+            if (!DoRemoveSetting(appName, logType))
+            {
+                throw new LogSettingNotFoundException();
+            }
+        }
+
+        public void UpdateSetting(string appName, LogType logType, LogSetting setting)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogType), logType));
+            Raise<ArgumentNullException>.IfIsNull(setting);
+            Raise<ArgumentOutOfRangeException>.If(setting.Days < 1 || setting.MaxEntries < 1);
+            if (!DoUpdateSetting(appName.ToLower(), logType, setting))
+            {
+                throw new LogSettingNotFoundException();
             }
         }
 
         #endregion ILogManager Members
 
         public abstract LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
-           IEnumerable<KeyValuePair<string, string>> args);
+            IEnumerable<KeyValuePair<string, string>> args);
 
-        protected abstract IList<LogEntry> GetLogEntries(string appName, LogType? logType);
+        protected abstract IList<LogEntry> GetEntries(string appName, LogType? logType);
 
-        protected abstract IList<LogSetting> GetLogSettings(string appName, LogType? logType);
+        protected abstract IList<LogSetting> GetSettings(string appName, LogType? logType);
 
-        protected abstract bool DoAddSettings(string appName, LogType logType, LogSetting settings);
+        protected abstract bool DoRemoveEntry(string appName, int logId);
 
-        protected abstract bool DoDeleteSettings(string appName, LogType logType);
+        protected abstract bool DoAddSetting(string appName, LogType logType, LogSetting setting);
 
-        protected abstract bool DoUpdateSettings(string appName, LogType logType, LogSetting settings);
+        protected abstract bool DoUpdateSetting(string appName, LogType logType, LogSetting setting);
 
-        protected abstract bool DoDeleteLog(string appName, int id);
+        protected abstract bool DoRemoveSetting(string appName, LogType logType);
 
         #region Shortcuts
 

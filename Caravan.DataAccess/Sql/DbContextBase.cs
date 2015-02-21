@@ -1,4 +1,4 @@
-﻿using Finsa.Caravan.Common.DataModel.Logging;
+﻿using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess.Sql;
 using System.Data.Entity;

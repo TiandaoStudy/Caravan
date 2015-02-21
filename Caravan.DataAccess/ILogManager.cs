@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.Models.Logging;
 
 namespace Finsa.Caravan.DataAccess
 {
     /// <summary>
-    ///   TODO
+    ///   Handles logging and log settings.
     /// </summary>
     public interface ILogManager
     {
@@ -17,7 +17,7 @@ namespace Finsa.Caravan.DataAccess
         ///   TODO
         /// </summary>
         /// <param name="type"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="codeUnit"></param>
         /// <param name="function"></param>
@@ -37,7 +37,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="longMessage"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -53,7 +53,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="longMessage"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -143,7 +143,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="longMessage"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -158,7 +158,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="longMessage"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -173,7 +173,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="longMessage"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -188,7 +188,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="longMessage"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -203,7 +203,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="longMessage"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -214,7 +214,7 @@ namespace Finsa.Caravan.DataAccess
         ///   TODO
         /// </summary>
         /// <param name="type"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="codeUnit"></param>
         /// <param name="function"></param>
@@ -232,7 +232,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="exception"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -247,7 +247,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="exception"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -261,7 +261,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="exception"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -275,7 +275,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="exception"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -289,7 +289,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="exception"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -303,7 +303,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="exception"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -317,7 +317,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="exception"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -331,7 +331,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="exception"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -345,7 +345,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="exception"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -359,7 +359,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="exception"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -373,7 +373,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="exception"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -387,7 +387,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="exception"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <param name="userName"></param>
         /// <param name="function"></param>
         /// <returns></returns>
@@ -396,7 +396,7 @@ namespace Finsa.Caravan.DataAccess
 
         #endregion Logging Methods
 
-        #region Logs Retrieval
+        #region Entries
 
         /// <summary>
         ///   TODO
@@ -407,7 +407,7 @@ namespace Finsa.Caravan.DataAccess
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
         IList<LogEntry> Entries(string appName);
@@ -415,7 +415,7 @@ namespace Finsa.Caravan.DataAccess
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="logType"></param>
+        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">
         ///   <paramref name="logType"/> is not a valid <see cref="LogType"/>.
@@ -425,8 +425,8 @@ namespace Finsa.Caravan.DataAccess
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="appName"></param>
-        /// <param name="logType"></param>
+        /// <param name="appName">The application name.</param>
+        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">
         ///   <paramref name="appName"/> is null or empty. <paramref name="logType"/> is not a valid <see cref="LogType"/>.
@@ -434,72 +434,74 @@ namespace Finsa.Caravan.DataAccess
         IList<LogEntry> Entries(string appName, LogType logType);
 
         /// <summary>
-        ///   Deletes a log
+        ///   Removes a log entry. Use it to delete logs that contain sensitive information!
         /// </summary>
-        /// <param name="appName"></param>
-        /// <param name="id"></param>
-        string DeleteLog(string appName, int id);
+        /// <param name="appName">The application name.</param>
+        /// <param name="logId"></param>
+        void RemoveEntry(string appName, int logId);
 
-        #endregion Logs Retrieval
+        #endregion Entries
 
-        #region Log Settings
+        #region Settings
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <returns></returns>
-        IList<LogSetting> LogSettings();
+        IList<LogSetting> Settings();
 
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="appName"></param>
+        /// <param name="appName">The application name.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
-        IList<LogSetting> LogSettings(string appName);
+        IList<LogSetting> Settings(string appName);
 
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="logType"></param>
+        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">
         ///   <paramref name="logType"/> is not a valid <see cref="LogType"/>.
         /// </exception>
-        IList<LogSetting> LogSettings(LogType logType);
+        IList<LogSetting> Settings(LogType logType);
 
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="appName"></param>
-        /// <param name="logType"></param>
+        /// <param name="appName">The application name.</param>
+        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">
         ///   <paramref name="appName"/> is null or empty. <paramref name="logType"/> is not a valid <see cref="LogType"/>.
         /// </exception>
-        LogSetting LogSettings(string appName, LogType logType);
+        LogSetting Settings(string appName, LogType logType);
 
         /// <summary>
-        ///   </summary>
-        /// <param name="appName"></param>
-        /// <param name="logType"></param>
-        /// <param name="settings"></param>
-        void AddSettings(string appName, LogType logType, LogSetting settings);
-
-        /// <summary>
-        ///   </summary>
-        /// <param name="appName"></param>
-        /// <param name="logType"></param>
-        /// <param name="settings"></param>
-        void UpdateSettings(string appName, LogType logType, LogSetting settings);
-
-        /// <summary>
-        ///   Deletes a setting with a specificed logType in a specified application
+        ///   TODO
         /// </summary>
-        /// <param name="appName">the application</param>
-        /// <param name="logType">The logType</param>
-        string DeleteSettings(string appName, LogType logType);
+        /// <param name="appName">The application name.</param>
+        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="setting"></param>
+        void AddSetting(string appName, LogType logType, LogSetting setting);
 
-        #endregion Log Settings
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <param name="appName">The application name.</param>
+        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="setting"></param>
+        void UpdateSetting(string appName, LogType logType, LogSetting setting);
+
+        /// <summary>
+        ///   Removes a setting with a specificed log type in a specified application.
+        /// </summary>
+        /// <param name="appName">The application name.</param>
+        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        void RemoveSetting(string appName, LogType logType);
+
+        #endregion Settings
     }
 }

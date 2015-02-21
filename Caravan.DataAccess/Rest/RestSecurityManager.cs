@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using Finsa.Caravan.Common.DataModel.Exceptions;
-using Finsa.Caravan.Common.DataModel.Rest;
+using Finsa.Caravan.Common.Models.Logging.Exceptions;
+using Finsa.Caravan.Common.Models.Rest;
 using Finsa.Caravan.Common.Models.Security;
+using Finsa.Caravan.Common.Models.Security.Exceptions;
 using Finsa.Caravan.DataAccess.Core;
 using RestSharp;
 
@@ -21,7 +22,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             //request.AddUrlSegment("appName", appName);
             request.AddJsonBody(new RestRequest<object> { Auth = "AA", Body = new object() });
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecApp>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecApp>>(request);
 
             var apps = new List<SecApp> { response.Data.Body };
 
@@ -46,12 +47,12 @@ namespace Finsa.Caravan.DataAccess.Rest
             request.AddUrlSegment("appName", appName);
             request.AddJsonBody(new RestRequest<object> { Auth = "AA", Body = new object() });
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecApp>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecApp>>(request);
 
             if (response.ErrorException != null)
             {
-               if (response.ErrorMessage == AppNotFoundException.TheMessage)
-                  throw new AppNotFoundException(response.ErrorMessage);//verificare messaggio di output
+               if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
+                  throw new SecAppNotFoundException(response.ErrorMessage);//verificare messaggio di output
                throw new Exception(response.ErrorMessage);
             }
 
@@ -83,11 +84,11 @@ namespace Finsa.Caravan.DataAccess.Rest
                   }
             });
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecApp>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecApp>>(request);
             if (response.ErrorMessage != null)
             {
-               if (response.ErrorMessage == AppExistingException.TheMessage)
-                  throw new AppExistingException();
+               if (response.ErrorMessage == SecAppExistingException.TheMessage)
+                  throw new SecAppExistingException();
                throw new Exception(response.ErrorMessage);
             }
 
@@ -121,12 +122,12 @@ namespace Finsa.Caravan.DataAccess.Rest
 
             request.AddJsonBody(new RestRequest<dynamic> { Auth = "AA", Body = new object() });
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecGroup>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecGroup>>(request);
 
             if (response.ErrorException != null)
             {
-               if (response.ErrorMessage == AppNotFoundException.TheMessage)
-                  throw new AppNotFoundException();
+               if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
+                  throw new SecAppNotFoundException();
                throw new Exception(response.ErrorMessage);
             }
 
@@ -160,13 +161,13 @@ namespace Finsa.Caravan.DataAccess.Rest
                   }
             });
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecGroup>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecGroup>>(request);
             if (response.ErrorException != null)
             {
-               if (response.ErrorMessage == AppNotFoundException.TheMessage)
-                  throw new AppNotFoundException();
-               if (response.ErrorMessage == GroupExistingException.TheMessage)
-                  throw new GroupExistingException();
+               if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
+                  throw new SecAppNotFoundException();
+               if (response.ErrorMessage == SecGroupExistingException.TheMessage)
+                  throw new SecGroupExistingException();
                throw new Exception(response.ErrorMessage);
             }
 
@@ -191,13 +192,13 @@ namespace Finsa.Caravan.DataAccess.Rest
             request.AddUrlSegment("groupName", groupName);
             request.AddJsonBody(new RestRequest<dynamic> { Auth = "AA", Body = new object() });
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecGroup>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecGroup>>(request);
             if (response.ErrorException != null)
             {
-               if (response.ErrorMessage == AppNotFoundException.TheMessage)
-                  throw new AppNotFoundException();
-               if (response.ErrorMessage == GroupNotFoundException.TheMessage)
-                  throw new GroupNotFoundException();
+               if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
+                  throw new SecAppNotFoundException();
+               if (response.ErrorMessage == SecGroupNotFoundException.TheMessage)
+                  throw new SecGroupNotFoundException();
                throw new Exception(response.ErrorMessage);
             }
 
@@ -230,15 +231,15 @@ namespace Finsa.Caravan.DataAccess.Rest
                   }
             });
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecGroup>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecGroup>>(request);
             if (response.ErrorException != null)
             {
-               if (response.ErrorMessage == GroupExistingException.TheMessage)
-                  throw new GroupExistingException();
-               if (response.ErrorMessage == GroupNotFoundException.TheMessage)
-                  throw new GroupNotFoundException();
-               if (response.ErrorMessage == AppNotFoundException.TheMessage)
-                  throw new AppNotFoundException();
+               if (response.ErrorMessage == SecGroupExistingException.TheMessage)
+                  throw new SecGroupExistingException();
+               if (response.ErrorMessage == SecGroupNotFoundException.TheMessage)
+                  throw new SecGroupNotFoundException();
+               if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
+                  throw new SecAppNotFoundException();
                throw new Exception(response.ErrorMessage);
             }
             return true;
@@ -268,20 +269,20 @@ namespace Finsa.Caravan.DataAccess.Rest
                request.AddUrlSegment("appName", appName);
             }
             request.AddJsonBody(new RestRequest<SecUser> { Auth = "AA", Body = null });
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecUser>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecUser>>(request);
 
             if (response.ErrorException != null)
             {
                if (response.StatusCode == HttpStatusCode.NotFound)
                {
-                  if (response.ErrorMessage == AppNotFoundException.TheMessage)
+                  if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
                   {
-                     throw new AppNotFoundException(); //verificare messaggio in output
+                     throw new SecAppNotFoundException(); //verificare messaggio in output
                   }
 
-                  if (response.ErrorMessage == UserNotFoundException.TheMessage)
+                  if (response.ErrorMessage == SecUserNotFoundException.TheMessage)
                   {
-                     throw new UserNotFoundException(); //verificare messaggio in output
+                     throw new SecUserNotFoundException(); //verificare messaggio in output
                   }
                }
                throw new Exception(response.ErrorMessage);
@@ -316,17 +317,17 @@ namespace Finsa.Caravan.DataAccess.Rest
                      Active = newUser.Active
                   }
             });
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecUser>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecUser>>(request);
 
             if (response.ErrorException != null)
             {
 
                if (response.StatusCode == HttpStatusCode.Conflict)
                {
-                  throw new UserExistingException();
+                  throw new SecUserExistingException();
                }
                if (response.StatusCode == HttpStatusCode.NotFound)
-                  throw new AppNotFoundException();
+                  throw new SecAppNotFoundException();
                throw new Exception(response.ErrorMessage);
 
             }
@@ -349,14 +350,14 @@ namespace Finsa.Caravan.DataAccess.Rest
             request.AddUrlSegment("userLogin", userLogin);
 
             request.AddJsonBody(new {Auth = "AA", Body = new object()});
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<dynamic>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<dynamic>>(request);
 
             if (response.ErrorException != null){
                if (response.StatusCode == HttpStatusCode.NotFound)
-                  if (response.ErrorMessage == AppNotFoundException.TheMessage)
-                     throw new AppNotFoundException(response.ErrorMessage); //verificare messaggio in output
-                  if (response.ErrorMessage == UserNotFoundException.TheMessage)
-                     throw new UserNotFoundException(response.ErrorMessage); //verificare messaggio in output
+                  if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
+                     throw new SecAppNotFoundException(response.ErrorMessage); //verificare messaggio in output
+                  if (response.ErrorMessage == SecUserNotFoundException.TheMessage)
+                     throw new SecUserNotFoundException(response.ErrorMessage); //verificare messaggio in output
                throw new Exception(response.ErrorMessage);
             }
 
@@ -387,19 +388,19 @@ namespace Finsa.Caravan.DataAccess.Rest
                      Login = newUser.Login,
                      Email = newUser.Email}
                   });
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecUser>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecUser>>(request);
 
             if (response.ErrorException != null)
             {
                if (response.StatusCode == HttpStatusCode.NotFound)
                {
-                  if (response.ErrorMessage == AppNotFoundException.TheMessage)
+                  if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
                   {
-                     throw new AppNotFoundException(response.ErrorMessage); //verificare messaggio in output
+                     throw new SecAppNotFoundException(response.ErrorMessage); //verificare messaggio in output
                   }
-                  if (response.ErrorMessage == UserNotFoundException.TheMessage)
+                  if (response.ErrorMessage == SecUserNotFoundException.TheMessage)
                   {
-                     throw new UserNotFoundException(response.ErrorMessage);
+                     throw new SecUserNotFoundException(response.ErrorMessage);
                   }
                }
                throw new Exception(response.ErrorMessage);
@@ -425,14 +426,14 @@ namespace Finsa.Caravan.DataAccess.Rest
             request.AddUrlSegment("groupName", groupName);
             request.AddJsonBody(new RestRequest<dynamic> {Auth = "AA", Body = new object()});
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecUser>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecUser>>(request);
 
             if (response.ErrorException != null)
             {
                if(response.StatusCode==HttpStatusCode.NotFound)
-                  throw new GroupNotFoundException();
+                  throw new SecGroupNotFoundException();
                if(response.StatusCode==HttpStatusCode.Conflict)
-                  throw new UserExistingException();
+                  throw new SecUserExistingException();
             }
          }
          catch (Exception e)
@@ -455,14 +456,14 @@ namespace Finsa.Caravan.DataAccess.Rest
             request.AddUrlSegment("groupName", groupName);
             request.AddJsonBody(new RestRequest<dynamic> { Auth = "AA", Body = new object() });
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecUser>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecUser>>(request);
             if (response.ErrorException != null)
             {
                if (response.StatusCode == HttpStatusCode.NotFound)
                {
-                  if(response.ErrorMessage==UserNotFoundException.TheMessage)
-                     throw new UserNotFoundException();
-                  throw new GroupNotFoundException();
+                  if(response.ErrorMessage==SecUserNotFoundException.TheMessage)
+                     throw new SecUserNotFoundException();
+                  throw new SecGroupNotFoundException();
                }
                throw new Exception(response.ErrorMessage);
             }
@@ -484,12 +485,12 @@ namespace Finsa.Caravan.DataAccess.Rest
          request.AddUrlSegment("appName", appName);
          request.AddJsonBody(new RestRequest<dynamic> {Auth = "AA", Body = new object()});
 
-         var response = client.Execute<Common.DataModel.Rest.RestResponse<SecContextSingle>>(request);
+         var response = client.Execute<Common.Models.Rest.RestResponse<SecContextSingle>>(request);
 
          if (response.ErrorException != null)
          {
-            if(response.ErrorMessage == AppNotFoundException.TheMessage)
-               throw new AppNotFoundException();
+            if(response.ErrorMessage == SecAppNotFoundException.TheMessage)
+               throw new SecAppNotFoundException();
             throw new Exception(response.ErrorMessage);
          }
 
@@ -506,7 +507,7 @@ namespace Finsa.Caravan.DataAccess.Rest
          request.AddUrlSegment("appName", appName);
          request.AddJsonBody(new RestRequest<dynamic> {Auth = "AA", Body = new object()});
 
-         var response = client.Execute<Common.DataModel.Rest.RestResponse<SecObjectSingle>>(request);
+         var response = client.Execute<Common.Models.Rest.RestResponse<SecObjectSingle>>(request);
 
          var objs = new List<SecObject> { response.Data.Body.Object};
          
@@ -539,12 +540,12 @@ namespace Finsa.Caravan.DataAccess.Rest
 
             request.AddJsonBody(new RestRequest<dynamic> {Auth = "AA", Body = new object()});
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecEntrySingle>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecEntrySingle>>(request);
 
             if (response.ErrorException != null)
             {
-               if (response.ErrorMessage == AppNotFoundException.TheMessage)
-                  throw new AppNotFoundException();
+               if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
+                  throw new SecAppNotFoundException();
                throw new Exception(response.ErrorMessage);
             }
 
@@ -585,14 +586,14 @@ namespace Finsa.Caravan.DataAccess.Rest
                });
             }
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecEntrySingle>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecEntrySingle>>(request);
 
             if (response.ErrorException != null)
             {
-               if (response.ErrorMessage == AppNotFoundException.TheMessage)
-                  throw new AppNotFoundException();
-               if (response.ErrorMessage == EntryExistingException.TheMessage)
-                  throw new EntryExistingException();
+               if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
+                  throw new SecAppNotFoundException();
+               if (response.ErrorMessage == LogEntryExistingException.TheMessage)
+                  throw new LogEntryExistingException();
                throw new Exception(response.ErrorMessage);
             }
          }
@@ -640,16 +641,16 @@ namespace Finsa.Caravan.DataAccess.Rest
                });
             }
 
-            var response = client.Execute<Common.DataModel.Rest.RestResponse<SecEntrySingle>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecEntrySingle>>(request);
             if (response.ErrorException != null)
             {
-               if (response.ErrorMessage == AppNotFoundException.TheMessage)
+               if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
                {
-                  throw new AppNotFoundException();
+                  throw new SecAppNotFoundException();
                }
-               if (response.ErrorMessage==EntryExistingException.TheMessage)
+               if (response.ErrorMessage==LogEntryExistingException.TheMessage)
                {
-                  throw new EntryExistingException();
+                  throw new LogEntryExistingException();
                }
                throw new Exception(response.ErrorMessage);
             }

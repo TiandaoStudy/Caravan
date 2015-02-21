@@ -14,8 +14,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Finsa.Caravan.Common.DataModel.Exceptions;
-using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.Models.Logging;
+using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.DataAccess;
 using LinqToQuerystring.WebApi;
 
@@ -77,14 +77,19 @@ namespace Finsa.Caravan.WebService.Controllers
         ///   Delete log with the specified id in the specified application
         /// </summary>
         /// <param name="appName">The application name</param>
-        /// <param name="id">The id of the log to delete which can be "warn", "info" or "error"</param>
+        /// <param name="logId">The id of the log to delete which can be "warn", "info" or "error"</param>
         [Route("{appName}/entries/{id}")]
-        public HttpResponseMessage DeleteLog(string appName, int id)
+        public HttpResponseMessage DeleteLog(string appName, int logId)
         {
-            var log = Db.Logger.DeleteLog(appName, id);
-            if (log != "OK")
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, LogNotFoundException.TheMessage);
-            return Request.CreateResponse(HttpStatusCode.OK, log);
+            try
+            {
+                Db.Logger.RemoveEntry(appName, logId);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (LogEntryNotFoundException)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, LogEntryNotFoundException.TheMessage);
+            }
         }
 
         /// <summary>
@@ -95,7 +100,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/settings"), LinqToQueryable]
         public IQueryable<LogSetting> GetSettings(string appName)
         {
-            return Db.Logger.LogSettings(appName).AsQueryable();
+            return Db.Logger.Settings(appName).AsQueryable();
         }
 
         /// <summary>
@@ -107,7 +112,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/settings/{logType}")]
         public LogSetting GetSettings(string appName, LogType logType)
         {
-            var settings = Db.Logger.LogSettings(appName, logType);
+            var settings = Db.Logger.Settings(appName, logType);
             if (settings == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -124,7 +129,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/settings/{logType}")]
         public void PostSetting(string appName, LogType logType, [FromBody] LogSetting settings)
         {
-            Db.Logger.AddSettings(appName, logType, settings);
+            Db.Logger.AddSetting(appName, logType, settings);
         }
 
         /// <summary>
@@ -136,7 +141,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/settings/{logType}")]
         public void PutSetting(string appName, LogType logType, [FromBody] LogSetting settings)
         {
-            Db.Logger.UpdateSettings(appName, logType, settings);
+            Db.Logger.UpdateSetting(appName, logType, settings);
         }
 
         /// <summary>
@@ -147,10 +152,15 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/settings/{logType}")]
         public HttpResponseMessage DeleteSetting(string appName, LogType logType)
         {
-            var setting = Db.Logger.DeleteSettings(appName, logType);
-            if (setting != "OK")
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, LogNotFoundException.TheMessage);
-            return Request.CreateResponse(HttpStatusCode.OK, setting);
+            try
+            {
+                Db.Logger.RemoveSetting(appName, logType);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (LogSettingNotFoundException)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, LogEntryNotFoundException.TheMessage);
+            }
         }
     }
 }

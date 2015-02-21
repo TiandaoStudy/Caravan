@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.Models.Logging;
 using Newtonsoft.Json;
 using PommaLabs;
 

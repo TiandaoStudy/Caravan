@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Mongo.DataModel;
@@ -42,7 +42,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
          return LogResult.Success;
       }
 
-      protected override IList<LogEntry> GetLogEntries(string appName, LogType? logType)
+      protected override IList<LogEntry> GetEntries(string appName, LogType? logType)
       {
          var apps = MongoUtilities.GetSecAppCollection().AsQueryable();
          Dictionary<ObjectId, MongoSecApp> appMap;
@@ -79,12 +79,12 @@ namespace Finsa.Caravan.DataAccess.Mongo
          }).ToList();
       }
 
-       protected override bool DoDeleteLog(string appName, int id)
+       protected override bool DoRemoveEntry(string appName, int logId)
        {
            throw new System.NotImplementedException();
        }
 
-       protected override IList<LogSetting> GetLogSettings(string appName, LogType? logType)
+       protected override IList<LogSetting> GetSettings(string appName, LogType? logType)
       {
          var apps = MongoUtilities.GetSecAppCollection();
          var query = apps.AsQueryable();
@@ -108,7 +108,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
                  }).ToList();
       }
 
-      protected override bool DoAddSettings(string appName, LogType logType, LogSetting settings)
+      protected override bool DoAddSetting(string appName, LogType logType, LogSetting setting)
       {
          // Update preparation
          var logTypeStr = logType.ToString().ToLower();
@@ -124,7 +124,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
          return apps.Update(query, update).Ok;
       }
 
-      protected override bool DoUpdateSettings(string appName, LogType logType, LogSetting settings)
+      protected override bool DoUpdateSetting(string appName, LogType logType, LogSetting setting)
       {
          // Update preparation
          var logTypeStr = logType.ToString().ToLower();
@@ -144,7 +144,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
          return apps.Update(query, update).Ok;
       }
 
-       protected override bool DoDeleteSettings(string appName, LogType logType)
+       protected override bool DoRemoveSetting(string appName, LogType logType)
        {
            throw new System.NotImplementedException();
        }

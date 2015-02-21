@@ -1,14 +1,16 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Runtime.Serialization;
 using Finsa.Caravan.Common.Models.Security;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
+using PommaLabs;
 
-namespace Finsa.Caravan.Common.DataModel.Logging
+namespace Finsa.Caravan.Common.Models.Logging
 {
     [Serializable, DataContract(IsReference = true)]
-    public class LogEntry : IEquatable<LogEntry>
+    public class LogEntry : EquatableObject<LogEntry>
     {
         public const string AutoFilled = "Automatically filled parameter";
         public const string NotSpecified = "...";
@@ -257,37 +259,17 @@ namespace Finsa.Caravan.Common.DataModel.Logging
             }
         }
 
-        public bool Equals(LogEntry other)
+        protected override IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Id == other.Id && AppId == other.AppId;
+            yield return GKeyValuePair.Create("Id", Id.ToString(CultureInfo.InvariantCulture));
+            yield return GKeyValuePair.Create("Date", Date.ToString(CultureInfo.InvariantCulture));
+            yield return GKeyValuePair.Create("AppName", App.Name);
         }
 
-        public override bool Equals(object obj)
+        protected override IEnumerable<object> GetIdentifyingMembers()
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((LogEntry) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (Id.GetHashCode() * 397) ^ AppId.GetHashCode();
-            }
-        }
-
-        public static bool operator ==(LogEntry left, LogEntry right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(LogEntry left, LogEntry right)
-        {
-            return !Equals(left, right);
+            yield return App.Name;
+            yield return Id;
         }
     }
 }

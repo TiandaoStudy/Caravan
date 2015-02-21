@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Finsa.Caravan.Common.DataModel.Exceptions;
+using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.Common.Models.Security;
+using Finsa.Caravan.Common.Models.Security.Exceptions;
 using PommaLabs.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
@@ -22,7 +23,7 @@ namespace Finsa.Caravan.DataAccess.Core
             var app = GetApp(appName.ToLower());
             if (app == null)
             {
-                throw new AppNotFoundException();
+                throw new SecAppNotFoundException();
             }
             return app;
         }
@@ -38,7 +39,7 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 if (!DoAddApp(app))
                 {
-                    throw new AppExistingException();
+                    throw new SecAppExistingException();
                 }
             }
             catch (Exception ex)
@@ -65,7 +66,7 @@ namespace Finsa.Caravan.DataAccess.Core
             var group = GetGroups(appName.ToLower(), groupName.ToLower()).FirstOrDefault();
             if (group == null)
             {
-                throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
+                throw new SecGroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
             }
             return group;
         }
@@ -83,7 +84,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 newGroup.Name = newGroup.Name.ToLower();
                 if (!DoAddGroup(appName.ToLower(), newGroup))
                 {
-                    throw new GroupExistingException();
+                    throw new SecGroupExistingException();
                 }
                 Db.Logger.LogWarnAsync<TSec>("ADDED GROUP", context: logCtx, appName: appName);
             }
@@ -105,7 +106,7 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 if (!DoRemoveGroup(appName.ToLower(), groupName.ToLower()))
                 {
-                    throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
+                    throw new SecGroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
                 }
                 Db.Logger.LogWarnAsync<TSec>("REMOVED GROUP", context: logCtx, appName: appName);
             }
@@ -130,7 +131,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 newGroup.Name = newGroup.Name.ToLower();
                 if (!DoUpdateGroup(appName.ToLower(), groupName.ToLower(), newGroup))
                 {
-                    throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
+                    throw new SecGroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
                 }
                 Db.Logger.LogWarnAsync<TSec>("UPDATED GROUP", context: logCtx, appName: appName);
             }
@@ -158,7 +159,7 @@ namespace Finsa.Caravan.DataAccess.Core
             var user = GetUsers(appName.ToLower(), userLogin.ToLower()).FirstOrDefault();
             if (user == null)
             {
-                throw new UserNotFoundException();
+                throw new SecUserNotFoundException();
             }
             return user;
         }
@@ -176,7 +177,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 newUser.Login = newUser.Login.ToLower();
                 if (!DoAddUser(appName.ToLower(), newUser))
                 {
-                    throw new UserExistingException();
+                    throw new SecUserExistingException();
                 }
                 Db.Logger.LogWarnAsync<TSec>("ADDED USER", context: logCtx, appName: appName);
             }
@@ -198,7 +199,7 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 if (!DoRemoveUser(appName.ToLower(), userLogin))
                 {
-                    throw new UserNotFoundException();
+                    throw new SecUserNotFoundException();
                 }
                 Db.Logger.LogWarnAsync<TSec>("REMOVED USER", context: logCtx, appName: appName);
             }
@@ -223,7 +224,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 newUser.Login = newUser.Login.ToLower();
                 if (!DoUpdateUser(appName.ToLower(), userLogin.ToLower(), newUser))
                 {
-                    throw new UserNotFoundException();
+                    throw new SecUserNotFoundException();
                 }
                 Db.Logger.LogWarnAsync<TSec>("UPDATED USER", context: logCtx, appName: appName);
             }
@@ -246,7 +247,7 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 if (!DoAddUserToGroup(appName.ToLower(), userLogin.ToLower(), groupName.ToLower()))
                 {
-                    throw new UserExistingException();
+                    throw new SecUserExistingException();
                 }
                 Db.Logger.LogWarnAsync<TSec>("ADDED USER TO GROUP", context: logCtx, appName: appName);
             }
@@ -269,7 +270,7 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 if (!DoRemoveUserFromGroup(appName.ToLower(), userLogin.ToLower(), groupName.ToLower()))
                 {
-                    throw new UserNotFoundException();
+                    throw new SecUserNotFoundException();
                 }
                 Db.Logger.LogWarnAsync<TSec>("REMOVED USER FROM GROUP", context: logCtx, appName: appName);
             }
@@ -377,7 +378,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 }
                 if (!DoAddEntry(appName.ToLower(), secContext, secObject, userLogin, groupName))
                 {
-                    throw new EntryExistingException();
+                    throw new LogEntryExistingException();
                 }
                 Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, secObject.Name, secContext.Name, userLogin ?? groupName), context: logCtx, appName: appName);
             }

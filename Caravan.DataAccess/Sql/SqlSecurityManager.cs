@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
-using Finsa.Caravan.Common.DataModel.Exceptions;
 using Finsa.Caravan.Common.Models.Security;
+using Finsa.Caravan.Common.Models.Security.Exceptions;
 using Finsa.Caravan.DataAccess.Core;
 
 namespace Finsa.Caravan.DataAccess.Sql
@@ -126,7 +126,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             {
                if (grp.Name != newGroup.Name && ctx.SecGroups.Any(g => g.AppId == grp.AppId && g.Name == newGroup.Name))
                {
-                  throw new GroupExistingException();
+                  throw new SecGroupExistingException();
                }
                grp.Name = newGroup.Name;
                grp.Description = newGroup.Description ?? String.Empty;
@@ -208,7 +208,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             {
                if (userLogin != newUser.Login && ctx.SecUsers.Any(u => u.AppId == user.AppId && u.Login == newUser.Login))
                {
-                  throw new UserExistingException();
+                  throw new SecUserExistingException();
                }
                user.FirstName = newUser.FirstName;
                user.LastName = newUser.LastName;
@@ -443,7 +443,7 @@ namespace Finsa.Caravan.DataAccess.Sql
          var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => (long?) a.Id).FirstOrDefault();
          if (appId == null)
          {
-            throw new AppNotFoundException();
+            throw new SecAppNotFoundException();
          }
          return appId.Value;
       }
@@ -453,7 +453,7 @@ namespace Finsa.Caravan.DataAccess.Sql
           var group = ctx.SecGroups.Include(g => g.Users).FirstOrDefault(g => g.AppId == appId && g.Name == groupName);
          if (group == null)
          {
-            throw new GroupNotFoundException();
+            throw new SecGroupNotFoundException();
          }
          return group;
       }
@@ -463,7 +463,7 @@ namespace Finsa.Caravan.DataAccess.Sql
          var user = ctx.SecUsers.FirstOrDefault(u => u.AppId == appId && u.Login == userLogin);
          if (user == null)
          {
-            throw new UserNotFoundException();
+            throw new SecUserNotFoundException();
          }
          return user;
       }
@@ -473,7 +473,7 @@ namespace Finsa.Caravan.DataAccess.Sql
          var user = ctx.SecUsers.Include(u => u.Groups).FirstOrDefault(u => u.AppId == appId && u.Login == userLogin);
          if (user == null)
          {
-            throw new UserNotFoundException();
+            throw new SecUserNotFoundException();
          }
          return user;
       }

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Finsa.Caravan.Common.DataModel.Exceptions;
-using Finsa.Caravan.Common.DataModel.Logging;
+using Finsa.Caravan.Common.Models.Logging;
+using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.Common.Models.Security;
+using Finsa.Caravan.Common.Models.Security.Exceptions;
 using Finsa.Caravan.DataAccess;
 using NUnit.Framework;
 
@@ -27,11 +28,11 @@ namespace UnitTests.DataAccess
             Db.Security.AddApp(_myApp2);
             _settingError = new LogSetting() { Days = 30, Enabled = 1, MaxEntries = 100 };
 
-            Db.Logger.AddSettings(_myApp.Name, LogType.Error, _settingError);
-            Db.Logger.AddSettings(_myApp.Name, LogType.Fatal, _settingError);
-            Db.Logger.AddSettings(_myApp.Name, LogType.Info, _settingError);
-            Db.Logger.AddSettings(_myApp.Name, LogType.Debug, _settingError);
-            Db.Logger.AddSettings(_myApp.Name, LogType.Warn, _settingError);
+            Db.Logger.AddSetting(_myApp.Name, LogType.Error, _settingError);
+            Db.Logger.AddSetting(_myApp.Name, LogType.Fatal, _settingError);
+            Db.Logger.AddSetting(_myApp.Name, LogType.Info, _settingError);
+            Db.Logger.AddSetting(_myApp.Name, LogType.Debug, _settingError);
+            Db.Logger.AddSetting(_myApp.Name, LogType.Warn, _settingError);
         }
 
         [TearDown]
@@ -223,7 +224,7 @@ namespace UnitTests.DataAccess
         }
 
         [Test]
-        [ExpectedException(typeof(UserExistingException))]
+        [ExpectedException(typeof(SecUserExistingException))]
         public void AddUser_UserLoginAlreadyPresent_ThrowsException()
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
@@ -244,7 +245,7 @@ namespace UnitTests.DataAccess
                 {
                     Db.Security.AddUser(_myApp.Name, user1);
                 }
-                catch (UserExistingException)
+                catch (SecUserExistingException)
                 {
                     failCount++;
                 }
@@ -367,7 +368,7 @@ namespace UnitTests.DataAccess
         }
 
         [Test]
-        [ExpectedException(typeof(UserNotFoundException))]
+        [ExpectedException(typeof(SecUserNotFoundException))]
         public void RemoveUser_UserNotFound_ThrowsUserNotFoundException()
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "sarav" };
@@ -457,7 +458,7 @@ namespace UnitTests.DataAccess
         }
 
         [Test]
-        [ExpectedException(typeof(UserNotFoundException))]
+        [ExpectedException(typeof(SecUserNotFoundException))]
         public void UpdateUser_UserNotExisting_ThrowsUserNotFoundException()
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
@@ -482,7 +483,7 @@ namespace UnitTests.DataAccess
                     Db.Security.RemoveUser(_myApp.Name, user1.Login);
                     Db.Security.UpdateUser(_myApp.Name, user1.Login, user1);
                 }
-                catch (UserNotFoundException)
+                catch (SecUserNotFoundException)
                 {
                     failCount++;
                 }
@@ -491,7 +492,7 @@ namespace UnitTests.DataAccess
         }
 
         [Test]
-        [ExpectedException(typeof(UserExistingException))]
+        [ExpectedException(typeof(SecUserExistingException))]
         public void UpdateUser_UserUpdatedAlreadyExisting_ThrowsUserExistingException()
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
@@ -521,7 +522,7 @@ namespace UnitTests.DataAccess
                     user1.Login = "bobobo";
                     Db.Security.UpdateUser(_myApp.Name, "blabla1", user1);
                 }
-                catch (UserExistingException)
+                catch (SecUserExistingException)
                 {
                     failCount++;
                 }
@@ -926,7 +927,7 @@ namespace UnitTests.DataAccess
         }
 
         [Test]
-        [ExpectedException(typeof(GroupExistingException))]
+        [ExpectedException(typeof(SecGroupExistingException))]
         public void AddGroup_GroupAlreadyExisting_ThrowsGroupExistingException()
         {
             var group1 = new SecGroup { Name = "my_group" };
@@ -1019,7 +1020,7 @@ namespace UnitTests.DataAccess
         }
 
         [Test]
-        [ExpectedException(typeof(GroupNotFoundException))]
+        [ExpectedException(typeof(SecGroupNotFoundException))]
         public void RemoveGroup_GroupNotExisting_ThrowsGroupNotFoundException()
         {
             var group1 = new SecGroup { Name = "my_group" };
@@ -1116,7 +1117,7 @@ namespace UnitTests.DataAccess
         }
 
         [Test]
-        [ExpectedException(typeof(GroupNotFoundException))]
+        [ExpectedException(typeof(SecGroupNotFoundException))]
         public void UpdateGroup_GroupNotExisting_ThrowsGroupNotFoundException()
         {
             var group1 = new SecGroup { Name = "my_group" };
@@ -1126,7 +1127,7 @@ namespace UnitTests.DataAccess
         }
 
         [Test]
-        [ExpectedException(typeof(GroupExistingException))]
+        [ExpectedException(typeof(SecGroupExistingException))]
         public void UpdateGroup_AlreadyexistingGroup_ThrowsGroupExistingException()
         {
             var group1 = new SecGroup { Name = "my_group" };
@@ -1275,7 +1276,7 @@ namespace UnitTests.DataAccess
         }
 
         [Test]
-        [ExpectedException(typeof(AppExistingException))]
+        [ExpectedException(typeof(SecAppExistingException))]
         public void AddApp_AlreadyExistingAppName_ThrowsAppExistingException()
         {
             var newApp = new SecApp() { Name = "mio_test", Description = "my new application" };
@@ -2007,7 +2008,7 @@ namespace UnitTests.DataAccess
         }
 
         [Test]
-        [ExpectedException(typeof(EntryExistingException))]
+        [ExpectedException(typeof(LogEntryExistingException))]
         public void AddEntry_GroupAlreadyExisting_Throws()//same context,App,obj,group;
         {
             var c1 = new SecContext { Name = "c1", Description = "context1" };
@@ -2028,7 +2029,7 @@ namespace UnitTests.DataAccess
         }
 
         [Test]
-        [ExpectedException(typeof(EntryExistingException))]
+        [ExpectedException(typeof(LogEntryExistingException))]
         public void AddEntry_UserAlreadyExisting_Throws()//same app,context,obj, user
         {
             var c1 = new SecContext { Name = "c1", Description = "context1" };
