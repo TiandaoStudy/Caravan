@@ -318,7 +318,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #endregion ILogManager Members
 
-        public abstract LogResult LogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context,
+        protected abstract LogResult DoLogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context,
             IEnumerable<KeyValuePair<string, string>> args);
 
         protected abstract IList<LogEntry> GetEntries(string appName, LogType? logType);
@@ -334,6 +334,27 @@ namespace Finsa.Caravan.DataAccess.Core
         protected abstract bool DoRemoveSetting(string appName, LogType logType);
 
         #region Shortcuts
+
+        public LogResult LogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage,
+            string context, IEnumerable<KeyValuePair<string, string>> args)
+        {
+            try
+            {
+                Raise<ArgumentNullException>.IfIsNull(shortMessage);
+                AuxCommonLogging(logType, shortMessage, context);
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    CommonLogging.Error(ex.Message);
+                }
+                // ReSharper disable once EmptyGeneralCatchClause
+                catch { }
+                return LogResult.Failure(ex);
+            }
+            return DoLogRaw(logType, GetCurrentAppName(appName), GetCurrentUserName(userLogin), codeUnit, function, shortMessage, longMessage, context, args);
+        }
 
         private LogResult Log<TCodeUnit>(LogType logType, string appName, string userName, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
         {
@@ -352,7 +373,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 catch { }
                 return LogResult.Failure(ex);
             }
-            return LogRaw(logType, GetCurrentAppName(appName), GetCurrentUserName(userName), typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
+            return DoLogRaw(logType, GetCurrentAppName(appName), GetCurrentUserName(userName), typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
         }
 
         public LogResult LogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, Exception exception, string context, IEnumerable<KeyValuePair<string, string>> args)
@@ -373,7 +394,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 catch { }
                 return LogResult.Failure(ex);
             }
-            return LogRaw(logType, GetCurrentAppName(appName), GetCurrentUserName(userLogin), codeUnit, function, exception.Message, exception.StackTrace, context, args);
+            return DoLogRaw(logType, GetCurrentAppName(appName), GetCurrentUserName(userLogin), codeUnit, function, exception.Message, exception.StackTrace, context, args);
         }
 
         private LogResult Log<TCodeUnit>(LogType logType, string appName, string userName, string function, Exception exception, string context, IEnumerable<KeyValuePair<string, string>> args)
@@ -394,7 +415,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 catch { }
                 return LogResult.Failure(ex);
             }
-            return LogRaw(logType, GetCurrentAppName(appName), GetCurrentUserName(userName), typeof(TCodeUnit).FullName, function, exception.Message, exception.StackTrace, context, args);
+            return DoLogRaw(logType, GetCurrentAppName(appName), GetCurrentUserName(userName), typeof(TCodeUnit).FullName, function, exception.Message, exception.StackTrace, context, args);
         }
 
         private static Exception FindInnermostException(Exception exception)

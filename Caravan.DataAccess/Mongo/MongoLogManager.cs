@@ -16,7 +16,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
 {
    internal sealed class MongoLogManager : LogManagerBase<MongoLogManager>
    {
-      public override LogResult LogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
+      protected override LogResult DoLogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
       {
          var app = MongoUtilities.GetSecAppCollection().AsQueryable().First(a => a.Name == appName);
 
