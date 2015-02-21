@@ -1,9 +1,8 @@
-﻿using Finsa.Caravan.Common.Models.Logging;
+﻿using System.Data.Entity;
+using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.DataAccess.Sql;
-using System.Data.Entity;
 
-namespace Finsa.Caravan.DataAccess.Core
+namespace Finsa.Caravan.DataAccess.Sql
 {
     internal abstract class DbContextBase : CaravanDbContext<DbContextBase>
     {
