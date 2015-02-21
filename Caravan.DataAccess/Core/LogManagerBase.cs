@@ -4,13 +4,14 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Web;
+using Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using PommaLabs.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
-    internal abstract class LogManagerBase : ILogManager
+    internal abstract class LogManagerBase<TLog> : ILogManager where TLog : LogManagerBase<TLog>
     {
         #region ILogManager Members
 
@@ -339,9 +340,16 @@ namespace Finsa.Caravan.DataAccess.Core
             try
             {
                 Raise<ArgumentException>.IfIsEmpty(shortMessage);
+                AuxCommonLogging(logType, shortMessage, context);
             }
             catch (Exception ex)
             {
+                try
+                {
+                    CommonLogging.Error(ex.Message);
+                }
+// ReSharper disable once EmptyGeneralCatchClause
+                catch { }
                 return LogResult.Failure(ex);
             }
             return LogRaw(logType, GetCurrentAppName(appName), GetCurrentUserName(userName), typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
@@ -353,9 +361,16 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 Raise<ArgumentNullException>.IfIsNull(exception);
                 exception = FindInnermostException(exception);
+                AuxCommonLogging(logType, exception.Message, context);
             }
             catch (Exception ex)
             {
+                try
+                {
+                    CommonLogging.Error(ex.Message);
+                }
+                // ReSharper disable once EmptyGeneralCatchClause
+                catch { }
                 return LogResult.Failure(ex);
             }
             return LogRaw(logType, GetCurrentAppName(appName), GetCurrentUserName(userLogin), codeUnit, function, exception.Message, exception.StackTrace, context, args);
@@ -367,9 +382,16 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 Raise<ArgumentNullException>.IfIsNull(exception);
                 exception = FindInnermostException(exception);
+                AuxCommonLogging(logType, exception.Message, context);
             }
             catch (Exception ex)
             {
+                try
+                {
+                    CommonLogging.Error(ex.Message);
+                }
+                // ReSharper disable once EmptyGeneralCatchClause
+                catch { }
                 return LogResult.Failure(ex);
             }
             return LogRaw(logType, GetCurrentAppName(appName), GetCurrentUserName(userName), typeof(TCodeUnit).FullName, function, exception.Message, exception.StackTrace, context, args);
@@ -413,5 +435,42 @@ namespace Finsa.Caravan.DataAccess.Core
         }
 
         #endregion Shortcuts
+
+        #region Common.Logging
+
+        private static readonly ILog CommonLogging = LogManager.GetLogger<TLog>();
+
+        private static void AuxCommonLogging(LogType logType, string shortMessage, string context)
+        {
+            var msg = shortMessage;
+            if (!String.IsNullOrWhiteSpace(context))
+            {
+                msg += " @ " + context;
+            }
+            switch (logType)
+            {
+                case LogType.Debug:
+                    CommonLogging.Debug(msg);
+                    break;
+
+                case LogType.Error:
+                    CommonLogging.Error(msg);
+                    break;
+
+                case LogType.Fatal:
+                    CommonLogging.Fatal(msg);
+                    break;
+
+                case LogType.Info:
+                    CommonLogging.Info(msg);
+                    break;
+
+                case LogType.Warn:
+                    CommonLogging.Warn(msg);
+                    break;
+            }
+        }
+
+        #endregion Common.Logging
     }
 }

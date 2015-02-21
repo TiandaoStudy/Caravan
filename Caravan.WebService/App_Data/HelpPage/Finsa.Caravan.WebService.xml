@@ -25,6 +25,16 @@
               Controller che si occupa della parte di logging.
             </summary>
         </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetPing">
+            <summary>
+              Writes a silly message into the log.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetPing(System.String)">
+            <summary>
+              Writes a silly message into the log.
+            </summary>
+        </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetEntries(System.String)">
             <summary>
               Returns all log entries.

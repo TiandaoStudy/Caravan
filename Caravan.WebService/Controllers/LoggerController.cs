@@ -16,6 +16,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Logging.Exceptions;
+using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
 using LinqToQuerystring.WebApi;
 
@@ -27,6 +28,33 @@ namespace Finsa.Caravan.WebService.Controllers
     [RoutePrefix("logger")]
     public sealed class LoggerController : ApiController
     {
+        /// <summary>
+        ///   Writes a silly message into the log.
+        /// </summary>
+        [Route("ping")]
+        public HttpResponseMessage GetPing()
+        {
+            return GetPing(Common.Properties.Settings.Default.ApplicationName);
+        }
+
+        /// <summary>
+        ///   Writes a silly message into the log.
+        /// </summary>
+        [Route("{appName}/ping")]
+        public HttpResponseMessage GetPing(string appName)
+        {
+            var result = Db.Logger.LogInfo<LoggerController>(new LogEntry
+            {
+                ShortMessage = "Ping pong :)",
+                App = new SecApp { Name = appName }
+            });
+            if (result.Succeeded)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, result.Exception);
+        }
+
         /// <summary>
         ///   Returns all log entries.
         /// </summary>

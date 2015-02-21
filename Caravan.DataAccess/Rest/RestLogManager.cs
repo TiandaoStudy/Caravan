@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Finsa.Caravan.DataAccess.Rest
 {
-    internal sealed class RestLogManager : LogManagerBase
+    internal sealed class RestLogManager : LogManagerBase<RestLogManager>
     {
         public override LogResult LogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
         {

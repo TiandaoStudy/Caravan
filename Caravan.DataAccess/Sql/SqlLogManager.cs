@@ -10,7 +10,7 @@ using PommaLabs.Extensions;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
-    internal sealed class SqlLogManager : LogManagerBase
+    internal sealed class SqlLogManager : LogManagerBase<SqlLogManager>
     {
         #region Constants
 

@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace Finsa.Caravan.DataAccess.Mongo
 {
-   internal sealed class MongoLogManager : LogManagerBase
+   internal sealed class MongoLogManager : LogManagerBase<MongoLogManager>
    {
       public override LogResult LogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
       {
