@@ -7,464 +7,459 @@ using PommaLabs.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
-   public abstract class SecurityManagerBase
-   {
-   }
+    public abstract class SecurityManagerBase<TSec> : ISecurityManager where TSec : SecurityManagerBase<TSec>
+    {
+        #region Apps
 
-   public abstract class SecurityManagerBase<TSec> : SecurityManagerBase, ISecurityManager where TSec : SecurityManagerBase<TSec>
-   {
-      #region Apps
+        public IList<SecApp> Apps()
+        {
+            return GetApps();
+        }
 
-      public IList<SecApp> Apps()
-      {
-         return GetApps();
-      }
-
-      public SecApp App(string appName)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         var app = GetApp(appName.ToLower());
-         if (app == null)
-         {
-            throw new AppNotFoundException();
-         }
-         return app;
-      }
-
-      public void AddApp(SecApp app)
-      {
-         Raise<ArgumentNullException>.IfIsNull(app);
-         Raise<ArgumentException>.IfIsEmpty(app.Name);
-
-         const string logCtx = "Adding a new app";
-
-         try
-         {
-            if (!DoAddApp(app))
+        public SecApp App(string appName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            var app = GetApp(appName.ToLower());
+            if (app == null)
             {
-               throw new AppExistingException();
+                throw new AppNotFoundException();
             }
-         }
-         catch (Exception ex)
-         {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx);
-            throw;
-         }
-      }
+            return app;
+        }
 
-      #endregion
+        public void AddApp(SecApp app)
+        {
+            Raise<ArgumentNullException>.IfIsNull(app);
+            Raise<ArgumentException>.IfIsEmpty(app.Name);
 
-      #region Groups
+            const string logCtx = "Adding a new app";
 
-      public IList<SecGroup> Groups(string appName)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         return GetGroups(appName.ToLower(), null);
-      }
-      
-      public SecGroup Group(string appName, string groupName)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(groupName);
-         var group = GetGroups(appName.ToLower(), groupName.ToLower()).FirstOrDefault();
-         if (group == null)
-         {
-            throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
-         }
-         return group;
-      }
-
-      public void AddGroup(string appName, SecGroup newGroup)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentNullException>.IfIsNull(newGroup);
-         Raise<ArgumentException>.IfIsEmpty(newGroup.Name);
-
-         const string logCtx = "Adding a new group";
-
-         try
-         {
-            newGroup.Name = newGroup.Name.ToLower();
-            if (!DoAddGroup(appName.ToLower(), newGroup))
+            try
             {
-               throw new GroupExistingException();
+                if (!DoAddApp(app))
+                {
+                    throw new AppExistingException();
+                }
             }
-            Db.Logger.LogWarnAsync<TSec>("ADDED GROUP", context: logCtx, appName: appName);
-         }
-         catch (Exception ex)
-         {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, appName: appName);
-            throw;
-         }
-
-      }
-
-      public void RemoveGroup(string appName, string groupName)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(groupName);
-
-         const string logCtx = "Removing a group";
-
-         try
-         {
-            if (!DoRemoveGroup(appName.ToLower(), groupName.ToLower()))
+            catch (Exception ex)
             {
-               throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);   
+                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx);
+                throw;
             }
-            Db.Logger.LogWarnAsync<TSec>("REMOVED GROUP", context: logCtx, appName: appName);
-         }
-         catch (Exception ex)
-         {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, appName: appName);
-            throw;
-         }
-      }
+        }
 
-      public void UpdateGroup(string appName, string groupName, SecGroup newGroup)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(groupName);
-         Raise<ArgumentNullException>.IfIsNull(newGroup);
-         Raise<ArgumentException>.IfIsEmpty(newGroup.Name);
+        #endregion Apps
 
-         const string logCtx = "Updating a group";
+        #region Groups
 
-         try
-         {
-            newGroup.Name = newGroup.Name.ToLower();
-            if (!DoUpdateGroup(appName.ToLower(), groupName.ToLower(), newGroup))
+        public IList<SecGroup> Groups(string appName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            return GetGroups(appName.ToLower(), null);
+        }
+
+        public SecGroup Group(string appName, string groupName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfIsEmpty(groupName);
+            var group = GetGroups(appName.ToLower(), groupName.ToLower()).FirstOrDefault();
+            if (group == null)
             {
-               throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);   
+                throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
             }
-            Db.Logger.LogWarnAsync<TSec>("UPDATED GROUP", context: logCtx, appName: appName);
-         }
-         catch (Exception ex)
-         {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, appName: appName);
-            throw;
-         }
-      }
+            return group;
+        }
 
-      #endregion
+        public void AddGroup(string appName, SecGroup newGroup)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentNullException>.IfIsNull(newGroup);
+            Raise<ArgumentException>.IfIsEmpty(newGroup.Name);
 
-      #region Users
+            const string logCtx = "Adding a new group";
 
-      public IList<SecUser> Users(string appName)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         return GetUsers(appName.ToLower(), null);
-      }
-
-      public SecUser User(string appName, string userLogin)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(userLogin);
-         var user = GetUsers(appName.ToLower(), userLogin.ToLower()).FirstOrDefault();
-         if (user == null)
-         {
-            throw new UserNotFoundException();
-         }
-         return user;
-      }
-
-      public void AddUser(string appName, SecUser newUser)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentNullException>.IfIsNull(newUser);
-         Raise<ArgumentException>.IfIsEmpty(newUser.Login);
-
-         const string logCtx = "Adding a new user";
-
-         try
-         {
-            newUser.Login = newUser.Login.ToLower();
-            if (!DoAddUser(appName.ToLower(), newUser))
+            try
             {
-               throw new UserExistingException();
+                newGroup.Name = newGroup.Name.ToLower();
+                if (!DoAddGroup(appName.ToLower(), newGroup))
+                {
+                    throw new GroupExistingException();
+                }
+                Db.Logger.LogWarnAsync<TSec>("ADDED GROUP", context: logCtx, appName: appName);
             }
-            Db.Logger.LogWarnAsync<TSec>("ADDED USER", context: logCtx, appName: appName);
-         }
-         catch (Exception ex)
-         {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, appName: appName);
-            throw;
-         }
-      }
-
-      public void RemoveUser(string appName, string userLogin)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(userLogin);
-
-         const string logCtx = "Removing an user";
-
-         try
-         {
-            if (!DoRemoveUser(appName.ToLower(), userLogin))
+            catch (Exception ex)
             {
-               throw new UserNotFoundException();
+                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx, appName: appName);
+                throw;
             }
-            Db.Logger.LogWarnAsync<TSec>("REMOVED USER", context: logCtx, appName: appName);
-         }
-         catch (Exception ex)
-         {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, appName: appName);
-            throw;
-         }
-      }
+        }
 
-      public void UpdateUser(string appName, string userLogin, SecUser newUser)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(userLogin);
-         Raise<ArgumentNullException>.IfIsNull(newUser);
-         Raise<ArgumentException>.IfIsEmpty(newUser.Login);
+        public void RemoveGroup(string appName, string groupName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfIsEmpty(groupName);
 
-         const string logCtx = "Updating an user";
-         
-         try
-         {
-            newUser.Login = newUser.Login.ToLower();
-            if (!DoUpdateUser(appName.ToLower(), userLogin.ToLower(), newUser))
+            const string logCtx = "Removing a group";
+
+            try
             {
-               throw new UserNotFoundException();
+                if (!DoRemoveGroup(appName.ToLower(), groupName.ToLower()))
+                {
+                    throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
+                }
+                Db.Logger.LogWarnAsync<TSec>("REMOVED GROUP", context: logCtx, appName: appName);
             }
-            Db.Logger.LogWarnAsync<TSec>("UPDATED USER", context: logCtx, appName: appName);
-         }
-         catch (Exception ex)
-         {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, appName: appName);
-            throw;
-         }
-      }
-
-      public void AddUserToGroup(string appName, string userLogin, string groupName)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(userLogin);
-         Raise<ArgumentException>.IfIsEmpty(groupName);
-         
-         const string logCtx = "Adding an user to a group";
-
-         try
-         {
-            if (!DoAddUserToGroup(appName.ToLower(), userLogin.ToLower(), groupName.ToLower()))
+            catch (Exception ex)
             {
-               throw new UserExistingException();
+                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx, appName: appName);
+                throw;
             }
-            Db.Logger.LogWarnAsync<TSec>("ADDED USER TO GROUP", context: logCtx, appName: appName);
-         }
-         catch (Exception ex)
-         {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, appName: appName);
-            throw;
-         }
-      }
+        }
 
-      public void RemoveUserFromGroup(string appName, string userLogin, string groupName)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(userLogin);
-         Raise<ArgumentException>.IfIsEmpty(groupName);
-         
-         const string logCtx = "Removing an user from a group";
+        public void UpdateGroup(string appName, string groupName, SecGroup newGroup)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfIsEmpty(groupName);
+            Raise<ArgumentNullException>.IfIsNull(newGroup);
+            Raise<ArgumentException>.IfIsEmpty(newGroup.Name);
 
-         try
-         {
-            if (!DoRemoveUserFromGroup(appName.ToLower(), userLogin.ToLower(), groupName.ToLower()))
+            const string logCtx = "Updating a group";
+
+            try
             {
-               throw new UserNotFoundException();
+                newGroup.Name = newGroup.Name.ToLower();
+                if (!DoUpdateGroup(appName.ToLower(), groupName.ToLower(), newGroup))
+                {
+                    throw new GroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
+                }
+                Db.Logger.LogWarnAsync<TSec>("UPDATED GROUP", context: logCtx, appName: appName);
             }
-            Db.Logger.LogWarnAsync<TSec>("REMOVED USER FROM GROUP", context: logCtx, appName: appName);
-         }
-         catch (Exception ex)
-         {
-            Db.Logger.LogErrorAsync<SecurityManagerBase>(ex, logCtx, appName: appName);
-            throw;
-         }
-      }
-
-      #endregion
-
-      #region Contexts
-
-      public IList<SecContext> Contexts(string appName)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         return GetContexts(appName.ToLower());
-      }
-
-      #endregion
-
-      #region Objects
-
-      public IList<SecObject> Objects(string appName)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         return GetObjects(appName.ToLower(), null);
-      }
-
-      public IList<SecObject> Objects(string appName, string contextName)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(contextName);
-         return GetObjects(appName.ToLower(), contextName.ToLower());
-      }
-
-      #endregion
-
-      #region Entries
-
-      public IList<SecEntry> Entries(string appName)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         return GetEntries(appName.ToLower(), null, null, null);
-      }
-
-      public IList<SecEntry> Entries(string appName, string contextName)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(contextName);
-         return GetEntries(appName.ToLower(), contextName.ToLower(), null, null);
-      }
-
-      public IList<SecEntry> Entries(string appName, string contextName, string userLogin)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(contextName);
-         Raise<ArgumentException>.IfIsEmpty(userLogin);
-         return GetEntries(appName.ToLower(), contextName.ToLower(), null, userLogin.ToLower());
-      }
-
-      public IList<SecEntry> EntriesForObject(string appName, string contextName, string objectName)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(contextName);
-         Raise<ArgumentException>.IfIsEmpty(objectName);
-         return GetEntries(appName.ToLower(), contextName.ToLower(), objectName.ToLower(), null);
-      }
-
-      public IList<SecEntry> EntriesForObject(string appName, string contextName, string objectName, string userLogin)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(contextName);
-         Raise<ArgumentException>.IfIsEmpty(objectName);
-         Raise<ArgumentException>.IfIsEmpty(userLogin);
-         return GetEntries(appName.ToLower(), contextName.ToLower(), objectName.ToLower(), userLogin.ToLower());
-      }
-
-      public void AddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsNull(secContext);
-         Raise<ArgumentException>.IfIsEmpty(secContext.Name);
-         Raise<ArgumentException>.IfIsNull(secObject);
-         Raise<ArgumentException>.IfIsEmpty(secObject.Name);
-         Raise<ArgumentException>.If(String.IsNullOrWhiteSpace(userLogin) && String.IsNullOrWhiteSpace(groupName));
-         Raise<ArgumentException>.If(!String.IsNullOrWhiteSpace(userLogin) && groupName != null);
-         Raise<ArgumentException>.If(!String.IsNullOrWhiteSpace(groupName) && userLogin != null);
-
-         const string logShort = "Security entry for object '{0}' in context '{1}' has been added for '{2}'";
-         const string logCtx = "Adding a new security entry";
-
-         try
-         {
-            secContext.Name = secContext.Name.ToLower();
-            secObject.Name = secObject.Name.ToLower();
-            if (userLogin != null)
+            catch (Exception ex)
             {
-               userLogin = userLogin.ToLower();
+                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx, appName: appName);
+                throw;
             }
-            if (groupName != null)
+        }
+
+        #endregion Groups
+
+        #region Users
+
+        public IList<SecUser> Users(string appName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            return GetUsers(appName.ToLower(), null);
+        }
+
+        public SecUser User(string appName, string userLogin)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfIsEmpty(userLogin);
+            var user = GetUsers(appName.ToLower(), userLogin.ToLower()).FirstOrDefault();
+            if (user == null)
             {
-               groupName = groupName.ToLower();
+                throw new UserNotFoundException();
             }
-            if (!DoAddEntry(appName.ToLower(), secContext, secObject, userLogin, groupName))
+            return user;
+        }
+
+        public void AddUser(string appName, SecUser newUser)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentNullException>.IfIsNull(newUser);
+            Raise<ArgumentException>.IfIsEmpty(newUser.Login);
+
+            const string logCtx = "Adding a new user";
+
+            try
             {
-               throw new EntryExistingException();
+                newUser.Login = newUser.Login.ToLower();
+                if (!DoAddUser(appName.ToLower(), newUser))
+                {
+                    throw new UserExistingException();
+                }
+                Db.Logger.LogWarnAsync<TSec>("ADDED USER", context: logCtx, appName: appName);
             }
-            Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, secObject.Name, secContext.Name, userLogin ?? groupName), context: logCtx, appName: appName);
-         }
-         catch (Exception ex)
-         {
-            Db.Logger.LogWarnAsync<TSec>(ex, logCtx, appName: appName);
-            throw;
-         }
-      }
-
-      public void RemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)
-      {
-         Raise<ArgumentException>.IfIsEmpty(appName);
-         Raise<ArgumentException>.IfIsEmpty(contextName);
-         Raise<ArgumentException>.IfIsEmpty(objectName);
-         Raise<ArgumentException>.If(String.IsNullOrWhiteSpace(userLogin) && String.IsNullOrWhiteSpace(groupName));
-         Raise<ArgumentException>.If(!String.IsNullOrWhiteSpace(userLogin) && groupName != null);
-         Raise<ArgumentException>.If(!String.IsNullOrWhiteSpace(groupName) && userLogin != null);
-
-         const string logShort = "Security entry for object '{0}' in context '{1}' has been removed for '{2}'";
-         const string logCtx = "Removing a security entry";
-
-         try
-         {
-            if (userLogin != null)
+            catch (Exception ex)
             {
-               userLogin = userLogin.ToLower();
+                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx, appName: appName);
+                throw;
             }
-            if (groupName != null)
+        }
+
+        public void RemoveUser(string appName, string userLogin)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfIsEmpty(userLogin);
+
+            const string logCtx = "Removing an user";
+
+            try
             {
-               groupName = groupName.ToLower();
+                if (!DoRemoveUser(appName.ToLower(), userLogin))
+                {
+                    throw new UserNotFoundException();
+                }
+                Db.Logger.LogWarnAsync<TSec>("REMOVED USER", context: logCtx, appName: appName);
             }
-            DoRemoveEntry(appName.ToLower(), contextName.ToLower(), objectName.ToLower(), userLogin, groupName);
-            Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, objectName.ToLower(), contextName.ToLower(), userLogin ?? groupName), context: logCtx, appName: appName);
-         }
-         catch (Exception ex)
-         {
-            Db.Logger.LogWarnAsync<TSec>(ex, logCtx, appName: appName);
-            throw;
-         }
-      }
+            catch (Exception ex)
+            {
+                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx, appName: appName);
+                throw;
+            }
+        }
 
-      #endregion
+        public void UpdateUser(string appName, string userLogin, SecUser newUser)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfIsEmpty(userLogin);
+            Raise<ArgumentNullException>.IfIsNull(newUser);
+            Raise<ArgumentException>.IfIsEmpty(newUser.Login);
 
-      #region Abstract Methods
+            const string logCtx = "Updating an user";
 
-      protected abstract IList<SecApp> GetApps();
+            try
+            {
+                newUser.Login = newUser.Login.ToLower();
+                if (!DoUpdateUser(appName.ToLower(), userLogin.ToLower(), newUser))
+                {
+                    throw new UserNotFoundException();
+                }
+                Db.Logger.LogWarnAsync<TSec>("UPDATED USER", context: logCtx, appName: appName);
+            }
+            catch (Exception ex)
+            {
+                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx, appName: appName);
+                throw;
+            }
+        }
 
-      protected abstract SecApp GetApp(string appName);
+        public void AddUserToGroup(string appName, string userLogin, string groupName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfIsEmpty(userLogin);
+            Raise<ArgumentException>.IfIsEmpty(groupName);
 
-      protected abstract bool DoAddApp(SecApp app);
+            const string logCtx = "Adding an user to a group";
 
-      protected abstract IList<SecGroup> GetGroups(string appName, string groupName);
+            try
+            {
+                if (!DoAddUserToGroup(appName.ToLower(), userLogin.ToLower(), groupName.ToLower()))
+                {
+                    throw new UserExistingException();
+                }
+                Db.Logger.LogWarnAsync<TSec>("ADDED USER TO GROUP", context: logCtx, appName: appName);
+            }
+            catch (Exception ex)
+            {
+                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx, appName: appName);
+                throw;
+            }
+        }
 
-      protected abstract bool DoAddGroup(string appName, SecGroup newGroup);
+        public void RemoveUserFromGroup(string appName, string userLogin, string groupName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfIsEmpty(userLogin);
+            Raise<ArgumentException>.IfIsEmpty(groupName);
 
-      protected abstract bool DoRemoveGroup(string appName, string groupName);
+            const string logCtx = "Removing an user from a group";
 
-      protected abstract bool DoUpdateGroup(string appName, string groupName, SecGroup newGroup);
+            try
+            {
+                if (!DoRemoveUserFromGroup(appName.ToLower(), userLogin.ToLower(), groupName.ToLower()))
+                {
+                    throw new UserNotFoundException();
+                }
+                Db.Logger.LogWarnAsync<TSec>("REMOVED USER FROM GROUP", context: logCtx, appName: appName);
+            }
+            catch (Exception ex)
+            {
+                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx, appName: appName);
+                throw;
+            }
+        }
 
-      protected abstract IList<SecUser> GetUsers(string appName, string userLogin);
+        #endregion Users
 
-      protected abstract bool DoAddUser(string appName, SecUser newUser);
+        #region Contexts
 
-      protected abstract bool DoRemoveUser(string appName, string userLogin);
+        public IList<SecContext> Contexts(string appName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            return GetContexts(appName.ToLower());
+        }
 
-      protected abstract bool DoUpdateUser(string appName, string userLogin, SecUser newUser);
+        #endregion Contexts
 
-      protected abstract bool DoAddUserToGroup(string appName, string userLogin, string groupName);
+        #region Objects
 
-      protected abstract bool DoRemoveUserFromGroup(string appName, string userLogin, string groupName);
+        public IList<SecObject> Objects(string appName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            return GetObjects(appName.ToLower(), null);
+        }
 
-      protected abstract IList<SecContext> GetContexts(string appName);
+        public IList<SecObject> Objects(string appName, string contextName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfIsEmpty(contextName);
+            return GetObjects(appName.ToLower(), contextName.ToLower());
+        }
 
-      protected abstract IList<SecObject> GetObjects(string appName, string contextName);
+        #endregion Objects
 
-      protected abstract IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin);
+        #region Entries
 
-      protected abstract bool DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName);
+        public IList<SecEntry> Entries(string appName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            return GetEntries(appName.ToLower(), null, null, null);
+        }
 
-      protected abstract bool DoRemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName);
+        public IList<SecEntry> Entries(string appName, string contextName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfIsEmpty(contextName);
+            return GetEntries(appName.ToLower(), contextName.ToLower(), null, null);
+        }
 
-      #endregion
-   }
+        public IList<SecEntry> Entries(string appName, string contextName, string userLogin)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfIsEmpty(contextName);
+            Raise<ArgumentException>.IfIsEmpty(userLogin);
+            return GetEntries(appName.ToLower(), contextName.ToLower(), null, userLogin.ToLower());
+        }
+
+        public IList<SecEntry> EntriesForObject(string appName, string contextName, string objectName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfIsEmpty(contextName);
+            Raise<ArgumentException>.IfIsEmpty(objectName);
+            return GetEntries(appName.ToLower(), contextName.ToLower(), objectName.ToLower(), null);
+        }
+
+        public IList<SecEntry> EntriesForObject(string appName, string contextName, string objectName, string userLogin)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfIsEmpty(contextName);
+            Raise<ArgumentException>.IfIsEmpty(objectName);
+            Raise<ArgumentException>.IfIsEmpty(userLogin);
+            return GetEntries(appName.ToLower(), contextName.ToLower(), objectName.ToLower(), userLogin.ToLower());
+        }
+
+        public void AddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfIsNull(secContext);
+            Raise<ArgumentException>.IfIsEmpty(secContext.Name);
+            Raise<ArgumentException>.IfIsNull(secObject);
+            Raise<ArgumentException>.IfIsEmpty(secObject.Name);
+            Raise<ArgumentException>.If(String.IsNullOrWhiteSpace(userLogin) && String.IsNullOrWhiteSpace(groupName));
+            Raise<ArgumentException>.If(!String.IsNullOrWhiteSpace(userLogin) && groupName != null);
+            Raise<ArgumentException>.If(!String.IsNullOrWhiteSpace(groupName) && userLogin != null);
+
+            const string logShort = "Security entry for object '{0}' in context '{1}' has been added for '{2}'";
+            const string logCtx = "Adding a new security entry";
+
+            try
+            {
+                secContext.Name = secContext.Name.ToLower();
+                secObject.Name = secObject.Name.ToLower();
+                if (userLogin != null)
+                {
+                    userLogin = userLogin.ToLower();
+                }
+                if (groupName != null)
+                {
+                    groupName = groupName.ToLower();
+                }
+                if (!DoAddEntry(appName.ToLower(), secContext, secObject, userLogin, groupName))
+                {
+                    throw new EntryExistingException();
+                }
+                Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, secObject.Name, secContext.Name, userLogin ?? groupName), context: logCtx, appName: appName);
+            }
+            catch (Exception ex)
+            {
+                Db.Logger.LogWarnAsync<TSec>(ex, logCtx, appName: appName);
+                throw;
+            }
+        }
+
+        public void RemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfIsEmpty(contextName);
+            Raise<ArgumentException>.IfIsEmpty(objectName);
+            Raise<ArgumentException>.If(String.IsNullOrWhiteSpace(userLogin) && String.IsNullOrWhiteSpace(groupName));
+            Raise<ArgumentException>.If(!String.IsNullOrWhiteSpace(userLogin) && groupName != null);
+            Raise<ArgumentException>.If(!String.IsNullOrWhiteSpace(groupName) && userLogin != null);
+
+            const string logShort = "Security entry for object '{0}' in context '{1}' has been removed for '{2}'";
+            const string logCtx = "Removing a security entry";
+
+            try
+            {
+                if (userLogin != null)
+                {
+                    userLogin = userLogin.ToLower();
+                }
+                if (groupName != null)
+                {
+                    groupName = groupName.ToLower();
+                }
+                DoRemoveEntry(appName.ToLower(), contextName.ToLower(), objectName.ToLower(), userLogin, groupName);
+                Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, objectName.ToLower(), contextName.ToLower(), userLogin ?? groupName), context: logCtx, appName: appName);
+            }
+            catch (Exception ex)
+            {
+                Db.Logger.LogWarnAsync<TSec>(ex, logCtx, appName: appName);
+                throw;
+            }
+        }
+
+        #endregion Entries
+
+        #region Abstract Methods
+
+        protected abstract IList<SecApp> GetApps();
+
+        protected abstract SecApp GetApp(string appName);
+
+        protected abstract bool DoAddApp(SecApp app);
+
+        protected abstract IList<SecGroup> GetGroups(string appName, string groupName);
+
+        protected abstract bool DoAddGroup(string appName, SecGroup newGroup);
+
+        protected abstract bool DoRemoveGroup(string appName, string groupName);
+
+        protected abstract bool DoUpdateGroup(string appName, string groupName, SecGroup newGroup);
+
+        protected abstract IList<SecUser> GetUsers(string appName, string userLogin);
+
+        protected abstract bool DoAddUser(string appName, SecUser newUser);
+
+        protected abstract bool DoRemoveUser(string appName, string userLogin);
+
+        protected abstract bool DoUpdateUser(string appName, string userLogin, SecUser newUser);
+
+        protected abstract bool DoAddUserToGroup(string appName, string userLogin, string groupName);
+
+        protected abstract bool DoRemoveUserFromGroup(string appName, string userLogin, string groupName);
+
+        protected abstract IList<SecContext> GetContexts(string appName);
+
+        protected abstract IList<SecObject> GetObjects(string appName, string contextName);
+
+        protected abstract IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin);
+
+        protected abstract bool DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName);
+
+        protected abstract bool DoRemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName);
+
+        #endregion Abstract Methods
+    }
 }

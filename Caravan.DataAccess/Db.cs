@@ -1,9 +1,18 @@
-﻿using Finsa.Caravan.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Entity;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Transactions;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Mongo;
 using Finsa.Caravan.DataAccess.Properties;
 using Finsa.Caravan.DataAccess.Rest;
 using Finsa.Caravan.DataAccess.Sql;
+using Finsa.Caravan.DataAccess.Sql.FakeSql;
 using Finsa.Caravan.DataAccess.Sql.MySql;
 using Finsa.Caravan.DataAccess.Sql.Oracle;
 using Finsa.Caravan.DataAccess.Sql.SqlServer;
@@ -11,13 +20,6 @@ using Finsa.Caravan.DataAccess.Sql.SqlServerCe;
 using PommaLabs.Diagnostics;
 using PommaLabs.KVLite;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Transactions;
 
 namespace Finsa.Caravan.DataAccess
 {
@@ -29,10 +31,10 @@ namespace Finsa.Caravan.DataAccess
         private const string CachePartitionName = "Caravan.DataAccess";
         private const string ConnectionStringKey = "ConnectionString";
 
-        private static LogManagerBase _logManagerInstance;
+        private static ILogManager _logManagerInstance;
         private static QueryManagerBase _queryManagerInstance;
         private static ISecurityManager _securityManagerInstance;
-        private static DbManagerBase _dbManagerInstance;
+        private static IDbManager _dbManagerInstance;
         private static Func<DbContextBase> _dbContextGenerator;
 
         static Db()
@@ -92,7 +94,8 @@ namespace Finsa.Caravan.DataAccess
 
                 if (String.IsNullOrWhiteSpace(configConnectionString))
                 {
-                    // If connection string is not in the configuration file, then return the cached one, even if empty.
+                    // If connection string is not in the configuration file, then return the cached
+                    // one, even if empty.
                     return cachedConnectionString;
                 }
                 Manager.ElaborateConnectionString(ref configConnectionString);
@@ -114,6 +117,17 @@ namespace Finsa.Caravan.DataAccess
         }
 
         #region DbContext Generators
+
+        private static SqlDbContext FakeSqlDbContextGenerator()
+        {
+            var ctx = new SqlDbContext();
+            // Required, because the database is in-memory and thus it may not exist.
+            ctx.Database.CreateIfNotExists();
+            Database.SetInitializer(new DropCreateDatabaseAlways<SqlDbContext>());
+            ctx.Database.Initialize(false);
+            Database.SetInitializer(new CreateDatabaseIfNotExists<SqlDbContext>());
+            return ctx;
+        }
 
         private static SqlDbContext SqlDbContextGenerator()
         {
@@ -168,7 +182,6 @@ namespace Finsa.Caravan.DataAccess
         {
             var ctx = _dbContextGenerator();
             ctx.Database.Initialize(false);
-            ctx.Database.Connection.Open();
             return ctx;
         }
 
@@ -185,6 +198,8 @@ namespace Finsa.Caravan.DataAccess
         {
             switch (AccessKind)
             {
+                case DataAccessKind.FakeSql:
+                case DataAccessKind.MySql:
                 case DataAccessKind.Oracle:
                 case DataAccessKind.PostgreSql:
                 case DataAccessKind.SqlServer:
@@ -239,8 +254,29 @@ namespace Finsa.Caravan.DataAccess
         {
             Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(DataAccessKind), kind));
             AccessKind = kind;
+            
+            // Sets the implementations which are shared between SQL drivers.
             switch (kind)
             {
+                case DataAccessKind.FakeSql:
+                case DataAccessKind.MySql:
+                case DataAccessKind.Oracle:
+                case DataAccessKind.PostgreSql:
+                case DataAccessKind.SqlServer:
+                case DataAccessKind.SqlServerCe:
+                    _logManagerInstance = new SqlLogManager();
+                    _queryManagerInstance = new SqlQueryManager();
+                    _securityManagerInstance = new SqlSecurityManager();
+                    break;
+            }
+
+            switch (kind)
+            {
+                case DataAccessKind.FakeSql:
+                    _dbManagerInstance = new FakeSqlDbManager();
+                    _dbContextGenerator = FakeSqlDbContextGenerator;
+                    break;
+
                 case DataAccessKind.MongoDb:
                     _dbManagerInstance = new MongoDbManager();
                     _logManagerInstance = new MongoLogManager();
@@ -250,23 +286,15 @@ namespace Finsa.Caravan.DataAccess
                 case DataAccessKind.MySql:
                     _dbManagerInstance = new MySqlDbManager();
                     _dbContextGenerator = SqlDbContextGenerator;
-                    _logManagerInstance = new SqlLogManager();
-                    _queryManagerInstance = new SqlQueryManager();
-                    _securityManagerInstance = new SqlSecurityManager();
                     break;
 
                 case DataAccessKind.Oracle:
                     _dbManagerInstance = new OracleDbManager();
                     _dbContextGenerator = OracleDbContextGenerator;
-                    _logManagerInstance = new SqlLogManager();
-                    _queryManagerInstance = new SqlQueryManager();
-                    _securityManagerInstance = new SqlSecurityManager();
                     break;
 
                 case DataAccessKind.PostgreSql:
-                    _logManagerInstance = new SqlLogManager();
-                    _queryManagerInstance = new SqlQueryManager();
-                    _securityManagerInstance = new SqlSecurityManager();
+                    _dbContextGenerator = SqlDbContextGenerator;
                     break;
 
                 case DataAccessKind.Rest:
@@ -278,17 +306,11 @@ namespace Finsa.Caravan.DataAccess
                 case DataAccessKind.SqlServer:
                     _dbManagerInstance = new SqlServerDbManager();
                     _dbContextGenerator = SqlServerDbContextGenerator;
-                    _logManagerInstance = new SqlLogManager();
-                    _queryManagerInstance = new SqlQueryManager();
-                    _securityManagerInstance = new SqlSecurityManager();
                     break;
 
                 case DataAccessKind.SqlServerCe:
                     _dbManagerInstance = new SqlServerCeDbManager();
                     _dbContextGenerator = SqlServerCeDbContextGenerator;
-                    _logManagerInstance = new SqlLogManager();
-                    _queryManagerInstance = new SqlQueryManager();
-                    _securityManagerInstance = new SqlSecurityManager();
                     break;
             }
         }

@@ -7,86 +7,90 @@ using PommaLabs.Extensions;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
-   public static class CaravanDbContext
-   {
-      public static void Init<TCtx>() where TCtx : DbContext
-      {
-         Database.SetInitializer<TCtx>(null);
-      }
-   }
+    public static class CaravanDbContext
+    {
+        public static void Init<TCtx>() where TCtx : DbContext
+        {
+            Database.SetInitializer(new CreateDatabaseIfNotExists<TCtx>());
+        }
+    }
 
-   public abstract class CaravanDbContext<TCtx> : DbContext where TCtx : CaravanDbContext<TCtx>
-   {
-      #region Construction
+    public abstract class CaravanDbContext<TCtx> : DbContext where TCtx : CaravanDbContext<TCtx>
+    {
+        #region Construction
 
-      protected CaravanDbContext()
-      {
-         Init();
-      }
+        protected CaravanDbContext()
+        {
+            Init();
+        }
 
-      protected CaravanDbContext(DbConnection existingConnection, bool contextOwnsConnection) : base(existingConnection, contextOwnsConnection)
-      {
-         Init();
-      }
+        protected CaravanDbContext(DbConnection existingConnection, bool contextOwnsConnection)
+            : base(existingConnection, contextOwnsConnection)
+        {
+            Init();
+        }
 
-      protected CaravanDbContext(string nameOrConnectionString) : base(nameOrConnectionString)
-      {
-         Init();
-      }
+        protected CaravanDbContext(string nameOrConnectionString)
+            : base(nameOrConnectionString)
+        {
+            Init();
+        }
 
-      #endregion
+        #endregion Construction
 
-      public void SaveConcurrentChanges(Action<TCtx, DbUpdateConcurrencyException> onFailure)
-      {
-         for (var i = 0; i < Settings.Default.DefaultSaveChangesRetryCount; ++i)
-         {
-            try
+        public void SaveConcurrentChanges(Action<TCtx, DbUpdateConcurrencyException> onFailure)
+        {
+            for (var i = 0; i < Settings.Default.DefaultSaveChangesRetryCount; ++i)
             {
-               SaveChanges();
-               break;
+                try
+                {
+                    SaveChanges();
+                    break;
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    // If this is the last run, then rethrow the exception.
+                    if (i + 1 == Settings.Default.DefaultSaveChangesRetryCount)
+                    {
+                        throw;
+                    }
+
+                    // Call the handler user has passed as argument, if any.
+                    onFailure.SafeInvoke(this as TCtx, ex);
+
+                    // SaveChanges will be called on the next run.
+                }
             }
-            catch (DbUpdateConcurrencyException ex)
+        }
+
+        public void UndoChanges()
+        {
+            foreach (var entry in ChangeTracker.Entries())
             {
-               // If this is the last run, then rethrow the exception.
-               if (i + 1 == Settings.Default.DefaultSaveChangesRetryCount)
-               {
-                  throw;
-               }
+                switch (entry.State)
+                {
+                    case EntityState.Modified:
+                        entry.State = EntityState.Unchanged;
+                        break;
 
-               // Call the handler user has passed as argument, if any.
-               onFailure.SafeInvoke(this as TCtx, ex);
+                    case EntityState.Added:
+                        entry.State = EntityState.Detached;
+                        break;
 
-               // SaveChanges will be called on the next run.
+                    case EntityState.Deleted:
+                        entry.Reload();
+                        break;
+                }
             }
-         }
-      }
+        }
 
-      public void UndoChanges()
-      {
-         foreach (var entry in ChangeTracker.Entries())
-         {
-            switch (entry.State)
-            {
-               case EntityState.Modified:
-                  entry.State = EntityState.Unchanged;
-                  break;
-               case EntityState.Added:
-                  entry.State = EntityState.Detached;
-                  break;
-               case EntityState.Deleted:
-                  entry.Reload();
-                  break;
-            }
-         }
-      }
+        #region Private Methods
 
-      #region Private Methods
+        private void Init()
+        {
+            Configuration.LazyLoadingEnabled = false;
+        }
 
-      private void Init()
-      {
-         Configuration.LazyLoadingEnabled = false;
-      }
-
-      #endregion
-   }
+        #endregion Private Methods
+    }
 }
