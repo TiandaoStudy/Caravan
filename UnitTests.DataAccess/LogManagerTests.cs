@@ -138,6 +138,28 @@ namespace UnitTests.DataAccess
         #region Logging Methods
 
         [Test]
+        public void Log_validArgs_withParams()
+        {
+            var args = new[]
+            {
+                KeyValuePair.Create("a", "b"),
+                KeyValuePair.Create("c", "d")
+            };
+
+            var res = Db.Logger.LogRaw(LogType.Info, _myApp.Name, "", "UnitTests.DataAccess.LogManagerTests", "Log_validArgs_", "test", args: args);
+
+            Assert.True(res.Succeeded);
+
+            var q = Db.Logger.Entries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests");
+            Assert.That(q.Count(), Is.EqualTo(1));
+
+            var q1 = Db.Logger.Entries(_myApp.Name).Where(l => l.Function == "log_validargs_");
+            Assert.That(q1.Count(), Is.EqualTo(1));
+
+            Assert.True(args.SequenceEqual(q1.First().Arguments));
+        }
+
+        [Test]
         public void Log_validArgs_()
         {
             var res = Db.Logger.LogRaw(LogType.Info, _myApp.Name, "", "UnitTests.DataAccess.LogManagerTests", "Log_validArgs_", new Exception());
