@@ -9,7 +9,7 @@ using Finsa.Caravan.DataAccess.Core;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
-   public sealed class SqlSecurityManager : SecurityManagerBase<SqlSecurityManager>
+   internal sealed class SqlSecurityManager : SecurityManagerBase<SqlSecurityManager>
    {
       private const int NoId = 0;
 

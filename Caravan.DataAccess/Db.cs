@@ -32,7 +32,6 @@ namespace Finsa.Caravan.DataAccess
         private const string ConnectionStringKey = "ConnectionString";
 
         private static ILogManager _logManagerInstance;
-        private static QueryManagerBase _queryManagerInstance;
         private static ISecurityManager _securityManagerInstance;
         private static IDbManager _dbManagerInstance;
         private static Func<DbContextBase> _dbContextGenerator;
@@ -62,11 +61,6 @@ namespace Finsa.Caravan.DataAccess
         public static ILogManager Logger
         {
             get { return _logManagerInstance; }
-        }
-
-        public static IQueryManager Query
-        {
-            get { return _queryManagerInstance; }
         }
 
         public static ISecurityManager Security
@@ -267,7 +261,6 @@ namespace Finsa.Caravan.DataAccess
                 case DataAccessKind.SqlServer:
                 case DataAccessKind.SqlServerCe:
                     _logManagerInstance = new SqlLogManager();
-                    _queryManagerInstance = new SqlQueryManager();
                     _securityManagerInstance = new SqlSecurityManager();
                     break;
             }
@@ -301,7 +294,6 @@ namespace Finsa.Caravan.DataAccess
 
                 case DataAccessKind.Rest:
                     _logManagerInstance = new RestLogManager();
-                    _queryManagerInstance = new RestQueryManager();
                     _securityManagerInstance = new RestSecurityManager();
                     break;
 

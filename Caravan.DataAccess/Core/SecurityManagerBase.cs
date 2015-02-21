@@ -8,7 +8,7 @@ using PommaLabs.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
-    public abstract class SecurityManagerBase<TSec> : ISecurityManager where TSec : SecurityManagerBase<TSec>
+    internal abstract class SecurityManagerBase<TSec> : ISecurityManager where TSec : SecurityManagerBase<TSec>
     {
         #region Apps
 
