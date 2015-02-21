@@ -79,7 +79,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests (DataAccess)", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebService", "Caravan.WebService\Caravan.WebService.csproj", "{A5199477-2670-4E28-A49A-E19E089CF85D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests (WebService)", "Unit Tests (WebService)\Unit Tests (WebService).csproj", "{029566A6-79FE-4F3A-90CF-A21125A3F6A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests (WebService)", "UnitTests.WebService\Unit Tests (WebService).csproj", "{029566A6-79FE-4F3A-90CF-A21125A3F6A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
