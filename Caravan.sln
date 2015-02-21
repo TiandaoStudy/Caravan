@@ -79,6 +79,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests (DataAccess)", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebService", "Caravan.WebService\Caravan.WebService.csproj", "{A5199477-2670-4E28-A49A-E19E089CF85D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests (WebService)", "Unit Tests (WebService)\Unit Tests (WebService).csproj", "{029566A6-79FE-4F3A-90CF-A21125A3F6A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +139,10 @@ Global
 		{A5199477-2670-4E28-A49A-E19E089CF85D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5199477-2670-4E28-A49A-E19E089CF85D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5199477-2670-4E28-A49A-E19E089CF85D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{029566A6-79FE-4F3A-90CF-A21125A3F6A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{029566A6-79FE-4F3A-90CF-A21125A3F6A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{029566A6-79FE-4F3A-90CF-A21125A3F6A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{029566A6-79FE-4F3A-90CF-A21125A3F6A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
