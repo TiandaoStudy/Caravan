@@ -128,9 +128,9 @@
       <HintPath>..\packages\PommaLabs.GRAMPA.2.1.7\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PommaLabs.KVLite, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PommaLabs.KVLite, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.KVLite.Core.1.4.1\lib\net45\PommaLabs.KVLite.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.KVLite.Core.1.4.2\lib\net45\PommaLabs.KVLite.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=105.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -161,8 +161,8 @@
     <Compile Include="Activities\LogActivity.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Sql\CaravanDbContext.cs" />
-    <Compile Include="Core\DbContextBase.cs" />
-    <Compile Include="Core\DbManagerBase.cs" />
+    <Compile Include="Sql\DbContextBase.cs" />
+    <Compile Include="Sql\DbManagerBase.cs" />
     <Compile Include="Core\LogManagerBase.cs" />
     <Compile Include="Core\QueryManagerBase.cs" />
     <Compile Include="Core\SecurityManagerBase.cs" />
@@ -172,11 +172,11 @@
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="IQueryManager.cs" />
-    <Compile Include="Mongo\DataModel\Logging\MongoLogEntry.cs" />
-    <Compile Include="Mongo\DataModel\Logging\MongoLogSettings.cs" />
-    <Compile Include="Mongo\DataModel\MongoDocument.cs" />
-    <Compile Include="Mongo\DataModel\MongoSequence.cs" />
-    <Compile Include="Mongo\DataModel\Security\MongoSecApp.cs" />
+    <Compile Include="Mongo\Models\Logging\MongoLogEntry.cs" />
+    <Compile Include="Mongo\Models\Logging\MongoLogSettings.cs" />
+    <Compile Include="Mongo\Models\MongoDocument.cs" />
+    <Compile Include="Mongo\Models\MongoSequence.cs" />
+    <Compile Include="Mongo\Models\Security\MongoSecApp.cs" />
     <Compile Include="Mongo\MongoDbManager.cs" />
     <Compile Include="Mongo\MongoLogManager.cs" />
     <Compile Include="Mongo\MongoSecurityManager.cs" />
@@ -250,6 +250,7 @@
     <Content Include="Sql\Oracle\Scripts\Triggers\caravan_log_id.sql" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Sql\Models\" />
     <Folder Include="Sql\MySql\Scripts\" />
     <Folder Include="Sql\Postgres\" />
   </ItemGroup>

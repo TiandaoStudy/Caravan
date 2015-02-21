@@ -10,21 +10,16 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using System.Linq;
 using System.Web.Http;
-using Finsa.Caravan.Common;
-using LinqToQuerystring.WebApi;
-using PommaLabs.KVLite;
+using PommaLabs.KVLite.Web.Http;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
+    /// <summary>
+    ///   Controller che si occupa della gestione della cache locale al server.
+    /// </summary>
     [RoutePrefix("cache")]
-    public sealed class CacheController : ApiController
+    public sealed class CacheController : CacheControllerBase
     {
-        [Route("items"), LinqToQueryable]
-        public IQueryable<CacheItem> GetItems()
-        {
-            return Cache.Instance.GetManyItems().AsQueryable().Where(i => !i.Key.StartsWith("ConnectionString"));
-        }
     }
 }

@@ -4,6 +4,11 @@
         <name>Finsa.Caravan.WebService</name>
     </assembly>
     <members>
+        <member name="T:Finsa.Caravan.WebService.Controllers.CacheController">
+            <summary>
+              Controller che si occupa della gestione della cache locale al server.
+            </summary>
+        </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.HelpController">
             <summary>
               The HELP controller.
