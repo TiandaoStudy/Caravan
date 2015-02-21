@@ -14,22 +14,22 @@ namespace Finsa.Caravan.DataAccess.Core
     {
         #region ILogManager Members
 
-        public LogResult Log<TCodeUnit>(LogType type, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled,
+        public LogResult Log<TCodeUnit>(LogType logType, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
            string function = LogEntry.AutoFilled)
         {
-            return Log<TCodeUnit>(type, appName, userName, function, shortMessage, longMessage, context, args);
+            return Log<TCodeUnit>(logType, appName, userLogin, function, shortMessage, longMessage, context, args);
         }
 
-        public Task<LogResult> LogAsync<TCodeUnit>(LogType type, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled,
+        public Task<LogResult> LogAsync<TCodeUnit>(LogType logType, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
            string function = LogEntry.AutoFilled)
         {
-            return Task.Factory.StartNew(() => Log<TCodeUnit>(type, appName, userName, function, shortMessage, longMessage, context, args));
+            return Task.Factory.StartNew(() => Log<TCodeUnit>(logType, appName, userLogin, function, shortMessage, longMessage, context, args));
         }
 
         public LogResult LogDebug<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string applicationName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled)
+           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled)
         {
-            return Log<TCodeUnit>(LogType.Debug, applicationName, userName, function, shortMessage, longMessage, context, args);
+            return Log<TCodeUnit>(LogType.Debug, appName, userName, function, shortMessage, longMessage, context, args);
         }
 
         public Task<LogResult> LogDebugAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled,
@@ -86,14 +86,14 @@ namespace Finsa.Caravan.DataAccess.Core
             return Task.Factory.StartNew(() => LogFatal<TCodeUnit>(shortMessage, longMessage, context, args, appName, userName, function));
         }
 
-        public LogResult Log<TCodeUnit>(LogType type, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
+        public LogResult Log<TCodeUnit>(LogType logType, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
         {
-            return Log<TCodeUnit>(type, appName, userName, function, exception, context, args);
+            return Log<TCodeUnit>(logType, appName, userName, function, exception, context, args);
         }
 
-        public Task<LogResult> LogAsync<TCodeUnit>(LogType type, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
+        public Task<LogResult> LogAsync<TCodeUnit>(LogType logType, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
         {
-            return Task.Factory.StartNew(() => Log<TCodeUnit>(type, appName, userName, function, exception, context, args));
+            return Task.Factory.StartNew(() => Log<TCodeUnit>(logType, appName, userName, function, exception, context, args));
         }
 
         public LogResult LogDebug<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled,
@@ -245,7 +245,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #endregion ILogManager Members
 
-        public abstract LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context,
+        public abstract LogResult LogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context,
             IEnumerable<KeyValuePair<string, string>> args);
 
         protected abstract IList<LogEntry> GetEntries(string appName, LogType? logType);
@@ -262,7 +262,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Shortcuts
 
-        private LogResult Log<TCodeUnit>(LogType type, string appName, string userName, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
+        private LogResult Log<TCodeUnit>(LogType logType, string appName, string userName, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
         {
             try
             {
@@ -272,10 +272,10 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 return LogResult.Failure(ex);
             }
-            return LogRaw(type, GetCurrentAppName(appName), GetCurrentUserName(userName), typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
+            return LogRaw(logType, GetCurrentAppName(appName), GetCurrentUserName(userName), typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
         }
 
-        public LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, Exception exception, string context, IEnumerable<KeyValuePair<string, string>> args)
+        public LogResult LogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, Exception exception, string context, IEnumerable<KeyValuePair<string, string>> args)
         {
             try
             {
@@ -286,10 +286,10 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 return LogResult.Failure(ex);
             }
-            return LogRaw(type, GetCurrentAppName(appName), GetCurrentUserName(userName), codeUnit, function, exception.Message, exception.StackTrace, context, args);
+            return LogRaw(logType, GetCurrentAppName(appName), GetCurrentUserName(userLogin), codeUnit, function, exception.Message, exception.StackTrace, context, args);
         }
 
-        private LogResult Log<TCodeUnit>(LogType type, string appName, string userName, string function, Exception exception, string context, IEnumerable<KeyValuePair<string, string>> args)
+        private LogResult Log<TCodeUnit>(LogType logType, string appName, string userName, string function, Exception exception, string context, IEnumerable<KeyValuePair<string, string>> args)
         {
             try
             {
@@ -300,7 +300,7 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 return LogResult.Failure(ex);
             }
-            return LogRaw(type, GetCurrentAppName(appName), GetCurrentUserName(userName), typeof(TCodeUnit).FullName, function, exception.Message, exception.StackTrace, context, args);
+            return LogRaw(logType, GetCurrentAppName(appName), GetCurrentUserName(userName), typeof(TCodeUnit).FullName, function, exception.Message, exception.StackTrace, context, args);
         }
 
         private static Exception FindInnermostException(Exception exception)

@@ -11,14 +11,14 @@ namespace Finsa.Caravan.DataAccess
     /// </summary>
     public interface ILogManager
     {
-        #region Logging Methods
+        #region Logging
 
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="logType"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="codeUnit"></param>
         /// <param name="function"></param>
         /// <param name="shortMessage"></param>
@@ -26,39 +26,39 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
+        LogResult LogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <typeparam name="TCodeUnit"></typeparam>
-        /// <param name="type"></param>
+        /// <param name="logType"></param>
         /// <param name="shortMessage"></param>
         /// <param name="longMessage"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
-        LogResult Log<TCodeUnit>(LogType type, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+        LogResult Log<TCodeUnit>(LogType logType, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <typeparam name="TCodeUnit"></typeparam>
-        /// <param name="type"></param>
+        /// <param name="logType"></param>
         /// <param name="shortMessage"></param>
         /// <param name="longMessage"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
-        Task<LogResult> LogAsync<TCodeUnit>(LogType type, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+        Task<LogResult> LogAsync<TCodeUnit>(LogType logType, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -68,12 +68,12 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="longMessage"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="applicationName"></param>
-        /// <param name="userName"></param>
+        /// <param name="appName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         LogResult LogDebug<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string applicationName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -83,12 +83,12 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="longMessage"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="applicationName"></param>
-        /// <param name="userName"></param>
+        /// <param name="appName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         Task<LogResult> LogDebugAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string applicationName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -98,12 +98,12 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="longMessage"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="applicationName"></param>
-        /// <param name="userName"></param>
+        /// <param name="appName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         LogResult LogInfo<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string applicationName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -113,12 +113,12 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="longMessage"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="applicationName"></param>
-        /// <param name="userName"></param>
+        /// <param name="appName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         Task<LogResult> LogInfoAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string applicationName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -128,12 +128,12 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="longMessage"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
-        /// <param name="applicationName"></param>
-        /// <param name="userName"></param>
+        /// <param name="appName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         LogResult LogWarn<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string applicationName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -144,11 +144,11 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         Task<LogResult> LogWarnAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -159,11 +159,11 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         LogResult LogError<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -174,11 +174,11 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         Task<LogResult> LogErrorAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -189,11 +189,11 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         LogResult LogFatal<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -204,55 +204,55 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         Task<LogResult> LogFatalAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="logType"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="codeUnit"></param>
         /// <param name="function"></param>
         /// <param name="exception"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
+        LogResult LogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <typeparam name="TCodeUnit"></typeparam>
-        /// <param name="type"></param>
+        /// <param name="logType"></param>
         /// <param name="exception"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
-        LogResult Log<TCodeUnit>(LogType type, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+        LogResult Log<TCodeUnit>(LogType logType, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <typeparam name="TCodeUnit"></typeparam>
-        /// <param name="type"></param>
+        /// <param name="logType"></param>
         /// <param name="exception"></param>
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
-        Task<LogResult> LogAsync<TCodeUnit>(LogType type, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+        Task<LogResult> LogAsync<TCodeUnit>(LogType logType, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -262,11 +262,11 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         LogResult LogDebug<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -276,11 +276,11 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         Task<LogResult> LogDebugAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -290,11 +290,11 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         LogResult LogInfo<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -304,11 +304,11 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         Task<LogResult> LogInfoAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -318,11 +318,11 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         LogResult LogWarn<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -332,11 +332,11 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         Task<LogResult> LogWarnAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -346,11 +346,11 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         LogResult LogError<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -360,11 +360,11 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         Task<LogResult> LogErrorAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -374,11 +374,11 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         LogResult LogFatal<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
         ///   TODO
@@ -388,13 +388,13 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <param name="appName">The application name.</param>
-        /// <param name="userName"></param>
+        /// <param name="userLogin"></param>
         /// <param name="function"></param>
         /// <returns></returns>
         Task<LogResult> LogFatalAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
-           string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
-        #endregion Logging Methods
+        #endregion Logging
 
         #region Entries
 

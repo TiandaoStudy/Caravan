@@ -11,7 +11,7 @@ namespace Finsa.Caravan.DataAccess.Rest
 {
     public sealed class RestLogManager : LogManagerBase
     {
-        public override LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
+        public override LogResult LogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
         {
             var client = new RestClient("http://localhost/Caravan.RestService/security");
             var request = new RestRequest("{appName}/entries", Method.POST);

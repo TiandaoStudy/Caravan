@@ -22,7 +22,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
       #endregion
 
-      public override LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function,
+      public override LogResult LogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function,
          string shortMessage, string longMessage, string context,
          IEnumerable<KeyValuePair<string, string>> args)
       {
@@ -36,7 +36,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             using (var ctx = Db.CreateWriteContext())
             {
                var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
-               var typeId = type.ToString().ToLower();
+               var typeId = logType.ToString().ToLower();
                var settings = ctx.LogSettings.First(s => s.AppId == appId && s.TypeId == typeId);
 
                // We delete logs older than "settings.Days"
@@ -67,7 +67,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                      Date = DateTime.Now,
                      AppId = appId,
                      TypeId = typeId,
-                     UserLogin = userName.Truncate(MaxStringLength).ToLower(),
+                     UserLogin = userLogin.Truncate(MaxStringLength).ToLower(),
                      CodeUnit = codeUnit.Truncate(MaxStringLength).ToLower(),
                      Function = function.Truncate(MaxStringLength).ToLower(),
                      ShortMessage = shortMessage.Truncate(MaxStringLength),
