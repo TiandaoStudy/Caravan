@@ -185,6 +185,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Sql\FakeSql\FakeSqlDbManager.cs" />
+    <Compile Include="Sql\Models\Logging\SqlLogEntry.cs" />
+    <Compile Include="Sql\Models\Logging\SqlLogSetting.cs" />
+    <Compile Include="Sql\Models\Security\SqlSecApp.cs" />
+    <Compile Include="Sql\Models\Security\SqlSecContext.cs" />
+    <Compile Include="Sql\Models\Security\SqlSecEntry.cs" />
+    <Compile Include="Sql\Models\Security\SqlSecGroup.cs" />
+    <Compile Include="Sql\Models\Security\SqlSecObject.cs" />
+    <Compile Include="Sql\Models\Security\SqlSecUser.cs" />
     <Compile Include="Sql\MySql\MySqlDbManager.cs" />
     <Compile Include="Sql\Oracle\OracleDynamicParameters.cs" />
     <Compile Include="Sql\SqlServerCe\SqlServerCeDbContext.cs" />
@@ -246,7 +254,6 @@
     <Content Include="Sql\Oracle\Scripts\Triggers\caravan_log_id.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Sql\Models\" />
     <Folder Include="Sql\MySql\Scripts\" />
     <Folder Include="Sql\Postgres\" />
   </ItemGroup>

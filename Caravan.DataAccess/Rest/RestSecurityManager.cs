@@ -471,7 +471,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             request.AddUrlSegment("appName", appName);
             request.AddJsonBody(new RestRequest<dynamic> { Auth = "AA", Body = new object() });
 
-            var response = client.Execute<Common.Models.Rest.RestResponse<SecContextSingle>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecContext>>(request);
 
             if (response.ErrorException != null)
             {
@@ -480,7 +480,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                 throw new Exception(response.ErrorMessage);
             }
 
-            var contexts = new List<SecContext> { response.Data.Body.Context };
+            var contexts = new List<SecContext> { response.Data.Body };
 
             return contexts;
         }
@@ -493,9 +493,9 @@ namespace Finsa.Caravan.DataAccess.Rest
             request.AddUrlSegment("appName", appName);
             request.AddJsonBody(new RestRequest<dynamic> { Auth = "AA", Body = new object() });
 
-            var response = client.Execute<Common.Models.Rest.RestResponse<SecObjectSingle>>(request);
+            var response = client.Execute<Common.Models.Rest.RestResponse<SecObject>>(request);
 
-            var objs = new List<SecObject> { response.Data.Body.Object };
+            var objs = new List<SecObject> { response.Data.Body };
 
             return objs;
         }
@@ -525,7 +525,7 @@ namespace Finsa.Caravan.DataAccess.Rest
 
                 request.AddJsonBody(new RestRequest<dynamic> { Auth = "AA", Body = new object() });
 
-                var response = client.Execute<Common.Models.Rest.RestResponse<SecEntrySingle>>(request);
+                var response = client.Execute<Common.Models.Rest.RestResponse<SecEntry>>(request);
 
                 if (response.ErrorException != null)
                 {
@@ -534,7 +534,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                     throw new Exception(response.ErrorMessage);
                 }
 
-                var entries = new List<SecEntry> { response.Data.Body.Entry };
+                var entries = new List<SecEntry> { response.Data.Body };
 
                 return entries;
             }
@@ -554,22 +554,22 @@ namespace Finsa.Caravan.DataAccess.Rest
                 request.AddUrlSegment("appName", appName);
                 if (userLogin != null)
                 {
-                    request.AddJsonBody(new RestRequest<SecEntrySingle>
+                    request.AddJsonBody(new RestRequest<SecEntry>
                     {
                         Auth = "AA",
-                        Body = new SecEntrySingle { Entry = new SecEntry { Context = secContext, Object = secObject, User = new SecUser { Login = userLogin } } }
+                        Body = new SecEntry { Context = secContext, Object = secObject, User = new SecUser { Login = userLogin } }
                     });
                 }
                 else
                 {
-                    request.AddJsonBody(new RestRequest<SecEntrySingle>
+                    request.AddJsonBody(new RestRequest<SecEntry>
                     {
                         Auth = "AA",
-                        Body = new SecEntrySingle { Entry = new SecEntry { Context = secContext, Object = secObject, Group = new SecGroup { Name = groupName } } }
+                        Body = new SecEntry { Context = secContext, Object = secObject, Group = new SecGroup { Name = groupName } }
                     });
                 }
 
-                var response = client.Execute<Common.Models.Rest.RestResponse<SecEntrySingle>>(request);
+                var response = client.Execute<Common.Models.Rest.RestResponse<SecEntry>>(request);
 
                 if (response.ErrorException != null)
                 {
@@ -601,34 +601,28 @@ namespace Finsa.Caravan.DataAccess.Rest
 
                 if (userLogin != null)
                 {
-                    request.AddJsonBody(new RestRequest<SecEntrySingle>
+                    request.AddJsonBody(new RestRequest<SecEntry>
                     {
                         Auth = "AA",
-                        Body = new SecEntrySingle
-                        {
-                            Entry = new SecEntry
+                        Body =  new SecEntry
                             {
                                 User = new SecUser { Login = userLogin }
                             }
-                        }
                     });
                 }
                 else
                 {
-                    request.AddJsonBody(new RestRequest<SecEntrySingle>
+                    request.AddJsonBody(new RestRequest<SecEntry>
                     {
                         Auth = "AA",
-                        Body = new SecEntrySingle
-                        {
-                            Entry = new SecEntry
+                        Body = new SecEntry
                             {
                                 Group = new SecGroup { Name = groupName }
                             }
-                        }
                     });
                 }
 
-                var response = client.Execute<Common.Models.Rest.RestResponse<SecEntrySingle>>(request);
+                var response = client.Execute<Common.Models.Rest.RestResponse<SecEntry>>(request);
                 if (response.ErrorException != null)
                 {
                     if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
