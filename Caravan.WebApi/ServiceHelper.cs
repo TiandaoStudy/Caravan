@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using AutoMapper;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.DataModel.Security;
+using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebApi.Models.Security;
 using Newtonsoft.Json;

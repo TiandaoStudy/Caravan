@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Finsa.Caravan.Common.DataModel.Exceptions;
-using Finsa.Caravan.Common.DataModel.Security;
+using Finsa.Caravan.Common.Models.Security;
 
 namespace Finsa.Caravan.DataAccess
 {

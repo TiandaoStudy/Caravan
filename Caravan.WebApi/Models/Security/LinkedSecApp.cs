@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Finsa.Caravan.Common.DataModel.Links;
-using Finsa.Caravan.Common.DataModel.Security;
+using Finsa.Caravan.Common.Models.Security;
 using Newtonsoft.Json;
 using System;
 using System.Runtime.Serialization;

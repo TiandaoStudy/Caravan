@@ -1,10 +1,10 @@
-﻿using Finsa.Caravan.Common.DataModel.Logging;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Finsa.Caravan.Common.DataModel.Logging;
+using Newtonsoft.Json;
 
-namespace Finsa.Caravan.Common.DataModel.Security
+namespace Finsa.Caravan.Common.Models.Security
 {
     [Serializable, DataContract(IsReference = true)]
     public class SecApp : IEquatable<SecApp>

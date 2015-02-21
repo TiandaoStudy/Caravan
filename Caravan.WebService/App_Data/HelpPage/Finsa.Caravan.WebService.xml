@@ -113,7 +113,7 @@
             <param name="appName">The application to show</param>
             <returns>All the details of the specified application</returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostApp(Finsa.Caravan.Common.DataModel.Security.SecApp)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostApp(Finsa.Caravan.Common.Models.Security.SecApp)">
             <summary>
               Insert a new application
             </summary>
@@ -126,14 +126,14 @@
             <param name="appName">Application name</param>
             <returns>All the users of the specified application</returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostUser(System.String,Finsa.Caravan.Common.DataModel.Security.SecUser)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostUser(System.String,Finsa.Caravan.Common.Models.Security.SecUser)">
             <summary>
               Add a new user in the specified application
             </summary>
             <param name="appName">Application name</param>
             <param name="user">The new user to add</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutUser(System.String,System.String,Finsa.Caravan.Common.DataModel.Security.SecUser)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutUser(System.String,System.String,Finsa.Caravan.Common.Models.Security.SecUser)">
             <summary>
               Update the user with the specified userLogin in the specified application
             </summary>
@@ -180,7 +180,7 @@
             <param name="groupName">The group name</param>
             <returns></returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostGroup(System.String,Finsa.Caravan.Common.DataModel.Security.SecGroup)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostGroup(System.String,Finsa.Caravan.Common.Models.Security.SecGroup)">
             <summary>
               Add a new group to the specified application
             </summary>
@@ -194,7 +194,7 @@
             <param name="appName">The application name</param>
             <param name="groupName">The group name</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutGroup(System.String,System.String,Finsa.Caravan.Common.DataModel.Security.SecGroup)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutGroup(System.String,System.String,Finsa.Caravan.Common.Models.Security.SecGroup)">
             <summary>
               Update the specified group
             </summary>
@@ -267,7 +267,7 @@
             <param name="userLogin">The user login</param>
             <returns></returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostEntry(System.String,Finsa.Caravan.Common.DataModel.Security.SecEntry)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostEntry(System.String,Finsa.Caravan.Common.Models.Security.SecEntry)">
             <summary>
               Add a new entry in the specified application withe the specified parameters
             </summary>

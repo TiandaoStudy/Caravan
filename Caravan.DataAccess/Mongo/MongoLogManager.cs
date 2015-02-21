@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using Finsa.Caravan.Common.DataModel.Logging;
-using Finsa.Caravan.Common.DataModel.Security;
+using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Mongo.DataModel;
 using Finsa.Caravan.DataAccess.Mongo.DataModel.Logging;

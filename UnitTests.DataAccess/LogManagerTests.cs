@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.DataModel.Logging;
-using Finsa.Caravan.Common.DataModel.Security;
+using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
 using NUnit.Framework;
 

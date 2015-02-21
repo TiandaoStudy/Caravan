@@ -5,7 +5,12 @@ namespace Finsa.Caravan.DataAccess.Sql.FakeSql
 {
     internal sealed class FakeSqlDbManager : DbManagerBase
     {
-        private readonly DbConnection _connection = Effort.DbConnectionFactory.CreatePersistent("caravan");
+        private DbConnection _connection;
+
+        public FakeSqlDbManager()
+        {
+            ResetConnection();
+        }
 
         public override DataAccessKind Kind
         {
@@ -19,8 +24,15 @@ namespace Finsa.Caravan.DataAccess.Sql.FakeSql
 
         public override DbConnection CreateConnection()
         {
+            // Close connection, since someone might have left it open.
             _connection.Close();
             return _connection;
+        }
+
+        public void ResetConnection()
+        {
+            // Connection should be persisted, otherwise the DB may be lost.
+            _connection = Effort.DbConnectionFactory.CreatePersistent("caravan");
         }
     }
 }

@@ -118,17 +118,6 @@ namespace Finsa.Caravan.DataAccess
 
         #region DbContext Generators
 
-        private static SqlDbContext FakeSqlDbContextGenerator()
-        {
-            var ctx = new SqlDbContext();
-            // Required, because the database is in-memory and thus it may not exist.
-            ctx.Database.CreateIfNotExists();
-            Database.SetInitializer(new DropCreateDatabaseAlways<SqlDbContext>());
-            ctx.Database.Initialize(false);
-            Database.SetInitializer(new CreateDatabaseIfNotExists<SqlDbContext>());
-            return ctx;
-        }
-
         private static SqlDbContext SqlDbContextGenerator()
         {
             return new SqlDbContext();
@@ -164,9 +153,9 @@ namespace Finsa.Caravan.DataAccess
             var logEntry = queryable.ToString();
             var milliseconds = stopwatch.ElapsedMilliseconds;
             Logger.LogDebugAsync<IDbManager>("EF generated query", logEntry, "Logging and timing the query", new[]
-         {
-            KeyValuePair.Create("milliseconds", milliseconds.ToString(CultureInfo.InvariantCulture))
-         });
+            {
+                KeyValuePair.Create("milliseconds", milliseconds.ToString(CultureInfo.InvariantCulture))
+            });
 
             return list;
         }
@@ -191,14 +180,27 @@ namespace Finsa.Caravan.DataAccess
 
         internal static void ChangeDataAccessKindUseOnlyForUnitTestsPlease()
         {
-            SetDataAccessKind(DataAccessKind.SqlServerCe);
+            SetDataAccessKind(DataAccessKind.FakeSql);
         }
 
         internal static void ClearAllTablesUseOnlyInsideUnitTestsPlease()
         {
             switch (AccessKind)
             {
+                // Custom actions are required for Effort.
                 case DataAccessKind.FakeSql:
+                    // A new connection is created and persisted for the whole test duration.
+                    (Manager as FakeSqlDbManager).ResetConnection();
+                    // The database is recreated, since it is in-memory and probably it does not exist.
+                    using (var ctx = CreateWriteContext())
+                    {
+                        ctx.Database.CreateIfNotExists();
+                        Database.SetInitializer(new DropCreateDatabaseAlways<SqlDbContext>());
+                        ctx.Database.Initialize(true);
+                        Database.SetInitializer(new CreateDatabaseIfNotExists<SqlDbContext>());
+                    }
+                    break;
+
                 case DataAccessKind.MySql:
                 case DataAccessKind.Oracle:
                 case DataAccessKind.PostgreSql:
@@ -274,7 +276,7 @@ namespace Finsa.Caravan.DataAccess
             {
                 case DataAccessKind.FakeSql:
                     _dbManagerInstance = new FakeSqlDbManager();
-                    _dbContextGenerator = FakeSqlDbContextGenerator;
+                    _dbContextGenerator = SqlDbContextGenerator;
                     break;
 
                 case DataAccessKind.MongoDb:

@@ -1,5 +1,5 @@
 ﻿using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.DataModel.Security;
+using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
 using PommaLabs.KVLite;
 using System;
