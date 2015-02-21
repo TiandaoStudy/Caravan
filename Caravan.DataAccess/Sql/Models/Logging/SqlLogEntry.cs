@@ -6,11 +6,11 @@ namespace Finsa.Caravan.DataAccess.Sql.Models.Logging
     [Serializable]
     public class SqlLogEntry
     {
-        public long Id { get; set; }
-
         public long AppId { get; set; }
 
-        public SqlSecApp App { get; set; }
+        public long Id { get; set; }
+
+        public string LogType { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -25,10 +25,6 @@ namespace Finsa.Caravan.DataAccess.Sql.Models.Logging
         public string LongMessage { get; set; }
 
         public string Context { get; set; }
-
-        public SqlLogSetting LogSettings { get; set; }
-
-        public string TypeId { get; set; }
 
         public string Key0 { get; set; }
 
@@ -69,5 +65,9 @@ namespace Finsa.Caravan.DataAccess.Sql.Models.Logging
         public string Key9 { get; set; }
 
         public string Value9 { get; set; }
+
+        public SqlSecApp App { get; set; }
+
+        public SqlLogSetting LogSetting { get; set; }
     }
 }

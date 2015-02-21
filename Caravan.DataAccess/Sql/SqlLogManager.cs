@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
+using AutoMapper;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.DataAccess.Sql.Models.Logging;
 using PommaLabs.Diagnostics;
 using PommaLabs.Extensions;
 
@@ -16,13 +18,11 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         private const int MaxArgumentCount = 10;
         private const int MaxStringLength = 2000;
-        private const int NoId = 0;
 
         #endregion Constants
 
         protected override LogResult DoLogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function,
-           string shortMessage, string longMessage, string context,
-           IEnumerable<KeyValuePair<string, string>> args)
+           string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
         {
             try
             {
@@ -35,22 +35,22 @@ namespace Finsa.Caravan.DataAccess.Sql
                 {
                     var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
                     var typeId = logType.ToString().ToLower();
-                    var settings = ctx.LogSettings.First(s => s.AppId == appId && s.TypeId == typeId);
+                    var settings = ctx.LogSettings.First(s => s.AppId == appId && s.LogType == typeId);
 
                     // We delete logs older than "settings.Days"
                     var minDate = DateTime.Now.Subtract(TimeSpan.FromDays(settings.Days));
                     var oldLogs = from l in ctx.LogEntries
-                                  where l.AppId == appId && l.TypeId == typeId
+                                  where l.AppId == appId && l.LogType == typeId
                                   where l.Date < minDate
                                   select l;
                     ctx.LogEntries.RemoveRange(oldLogs);
 
                     // We delete enough entries to preserve the upper limit
-                    var logCount = ctx.LogEntries.Count(e => e.AppId == appId && e.TypeId == typeId);
+                    var logCount = ctx.LogEntries.Count(e => e.AppId == appId && e.LogType == typeId);
                     if (logCount >= settings.MaxEntries)
                     {
                         var olderLogs = (from l in ctx.LogEntries
-                                         where l.AppId == appId && l.TypeId == typeId
+                                         where l.AppId == appId && l.LogType == typeId
                                          orderby l.Date ascending
                                          select l).Take(logCount - settings.MaxEntries + 1);
                         ctx.LogEntries.RemoveRange(olderLogs);
@@ -59,20 +59,78 @@ namespace Finsa.Caravan.DataAccess.Sql
                     // If log is enabled, then we can insert a new entry
                     if (settings.Enabled == 1)
                     {
-                        ctx.LogEntries.Add(new LogEntry
+                        var entry = new SqlLogEntry
                         {
-                            Id = NoId,
                             Date = DateTime.Now,
                             AppId = appId,
-                            TypeId = typeId,
+                            LogType = typeId,
                             UserLogin = userLogin.Truncate(MaxStringLength).ToLower(),
                             CodeUnit = codeUnit.Truncate(MaxStringLength).ToLower(),
                             Function = function.Truncate(MaxStringLength).ToLower(),
                             ShortMessage = shortMessage.Truncate(MaxStringLength),
-                            LongMessage = longMessage, // Not truncated, because it should be a CLOB.
-                            Context = context.Truncate(MaxStringLength),
-                            Arguments = argsList
-                        });
+                            LongMessage = longMessage, // Not truncated, because it should be a CLOB/TEXT/whatever...
+                            Context = context.Truncate(MaxStringLength)
+                        };
+
+                        for (var i = 0; i < argsList.Length; ++i)
+                        {
+                            var key = argsList[i].Key;
+                            var val = argsList[i].Value;
+                            switch (i)
+                            {
+                                case 0:
+                                    entry.Key0 = key;
+                                    entry.Value0 = val;
+                                    break;
+
+                                case 1:
+                                    entry.Key1 = key;
+                                    entry.Value1 = val;
+                                    break;
+
+                                case 2:
+                                    entry.Key2 = key;
+                                    entry.Value2 = val;
+                                    break;
+
+                                case 3:
+                                    entry.Key3 = key;
+                                    entry.Value3 = val;
+                                    break;
+
+                                case 4:
+                                    entry.Key4 = key;
+                                    entry.Value4 = val;
+                                    break;
+
+                                case 5:
+                                    entry.Key5 = key;
+                                    entry.Value5 = val;
+                                    break;
+
+                                case 6:
+                                    entry.Key6 = key;
+                                    entry.Value6 = val;
+                                    break;
+
+                                case 7:
+                                    entry.Key7 = key;
+                                    entry.Value7 = val;
+                                    break;
+
+                                case 8:
+                                    entry.Key8 = key;
+                                    entry.Value8 = val;
+                                    break;
+
+                                case 9:
+                                    entry.Key9 = key;
+                                    entry.Value9 = val;
+                                    break;
+                            }
+                        }
+
+                        ctx.LogEntries.Add(entry);
                     }
 
                     ctx.SaveChanges();
@@ -98,9 +156,13 @@ namespace Finsa.Caravan.DataAccess.Sql
                 if (logType != null)
                 {
                     var logTypeString = logType.ToString().ToLower();
-                    q = q.Where(s => s.TypeId == logTypeString);
+                    q = q.Where(s => s.LogType == logTypeString);
                 }
-                return q.OrderByDescending(s => s.Id).ThenByDescending(s => s.Date).ToList();
+                return q.OrderByDescending(s => s.Id)
+                    .ThenByDescending(s => s.Date)
+                    .AsEnumerable()
+                    .Select(Mapper.Map<LogEntry>)
+                    .ToList();
             }
         }
 
@@ -135,9 +197,13 @@ namespace Finsa.Caravan.DataAccess.Sql
                 if (logType != null)
                 {
                     var logTypeString = logType.ToString().ToLower();
-                    q = q.Where(s => s.TypeId == logTypeString);
+                    q = q.Where(s => s.LogType == logTypeString);
                 }
-                return q.OrderBy(s => s.App.Name).ThenBy(s => s.TypeId).ToLogAndList();
+                return q.OrderBy(s => s.App.Name)
+                    .ThenBy(s => s.LogType)
+                    .AsEnumerable()
+                    .Select(Mapper.Map<LogSetting>)
+                    .ToList();
             }
         }
 
@@ -150,15 +216,15 @@ namespace Finsa.Caravan.DataAccess.Sql
                 var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
                 var typeId = logType.ToString().ToLower();
 
-                if (!ctx.LogSettings.Any(s => s.AppId == appId && s.TypeId == typeId))
+                if (!ctx.LogSettings.Any(s => s.AppId == appId && s.LogType == typeId))
                 {
-                    var newSetting = new LogSetting
+                    var newSetting = new SqlLogSetting
                     {
                         AppId = appId,
                         Days = setting.Days,
                         Enabled = setting.Enabled,
                         MaxEntries = setting.MaxEntries,
-                        TypeId = typeId
+                        LogType = typeId
                     };
 
                     ctx.LogSettings.Add(newSetting);
@@ -179,7 +245,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 var deleted = false;
                 var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
                 var typeId = logType.ToString().ToLower();
-                var settings = ctx.LogSettings.FirstOrDefault(a => a.AppId == appId && a.TypeId == typeId);
+                var settings = ctx.LogSettings.FirstOrDefault(a => a.AppId == appId && a.LogType == typeId);
 
                 if (settings != null)
                 {
@@ -201,19 +267,13 @@ namespace Finsa.Caravan.DataAccess.Sql
                 var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
                 var typeId = logType.ToString().ToLower();
 
-                var settingToUpdate = ctx.LogSettings.First(s => s.AppId == appId && s.TypeId == typeId);
+                var settingToUpdate = ctx.LogSettings.First(s => s.AppId == appId && s.LogType == typeId);
 
                 if (settingToUpdate != null)
                 {
-                    settingToUpdate.App = setting.App;
-                    settingToUpdate.AppId = appId;
                     settingToUpdate.Days = setting.Days;
                     settingToUpdate.Enabled = setting.Enabled;
-                    settingToUpdate.LogEntries = setting.LogEntries;
                     settingToUpdate.MaxEntries = setting.MaxEntries;
-                    settingToUpdate.Type = logType;
-                    settingToUpdate.TypeId = typeId;
-
                     update = true;
                 }
 

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess.Core;
@@ -72,8 +73,8 @@ namespace Finsa.Caravan.DataAccess.Mongo
          return logEntries.AsEnumerable().Select(l => new LogEntry
          {
             Id = l.LogId,
-            AppId = appMap[l.AppId].AppId,
-            TypeId = l.Type,
+            AppName = appMap[l.AppId].Name,
+            LogType = (LogType) Enum.Parse(typeof(LogType), l.Type, true),
             ShortMessage = l.ShortMessage,
             CodeUnit = l.CodeUnit
          }).ToList();
@@ -100,11 +101,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
                  from s in a.LogSettings.Where(s => logTypeStr == null || s.Type == logTypeStr)
                  select new LogSetting
                  {
-                    App = new SecApp
-                    {
-                       Id = a.AppId,
-                       Name = a.Name
-                    }
+                    AppName = a.Name
                  }).ToList();
       }
 

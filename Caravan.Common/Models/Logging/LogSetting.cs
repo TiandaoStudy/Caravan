@@ -1,80 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.Serialization;
-using Finsa.Caravan.Common.Models.Security;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using PommaLabs;
 
 namespace Finsa.Caravan.Common.Models.Logging
 {
     [Serializable, DataContract(IsReference = true)]
-    public class LogSetting : IEquatable<LogSetting>
+    public class LogSetting : EquatableObject<LogSetting>
     {
-        [JsonProperty(Order = 0)]
-        public long AppId { get; set; }
+        [JsonProperty(Order = 0), DataMember(Order = 0)]
+        public string AppName { get; set; }
 
-        [JsonIgnore]
-        public SecApp App { get; set; }
+        [JsonProperty(Order = 1), DataMember(Order = 1), JsonConverter(typeof(StringEnumConverter))]
+        public LogType LogType { get; set; }
 
-        [JsonProperty(Order = 2)]
+        [JsonProperty(Order = 2), DataMember(Order = 2), JsonConverter(typeof(BooleanConverter))]
         public int Enabled { get; set; }
 
-        [JsonProperty(Order = 3)]
+        [JsonProperty(Order = 3), DataMember(Order = 3)]
         public int Days { get; set; }
 
-        [JsonProperty(Order = 4)]
+        [JsonProperty(Order = 4), DataMember(Order = 4)]
         public int MaxEntries { get; set; }
 
-        [JsonIgnore]
-        public virtual ICollection<LogEntry> LogEntries { get; set; }
-
-        [JsonIgnore]
-        public string TypeId { get; set; }
-
-        [JsonConverter(typeof(StringEnumConverter))]
-        [JsonProperty(Order = 1)]
-        public LogType Type
+        protected override IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            get
-            {
-                LogType logType;
-                Enum.TryParse(TypeId, true, out logType);
-                return logType;
-            }
-            set { TypeId = value.ToString().ToLower(); }
+            yield return GKeyValuePair.Create("AppName", AppName);
+            yield return GKeyValuePair.Create("LogType", LogType.ToString());
+            yield return GKeyValuePair.Create("Enabled", (Enabled == 1).ToString(CultureInfo.InvariantCulture));
         }
 
-        public bool Equals(LogSetting other)
+        protected override IEnumerable<object> GetIdentifyingMembers()
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return AppId == other.AppId && string.Equals(TypeId, other.TypeId);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((LogSetting) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (AppId.GetHashCode() * 397) ^ TypeId.GetHashCode();
-            }
-        }
-
-        public static bool operator ==(LogSetting left, LogSetting right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(LogSetting left, LogSetting right)
-        {
-            return !Equals(left, right);
+            yield return AppName;
+            yield return LogType;
         }
     }
 

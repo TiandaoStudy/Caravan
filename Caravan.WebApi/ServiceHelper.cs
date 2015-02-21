@@ -1,9 +1,6 @@
 ﻿using System.Web.Http;
-using AutoMapper;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.WebApi.Models.Security;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PommaLabs.KVLite;
@@ -27,9 +24,6 @@ namespace Finsa.Caravan.WebApi
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
-
-            // Mapping per le risorse dotate di link.
-            Mapper.CreateMap<SecApp, LinkedSecApp>();
 
             // Loggo l'avvio dell'applicazione.
             Db.Logger.LogInfoAsync<ServiceHelper>("Application started");

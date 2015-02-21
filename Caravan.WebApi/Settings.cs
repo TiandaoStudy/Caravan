@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.DataAccess.Sql.Models.Logging;
-using Finsa.Caravan.DataAccess.Sql.Models.Security;
+using Finsa.Caravan.WebApi.Models.Security;
 
-namespace Finsa.Caravan.DataAccess.Properties {
+namespace Finsa.Caravan.WebApi.Properties {
     
     
     // This class allows you to handle specific events on the settings class:
@@ -12,7 +10,7 @@ namespace Finsa.Caravan.DataAccess.Properties {
     //  The PropertyChanged event is raised after a setting's value is changed.
     //  The SettingsLoaded event is raised after the setting values are loaded.
     //  The SettingsSaving event is raised before the setting values are saved.
-    public sealed partial class Settings {
+    internal sealed partial class Settings {
         
         public Settings() {
             // // To add event handlers for saving and changing settings, uncomment the lines below:
@@ -26,14 +24,7 @@ namespace Finsa.Caravan.DataAccess.Properties {
         static Settings()
         {
             // Mappings
-            Mapper.CreateMap<SqlLogEntry, LogEntry>();
-            Mapper.CreateMap<SqlLogSetting, LogSetting>();
-            Mapper.CreateMap<SqlSecApp, SecApp>();
-            Mapper.CreateMap<SqlSecContext, SecContext>();
-            Mapper.CreateMap<SqlSecEntry, SecEntry>();
-            Mapper.CreateMap<SqlSecGroup, SecGroup>();
-            Mapper.CreateMap<SqlSecObject, SecObject>();
-            Mapper.CreateMap<SqlSecUser, SecUser>();
+            Mapper.CreateMap<SecApp, LinkedSecApp>();
         }
         
         private void SettingChangingEventHandler(object sender, System.Configuration.SettingChangingEventArgs e) {

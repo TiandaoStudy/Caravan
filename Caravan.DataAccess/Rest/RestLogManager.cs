@@ -84,7 +84,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                            Days = setting.Days,
                            MaxEntries = setting.MaxEntries,
                            Enabled = setting.Enabled,
-                           LogEntries = setting.LogEntries
+                           //LogEntries = setting.LogEntries
                        }
                 });
 
@@ -125,7 +125,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                            Days = setting.Days,
                            MaxEntries = setting.MaxEntries,
                            Enabled = setting.Enabled,
-                           LogEntries = setting.LogEntries
+                           //LogEntries = setting.LogEntries
                        }
                 });
 

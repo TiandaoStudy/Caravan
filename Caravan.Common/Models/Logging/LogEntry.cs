@@ -21,10 +21,11 @@ namespace Finsa.Caravan.Common.Models.Logging
         public long Id { get; set; }
 
         [JsonProperty(Order = 1), DataMember(Order = 1)]
-        public long AppId { get; set; }
+        public string AppName { get; set; }
 
-        [JsonIgnore, IgnoreDataMember]
-        public SecApp App { get; set; }
+        [JsonProperty(Order = 2), DataMember(Order = 2)]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public LogType LogType { get; set; }
 
         [JsonProperty(Order = 3), DataMember(Order = 3)]
         public DateTime Date { get; set; }
@@ -46,25 +47,6 @@ namespace Finsa.Caravan.Common.Models.Logging
 
         [JsonProperty(Order = 9), DataMember(Order = 9)]
         public string Context { get; set; }
-
-        [JsonIgnore, IgnoreDataMember]
-        public LogSetting LogSettings { get; set; }
-
-        [JsonIgnore, IgnoreDataMember]
-        public string TypeId { get; set; }
-
-        [JsonProperty(Order = 2), DataMember(Order = 2)]
-        [JsonConverter(typeof(StringEnumConverter))]
-        public LogType Type
-        {
-            get
-            {
-                LogType logType;
-                Enum.TryParse(TypeId, true, out logType);
-                return logType;
-            }
-            set { TypeId = value.ToString().ToLower(); }
-        }
 
         [JsonIgnore]
         public string Key0 { get; set; }
@@ -261,14 +243,14 @@ namespace Finsa.Caravan.Common.Models.Logging
 
         protected override IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
+            yield return GKeyValuePair.Create("AppName", AppName);
             yield return GKeyValuePair.Create("Id", Id.ToString(CultureInfo.InvariantCulture));
             yield return GKeyValuePair.Create("Date", Date.ToString(CultureInfo.InvariantCulture));
-            yield return GKeyValuePair.Create("AppName", App.Name);
         }
 
         protected override IEnumerable<object> GetIdentifyingMembers()
         {
-            yield return App.Name;
+            yield return AppName;
             yield return Id;
         }
     }

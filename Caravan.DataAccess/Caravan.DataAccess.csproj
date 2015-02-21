@@ -195,7 +195,6 @@
     <Compile Include="Sql\Models\Security\SqlSecUser.cs" />
     <Compile Include="Sql\MySql\MySqlDbManager.cs" />
     <Compile Include="Sql\Oracle\OracleDynamicParameters.cs" />
-    <Compile Include="Sql\SqlServerCe\SqlServerCeDbContext.cs" />
     <Compile Include="ILogManager.cs" />
     <Compile Include="Db.cs" />
     <Compile Include="IDbManager.cs" />
@@ -209,7 +208,6 @@
     <Compile Include="Rest\RestSecurityManager.cs" />
     <Compile Include="Sql\SqlServerCe\SqlServerCeDbManager.cs" />
     <Compile Include="Sql\SqlDbContext.cs" />
-    <Compile Include="Sql\SqlServer\SqlServerDbContext.cs" />
     <Compile Include="Sql\SqlServer\SqlServerDbManager.cs" />
   </ItemGroup>
   <ItemGroup>

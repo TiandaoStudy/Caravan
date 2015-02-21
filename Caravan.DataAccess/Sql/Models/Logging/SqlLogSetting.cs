@@ -9,7 +9,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Models.Logging
     {
         public long AppId { get; set; }
 
-        public SqlSecApp App { get; set; }
+        public string LogType { get; set; }
 
         public int Enabled { get; set; }
 
@@ -17,8 +17,8 @@ namespace Finsa.Caravan.DataAccess.Sql.Models.Logging
 
         public int MaxEntries { get; set; }
 
-        public virtual ICollection<SqlLogEntry> LogEntries { get; set; }
+        public SqlSecApp App { get; set; }
 
-        public string TypeId { get; set; }
+        public virtual ICollection<SqlLogEntry> LogEntries { get; set; }
     }
 }

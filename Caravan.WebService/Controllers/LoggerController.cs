@@ -45,8 +45,8 @@ namespace Finsa.Caravan.WebService.Controllers
         {
             var result = Db.Logger.LogInfo<LoggerController>(new LogEntry
             {
-                ShortMessage = "Ping pong :)",
-                App = new SecApp { Name = appName }
+                AppName = appName,
+                ShortMessage = "Ping pong :)"
             });
             if (result.Succeeded)
             {
@@ -86,7 +86,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries")]
         public void PostLog(string appName, [FromBody] LogEntry log)
         {
-            Db.Logger.LogRaw(log.Type, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
+            Db.Logger.LogRaw(log.LogType, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
         }
 
         /// <summary>

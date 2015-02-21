@@ -122,16 +122,6 @@ namespace Finsa.Caravan.DataAccess
             return new OracleDbContext();
         }
 
-        private static SqlServerDbContext SqlServerDbContextGenerator()
-        {
-            return new SqlServerDbContext();
-        }
-
-        private static SqlServerCeDbContext SqlServerCeDbContextGenerator()
-        {
-            return new SqlServerCeDbContext();
-        }
-
         #endregion DbContext Generators
 
         #region EF Helpers
@@ -299,12 +289,12 @@ namespace Finsa.Caravan.DataAccess
 
                 case DataAccessKind.SqlServer:
                     _dbManagerInstance = new SqlServerDbManager();
-                    _dbContextGenerator = SqlServerDbContextGenerator;
+                    _dbContextGenerator = SqlDbContextGenerator;
                     break;
 
                 case DataAccessKind.SqlServerCe:
                     _dbManagerInstance = new SqlServerCeDbManager();
-                    _dbContextGenerator = SqlServerCeDbContextGenerator;
+                    _dbContextGenerator = SqlDbContextGenerator;
                     break;
             }
         }
