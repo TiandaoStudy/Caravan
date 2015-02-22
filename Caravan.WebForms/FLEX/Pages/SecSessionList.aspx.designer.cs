@@ -10,7 +10,7 @@
 namespace Finsa.Caravan.WebForms.Pages {
     
     
-    public partial class ConnectedUsers {
+    public partial class SecSessionList {
         
         /// <summary>
         /// crvnUsersLkp control.

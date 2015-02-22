@@ -110,10 +110,9 @@
                </asp:LinkButton>
             </ItemTemplate>
          </asp:TemplateField>
-         <asp:BoundField DataField="Id" HeaderText="Id" SortExpression="Id" />
+         <asp:BoundField DataField="Login" HeaderText="Login" SortExpression="Login" />
          <asp:BoundField DataField="FirstName" HeaderText="FirstName" SortExpression="FirstName" />
          <asp:BoundField DataField="LastName" HeaderText="LastName" SortExpression="LastName" />
-         <asp:BoundField DataField="Login" HeaderText="Login" SortExpression="Login" />
          <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email" />
          <asp:TemplateField HeaderText="Active" SortExpression="Active">
             <ItemTemplate>
@@ -146,7 +145,6 @@
 
 <asp:Content ID="aspHiddenContent" ContentPlaceHolderID="hiddenContent" runat="server">
    <crvn:HiddenTrigger runat="server" ID="hiddenRefresh" OnTriggered="hiddenRefresh_OnTriggered" />
-
    <crvn:HiddenTrigger runat="server" ID="hiddenDelete" OnTriggered="hiddenDelete_OnTriggered" />
    <asp:HiddenField runat="server" ID="loginToBeDeleted" />
 </asp:Content>

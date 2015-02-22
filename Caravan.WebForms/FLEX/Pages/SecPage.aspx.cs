@@ -87,63 +87,63 @@ namespace FLEX.Web.Pages
 
       protected void TreeView1_SelectedNodeChanged(object sender, EventArgs args)
       {
-         var entries = Db.Security.EntriesForObject(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, "menu", TreeView1.SelectedValue);
-         var blockedUsers = entries.Where(e => e.User != null).Select(e => e.User).ToList();
-         var blockedGroups = entries.Where(e => e.Group != null).Select(e => e.Group).ToList();
-         var allowedUsers = Db.Security.Users(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName).Except(blockedUsers).ToList();
-         var allowedGroups = Db.Security.Groups(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName).Except(blockedGroups).ToList();
+         //var entries = Db.Security.EntriesForObject(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, "menu", TreeView1.SelectedValue);
+         //var blockedUsers = entries.Where(e => e.User != null).Select(e => e.User).ToList();
+         //var blockedGroups = entries.Where(e => e.Group != null).Select(e => e.Group).ToList();
+         //var allowedUsers = Db.Security.Users(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName).Except(blockedUsers).ToList();
+         //var allowedGroups = Db.Security.Groups(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName).Except(blockedGroups).ToList();
 
-         //Users
-         DataTable _tableLeft = new DataTable();
-         _tableLeft.Columns.Add("Id", typeof(int));
-         _tableLeft.Columns.Add("Login", typeof(string));
-         _tableLeft.Columns.Add("FirstName", typeof(string));
-         _tableLeft.Columns.Add("LastName", typeof(string));
+         ////Users
+         //DataTable _tableLeft = new DataTable();
+         //_tableLeft.Columns.Add("Id", typeof(int));
+         //_tableLeft.Columns.Add("Login", typeof(string));
+         //_tableLeft.Columns.Add("FirstName", typeof(string));
+         //_tableLeft.Columns.Add("LastName", typeof(string));
 
-         DataTable _tableRight = new DataTable();
-         _tableRight.Columns.Add("Id", typeof(int));
-         _tableRight.Columns.Add("Login", typeof(string));
-         _tableRight.Columns.Add("FirstName", typeof(string));
-         _tableRight.Columns.Add("LastName", typeof(string));
+         //DataTable _tableRight = new DataTable();
+         //_tableRight.Columns.Add("Id", typeof(int));
+         //_tableRight.Columns.Add("Login", typeof(string));
+         //_tableRight.Columns.Add("FirstName", typeof(string));
+         //_tableRight.Columns.Add("LastName", typeof(string));
         
-         foreach (var item in allowedUsers)
-         {
-            _tableLeft.Rows.Add(item.Id, item.Login, item.FirstName, item.LastName);
-         }
+         //foreach (var item in allowedUsers)
+         //{
+         //   _tableLeft.Rows.Add(item.Id, item.Login, item.FirstName, item.LastName);
+         //}
         
-         foreach (var item in blockedUsers)
-         {
-            _tableRight.Rows.Add(item.Id, item.Login, item.FirstName, item.LastName);
-         }
+         //foreach (var item in blockedUsers)
+         //{
+         //   _tableRight.Rows.Add(item.Id, item.Login, item.FirstName, item.LastName);
+         //}
 
-         flexMultipleSelectUsers.SetLeftDataSource(_tableLeft);
-         flexMultipleSelectUsers.SetRightDataSource(_tableRight);
-         flexMultipleSelectUsers.LeftPanelTitle = "Available Users";
-         flexMultipleSelectUsers.RightPanelTitle = "Chosen Users";
+         //flexMultipleSelectUsers.SetLeftDataSource(_tableLeft);
+         //flexMultipleSelectUsers.SetRightDataSource(_tableRight);
+         //flexMultipleSelectUsers.LeftPanelTitle = "Available Users";
+         //flexMultipleSelectUsers.RightPanelTitle = "Chosen Users";
 
-         //Groups
-         DataTable _tableLeftGroups = new DataTable();
-         _tableLeftGroups.Columns.Add("Id", typeof(int));
-         _tableLeftGroups.Columns.Add("Name", typeof(string));
+         ////Groups
+         //DataTable _tableLeftGroups = new DataTable();
+         //_tableLeftGroups.Columns.Add("Id", typeof(int));
+         //_tableLeftGroups.Columns.Add("Name", typeof(string));
 
-         DataTable _tableRightGroups = new DataTable();
-         _tableRightGroups.Columns.Add("Id", typeof(int));
-         _tableRightGroups.Columns.Add("Name", typeof(string));
+         //DataTable _tableRightGroups = new DataTable();
+         //_tableRightGroups.Columns.Add("Id", typeof(int));
+         //_tableRightGroups.Columns.Add("Name", typeof(string));
 
-         foreach (var item in allowedGroups)
-         {
-            _tableLeftGroups.Rows.Add(item.Id, item.Name);
-         }
+         //foreach (var item in allowedGroups)
+         //{
+         //   _tableLeftGroups.Rows.Add(item.Id, item.Name);
+         //}
 
-         foreach (var item in blockedGroups)
-         {
-            _tableRightGroups.Rows.Add(item.Id, item.Name);
-         }
+         //foreach (var item in blockedGroups)
+         //{
+         //   _tableRightGroups.Rows.Add(item.Id, item.Name);
+         //}
 
-         flexMultiSelectGroups.SetLeftDataSource(_tableLeftGroups);
-         flexMultiSelectGroups.SetRightDataSource(_tableRightGroups);
-         flexMultiSelectGroups.LeftPanelTitle = "Available Groups";
-         flexMultiSelectGroups.RightPanelTitle = "Chosen Groups";
+         //flexMultiSelectGroups.SetLeftDataSource(_tableLeftGroups);
+         //flexMultiSelectGroups.SetRightDataSource(_tableRightGroups);
+         //flexMultiSelectGroups.LeftPanelTitle = "Available Groups";
+         //flexMultiSelectGroups.RightPanelTitle = "Chosen Groups";
       }
 
       protected void TreeView1_TreeNodeExpanded(object sender, TreeNodeEventArgs e)

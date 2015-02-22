@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using PommaLabs.Collections;
 using PommaLabs.Diagnostics;
 
-namespace Finsa.Caravan.Common.DataModel.Links
+namespace Finsa.Caravan.Common.Models.Linking
 {
     public sealed class Links : IEnumerable<Link>
     {
         private readonly ThinLinkedList<Link> _links = new ThinLinkedList<Link>();
 
-        public const string JsonPropertyName = "$links";
-        public const int JsonPropertyOrder = 1000;
+        public const string PropertyName = "_links";
+        public const int PropertyOrder = 1000;
 
         public void AddLink(Link link)
         {

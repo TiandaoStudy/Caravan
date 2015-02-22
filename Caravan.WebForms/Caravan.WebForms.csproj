@@ -100,10 +100,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\PommaLabs.Armando.0.3.3\lib\net40-client\PommaLabs.Armando.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.GRAMPA, Version=2.1.8.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PommaLabs.GRAMPA, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.GRAMPA.2.1.8\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\PommaLabs.GRAMPA.2.2.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
     <Reference Include="PommaLabs.KVLite, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -160,13 +159,6 @@
     <Compile Include="FLEX\MasterPages\IHead.cs" />
     <Compile Include="FLEX\MasterPages\IPopup.cs" />
     <Compile Include="FLEX\MasterPages\IPage.cs" />
-    <Compile Include="FLEX\Pages\AjaxLookup.aspx.cs">
-      <DependentUpon>AjaxLookup.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="FLEX\Pages\AjaxLookup.aspx.designer.cs">
-      <DependentUpon>AjaxLookup.aspx</DependentUpon>
-    </Compile>
     <Compile Include="FLEX\Pages\CacheOverview.aspx.cs">
       <DependentUpon>CacheOverview.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -209,12 +201,12 @@
     <Compile Include="FLEX\Pages\SecUsersDetails.aspx.designer.cs">
       <DependentUpon>SecUsersDetails.aspx.cs</DependentUpon>
     </Compile>
-    <Compile Include="FLEX\Pages\ConnectedUsers.aspx.cs">
-      <DependentUpon>ConnectedUsers.aspx</DependentUpon>
+    <Compile Include="FLEX\Pages\SecSessionList.aspx.cs">
+      <DependentUpon>SecSessionList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="FLEX\Pages\ConnectedUsers.aspx.designer.cs">
-      <DependentUpon>ConnectedUsers.aspx</DependentUpon>
+    <Compile Include="FLEX\Pages\SecSessionList.aspx.designer.cs">
+      <DependentUpon>SecSessionList.aspx</DependentUpon>
     </Compile>
     <Compile Include="FLEX\Pages\SecUsersList.aspx.cs">
       <DependentUpon>SecUsersList.aspx</DependentUpon>
@@ -246,13 +238,6 @@
     </Compile>
     <Compile Include="FLEX\Pages\ErrorHandler.aspx.designer.cs">
       <DependentUpon>ErrorHandler.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="FLEX\Pages\Lookup.aspx.cs">
-      <DependentUpon>Lookup.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="FLEX\Pages\Lookup.aspx.designer.cs">
-      <DependentUpon>Lookup.aspx</DependentUpon>
     </Compile>
     <Compile Include="FLEX\Pages\MenuNavigator.aspx.cs">
       <DependentUpon>MenuNavigator.aspx</DependentUpon>
@@ -561,7 +546,7 @@
     <Content Include="FLEX\Pages\SecUsersDetails.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="FLEX\Pages\ConnectedUsers.aspx">
+    <Content Include="FLEX\Pages\SecSessionList.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\Pages\SecUsersList.aspx">
@@ -710,13 +695,7 @@
     <Content Include="FLEX\Images\sort_both.png" />
     <Content Include="FLEX\Images\sort_desc.png" />
     <Content Include="FLEX\Images\sort_desc_disabled.png" />
-    <Content Include="FLEX\Pages\AjaxLookup.aspx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
     <Content Include="FLEX\Pages\CacheOverview.aspx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
-    <Content Include="FLEX\Pages\Lookup.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="FLEX\Pages\MenuNavigator.aspx">

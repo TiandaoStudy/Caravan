@@ -1,4 +1,4 @@
-﻿namespace Finsa.Caravan.Common.DataModel.Links
+﻿namespace Finsa.Caravan.Common.Models.Linking
 {
     /// <summary>
     ///   Indicates that the link's context is a part of a series, and that the previous in the

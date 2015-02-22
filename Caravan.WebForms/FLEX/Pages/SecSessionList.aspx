@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ConnectedUsers.aspx.cs" Inherits="Finsa.Caravan.WebForms.Pages.ConnectedUsers" MasterPageFile="~/FLEX/MasterPages/VerticalSearch.Master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SecSessionList.aspx.cs" Inherits="Finsa.Caravan.WebForms.Pages.SecSessionList" MasterPageFile="~/FLEX/MasterPages/VerticalSearch.Master" %>
 <%@ MasterType VirtualPath="~/FLEX/MasterPages/VerticalSearch.Master"%>
 <%@ Import Namespace="FLEX.Web.MasterPages" %>
 <%@ Register TagPrefix="crvn" Namespace="FLEX.WebForms.UserControls" Assembly="Finsa.Caravan.WebForms" %>

@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
-using PommaLabs.Diagnostics;
-using System;
+﻿using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using PommaLabs.Diagnostics;
 
-namespace Finsa.Caravan.Common.DataModel.Links
+namespace Finsa.Caravan.Common.Models.Linking
 {
     /// <summary>
     ///   A base class for relation links. See here: https://www.iana.org/assignments/link-relations/link-relations.xhtml.
@@ -17,7 +17,7 @@ namespace Finsa.Caravan.Common.DataModel.Links
         public const string HttpGetMethod = "GET";
         public const string HttpPostMethod = "POST";
 
-        #endregion
+        #endregion HTTP Methods
 
         [JsonProperty("rel"), DataMember(Name = "rel")]
         public string Rel { get; private set; }
@@ -26,7 +26,7 @@ namespace Finsa.Caravan.Common.DataModel.Links
         public string Href { get; private set; }
 
         [JsonProperty("method"), DataMember(Name = "method")]
-        public string Method { get; private set; } 
+        public string Method { get; private set; }
 
         [JsonProperty("title"), DataMember(Name = "title")]
         public string Title { get; private set; }
