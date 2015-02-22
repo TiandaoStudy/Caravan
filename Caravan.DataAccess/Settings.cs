@@ -1,4 +1,7 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess.Sql.Models.Logging;
@@ -26,7 +29,6 @@ namespace Finsa.Caravan.DataAccess.Properties {
         static Settings()
         {
             // Mappings
-            Mapper.CreateMap<SqlLogEntry, LogEntry>();
             Mapper.CreateMap<SqlLogSetting, LogSetting>();
             Mapper.CreateMap<SqlSecApp, SecApp>();
             Mapper.CreateMap<SqlSecContext, SecContext>();
@@ -34,6 +36,53 @@ namespace Finsa.Caravan.DataAccess.Properties {
             Mapper.CreateMap<SqlSecGroup, SecGroup>();
             Mapper.CreateMap<SqlSecObject, SecObject>();
             Mapper.CreateMap<SqlSecUser, SecUser>();
+            Mapper.CreateMap<SqlLogEntry, LogEntry>().AfterMap((sl, l) =>
+            {
+                var array = new KeyValuePair<string, string>[10];
+                var index = 0;
+                if (sl.Key0 != null)
+                {
+                    array[index++] = KeyValuePair.Create(sl.Key0, sl.Value0);
+                }
+                if (sl.Key1 != null)
+                {
+                    array[index++] = KeyValuePair.Create(sl.Key1, sl.Value1);
+                }
+                if (sl.Key2 != null)
+                {
+                    array[index++] = KeyValuePair.Create(sl.Key2, sl.Value2);
+                }
+                if (sl.Key3 != null)
+                {
+                    array[index++] = KeyValuePair.Create(sl.Key3, sl.Value3);
+                }
+                if (sl.Key4 != null)
+                {
+                    array[index++] = KeyValuePair.Create(sl.Key4, sl.Value4);
+                }
+                if (sl.Key5 != null)
+                {
+                    array[index++] = KeyValuePair.Create(sl.Key5, sl.Value5);
+                }
+                if (sl.Key6 != null)
+                {
+                    array[index++] = KeyValuePair.Create(sl.Key6, sl.Value6);
+                }
+                if (sl.Key7 != null)
+                {
+                    array[index++] = KeyValuePair.Create(sl.Key7, sl.Value7);
+                }
+                if (sl.Key8 != null)
+                {
+                    array[index++] = KeyValuePair.Create(sl.Key8, sl.Value8);
+                }
+                if (sl.Key9 != null)
+                {
+                    array[index++] = KeyValuePair.Create(sl.Key9, sl.Value9);
+                }
+                Array.Resize(ref array, index);
+                l.Arguments = array;
+            });
         }
         
         private void SettingChangingEventHandler(object sender, System.Configuration.SettingChangingEventArgs e) {

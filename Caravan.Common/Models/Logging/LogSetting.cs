@@ -36,8 +36,8 @@ namespace Finsa.Caravan.Common.Models.Logging
 
         protected override IEnumerable<object> GetIdentifyingMembers()
         {
-            yield return AppName;
             yield return LogType;
+            yield return AppName;
         }
     }
 

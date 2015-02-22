@@ -282,7 +282,7 @@
             <param name="userLogin">The user login</param>
             <returns></returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostEntry(System.String,Finsa.Caravan.Common.Models.Security.SecEntry)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostEntry(System.String,Finsa.Caravan.WebService.Controllers.SecurityController.SecEntryForAdd)">
             <summary>
               Add a new entry in the specified application withe the specified parameters
             </summary>

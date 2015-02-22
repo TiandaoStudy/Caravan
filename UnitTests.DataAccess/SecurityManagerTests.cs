@@ -392,14 +392,14 @@ namespace UnitTests.DataAccess
             Db.Security.UpdateUser(_myApp.Name, "blabla", user1);
 
             var q = (from u in Db.Security.Users(_myApp.Name)
-                     where u.Id == user1.Id && u.Login == user1.Login
+                     where u.Login == user1.Login
                      select u).ToList();
 
             Assert.That(q.Count(), Is.EqualTo(1));
             Assert.That(q.First().Login, Is.EqualTo("updatedLogin".ToLower()));
 
             var q2 = (from u in Db.Security.Users(_myApp.Name)
-                      where u.Id == user1.Id && u.Login == "blabla"
+                      where u.Login == "blabla"
                       select u).ToList();
             Assert.That(q2.Count, Is.EqualTo(0));
         }
@@ -606,12 +606,12 @@ namespace UnitTests.DataAccess
 
             Assert.True(user1.Groups.Any(g => g.Equals(group1)));
             Assert.False(user1.Groups.Any(g => g.Equals(group2)));
-            Assert.AreEqual(1, user1.Groups.Count);
+            Assert.AreEqual(1, user1.Groups.Length);
 
             Assert.True(group1.Users.Any(g => g.Equals(user1)));
             Assert.False(group2.Users.Any(g => g.Equals(user1)));
-            Assert.AreEqual(1, group1.Users.Count);
-            Assert.AreEqual(0, group2.Users.Count);
+            Assert.AreEqual(1, group1.Users.Length);
+            Assert.AreEqual(0, group2.Users.Length);
         }
 
         [TestCase(Small)]
@@ -634,8 +634,8 @@ namespace UnitTests.DataAccess
             });
             group1 = Db.Security.Group(_myApp.Name, group1.Name);
             group2 = Db.Security.Group(_myApp.Name, group2.Name);
-            Assert.AreEqual(userCount, group1.Users.Count);
-            Assert.AreEqual(0, group2.Users.Count);
+            Assert.AreEqual(userCount, group1.Users.Length);
+            Assert.AreEqual(0, group2.Users.Length);
 
             for (var i = 1; i <= userCount; ++i)
             {
@@ -1077,14 +1077,14 @@ namespace UnitTests.DataAccess
             Db.Security.UpdateGroup(_myApp.Name, "my_group", group1);
 
             var q = (from g in Db.Security.Groups(_myApp.Name)
-                     where g.Id == group1.Id && g.Name == group1.Name
+                     where g.Name == group1.Name
                      select g).ToList();
 
             Assert.That(q.Count(), Is.EqualTo(1));
             Assert.That(q.First().Name, Is.EqualTo("updated_group"));
 
             var q2 = (from g in Db.Security.Groups(_myApp.Name)
-                      where g.Id == group1.Id && g.Name == "my_group"
+                      where g.Name == "my_group"
                       select g).ToList();
 
             Assert.That(q2.Count(), Is.EqualTo(0));
@@ -1804,9 +1804,9 @@ namespace UnitTests.DataAccess
             var l = Db.Security.Entries(_myApp.Name, c1.Name);
 
             Assert.That(l.Count(), Is.EqualTo(1));
-            Assert.That(l.First().Context.Name, Is.EqualTo("c1"));
-            Assert.That(l.First().Object.Name, Is.EqualTo("obj1"));
-            Assert.That(l.First().Group.Name, Is.EqualTo("my_group"));
+            Assert.That(l.First().ContextName, Is.EqualTo("c1"));
+            Assert.That(l.First().ObjectName, Is.EqualTo("obj1"));
+            Assert.That(l.First().GroupName, Is.EqualTo("my_group"));
         }
 
         [Test]
@@ -1830,9 +1830,9 @@ namespace UnitTests.DataAccess
             var l = Db.Security.Entries(_myApp.Name, c1.Name);
 
             Assert.That(l.Count(), Is.EqualTo(1));
-            Assert.That(l.First().Context.Name, Is.EqualTo("c1"));
-            Assert.That(l.First().Object.Name, Is.EqualTo("obj1"));
-            Assert.That(l.First().User.Login, Is.EqualTo("mylogin"));
+            Assert.That(l.First().ContextName, Is.EqualTo("c1"));
+            Assert.That(l.First().ObjectName, Is.EqualTo("obj1"));
+            Assert.That(l.First().UserLogin, Is.EqualTo("mylogin"));
         }
 
         [Test]
@@ -1958,13 +1958,13 @@ namespace UnitTests.DataAccess
 
             Assert.That(l2.Count(), Is.EqualTo(1));
 
-            Assert.That(l2.First().Group.Name, Is.EqualTo("my_group"));
+            Assert.That(l2.First().GroupName, Is.EqualTo("my_group"));
 
             var l3 = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj2.Name);
 
             Assert.That(l3.Count(), Is.EqualTo(1));
 
-            Assert.That(l3.First().Group.Name, Is.EqualTo("my_group"));
+            Assert.That(l3.First().GroupName, Is.EqualTo("my_group"));
         }
 
         [Test]

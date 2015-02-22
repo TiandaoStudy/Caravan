@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using PommaLabs;
@@ -10,19 +11,13 @@ namespace Finsa.Caravan.Common.Models.Security
     public class SecUser : EquatableObject<SecUser>
     {
         [JsonProperty(Order = 0), DataMember(Order = 0)]
-        public long Id { get; set; }
-
-        [JsonIgnore]
-        public long AppId { get; set; }
-
-        [JsonIgnore, IgnoreDataMember]
-        public SecApp App { get; set; }
+        public string AppName { get; set; }
 
         [JsonProperty(Order = 1), DataMember(Order = 1)]
-        public int Active { get; set; }
-
-        [JsonProperty(Order = 2), DataMember(Order = 2)]
         public string Login { get; set; }
+
+        [JsonProperty(Order = 2), DataMember(Order = 2), JsonConverter(typeof(BooleanConverter))]
+        public int Active { get; set; }
 
         [JsonProperty(Order = 3), DataMember(Order = 3)]
         public string HashedPassword { get; set; }
@@ -37,20 +32,18 @@ namespace Finsa.Caravan.Common.Models.Security
         public string Email { get; set; }
 
         [JsonProperty(Order = 7), DataMember(Order = 7)]
-        public virtual ICollection<SecGroup> Groups { get; set; }
-
-        [JsonIgnore, IgnoreDataMember]
-        public virtual ICollection<SecEntry> SecEntries { get; set; }
+        public SecGroup[] Groups { get; set; }
 
         protected override IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
+            yield return GKeyValuePair.Create("AppName", AppName);
             yield return GKeyValuePair.Create("Login", Login);
             yield return GKeyValuePair.Create("FullName", FirstName + " " + LastName);
         }
 
         protected override IEnumerable<object> GetIdentifyingMembers()
         {
-            yield return App.Name;
+            yield return AppName;
             yield return Login;
         }
     }

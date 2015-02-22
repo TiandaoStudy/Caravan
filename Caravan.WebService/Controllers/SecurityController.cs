@@ -309,11 +309,9 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <param name="entry">The entry to add</param>
         [Route("{appName}/entries/")]
-        public void PostEntry(string appName, [FromBody] SecEntry entry)
+        public void PostEntry(string appName, [FromBody] SecEntryForAdd entry)
         {
-            var userLogin = (entry.User == null) ? null : entry.User.Login;
-            var groupName = (entry.Group == null) ? null : entry.Group.Name;
-            Db.Security.AddEntry(appName, entry.Context, entry.Object, userLogin, groupName);
+            Db.Security.AddEntry(appName, entry.Context, entry.Object, entry.UserLogin, entry.GroupName);
         }
 
         /// <summary>
@@ -329,6 +327,17 @@ namespace Finsa.Caravan.WebService.Controllers
             string groupName)
         {
             Db.Security.RemoveEntry(appName, contextname, objectName, userLogin, groupName);
+        }
+
+        public sealed class SecEntryForAdd
+        {
+            public SecContext Context { get; set; }
+
+            public SecObject Object { get; set; }
+
+            public string UserLogin { get; set; }
+
+            public string GroupName { get; set; }
         }
 
         #endregion Entries

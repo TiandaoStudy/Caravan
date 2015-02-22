@@ -2,73 +2,41 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using PommaLabs;
 
 namespace Finsa.Caravan.Common.Models.Security
 {
     [Serializable, DataContract(IsReference = true)]
-    public class SecObject : IEquatable<SecObject>
+    public class SecObject : EquatableObject<SecObject>
     {
         [JsonProperty(Order = 0), DataMember(Order = 0)]
-        public long Id { get; set; }
-
-        [JsonIgnore, IgnoreDataMember]
-        public long ContextId { get; set; }
-
-        [JsonIgnore, IgnoreDataMember]
-        public SecContext Context { get; set; }
-
-        [JsonIgnore, IgnoreDataMember]
-        public long AppId { get; set; }
-
-        [JsonIgnore, IgnoreDataMember]
-        public SecApp App { get; set; }
+        public string AppName { get; set; }
 
         [JsonProperty(Order = 1), DataMember(Order = 1)]
-        public string Name { get; set; }
+        public string ContextName { get; set; }
 
         [JsonProperty(Order = 2), DataMember(Order = 2)]
-        public string Description { get; set; }
+        public string Name { get; set; }
 
         [JsonProperty(Order = 3), DataMember(Order = 3)]
+        public string Description { get; set; }
+
+        [JsonProperty(Order = 4), DataMember(Order = 4)]
         public string Type { get; set; }
 
-        [JsonIgnore, IgnoreDataMember]
-        public virtual ICollection<SecEntry> SecEntries { get; set; }
-
-        public bool Equals(SecObject other)
+        protected override IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Id == other.Id && ContextId == other.ContextId && AppId == other.AppId;
+            yield return GKeyValuePair.Create("AppName", AppName);
+            yield return GKeyValuePair.Create("ContextName", ContextName);
+            yield return GKeyValuePair.Create("Name", Name);
+            yield return GKeyValuePair.Create("Type", Type);
         }
 
-        public override bool Equals(object obj)
+        protected override IEnumerable<object> GetIdentifyingMembers()
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((SecObject) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = Id.GetHashCode();
-                hashCode = (hashCode * 397) ^ ContextId.GetHashCode();
-                hashCode = (hashCode * 397) ^ AppId.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        public static bool operator ==(SecObject left, SecObject right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(SecObject left, SecObject right)
-        {
-            return !Equals(left, right);
+            yield return Name;
+            yield return ContextName;
+            yield return AppName;
         }
     }
 }
