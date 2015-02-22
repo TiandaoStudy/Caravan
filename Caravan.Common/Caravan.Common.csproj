@@ -135,6 +135,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Serialization\Converters\IntToBoolConverter.cs" />
     <Compile Include="WebService\IAuthManager.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="WebForms\ISearchControl.cs" />

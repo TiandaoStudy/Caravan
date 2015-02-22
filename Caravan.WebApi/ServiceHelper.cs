@@ -21,9 +21,13 @@ namespace Finsa.Caravan.WebApi
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 Formatting = Formatting.None,
                 NullValueHandling = NullValueHandling.Ignore,
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                PreserveReferencesHandling = PreserveReferencesHandling.None,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
+
+            // Personalizzo le impostazioni del serializzatore XML.
+            var xml = configuration.Formatters.XmlFormatter;
+            xml.Indent = false;
 
             // Loggo l'avvio dell'applicazione.
             Db.Logger.LogInfoAsync<ServiceHelper>("Application started");

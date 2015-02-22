@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.Serialization;
+using Finsa.Caravan.Common.Serialization.Converters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using PommaLabs;
@@ -18,7 +18,7 @@ namespace Finsa.Caravan.Common.Models.Logging
         [JsonProperty(Order = 1), DataMember(Order = 1), JsonConverter(typeof(StringEnumConverter))]
         public LogType LogType { get; set; }
 
-        [JsonProperty(Order = 2), DataMember(Order = 2), JsonConverter(typeof(BooleanConverter))]
+        [JsonProperty(Order = 2), DataMember(Order = 2), JsonConverter(typeof(IntToBoolConverter))]
         public int Enabled { get; set; }
 
         [JsonProperty(Order = 3), DataMember(Order = 3)]

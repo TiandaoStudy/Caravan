@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Runtime.Serialization;
+using Finsa.Caravan.Common.Serialization.Converters;
 using Newtonsoft.Json;
 using PommaLabs;
 
@@ -16,7 +16,7 @@ namespace Finsa.Caravan.Common.Models.Security
         [JsonProperty(Order = 1), DataMember(Order = 1)]
         public string Login { get; set; }
 
-        [JsonProperty(Order = 2), DataMember(Order = 2), JsonConverter(typeof(BooleanConverter))]
+        [JsonProperty(Order = 2), DataMember(Order = 2), JsonConverter(typeof(IntToBoolConverter))]
         public int Active { get; set; }
 
         [JsonProperty(Order = 3), DataMember(Order = 3)]
