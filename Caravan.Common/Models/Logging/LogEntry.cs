@@ -8,7 +8,7 @@ using PommaLabs;
 
 namespace Finsa.Caravan.Common.Models.Logging
 {
-    [Serializable, DataContract(IsReference = true)]
+    [Serializable, DataContract]
     public class LogEntry : EquatableObject<LogEntry>
     {
         public const string AutoFilled = "Automatically filled parameter";

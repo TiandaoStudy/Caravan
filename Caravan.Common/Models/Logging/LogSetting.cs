@@ -9,7 +9,7 @@ using PommaLabs;
 
 namespace Finsa.Caravan.Common.Models.Logging
 {
-    [Serializable, DataContract(IsReference = true)]
+    [Serializable, DataContract]
     public class LogSetting : EquatableObject<LogSetting>
     {
         [JsonProperty(Order = 0), DataMember(Order = 0)]

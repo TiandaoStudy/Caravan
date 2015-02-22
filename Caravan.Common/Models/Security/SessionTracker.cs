@@ -4,7 +4,7 @@ using System.Web;
 
 namespace Finsa.Caravan.Common.Models.Security
 {
-    [Serializable, DataContract(IsReference = true)]
+    [Serializable, DataContract]
     public class SessionTracker
     {
         public string UserHostAddress { get; private set; }

@@ -6,7 +6,7 @@ using PommaLabs;
 
 namespace Finsa.Caravan.Common.Models.Security
 {
-    [Serializable, DataContract(IsReference = true)]
+    [Serializable, DataContract]
     public class SecContext : EquatableObject<SecContext>
     {
         [JsonProperty(Order = 0), DataMember(Order = 0)]
