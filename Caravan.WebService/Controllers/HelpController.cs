@@ -13,7 +13,7 @@
 using System.Web.Http;
 using Finsa.WebApi.HelpPage.AnyHost;
 
-namespace Caravan.WebService.Controllers
+namespace Finsa.Caravan.WebService.Controllers
 {
     /// <summary>
     ///   The HELP controller.
@@ -27,7 +27,7 @@ namespace Caravan.WebService.Controllers
         /// </summary>
         public HelpController()
         {
-            Info.MyServiceName = "Caravan.WebService";
+            Info.MyServiceName = Common.Properties.Settings.Default.ApplicationDescription;
             Info.MyCompanyName = "Finsa S.p.A.";
             Info.MyCompanyUrl = "http://www.finsa.it/";
             Info.MyCustomerName = null;

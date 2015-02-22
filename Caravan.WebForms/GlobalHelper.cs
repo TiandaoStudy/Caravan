@@ -1,5 +1,5 @@
 ﻿using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.DataModel.Security;
+using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
 using PommaLabs.KVLite;
 using System;
@@ -32,7 +32,7 @@ namespace Finsa.Caravan.WebForms
          }
 
          // Starts user tracking.
-         HttpContext.Current.Application.Add("TRACK_USER_LIST", new Dictionary<string, SessionTracker>());
+         HttpContext.Current.Application.Add("TRACK_USER_LIST", new Dictionary<string, SecSession>());
       }
 
       public static void Application_End(object sender, EventArgs args)
@@ -82,11 +82,11 @@ namespace Finsa.Caravan.WebForms
          Application.Lock();
          try
          {
-            var _st = new SessionTracker();
+            var _st = new SecSession();
             //Recupero le informazioni relative al client collegato
             _st.FillData();
             //Leggo la lista degli utenti collegati
-            Dictionary<string, SessionTracker> _userList = (Dictionary<string, SessionTracker>)Application.Get("TRACK_USER_LIST");
+            Dictionary<string, SecSession> _userList = (Dictionary<string, SecSession>)Application.Get("TRACK_USER_LIST");
             if (!_userList.ContainsKey(SessionID))
             {
                //Aggiungo il nuovo utente
@@ -116,7 +116,7 @@ namespace Finsa.Caravan.WebForms
          try
          {
             //Leggo la lista degli utenti collegati
-            Dictionary<string, SessionTracker> _userList = (Dictionary<string, SessionTracker>)Application.Get("TRACK_USER_LIST");
+            Dictionary<string, SecSession> _userList = (Dictionary<string, SecSession>)Application.Get("TRACK_USER_LIST");
 
             if (_userList.ContainsKey(SessionID))
             {
@@ -144,15 +144,15 @@ namespace Finsa.Caravan.WebForms
             try
             {
                //Leggo la lista degli utenti collegati
-               Dictionary<string, SessionTracker> _userList = (Dictionary<string, SessionTracker>)Application.Get("TRACK_USER_LIST");
+               Dictionary<string, SecSession> _userList = (Dictionary<string, SecSession>)Application.Get("TRACK_USER_LIST");
                //Leggo i dati relativi all'utente
 
                //Se trovo l'utente, aggiorno i dati
                if (_userList.ContainsKey(Cookies.Value))
                {
-                  SessionTracker _st = (SessionTracker)_userList[Cookies.Value];
+                  SecSession _st = (SecSession)_userList[Cookies.Value];
                   _st.LastVisit = DateTime.Now;
-                  _st.Login = userName;
+                  _st.UserLogin = userName;
                   _userList[Cookies.Value] = _st;
                   //Salvo i dati
                   Application["TRACK_USER_LIST"] = _userList;

@@ -38,6 +38,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="CodeProject.ObjectPool, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CodeProject.ObjectPool.1.3.1\lib\net40-client\CodeProject.ObjectPool.dll</HintPath>
@@ -57,13 +63,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.GRAMPA, Version=2.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.GRAMPA.2.1.6\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+    <Reference Include="PommaLabs.GRAMPA">
+      <HintPath>..\packages\PommaLabs.GRAMPA.2.2.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.KVLite, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PommaLabs.KVLite, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.KVLite.Core.1.4.1\lib\net45\PommaLabs.KVLite.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.KVLite.Core.1.4.2\lib\net45\PommaLabs.KVLite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -71,6 +76,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
       <HintPath>..\packages\System.Data.SQLite.Core.MSIL.1.0.94.0\lib\net45\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
@@ -79,16 +85,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache.cs" />
-    <Compile Include="Models\Exceptions\AppExistingException.cs" />
-    <Compile Include="Models\Exceptions\AppNotFoundException.cs" />
-    <Compile Include="Models\Exceptions\EntryExistingException.cs" />
-    <Compile Include="Models\Exceptions\GroupExistingException.cs" />
-    <Compile Include="Models\Exceptions\GroupNotFoundException.cs" />
-    <Compile Include="Models\Exceptions\LogNotFoundException.cs" />
-    <Compile Include="Models\Exceptions\SettingExistingException.cs" />
-    <Compile Include="Models\Exceptions\SettingNotFoundException.cs" />
-    <Compile Include="Models\Exceptions\UserExistingException.cs" />
-    <Compile Include="Models\Exceptions\UserNotFoundException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecAppExistingException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecAppNotFoundException.cs" />
+    <Compile Include="Models\Logging\Exceptions\LogEntryExistingException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecGroupExistingException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecGroupNotFoundException.cs" />
+    <Compile Include="Models\Logging\Exceptions\LogEntryNotFoundException.cs" />
+    <Compile Include="Models\Logging\Exceptions\LogSettingExistingException.cs" />
+    <Compile Include="Models\Logging\Exceptions\LogSettingNotFoundException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecUserExistingException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecUserNotFoundException.cs" />
     <Compile Include="Models\Formatting\TextAlignment.cs" />
     <Compile Include="Models\Linking\AlternateLink.cs" />
     <Compile Include="Models\Linking\CollectionLink.cs" />
@@ -114,7 +120,7 @@
     <Compile Include="Models\Security\SecGroup.cs" />
     <Compile Include="Models\Security\SecObject.cs" />
     <Compile Include="Models\Security\SecUser.cs" />
-    <Compile Include="Models\Security\SessionTracker.cs" />
+    <Compile Include="Models\Security\SecSession.cs" />
     <Compile Include="Finsa.Caravan.Common.XmlSchemas.MenuEntries.Item.Serialization.cs">
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
@@ -128,6 +134,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Serialization\Converters\IntToBoolConverter.cs" />
     <Compile Include="WebService\IAuthManager.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="WebForms\ISearchControl.cs" />
@@ -193,6 +200,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

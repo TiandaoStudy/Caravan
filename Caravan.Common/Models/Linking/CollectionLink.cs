@@ -1,4 +1,4 @@
-﻿namespace Finsa.Caravan.Common.DataModel.Links
+﻿namespace Finsa.Caravan.Common.Models.Linking
 {
     /// <summary>
     ///   The target IRI points to a resource which represents the collection resource for the

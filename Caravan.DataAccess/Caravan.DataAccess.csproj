@@ -45,16 +45,13 @@
     xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Antlr3.Runtime">
-      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="AutoMapper, Version=3.3.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AutoMapper.3.3.0\lib\net40\AutoMapper.dll</HintPath>
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="AutoMapper.Net4, Version=3.3.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AutoMapper.3.3.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
     <Reference Include="CodeProject.ObjectPool">
       <HintPath>..\packages\CodeProject.ObjectPool.1.3.1\lib\net40-client\CodeProject.ObjectPool.dll</HintPath>
@@ -72,6 +69,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Dapper.1.38\lib\net45\Dapper.dll</HintPath>
     </Reference>
+    <Reference Include="Effort">
+      <HintPath>..\packages\Effort.EF6.1.1.4\lib\net45\Effort.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
@@ -84,12 +85,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.2\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
     </Reference>
-    <Reference Include="LinqToQuerystring">
-      <HintPath>..\packages\LinqToQuerystring.0.7.0.8\lib\net35\LinqToQuerystring.dll</HintPath>
-    </Reference>
-    <Reference Include="LinqToQuerystring.EntityFramework">
-      <HintPath>..\packages\LinqToQuerystring.EntityFramework.1.2\lib\net40\LinqToQuerystring.EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MongoDB.Bson, Version=1.10.0.62, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -98,6 +93,9 @@
     <Reference Include="MongoDB.Driver, Version=1.10.0.62, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\mongocsharpdriver.1.10.0\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security">
+      <HintPath>..\packages\Npgsql.2.2.4.3\lib\net45\Mono.Security.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data">
       <HintPath>..\packages\MySql.Data.6.9.5\lib\net45\MySql.Data.dll</HintPath>
@@ -109,6 +107,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NMemory">
+      <HintPath>..\packages\NMemory.1.0.1\lib\net45\NMemory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\packages\Npgsql.2.2.4.3\lib\net45\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql.EntityFramework">
+      <HintPath>..\packages\Npgsql.EntityFramework.2.2.4.3\lib\net45\Npgsql.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -116,14 +124,13 @@
       <HintPath>..\packages\Finsa.Odp.Net.Core.Unofficial.5.0.0\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PommaLabs.GRAMPA, Version=2.1.6.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PommaLabs.GRAMPA, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.GRAMPA.2.1.6\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\PommaLabs.GRAMPA.2.2.0\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.KVLite, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PommaLabs.KVLite, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.KVLite.Core.1.4.1\lib\net45\PommaLabs.KVLite.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.KVLite.Core.1.4.2\lib\net45\PommaLabs.KVLite.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=105.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -154,22 +161,20 @@
     <Compile Include="Activities\LogActivity.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Sql\CaravanDbContext.cs" />
-    <Compile Include="Core\DbContextBase.cs" />
+    <Compile Include="Sql\DbContextBase.cs" />
     <Compile Include="Core\DbManagerBase.cs" />
     <Compile Include="Core\LogManagerBase.cs" />
-    <Compile Include="Core\QueryManagerBase.cs" />
     <Compile Include="Core\SecurityManagerBase.cs" />
     <Compile Include="Core\ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
-    <Compile Include="IQueryManager.cs" />
-    <Compile Include="Mongo\DataModel\Logging\MongoLogEntry.cs" />
-    <Compile Include="Mongo\DataModel\Logging\MongoLogSettings.cs" />
-    <Compile Include="Mongo\DataModel\MongoDocument.cs" />
-    <Compile Include="Mongo\DataModel\MongoSequence.cs" />
-    <Compile Include="Mongo\DataModel\Security\MongoSecApp.cs" />
+    <Compile Include="Mongo\Models\Logging\MongoLogEntry.cs" />
+    <Compile Include="Mongo\Models\Logging\MongoLogSettings.cs" />
+    <Compile Include="Mongo\Models\MongoDocument.cs" />
+    <Compile Include="Mongo\Models\MongoSequence.cs" />
+    <Compile Include="Mongo\Models\Security\MongoSecApp.cs" />
     <Compile Include="Mongo\MongoDbManager.cs" />
     <Compile Include="Mongo\MongoLogManager.cs" />
     <Compile Include="Mongo\MongoSecurityManager.cs" />
@@ -179,11 +184,17 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Rest\RestQueryManager.cs" />
+    <Compile Include="Sql\FakeSql\FakeSqlDbManager.cs" />
+    <Compile Include="Sql\Models\Logging\SqlLogEntry.cs" />
+    <Compile Include="Sql\Models\Logging\SqlLogSetting.cs" />
+    <Compile Include="Sql\Models\Security\SqlSecApp.cs" />
+    <Compile Include="Sql\Models\Security\SqlSecContext.cs" />
+    <Compile Include="Sql\Models\Security\SqlSecEntry.cs" />
+    <Compile Include="Sql\Models\Security\SqlSecGroup.cs" />
+    <Compile Include="Sql\Models\Security\SqlSecObject.cs" />
+    <Compile Include="Sql\Models\Security\SqlSecUser.cs" />
     <Compile Include="Sql\MySql\MySqlDbManager.cs" />
     <Compile Include="Sql\Oracle\OracleDynamicParameters.cs" />
-    <Compile Include="Sql\SqlQueryManager.cs" />
-    <Compile Include="Sql\SqlServerCe\SqlServerCeDbContext.cs" />
     <Compile Include="ILogManager.cs" />
     <Compile Include="Db.cs" />
     <Compile Include="IDbManager.cs" />
@@ -197,7 +208,6 @@
     <Compile Include="Rest\RestSecurityManager.cs" />
     <Compile Include="Sql\SqlServerCe\SqlServerCeDbManager.cs" />
     <Compile Include="Sql\SqlDbContext.cs" />
-    <Compile Include="Sql\SqlServer\SqlServerDbContext.cs" />
     <Compile Include="Sql\SqlServer\SqlServerDbManager.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +252,7 @@
     <Content Include="Sql\Oracle\Scripts\Triggers\caravan_log_id.sql" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Sql\MySql\Scripts\" />
     <Folder Include="Sql\Postgres\" />
   </ItemGroup>
   <ItemGroup>
@@ -261,7 +272,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
-  <Import Project="..\packages\AutoMapper.3.3.0\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.0\tools\AutoMapper.targets')" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

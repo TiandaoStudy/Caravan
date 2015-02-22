@@ -1,149 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using PommaLabs;
 
-namespace Finsa.Caravan.Common.DataModel.Security
+namespace Finsa.Caravan.Common.Models.Security
 {
-   [Serializable, DataContract(IsReference = true)]
-   public class SecEntry : IEquatable<SecEntry>
-   {
-      [DataMember]
-      public long Id { get; set; }
+    [Serializable, DataContract]
+    public class SecEntry : EquatableObject<SecEntry>
+    {
+        [JsonProperty(Order = 0), DataMember(Order = 0)]
+        public string AppName { get; set; }
 
-       [DataMember]
-      public long AppId { get; set; }
+        [JsonProperty(Order = 1), DataMember(Order = 1)]
+        public long Id { get; set; }
 
-       [DataMember]
-      public SecApp App { get; set; }
+        [JsonProperty(Order = 2), DataMember(Order = 2)]
+        public string ContextName { get; set; }
 
-       [DataMember]
-      public long? UserId { get; set; }
+        [JsonProperty(Order = 3), DataMember(Order = 3)]
+        public string ObjectName { get; set; }
 
-       [DataMember]
-      public SecUser User { get; set; }
+        [JsonProperty(Order = 4), DataMember(Order = 4)]
+        public string UserLogin { get; set; }
 
-       [DataMember]
-      public long? GroupId { get; set; }
+        [JsonProperty(Order = 5), DataMember(Order = 5)]
+        public string GroupName { get; set; }
 
-       [DataMember]
-      public SecGroup Group { get; set; }
+        protected override IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+        {
+            yield return GKeyValuePair.Create("AppName", AppName);
+            yield return GKeyValuePair.Create("Id", Id.ToString(CultureInfo.InvariantCulture));
+        }
 
-       [DataMember]
-      public long ContextId { get; set; }
-
-       [DataMember]
-      public SecContext Context { get; set; }
-
-       [DataMember]
-      public long ObjectId { get; set; }
-
-       [DataMember]
-      public SecObject Object { get; set; }
-
-      public bool Equals(SecEntry other)
-      {
-         if (ReferenceEquals(null, other)) return false;
-         if (ReferenceEquals(this, other)) return true;
-         return Id == other.Id && AppId == other.AppId;
-      }
-
-      public override bool Equals(object obj)
-      {
-         if (ReferenceEquals(null, obj)) return false;
-         if (ReferenceEquals(this, obj)) return true;
-         if (obj.GetType() != GetType()) return false;
-         return Equals((SecEntry) obj);
-      }
-
-      public override int GetHashCode()
-      {
-         unchecked
-         {
-            return (Id.GetHashCode()*397) ^ AppId.GetHashCode();
-         }
-      }
-
-      public static bool operator ==(SecEntry left, SecEntry right)
-      {
-         return Equals(left, right);
-      }
-
-      public static bool operator !=(SecEntry left, SecEntry right)
-      {
-         return !Equals(left, right);
-      }
-   }
-
-   [Serializable,DataContract(IsReference = true)]
-   public class SecEntrySingle : IEquatable<SecEntrySingle>
-   {
-      [DataMember]
-      public SecEntry Entry { get; set; }
-
-      public bool Equals(SecEntrySingle other)
-      {
-         if (ReferenceEquals(null, other)) return false;
-         if (ReferenceEquals(this, other)) return true;
-         return Entry.Equals(other.Entry);
-      }
-
-      public override bool Equals(object obj)
-      {
-         if (ReferenceEquals(null, obj)) return false;
-         if (ReferenceEquals(this, obj)) return true;
-         if (obj.GetType() != GetType()) return false;
-         return Equals((SecEntrySingle) obj);
-      }
-
-      public override int GetHashCode()
-      {
-         return Entry.GetHashCode();
-      }
-
-      public static bool operator ==(SecEntrySingle left, SecEntrySingle right)
-      {
-         return Equals(left, right);
-      }
-
-      public static bool operator !=(SecEntrySingle left, SecEntrySingle right)
-      {
-         return !Equals(left, right);
-      }
-   }
-
-   [Serializable,DataContract(IsReference = true)]
-   public class SecEntryList : IEquatable<SecEntryList>
-   {
-      public IEnumerable<SecEntry> Entries { get; set; }
-
-      public bool Equals(SecEntryList other)
-      {
-         if (ReferenceEquals(null, other)) return false;
-         if (ReferenceEquals(this, other)) return true;
-         return Entries.Equals(other.Entries);
-      }
-
-      public override bool Equals(object obj)
-      {
-         if (ReferenceEquals(null, obj)) return false;
-         if (ReferenceEquals(this, obj)) return true;
-         if (obj.GetType() != GetType()) return false;
-         return Equals((SecEntryList) obj);
-      }
-
-      public override int GetHashCode()
-      {
-         return Entries.GetHashCode();
-      }
-
-      public static bool operator ==(SecEntryList left, SecEntryList right)
-      {
-         return Equals(left, right);
-      }
-
-      public static bool operator !=(SecEntryList left, SecEntryList right)
-      {
-         return !Equals(left, right);
-      }
-   }
+        protected override IEnumerable<object> GetIdentifyingMembers()
+        {
+            yield return Id;
+            yield return AppName;
+        }
+    }
 }

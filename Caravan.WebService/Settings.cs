@@ -1,4 +1,4 @@
-﻿namespace Caravan.WebService.Properties {
+﻿namespace Finsa.Caravan.WebService.Properties {
     
     
     // This class allows you to handle specific events on the settings class:

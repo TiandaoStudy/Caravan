@@ -1,4 +1,8 @@
-﻿namespace Finsa.Caravan.Common.Properties
+﻿using System;
+using AutoMapper;
+using Finsa.Caravan.Common.Models.Logging;
+
+namespace Finsa.Caravan.Common.Properties
 {
     // This class allows you to handle specific events on the settings class:
     //  The SettingChanging event is raised before a setting's value is changed.
@@ -15,6 +19,16 @@
             //
             // this.SettingsSaving += this.SettingsSavingEventHandler;
             //
+        }
+
+        static Settings()
+        {
+            // Mappings
+            Mapper.CreateMap<string, LogType>().ConvertUsing(str =>
+            {
+                LogType logType;
+                return Enum.TryParse(str, true, out logType) ? logType : LogType.Debug;
+            });
         }
 
         private void SettingChangingEventHandler(object sender, System.Configuration.SettingChangingEventArgs e)

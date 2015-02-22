@@ -1,4 +1,4 @@
-﻿namespace Finsa.Caravan.Common.DataModel.Links
+﻿namespace Finsa.Caravan.Common.Models.Linking
 {
     /// <summary>
     ///   Refers to a substitute for this context

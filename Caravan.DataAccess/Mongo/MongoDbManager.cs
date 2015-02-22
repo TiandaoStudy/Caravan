@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Common;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.DataAccess.Sql;
 
 namespace Finsa.Caravan.DataAccess.Mongo
 {

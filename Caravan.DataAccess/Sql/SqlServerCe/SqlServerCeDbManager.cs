@@ -1,28 +1,28 @@
 using System.Data.Common;
+using System.Data.SqlServerCe;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataAccess.Properties;
 
 namespace Finsa.Caravan.DataAccess.Sql.SqlServerCe
 {
-	public sealed class SqlServerCeDbManager : DbManagerBase
-	{
-		private static readonly DbProviderFactory DbFactory = DbProviderFactories.GetFactory("System.Data.SqlServerCe.4.0");
+    internal sealed class SqlServerCeDbManager : DbManagerBase
+    {
+        private static readonly DbProviderFactory DbFactory = SqlCeProviderFactory.Instance;
 
-	   public override DataAccessKind Kind
-	   {
-	      get { return DataAccessKind.SqlServerCe; }
-	   }
+        public override DataAccessKind Kind
+        {
+            get { return DataAccessKind.SqlServerCe; }
+        }
 
-	   public override void ElaborateConnectionString(ref string connectionString)
-		{
-			connectionString = connectionString;
-		}
+        public override void ElaborateConnectionString(ref string connectionString)
+        {
+            // Nothing to do with the connection string.
+        }
 
-		public override DbConnection CreateConnection()
-		{
-			var connection = DbFactory.CreateConnection();
-			connection.ConnectionString = Db.ConnectionString;
-			return connection;
-		}
-	}
+        public override DbConnection CreateConnection()
+        {
+            var connection = DbFactory.CreateConnection();
+            connection.ConnectionString = Db.ConnectionString;
+            return connection;
+        }
+    }
 }

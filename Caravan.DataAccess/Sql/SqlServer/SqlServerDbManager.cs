@@ -1,11 +1,12 @@
+using System.Data.SqlClient;
 using Finsa.Caravan.DataAccess.Core;
 using System.Data.Common;
 
 namespace Finsa.Caravan.DataAccess.Sql.SqlServer
 {
-    public sealed class SqlServerDbManager : DbManagerBase
+    internal sealed class SqlServerDbManager : DbManagerBase
     {
-        private static readonly DbProviderFactory DbFactory = System.Data.SqlClient.SqlClientFactory.Instance;
+        private static readonly DbProviderFactory DbFactory = SqlClientFactory.Instance;
 
         public override DataAccessKind Kind
         {
@@ -14,7 +15,7 @@ namespace Finsa.Caravan.DataAccess.Sql.SqlServer
 
         public override void ElaborateConnectionString(ref string connectionString)
         {
-            connectionString = connectionString;
+            // Nothing to do with the connection string.
         }
 
         public override DbConnection CreateConnection()

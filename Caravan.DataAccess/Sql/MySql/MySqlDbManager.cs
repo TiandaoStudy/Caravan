@@ -3,7 +3,7 @@ using System.Data.Common;
 
 namespace Finsa.Caravan.DataAccess.Sql.MySql
 {
-    public sealed class MySqlDbManager : DbManagerBase
+    internal sealed class MySqlDbManager : DbManagerBase
     {
         private static readonly DbProviderFactory DbFactory = global::MySql.Data.MySqlClient.MySqlClientFactory.Instance;
 
@@ -14,7 +14,7 @@ namespace Finsa.Caravan.DataAccess.Sql.MySql
 
         public override void ElaborateConnectionString(ref string connectionString)
         {
-            connectionString = connectionString;
+            // Nothing to do with the connection string.
         }
 
         public override DbConnection CreateConnection()

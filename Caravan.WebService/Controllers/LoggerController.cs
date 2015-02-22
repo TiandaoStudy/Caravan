@@ -1,20 +1,60 @@
-﻿using Finsa.Caravan.Common.DataModel.Exceptions;
-using Finsa.Caravan.Common.DataModel.Logging;
-using Finsa.Caravan.DataAccess;
-using LinqToQuerystring.WebApi;
+﻿// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Finsa.Caravan.Common.Models.Logging;
+using Finsa.Caravan.Common.Models.Logging.Exceptions;
+using Finsa.Caravan.Common.Models.Security;
+using Finsa.Caravan.DataAccess;
+using LinqToQuerystring.WebApi;
 
-namespace Caravan.WebService.Controllers
+namespace Finsa.Caravan.WebService.Controllers
 {
     /// <summary>
-    ///
+    ///   Controller che si occupa della parte di logging.
     /// </summary>
     [RoutePrefix("logger")]
     public sealed class LoggerController : ApiController
     {
+        /// <summary>
+        ///   Writes a silly message into the log.
+        /// </summary>
+        [Route("ping")]
+        public HttpResponseMessage GetPing()
+        {
+            return GetPing(Common.Properties.Settings.Default.ApplicationName);
+        }
+
+        /// <summary>
+        ///   Writes a silly message into the log.
+        /// </summary>
+        [Route("{appName}/ping")]
+        public HttpResponseMessage GetPing(string appName)
+        {
+            var result = Db.Logger.LogInfo<LoggerController>(new LogEntry
+            {
+                AppName = appName,
+                ShortMessage = "Ping pong :)"
+            });
+            if (result.Succeeded)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, result.Exception);
+        }
+
         /// <summary>
         ///   Returns all log entries.
         /// </summary>
@@ -23,7 +63,7 @@ namespace Caravan.WebService.Controllers
         [Route("{appName}/entries"), LinqToQueryable]
         public IQueryable<LogEntry> GetEntries(string appName)
         {
-            return Db.Logger.Logs(appName).AsQueryable();
+            return Db.Logger.Entries(appName).AsQueryable();
         }
 
         /// <summary>
@@ -35,7 +75,7 @@ namespace Caravan.WebService.Controllers
         [Route("{appName}/entries/{logType}"), LinqToQueryable]
         public IQueryable<LogEntry> GetEntries(string appName, LogType logType)
         {
-            return Db.Logger.Logs(appName, logType).AsQueryable();
+            return Db.Logger.Entries(appName, logType).AsQueryable();
         }
 
         /// <summary>
@@ -46,7 +86,7 @@ namespace Caravan.WebService.Controllers
         [Route("{appName}/entries")]
         public void PostLog(string appName, [FromBody] LogEntry log)
         {
-            Db.Logger.LogRaw(log.Type, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
+            Db.Logger.LogRaw(log.LogType, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
         }
 
         /// <summary>
@@ -65,14 +105,19 @@ namespace Caravan.WebService.Controllers
         ///   Delete log with the specified id in the specified application
         /// </summary>
         /// <param name="appName">The application name</param>
-        /// <param name="id">The id of the log to delete which can be "warn", "info" or "error"</param>
+        /// <param name="logId">The id of the log to delete which can be "warn", "info" or "error"</param>
         [Route("{appName}/entries/{id}")]
-        public HttpResponseMessage DeleteLog(string appName, int id)
+        public HttpResponseMessage DeleteLog(string appName, int logId)
         {
-            var log = Db.Logger.DeleteLog(appName, id);
-            if (log != "OK")
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, LogNotFoundException.TheMessage);
-            return Request.CreateResponse(HttpStatusCode.OK, log);
+            try
+            {
+                Db.Logger.RemoveEntry(appName, logId);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (LogEntryNotFoundException)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, LogEntryNotFoundException.TheMessage);
+            }
         }
 
         /// <summary>
@@ -83,7 +128,7 @@ namespace Caravan.WebService.Controllers
         [Route("{appName}/settings"), LinqToQueryable]
         public IQueryable<LogSetting> GetSettings(string appName)
         {
-            return Db.Logger.LogSettings(appName).AsQueryable();
+            return Db.Logger.Settings(appName).AsQueryable();
         }
 
         /// <summary>
@@ -95,7 +140,7 @@ namespace Caravan.WebService.Controllers
         [Route("{appName}/settings/{logType}")]
         public LogSetting GetSettings(string appName, LogType logType)
         {
-            var settings = Db.Logger.LogSettings(appName, logType);
+            var settings = Db.Logger.Settings(appName, logType);
             if (settings == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -112,7 +157,7 @@ namespace Caravan.WebService.Controllers
         [Route("{appName}/settings/{logType}")]
         public void PostSetting(string appName, LogType logType, [FromBody] LogSetting settings)
         {
-            Db.Logger.AddSettings(appName, logType, settings);
+            Db.Logger.AddSetting(appName, logType, settings);
         }
 
         /// <summary>
@@ -124,7 +169,7 @@ namespace Caravan.WebService.Controllers
         [Route("{appName}/settings/{logType}")]
         public void PutSetting(string appName, LogType logType, [FromBody] LogSetting settings)
         {
-            Db.Logger.UpdateSettings(appName, logType, settings);
+            Db.Logger.UpdateSetting(appName, logType, settings);
         }
 
         /// <summary>
@@ -132,14 +177,18 @@ namespace Caravan.WebService.Controllers
         /// </summary>
         /// <param name="appName">Application name</param>
         /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
-
         [Route("{appName}/settings/{logType}")]
         public HttpResponseMessage DeleteSetting(string appName, LogType logType)
         {
-            var setting = Db.Logger.DeleteSettings(appName, logType);
-            if (setting != "OK")
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, LogNotFoundException.TheMessage);
-            return Request.CreateResponse(HttpStatusCode.OK, setting);
+            try
+            {
+                Db.Logger.RemoveSetting(appName, logType);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (LogSettingNotFoundException)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, LogEntryNotFoundException.TheMessage);
+            }
         }
     }
 }

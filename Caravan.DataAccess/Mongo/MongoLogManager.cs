@@ -1,6 +1,7 @@
-﻿using System.Diagnostics;
-using Finsa.Caravan.Common.DataModel.Logging;
-using Finsa.Caravan.Common.DataModel.Security;
+﻿using System;
+using System.Diagnostics;
+using Finsa.Caravan.Common.Models.Logging;
+using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Mongo.DataModel;
 using Finsa.Caravan.DataAccess.Mongo.DataModel.Logging;
@@ -14,9 +15,9 @@ using System.Linq;
 
 namespace Finsa.Caravan.DataAccess.Mongo
 {
-   internal sealed class MongoLogManager : LogManagerBase
+   internal sealed class MongoLogManager : LogManagerBase<MongoLogManager>
    {
-      public override LogResult LogRaw(LogType logType, string appName, string userName, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
+      protected override LogResult DoLogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
       {
          var app = MongoUtilities.GetSecAppCollection().AsQueryable().First(a => a.Name == appName);
 
@@ -42,7 +43,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
          return LogResult.Success;
       }
 
-      protected override IList<LogEntry> GetLogEntries(string appName, LogType? logType)
+      protected override IList<LogEntry> GetEntries(string appName, LogType? logType)
       {
          var apps = MongoUtilities.GetSecAppCollection().AsQueryable();
          Dictionary<ObjectId, MongoSecApp> appMap;
@@ -72,19 +73,19 @@ namespace Finsa.Caravan.DataAccess.Mongo
          return logEntries.AsEnumerable().Select(l => new LogEntry
          {
             Id = l.LogId,
-            AppId = appMap[l.AppId].AppId,
-            TypeId = l.Type,
+            AppName = appMap[l.AppId].Name,
+            LogType = (LogType) Enum.Parse(typeof(LogType), l.Type, true),
             ShortMessage = l.ShortMessage,
             CodeUnit = l.CodeUnit
          }).ToList();
       }
 
-       protected override bool DoDeleteLog(string appName, int id)
+       protected override bool DoRemoveEntry(string appName, int logId)
        {
            throw new System.NotImplementedException();
        }
 
-       protected override IList<LogSetting> GetLogSettings(string appName, LogType? logType)
+       protected override IList<LogSetting> GetSettings(string appName, LogType? logType)
       {
          var apps = MongoUtilities.GetSecAppCollection();
          var query = apps.AsQueryable();
@@ -100,15 +101,11 @@ namespace Finsa.Caravan.DataAccess.Mongo
                  from s in a.LogSettings.Where(s => logTypeStr == null || s.Type == logTypeStr)
                  select new LogSetting
                  {
-                    App = new SecApp
-                    {
-                       Id = a.AppId,
-                       Name = a.Name
-                    }
+                    AppName = a.Name
                  }).ToList();
       }
 
-      protected override bool DoAddSettings(string appName, LogType logType, LogSetting settings)
+      protected override bool DoAddSetting(string appName, LogType logType, LogSetting setting)
       {
          // Update preparation
          var logTypeStr = logType.ToString().ToLower();
@@ -124,7 +121,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
          return apps.Update(query, update).Ok;
       }
 
-      protected override bool DoUpdateSettings(string appName, LogType logType, LogSetting settings)
+      protected override bool DoUpdateSetting(string appName, LogType logType, LogSetting setting)
       {
          // Update preparation
          var logTypeStr = logType.ToString().ToLower();
@@ -144,7 +141,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
          return apps.Update(query, update).Ok;
       }
 
-       protected override bool DoDeleteSettings(string appName, LogType logType)
+       protected override bool DoRemoveSetting(string appName, LogType logType)
        {
            throw new System.NotImplementedException();
        }

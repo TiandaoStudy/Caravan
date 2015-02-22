@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using Finsa.Caravan.Common.DataModel.Security;
+using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
@@ -68,7 +68,6 @@ namespace Finsa.Caravan.WebForms.Pages
          var user = Db.Security.User(Common.Properties.Settings.Default.ApplicationName, login);
          Raise<ArgumentException>.IfIsNull(user, "Given user name does not exist");
 
-         txtUserId.Text = user.Id.ToString(CultureInfo.InvariantCulture);
          txtFirstName.Text = user.FirstName;
          txtLastName.Text = user.LastName;
          txtEmail.Text = user.Email;

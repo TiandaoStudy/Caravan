@@ -3,226 +3,284 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
-using Finsa.Caravan.Common.DataModel.Logging;
-using Finsa.Caravan.Common.Properties;
+using AutoMapper;
+using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.DataAccess.Core;
-using MongoDB.Driver;
+using Finsa.Caravan.DataAccess.Sql.Models.Logging;
 using PommaLabs.Diagnostics;
 using PommaLabs.Extensions;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
-   public sealed class SqlLogManager : LogManagerBase
-   {
-      #region Constants
+    internal sealed class SqlLogManager : LogManagerBase<SqlLogManager>
+    {
+        #region Constants
 
-      private const int MaxArgumentCount = 10;
-      private const int MaxStringLength = 2000;
-      private const int NoId = 0;
+        private const int MaxArgumentCount = 10;
+        private const int MaxStringLength = 2000;
 
-      #endregion
+        #endregion Constants
 
-      public override LogResult LogRaw(LogType type, string appName, string userName, string codeUnit, string function,
-         string shortMessage, string longMessage, string context,
-         IEnumerable<KeyValuePair<string, string>> args)
-      {
-         try
-         {
-            Raise<ArgumentException>.IfIsEmpty(codeUnit);
-            var argsList = (args == null) ? new KeyValuePair<string, string>[0] : args.ToArray();
-            Raise<ArgumentOutOfRangeException>.If(argsList.Length > MaxArgumentCount);
-            
+        protected override LogResult DoLogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function,
+           string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
+        {
+            try
+            {
+                Raise<ArgumentException>.IfIsEmpty(codeUnit);
+                var argsList = (args == null) ? new KeyValuePair<string, string>[0] : args.ToArray();
+                Raise<ArgumentOutOfRangeException>.If(argsList.Length > MaxArgumentCount);
+
+                using (var trx = new TransactionScope())
+                using (var ctx = Db.CreateWriteContext())
+                {
+                    var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
+                    var typeId = logType.ToString().ToLower();
+                    var settings = ctx.LogSettings.First(s => s.AppId == appId && s.LogType == typeId);
+
+                    // We delete logs older than "settings.Days"
+                    var minDate = DateTime.Now.Subtract(TimeSpan.FromDays(settings.Days));
+                    var oldLogs = from l in ctx.LogEntries
+                                  where l.AppId == appId && l.LogType == typeId
+                                  where l.Date < minDate
+                                  select l;
+                    ctx.LogEntries.RemoveRange(oldLogs);
+
+                    // We delete enough entries to preserve the upper limit
+                    var logCount = ctx.LogEntries.Count(e => e.AppId == appId && e.LogType == typeId);
+                    if (logCount >= settings.MaxEntries)
+                    {
+                        var olderLogs = (from l in ctx.LogEntries
+                                         where l.AppId == appId && l.LogType == typeId
+                                         orderby l.Date ascending
+                                         select l).Take(logCount - settings.MaxEntries + 1);
+                        ctx.LogEntries.RemoveRange(olderLogs);
+                    }
+
+                    // If log is enabled, then we can insert a new entry
+                    if (settings.Enabled == 1)
+                    {
+                        var entry = new SqlLogEntry
+                        {
+                            Date = DateTime.Now,
+                            AppId = appId,
+                            LogType = typeId,
+                            UserLogin = userLogin.Truncate(MaxStringLength).ToLower(),
+                            CodeUnit = codeUnit.Truncate(MaxStringLength).ToLower(),
+                            Function = function.Truncate(MaxStringLength).ToLower(),
+                            ShortMessage = shortMessage.Truncate(MaxStringLength),
+                            LongMessage = longMessage, // Not truncated, because it should be a CLOB/TEXT/whatever...
+                            Context = context.Truncate(MaxStringLength)
+                        };
+
+                        for (var i = 0; i < argsList.Length; ++i)
+                        {
+                            var key = argsList[i].Key;
+                            var val = argsList[i].Value;
+                            switch (i)
+                            {
+                                case 0:
+                                    entry.Key0 = key;
+                                    entry.Value0 = val;
+                                    break;
+
+                                case 1:
+                                    entry.Key1 = key;
+                                    entry.Value1 = val;
+                                    break;
+
+                                case 2:
+                                    entry.Key2 = key;
+                                    entry.Value2 = val;
+                                    break;
+
+                                case 3:
+                                    entry.Key3 = key;
+                                    entry.Value3 = val;
+                                    break;
+
+                                case 4:
+                                    entry.Key4 = key;
+                                    entry.Value4 = val;
+                                    break;
+
+                                case 5:
+                                    entry.Key5 = key;
+                                    entry.Value5 = val;
+                                    break;
+
+                                case 6:
+                                    entry.Key6 = key;
+                                    entry.Value6 = val;
+                                    break;
+
+                                case 7:
+                                    entry.Key7 = key;
+                                    entry.Value7 = val;
+                                    break;
+
+                                case 8:
+                                    entry.Key8 = key;
+                                    entry.Value8 = val;
+                                    break;
+
+                                case 9:
+                                    entry.Key9 = key;
+                                    entry.Value9 = val;
+                                    break;
+                            }
+                        }
+
+                        ctx.LogEntries.Add(entry);
+                    }
+
+                    ctx.SaveChanges();
+                    trx.Complete();
+                    return LogResult.Success;
+                }
+            }
+            catch (Exception ex)
+            {
+                return LogResult.Failure(ex);
+            }
+        }
+
+        protected override IList<LogEntry> GetEntries(string appName, LogType? logType)
+        {
+            using (var ctx = Db.CreateReadContext())
+            {
+                var q = ctx.LogEntries.Include(s => s.App);
+                if (appName != null)
+                {
+                    q = q.Where(s => s.App.Name == appName);
+                }
+                if (logType != null)
+                {
+                    var logTypeString = logType.ToString().ToLower();
+                    q = q.Where(s => s.LogType == logTypeString);
+                }
+                return q.OrderByDescending(s => s.Id)
+                    .ThenByDescending(s => s.Date)
+                    .AsEnumerable()
+                    .Select(Mapper.Map<LogEntry>)
+                    .ToList();
+            }
+        }
+
+        protected override bool DoRemoveEntry(string appName, int logId)
+        {
             using (var trx = new TransactionScope())
             using (var ctx = Db.CreateWriteContext())
             {
-               var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
-               var typeId = type.ToString().ToLower();
-               var settings = ctx.LogSettings.First(s => s.AppId == appId && s.TypeId == typeId);
+                var deleted = false;
+                var log = ctx.LogEntries.FirstOrDefault(l => l.App.Name == appName && l.Id == logId);
 
-               // We delete logs older than "settings.Days"
-               var minDate = DateTime.Now.Subtract(TimeSpan.FromDays(settings.Days));
-               var oldLogs = from l in ctx.LogEntries
-                  where l.AppId == appId && l.TypeId == typeId
-                  where l.Date < minDate
-                  select l;
-               ctx.LogEntries.RemoveRange(oldLogs);
-
-               // We delete enough entries to preserve the upper limit
-               var logCount = ctx.LogEntries.Count(e => e.AppId == appId && e.TypeId == typeId);
-               if (logCount >= settings.MaxEntries)
-               {
-                  var olderLogs = (from l in ctx.LogEntries
-                     where l.AppId == appId && l.TypeId == typeId
-                     orderby l.Date ascending
-                     select l).Take(logCount - settings.MaxEntries + 1);
-                  ctx.LogEntries.RemoveRange(olderLogs);
-               }
-
-               // If log is enabled, then we can insert a new entry
-               if (settings.Enabled == 1)
-               {
-                  ctx.LogEntries.Add(new LogEntry
-                  {
-                     Id = NoId,
-                     Date = DateTime.Now,
-                     AppId = appId,
-                     TypeId = typeId,
-                     UserLogin = userName.Truncate(MaxStringLength).ToLower(),
-                     CodeUnit = codeUnit.Truncate(MaxStringLength).ToLower(),
-                     Function = function.Truncate(MaxStringLength).ToLower(),
-                     ShortMessage = shortMessage.Truncate(MaxStringLength),
-                     LongMessage = longMessage, // Not truncated, because it should be a CLOB.
-                     Context = context.Truncate(MaxStringLength),
-                     Arguments = argsList
-                  });
-               }
-
-               ctx.SaveChanges();
-               trx.Complete();
-               return LogResult.Success;
+                if (log != null)
+                {
+                    ctx.LogEntries.Remove(log);
+                    deleted = true;
+                    ctx.SaveChanges();
+                    trx.Complete();
+                }
+                return deleted;
             }
-         }
-         catch (Exception ex)
-         {
-            return LogResult.Failure(ex);
-         }
-      }
+        }
 
-      protected override IList<LogEntry> GetLogEntries(string appName, LogType? logType)
-      {
-         using (var ctx = Db.CreateReadContext())
-         {
-            var q = ctx.LogEntries.Include(s => s.App);
-            if (appName != null)
+        protected override IList<LogSetting> GetSettings(string appName, LogType? logType)
+        {
+            using (var ctx = Db.CreateReadContext())
             {
-               q = q.Where(s => s.App.Name == appName);
+                var q = ctx.LogSettings.Include(s => s.App);
+                if (appName != null)
+                {
+                    q = q.Where(s => s.App.Name == appName);
+                }
+                if (logType != null)
+                {
+                    var logTypeString = logType.ToString().ToLower();
+                    q = q.Where(s => s.LogType == logTypeString);
+                }
+                return q.OrderBy(s => s.App.Name)
+                    .ThenBy(s => s.LogType)
+                    .AsEnumerable()
+                    .Select(Mapper.Map<LogSetting>)
+                    .ToList();
             }
-            if (logType != null)
+        }
+
+        protected override bool DoAddSetting(string appName, LogType logType, LogSetting setting)
+        {
+            using (var trx = new TransactionScope())
+            using (var ctx = Db.CreateWriteContext())
             {
-               var logTypeString = logType.ToString().ToLower();
-               q = q.Where(s => s.TypeId == logTypeString);
+                var added = false;
+                var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
+                var typeId = logType.ToString().ToLower();
+
+                if (!ctx.LogSettings.Any(s => s.AppId == appId && s.LogType == typeId))
+                {
+                    var newSetting = new SqlLogSetting
+                    {
+                        AppId = appId,
+                        Days = setting.Days,
+                        Enabled = setting.Enabled,
+                        MaxEntries = setting.MaxEntries,
+                        LogType = typeId
+                    };
+
+                    ctx.LogSettings.Add(newSetting);
+                    added = true;
+                }
+
+                ctx.SaveChanges();
+                trx.Complete();
+                return added;
             }
-            return q.OrderByDescending(s => s.Id).ThenByDescending(s => s.Date).ToList();
-         }
-      }
+        }
 
-       protected override bool DoDeleteLog(string appName, int id)
-       {
-           using(var trx = new TransactionScope())
-           using (var ctx = Db.CreateWriteContext())
-           {
-               var deleted = false;
-               var log = ctx.LogEntries.FirstOrDefault(l => l.App.Name == appName && l.Id == id);
-
-               if (log != null)
-               {
-                   ctx.LogEntries.Remove(log);
-                   deleted = true;
-                   ctx.SaveChanges();
-                   trx.Complete();
-               }
-               return deleted;
-           }
-       }
-
-       protected override IList<LogSetting> GetLogSettings(string appName, LogType? logType)
-      {
-         using (var ctx = Db.CreateReadContext())
-         {
-            var q = ctx.LogSettings.Include(s => s.App);
-            if (appName != null)
+        protected override bool DoRemoveSetting(string appName, LogType logType)
+        {
+            using (var trx = new TransactionScope())
+            using (var ctx = Db.CreateWriteContext())
             {
-               q = q.Where(s => s.App.Name == appName);
+                var deleted = false;
+                var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
+                var typeId = logType.ToString().ToLower();
+                var settings = ctx.LogSettings.FirstOrDefault(a => a.AppId == appId && a.LogType == typeId);
+
+                if (settings != null)
+                {
+                    ctx.LogSettings.Remove(settings);
+                    deleted = true;
+                    ctx.SaveChanges();
+                    trx.Complete();
+                }
+                return deleted;
             }
-            if (logType != null)
+        }
+
+        protected override bool DoUpdateSetting(string appName, LogType logType, LogSetting setting)
+        {
+            using (var trx = new TransactionScope())
+            using (var ctx = Db.CreateWriteContext())
             {
-               var logTypeString = logType.ToString().ToLower();
-               q = q.Where(s => s.TypeId == logTypeString);
+                var update = false;
+                var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
+                var typeId = logType.ToString().ToLower();
+
+                var settingToUpdate = ctx.LogSettings.First(s => s.AppId == appId && s.LogType == typeId);
+
+                if (settingToUpdate != null)
+                {
+                    settingToUpdate.Days = setting.Days;
+                    settingToUpdate.Enabled = setting.Enabled;
+                    settingToUpdate.MaxEntries = setting.MaxEntries;
+                    update = true;
+                }
+
+                ctx.SaveChanges();
+                trx.Complete();
+                return update;
             }
-            return q.OrderBy(s => s.App.Name).ThenBy(s => s.TypeId).ToLogAndList();
-         }
-      }
-
-      protected override bool DoAddSettings(string appName, LogType logType, LogSetting settings)
-      {
-         using (var trx = new TransactionScope())
-         using (var ctx = Db.CreateWriteContext())
-         {
-            var added = false;
-            var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
-            var typeId = logType.ToString().ToLower();
-
-            if (!ctx.LogSettings.Any(s => s.AppId == appId && s.TypeId == typeId))
-            {
-               var newSetting = new LogSetting
-               {
-                  AppId = appId,
-                  Days = settings.Days,
-                  Enabled = settings.Enabled,
-                  MaxEntries = settings.MaxEntries,
-                  TypeId = typeId
-               };
-
-               ctx.LogSettings.Add(newSetting);
-               added = true;
-            }
-
-            ctx.SaveChanges();
-            trx.Complete();
-            return added;
-         }
-      }
-
-       protected override bool DoDeleteSettings(string appName, LogType logType)
-       {
-           using (var trx = new TransactionScope())
-           using (var ctx = Db.CreateWriteContext())
-           {
-               var deleted = false;
-               var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
-               var typeId = logType.ToString().ToLower();
-               var settings = ctx.LogSettings.FirstOrDefault(a => a.AppId == appId && a.TypeId == typeId);
-               
-               if (settings != null)
-               {
-                   ctx.LogSettings.Remove(settings);
-                   deleted = true;
-                   ctx.SaveChanges();
-                   trx.Complete();
-               }
-               return deleted;
-           }
-       }
-
-       protected override bool DoUpdateSettings(string appName, LogType logType, LogSetting settings)
-      {
-         using (var trx = new TransactionScope())
-         using (var ctx = Db.CreateWriteContext())
-         {
-            var update = false;
-            var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
-            var typeId = logType.ToString().ToLower();
-
-            var settingToUpdate = ctx.LogSettings.First(s => s.AppId == appId && s.TypeId == typeId);
-
-            if (settingToUpdate != null)
-            {
-               settingToUpdate.App = settings.App;
-               settingToUpdate.AppId = appId;
-               settingToUpdate.Days = settings.Days;
-               settingToUpdate.Enabled = settings.Enabled;
-               settingToUpdate.LogEntries = settings.LogEntries;
-               settingToUpdate.MaxEntries = settings.MaxEntries;
-               settingToUpdate.Type = logType;
-               settingToUpdate.TypeId = typeId;
-
-               update = true;
-            }
-
-            ctx.SaveChanges();
-            trx.Complete();
-            return update;
-         }
-      }
-   }
+        }
+    }
 }
