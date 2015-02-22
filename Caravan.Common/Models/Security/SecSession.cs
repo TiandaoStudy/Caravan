@@ -5,15 +5,15 @@ using System.Web;
 namespace Finsa.Caravan.Common.Models.Security
 {
     [Serializable, DataContract]
-    public class SessionTracker
+    public class SecSession
     {
+        public string UserLogin { get; set; }
+
         public string UserHostAddress { get; private set; }
 
         public string UserHostName { get; private set; }
 
         public DateTime LastVisit { get; set; }
-
-        public string Login { get; set; }
 
         public void FillData()
         {

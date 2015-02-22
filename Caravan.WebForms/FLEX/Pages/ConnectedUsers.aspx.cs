@@ -50,7 +50,7 @@ namespace Finsa.Caravan.WebForms.Pages
           var userLogin = "";
 
           Application.Lock();
-          Dictionary<string, SessionTracker> _userList = (Dictionary<string, SessionTracker>)Application.Get("TRACK_USER_LIST");
+          Dictionary<string, SecSession> _userList = (Dictionary<string, SecSession>)Application.Get("TRACK_USER_LIST");
           Application.UnLock();
 
 
@@ -66,12 +66,12 @@ namespace Finsa.Caravan.WebForms.Pages
          {
              userLogin = SearchCriteria["CUSR_LOGIN"][0];
 
-             var users = _userList.Where(x => ((SessionTracker)x.Value).Login == userLogin.ToString());
+             var users = _userList.Where(x => ((SecSession)x.Value).UserLogin == userLogin.ToString());
 
 
              foreach (var item in users)
              {
-                 _tableUsers.Rows.Add(item.Value.Login, item.Value.UserHostName, item.Value.UserHostAddress, item.Value.LastVisit);
+                 _tableUsers.Rows.Add(item.Value.UserLogin, item.Value.UserHostName, item.Value.UserHostAddress, item.Value.LastVisit);
              }
 
 
@@ -81,9 +81,9 @@ namespace Finsa.Caravan.WebForms.Pages
          else
          {
 
-            foreach (var item in _userList.Where(u => u.Value.Login != null))
+            foreach (var item in _userList.Where(u => u.Value.UserLogin != null))
              {
-                 _tableUsers.Rows.Add(item.Value.Login, item.Value.UserHostName, item.Value.UserHostAddress, item.Value.LastVisit);
+                 _tableUsers.Rows.Add(item.Value.UserLogin, item.Value.UserHostName, item.Value.UserHostAddress, item.Value.LastVisit);
              }
 
              fdtgConnectedUsers.DataSource = _tableUsers;

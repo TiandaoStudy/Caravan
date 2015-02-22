@@ -55,7 +55,7 @@
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="PommaLabs.GRAMPA">
-      <HintPath>..\packages\PommaLabs.GRAMPA.2.1.7\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.GRAMPA.2.1.8\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
