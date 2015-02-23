@@ -199,7 +199,6 @@
     <Compile Include="Db.cs" />
     <Compile Include="IDbManager.cs" />
     <Compile Include="ISecurityManager.cs" />
-    <Compile Include="Sql\Oracle\OracleDbContext.cs" />
     <Compile Include="Sql\SqlSecurityManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sql\SqlLogManager.cs" />
