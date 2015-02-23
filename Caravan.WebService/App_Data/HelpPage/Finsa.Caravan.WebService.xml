@@ -50,6 +50,14 @@
             <param name="logType">Type of log which can be "warn", "info" or "error"</param>
             <returns></returns>
         </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetEntry(System.String,System.Int64)">
+            <summary>
+              returns a logs of with specified ID
+            </summary>
+            <param name="appName">Application name</param>
+            <param name="logId">ID of the entry</param>
+            <returns></returns>
+        </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.PostLog(System.String,Finsa.Caravan.Common.Models.Logging.LogEntry)">
             <summary>
               Add a new log with the features specified in the body of the request

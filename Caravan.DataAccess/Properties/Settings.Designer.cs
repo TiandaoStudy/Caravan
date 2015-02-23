@@ -70,15 +70,6 @@ namespace Finsa.Caravan.DataAccess.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("mydb")]
-        public string OracleUser {
-            get {
-                return ((string)(this["OracleUser"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("finsa.caravan.it/")]
         public string RestServiceUrl {
             get {

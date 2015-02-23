@@ -117,11 +117,6 @@ namespace Finsa.Caravan.DataAccess
             return new SqlDbContext();
         }
 
-        private static OracleDbContext OracleDbContextGenerator()
-        {
-            return new OracleDbContext();
-        }
-
         #endregion DbContext Generators
 
         #region EF Helpers
@@ -275,7 +270,7 @@ namespace Finsa.Caravan.DataAccess
 
                 case DataAccessKind.Oracle:
                     _dbManagerInstance = new OracleDbManager();
-                    _dbContextGenerator = OracleDbContextGenerator;
+                    _dbContextGenerator = SqlDbContextGenerator;
                     break;
 
                 case DataAccessKind.PostgreSql:

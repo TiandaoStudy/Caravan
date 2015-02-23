@@ -72,10 +72,22 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">Application name</param>
         /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
         /// <returns></returns>
-        [Route("{appName}/entries/{logType}"), LinqToQueryable]
+        [Route("{appName}/entries/{logType:alpha}"), LinqToQueryable]
         public IQueryable<LogEntry> GetEntries(string appName, LogType logType)
         {
             return Db.Logger.Entries(appName, logType).AsQueryable();
+        }
+
+        /// <summary>
+        ///   returns a logs of with specified ID
+        /// </summary>
+        /// <param name="appName">Application name</param>
+        /// <param name="logId">ID of the entry</param>
+        /// <returns></returns>
+        [Route("{appName}/entries/{logId:long}")]
+        public LogEntry GetEntry(string appName, long logId)
+        {
+            return Db.Logger.Entries(appName).FirstOrDefault(e => e.Id == logId);
         }
 
         /// <summary>
