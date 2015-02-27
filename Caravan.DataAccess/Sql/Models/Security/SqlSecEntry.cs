@@ -1,12 +1,15 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Finsa.Caravan.DataAccess.Sql.Models.Security
 {
     [Serializable]
     public class SqlSecEntry
     {
+        [Required]
         public long Id { get; set; }
 
+        [Required]
         public long AppId { get; set; }
 
         public SqlSecApp App { get; set; }

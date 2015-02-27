@@ -11,6 +11,14 @@ namespace Finsa.Caravan.DataAccess.Sql
 {
     internal sealed class SqlDbContext : CaravanDbContext<SqlDbContext>
     {
+        #region Constants
+
+        internal const short SmallLength = 64;
+        internal const short MediumLength = 256;
+        internal const short LargeLength = 1024;
+
+        #endregion
+
         static SqlDbContext()
         {
             CaravanDbContext.Init<SqlDbContext>();
