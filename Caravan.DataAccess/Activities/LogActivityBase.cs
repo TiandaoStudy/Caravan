@@ -7,22 +7,22 @@ namespace Finsa.Caravan.DataAccess.Activities
 {
     public abstract class LogActivityBase : CodeActivity<LogResult>
     {
-        private InArgument<IEnumerable<KeyValuePair<string, string>>> Arguments { get; set; }
+        public InArgument<IEnumerable<KeyValuePair<string, string>>> Arguments { get; set; }
 
-        private InArgument<string> Context { get; set; }
+        public InArgument<string> Context { get; set; }
 
         /// <summary>
         ///   The exception that should be logged. It may not be specified.
         /// </summary>
-        private InArgument<Exception> Exception { get; set; }
+        public InArgument<Exception> Exception { get; set; }
 
-        private InArgument<LogType> LogType { get; set; }
+        public InArgument<LogType> LogType { get; set; }
 
-        private InArgument<string> LongMessage { get; set; }
+        public InArgument<string> LongMessage { get; set; }
 
-        private InArgument<string> ShortMessage { get; set; }
+        public InArgument<string> ShortMessage { get; set; }
 
-        private InArgument<string> WorkflowName { get; set; }
+        public InArgument<string> WorkflowName { get; set; }
 
         protected override LogResult Execute(CodeActivityContext ctx)
         {
