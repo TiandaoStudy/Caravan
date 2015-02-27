@@ -22,35 +22,42 @@ namespace Finsa.Caravan.DataAccess.Activities
 
         public InArgument<string> ShortMessage { get; set; }
 
+        public InArgument<string> UserLogin { get; set; }
+
         public InArgument<string> WorkflowName { get; set; }
 
         protected override LogResult Execute(CodeActivityContext ctx)
         {
+            LogResult result;
             var exception = Exception.Get(ctx);
             if (exception == null)
             {
-                return Db.Logger.LogRaw(
+                result = Db.Logger.LogRaw(
                     LogType.Get(ctx),
-                    Common.Properties.Settings.Default.ApplicationName,
-                    String.Empty,
+                    Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName,
+                    UserLogin.Get(ctx),
                     WorkflowName.Get(ctx),
-                    "Execute",
+                    "LogActivity.Execute",
                     ShortMessage.Get(ctx),
                     LongMessage.Get(ctx),
                     Context.Get(ctx),
                     Arguments.Get(ctx)
                 );
             }
-            return Db.Logger.LogRaw(
-                LogType.Get(ctx),
-                Common.Properties.Settings.Default.ApplicationName,
-                String.Empty,
-                WorkflowName.Get(ctx),
-                "Execute",
-                exception,
-                Context.Get(ctx),
-                Arguments.Get(ctx)
-            );
+            else
+            {
+                result = Db.Logger.LogRaw(
+                    LogType.Get(ctx),
+                    Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName,
+                    UserLogin.Get(ctx),
+                    WorkflowName.Get(ctx),
+                    "LogActivity.Execute",
+                    exception,
+                    Context.Get(ctx),
+                    Arguments.Get(ctx)
+                );
+            }
+            return result;
         }
     }
 }
