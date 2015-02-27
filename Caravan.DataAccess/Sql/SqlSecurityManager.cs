@@ -478,7 +478,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         #region Private Methods
 
-        private static long GetAppIdByName(DbContextBase ctx, string appName)
+        private static long GetAppIdByName(SqlDbContext ctx, string appName)
         {
             var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => (long?) a.Id).FirstOrDefault();
             if (appId == null)
@@ -488,7 +488,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             return appId.Value;
         }
 
-        private static SqlSecGroup GetGroupByName(DbContextBase ctx, long appId, string groupName)
+        private static SqlSecGroup GetGroupByName(SqlDbContext ctx, long appId, string groupName)
         {
             var group = ctx.SecGroups.Include(g => g.Users).FirstOrDefault(g => g.AppId == appId && g.Name == groupName);
             if (group == null)
@@ -498,7 +498,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             return group;
         }
 
-        private static SqlSecUser GetUserByLogin(DbContextBase ctx, long appId, string userLogin)
+        private static SqlSecUser GetUserByLogin(SqlDbContext ctx, long appId, string userLogin)
         {
             var user = ctx.SecUsers.FirstOrDefault(u => u.AppId == appId && u.Login == userLogin);
             if (user == null)
@@ -508,7 +508,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             return user;
         }
 
-        private static SqlSecUser GetUserByLoginWithGroups(DbContextBase ctx, long appId, string userLogin)
+        private static SqlSecUser GetUserByLoginWithGroups(SqlDbContext ctx, long appId, string userLogin)
         {
             var user = ctx.SecUsers.Include(u => u.Groups).FirstOrDefault(u => u.AppId == appId && u.Login == userLogin);
             if (user == null)

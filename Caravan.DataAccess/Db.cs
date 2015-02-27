@@ -15,6 +15,7 @@ using Finsa.Caravan.DataAccess.Sql;
 using Finsa.Caravan.DataAccess.Sql.FakeSql;
 using Finsa.Caravan.DataAccess.Sql.MySql;
 using Finsa.Caravan.DataAccess.Sql.Oracle;
+using Finsa.Caravan.DataAccess.Sql.PostgreSql;
 using Finsa.Caravan.DataAccess.Sql.SqlServer;
 using Finsa.Caravan.DataAccess.Sql.SqlServerCe;
 using PommaLabs.Diagnostics;
@@ -34,7 +35,7 @@ namespace Finsa.Caravan.DataAccess
         private static ILogManager _logManagerInstance;
         private static ISecurityManager _securityManagerInstance;
         private static IDbManager _dbManagerInstance;
-        private static Func<DbContextBase> _dbContextGenerator;
+        private static Func<SqlDbContext> _dbContextGenerator;
 
         static Db()
         {
@@ -139,14 +140,14 @@ namespace Finsa.Caravan.DataAccess
             return list;
         }
 
-        internal static DbContextBase CreateReadContext()
+        internal static SqlDbContext CreateReadContext()
         {
             var ctx = CreateWriteContext();
             ctx.Configuration.ProxyCreationEnabled = false;
             return ctx;
         }
 
-        internal static DbContextBase CreateWriteContext()
+        internal static SqlDbContext CreateWriteContext()
         {
             var ctx = _dbContextGenerator();
             ctx.Database.Initialize(false);
@@ -235,26 +236,11 @@ namespace Finsa.Caravan.DataAccess
         {
             Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(DataAccessKind), kind));
             AccessKind = kind;
-            
-            // Sets the implementations which are shared between SQL drivers.
-            switch (kind)
-            {
-                case DataAccessKind.FakeSql:
-                case DataAccessKind.MySql:
-                case DataAccessKind.Oracle:
-                case DataAccessKind.PostgreSql:
-                case DataAccessKind.SqlServer:
-                case DataAccessKind.SqlServerCe:
-                    _logManagerInstance = new SqlLogManager();
-                    _securityManagerInstance = new SqlSecurityManager();
-                    break;
-            }
 
             switch (kind)
             {
                 case DataAccessKind.FakeSql:
                     _dbManagerInstance = new FakeSqlDbManager();
-                    _dbContextGenerator = SqlDbContextGenerator;
                     break;
 
                 case DataAccessKind.MongoDb:
@@ -265,16 +251,14 @@ namespace Finsa.Caravan.DataAccess
 
                 case DataAccessKind.MySql:
                     _dbManagerInstance = new MySqlDbManager();
-                    _dbContextGenerator = SqlDbContextGenerator;
                     break;
 
                 case DataAccessKind.Oracle:
                     _dbManagerInstance = new OracleDbManager();
-                    _dbContextGenerator = SqlDbContextGenerator;
                     break;
 
                 case DataAccessKind.PostgreSql:
-                    _dbContextGenerator = SqlDbContextGenerator;
+                    _dbManagerInstance = new PostgreSqlDbManager();
                     break;
 
                 case DataAccessKind.Rest:
@@ -284,12 +268,25 @@ namespace Finsa.Caravan.DataAccess
 
                 case DataAccessKind.SqlServer:
                     _dbManagerInstance = new SqlServerDbManager();
-                    _dbContextGenerator = SqlDbContextGenerator;
                     break;
 
                 case DataAccessKind.SqlServerCe:
                     _dbManagerInstance = new SqlServerCeDbManager();
+                    break;
+            }
+
+            // Sets the implementations which are shared between SQL drivers.
+            switch (kind)
+            {
+                case DataAccessKind.FakeSql:
+                case DataAccessKind.MySql:
+                case DataAccessKind.Oracle:
+                case DataAccessKind.PostgreSql:
+                case DataAccessKind.SqlServer:
+                case DataAccessKind.SqlServerCe:
                     _dbContextGenerator = SqlDbContextGenerator;
+                    _logManagerInstance = new SqlLogManager();
+                    _securityManagerInstance = new SqlSecurityManager();
                     break;
             }
         }

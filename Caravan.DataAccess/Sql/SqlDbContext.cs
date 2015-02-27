@@ -9,16 +9,43 @@ using Finsa.Caravan.DataAccess.Sql.Models.Security;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
-    internal sealed class SqlDbContext : DbContextBase
+    internal sealed class SqlDbContext : CaravanDbContext<SqlDbContext>
     {
         static SqlDbContext()
         {
             CaravanDbContext.Init<SqlDbContext>();
         }
 
+        public SqlDbContext()
+            : base(Db.Manager.OpenConnection(), true)
+        {
+        }
+
+        #region DB Sets
+
+        public DbSet<SqlLogEntry> LogEntries { get; set; }
+
+        public DbSet<SqlLogSetting> LogSettings { get; set; }
+
+        public DbSet<SqlSecApp> SecApps { get; set; }
+
+        public DbSet<SqlSecContext> SecContexts { get; set; }
+
+        public DbSet<SqlSecEntry> SecEntries { get; set; }
+
+        public DbSet<SqlSecGroup> SecGroups { get; set; }
+
+        public DbSet<SqlSecObject> SecObjects { get; set; }
+
+        public DbSet<SqlSecUser> SecUsers { get; set; }
+
+        #endregion
+
         protected override void OnModelCreating(DbModelBuilder mb)
         {
             base.OnModelCreating(mb);
+
+            mb.HasDefaultSchema(Settings.Default.SqlSchema);
 
             /************************************************
              * SqlSecApp

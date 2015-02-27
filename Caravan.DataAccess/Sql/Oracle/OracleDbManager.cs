@@ -8,8 +8,6 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
 {
     internal sealed class OracleDbManager : DbManagerBase
     {
-        private static readonly OracleClientFactory DbFactory = new OracleClientFactory();
-
         public override DataAccessKind Kind
         {
             get { return DataAccessKind.Oracle; }
@@ -41,7 +39,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
 
         public override DbConnection CreateConnection()
         {
-            var connection = DbFactory.CreateConnection();
+            var connection = OracleClientFactory.Instance.CreateConnection();
             connection.ConnectionString = Db.ConnectionString;
             return connection;
         }

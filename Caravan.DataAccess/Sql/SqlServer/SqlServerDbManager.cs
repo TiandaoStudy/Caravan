@@ -6,8 +6,6 @@ namespace Finsa.Caravan.DataAccess.Sql.SqlServer
 {
     internal sealed class SqlServerDbManager : DbManagerBase
     {
-        private static readonly DbProviderFactory DbFactory = SqlClientFactory.Instance;
-
         public override DataAccessKind Kind
         {
             get { return DataAccessKind.SqlServer; }
@@ -20,7 +18,7 @@ namespace Finsa.Caravan.DataAccess.Sql.SqlServer
 
         public override DbConnection CreateConnection()
         {
-            var connection = DbFactory.CreateConnection();
+            var connection = SqlClientFactory.Instance.CreateConnection();
             connection.ConnectionString = Db.ConnectionString;
             return connection;
         }

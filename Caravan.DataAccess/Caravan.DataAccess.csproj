@@ -161,7 +161,6 @@
     <Compile Include="Activities\LogActivityBase.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Sql\CaravanDbContext.cs" />
-    <Compile Include="Sql\DbContextBase.cs" />
     <Compile Include="Core\DbManagerBase.cs" />
     <Compile Include="Core\LogManagerBase.cs" />
     <Compile Include="Core\SecurityManagerBase.cs" />
@@ -199,6 +198,7 @@
     <Compile Include="Db.cs" />
     <Compile Include="IDbManager.cs" />
     <Compile Include="ISecurityManager.cs" />
+    <Compile Include="Sql\PostgreSql\PostgreSqlDbManager.cs" />
     <Compile Include="Sql\SqlSecurityManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sql\SqlLogManager.cs" />
@@ -252,7 +252,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Sql\MySql\Scripts\" />
-    <Folder Include="Sql\Postgres\" />
+    <Folder Include="Sql\PostgreSql\Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\ErrorMessages.resx">

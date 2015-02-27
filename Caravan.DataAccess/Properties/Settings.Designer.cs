@@ -88,15 +88,6 @@ namespace Finsa.Caravan.DataAccess.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("dbo")]
-        public string SqlServerSchema {
-            get {
-                return ((string)(this["SqlServerSchema"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("mydb")]
         public string SqlSchema {
             get {
