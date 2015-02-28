@@ -19,7 +19,7 @@ namespace Finsa.Caravan.Common.Models.Logging
         public LogType LogType { get; set; }
 
         [JsonProperty(Order = 2), DataMember(Order = 2), JsonConverter(typeof(IntToBoolConverter))]
-        public int Enabled { get; set; }
+        public bool Enabled { get; set; }
 
         [JsonProperty(Order = 3), DataMember(Order = 3)]
         public int Days { get; set; }
@@ -31,7 +31,7 @@ namespace Finsa.Caravan.Common.Models.Logging
         {
             yield return GKeyValuePair.Create("AppName", AppName);
             yield return GKeyValuePair.Create("LogType", LogType.ToString());
-            yield return GKeyValuePair.Create("Enabled", (Enabled == 1).ToString(CultureInfo.InvariantCulture));
+            yield return GKeyValuePair.Create("Enabled", Enabled.ToString(CultureInfo.InvariantCulture));
         }
 
         protected override IEnumerable<object> GetIdentifyingMembers()

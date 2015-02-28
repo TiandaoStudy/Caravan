@@ -13,6 +13,13 @@ namespace Finsa.Caravan.DataAccess.Sql
 {
     internal sealed class SqlSecurityManager : SecurityManagerBase<SqlSecurityManager>
     {
+        #region Constants
+
+        private const int TrueInt = 1;
+        private const int FalseInt = 0;
+
+        #endregion
+
         #region Apps
 
         protected override IList<SecApp> GetApps()
@@ -97,7 +104,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                     {
                         AppId = appId,
                         Description = newGroup.Description ?? String.Empty,
-                        IsAdmin = newGroup.IsAdmin,
+                        IsAdmin = newGroup.IsAdmin ? TrueInt : FalseInt,
                         Name = newGroup.Name,
                         Notes = newGroup.Notes ?? String.Empty
                     });
@@ -144,7 +151,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                     }
                     grp.Name = newGroup.Name;
                     grp.Description = newGroup.Description ?? String.Empty;
-                    grp.IsAdmin = newGroup.IsAdmin;
+                    grp.IsAdmin = newGroup.IsAdmin ? TrueInt : FalseInt;
                     grp.Notes = newGroup.Notes ?? String.Empty;
                     updated = true;
                 }
@@ -188,7 +195,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                     ctx.SecUsers.Add(new SqlSecUser
                     {
                         AppId = appId,
-                        Active = newUser.Active,
+                        Active = newUser.Active ? TrueInt : FalseInt,
                         Email = newUser.Email,
                         FirstName = newUser.FirstName,
                         HashedPassword = newUser.HashedPassword,
@@ -240,7 +247,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                     user.LastName = newUser.LastName;
                     user.Email = newUser.Email;
                     user.Login = newUser.Login;
-                    user.Active = newUser.Active;
+                    user.Active = newUser.Active ? TrueInt : FalseInt;
                     updated = true;
                 }
                 ctx.SaveChanges();

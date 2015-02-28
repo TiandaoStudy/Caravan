@@ -19,6 +19,9 @@ namespace Finsa.Caravan.DataAccess.Sql
         private const int MaxArgumentCount = 10;
         private const int MaxStringLength = 2000;
 
+        private const int TrueInt = 1;
+        private const int FalseInt = 0;
+
         #endregion Constants
 
         protected override LogResult DoLogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function,
@@ -222,7 +225,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                     {
                         AppId = appId,
                         Days = setting.Days,
-                        Enabled = setting.Enabled,
+                        Enabled = setting.Enabled ? TrueInt : FalseInt,
                         MaxEntries = setting.MaxEntries,
                         LogType = typeId
                     };
@@ -272,7 +275,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 if (settingToUpdate != null)
                 {
                     settingToUpdate.Days = setting.Days;
-                    settingToUpdate.Enabled = setting.Enabled;
+                    settingToUpdate.Enabled = setting.Enabled ? TrueInt : FalseInt;
                     settingToUpdate.MaxEntries = setting.MaxEntries;
                     update = true;
                 }
