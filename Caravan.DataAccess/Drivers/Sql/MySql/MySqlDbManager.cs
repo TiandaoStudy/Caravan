@@ -1,5 +1,5 @@
-﻿using Finsa.Caravan.DataAccess.Core;
-using System.Data.Common;
+﻿using System.Data.Common;
+using Finsa.Caravan.DataAccess.Core;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.MySql
 {

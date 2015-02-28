@@ -91,7 +91,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        #endregion
+        #endregion Public Methods
 
         #region Private Methods
 

@@ -1,6 +1,6 @@
+using System.Data.Common;
 using System.Data.SqlClient;
 using Finsa.Caravan.DataAccess.Core;
-using System.Data.Common;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.SqlServer
 {

@@ -7,9 +7,8 @@ using System.Globalization;
 using System.Linq;
 using System.Transactions;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.DataAccess.Drivers.Rest;
 using Finsa.Caravan.DataAccess.Drivers.Mongo;
-using Finsa.Caravan.DataAccess.Properties;
+using Finsa.Caravan.DataAccess.Drivers.Rest;
 using Finsa.Caravan.DataAccess.Drivers.Sql;
 using Finsa.Caravan.DataAccess.Drivers.Sql.FakeSql;
 using Finsa.Caravan.DataAccess.Drivers.Sql.MySql;
@@ -17,6 +16,7 @@ using Finsa.Caravan.DataAccess.Drivers.Sql.Oracle;
 using Finsa.Caravan.DataAccess.Drivers.Sql.PostgreSql;
 using Finsa.Caravan.DataAccess.Drivers.Sql.SqlServer;
 using Finsa.Caravan.DataAccess.Drivers.Sql.SqlServerCe;
+using Finsa.Caravan.DataAccess.Properties;
 using PommaLabs.Diagnostics;
 using PommaLabs.KVLite;
 using RestSharp;
@@ -111,7 +111,7 @@ namespace Finsa.Caravan.DataAccess
             }
         }
 
-        #endregion
+        #endregion Public Properties - Common
 
         #region Methods that must be used _ONLY_ inside (or for) Unit Tests
 

@@ -103,6 +103,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
 
         public SqlLogSetting LogSetting { get; set; }
 
-        #endregion
+        #endregion Relationships
     }
 }

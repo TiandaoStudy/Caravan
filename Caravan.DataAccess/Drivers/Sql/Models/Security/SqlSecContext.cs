@@ -28,6 +28,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 
         public virtual ICollection<SqlSecEntry> SecEntries { get; set; }
 
-        #endregion
+        #endregion Relationships
     }
 }

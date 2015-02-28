@@ -1,11 +1,8 @@
-﻿using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataAccess.Properties;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
+using Finsa.Caravan.DataAccess.Properties;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -17,7 +14,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         internal const short MediumLength = 256;
         internal const short LargeLength = 1024;
 
-        #endregion
+        #endregion Constants
 
         static SqlDbContext()
         {
@@ -61,7 +58,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         public DbSet<SqlSecUser> SecUsers { get; set; }
 
-        #endregion
+        #endregion DB Sets
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {

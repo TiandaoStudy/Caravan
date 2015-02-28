@@ -18,7 +18,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         private const int TrueInt = 1;
         private const int FalseInt = 0;
 
-        #endregion
+        #endregion Constants
 
         #region Apps
 

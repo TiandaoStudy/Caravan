@@ -33,6 +33,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 
         public virtual ICollection<SqlLogEntry> LogEntries { get; set; }
 
-        #endregion
+        #endregion Relationships
     }
 }
