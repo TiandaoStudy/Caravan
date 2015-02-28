@@ -71,7 +71,7 @@ namespace Finsa.Caravan.WebForms.Pages
          txtFirstName.Text = user.FirstName;
          txtLastName.Text = user.LastName;
          txtEmail.Text = user.Email;
-         chkIsActive.Checked = user.Active == 1;
+         chkIsActive.Checked = user.Active;
 
          
      
@@ -85,13 +85,13 @@ namespace Finsa.Caravan.WebForms.Pages
           {
               if (Mode == NewMode)
               {
-                  var newUser = new SecUser { FirstName = txtFirstName.Text, LastName = txtLastName.Text, Email = txtEmail.Text, Active = chkIsActive.Checked ? 1 : 0 };
+                  var newUser = new SecUser { FirstName = txtFirstName.Text, LastName = txtLastName.Text, Email = txtEmail.Text, Active = chkIsActive.Checked };
                   Db.Security.AddUser(Common.Properties.Settings.Default.ApplicationName, newUser);
 
               }
               else if (Mode == EditMode)
               {
-                  var newUser= new SecUser { FirstName = txtFirstName.Text, LastName = txtLastName.Text, Email = txtEmail.Text, Active = chkIsActive.Checked ? 1 : 0, Login = Login };
+                  var newUser= new SecUser { FirstName = txtFirstName.Text, LastName = txtLastName.Text, Email = txtEmail.Text, Active = chkIsActive.Checked, Login = Login };
                   Db.Security.UpdateUser(Common.Properties.Settings.Default.ApplicationName, Login, newUser);
               }
               Master.RegisterCloseScript(this);
