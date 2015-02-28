@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 namespace Finsa.Caravan.WebApi.Results
 {

@@ -9,10 +9,10 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Oracle
 {
     public class OracleDynamicParameters : SqlMapper.IDynamicParameters
     {
-        private static Dictionary<SqlMapper.Identity, Action<IDbCommand, object>> paramReaderCache = new Dictionary<SqlMapper.Identity, Action<IDbCommand, object>>();
+        private static readonly Dictionary<SqlMapper.Identity, Action<IDbCommand, object>> ParamReaderCache = new Dictionary<SqlMapper.Identity, Action<IDbCommand, object>>();
 
-        private Dictionary<string, ParamInfo> parameters = new Dictionary<string, ParamInfo>();
-        private List<object> templates;
+        private readonly Dictionary<string, ParamInfo> _parameters = new Dictionary<string, ParamInfo>();
+        private List<object> _templates;
 
         private class ParamInfo
         {
@@ -50,13 +50,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Oracle
         /// EG: AddDynamicParams(new {A = 1, B = 2}) // will add property A and B to the dynamic
         /// </summary>
         /// <param name="param"></param>
-        public void AddDynamicParams(
-#if CSHARP30
-			object param
-#else
-dynamic param
-#endif
-)
+        public void AddDynamicParams(dynamic param)
         {
             var obj = param as object;
             if (obj != null)
@@ -67,37 +61,33 @@ dynamic param
                     var dictionary = obj as IEnumerable<KeyValuePair<string, object>>;
                     if (dictionary == null)
                     {
-                        templates = templates ?? new List<object>();
-                        templates.Add(obj);
+                        _templates = _templates ?? new List<object>();
+                        _templates.Add(obj);
                     }
                     else
                     {
                         foreach (var kvp in dictionary)
                         {
-#if CSHARP30
-							Add(kvp.Key, kvp.Value, null, null, null);
-#else
                             Add(kvp.Key, kvp.Value);
-#endif
                         }
                     }
                 }
                 else
                 {
-                    if (subDynamic.parameters != null)
+                    if (subDynamic._parameters != null)
                     {
-                        foreach (var kvp in subDynamic.parameters)
+                        foreach (var kvp in subDynamic._parameters)
                         {
-                            parameters.Add(kvp.Key, kvp.Value);
+                            _parameters.Add(kvp.Key, kvp.Value);
                         }
                     }
 
-                    if (subDynamic.templates != null)
+                    if (subDynamic._templates != null)
                     {
-                        templates = templates ?? new List<object>();
-                        foreach (var t in subDynamic.templates)
+                        _templates = _templates ?? new List<object>();
+                        foreach (var t in subDynamic._templates)
                         {
-                            templates.Add(t);
+                            _templates.Add(t);
                         }
                     }
                 }
@@ -112,15 +102,9 @@ dynamic param
         /// <param name="dbType"></param>
         /// <param name="direction"></param>
         /// <param name="size"></param>
-        public void Add(
-#if CSHARP30
-			string name, object value, DbType? dbType, ParameterDirection? direction, int? size
-#else
-string name, object value = null, OracleDbType? dbType = null, ParameterDirection? direction = null, int? size = null
-#endif
-)
+        public void Add(string name, object value = null, OracleDbType? dbType = null, ParameterDirection? direction = null, int? size = null)
         {
-            parameters[Clean(name)] = new ParamInfo() { Name = name, Value = value, ParameterDirection = direction ?? ParameterDirection.Input, DbType = dbType, Size = size };
+            _parameters[Clean(name)] = new ParamInfo { Name = name, Value = value, ParameterDirection = direction ?? ParameterDirection.Input, DbType = dbType, Size = size };
         }
 
         private static string Clean(string name)
@@ -150,19 +134,19 @@ string name, object value = null, OracleDbType? dbType = null, ParameterDirectio
         /// <param name="identity">Information about the query</param>
         protected void AddParameters(IDbCommand command, SqlMapper.Identity identity)
         {
-            if (templates != null)
+            if (_templates != null)
             {
-                foreach (var template in templates)
+                foreach (var template in _templates)
                 {
                     var newIdent = identity.ForDynamicParameters(template.GetType());
                     Action<IDbCommand, object> appender;
 
-                    lock (paramReaderCache)
+                    lock (ParamReaderCache)
                     {
-                        if (!paramReaderCache.TryGetValue(newIdent, out appender))
+                        if (!ParamReaderCache.TryGetValue(newIdent, out appender))
                         {
                             appender = SqlMapper.CreateParamInfoGenerator(newIdent, false, true);
-                            paramReaderCache[newIdent] = appender;
+                            ParamReaderCache[newIdent] = appender;
                         }
                     }
 
@@ -170,7 +154,7 @@ string name, object value = null, OracleDbType? dbType = null, ParameterDirectio
                 }
             }
 
-            foreach (var param in parameters.Values)
+            foreach (var param in _parameters.Values)
             {
                 string name = Clean(param.Name);
                 bool add = !((OracleCommand) command).Parameters.Contains(name);
@@ -218,7 +202,7 @@ string name, object value = null, OracleDbType? dbType = null, ParameterDirectio
         {
             get
             {
-                return parameters.Select(p => p.Key);
+                return _parameters.Select(p => p.Key);
             }
         }
 
@@ -230,10 +214,10 @@ string name, object value = null, OracleDbType? dbType = null, ParameterDirectio
         /// <returns>The value, note DBNull.Value is not returned, instead the value is returned as null</returns>
         public T Get<T>(string name)
         {
-            var val = parameters[Clean(name)].AttachedParam.Value;
+            var val = _parameters[Clean(name)].AttachedParam.Value;
             if (val == DBNull.Value)
             {
-                if (default(T) != null)
+                if (!ReferenceEquals(default(T), null))
                 {
                     throw new ApplicationException("Attempting to cast a DBNull to a non nullable type!");
                 }

@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
@@ -7,16 +8,16 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
     [Serializable]
     public class SqlLogEntry
     {
-        [Required]
+        [Required, Index("IDX_CARAVAN_LOG_SETTINGS")]
         public long AppId { get; set; }
 
         [Required]
         public long Id { get; set; }
 
-        [Required, MinLength(4), MaxLength(5)]
+        [Required, MaxLength(SqlDbContext.TinyLength), Index("IDX_CARAVAN_LOG_SETTINGS")]
         public string LogType { get; set; }
 
-        [Required]
+        [Required, Index("IDX_CARAVAN_LOG_DATE")]
         public DateTime Date { get; set; }
 
         [MaxLength(SqlDbContext.MediumLength)]

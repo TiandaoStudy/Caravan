@@ -10,6 +10,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
     {
         #region Constants
 
+        internal const short TinyLength = 16;
         internal const short SmallLength = 64;
         internal const short MediumLength = 256;
         internal const short LargeLength = 1024;

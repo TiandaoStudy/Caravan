@@ -11,10 +11,10 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
         [Required]
         public long Id { get; set; }
 
-        [Required]
+        [Required, MaxLength(SqlDbContext.SmallLength)]
         public string Name { get; set; }
 
-        [Required]
+        [Required, MaxLength(SqlDbContext.LargeLength)]
         public string Description { get; set; }
 
         #region Relationships

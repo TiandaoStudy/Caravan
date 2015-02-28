@@ -11,7 +11,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
         [Required]
         public long AppId { get; set; }
 
-        [Required, MinLength(4), MaxLength(5)]
+        [Required, MaxLength(SqlDbContext.TinyLength)]
         public string LogType { get; set; }
 
         [Required]
