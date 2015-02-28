@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace Finsa.Caravan.DataAccess.Sql.Oracle
+namespace Finsa.Caravan.DataAccess.Drivers.Sql.Oracle
 {
    public class OracleDynamicParameters : SqlMapper.IDynamicParameters
    {

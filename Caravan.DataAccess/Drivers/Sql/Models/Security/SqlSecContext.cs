@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Finsa.Caravan.DataAccess.Sql.Models.Security
+namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 {
     [Serializable]
     public class SqlSecContext

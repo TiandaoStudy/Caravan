@@ -1,7 +1,7 @@
 ﻿using Finsa.Caravan.DataAccess.Core;
 using System.Data.Common;
 
-namespace Finsa.Caravan.DataAccess.Sql.MySql
+namespace Finsa.Caravan.DataAccess.Drivers.Sql.MySql
 {
     internal sealed class MySqlDbManager : DbManagerBase
     {

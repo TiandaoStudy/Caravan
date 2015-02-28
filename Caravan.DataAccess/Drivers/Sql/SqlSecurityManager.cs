@@ -7,9 +7,9 @@ using AutoMapper;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Models.Security.Exceptions;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataAccess.Sql.Models.Security;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 
-namespace Finsa.Caravan.DataAccess.Sql
+namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
     internal sealed class SqlSecurityManager : SecurityManagerBase<SqlSecurityManager>
     {

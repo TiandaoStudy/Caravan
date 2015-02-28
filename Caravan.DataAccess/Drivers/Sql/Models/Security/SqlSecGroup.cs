@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Finsa.Caravan.DataAccess.Sql.Models.Security
+namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 {
     [Serializable]
     public class SqlSecGroup

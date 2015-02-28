@@ -8,7 +8,7 @@ using Finsa.Caravan.Common.Models.Security.Exceptions;
 using Finsa.Caravan.DataAccess.Core;
 using RestSharp;
 
-namespace Finsa.Caravan.DataAccess.Rest
+namespace Finsa.Caravan.DataAccess.Drivers.Rest
 {
     internal sealed class RestSecurityManager : SecurityManagerBase<RestSecurityManager>
     {

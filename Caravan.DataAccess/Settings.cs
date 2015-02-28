@@ -4,8 +4,8 @@ using AutoMapper;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.DataAccess.Sql.Models.Logging;
-using Finsa.Caravan.DataAccess.Sql.Models.Security;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 
 namespace Finsa.Caravan.DataAccess.Properties {
     

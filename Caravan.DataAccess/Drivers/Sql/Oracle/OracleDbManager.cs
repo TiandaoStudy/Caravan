@@ -4,7 +4,7 @@ using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Properties;
 using Oracle.ManagedDataAccess.Client;
 
-namespace Finsa.Caravan.DataAccess.Sql.Oracle
+namespace Finsa.Caravan.DataAccess.Drivers.Sql.Oracle
 {
     internal sealed class OracleDbManager : DbManagerBase
     {

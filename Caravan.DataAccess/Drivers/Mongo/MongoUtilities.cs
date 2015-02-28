@@ -1,14 +1,14 @@
 ﻿using System.Diagnostics;
 using System.Linq;
-using Finsa.Caravan.DataAccess.Mongo.DataModel;
-using Finsa.Caravan.DataAccess.Mongo.DataModel.Logging;
-using Finsa.Caravan.DataAccess.Mongo.DataModel.Security;
+using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel;
+using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Logging;
+using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Security;
 using Finsa.Caravan.DataAccess.Properties;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using PommaLabs.Extensions;
 
-namespace Finsa.Caravan.DataAccess.Mongo
+namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 {
    internal static class MongoUtilities
    {

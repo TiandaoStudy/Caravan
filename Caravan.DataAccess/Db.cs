@@ -7,16 +7,16 @@ using System.Globalization;
 using System.Linq;
 using System.Transactions;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.DataAccess.Mongo;
+using Finsa.Caravan.DataAccess.Drivers.Rest;
+using Finsa.Caravan.DataAccess.Drivers.Mongo;
 using Finsa.Caravan.DataAccess.Properties;
-using Finsa.Caravan.DataAccess.Rest;
-using Finsa.Caravan.DataAccess.Sql;
-using Finsa.Caravan.DataAccess.Sql.FakeSql;
-using Finsa.Caravan.DataAccess.Sql.MySql;
-using Finsa.Caravan.DataAccess.Sql.Oracle;
-using Finsa.Caravan.DataAccess.Sql.PostgreSql;
-using Finsa.Caravan.DataAccess.Sql.SqlServer;
-using Finsa.Caravan.DataAccess.Sql.SqlServerCe;
+using Finsa.Caravan.DataAccess.Drivers.Sql;
+using Finsa.Caravan.DataAccess.Drivers.Sql.FakeSql;
+using Finsa.Caravan.DataAccess.Drivers.Sql.MySql;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Oracle;
+using Finsa.Caravan.DataAccess.Drivers.Sql.PostgreSql;
+using Finsa.Caravan.DataAccess.Drivers.Sql.SqlServer;
+using Finsa.Caravan.DataAccess.Drivers.Sql.SqlServerCe;
 using PommaLabs.Diagnostics;
 using PommaLabs.KVLite;
 using RestSharp;
@@ -78,6 +78,8 @@ namespace Finsa.Caravan.DataAccess
 
         #endregion Public Properties - REST Driver
 
+        #region Public Properties - Common
+
         public static string ConnectionString
         {
             get
@@ -109,27 +111,7 @@ namespace Finsa.Caravan.DataAccess
             }
         }
 
-        #region EF Helpers
-
-        public static List<T> ToLogAndList<T>(this IQueryable<T> queryable)
-        {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            var list = queryable.ToList();
-            stopwatch.Stop();
-
-            // Logging query and execution time.
-            var logEntry = queryable.ToString();
-            var milliseconds = stopwatch.ElapsedMilliseconds;
-            Logger.LogDebugAsync<IDbManager>("EF generated query", logEntry, "Logging and timing the query", new[]
-            {
-                KeyValuePair.Create("milliseconds", milliseconds.ToString(CultureInfo.InvariantCulture))
-            });
-
-            return list;
-        }
-
-        #endregion EF Helpers
+        #endregion
 
         #region Methods that must be used _ONLY_ inside (or for) Unit Tests
 

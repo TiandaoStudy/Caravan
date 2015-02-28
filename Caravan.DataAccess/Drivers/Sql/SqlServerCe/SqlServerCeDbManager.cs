@@ -2,7 +2,7 @@ using System.Data.Common;
 using System.Data.SqlServerCe;
 using Finsa.Caravan.DataAccess.Core;
 
-namespace Finsa.Caravan.DataAccess.Sql.SqlServerCe
+namespace Finsa.Caravan.DataAccess.Drivers.Sql.SqlServerCe
 {
     internal sealed class SqlServerCeDbManager : DbManagerBase
     {

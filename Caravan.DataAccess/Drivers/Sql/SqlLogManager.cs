@@ -6,11 +6,11 @@ using System.Transactions;
 using AutoMapper;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataAccess.Sql.Models.Logging;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using PommaLabs.Diagnostics;
 using PommaLabs.Extensions;
 
-namespace Finsa.Caravan.DataAccess.Sql
+namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
     internal sealed class SqlLogManager : LogManagerBase<SqlLogManager>
     {

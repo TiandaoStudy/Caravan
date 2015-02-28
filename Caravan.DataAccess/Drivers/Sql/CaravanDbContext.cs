@@ -1,11 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess.Properties;
 using PommaLabs.Extensions;
 
-namespace Finsa.Caravan.DataAccess.Sql
+namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
     public static class CaravanDbContext
     {
@@ -37,6 +42,8 @@ namespace Finsa.Caravan.DataAccess.Sql
         }
 
         #endregion Construction
+
+        #region Public Methods
 
         public void SaveConcurrentChanges(Action<TCtx, DbUpdateConcurrencyException> onFailure)
         {
@@ -84,6 +91,8 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
         }
 
+        #endregion
+
         #region Private Methods
 
         private void Init()
@@ -92,5 +101,26 @@ namespace Finsa.Caravan.DataAccess.Sql
         }
 
         #endregion Private Methods
+    }
+
+    public static class QueryableExtensions
+    {
+        public static List<T> ToLogAndList<T>(this IQueryable<T> queryable)
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            var list = queryable.ToList();
+            stopwatch.Stop();
+
+            // Logging query and execution time.
+            var logEntry = queryable.ToString();
+            var milliseconds = stopwatch.ElapsedMilliseconds;
+            Db.Logger.LogDebugAsync<IDbManager>("EF generated query", logEntry, "Logging and timing the query", new[]
+            {
+                KeyValuePair.Create("milliseconds", milliseconds.ToString(CultureInfo.InvariantCulture))
+            });
+
+            return list;
+        }
     }
 }

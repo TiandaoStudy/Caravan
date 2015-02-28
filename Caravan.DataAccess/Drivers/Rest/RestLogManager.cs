@@ -1,13 +1,13 @@
-﻿using Finsa.Caravan.Common.Models.Logging;
+﻿using System;
+using System.Collections.Generic;
+using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.Common.Models.Rest;
 using Finsa.Caravan.Common.Models.Security.Exceptions;
 using Finsa.Caravan.DataAccess.Core;
 using RestSharp;
-using System;
-using System.Collections.Generic;
 
-namespace Finsa.Caravan.DataAccess.Rest
+namespace Finsa.Caravan.DataAccess.Drivers.Rest
 {
     internal sealed class RestLogManager : LogManagerBase<RestLogManager>
     {

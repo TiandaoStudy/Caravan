@@ -4,10 +4,10 @@ using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Properties;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using Finsa.Caravan.DataAccess.Sql.Models.Logging;
-using Finsa.Caravan.DataAccess.Sql.Models.Security;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 
-namespace Finsa.Caravan.DataAccess.Sql
+namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
     internal sealed class SqlDbContext : CaravanDbContext<SqlDbContext>
     {

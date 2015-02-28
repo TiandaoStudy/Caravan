@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 
-namespace Finsa.Caravan.DataAccess.Mongo.DataModel.Logging
+namespace Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Logging
 {
    internal class MongoLogEntry : MongoDocument
    {

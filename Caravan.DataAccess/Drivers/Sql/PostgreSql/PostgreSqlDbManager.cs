@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Finsa.Caravan.DataAccess.Core;
 using Npgsql;
 
-namespace Finsa.Caravan.DataAccess.Sql.PostgreSql
+namespace Finsa.Caravan.DataAccess.Drivers.Sql.PostgreSql
 {
     internal sealed class PostgreSqlDbManager : DbManagerBase
     {

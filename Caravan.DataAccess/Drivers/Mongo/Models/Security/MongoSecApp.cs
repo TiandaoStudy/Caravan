@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Finsa.Caravan.DataAccess.Mongo.DataModel.Logging;
+using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Logging;
 
-namespace Finsa.Caravan.DataAccess.Mongo.DataModel.Security
+namespace Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Security
 {
    internal class MongoSecApp : MongoDocument
    {
