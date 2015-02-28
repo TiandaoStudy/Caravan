@@ -24,7 +24,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override IList<SecApp> GetApps()
         {
-            using (var ctx = Db.CreateReadContext())
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var q = ctx.SecApps.Include(a => a.Users).Include(a => a.Groups).Include("Contexts.Objects").Include(a => a.LogSettings);
                 return q.OrderBy(a => a.Name)
@@ -36,7 +36,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override SecApp GetApp(string appName)
         {
-            using (var ctx = Db.CreateReadContext())
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var q = ctx.SecApps.Include(a => a.Users).Include(a => a.Groups).Include("Contexts.Objects").Include(a => a.LogSettings);
                 if (appName != null)
@@ -49,7 +49,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override bool DoAddApp(SecApp app)
         {
-            using (var ctx = Db.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var added = false;
                 if (!ctx.SecApps.Any(a => a.Name == app.Name))
@@ -72,7 +72,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override IList<SecGroup> GetGroups(string appName, string groupName)
         {
-            using (var ctx = Db.CreateReadContext())
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var q = ctx.SecGroups.Include(g => g.App).Include(g => g.Users);
                 var appId = GetAppIdByName(ctx, appName);
@@ -94,7 +94,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoAddGroup(string appName, SecGroup newGroup)
         {
             using (var trx = new TransactionScope())
-            using (var ctx = Db.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
                 var added = false;
@@ -119,7 +119,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoRemoveGroup(string appName, string groupName)
         {
             using (var trx = new TransactionScope())
-            using (var ctx = Db.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var removed = false;
                 var appId = GetAppIdByName(ctx, appName);
@@ -138,7 +138,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoUpdateGroup(string appName, string groupName, SecGroup newGroup)
         {
             using (var trx = new TransactionScope())
-            using (var ctx = Db.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var updated = false;
                 var appId = GetAppIdByName(ctx, appName);
@@ -167,7 +167,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override IList<SecUser> GetUsers(string appName, string userLogin)
         {
-            using (var ctx = Db.CreateReadContext())
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
                 var q = ctx.SecUsers.Include(u => u.App).Include(u => u.Groups).Where(u => u.AppId == appId);
@@ -186,7 +186,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoAddUser(string appName, SecUser newUser)
         {
             using (var trx = new TransactionScope())
-            using (var ctx = Db.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
                 var added = false;
@@ -213,7 +213,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoRemoveUser(string appName, string userLogin)
         {
             using (var trx = new TransactionScope())
-            using (var ctx = Db.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var removed = false;
                 var appId = GetAppIdByName(ctx, appName);
@@ -232,7 +232,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoUpdateUser(string appName, string userLogin, SecUser newUser)
         {
             using (var trx = new TransactionScope())
-            using (var ctx = Db.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var updated = false;
                 var appId = GetAppIdByName(ctx, appName);
@@ -259,7 +259,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoAddUserToGroup(string appName, string userLogin, string groupName)
         {
             using (var trx = new TransactionScope())
-            using (var ctx = Db.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
                 var user = GetUserByLogin(ctx, appId, userLogin);
@@ -279,7 +279,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoRemoveUserFromGroup(string appName, string userLogin, string groupName)
         {
             using (var trx = new TransactionScope())
-            using (var ctx = Db.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
                 var user = GetUserByLogin(ctx, appId, userLogin);
@@ -302,7 +302,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override IList<SecContext> GetContexts(string appName)
         {
-            using (var ctx = Db.CreateReadContext())
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
                 var q = ctx.SecContexts.Include(c => c.Objects);
@@ -323,7 +323,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override IList<SecObject> GetObjects(string appName, string contextName)
         {
-            using (var ctx = Db.CreateReadContext())
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var q = ctx.SecObjects.Include(o => o.SecEntries);
                 if (appName != null)
@@ -349,7 +349,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin)
         {
-            using (var ctx = Db.CreateReadContext())
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
 
@@ -382,7 +382,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
         {
             using (var trx = new TransactionScope())
-            using (var ctx = Db.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
                 var dbContext = ctx.SecContexts.FirstOrDefault(c => c.AppId == appId && c.Name == secContext.Name);
@@ -456,7 +456,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoRemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)
         {
             using (var trx = new TransactionScope())
-            using (var ctx = Db.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
                 //var entry = ctx.SecEntries.FirstOrDefault(e => e.AppId == appId && e.Context.Name == contextName && e.Object.Name == objectName && (e.User == null || e.User.Login == userLogin) && (e.Group == null || e.Group.Name == groupName));

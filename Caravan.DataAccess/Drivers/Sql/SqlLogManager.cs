@@ -34,7 +34,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 Raise<ArgumentOutOfRangeException>.If(argsList.Length > MaxArgumentCount);
 
                 using (var trx = new TransactionScope())
-                using (var ctx = Db.CreateWriteContext())
+                using (var ctx = SqlDbContext.CreateWriteContext())
                 {
                     var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
                     var typeId = logType.ToString().ToLower();
@@ -149,7 +149,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override IList<LogEntry> GetEntries(string appName, LogType? logType)
         {
-            using (var ctx = Db.CreateReadContext())
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var q = ctx.LogEntries.Include(s => s.App);
                 if (appName != null)
@@ -172,7 +172,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoRemoveEntry(string appName, int logId)
         {
             using (var trx = new TransactionScope())
-            using (var ctx = Db.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var deleted = false;
                 var log = ctx.LogEntries.FirstOrDefault(l => l.App.Name == appName && l.Id == logId);
@@ -190,7 +190,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override IList<LogSetting> GetSettings(string appName, LogType? logType)
         {
-            using (var ctx = Db.CreateReadContext())
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var q = ctx.LogSettings.Include(s => s.App);
                 if (appName != null)
@@ -213,7 +213,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoAddSetting(string appName, LogType logType, LogSetting setting)
         {
             using (var trx = new TransactionScope())
-            using (var ctx = Db.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var added = false;
                 var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
@@ -243,7 +243,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoRemoveSetting(string appName, LogType logType)
         {
             using (var trx = new TransactionScope())
-            using (var ctx = Db.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var deleted = false;
                 var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
@@ -264,7 +264,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoUpdateSetting(string appName, LogType logType, LogSetting setting)
         {
             using (var trx = new TransactionScope())
-            using (var ctx = Db.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var update = false;
                 var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();

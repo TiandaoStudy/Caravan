@@ -29,6 +29,20 @@ namespace Finsa.Caravan.DataAccess.Sql
         {
         }
 
+        public static SqlDbContext CreateReadContext()
+        {
+            var ctx = CreateWriteContext();
+            ctx.Configuration.ProxyCreationEnabled = false;
+            return ctx;
+        }
+
+        public static SqlDbContext CreateWriteContext()
+        {
+            var ctx = new SqlDbContext();
+            ctx.Database.Initialize(false);
+            return ctx;
+        }
+
         #region DB Sets
 
         public DbSet<SqlLogEntry> LogEntries { get; set; }

@@ -3,7 +3,7 @@ using System.Activities;
 using System.Collections.Generic;
 using Finsa.Caravan.Common.Models.Logging;
 
-namespace Finsa.Caravan.DataAccess.Activities
+namespace Finsa.Caravan.DataAccess.Activities.Logging
 {
     public abstract class LogActivityBase : CodeActivity<LogResult>
     {

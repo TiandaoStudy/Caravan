@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Linq;
 using System.Transactions;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Mongo;
 using Finsa.Caravan.DataAccess.Properties;
 using Finsa.Caravan.DataAccess.Rest;
@@ -35,7 +34,6 @@ namespace Finsa.Caravan.DataAccess
         private static ILogManager _logManagerInstance;
         private static ISecurityManager _securityManagerInstance;
         private static IDbManager _dbManagerInstance;
-        private static Func<SqlDbContext> _dbContextGenerator;
 
         static Db()
         {
@@ -111,15 +109,6 @@ namespace Finsa.Caravan.DataAccess
             }
         }
 
-        #region DbContext Generators
-
-        private static SqlDbContext SqlDbContextGenerator()
-        {
-            return new SqlDbContext();
-        }
-
-        #endregion DbContext Generators
-
         #region EF Helpers
 
         public static List<T> ToLogAndList<T>(this IQueryable<T> queryable)
@@ -140,20 +129,6 @@ namespace Finsa.Caravan.DataAccess
             return list;
         }
 
-        internal static SqlDbContext CreateReadContext()
-        {
-            var ctx = CreateWriteContext();
-            ctx.Configuration.ProxyCreationEnabled = false;
-            return ctx;
-        }
-
-        internal static SqlDbContext CreateWriteContext()
-        {
-            var ctx = _dbContextGenerator();
-            ctx.Database.Initialize(false);
-            return ctx;
-        }
-
         #endregion EF Helpers
 
         #region Methods that must be used _ONLY_ inside (or for) Unit Tests
@@ -172,7 +147,7 @@ namespace Finsa.Caravan.DataAccess
                     // A new connection is created and persisted for the whole test duration.
                     (Manager as FakeSqlDbManager).ResetConnection();
                     // The database is recreated, since it is in-memory and probably it does not exist.
-                    using (var ctx = CreateWriteContext())
+                    using (var ctx = SqlDbContext.CreateWriteContext())
                     {
                         ctx.Database.CreateIfNotExists();
                         Database.SetInitializer(new DropCreateDatabaseAlways<SqlDbContext>());
@@ -187,7 +162,7 @@ namespace Finsa.Caravan.DataAccess
                 case DataAccessKind.SqlServer:
                 case DataAccessKind.SqlServerCe:
                     using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
-                    using (var ctx = CreateWriteContext())
+                    using (var ctx = SqlDbContext.CreateWriteContext())
                     {
                         ctx.LogEntries.RemoveRange(ctx.LogEntries.ToList());
                         ctx.SaveChanges();
@@ -284,7 +259,6 @@ namespace Finsa.Caravan.DataAccess
                 case DataAccessKind.PostgreSql:
                 case DataAccessKind.SqlServer:
                 case DataAccessKind.SqlServerCe:
-                    _dbContextGenerator = SqlDbContextGenerator;
                     _logManagerInstance = new SqlLogManager();
                     _securityManagerInstance = new SqlSecurityManager();
                     break;
