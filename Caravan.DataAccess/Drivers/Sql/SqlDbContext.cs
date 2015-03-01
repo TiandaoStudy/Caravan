@@ -1,12 +1,18 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using Finsa.Caravan.DataAccess.Properties;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
-    internal sealed class SqlDbContext : CaravanDbContext<SqlDbContext>
+    internal sealed class SqlDbContext : DbContext
     {
         #region Constants
 
@@ -19,12 +25,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         static SqlDbContext()
         {
-            CaravanDbContext.Init<SqlDbContext>();
+            Database.SetInitializer(new CreateDatabaseIfNotExists<SqlDbContext>());
         }
 
         public SqlDbContext()
-            : base(Db.Manager.CreateConnection(), true)
+            : base(GetConnection(), true)
         {
+            Configuration.LazyLoadingEnabled = false;
         }
 
         public static SqlDbContext CreateReadContext()
@@ -39,6 +46,16 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             var ctx = new SqlDbContext();
             ctx.Database.Initialize(false);
             return ctx;
+        }
+
+        private static DbConnection GetConnection()
+        {
+            if (Db.Manager.Kind == DataAccessKind.FakeSql)
+            {
+                // Needed, otherwise Unit Tests fail.
+                return Db.Manager.OpenConnection();
+            }
+            return Db.Manager.CreateConnection();
         }
 
         #region DB Sets
@@ -199,6 +216,27 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 .WithMany(x => x.LogEntries)
                 .HasForeignKey(x => new { x.AppId, x.LogType })
                 .WillCascadeOnDelete(true);
+        }
+    }
+
+    public static class QueryableExtensions
+    {
+        public static List<T> ToLogAndList<T>(this IQueryable<T> queryable)
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            var list = queryable.ToList();
+            stopwatch.Stop();
+
+            // Logging query and execution time.
+            var logEntry = queryable.ToString();
+            var milliseconds = stopwatch.ElapsedMilliseconds;
+            Db.Logger.LogDebugAsync<IDbManager>("EF generated query", logEntry, "Logging and timing the query", new[]
+            {
+                KeyValuePair.Create("milliseconds", milliseconds.ToString(CultureInfo.InvariantCulture))
+            });
+
+            return list;
         }
     }
 }

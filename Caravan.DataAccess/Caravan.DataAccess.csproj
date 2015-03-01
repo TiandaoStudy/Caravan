@@ -161,7 +161,6 @@
     <Compile Include="Activities\Logging\LogActivityBase.cs" />
     <Compile Include="Drivers\Sql\Models\Security\SqlSecRole.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Drivers\Sql\CaravanDbContext.cs" />
     <Compile Include="Core\DbManagerBase.cs" />
     <Compile Include="Core\LogManagerBase.cs" />
     <Compile Include="Core\SecurityManagerBase.cs" />

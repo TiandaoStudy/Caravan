@@ -8,9 +8,6 @@
     <Setting Name="DataAccessKind" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Oracle</Value>
     </Setting>
-    <Setting Name="DefaultSaveChangesRetryCount" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">10</Value>
-    </Setting>
     <Setting Name="MongoDbName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">caravan</Value>
     </Setting>
