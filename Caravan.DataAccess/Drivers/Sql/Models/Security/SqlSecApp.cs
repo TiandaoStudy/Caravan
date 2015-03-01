@@ -15,9 +15,10 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 
         [Required, Column("CAPP_NAME", Order = 1)]
         [MaxLength(SqlDbContext.SmallLength)]
+        [Index("UK_CRVN_SEC_APPS", 0, IsUnique = true)]
         public string Name { get; set; }
 
-        [Required, Column("CAPP_DESCR", Order = 2)]
+        [Column("CAPP_DESCR", Order = 2)]
         [MaxLength(SqlDbContext.MediumLength)]
         public string Description { get; set; }
 

@@ -21,7 +21,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
         [Index("UK_CRVN_SEC_ROLES", 1, IsUnique = true)]
         public string Name { get; set; }
 
-        [Required, Column("CROL_DESCR", Order = 3)]
+        [Column("CROL_DESCR", Order = 3)]
         [MaxLength(SqlDbContext.MediumLength)]
         public string Description { get; set; }
 

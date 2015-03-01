@@ -21,22 +21,22 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
         [Index("UK_CRVN_SEC_USERS", 1, IsUnique = true)]
         public string Login { get; set; }
 
-        [Required, Column("CUSR_HASHED_PWD", Order = 3)]
+        [Column("CUSR_HASHED_PWD", Order = 3)]
         [MaxLength(SqlDbContext.MediumLength)]
         public string HashedPassword { get; set; }
 
         [Required, Column("CUSR_ACTIVE", Order = 4)]
         public bool Active { get; set; }
 
-        [Required, Column("CUSR_FIRST_NAME", Order = 5)]
+        [Column("CUSR_FIRST_NAME", Order = 5)]
         [MaxLength(SqlDbContext.MediumLength)]
         public string FirstName { get; set; }
 
-        [Required, Column("CUSR_LAST_NAME", Order = 6)]
+        [Column("CUSR_LAST_NAME", Order = 6)]
         [MaxLength(SqlDbContext.MediumLength)]
         public string LastName { get; set; }
 
-        [Required, Column("CUSR_EMAIL", Order = 7)]
+        [Column("CUSR_EMAIL", Order = 7)]
         [MaxLength(SqlDbContext.MediumLength)]
         public string Email { get; set; }
 

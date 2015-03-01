@@ -21,7 +21,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
         [Index("UK_CRVN_SEC_CONTEXTS", 1, IsUnique = true)]
         public string Name { get; set; }
 
-        [Required, Column("CCTX_DESCR", Order = 3)]
+        [Column("CCTX_DESCR", Order = 3)]
         [MaxLength(SqlDbContext.LargeLength)]
         public string Description { get; set; }
 
