@@ -25,7 +25,21 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         static SqlDbContext()
         {
-            Database.SetInitializer(new CreateDatabaseIfNotExists<SqlDbContext>());
+            switch (Settings.Default.SqlInitializer)
+            {
+                case "CreateDatabaseIfNotExists":
+                    Database.SetInitializer(new CreateDatabaseIfNotExists<SqlDbContext>());
+                    break;
+                case "DropCreateDatabaseAlways":
+                    Database.SetInitializer(new DropCreateDatabaseAlways<SqlDbContext>());
+                    break;
+                case "DropCreateDatabaseIfModelChanges":
+                    Database.SetInitializer(new DropCreateDatabaseIfModelChanges<SqlDbContext>());
+                    break;
+                default:
+                    Database.SetInitializer<SqlDbContext>(null);
+                    break;
+            }
         }
 
         public SqlDbContext()

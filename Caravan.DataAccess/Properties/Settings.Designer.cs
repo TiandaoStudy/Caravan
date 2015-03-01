@@ -85,5 +85,14 @@ namespace Finsa.Caravan.DataAccess.Properties {
                 return ((string)(this["SqlSchema"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("CreateDatabaseIfNotExists")]
+        public string SqlInitializer {
+            get {
+                return ((string)(this["SqlInitializer"]));
+            }
+        }
     }
 }

@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.WebApi.Models.Security;
-
-namespace Finsa.Caravan.WebApi.Properties
+﻿namespace Finsa.Caravan.WebApi.Properties
 {
     // This class allows you to handle specific events on the settings class:
     //  The SettingChanging event is raised before a setting's value is changed.
@@ -19,12 +15,6 @@ namespace Finsa.Caravan.WebApi.Properties
             //
             // this.SettingsSaving += this.SettingsSavingEventHandler;
             //
-        }
-
-        static Settings()
-        {
-            // Mappings
-            Mapper.CreateMap<SecApp, LinkedSecApp>();
         }
 
         private void SettingChangingEventHandler(object sender, System.Configuration.SettingChangingEventArgs e)

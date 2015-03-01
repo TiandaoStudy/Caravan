@@ -21,7 +21,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
         [Index("IX_CRVN_LOG_TYPE", 1)]
         public string LogType { get; set; }
 
-        [Required, Column("CLOG_TYPE", Order = 3)]
+        [Required, Column("CLOG_DATE", Order = 3)]
         [Index("IX_CRVN_LOG_DATE", 1)]
         public DateTime Date { get; set; }
 
