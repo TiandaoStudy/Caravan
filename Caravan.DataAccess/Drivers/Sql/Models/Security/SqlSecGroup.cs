@@ -5,28 +5,29 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 {
-    [Serializable]
+    [Serializable, Table("CRVN_SEC_GROUPS")]
     public class SqlSecGroup
     {
-        [Key, Column(Order = 0)]
-        [Index("UK_CARAVAN_SEC_GROUP", 0, IsUnique = true)]
-        public long AppId { get; set; }
+        [Key, Column("CGRP_ID", Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
-        [Key, Column(Order = 1), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+        [Required, Column("CAPP_ID", Order = 1)]
+        [Index("UK_CRVN_SEC_GROUPS", 0, IsUnique = true)]
+        public int AppId { get; set; }
 
-        [Required, Column(Order = 2), MaxLength(SqlDbContext.SmallLength)]
-        [Index("UK_CARAVAN_SEC_GROUP", 1, IsUnique = true)]
+        [Required, Column("CGRP_NAME", Order = 2)]
+        [MaxLength(SqlDbContext.SmallLength)]
+        [Index("UK_CRVN_SEC_GROUPS", 1, IsUnique = true)]
         public string Name { get; set; }
 
-        [Required, Column(Order = 3), MaxLength(SqlDbContext.MediumLength)]
+        [Required, Column("CGRP_DESCR", Order = 3)]
+        [MaxLength(SqlDbContext.MediumLength)]
         public string Description { get; set; }
 
-        [Column(Order = 4), MaxLength(SqlDbContext.LargeLength)]
+        [Column("CGRP_NOTES", Order = 4)]
+        [MaxLength(SqlDbContext.LargeLength)]
         public string Notes { get; set; }
-
-        [Required, Column(Order = 5)] // <-- USARE RUOLI???
-        public int IsAdmin { get; set; }
 
         #region Relationships
 

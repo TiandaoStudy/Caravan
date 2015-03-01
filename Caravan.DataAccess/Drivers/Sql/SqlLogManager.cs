@@ -19,9 +19,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         private const int MaxArgumentCount = 10;
         private const int MaxStringLength = 2000;
 
-        private const int TrueInt = 1;
-        private const int FalseInt = 0;
-
         #endregion Constants
 
         protected override LogResult DoLogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function,
@@ -60,7 +57,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     }
 
                     // If log is enabled, then we can insert a new entry
-                    if (settings.Enabled == 1)
+                    if (settings.Enabled)
                     {
                         var entry = new SqlLogEntry
                         {
@@ -225,7 +222,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     {
                         AppId = appId,
                         Days = setting.Days,
-                        Enabled = setting.Enabled ? TrueInt : FalseInt,
+                        Enabled = setting.Enabled,
                         MaxEntries = setting.MaxEntries,
                         LogType = typeId
                     };
@@ -275,7 +272,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 if (settingToUpdate != null)
                 {
                     settingToUpdate.Days = setting.Days;
-                    settingToUpdate.Enabled = setting.Enabled ? TrueInt : FalseInt;
+                    settingToUpdate.Enabled = setting.Enabled;
                     settingToUpdate.MaxEntries = setting.MaxEntries;
                     update = true;
                 }

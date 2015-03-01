@@ -13,13 +13,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
     internal sealed class SqlSecurityManager : SecurityManagerBase<SqlSecurityManager>
     {
-        #region Constants
-
-        private const int TrueInt = 1;
-        private const int FalseInt = 0;
-
-        #endregion Constants
-
         #region Apps
 
         protected override IList<SecApp> GetApps()
@@ -104,7 +97,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     {
                         AppId = appId,
                         Description = newGroup.Description ?? String.Empty,
-                        IsAdmin = newGroup.IsAdmin ? TrueInt : FalseInt,
                         Name = newGroup.Name,
                         Notes = newGroup.Notes ?? String.Empty
                     });
@@ -151,7 +143,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     }
                     grp.Name = newGroup.Name;
                     grp.Description = newGroup.Description ?? String.Empty;
-                    grp.IsAdmin = newGroup.IsAdmin ? TrueInt : FalseInt;
                     grp.Notes = newGroup.Notes ?? String.Empty;
                     updated = true;
                 }
@@ -195,7 +186,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     ctx.SecUsers.Add(new SqlSecUser
                     {
                         AppId = appId,
-                        Active = newUser.Active ? TrueInt : FalseInt,
+                        Active = newUser.Active,
                         Email = newUser.Email,
                         FirstName = newUser.FirstName,
                         HashedPassword = newUser.HashedPassword,
@@ -247,7 +238,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     user.LastName = newUser.LastName;
                     user.Email = newUser.Email;
                     user.Login = newUser.Login;
-                    user.Active = newUser.Active ? TrueInt : FalseInt;
+                    user.Active = newUser.Active;
                     updated = true;
                 }
                 ctx.SaveChanges();
@@ -328,13 +319,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 var q = ctx.SecObjects.Include(o => o.SecEntries);
                 if (appName != null)
                 {
-                    q = q.Where(o => o.App.Name == appName);
+                    q = q.Where(o => o.Context.App.Name == appName);
                 }
                 if (contextName != null)
                 {
                     q = q.Where(o => o.Context.Name == contextName);
                 }
-                return q.OrderBy(o => o.App.Name)
+                return q.OrderBy(o => o.Context.App.Name)
                     .ThenBy(o => o.Context.Name)
                     .ThenBy(o => o.Name)
                     .AsEnumerable()
@@ -353,14 +344,14 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             {
                 var appId = GetAppIdByName(ctx, appName);
 
-                var q = ctx.SecEntries.Include(e => e.App).Include(e => e.Context).Include(e => e.Object).Include(e => e.User).Include(e => e.Group);
+                var q = ctx.SecEntries.Include(e => e.Object).Include(e => e.User).Include(e => e.Group);
                 if (appName != null)
                 {
-                    q = q.Where(e => e.AppId == appId);
+                    q = q.Where(e => e.Object.Context.AppId == appId);
                 }
                 if (contextName != null)
                 {
-                    q = q.Where(e => e.Context.Name == contextName);
+                    q = q.Where(e => e.Object.Context.Name == contextName);
                 }
                 if (objectName != null)
                 {
@@ -401,12 +392,11 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 {
                     dbContext.Description = secContext.Description;
                 }
-                var dbObject = ctx.SecObjects.FirstOrDefault(o => o.AppId == appId && o.ContextId == dbContext.Id && o.Name == secObject.Name);
+                var dbObject = ctx.SecObjects.FirstOrDefault(o => o.Context.AppId == appId && o.ContextId == dbContext.Id && o.Name == secObject.Name);
                 if (dbObject == null)
                 {
                     dbObject = new SqlSecObject
                     {
-                        AppId = appId,
                         ContextId = dbContext.Id,
                         Name = secObject.Name,
                         Description = secObject.Description,
@@ -420,17 +410,17 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     dbObject.Description = secObject.Description;
                     dbObject.Type = secObject.Type;
                 }
-                var q = ctx.SecEntries.Where(e => e.AppId == appId && e.ContextId == dbContext.Id && e.ObjectId == dbObject.Id);
+                var q = ctx.SecEntries.Where(e => e.Object.Context.AppId == appId && e.Object.ContextId == dbContext.Id && e.ObjectId == dbObject.Id);
                 long? userId = null;
                 if (!String.IsNullOrWhiteSpace(userLogin))
                 {
                     userId = ctx.SecUsers.Where(u => u.AppId == appId && u.Login == userLogin).Select(u => (long?) u.Id).FirstOrDefault();
                     q = q.Where(e => e.UserId == userId);
                 }
-                long? groupId = null;
+                int? groupId = null;
                 if (!String.IsNullOrWhiteSpace(groupName))
                 {
-                    groupId = ctx.SecGroups.Where(g => g.AppId == appId && g.Name == groupName).Select(g => (long?) g.Id).FirstOrDefault();
+                    groupId = ctx.SecGroups.Where(g => g.AppId == appId && g.Name == groupName).Select(g => (int?) g.Id).FirstOrDefault();
                     q = q.Where(e => e.GroupId == groupId);
                 }
                 var added = false;
@@ -438,10 +428,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 {
                     var secEntry = new SqlSecEntry
                     {
-                        AppId = appId,
                         UserId = userId,
                         GroupId = groupId,
-                        ContextId = dbContext.Id,
                         ObjectId = dbObject.Id
                     };
                     ctx.SecEntries.Add(secEntry);
@@ -461,7 +449,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 var appId = GetAppIdByName(ctx, appName);
                 //var entry = ctx.SecEntries.FirstOrDefault(e => e.AppId == appId && e.Context.Name == contextName && e.Object.Name == objectName && (e.User == null || e.User.Login == userLogin) && (e.Group == null || e.Group.Name == groupName));
 
-                var q = ctx.SecEntries.Include(e => e.App).Include(e => e.Context).Include(e => e.Object).Include(e => e.User).Include(e => e.Group);
+                var q = ctx.SecEntries.Include(e => e.Object).Include(e => e.User).Include(e => e.Group);
 
                 if (userLogin != null)
                 {
@@ -485,9 +473,9 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         #region Private Methods
 
-        private static long GetAppIdByName(SqlDbContext ctx, string appName)
+        private static int GetAppIdByName(SqlDbContext ctx, string appName)
         {
-            var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => (long?) a.Id).FirstOrDefault();
+            var appId = ctx.SecApps.Where(a => a.Name == appName).Select(a => (int?) a.Id).FirstOrDefault();
             if (appId == null)
             {
                 throw new SecAppNotFoundException();

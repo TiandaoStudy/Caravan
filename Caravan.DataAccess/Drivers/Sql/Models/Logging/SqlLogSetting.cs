@@ -6,22 +6,29 @@ using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
 {
-    [Serializable]
+    [Serializable, Table("CRVN_LOG_SETTINGS")]
     public class SqlLogSetting
     {
-        [Key, Column(Order = 0)]
-        public long AppId { get; set; }
+        [Key, Column("CLOS_ID", Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
-        [Key, Column(Order = 1), MaxLength(SqlDbContext.TinyLength)]
+        [Required, Column("CAPP_ID", Order = 1)]
+        [Index("UK_CRVN_LOG_SETTINGS", 0, IsUnique = true)]
+        public int AppId { get; set; }
+
+        [Required, Column("CLOS_TYPE", Order = 2)]
+        [MaxLength(SqlDbContext.TinyLength)]
+        [Index("UK_CRVN_LOG_SETTINGS", 1, IsUnique = true)]
         public string LogType { get; set; }
 
-        [Required, Column(Order = 2)]
-        public int Enabled { get; set; }
+        [Required, Column("CLOS_ENABLED", Order = 3)]
+        public bool Enabled { get; set; }
 
-        [Required, Column(Order = 3)]
-        public int Days { get; set; }
+        [Required, Column("CLOS_DAYS", Order = 4)]
+        public short Days { get; set; }
 
-        [Required, Column(Order = 4)]
+        [Required, Column("CLOS_MAX_ENTRIES", Order = 5)]
         public int MaxEntries { get; set; }
 
         #region Relationships

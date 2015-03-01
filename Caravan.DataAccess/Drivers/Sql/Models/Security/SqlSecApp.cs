@@ -6,16 +6,19 @@ using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 {
-    [Serializable]
+    [Serializable, Table("CRVN_SEC_APPS")]
     public class SqlSecApp
     {
-        [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+        [Key, Column("CAPP_ID", Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
-        [Required, Column(Order = 1), MaxLength(SqlDbContext.SmallLength)]
+        [Required, Column("CAPP_NAME", Order = 1)]
+        [MaxLength(SqlDbContext.SmallLength)]
         public string Name { get; set; }
 
-        [Required, Column(Order = 2), MaxLength(SqlDbContext.MediumLength)]
+        [Required, Column("CAPP_DESCR", Order = 2)]
+        [MaxLength(SqlDbContext.MediumLength)]
         public string Description { get; set; }
 
         #region Relationships

@@ -4,36 +4,27 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 {
-    [Serializable]
+    [Serializable, Table("CRVN_SEC_ENTRIES")]
     public class SqlSecEntry
     {
-        [Key, Column(Order = 0), Index("IDX_CARAVAN_SECURITY_CTX", 0)]
-        public long AppId { get; set; }
-
-        [Key, Column(Order = 1), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, Column("CSEC_ID", Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
-        [Required, Column(Order = 2), Index("IDX_CARAVAN_SECURITY_CTX", 1)]
-        public long ContextId { get; set; }
+        [Required, Column("COBJ_ID", Order = 1)]
+        public int ObjectId { get; set; }
 
-        [Required, Column(Order = 3)]
-        public long ObjectId { get; set; }
-
-        [Column(Order = 4)]
+        [Column("CUSR_ID", Order = 2)]
         public long? UserId { get; set; }
 
-        [Column(Order = 5)]
-        public long? GroupId { get; set; }
+        [Column("CGRP_ID", Order = 3)]
+        public int? GroupId { get; set; }
 
         #region Relationships
-
-        public SqlSecApp App { get; set; }
 
         public SqlSecUser User { get; set; }
 
         public SqlSecGroup Group { get; set; }
-
-        public SqlSecContext Context { get; set; }
 
         public SqlSecObject Object { get; set; }
 

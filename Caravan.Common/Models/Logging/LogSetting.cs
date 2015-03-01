@@ -22,7 +22,7 @@ namespace Finsa.Caravan.Common.Models.Logging
         public bool Enabled { get; set; }
 
         [JsonProperty(Order = 3), DataMember(Order = 3)]
-        public int Days { get; set; }
+        public short Days { get; set; }
 
         [JsonProperty(Order = 4), DataMember(Order = 4)]
         public int MaxEntries { get; set; }

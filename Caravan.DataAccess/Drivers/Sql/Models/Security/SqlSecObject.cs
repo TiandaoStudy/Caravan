@@ -5,32 +5,33 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 {
-    [Serializable]
+    [Serializable, Table("CRVN_SEC_OBJECTS")]
     public class SqlSecObject
     {
-        [Key, Column(Order = 0), Index("UK_CARAVAN_SEC_OBJECT", 0, IsUnique = true)]
-        public long AppId { get; set; }
+        [Key, Column("COBJ_ID", Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
-        [Key, Column(Order = 1), Index("UK_CARAVAN_SEC_OBJECT", 1, IsUnique = true)]
-        public long ContextId { get; set; }
+        [Required, Column("CCTX_ID", Order = 1)]
+        [Index("UK_CRVN_SEC_OBJECTS", 0, IsUnique = true)]
+        public int ContextId { get; set; }
 
-        [Key, Column(Order = 2), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
-
-        [Required, Column(Order = 3), Index("UK_CARAVAN_SEC_OBJECT", 2, IsUnique = true), MaxLength(SqlDbContext.SmallLength)]
+        [Required, Column("COBJ_NAME", Order = 2)]
+        [MaxLength(SqlDbContext.SmallLength)]
+        [Index("UK_CRVN_SEC_OBJECTS", 1, IsUnique = true)]
         public string Name { get; set; }
 
-        [Required, Column(Order = 4), MaxLength(SqlDbContext.MediumLength)]
+        [Required, Column("COBJ_DESCR", Order = 4)]
+        [MaxLength(SqlDbContext.MediumLength)]
         public string Description { get; set; }
 
-        [Required, Column(Order = 5), MaxLength(SqlDbContext.TinyLength)]
+        [Required, Column("COBJ_TYPE", Order = 5)]
+        [MaxLength(SqlDbContext.TinyLength)]
         public string Type { get; set; }
 
         #region Relationships
 
         public SqlSecContext Context { get; set; }
-
-        public SqlSecApp App { get; set; }
 
         public virtual ICollection<SqlSecEntry> SecEntries { get; set; }
 

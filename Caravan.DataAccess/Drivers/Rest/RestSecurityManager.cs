@@ -148,8 +148,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
                     Body = new SecGroup
                        {
                            Description = newGroup.Description,
-                           Name = newGroup.Name,
-                           IsAdmin = newGroup.IsAdmin
+                           Name = newGroup.Name
                        }
                 });
 
@@ -215,8 +214,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
                     Body = new SecGroup
                        {
                            Description = newGroup.Description,
-                           Name = newGroup.Name,
-                           IsAdmin = newGroup.IsAdmin
+                           Name = newGroup.Name
                        }
                 });
 

@@ -5,33 +5,39 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 {
-    [Serializable]
+    [Serializable, Table("CRVN_SEC_USERS")]
     public class SqlSecUser
     {
-        [Key, Column("CAPP_ID", Order = 0)]
-        [Index("UK_CARAVAN_SEC_USER", 0, IsUnique = true)]
-        public long AppId { get; set; }
-
-        [Key, Column(Order = 1), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, Column("CUSR_ID", Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
-        [Required, Column(Order = 2), MaxLength(SqlDbContext.SmallLength)]
-        [Index("UK_CARAVAN_SEC_USER", 1, IsUnique = true)]
+        [Required, Column("CAPP_ID", Order = 1)]
+        [Index("UK_CRVN_SEC_USERS", 0, IsUnique = true)]
+        public int AppId { get; set; }
+
+        [Required, Column("CUSR_LOGIN", Order = 2)]
+        [MaxLength(SqlDbContext.SmallLength)]
+        [Index("UK_CRVN_SEC_USERS", 1, IsUnique = true)]
         public string Login { get; set; }
 
-        [Required, Column(Order = 3)]
-        public int Active { get; set; }
-
-        [Required, Column(Order = 4), MaxLength(SqlDbContext.MediumLength)]
+        [Required, Column("CUSR_HASHED_PWD", Order = 3)]
+        [MaxLength(SqlDbContext.MediumLength)]
         public string HashedPassword { get; set; }
 
-        [Required, Column(Order = 5), MaxLength(SqlDbContext.MediumLength)]
+        [Required, Column("CUSR_ACTIVE", Order = 4)]
+        public bool Active { get; set; }
+
+        [Required, Column("CUSR_FIRST_NAME", Order = 5)]
+        [MaxLength(SqlDbContext.MediumLength)]
         public string FirstName { get; set; }
 
-        [Required, Column(Order = 6), MaxLength(SqlDbContext.MediumLength)]
+        [Required, Column("CUSR_LAST_NAME", Order = 6)]
+        [MaxLength(SqlDbContext.MediumLength)]
         public string LastName { get; set; }
 
-        [Required, Column(Order = 7), MaxLength(SqlDbContext.MediumLength)]
+        [Required, Column("CUSR_EMAIL", Order = 7)]
+        [MaxLength(SqlDbContext.MediumLength)]
         public string Email { get; set; }
 
         #region Relationships

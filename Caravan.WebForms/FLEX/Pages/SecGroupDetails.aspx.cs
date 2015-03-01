@@ -103,7 +103,6 @@ namespace Finsa.Caravan.WebForms.Pages
          txtGrpName.Text = group.Name;
          txtGrpDescr.Text = group.Description;
          txtNotes.Text = group.Notes;
-         chkAdmin.Checked = group.IsAdmin;
       }
 
       private void MostraMultiSelectForEdit()
@@ -153,7 +152,7 @@ namespace Finsa.Caravan.WebForms.Pages
 
             if (Mode == NewMode)
             {
-               var newGroup = new SecGroup { Name = txtGrpName.Text, Description = txtGrpDescr.Text, Notes = txtNotes.Text, IsAdmin = chkAdmin.Checked };
+               var newGroup = new SecGroup { Name = txtGrpName.Text, Description = txtGrpDescr.Text, Notes = txtNotes.Text };
                Db.Security.AddGroup(Common.Properties.Settings.Default.ApplicationName, newGroup);
 
                if (crvnMultiSelectUsersGroups.RightDataTable != null) 
@@ -198,7 +197,7 @@ namespace Finsa.Caravan.WebForms.Pages
                     }
                 }
 
-               var newGroup = new SecGroup { Name = txtGrpName.Text, Description = txtGrpDescr.Text, Notes= txtNotes.Text ,IsAdmin = chkAdmin.Checked };
+               var newGroup = new SecGroup { Name = txtGrpName.Text, Description = txtGrpDescr.Text, Notes= txtNotes.Text };
                Db.Security.UpdateGroup(Common.Properties.Settings.Default.ApplicationName, GroupName, newGroup);
             }
             Master.RegisterCloseScript(this);
