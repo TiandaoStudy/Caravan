@@ -1,19 +1,18 @@
 ﻿-- REPLACE 'mydb' WITH DB NAME
 
-CREATE TABLE mydb.caravan_log_settings
+CREATE TABLE mydb.crvn_log_settings
 (
-     clos_type        NVARCHAR2(5)    NOT NULL
-   , capp_id          NUMBER          NOT NULL
+     capp_id          NUMBER          NOT NULL
+   , clos_type        NVARCHAR2(8)    NOT NULL
    , clos_enabled     NUMBER(1)       NOT NULL
    , clos_days        NUMBER(3)       NOT NULL
    , clos_max_entries NUMBER(7)       NOT NULL
    , CHECK (clos_type IN ('debug', 'info', 'warn', 'error', 'fatal')) ENABLE
    , CHECK (clos_enabled IN (0,1)) ENABLE
    , CHECK (clos_days > 0 AND clos_max_entries > 0) ENABLE
-   , CONSTRAINT pk_caravan_log_settings PRIMARY KEY (clos_type, capp_id) USING INDEX TABLESPACE dati_base_index ENABLE
+   , CONSTRAINT pk_caravan_log_settings PRIMARY KEY (capp_id, clos_type) ENABLE
    , CONSTRAINT fk_crvnlogsettings_crvnsecapp FOREIGN KEY (capp_id) REFERENCES mydb.caravan_sec_app (capp_id) ON DELETE CASCADE ENABLE
-)
-TABLESPACE dati_base;
+);
 
 COMMENT ON TABLE mydb.caravan_log_settings IS 'Tabelle delle impostazioni del sistema di logging delle applicazioni FINSA';
 COMMENT ON COLUMN mydb.caravan_log_settings.clos_type IS 'Tipo di logging, può assumere i valori debug, info, warn, error, fatal';

@@ -221,7 +221,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="README.md" />
-    <None Include="Drivers\Sql\SqlServerCe\Scripts\Tables.sqlce" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_roles.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_user_roles.sql" />
+    <Content Include="Drivers\Sql\SqlServerCe\Scripts\Schema.sql" />
     <None Include="Drivers\Sql\SqlServer\Scripts\Tables.sqlce" />
   </ItemGroup>
   <ItemGroup>
@@ -233,15 +235,15 @@
   <ItemGroup>
     <Content Include="Drivers\Sql\Oracle\Scripts\grants.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Packages\pck_caravan_log.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\caravan_log.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\caravan_sec_group.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\caravan_log_settings.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\caravan_sec_user.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\caravan_sec_user_group.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\caravan_sec_object.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\caravan_sec_app.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\caravan_sec_context.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\caravan_security.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_log_entries.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_groups.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_log_settings.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_users.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_user_groups.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_objects.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_apps.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_contexts.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_entries.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\caravan_security_id.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\caravan_sec_object_id.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\caravan_sec_group_id.sql" />
@@ -249,11 +251,11 @@
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\caravan_sec_user_id.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\caravan_sec_app_id.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\caravan_log_id.sql" />
+    <Content Include="Drivers\Sql\PostgreSql\Scripts\Schema.sql" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Activities\Security\" />
     <Folder Include="Drivers\Sql\MySql\Scripts\" />
-    <Folder Include="Drivers\Sql\PostgreSql\Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\ErrorMessages.resx">
