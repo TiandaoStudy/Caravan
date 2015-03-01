@@ -1,18 +1,19 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 {
     [Serializable]
     public class SqlSecEntry
     {
-        [Required]
-        public long Id { get; set; }
-
-        [Required]
+        [Key, Index("IDX_CARAVAN_SECURITY_CTX")]
         public long AppId { get; set; }
 
-        [Required]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id { get; set; }
+
+        [Required, Index("IDX_CARAVAN_SECURITY_CTX")]
         public long ContextId { get; set; }
 
         [Required]

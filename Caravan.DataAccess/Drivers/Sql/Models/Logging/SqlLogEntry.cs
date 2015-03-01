@@ -8,10 +8,10 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
     [Serializable]
     public class SqlLogEntry
     {
-        [Required, Index("IDX_CARAVAN_LOG_SETTINGS")]
+        [Key, Index("IDX_CARAVAN_LOG_SETTINGS"), Index("IDX_CARAVAN_LOG_DATE")]
         public long AppId { get; set; }
 
-        [Required]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
         [Required, MaxLength(SqlDbContext.TinyLength), Index("IDX_CARAVAN_LOG_SETTINGS")]

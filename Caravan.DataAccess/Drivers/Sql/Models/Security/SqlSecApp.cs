@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
@@ -8,7 +9,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
     [Serializable]
     public class SqlSecApp
     {
-        [Required]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
         [Required, MaxLength(SqlDbContext.SmallLength)]

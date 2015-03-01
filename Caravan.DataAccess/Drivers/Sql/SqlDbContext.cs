@@ -72,9 +72,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
              ************************************************/
 
             mb.Entity<SqlSecApp>().ToTable("CARAVAN_SEC_APP", Settings.Default.SqlSchema);
-            mb.Entity<SqlSecApp>().HasKey(x => x.Id);
 
-            mb.Entity<SqlSecApp>().Property(x => x.Id).HasColumnName("CAPP_ID").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            mb.Entity<SqlSecApp>().Property(x => x.Id).HasColumnName("CAPP_ID");
             mb.Entity<SqlSecApp>().Property(x => x.Name).HasColumnName("CAPP_NAME");
             mb.Entity<SqlSecApp>().Property(x => x.Description).HasColumnName("CAPP_DESCRIPTION");
 
@@ -83,9 +82,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
              ************************************************/
 
             mb.Entity<SqlSecUser>().ToTable("CARAVAN_SEC_USER", Settings.Default.SqlSchema);
-            mb.Entity<SqlSecUser>().HasKey(x => new { x.Id, x.AppId });
 
-            mb.Entity<SqlSecUser>().Property(x => x.Id).HasColumnName("CUSR_ID").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            mb.Entity<SqlSecUser>().Property(x => x.Id).HasColumnName("CUSR_ID");
             mb.Entity<SqlSecUser>().Property(x => x.AppId).HasColumnName("CAPP_ID");
             mb.Entity<SqlSecUser>().Property(x => x.Active).HasColumnName("CUSR_ACTIVE");
             mb.Entity<SqlSecUser>().Property(x => x.Login).HasColumnName("CUSR_LOGIN");
@@ -105,9 +103,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
              ************************************************/
 
             mb.Entity<SqlSecGroup>().ToTable("CARAVAN_SEC_GROUP", Settings.Default.SqlSchema);
-            mb.Entity<SqlSecGroup>().HasKey(x => new { x.Id, x.AppId });
 
-            mb.Entity<SqlSecGroup>().Property(x => x.Id).HasColumnName("CGRP_ID").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            mb.Entity<SqlSecGroup>().Property(x => x.Id).HasColumnName("CGRP_ID");
             mb.Entity<SqlSecGroup>().Property(x => x.AppId).HasColumnName("CAPP_ID");
             mb.Entity<SqlSecGroup>().Property(x => x.Name).HasColumnName("CGRP_NAME");
             mb.Entity<SqlSecGroup>().Property(x => x.Description).HasColumnName("CGRP_DESCRIPTION");
@@ -131,9 +128,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
              ************************************************/
 
             mb.Entity<SqlSecContext>().ToTable("CARAVAN_SEC_CONTEXT", Settings.Default.SqlSchema);
-            mb.Entity<SqlSecContext>().HasKey(x => new { x.Id, x.AppId });
 
-            mb.Entity<SqlSecContext>().Property(x => x.Id).HasColumnName("CCTX_ID").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            mb.Entity<SqlSecContext>().Property(x => x.Id).HasColumnName("CCTX_ID");
             mb.Entity<SqlSecContext>().Property(x => x.AppId).HasColumnName("CAPP_ID");
             mb.Entity<SqlSecContext>().Property(x => x.Name).HasColumnName("CCTX_NAME");
             mb.Entity<SqlSecContext>().Property(x => x.Description).HasColumnName("CCTX_DESCRIPTION");
@@ -149,9 +145,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
              ************************************************/
 
             mb.Entity<SqlSecObject>().ToTable("CARAVAN_SEC_OBJECT", Settings.Default.SqlSchema);
-            mb.Entity<SqlSecObject>().HasKey(x => new { x.Id, x.ContextId, x.AppId });
 
-            mb.Entity<SqlSecObject>().Property(x => x.Id).HasColumnName("COBJ_ID").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            mb.Entity<SqlSecObject>().Property(x => x.Id).HasColumnName("COBJ_ID");
             mb.Entity<SqlSecObject>().Property(x => x.ContextId).HasColumnName("CCTX_ID");
             mb.Entity<SqlSecObject>().Property(x => x.AppId).HasColumnName("capp_id");
             mb.Entity<SqlSecObject>().Property(x => x.Name).HasColumnName("COBJ_NAME");
@@ -162,7 +157,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             mb.Entity<SqlSecObject>()
                .HasRequired<SqlSecContext>(x => x.Context)
                .WithMany(x => x.Objects)
-               .HasForeignKey(x => new { x.ContextId, x.AppId });
+               .HasForeignKey(x => new { x.AppId, x.ContextId });
 
             // SqlSecObject(N) <-> SqlSecApp(1)
             mb.Entity<SqlSecObject>()
@@ -175,9 +170,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
              ************************************************/
 
             mb.Entity<SqlSecEntry>().ToTable("CARAVAN_SECURITY", Settings.Default.SqlSchema);
-            mb.Entity<SqlSecEntry>().HasKey(x => new { x.Id, x.AppId });
 
-            mb.Entity<SqlSecEntry>().Property(x => x.Id).HasColumnName("CSEC_ID").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            mb.Entity<SqlSecEntry>().Property(x => x.Id).HasColumnName("CSEC_ID");
             mb.Entity<SqlSecEntry>().Property(x => x.AppId).HasColumnName("CAPP_ID");
             mb.Entity<SqlSecEntry>().Property(x => x.UserId).HasColumnName("CUSR_ID");
             mb.Entity<SqlSecEntry>().Property(x => x.GroupId).HasColumnName("CGRP_ID");
@@ -194,32 +188,31 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             mb.Entity<SqlSecEntry>()
                .HasOptional<SqlSecUser>(x => x.User)
                .WithMany(x => x.SecEntries)
-               .HasForeignKey(x => new { x.UserId, x.AppId });
+               .HasForeignKey(x => new { x.AppId, x.UserId });
 
             // SqlSecEntry(N) <-> SqlSecGroup(1)
             mb.Entity<SqlSecEntry>()
                .HasOptional<SqlSecGroup>(x => x.Group)
                .WithMany(x => x.SecEntries)
-               .HasForeignKey(x => new { x.GroupId, x.AppId });
+               .HasForeignKey(x => new { x.AppId, x.GroupId });
 
             // SqlSecEntry(N) <-> SqlSecContext(1)
             mb.Entity<SqlSecEntry>()
                 .HasRequired<SqlSecContext>(x => x.Context)
                 .WithMany(x => x.SecEntries)
-                .HasForeignKey(x => new { x.ContextId, x.AppId });
+                .HasForeignKey(x => new { x.AppId, x.ContextId });
 
             // SqlSecEntry(N) <-> SqlSecObject(1)
             mb.Entity<SqlSecEntry>()
                 .HasRequired<SqlSecObject>(x => x.Object)
                 .WithMany(x => x.SecEntries)
-                .HasForeignKey(x => new { x.ObjectId, x.ContextId, x.AppId });
+                .HasForeignKey(x => new { x.AppId, x.ContextId, x.ObjectId });
 
             /************************************************
              * SqlLogSettings
              ************************************************/
 
             mb.Entity<SqlLogSetting>().ToTable("CARAVAN_LOG_SETTINGS", Settings.Default.SqlSchema);
-            mb.Entity<SqlLogSetting>().HasKey(x => new { x.AppId, x.LogType });
 
             mb.Entity<SqlLogSetting>().Property(x => x.AppId).HasColumnName("CAPP_ID");
             mb.Entity<SqlLogSetting>().Property(x => x.LogType).HasColumnName("CLOS_TYPE");
@@ -238,9 +231,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
              ************************************************/
 
             mb.Entity<SqlLogEntry>().ToTable("CARAVAN_LOG", Settings.Default.SqlSchema);
-            mb.Entity<SqlLogEntry>().HasKey(x => new { x.Id, x.AppId });
 
-            mb.Entity<SqlLogEntry>().Property(x => x.Id).HasColumnName("CLOG_ID").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            mb.Entity<SqlLogEntry>().Property(x => x.Id).HasColumnName("CLOG_ID");
             mb.Entity<SqlLogEntry>().Property(x => x.AppId).HasColumnName("CAPP_ID");
             mb.Entity<SqlLogEntry>().Property(x => x.LogType).HasColumnName("CLOS_TYPE");
             mb.Entity<SqlLogEntry>().Property(x => x.Date).HasColumnName("CLOG_DATE");

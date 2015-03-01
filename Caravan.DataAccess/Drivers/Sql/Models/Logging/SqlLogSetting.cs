@@ -8,10 +8,10 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
     [Serializable]
     public class SqlLogSetting
     {
-        [Required]
+        [Key]
         public long AppId { get; set; }
 
-        [Required, MaxLength(SqlDbContext.TinyLength)]
+        [Key, MaxLength(SqlDbContext.TinyLength)]
         public string LogType { get; set; }
 
         [Required]
