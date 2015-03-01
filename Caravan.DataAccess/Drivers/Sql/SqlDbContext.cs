@@ -84,7 +84,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             mb.Entity<SqlSecUser>().ToTable("CARAVAN_SEC_USER", Settings.Default.SqlSchema);
 
             mb.Entity<SqlSecUser>().Property(x => x.Id).HasColumnName("CUSR_ID");
-            mb.Entity<SqlSecUser>().Property(x => x.AppId).HasColumnName("CAPP_ID");
             mb.Entity<SqlSecUser>().Property(x => x.Active).HasColumnName("CUSR_ACTIVE");
             mb.Entity<SqlSecUser>().Property(x => x.Login).HasColumnName("CUSR_LOGIN");
             mb.Entity<SqlSecUser>().Property(x => x.HashedPassword).HasColumnName("CUSR_HASHED_PWD");

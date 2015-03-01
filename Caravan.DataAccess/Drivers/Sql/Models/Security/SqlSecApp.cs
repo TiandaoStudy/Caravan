@@ -9,13 +9,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
     [Serializable]
     public class SqlSecApp
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
-        [Required, MaxLength(SqlDbContext.SmallLength)]
+        [Required, Column(Order = 1), MaxLength(SqlDbContext.SmallLength)]
         public string Name { get; set; }
 
-        [Required, MaxLength(SqlDbContext.LargeLength)]
+        [Required, Column(Order = 2), MaxLength(SqlDbContext.MediumLength)]
         public string Description { get; set; }
 
         #region Relationships

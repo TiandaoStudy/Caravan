@@ -8,95 +8,98 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
     [Serializable]
     public class SqlLogEntry
     {
-        [Key, Index("IDX_CARAVAN_LOG_SETTINGS"), Index("IDX_CARAVAN_LOG_DATE")]
+        [Key, Column(Order = 0)]
+        [Index("IDX_CARAVAN_LOG_SETTINGS", 0), Index("IDX_CARAVAN_LOG_DATE", 0)]
         public long AppId { get; set; }
 
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, Column(Order = 1), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
-        [Required, MaxLength(SqlDbContext.TinyLength), Index("IDX_CARAVAN_LOG_SETTINGS")]
+        [Required, Column(Order = 2), MaxLength(SqlDbContext.TinyLength)]
+        [Index("IDX_CARAVAN_LOG_SETTINGS", 1)]
         public string LogType { get; set; }
 
-        [Required, Index("IDX_CARAVAN_LOG_DATE")]
+        [Required, Column(Order = 3)]
+        [Index("IDX_CARAVAN_LOG_DATE", 1)]
         public DateTime Date { get; set; }
 
-        [MaxLength(SqlDbContext.MediumLength)]
-        public string UserLogin { get; set; }
-
-        [MaxLength(SqlDbContext.LargeLength)]
-        public string CodeUnit { get; set; }
-
-        [MaxLength(SqlDbContext.MediumLength)]
-        public string Function { get; set; }
-
-        [Required, MaxLength(SqlDbContext.MediumLength)]
+        [Required, Column(Order = 4), MaxLength(SqlDbContext.MediumLength)]
         public string ShortMessage { get; set; }
 
-        [MaxLength(SqlDbContext.LargeLength)]
-        public string LongMessage { get; set; }
+        [Column(Order = 5), MaxLength(SqlDbContext.MediumLength)]
+        public string UserLogin { get; set; }
 
-        [MaxLength(SqlDbContext.MediumLength)]
+        [Column(Order = 6), MaxLength(SqlDbContext.LargeLength)]
+        public string CodeUnit { get; set; }
+
+        [Column(Order = 7), MaxLength(SqlDbContext.MediumLength)]
+        public string Function { get; set; }
+
+        [Column(Order = 8), MaxLength(SqlDbContext.MediumLength)]
         public string Context { get; set; }
 
-        [MaxLength(SqlDbContext.MediumLength)]
+        [Column(Order = 9), MaxLength(SqlDbContext.MediumLength)]
         public string Key0 { get; set; }
 
-        [MaxLength(SqlDbContext.LargeLength)]
+        [Column(Order = 10), MaxLength(SqlDbContext.LargeLength)]
         public string Value0 { get; set; }
 
-        [MaxLength(SqlDbContext.MediumLength)]
+        [Column(Order = 11), MaxLength(SqlDbContext.MediumLength)]
         public string Key1 { get; set; }
 
-        [MaxLength(SqlDbContext.LargeLength)]
+        [Column(Order = 12), MaxLength(SqlDbContext.LargeLength)]
         public string Value1 { get; set; }
 
-        [MaxLength(SqlDbContext.MediumLength)]
+        [Column(Order = 13), MaxLength(SqlDbContext.MediumLength)]
         public string Key2 { get; set; }
 
-        [MaxLength(SqlDbContext.LargeLength)]
+        [Column(Order = 14), MaxLength(SqlDbContext.LargeLength)]
         public string Value2 { get; set; }
 
-        [MaxLength(SqlDbContext.MediumLength)]
+        [Column(Order = 15), MaxLength(SqlDbContext.MediumLength)]
         public string Key3 { get; set; }
 
-        [MaxLength(SqlDbContext.LargeLength)]
+        [Column(Order = 16), MaxLength(SqlDbContext.LargeLength)]
         public string Value3 { get; set; }
 
-        [MaxLength(SqlDbContext.MediumLength)]
+        [Column(Order = 17), MaxLength(SqlDbContext.MediumLength)]
         public string Key4 { get; set; }
 
-        [MaxLength(SqlDbContext.LargeLength)]
+        [Column(Order = 18), MaxLength(SqlDbContext.LargeLength)]
         public string Value4 { get; set; }
 
-        [MaxLength(SqlDbContext.MediumLength)]
+        [Column(Order = 19), MaxLength(SqlDbContext.MediumLength)]
         public string Key5 { get; set; }
 
-        [MaxLength(SqlDbContext.LargeLength)]
+        [Column(Order = 20), MaxLength(SqlDbContext.LargeLength)]
         public string Value5 { get; set; }
 
-        [MaxLength(SqlDbContext.MediumLength)]
+        [Column(Order = 21), MaxLength(SqlDbContext.MediumLength)]
         public string Key6 { get; set; }
 
-        [MaxLength(SqlDbContext.LargeLength)]
+        [Column(Order = 22), MaxLength(SqlDbContext.LargeLength)]
         public string Value6 { get; set; }
 
-        [MaxLength(SqlDbContext.MediumLength)]
+        [Column(Order = 23), MaxLength(SqlDbContext.MediumLength)]
         public string Key7 { get; set; }
 
-        [MaxLength(SqlDbContext.LargeLength)]
+        [Column(Order = 24), MaxLength(SqlDbContext.LargeLength)]
         public string Value7 { get; set; }
 
-        [MaxLength(SqlDbContext.MediumLength)]
+        [Column(Order = 25), MaxLength(SqlDbContext.MediumLength)]
         public string Key8 { get; set; }
 
-        [MaxLength(SqlDbContext.LargeLength)]
+        [Column(Order = 26), MaxLength(SqlDbContext.LargeLength)]
         public string Value8 { get; set; }
 
-        [MaxLength(SqlDbContext.MediumLength)]
+        [Column(Order = 27), MaxLength(SqlDbContext.MediumLength)]
         public string Key9 { get; set; }
 
-        [MaxLength(SqlDbContext.LargeLength)]
+        [Column(Order = 28), MaxLength(SqlDbContext.LargeLength)]
         public string Value9 { get; set; }
+
+        [Column(Order = 29)] /* Should be a CLOB/TEXT */
+        public string LongMessage { get; set; }
 
         #region Relationships
 

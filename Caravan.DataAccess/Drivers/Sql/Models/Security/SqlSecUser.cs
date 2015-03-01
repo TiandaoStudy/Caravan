@@ -8,28 +8,30 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
     [Serializable]
     public class SqlSecUser
     {
-        [Key, Index("UK_CARAVAN_SEC_USER", IsUnique = true)]
+        [Key, Column("CAPP_ID", Order = 0)]
+        [Index("UK_CARAVAN_SEC_USER", 0, IsUnique = true)]
         public long AppId { get; set; }
 
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, Column(Order = 1), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
-        [Required]
-        public int Active { get; set; }
-
-        [Required, Index("UK_CARAVAN_SEC_USER", IsUnique = true), MaxLength(SqlDbContext.SmallLength)]
+        [Required, Column(Order = 2), MaxLength(SqlDbContext.SmallLength)]
+        [Index("UK_CARAVAN_SEC_USER", 1, IsUnique = true)]
         public string Login { get; set; }
 
-        [Required, MaxLength(SqlDbContext.MediumLength)]
+        [Required, Column(Order = 3)]
+        public int Active { get; set; }
+
+        [Required, Column(Order = 4), MaxLength(SqlDbContext.MediumLength)]
         public string HashedPassword { get; set; }
 
-        [Required, MaxLength(SqlDbContext.MediumLength)]
+        [Required, Column(Order = 5), MaxLength(SqlDbContext.MediumLength)]
         public string FirstName { get; set; }
 
-        [Required, MaxLength(SqlDbContext.MediumLength)]
+        [Required, Column(Order = 6), MaxLength(SqlDbContext.MediumLength)]
         public string LastName { get; set; }
 
-        [Required, MaxLength(SqlDbContext.MediumLength)]
+        [Required, Column(Order = 7), MaxLength(SqlDbContext.MediumLength)]
         public string Email { get; set; }
 
         #region Relationships
