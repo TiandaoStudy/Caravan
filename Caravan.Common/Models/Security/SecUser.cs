@@ -34,6 +34,9 @@ namespace Finsa.Caravan.Common.Models.Security
         [JsonProperty(Order = 7), DataMember(Order = 7)]
         public SecGroup[] Groups { get; set; }
 
+        [JsonProperty(Order = 8), DataMember(Order = 8)]
+        public SecRole[] Roles { get; set; }
+
         protected override IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
             yield return GKeyValuePair.Create("AppName", AppName);

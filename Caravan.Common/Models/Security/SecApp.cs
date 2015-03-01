@@ -23,12 +23,9 @@ namespace Finsa.Caravan.Common.Models.Security
         public SecGroup[] Groups { get; set; }
 
         [JsonProperty(Order = 4), DataMember(Order = 4)]
-        public SecRole[] Roles { get; set; }
-
-        [JsonProperty(Order = 5), DataMember(Order = 5)]
         public SecContext[] Contexts { get; set; }
 
-        [JsonProperty(Order = 6), DataMember(Order = 6)]
+        [JsonProperty(Order = 5), DataMember(Order = 5)]
         public LogSetting[] LogSettings { get; set; }
 
         protected override IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()

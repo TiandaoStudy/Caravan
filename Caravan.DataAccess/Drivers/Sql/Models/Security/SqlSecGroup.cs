@@ -33,6 +33,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 
         public SqlSecApp App { get; set; }
 
+        public virtual ICollection<SqlSecRole> Roles { get; set; }
+
         public virtual ICollection<SqlSecUser> Users { get; set; }
 
         public virtual ICollection<SqlSecEntry> SecEntries { get; set; }

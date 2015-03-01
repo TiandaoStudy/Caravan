@@ -117,6 +117,7 @@
     <Compile Include="Models\Security\SecApp.cs" />
     <Compile Include="Models\Security\SecContext.cs" />
     <Compile Include="Models\Security\SecEntry.cs" />
+    <Compile Include="Models\Security\SecRole.cs" />
     <Compile Include="Models\Security\SecGroup.cs" />
     <Compile Include="Models\Security\SecObject.cs" />
     <Compile Include="Models\Security\SecUser.cs" />

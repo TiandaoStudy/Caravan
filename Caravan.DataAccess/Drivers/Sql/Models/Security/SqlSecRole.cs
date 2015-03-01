@@ -12,9 +12,9 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required, Column("CAPP_ID", Order = 1)]
+        [Required, Column("CGRP_ID", Order = 1)]
         [Index("UK_CRVN_SEC_ROLES", 0, IsUnique = true)]
-        public int AppId { get; set; }
+        public int GroupId { get; set; }
 
         [Required, Column("CROL_NAME", Order = 2)]
         [MaxLength(SqlDbContext.SmallLength)]
@@ -31,7 +31,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 
         #region Relationships
 
-        public SqlSecApp App { get; set; }
+        public SqlSecGroup Group { get; set; }
 
         public virtual ICollection<SqlSecUser> Users { get; set; }
 

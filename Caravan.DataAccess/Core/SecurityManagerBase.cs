@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.Common.Models.Security;
@@ -37,6 +38,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
+                app.Name = app.Name.ToLower(CultureInfo.InvariantCulture);
                 if (!DoAddApp(app))
                 {
                     throw new SecAppExistingException();

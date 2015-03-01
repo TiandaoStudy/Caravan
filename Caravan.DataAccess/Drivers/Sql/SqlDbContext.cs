@@ -116,14 +116,14 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                            .ToTable("CRVN_SEC_USER_GROUPS"));
 
             /************************************************
-             * SqlSecGroup
+             * SqlSecRole
              ************************************************/
 
-            // SqlSecRole(N) <-> SqlSecApp(1)
+            // SqlSecRole(N) <-> SqlSecGroup(1)
             mb.Entity<SqlSecRole>()
-                .HasRequired<SqlSecApp>(x => x.App)
+                .HasRequired<SqlSecGroup>(x => x.Group)
                 .WithMany(x => x.Roles)
-                .HasForeignKey(x => x.AppId)
+                .HasForeignKey(x => x.GroupId)
                 .WillCascadeOnDelete(true);
 
             // SqlSecRole(N) <-> SqlSecUser(N)
