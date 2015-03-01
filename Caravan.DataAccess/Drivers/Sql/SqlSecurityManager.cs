@@ -189,7 +189,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                         Active = newUser.Active,
                         Email = newUser.Email,
                         FirstName = newUser.FirstName,
-                        HashedPassword = newUser.HashedPassword,
+                        HashedPassword = newUser.Password, // TODO Applicare HASH
                         LastName = newUser.LastName,
                         Login = newUser.Login
                     });
@@ -344,7 +344,11 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             {
                 var appId = GetAppIdByName(ctx, appName);
 
-                var q = ctx.SecEntries.Include(e => e.Object).Include(e => e.User).Include(e => e.Group);
+                var q = ctx.SecEntries
+                    .Include(e => e.Object.Context)
+                    .Include(e => e.User)
+                    .Include(e => e.Group);
+                
                 if (appName != null)
                 {
                     q = q.Where(e => e.Object.Context.AppId == appId);
@@ -363,6 +367,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     var groupIds = user.Groups.Select(g => g.Id).ToList();
                     q = q.Where(e => e.UserId == user.Id || groupIds.Contains(e.Group.Id));
                 }
+
                 return q.OrderBy(e => e.Object.Name)
                     .AsEnumerable()
                     .Select(Mapper.Map<SecEntry>)
@@ -483,7 +488,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             return appId.Value;
         }
 
-        private static SqlSecGroup GetGroupByName(SqlDbContext ctx, long appId, string groupName)
+        private static SqlSecGroup GetGroupByName(SqlDbContext ctx, int appId, string groupName)
         {
             var group = ctx.SecGroups.Include(g => g.Users).FirstOrDefault(g => g.AppId == appId && g.Name == groupName);
             if (group == null)
@@ -493,7 +498,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             return group;
         }
 
-        private static SqlSecUser GetUserByLogin(SqlDbContext ctx, long appId, string userLogin)
+        private static SqlSecUser GetUserByLogin(SqlDbContext ctx, int appId, string userLogin)
         {
             var user = ctx.SecUsers.FirstOrDefault(u => u.AppId == appId && u.Login == userLogin);
             if (user == null)
@@ -503,7 +508,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             return user;
         }
 
-        private static SqlSecUser GetUserByLoginWithGroups(SqlDbContext ctx, long appId, string userLogin)
+        private static SqlSecUser GetUserByLoginWithGroups(SqlDbContext ctx, int appId, string userLogin)
         {
             var user = ctx.SecUsers.Include(u => u.Groups).FirstOrDefault(u => u.AppId == appId && u.Login == userLogin);
             if (user == null)

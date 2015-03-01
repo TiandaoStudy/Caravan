@@ -32,7 +32,10 @@ namespace Finsa.Caravan.DataAccess.Properties
             Mapper.CreateMap<SqlLogSetting, LogSetting>();
             Mapper.CreateMap<SqlSecApp, SecApp>();
             Mapper.CreateMap<SqlSecContext, SecContext>();
-            Mapper.CreateMap<SqlSecEntry, SecEntry>();
+            Mapper.CreateMap<SqlSecEntry, SecEntry>().AfterMap((se, e) =>
+            {
+                e.ContextName = se.Object.Context.Name;
+            });
             Mapper.CreateMap<SqlSecGroup, SecGroup>();
             Mapper.CreateMap<SqlSecObject, SecObject>();
             Mapper.CreateMap<SqlSecUser, SecUser>();

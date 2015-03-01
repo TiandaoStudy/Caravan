@@ -16,11 +16,11 @@ namespace Finsa.Caravan.Common.Models.Security
         [JsonProperty(Order = 1), DataMember(Order = 1)]
         public string Login { get; set; }
 
-        [JsonProperty(Order = 2), DataMember(Order = 2), JsonConverter(typeof(IntToBoolConverter))]
-        public bool Active { get; set; }
+        [JsonProperty(Order = 2), DataMember(Order = 2)]
+        public string Password { get; set; }
 
         [JsonProperty(Order = 3), DataMember(Order = 3)]
-        public string HashedPassword { get; set; }
+        public bool Active { get; set; }
 
         [JsonProperty(Order = 4), DataMember(Order = 4)]
         public string FirstName { get; set; }
