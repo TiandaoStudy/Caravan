@@ -13,16 +13,16 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
         public long Id { get; set; }
 
         [Required, Column("CAPP_ID", Order = 1)]
-        [Index("IDX_CRVN_LOG_TYPE", 0), Index("IDX_CRVN_LOG_DATE", 0)]
+        [Index("IX_CRVN_LOG_TYPE", 0), Index("IX_CRVN_LOG_DATE", 0)]
         public int AppId { get; set; }
 
         [Required, Column("CLOS_TYPE", Order = 2)]
         [MaxLength(SqlDbContext.TinyLength)]
-        [Index("IDX_CRVN_LOG_TYPE", 1)]
+        [Index("IX_CRVN_LOG_TYPE", 1)]
         public string LogType { get; set; }
 
         [Required, Column("CLOG_TYPE", Order = 3)]
-        [Index("IDX_CRVN_LOG_DATE", 1)]
+        [Index("IX_CRVN_LOG_DATE", 1)]
         public DateTime Date { get; set; }
 
         [Column("CUSR_LOGIN", Order = 4)]

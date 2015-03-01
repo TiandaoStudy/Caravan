@@ -9,17 +9,11 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
     [Serializable, Table("CRVN_LOG_SETTINGS")]
     public class SqlLogSetting
     {
-        [Key, Column("CLOS_ID", Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
-        [Required, Column("CAPP_ID", Order = 1)]
-        [Index("UK_CRVN_LOG_SETTINGS", 0, IsUnique = true)]
+        [Key, Column("CAPP_ID", Order = 0)]
         public int AppId { get; set; }
 
-        [Required, Column("CLOS_TYPE", Order = 2)]
+        [Key, Column("CLOS_TYPE", Order = 1)]
         [MaxLength(SqlDbContext.TinyLength)]
-        [Index("UK_CRVN_LOG_SETTINGS", 1, IsUnique = true)]
         public string LogType { get; set; }
 
         [Required, Column("CLOS_ENABLED", Order = 3)]

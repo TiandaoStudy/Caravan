@@ -20,13 +20,18 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
         [Column("CGRP_ID", Order = 3)]
         public int? GroupId { get; set; }
 
-        #region Relationships
+        [Column("CROL_ID", Order = 4)]
+        public int? RoleId { get; set; }
 
-        public SqlSecUser User { get; set; }
+        #region Relationships
 
         public SqlSecGroup Group { get; set; }
 
         public SqlSecObject Object { get; set; }
+
+        public SqlSecRole Role { get; set; }
+
+        public SqlSecUser User { get; set; }
 
         #endregion
     }
