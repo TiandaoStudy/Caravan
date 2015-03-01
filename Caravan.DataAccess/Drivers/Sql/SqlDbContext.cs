@@ -23,7 +23,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         }
 
         public SqlDbContext()
-            : base(Db.Manager.OpenConnection(), true)
+            : base(Db.ConnectionString)
         {
         }
 

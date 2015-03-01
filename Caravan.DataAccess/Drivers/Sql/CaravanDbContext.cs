@@ -16,7 +16,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
     {
         public static void Init<TCtx>() where TCtx : DbContext
         {
-            Database.SetInitializer(new CreateDatabaseIfNotExists<TCtx>());
+            Database.SetInitializer(new DropCreateDatabaseAlways<TCtx>());
         }
     }
 

@@ -9,14 +9,14 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
     public class SqlLogEntry
     {
         [Key, Column(Order = 0)]
-        [Index("IDX_CARAVAN_LOG_SETTINGS", 0), Index("IDX_CARAVAN_LOG_DATE", 0)]
+        [Index("IDX_CARAVAN_LOG_TYPE", 0), Index("IDX_CARAVAN_LOG_DATE", 0)]
         public long AppId { get; set; }
 
         [Key, Column(Order = 1), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
         [Required, Column(Order = 2), MaxLength(SqlDbContext.TinyLength)]
-        [Index("IDX_CARAVAN_LOG_SETTINGS", 1)]
+        [Index("IDX_CARAVAN_LOG_TYPE", 1)]
         public string LogType { get; set; }
 
         [Required, Column(Order = 3)]
