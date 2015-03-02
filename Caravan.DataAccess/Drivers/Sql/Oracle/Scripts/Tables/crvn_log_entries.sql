@@ -46,7 +46,7 @@ CREATE TABLE mydb.crvn_log_entries
    , CHECK (clog_key_8 is null or clog_key_8 = lower(clog_key_8)) ENABLE
    , CHECK (clog_key_9 is null or clog_key_9 = lower(clog_key_9)) ENABLE
    , CONSTRAINT pk_crvn_log_entries PRIMARY KEY (clog_id) ENABLE
-   , CONSTRAINT fk_crvnlog_crvnlogsettings FOREIGN KEY (capp_id, clos_type) REFERENCES mydb.caravan_log_settings (capp_id, clos_type) ON DELETE CASCADE ENABLE
+   , CONSTRAINT fk_crvnlog_crvnlogsettings FOREIGN KEY (capp_id, clos_type) REFERENCES mydb.crvn_log_settings (capp_id, clos_type) ON DELETE CASCADE ENABLE
 );
 
 COMMENT ON TABLE mydb.crvn_log_entries IS 'Tabella di log per le applicazioni FINSA';
