@@ -1,6 +1,6 @@
 ﻿-- REPLACE 'mydb' WITH DB NAME
 
-CREATE TABLE mydb.crvn_sec_user_group
+CREATE TABLE mydb.crvn_sec_user_groups
 (
      cusr_id          NUMBER          NOT NULL
    , cgrp_id          NUMBER          NOT NULL

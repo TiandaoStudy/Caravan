@@ -1,11 +1,10 @@
 ﻿-- REPLACE 'mydb' WITH DB NAME
 
-CREATE OR REPLACE TRIGGER mydb.caravan_security_id
-BEFORE INSERT ON mydb.caravan_security 
+CREATE OR REPLACE TRIGGER mydb.crvn_sec_entries_id
+BEFORE INSERT ON mydb.crvn_sec_entries 
 FOR EACH ROW
 BEGIN
-  SELECT COALESCE(max(csec_id), -1) + 1
+  SELECT mydb.crvn_sec_entries_id.nextval
     INTO :new.csec_id
-    FROM mydb.caravan_security
-   WHERE capp_id = :new.capp_id;
+    FROM DUAL;
 END;
