@@ -8,7 +8,7 @@ CREATE TABLE mydb.crvn_sec_groups
    , cgrp_descr       NVARCHAR2(256)  NOT NULL
    , cgrp_notes       NVARCHAR2(1024) NOT NULL
    , CHECK (cgrp_name = lower(cgrp_name)) ENABLE
-   , CONSTRAINT pk_caravan_sec_group PRIMARY KEY (cgrp_id) ENABLE
-   , CONSTRAINT uk_caravan_sec_group UNIQUE (cgrp_name, capp_id) ENABLE
-   , CONSTRAINT fk_crvnsecgroup_crvnsecapp FOREIGN KEY (capp_id) REFERENCES mydb.caravan_sec_app (capp_id) ON DELETE CASCADE ENABLE
+   , CONSTRAINT pk_crvn_sec_groups PRIMARY KEY (cgrp_id) ENABLE
+   , CONSTRAINT uk_crvn_sec_groups UNIQUE (capp_id, cgrp_name) ENABLE
+   , CONSTRAINT fk_crvnsecgroups_crvnsecapps FOREIGN KEY (capp_id) REFERENCES mydb.crvn_sec_apps (capp_id) ON DELETE CASCADE ENABLE
 );
