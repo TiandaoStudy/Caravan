@@ -249,8 +249,8 @@
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\caravan_sec_group_id.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\caravan_sec_context_id.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\caravan_sec_user_id.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\caravan_sec_app_id.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\caravan_log_id.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_apps_id.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_log_entries_id.sql" />
     <Content Include="Drivers\Sql\PostgreSql\Scripts\Schema.sql" />
   </ItemGroup>
   <ItemGroup>

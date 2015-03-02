@@ -12,3 +12,5 @@ CREATE TABLE mydb.crvn_sec_groups
    , CONSTRAINT uk_crvn_sec_groups UNIQUE (capp_id, cgrp_name) ENABLE
    , CONSTRAINT fk_crvnsecgroups_crvnsecapps FOREIGN KEY (capp_id) REFERENCES mydb.crvn_sec_apps (capp_id) ON DELETE CASCADE ENABLE
 );
+
+CREATE SEQUENCE mydb.crvn_sec_groups_id;

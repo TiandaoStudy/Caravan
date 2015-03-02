@@ -15,3 +15,5 @@ CREATE TABLE mydb.crvn_sec_users
    , CONSTRAINT uk_crvn_sec_users UNIQUE (capp_id, cusr_login) ENABLE
    , CONSTRAINT fk_crvnsecusers_crvnsecapps FOREIGN KEY (capp_id) REFERENCES mydb.crvn_sec_apps (capp_id) ON DELETE CASCADE ENABLE
 );
+
+CREATE SEQUENCE mydb.crvn_sec_users_id;
