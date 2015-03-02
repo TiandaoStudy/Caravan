@@ -2,7 +2,7 @@
 
 namespace Finsa.Caravan.DataAccess.Core
 {
-    public abstract class DbManagerBase : IDbManager
+    internal abstract class DbManagerBase : IDbManager
     {
         public abstract DataAccessKind Kind { get; }
 

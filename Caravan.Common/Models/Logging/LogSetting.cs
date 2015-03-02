@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
-using Finsa.Caravan.Common.Serialization.Converters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using PommaLabs;
@@ -18,11 +17,11 @@ namespace Finsa.Caravan.Common.Models.Logging
         [JsonProperty(Order = 1), DataMember(Order = 1), JsonConverter(typeof(StringEnumConverter))]
         public LogType LogType { get; set; }
 
-        [JsonProperty(Order = 2), DataMember(Order = 2), JsonConverter(typeof(IntToBoolConverter))]
-        public int Enabled { get; set; }
+        [JsonProperty(Order = 2), DataMember(Order = 2)]
+        public bool Enabled { get; set; }
 
         [JsonProperty(Order = 3), DataMember(Order = 3)]
-        public int Days { get; set; }
+        public short Days { get; set; }
 
         [JsonProperty(Order = 4), DataMember(Order = 4)]
         public int MaxEntries { get; set; }
@@ -31,7 +30,7 @@ namespace Finsa.Caravan.Common.Models.Logging
         {
             yield return GKeyValuePair.Create("AppName", AppName);
             yield return GKeyValuePair.Create("LogType", LogType.ToString());
-            yield return GKeyValuePair.Create("Enabled", (Enabled == 1).ToString(CultureInfo.InvariantCulture));
+            yield return GKeyValuePair.Create("Enabled", Enabled.ToString(CultureInfo.InvariantCulture));
         }
 
         protected override IEnumerable<object> GetIdentifyingMembers()

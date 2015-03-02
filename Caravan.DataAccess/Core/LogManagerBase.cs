@@ -369,7 +369,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     CommonLogging.Error(ex.Message);
                 }
-// ReSharper disable once EmptyGeneralCatchClause
+                // ReSharper disable once EmptyGeneralCatchClause
                 catch { }
                 return LogResult.Failure(ex);
             }

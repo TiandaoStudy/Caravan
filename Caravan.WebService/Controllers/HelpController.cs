@@ -28,7 +28,7 @@ namespace Finsa.Caravan.WebService.Controllers
         public HelpController()
         {
             Info.MyServiceName = Common.Properties.Settings.Default.ApplicationDescription;
-            Info.MyCompanyName = "Finsa S.p.A.";
+            Info.MyCompanyName = "Finsa S.p.A";
             Info.MyCompanyUrl = "http://www.finsa.it/";
             Info.MyCustomerName = null;
         }

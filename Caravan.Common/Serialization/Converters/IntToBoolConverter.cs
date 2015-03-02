@@ -6,9 +6,6 @@ namespace Finsa.Caravan.Common.Serialization.Converters
 {
     public sealed class IntToBoolConverter : JsonConverter
     {
-        private const string LowerTrue = "true";
-        private const string LowerFalse = "false";
-
         private static readonly Dictionary<Type, Func<object, bool>> ConvertibleTypes = new Dictionary<Type, Func<object, bool>>
         {
             {typeof(short), x => ((short) x) != 0},
@@ -22,13 +19,13 @@ namespace Finsa.Caravan.Common.Serialization.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var @true = ConvertibleTypes[value.GetType()](value);
-            writer.WriteValue(@true ? LowerTrue : LowerFalse);
+            var @bool = ConvertibleTypes[value.GetType()](value);
+            writer.WriteValue(@bool);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return (reader.Value.ToString().ToLower() == LowerTrue) ? 1 : 0;
+            return ((bool) reader.Value) ? 1 : 0;
         }
 
         public override bool CanConvert(Type objectType)

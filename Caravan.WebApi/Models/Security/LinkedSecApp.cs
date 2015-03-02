@@ -12,6 +12,11 @@ namespace Finsa.Caravan.WebApi.Models.Security
     [Serializable, DataContract]
     public sealed class LinkedSecApp : LinkedObject
     {
+        static LinkedSecApp()
+        {
+            Mapper.CreateMap<SecApp, LinkedSecApp>();
+        }
+
         public LinkedSecApp(SecApp secApp, UrlHelper url)
         {
             Mapper.Map(secApp, this);

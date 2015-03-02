@@ -58,12 +58,12 @@ namespace Finsa.Caravan.WebForms.Pages
         protected void fdtgUsers_DataSourceUpdating(object sender, EventArgs args)
         {
             var users = new DataTable();
-            var active = 0;
+            var active = false;
             var userLogin = "";
             if (SearchCriteria["CUSR_LOGIN"].Count > 0 && SearchCriteria["Active"].Count == 1)
             {
                 userLogin = SearchCriteria["CUSR_LOGIN"][0];
-                active = crvnActive.SelectedValues[0] == "Y" ? 1 : 0;
+                active = crvnActive.SelectedValues[0] == "Y";
                 // This should not catch any exception, others will do.
                 users = (from us in DataAccess.Db.Security.Users(Common.Properties.Settings.Default.ApplicationName)
                          select new SecUser { FirstName = us.FirstName, LastName = us.LastName, Login = us.Login, Email = us.Email, Active = us.Active }).Where(x => x.Login == userLogin.ToString() && x.Active == active)
@@ -84,7 +84,7 @@ namespace Finsa.Caravan.WebForms.Pages
             }
             else if (SearchCriteria["Active"].Count == 1)
             {
-                active = crvnActive.SelectedValues[0] == "Y" ? 1 : 0;
+                active = crvnActive.SelectedValues[0] == "Y";
                 users = (from us in DataAccess.Db.Security.Users(Common.Properties.Settings.Default.ApplicationName)
                          select new SecUser { FirstName = us.FirstName, LastName = us.LastName, Login = us.Login, Email = us.Email, Active = us.Active }).Where(x => x.Active == active)
                              .ToDataTable();

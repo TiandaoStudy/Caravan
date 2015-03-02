@@ -7,16 +7,16 @@ using System.Globalization;
 using System.Linq;
 using System.Transactions;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataAccess.Mongo;
+using Finsa.Caravan.DataAccess.Drivers.Mongo;
+using Finsa.Caravan.DataAccess.Drivers.Rest;
+using Finsa.Caravan.DataAccess.Drivers.Sql;
+using Finsa.Caravan.DataAccess.Drivers.Sql.FakeSql;
+using Finsa.Caravan.DataAccess.Drivers.Sql.MySql;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Oracle;
+using Finsa.Caravan.DataAccess.Drivers.Sql.PostgreSql;
+using Finsa.Caravan.DataAccess.Drivers.Sql.SqlServer;
+using Finsa.Caravan.DataAccess.Drivers.Sql.SqlServerCe;
 using Finsa.Caravan.DataAccess.Properties;
-using Finsa.Caravan.DataAccess.Rest;
-using Finsa.Caravan.DataAccess.Sql;
-using Finsa.Caravan.DataAccess.Sql.FakeSql;
-using Finsa.Caravan.DataAccess.Sql.MySql;
-using Finsa.Caravan.DataAccess.Sql.Oracle;
-using Finsa.Caravan.DataAccess.Sql.SqlServer;
-using Finsa.Caravan.DataAccess.Sql.SqlServerCe;
 using PommaLabs.Diagnostics;
 using PommaLabs.KVLite;
 using RestSharp;
@@ -34,7 +34,6 @@ namespace Finsa.Caravan.DataAccess
         private static ILogManager _logManagerInstance;
         private static ISecurityManager _securityManagerInstance;
         private static IDbManager _dbManagerInstance;
-        private static Func<DbContextBase> _dbContextGenerator;
 
         static Db()
         {
@@ -79,6 +78,8 @@ namespace Finsa.Caravan.DataAccess
 
         #endregion Public Properties - REST Driver
 
+        #region Public Properties - Common
+
         public static string ConnectionString
         {
             get
@@ -110,50 +111,7 @@ namespace Finsa.Caravan.DataAccess
             }
         }
 
-        #region DbContext Generators
-
-        private static SqlDbContext SqlDbContextGenerator()
-        {
-            return new SqlDbContext();
-        }
-
-        #endregion DbContext Generators
-
-        #region EF Helpers
-
-        public static List<T> ToLogAndList<T>(this IQueryable<T> queryable)
-        {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            var list = queryable.ToList();
-            stopwatch.Stop();
-
-            // Logging query and execution time.
-            var logEntry = queryable.ToString();
-            var milliseconds = stopwatch.ElapsedMilliseconds;
-            Logger.LogDebugAsync<IDbManager>("EF generated query", logEntry, "Logging and timing the query", new[]
-            {
-                KeyValuePair.Create("milliseconds", milliseconds.ToString(CultureInfo.InvariantCulture))
-            });
-
-            return list;
-        }
-
-        internal static DbContextBase CreateReadContext()
-        {
-            var ctx = CreateWriteContext();
-            ctx.Configuration.ProxyCreationEnabled = false;
-            return ctx;
-        }
-
-        internal static DbContextBase CreateWriteContext()
-        {
-            var ctx = _dbContextGenerator();
-            ctx.Database.Initialize(false);
-            return ctx;
-        }
-
-        #endregion EF Helpers
+        #endregion Public Properties - Common
 
         #region Methods that must be used _ONLY_ inside (or for) Unit Tests
 
@@ -171,7 +129,7 @@ namespace Finsa.Caravan.DataAccess
                     // A new connection is created and persisted for the whole test duration.
                     (Manager as FakeSqlDbManager).ResetConnection();
                     // The database is recreated, since it is in-memory and probably it does not exist.
-                    using (var ctx = CreateWriteContext())
+                    using (var ctx = SqlDbContext.CreateWriteContext())
                     {
                         ctx.Database.CreateIfNotExists();
                         Database.SetInitializer(new DropCreateDatabaseAlways<SqlDbContext>());
@@ -186,7 +144,7 @@ namespace Finsa.Caravan.DataAccess
                 case DataAccessKind.SqlServer:
                 case DataAccessKind.SqlServerCe:
                     using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
-                    using (var ctx = CreateWriteContext())
+                    using (var ctx = SqlDbContext.CreateWriteContext())
                     {
                         ctx.LogEntries.RemoveRange(ctx.LogEntries.ToList());
                         ctx.SaveChanges();
@@ -235,7 +193,45 @@ namespace Finsa.Caravan.DataAccess
         {
             Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(DataAccessKind), kind));
             AccessKind = kind;
-            
+
+            switch (kind)
+            {
+                case DataAccessKind.FakeSql:
+                    _dbManagerInstance = new FakeSqlDbManager();
+                    break;
+
+                case DataAccessKind.MongoDb:
+                    _dbManagerInstance = new MongoDbManager();
+                    _logManagerInstance = new MongoLogManager();
+                    _securityManagerInstance = new MongoSecurityManager();
+                    break;
+
+                case DataAccessKind.MySql:
+                    _dbManagerInstance = new MySqlDbManager();
+                    break;
+
+                case DataAccessKind.Oracle:
+                    _dbManagerInstance = new OracleDbManager();
+                    break;
+
+                case DataAccessKind.PostgreSql:
+                    _dbManagerInstance = new PostgreSqlDbManager();
+                    break;
+
+                case DataAccessKind.Rest:
+                    _logManagerInstance = new RestLogManager();
+                    _securityManagerInstance = new RestSecurityManager();
+                    break;
+
+                case DataAccessKind.SqlServer:
+                    _dbManagerInstance = new SqlServerDbManager();
+                    break;
+
+                case DataAccessKind.SqlServerCe:
+                    _dbManagerInstance = new SqlServerCeDbManager();
+                    break;
+            }
+
             // Sets the implementations which are shared between SQL drivers.
             switch (kind)
             {
@@ -247,49 +243,6 @@ namespace Finsa.Caravan.DataAccess
                 case DataAccessKind.SqlServerCe:
                     _logManagerInstance = new SqlLogManager();
                     _securityManagerInstance = new SqlSecurityManager();
-                    break;
-            }
-
-            switch (kind)
-            {
-                case DataAccessKind.FakeSql:
-                    _dbManagerInstance = new FakeSqlDbManager();
-                    _dbContextGenerator = SqlDbContextGenerator;
-                    break;
-
-                case DataAccessKind.MongoDb:
-                    _dbManagerInstance = new MongoDbManager();
-                    _logManagerInstance = new MongoLogManager();
-                    _securityManagerInstance = new MongoSecurityManager();
-                    break;
-
-                case DataAccessKind.MySql:
-                    _dbManagerInstance = new MySqlDbManager();
-                    _dbContextGenerator = SqlDbContextGenerator;
-                    break;
-
-                case DataAccessKind.Oracle:
-                    _dbManagerInstance = new OracleDbManager();
-                    _dbContextGenerator = SqlDbContextGenerator;
-                    break;
-
-                case DataAccessKind.PostgreSql:
-                    _dbContextGenerator = SqlDbContextGenerator;
-                    break;
-
-                case DataAccessKind.Rest:
-                    _logManagerInstance = new RestLogManager();
-                    _securityManagerInstance = new RestSecurityManager();
-                    break;
-
-                case DataAccessKind.SqlServer:
-                    _dbManagerInstance = new SqlServerDbManager();
-                    _dbContextGenerator = SqlDbContextGenerator;
-                    break;
-
-                case DataAccessKind.SqlServerCe:
-                    _dbManagerInstance = new SqlServerCeDbManager();
-                    _dbContextGenerator = SqlDbContextGenerator;
                     break;
             }
         }

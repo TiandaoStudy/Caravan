@@ -16,11 +16,11 @@ namespace Finsa.Caravan.Common.Models.Security
         [JsonProperty(Order = 1), DataMember(Order = 1)]
         public string Login { get; set; }
 
-        [JsonProperty(Order = 2), DataMember(Order = 2), JsonConverter(typeof(IntToBoolConverter))]
-        public int Active { get; set; }
+        [JsonProperty(Order = 2), DataMember(Order = 2)]
+        public string Password { get; set; }
 
         [JsonProperty(Order = 3), DataMember(Order = 3)]
-        public string HashedPassword { get; set; }
+        public bool Active { get; set; }
 
         [JsonProperty(Order = 4), DataMember(Order = 4)]
         public string FirstName { get; set; }
@@ -33,6 +33,9 @@ namespace Finsa.Caravan.Common.Models.Security
 
         [JsonProperty(Order = 7), DataMember(Order = 7)]
         public SecGroup[] Groups { get; set; }
+
+        [JsonProperty(Order = 8), DataMember(Order = 8)]
+        public SecRole[] Roles { get; set; }
 
         protected override IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {

@@ -19,14 +19,14 @@ namespace Finsa.Caravan.Common.Models.Security
         [JsonProperty(Order = 2), DataMember(Order = 2)]
         public string Description { get; set; }
 
-        [JsonProperty(Order = 3), DataMember(Order = 3), JsonConverter(typeof(IntToBoolConverter))]
-        public int IsAdmin { get; set; }
-
-        [JsonProperty(Order = 4), DataMember(Order = 4)]
+        [JsonProperty(Order = 3), DataMember(Order = 3)]
         public string Notes { get; set; }
 
-        [JsonProperty(Order = 5), DataMember(Order = 5)]
+        [JsonProperty(Order = 4), DataMember(Order = 4)]
         public SecUser[] Users { get; set; }
+
+        [JsonProperty(Order = 5), DataMember(Order = 5)]
+        public SecRole[] Roles { get; set; }
 
         protected override IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {

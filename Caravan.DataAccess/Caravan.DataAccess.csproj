@@ -158,10 +158,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activities\LogActivity.cs" />
+    <Compile Include="Activities\Logging\LogActivityBase.cs" />
+    <Compile Include="Drivers\Sql\Models\Security\SqlSecRole.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Sql\CaravanDbContext.cs" />
-    <Compile Include="Sql\DbContextBase.cs" />
     <Compile Include="Core\DbManagerBase.cs" />
     <Compile Include="Core\LogManagerBase.cs" />
     <Compile Include="Core\SecurityManagerBase.cs" />
@@ -170,44 +169,45 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
-    <Compile Include="Mongo\Models\Logging\MongoLogEntry.cs" />
-    <Compile Include="Mongo\Models\Logging\MongoLogSettings.cs" />
-    <Compile Include="Mongo\Models\MongoDocument.cs" />
-    <Compile Include="Mongo\Models\MongoSequence.cs" />
-    <Compile Include="Mongo\Models\Security\MongoSecApp.cs" />
-    <Compile Include="Mongo\MongoDbManager.cs" />
-    <Compile Include="Mongo\MongoLogManager.cs" />
-    <Compile Include="Mongo\MongoSecurityManager.cs" />
-    <Compile Include="Mongo\MongoUtilities.cs" />
+    <Compile Include="Drivers\Mongo\Models\Logging\MongoLogEntry.cs" />
+    <Compile Include="Drivers\Mongo\Models\Logging\MongoLogSettings.cs" />
+    <Compile Include="Drivers\Mongo\Models\MongoDocument.cs" />
+    <Compile Include="Drivers\Mongo\Models\MongoSequence.cs" />
+    <Compile Include="Drivers\Mongo\Models\Security\MongoSecApp.cs" />
+    <Compile Include="Drivers\Mongo\MongoDbManager.cs" />
+    <Compile Include="Drivers\Mongo\MongoLogManager.cs" />
+    <Compile Include="Drivers\Mongo\MongoSecurityManager.cs" />
+    <Compile Include="Drivers\Mongo\MongoUtilities.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Sql\FakeSql\FakeSqlDbManager.cs" />
-    <Compile Include="Sql\Models\Logging\SqlLogEntry.cs" />
-    <Compile Include="Sql\Models\Logging\SqlLogSetting.cs" />
-    <Compile Include="Sql\Models\Security\SqlSecApp.cs" />
-    <Compile Include="Sql\Models\Security\SqlSecContext.cs" />
-    <Compile Include="Sql\Models\Security\SqlSecEntry.cs" />
-    <Compile Include="Sql\Models\Security\SqlSecGroup.cs" />
-    <Compile Include="Sql\Models\Security\SqlSecObject.cs" />
-    <Compile Include="Sql\Models\Security\SqlSecUser.cs" />
-    <Compile Include="Sql\MySql\MySqlDbManager.cs" />
-    <Compile Include="Sql\Oracle\OracleDynamicParameters.cs" />
+    <Compile Include="Drivers\Sql\FakeSql\FakeSqlDbManager.cs" />
+    <Compile Include="Drivers\Sql\Models\Logging\SqlLogEntry.cs" />
+    <Compile Include="Drivers\Sql\Models\Logging\SqlLogSetting.cs" />
+    <Compile Include="Drivers\Sql\Models\Security\SqlSecApp.cs" />
+    <Compile Include="Drivers\Sql\Models\Security\SqlSecContext.cs" />
+    <Compile Include="Drivers\Sql\Models\Security\SqlSecEntry.cs" />
+    <Compile Include="Drivers\Sql\Models\Security\SqlSecGroup.cs" />
+    <Compile Include="Drivers\Sql\Models\Security\SqlSecObject.cs" />
+    <Compile Include="Drivers\Sql\Models\Security\SqlSecUser.cs" />
+    <Compile Include="Drivers\Sql\MySql\MySqlDbManager.cs" />
+    <Compile Include="Drivers\Sql\Oracle\OracleDynamicParameters.cs" />
     <Compile Include="ILogManager.cs" />
     <Compile Include="Db.cs" />
     <Compile Include="IDbManager.cs" />
     <Compile Include="ISecurityManager.cs" />
-    <Compile Include="Sql\SqlSecurityManager.cs" />
+    <Compile Include="Drivers\Sql\PostgreSql\PostgreSqlDbManager.cs" />
+    <Compile Include="Drivers\Sql\SqlSecurityManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sql\SqlLogManager.cs" />
-    <Compile Include="Sql\Oracle\OracleDbManager.cs" />
-    <Compile Include="Rest\RestLogManager.cs" />
-    <Compile Include="Rest\RestSecurityManager.cs" />
-    <Compile Include="Sql\SqlServerCe\SqlServerCeDbManager.cs" />
-    <Compile Include="Sql\SqlDbContext.cs" />
-    <Compile Include="Sql\SqlServer\SqlServerDbManager.cs" />
+    <Compile Include="Drivers\Sql\SqlLogManager.cs" />
+    <Compile Include="Drivers\Sql\Oracle\OracleDbManager.cs" />
+    <Compile Include="Drivers\Rest\RestLogManager.cs" />
+    <Compile Include="Drivers\Rest\RestSecurityManager.cs" />
+    <Compile Include="Drivers\Sql\SqlServerCe\SqlServerCeDbManager.cs" />
+    <Compile Include="Drivers\Sql\SqlDbContext.cs" />
+    <Compile Include="Drivers\Sql\SqlServer\SqlServerDbManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -221,8 +221,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="README.md" />
-    <None Include="Sql\SqlServerCe\Scripts\Tables.sqlce" />
-    <None Include="Sql\SqlServer\Scripts\Tables.sqlce" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_roles.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_user_roles.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_roles_id.sql" />
+    <Content Include="Drivers\Sql\SqlServerCe\Scripts\Schema.sql" />
+    <None Include="Drivers\Sql\SqlServer\Scripts\Tables.sqlce" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Caravan.Common\Caravan.Common.csproj">
@@ -231,28 +234,29 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Sql\Oracle\Scripts\grants.sql" />
-    <Content Include="Sql\Oracle\Scripts\Packages\pck_caravan_log.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\caravan_log.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_group.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\caravan_log_settings.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_user.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_user_group.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_object.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_app.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\caravan_sec_context.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\caravan_security.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\caravan_security_id.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\caravan_sec_object_id.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\caravan_sec_group_id.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\caravan_sec_context_id.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\caravan_sec_user_id.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\caravan_sec_app_id.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\caravan_log_id.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\grants.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Packages\pck_caravan_log.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_log_entries.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_groups.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_log_settings.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_users.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_user_groups.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_objects.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_apps.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_contexts.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_entries.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\caravan_security_id.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_objects_id.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_groups_id.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_contexts_id.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_users_id.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_apps_id.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_log_entries_id.sql" />
+    <Content Include="Drivers\Sql\PostgreSql\Scripts\Schema.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Sql\MySql\Scripts\" />
-    <Folder Include="Sql\Postgres\" />
+    <Folder Include="Activities\Security\" />
+    <Folder Include="Drivers\Sql\MySql\Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\ErrorMessages.resx">
