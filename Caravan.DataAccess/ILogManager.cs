@@ -31,6 +31,21 @@ namespace Finsa.Caravan.DataAccess
         /// <summary>
         ///   TODO
         /// </summary>
+        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="appName">The application name.</param>
+        /// <param name="userLogin">The user logged in at the moment in which this log was produced.</param>
+        /// <param name="codeUnit">The class, module or package in which this log was produced.</param>
+        /// <param name="function">The method, procedure or function from which the log was called.</param>
+        /// <param name="shortMessage"></param>
+        /// <param name="longMessage"></param>
+        /// <param name="context">Contextual information which may add more meaning to the log message.</param>
+        /// <param name="args">Further information that should be logged.</param>
+        /// <returns></returns>
+        Task<LogResult> LogRawAsync(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
         /// <typeparam name="TCodeUnit">The class, module or package in which this log was produced.</typeparam>
         /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
         /// <param name="shortMessage"></param>
@@ -331,6 +346,20 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="args">Further information that should be logged.</param>
         /// <returns></returns>
         LogResult LogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="appName">The application name.</param>
+        /// <param name="userLogin">The user logged in at the moment in which this log was produced.</param>
+        /// <param name="codeUnit">The class, module or package in which this log was produced.</param>
+        /// <param name="function">The method, procedure or function from which the log was called.</param>
+        /// <param name="exception">The exception to be logged.</param>
+        /// <param name="context">Contextual information which may add more meaning to the log message.</param>
+        /// <param name="args">Further information that should be logged.</param>
+        /// <returns></returns>
+        Task<LogResult> LogRawAsync(LogType logType, string appName, string userLogin, string codeUnit, string function, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
 
         /// <summary>
         ///   TODO

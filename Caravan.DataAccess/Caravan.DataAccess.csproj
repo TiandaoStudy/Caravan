@@ -217,6 +217,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>all.sql</LastGenOutput>
     </None>
+    <None Include="Drivers\Sql\Oracle\Scripts\all.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>all.sql</LastGenOutput>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -242,6 +246,11 @@
     <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_users.sql" />
     <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_user_groups.sql" />
     <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_user_roles.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\all.sql">
+      <DependentUpon>all.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_roles.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_user_roles.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_roles_id.sql" />
@@ -266,7 +275,7 @@
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_apps.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_contexts.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_entries.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\caravan_security_id.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_entries_id.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_objects_id.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_groups_id.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_contexts_id.sql" />

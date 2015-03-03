@@ -148,6 +148,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\Logging\LogResponseAttribute.cs" />
+    <Compile Include="ActionFilters\Logging\LogRequestAttribute.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -181,6 +183,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ActionFilters\Security\" />
     <Folder Include="Models\Logging\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

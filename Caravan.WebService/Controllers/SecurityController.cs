@@ -15,6 +15,7 @@ using System.Linq;
 using System.Web.Http;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.WebApi.ActionFilters.Logging;
 using Finsa.Caravan.WebApi.Models.Security;
 using LinqToQuerystring.WebApi;
 
@@ -24,6 +25,7 @@ namespace Finsa.Caravan.WebService.Controllers
     ///   Controller che si occupa della gestione della sicurezza.
     /// </summary>
     [RoutePrefix("security")]
+    [LogRequest, LogResponse]
     public sealed class SecurityController : ApiController
     {
         #region App

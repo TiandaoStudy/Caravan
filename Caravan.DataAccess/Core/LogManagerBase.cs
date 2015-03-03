@@ -15,6 +15,12 @@ namespace Finsa.Caravan.DataAccess.Core
     {
         #region ILogManager Members
 
+        public Task<LogResult> LogRawAsync(LogType logType, string appName, string userLogin, string codeUnit, string function,
+            string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null)
+        {
+            return Task.Run(() => LogRaw(logType, appName, userLogin, codeUnit, function, shortMessage, longMessage, context, args));
+        }
+
         public LogResult Log<TCodeUnit>(LogType logType, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
             string function = LogEntry.AutoFilled)
         {
@@ -157,6 +163,12 @@ namespace Finsa.Caravan.DataAccess.Core
         {
             CheckAndFillEntry(e, function);
             return Task.Run(() => Log<TCodeUnit>(LogType.Fatal, e.AppName, e.UserLogin, function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments));
+        }
+
+        public Task<LogResult> LogRawAsync(LogType logType, string appName, string userLogin, string codeUnit, string function,
+            Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null)
+        {
+            return Task.Run(() => LogRaw(logType, appName, userLogin, codeUnit, function, exception, context, args));
         }
 
         public LogResult Log<TCodeUnit>(LogType logType, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userName = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
