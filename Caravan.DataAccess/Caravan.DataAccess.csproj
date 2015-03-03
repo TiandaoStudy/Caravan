@@ -221,6 +221,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="README.md" />
+    <Content Include="Drivers\Sql\MySql\Scripts\grants.sql" />
     <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_log_entries.sql" />
     <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_log_settings.sql" />
     <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_apps.sql" />
