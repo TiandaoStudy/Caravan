@@ -213,6 +213,10 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Drivers\Sql\MySql\Scripts\all.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>all.sql</LastGenOutput>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -221,6 +225,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="README.md" />
+    <Content Include="Drivers\Sql\MySql\Scripts\all.sql">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>all.tt</DependentUpon>
+    </Content>
     <Content Include="Drivers\Sql\MySql\Scripts\grants.sql" />
     <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_log_entries.sql" />
     <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_log_settings.sql" />
