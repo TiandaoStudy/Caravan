@@ -221,6 +221,17 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="README.md" />
+    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_log_entries.sql" />
+    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_log_settings.sql" />
+    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_apps.sql" />
+    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_contexts.sql" />
+    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_entries.sql" />
+    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_groups.sql" />
+    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_objects.sql" />
+    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_roles.sql" />
+    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_users.sql" />
+    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_user_groups.sql" />
+    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_user_roles.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_roles.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_user_roles.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_roles_id.sql" />
@@ -256,7 +267,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Activities\Security\" />
-    <Folder Include="Drivers\Sql\MySql\Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\ErrorMessages.resx">
