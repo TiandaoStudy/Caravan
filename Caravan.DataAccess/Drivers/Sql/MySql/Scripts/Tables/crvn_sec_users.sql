@@ -1,7 +1,7 @@
 ﻿-- REPLACE 'mydb' WITH DB NAME
 
 CREATE TABLE IF NOT EXISTS `mydb`.`crvn_sec_users` (
-  `cusr_id`         INT            NOT NULL AUTO_INCREMENT,
+  `cusr_id`         BIGINT         NOT NULL AUTO_INCREMENT,
   `capp_id`         INT            NOT NULL,
   `cusr_login`      VARCHAR(32)    NOT NULL,
   `cusr_hashed_pwd` VARCHAR(256)   NULL,

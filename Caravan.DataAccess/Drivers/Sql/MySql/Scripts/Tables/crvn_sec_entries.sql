@@ -3,7 +3,7 @@
 CREATE TABLE IF NOT EXISTS `mydb`.`crvn_sec_entries` (
   `csec_id`   BIGINT   NOT NULL AUTO_INCREMENT,
   `cobj_id`   INT      NOT NULL,
-  `cusr_id`   INT      NULL, -- Might be null, either user, group or role
+  `cusr_id`   BIGINT   NULL, -- Might be null, either user, group or role
   `cgrp_id`   INT      NULL, -- Might be null, either user, group or role
   `crol_id`   INT      NULL, -- Might be null, either user, group or role
   PRIMARY KEY (`csec_id`),
