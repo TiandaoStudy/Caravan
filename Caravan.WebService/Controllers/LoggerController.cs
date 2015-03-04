@@ -10,15 +10,15 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.Caravan.Common.Models.Logging;
+using Finsa.Caravan.Common.Models.Logging.Exceptions;
+using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.WebApi.ActionFilters.Logging;
+using LinqToQuerystring.WebApi;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Models.Logging.Exceptions;
-using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.DataAccess;
-using LinqToQuerystring.WebApi;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -26,6 +26,7 @@ namespace Finsa.Caravan.WebService.Controllers
     ///   Controller che si occupa della parte di logging.
     /// </summary>
     [RoutePrefix("logger")]
+    [LogRequest, LogResponse]
     public sealed class LoggerController : ApiController
     {
         /// <summary>
@@ -34,7 +35,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("ping")]
         public HttpResponseMessage GetPing()
         {
-            return GetPing(Common.Properties.Settings.Default.ApplicationName);
+            return GetPing(null);
         }
 
         /// <summary>
@@ -43,6 +44,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/ping")]
         public HttpResponseMessage GetPing(string appName)
         {
+            appName = appName ?? Common.Properties.Settings.Default.ApplicationName;
             var result = Db.Logger.LogInfo<LoggerController>(new LogEntry
             {
                 AppName = appName,
@@ -133,6 +135,16 @@ namespace Finsa.Caravan.WebService.Controllers
         }
 
         /// <summary>
+        ///   Returns all settings of the current application
+        /// </summary>
+        /// <returns></returns>
+        [Route("settings"), LinqToQueryable]
+        public IQueryable<LogSetting> GetSettings()
+        {
+            return GetSettings(null);
+        }
+
+        /// <summary>
         ///   Returns all settings of the specified application
         /// </summary>
         /// <param name="appName">Application name</param>
@@ -140,6 +152,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/settings"), LinqToQueryable]
         public IQueryable<LogSetting> GetSettings(string appName)
         {
+            appName = appName ?? Common.Properties.Settings.Default.ApplicationName;
             return Db.Logger.Settings(appName).AsQueryable();
         }
 

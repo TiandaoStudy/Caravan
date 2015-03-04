@@ -10,14 +10,14 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using System;
-using System.Linq;
-using System.Web.Http;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebApi.ActionFilters.Logging;
 using Finsa.Caravan.WebApi.Models.Security;
 using LinqToQuerystring.WebApi;
+using System;
+using System.Linq;
+using System.Web.Http;
 
 namespace Finsa.Caravan.WebService.Controllers
 {

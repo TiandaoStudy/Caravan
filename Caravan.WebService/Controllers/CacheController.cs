@@ -10,8 +10,9 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using System.Web.Http;
+using Finsa.Caravan.WebApi.ActionFilters.Logging;
 using PommaLabs.KVLite.Web.Http;
+using System.Web.Http;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -19,6 +20,7 @@ namespace Finsa.Caravan.WebService.Controllers
     ///   Controller che si occupa della gestione della cache locale al server.
     /// </summary>
     [RoutePrefix("cache")]
+    [LogRequest, LogResponse]
     public sealed class CacheController : CacheControllerBase
     {
     }
