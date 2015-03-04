@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`crvn_sec_apps` (
 CREATE TABLE IF NOT EXISTS `mydb`.`crvn_log_settings` (
   `capp_id`              INT         NOT NULL,
   `clos_type`            VARCHAR(8)  NOT NULL,
-  `clos_enabled`         TINYINT     NOT NULL,
+  `clos_enabled`         BIT         NOT NULL,
   `clos_days`            SMALLINT    NOT NULL,
   `clos_max_entries`     INT         NOT NULL,
   PRIMARY KEY (`clos_type`, `capp_id`),
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`crvn_sec_users` (
   `capp_id`         INT            NOT NULL,
   `cusr_login`      VARCHAR(32)    NOT NULL,
   `cusr_hashed_pwd` VARCHAR(256)   NULL,
-  `cusr_active`     TINYINT        NOT NULL,
+  `cusr_active`     BIT            NOT NULL,
   `cusr_first_name` VARCHAR(256)   NULL,
   `cusr_last_name`  VARCHAR(256)   NULL,
   `cusr_email`      VARCHAR(256)   NULL,
@@ -126,8 +126,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`crvn_sec_roles` (
 -- REPLACE 'mydb' WITH DB NAME
 
 CREATE TABLE IF NOT EXISTS `mydb`.`crvn_sec_user_groups` (
-  `cusr_id` INT NOT NULL,
-  `cgrp_id` INT NOT NULL,
+  `cusr_id` BIGINT    NOT NULL,
+  `cgrp_id` INT       NOT NULL,
   PRIMARY KEY (`cusr_id`, `cgrp_id`),
   CONSTRAINT `fk_crvnsecusrgrp_crvnsecusr`
     FOREIGN KEY (`cusr_id`)
@@ -144,8 +144,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`crvn_sec_user_groups` (
 -- REPLACE 'mydb' WITH DB NAME
 
 CREATE TABLE IF NOT EXISTS `mydb`.`crvn_sec_user_roles` (
-  `cusr_id` INT NOT NULL,
-  `crol_id` INT NOT NULL,
+  `cusr_id` BIGINT   NOT NULL,
+  `crol_id` INT      NOT NULL,
   PRIMARY KEY (`cusr_id`, `crol_id`),
   CONSTRAINT `fk_crvnsecusrrol_crvnsecusr`
     FOREIGN KEY (`cusr_id`)
