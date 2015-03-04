@@ -80,6 +80,12 @@
             <param name="appName">The application name</param>
             <param name="logId">The id of the log to delete which can be "warn", "info" or "error"</param>
         </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetSettings">
+            <summary>
+              Returns all settings of the current application
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetSettings(System.String)">
             <summary>
               Returns all settings of the specified application
