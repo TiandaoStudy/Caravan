@@ -13,15 +13,19 @@ namespace Finsa.Caravan.WebApi.ActionFilters.Logging
 {
     public sealed class LogRequestAttribute : ActionFilterAttribute
     {
+        internal static Guid RequestId { get; private set; }
+
         public override void OnActionExecuting(HttpActionContext ctx)
         {
             try
             {
-                var body = ctx.Request.Content.ReadAsStringAsync();
+                var body = (ctx.Request.Content == null) ? String.Empty : ctx.Request.Content.ReadAsStringAsync().Result;
                 var args = new[]
                 {
+                    KeyValuePair.Create("req_id", (RequestId = Guid.NewGuid()).ToString()),
+                    KeyValuePair.Create("uri", ctx.Request.RequestUri.ToString()),
                     KeyValuePair.Create("user_agent", ctx.Request.Headers.UserAgent.SafeToString()),
-                    KeyValuePair.Create("from", ctx.Request.Headers.From),
+                    KeyValuePair.Create("host", ctx.Request.Headers.Host),
                     KeyValuePair.Create("method", ctx.Request.Method.SafeToString()),
                     KeyValuePair.Create("accept", ctx.Request.Headers.Accept.SafeToString()),
                 };
@@ -32,7 +36,7 @@ namespace Finsa.Caravan.WebApi.ActionFilters.Logging
                     ctx.ActionDescriptor.ControllerDescriptor.ControllerType.FullName,
                     ctx.ActionDescriptor.ActionName,
                     "Incoming request",
-                    body.Result,
+                    body,
                     "On action executing",
                     args
                 );

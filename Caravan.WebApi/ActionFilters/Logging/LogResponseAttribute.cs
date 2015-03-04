@@ -15,10 +15,12 @@ namespace Finsa.Caravan.WebApi.ActionFilters.Logging
         {
             try
             {
-                var body = ctx.Response.Content.ReadAsStringAsync();
+                var body = (ctx.Response.Content == null) ? String.Empty : ctx.Response.Content.ReadAsStringAsync().Result;
                 var args = new[]
                 {
-                    KeyValuePair.Create("location", ctx.Response.Headers.Location.SafeToString()),
+                    KeyValuePair.Create("req_id", LogRequestAttribute.RequestId.ToString()),
+                    KeyValuePair.Create("status_code", ctx.Response.StatusCode.ToString()),
+                    KeyValuePair.Create("headers", ctx.Response.Headers.ToString()),
                 };
                 Db.Logger.LogRawAsync(
                     LogType.Debug,
@@ -27,7 +29,7 @@ namespace Finsa.Caravan.WebApi.ActionFilters.Logging
                     ctx.ActionContext.ActionDescriptor.ControllerDescriptor.ControllerType.FullName,
                     ctx.ActionContext.ActionDescriptor.ActionName,
                     "Outgoing response",
-                    body.Result,
+                    body,
                     "On action executed",
                     args
                 );
