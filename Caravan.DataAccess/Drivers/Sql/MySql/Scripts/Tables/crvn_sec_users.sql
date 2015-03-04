@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`crvn_sec_users` (
   `capp_id`         INT            NOT NULL,
   `cusr_login`      VARCHAR(32)    NOT NULL,
   `cusr_hashed_pwd` VARCHAR(256)   NULL,
-  `cusr_active`     TINYINT        NOT NULL,
+  `cusr_active`     BIT            NOT NULL,
   `cusr_first_name` VARCHAR(256)   NULL,
   `cusr_last_name`  VARCHAR(256)   NULL,
   `cusr_email`      VARCHAR(256)   NULL,

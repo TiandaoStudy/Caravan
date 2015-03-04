@@ -1,8 +1,8 @@
 ﻿-- REPLACE 'mydb' WITH DB NAME
 
 CREATE TABLE IF NOT EXISTS `mydb`.`crvn_sec_user_groups` (
-  `cusr_id` INT NOT NULL,
-  `cgrp_id` INT NOT NULL,
+  `cusr_id` BIGINT    NOT NULL,
+  `cgrp_id` INT       NOT NULL,
   PRIMARY KEY (`cusr_id`, `cgrp_id`),
   CONSTRAINT `fk_crvnsecusrgrp_crvnsecusr`
     FOREIGN KEY (`cusr_id`)
