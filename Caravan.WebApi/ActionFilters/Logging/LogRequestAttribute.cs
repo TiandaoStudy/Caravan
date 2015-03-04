@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
@@ -20,15 +21,17 @@ namespace Finsa.Caravan.WebApi.ActionFilters.Logging
             try
             {
                 var body = (ctx.Request.Content == null) ? String.Empty : ctx.Request.Content.ReadAsStringAsync().Result;
+
                 var args = new[]
                 {
                     KeyValuePair.Create("req_id", (RequestId = Guid.NewGuid()).ToString()),
-                    KeyValuePair.Create("uri", ctx.Request.RequestUri.ToString()),
-                    KeyValuePair.Create("user_agent", ctx.Request.Headers.UserAgent.SafeToString()),
                     KeyValuePair.Create("host", ctx.Request.Headers.Host),
+                    KeyValuePair.Create("user_agent", ctx.Request.Headers.UserAgent.SafeToString()),
+                    KeyValuePair.Create("uri", ctx.Request.RequestUri.ToString()),
                     KeyValuePair.Create("method", ctx.Request.Method.SafeToString()),
-                    KeyValuePair.Create("accept", ctx.Request.Headers.Accept.SafeToString()),
+                    KeyValuePair.Create("headers", ctx.Request.Headers.SafeToString())
                 };
+                
                 Db.Logger.LogRawAsync(
                     LogType.Debug,
                     Settings.Default.ApplicationName,

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Http.Filters;
 using Finsa.Caravan.Common;
@@ -16,12 +17,13 @@ namespace Finsa.Caravan.WebApi.ActionFilters.Logging
             try
             {
                 var body = (ctx.Response.Content == null) ? String.Empty : ctx.Response.Content.ReadAsStringAsync().Result;
+                
                 var args = new[]
                 {
                     KeyValuePair.Create("req_id", LogRequestAttribute.RequestId.ToString()),
-                    KeyValuePair.Create("status_code", ctx.Response.StatusCode.ToString()),
-                    KeyValuePair.Create("headers", ctx.Response.Headers.ToString()),
+                    KeyValuePair.Create("status_code", ctx.Response.StatusCode.ToString())
                 };
+                
                 Db.Logger.LogRawAsync(
                     LogType.Debug,
                     Settings.Default.ApplicationName,
