@@ -51,6 +51,7 @@ CREATE TABLE mydb.crvn_log_entries
    , clog_code_unit    NVARCHAR2(256)
    , clog_function     NVARCHAR2(256)
    , clog_short_msg    NVARCHAR2(256)       NOT NULL
+   , clog_long_msg     CLOB
    , clog_context      NVARCHAR2(256)
    , clog_key_0        NVARCHAR2(32)
    , clog_value_0      NVARCHAR2(1024)
@@ -72,7 +73,6 @@ CREATE TABLE mydb.crvn_log_entries
    , clog_value_8      NVARCHAR2(1024) 
    , clog_key_9        NVARCHAR2(32)
    , clog_value_9      NVARCHAR2(1024)
-   , clog_long_msg     CLOB
    , CHECK (cusr_login is null or cusr_login = lower(cusr_login)) ENABLE
    , CHECK (clog_code_unit = lower(clog_code_unit)) ENABLE
    , CHECK (clog_function = lower(clog_function)) ENABLE
