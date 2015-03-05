@@ -13,7 +13,6 @@
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.WebApi.ActionFilters.Logging;
 using LinqToQuerystring.WebApi;
 using System.Linq;
 using System.Net;
@@ -26,7 +25,6 @@ namespace Finsa.Caravan.WebService.Controllers
     ///   Controller che si occupa della parte di logging.
     /// </summary>
     [RoutePrefix("logger")]
-    [LogRequest, LogResponse]
     public sealed class LoggerController : ApiController
     {
         /// <summary>
