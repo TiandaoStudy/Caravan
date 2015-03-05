@@ -1,13 +1,14 @@
-﻿using System.Web.Http;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
-using Finsa.Caravan.WebApi;
+﻿using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebService;
 using Microsoft.Owin;
 using Owin;
+using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.Optimization;
+using System.Web.Routing;
 
 [assembly: OwinStartup(typeof(Startup))]
+
 namespace Finsa.Caravan.WebService
 {
     public sealed class Startup
