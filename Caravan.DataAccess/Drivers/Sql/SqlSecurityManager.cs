@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Transactions;
 using AutoMapper;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Models.Security.Exceptions;
@@ -86,7 +85,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         protected override bool DoAddGroup(string appName, SecGroup newGroup)
         {
-            using (var trx = new TransactionScope())
+            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
@@ -110,7 +109,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         protected override bool DoRemoveGroup(string appName, string groupName)
         {
-            using (var trx = new TransactionScope())
+            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var removed = false;
@@ -129,7 +128,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         protected override bool DoUpdateGroup(string appName, string groupName, SecGroup newGroup)
         {
-            using (var trx = new TransactionScope())
+            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var updated = false;
@@ -176,7 +175,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         protected override bool DoAddUser(string appName, SecUser newUser)
         {
-            using (var trx = new TransactionScope())
+            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
@@ -203,7 +202,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         protected override bool DoRemoveUser(string appName, string userLogin)
         {
-            using (var trx = new TransactionScope())
+            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var removed = false;
@@ -222,7 +221,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         protected override bool DoUpdateUser(string appName, string userLogin, SecUser newUser)
         {
-            using (var trx = new TransactionScope())
+            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var updated = false;
@@ -249,7 +248,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         protected override bool DoAddUserToGroup(string appName, string userLogin, string groupName)
         {
-            using (var trx = new TransactionScope())
+            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
@@ -269,7 +268,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         protected override bool DoRemoveUserFromGroup(string appName, string userLogin, string groupName)
         {
-            using (var trx = new TransactionScope())
+            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
@@ -377,7 +376,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         protected override bool DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
         {
-            using (var trx = new TransactionScope())
+            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
@@ -448,7 +447,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         protected override bool DoRemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)
         {
-            using (var trx = new TransactionScope())
+            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var appId = GetAppIdByName(ctx, appName);

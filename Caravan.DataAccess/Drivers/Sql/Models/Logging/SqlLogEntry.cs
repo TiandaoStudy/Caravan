@@ -41,92 +41,92 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
         [MaxLength(SqlDbContext.MediumLength)]
         public string ShortMessage { get; set; }
 
-        [Column("CLOG_CONTEXT", Order = 8)]
+        [Column("CLOG_LONG_MSG", Order = 8)] /* Should be a CLOB/TEXT */
+        public string LongMessage { get; set; }
+
+        [Column("CLOG_CONTEXT", Order = 9)]
         [MaxLength(SqlDbContext.MediumLength)]
         public string Context { get; set; }
 
-        [Column("CLOG_KEY_0", Order = 9)]
+        [Column("CLOG_KEY_0", Order = 10)]
         [MaxLength(SqlDbContext.SmallLength)]
         public string Key0 { get; set; }
 
-        [Column("CLOG_VALUE_0", Order = 10)]
+        [Column("CLOG_VALUE_0", Order = 11)]
         [MaxLength(SqlDbContext.LargeLength)]
         public string Value0 { get; set; }
 
-        [Column("CLOG_KEY_1", Order = 11)]
+        [Column("CLOG_KEY_1", Order = 12)]
         [MaxLength(SqlDbContext.SmallLength)]
         public string Key1 { get; set; }
 
-        [Column("CLOG_VALUE_1", Order = 12)]
+        [Column("CLOG_VALUE_1", Order = 13)]
         [MaxLength(SqlDbContext.LargeLength)]
         public string Value1 { get; set; }
 
-        [Column("CLOG_KEY_2", Order = 13)]
+        [Column("CLOG_KEY_2", Order = 14)]
         [MaxLength(SqlDbContext.SmallLength)]
         public string Key2 { get; set; }
 
-        [Column("CLOG_VALUE_2", Order = 14)]
+        [Column("CLOG_VALUE_2", Order = 15)]
         [MaxLength(SqlDbContext.LargeLength)]
         public string Value2 { get; set; }
 
-        [Column("CLOG_KEY_3", Order = 15)]
+        [Column("CLOG_KEY_3", Order = 16)]
         [MaxLength(SqlDbContext.SmallLength)]
         public string Key3 { get; set; }
 
-        [Column("CLOG_VALUE_3", Order = 16)]
+        [Column("CLOG_VALUE_3", Order = 17)]
         [MaxLength(SqlDbContext.LargeLength)]
         public string Value3 { get; set; }
 
-        [Column("CLOG_KEY_4", Order = 17)]
+        [Column("CLOG_KEY_4", Order = 18)]
         [MaxLength(SqlDbContext.SmallLength)]
         public string Key4 { get; set; }
 
-        [Column("CLOG_VALUE_4", Order = 18)]
+        [Column("CLOG_VALUE_4", Order = 19)]
         [MaxLength(SqlDbContext.LargeLength)]
         public string Value4 { get; set; }
 
-        [Column("CLOG_KEY_5", Order = 19)]
+        [Column("CLOG_KEY_5", Order = 20)]
         [MaxLength(SqlDbContext.SmallLength)]
         public string Key5 { get; set; }
 
-        [Column("CLOG_VALUE_5", Order = 20)]
+        [Column("CLOG_VALUE_5", Order = 21)]
         [MaxLength(SqlDbContext.LargeLength)]
         public string Value5 { get; set; }
 
-        [Column("CLOG_KEY_6", Order = 21)]
+        [Column("CLOG_KEY_6", Order = 22)]
         [MaxLength(SqlDbContext.SmallLength)]
         public string Key6 { get; set; }
 
-        [Column("CLOG_VALUE_6", Order = 22)]
+        [Column("CLOG_VALUE_6", Order = 23)]
         [MaxLength(SqlDbContext.LargeLength)]
         public string Value6 { get; set; }
 
-        [Column("CLOG_KEY_7", Order = 23)]
+        [Column("CLOG_KEY_7", Order = 24)]
         [MaxLength(SqlDbContext.SmallLength)]
         public string Key7 { get; set; }
 
-        [Column("CLOG_VALUE_7", Order = 24)]
+        [Column("CLOG_VALUE_7", Order = 25)]
         [MaxLength(SqlDbContext.LargeLength)]
         public string Value7 { get; set; }
 
-        [Column("CLOG_KEY_8", Order = 25)]
+        [Column("CLOG_KEY_8", Order = 26)]
         [MaxLength(SqlDbContext.SmallLength)]
         public string Key8 { get; set; }
 
-        [Column("CLOG_VALUE_8", Order = 26)]
+        [Column("CLOG_VALUE_8", Order = 27)]
         [MaxLength(SqlDbContext.LargeLength)]
         public string Value8 { get; set; }
 
-        [Column("CLOG_KEY_9", Order = 27)]
+        [Column("CLOG_KEY_9", Order = 28)]
         [MaxLength(SqlDbContext.SmallLength)]
         public string Key9 { get; set; }
 
-        [Column("CLOG_VALUE_9", Order = 28)]
+        [Column("CLOG_VALUE_9", Order = 29)]
         [MaxLength(SqlDbContext.LargeLength)]
         public string Value9 { get; set; }
-
-        [Column("CLOG_LONG_MSG", Order = 29)] /* Should be a CLOB/TEXT */
-        public string LongMessage { get; set; }
 
         #region Relationships
 

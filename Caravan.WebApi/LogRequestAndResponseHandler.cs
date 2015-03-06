@@ -41,7 +41,7 @@ namespace Finsa.Caravan.WebApi
                     userLogin,
                     GetType().FullName,
                     "SendAsync",
-                    "Incoming request",
+                    String.Format("Incoming request \"{0}\" at \"{1}\"", requestId, request.RequestUri.SafeToString()),
                     requestBody,
                     "Logging request",
                     args
@@ -85,7 +85,7 @@ namespace Finsa.Caravan.WebApi
                         userLogin,
                         GetType().FullName,
                         "SendAsync",
-                        "Outgoing response",
+                        String.Format("Outgoing response \"{0}\" for \"{1}\"", requestId, request.RequestUri.SafeToString()),
                         responseBody,
                         "Logging response",
                         args

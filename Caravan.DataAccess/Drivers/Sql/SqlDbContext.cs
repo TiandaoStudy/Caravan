@@ -5,6 +5,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Transactions;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
@@ -60,6 +61,11 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             var ctx = new SqlDbContext();
             ctx.Database.Initialize(false);
             return ctx;
+        }
+
+        public static TransactionScope BeginTrasaction()
+        {
+            return new TransactionScope(TransactionScopeOption.Required, new TransactionOptions {IsolationLevel = IsolationLevel.Snapshot});
         }
 
         private static DbConnection GetConnection()

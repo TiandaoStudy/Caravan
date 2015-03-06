@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Transactions;
 using AutoMapper;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.DataAccess.Core;
@@ -30,7 +29,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 var argsList = (args == null) ? new KeyValuePair<string, string>[0] : args.ToArray();
                 Raise<ArgumentOutOfRangeException>.If(argsList.Length > MaxArgumentCount);
 
-                using (var trx = new TransactionScope())
                 using (var ctx = SqlDbContext.CreateWriteContext())
                 {
                     var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
@@ -134,7 +132,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     }
 
                     ctx.SaveChanges();
-                    trx.Complete();
                     return LogResult.Success;
                 }
             }
@@ -168,12 +165,11 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         protected override bool DoRemoveEntry(string appName, int logId)
         {
-            using (var trx = new TransactionScope())
+            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var deleted = false;
                 var log = ctx.LogEntries.FirstOrDefault(l => l.App.Name == appName && l.Id == logId);
-
                 if (log != null)
                 {
                     ctx.LogEntries.Remove(log);
@@ -209,7 +205,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         protected override bool DoAddSetting(string appName, LogType logType, LogSetting setting)
         {
-            using (var trx = new TransactionScope())
+            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var added = false;
@@ -239,7 +235,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         protected override bool DoRemoveSetting(string appName, LogType logType)
         {
-            using (var trx = new TransactionScope())
+            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var deleted = false;
@@ -260,7 +256,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         protected override bool DoUpdateSetting(string appName, LogType logType, LogSetting setting)
         {
-            using (var trx = new TransactionScope())
+            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var update = false;
