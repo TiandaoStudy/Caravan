@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Finsa.Caravan.Common.Models.Logging;
+using System;
 using System.Activities;
 using System.Collections.Generic;
-using Finsa.Caravan.Common.Models.Logging;
 
 namespace Finsa.Caravan.DataAccess.Activities.Logging
 {
@@ -16,6 +16,7 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
         /// </summary>
         public InArgument<Exception> Exception { get; set; }
 
+        [RequiredArgument]
         public InArgument<LogType> LogType { get; set; }
 
         public InArgument<string> LongMessage { get; set; }
@@ -24,6 +25,7 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
 
         public InArgument<string> UserLogin { get; set; }
 
+        [RequiredArgument]
         public InArgument<string> WorkflowName { get; set; }
 
         protected override LogResult Execute(CodeActivityContext ctx)
@@ -34,7 +36,7 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
             {
                 result = Db.Logger.LogRaw(
                     LogType.Get(ctx),
-                    Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName,
+                    Common.Properties.Settings.Default.ApplicationName,
                     UserLogin.Get(ctx),
                     WorkflowName.Get(ctx),
                     "LogActivity.Execute",
@@ -48,7 +50,7 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
             {
                 result = Db.Logger.LogRaw(
                     LogType.Get(ctx),
-                    Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName,
+                    Common.Properties.Settings.Default.ApplicationName,
                     UserLogin.Get(ctx),
                     WorkflowName.Get(ctx),
                     "LogActivity.Execute",
