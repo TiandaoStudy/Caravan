@@ -313,22 +313,27 @@
             <param name="userLogin">The user login (must be null if the group name is present)</param>
             <param name="groupName">The group name (must be null if the user login is present)</param>
         </member>
+        <member name="T:Finsa.Caravan.WebService.Controllers.ValuesController">
+            <summary>
+              Sample controller with basic interactions.
+            </summary>
+        </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.ValuesController.Get">
             <summary>
-              Returns all values
+              Returns all values.
             </summary>
-            <returns>All values</returns>
+            <returns>All values.</returns>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.ValuesController.Get(System.Int32)">
             <summary>
-              Looks up some data from ID
+              Looks up some data from ID.
             </summary>
-            <param name="id">The id of the data</param>
-            <returns>The value of the data</returns>
+            <param name="id">The id of the data.</param>
+            <returns>The value of the data.</returns>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.ValuesController.Post(System.String)">
             <summary>
-              Looks up api from value
+              Adds given value.
             </summary>
             <param name="value">Value of the api</param>
             <returns></returns>
