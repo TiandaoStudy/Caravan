@@ -36,12 +36,12 @@ namespace Finsa.Caravan.WebApi
                 };
 
                 Db.Logger.LogRawAsync(
-                    LogType.Debug,
+                    LogType.Trace,
                     Settings.Default.ApplicationName,
                     userLogin,
                     GetType().FullName,
                     "SendAsync",
-                    String.Format("Incoming request \"{0}\" at \"{1}\"", requestId, request.RequestUri.SafeToString()),
+                    String.Format("Request \"{0}\" at \"{1}\"", requestId, request.RequestUri.SafeToString()),
                     requestBody,
                     "Logging request",
                     args
@@ -50,7 +50,7 @@ namespace Finsa.Caravan.WebApi
             catch (Exception ex)
             {
                 Db.Logger.LogRawAsync(
-                    LogType.Error,
+                    LogType.Trace,
                     Settings.Default.ApplicationName,
                     userLogin,
                     GetType().FullName,
@@ -85,7 +85,7 @@ namespace Finsa.Caravan.WebApi
                         userLogin,
                         GetType().FullName,
                         "SendAsync",
-                        String.Format("Outgoing response \"{0}\" for \"{1}\"", requestId, request.RequestUri.SafeToString()),
+                        String.Format("Response \"{0}\" for \"{1}\"", requestId, request.RequestUri.SafeToString()),
                         responseBody,
                         "Logging response",
                         args

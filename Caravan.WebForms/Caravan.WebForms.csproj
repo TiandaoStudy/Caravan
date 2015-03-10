@@ -100,9 +100,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\PommaLabs.Armando.0.3.3\lib\net40-client\PommaLabs.Armando.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.GRAMPA">
-      <HintPath>..\packages\PommaLabs.GRAMPA.2.2.1\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="PommaLabs.GRAMPA, Version=2.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PommaLabs.GRAMPA.2.2.4\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
     <Reference Include="PommaLabs.KVLite">
       <HintPath>..\packages\PommaLabs.KVLite.Core.1.5.1\lib\net45\PommaLabs.KVLite.dll</HintPath>

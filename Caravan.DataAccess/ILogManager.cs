@@ -153,6 +153,54 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="userLogin">The user logged in at the moment in which this log was produced.</param>
         /// <param name="function">The method, procedure or function from which the log was called.</param>
         /// <returns></returns>
+        LogResult LogTrace<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <typeparam name="TCodeUnit">The class, module or package in which this log was produced.</typeparam>
+        /// <param name="shortMessage"></param>
+        /// <param name="longMessage"></param>
+        /// <param name="context">Contextual information which may add more meaning to the log message.</param>
+        /// <param name="args">Further information that should be logged.</param>
+        /// <param name="appName"></param>
+        /// <param name="userLogin">The user logged in at the moment in which this log was produced.</param>
+        /// <param name="function">The method, procedure or function from which the log was called.</param>
+        /// <returns></returns>
+        Task<LogResult> LogTraceAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <typeparam name="TCodeUnit">The class, module or package in which this log was produced.</typeparam>
+        /// <param name="logEntry"></param>
+        /// <param name="function">The method, procedure or function from which the log was called.</param>
+        /// <returns></returns>
+        LogResult LogTrace<TCodeUnit>(LogEntry logEntry, [CallerMemberName] string function = LogEntry.AutoFilled);
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <typeparam name="TCodeUnit">The class, module or package in which this log was produced.</typeparam>
+        /// <param name="logEntry"></param>
+        /// <param name="function">The method, procedure or function from which the log was called.</param>
+        /// <returns></returns>
+        Task<LogResult> LogTraceAsync<TCodeUnit>(LogEntry logEntry, [CallerMemberName] string function = LogEntry.AutoFilled);
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <typeparam name="TCodeUnit">The class, module or package in which this log was produced.</typeparam>
+        /// <param name="shortMessage"></param>
+        /// <param name="longMessage"></param>
+        /// <param name="context">Contextual information which may add more meaning to the log message.</param>
+        /// <param name="args">Further information that should be logged.</param>
+        /// <param name="appName"></param>
+        /// <param name="userLogin">The user logged in at the moment in which this log was produced.</param>
+        /// <param name="function">The method, procedure or function from which the log was called.</param>
+        /// <returns></returns>
         LogResult LogInfo<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
@@ -417,6 +465,34 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="function">The method, procedure or function from which the log was called.</param>
         /// <returns></returns>
         Task<LogResult> LogDebugAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <typeparam name="TCodeUnit">The class, module or package in which this log was produced.</typeparam>
+        /// <param name="exception">The exception to be logged.</param>
+        /// <param name="context">Contextual information which may add more meaning to the log message.</param>
+        /// <param name="args">Further information that should be logged.</param>
+        /// <param name="appName">The application name.</param>
+        /// <param name="userLogin">The user logged in at the moment in which this log was produced.</param>
+        /// <param name="function">The method, procedure or function from which the log was called.</param>
+        /// <returns></returns>
+        LogResult LogTrace<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+            string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <typeparam name="TCodeUnit">The class, module or package in which this log was produced.</typeparam>
+        /// <param name="exception">The exception to be logged.</param>
+        /// <param name="context">Contextual information which may add more meaning to the log message.</param>
+        /// <param name="args">Further information that should be logged.</param>
+        /// <param name="appName">The application name.</param>
+        /// <param name="userLogin">The user logged in at the moment in which this log was produced.</param>
+        /// <param name="function">The method, procedure or function from which the log was called.</param>
+        /// <returns></returns>
+        Task<LogResult> LogTraceAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
