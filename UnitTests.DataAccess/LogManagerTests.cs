@@ -29,6 +29,7 @@ namespace UnitTests.DataAccess
             Db.Logger.AddSetting(_myApp.Name, LogType.Fatal, _settingError);
             Db.Logger.AddSetting(_myApp.Name, LogType.Info, _settingError);
             Db.Logger.AddSetting(_myApp.Name, LogType.Debug, _settingError);
+            Db.Logger.AddSetting(_myApp.Name, LogType.Trace, _settingError);
             Db.Logger.AddSetting(_myApp.Name, LogType.Warn, _settingError);
         }
 
@@ -51,7 +52,7 @@ namespace UnitTests.DataAccess
         {
             var settings = Db.Logger.Settings();
 
-            Assert.That(settings.Count, Is.EqualTo(5));
+            Assert.That(settings.Count, Is.EqualTo(6));
         }
 
         [Test]
@@ -59,7 +60,7 @@ namespace UnitTests.DataAccess
         {
             var settings = Db.Logger.Settings(_myApp.Name);
 
-            Assert.That(settings.Count, Is.EqualTo(5));
+            Assert.That(settings.Count, Is.EqualTo(6));
         }
 
         [Test]
@@ -211,6 +212,17 @@ namespace UnitTests.DataAccess
             Assert.True(res.Succeeded);
 
             var q = Db.Logger.Entries(LogType.Debug).Where(l => l.Function == "logdebug_validargs");
+
+            Assert.That(q.Count(), Is.EqualTo(1));
+        }
+
+        [Test]
+        public void LogTrace_validArgs()
+        {
+            var res = Db.Logger.LogTrace<LogManagerTests>(new Exception());
+            Assert.True(res.Succeeded);
+
+            var q = Db.Logger.Entries(LogType.Trace).Where(l => l.Function == "logtrace_validargs");
 
             Assert.That(q.Count(), Is.EqualTo(1));
         }
