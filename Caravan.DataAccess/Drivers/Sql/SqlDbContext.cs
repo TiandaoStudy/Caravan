@@ -251,7 +251,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             // Logging query and execution time.
             var logEntry = queryable.ToString();
             var milliseconds = stopwatch.ElapsedMilliseconds;
-            Db.Logger.LogDebugAsync<IDbManager>("EF generated query", logEntry, "Logging and timing the query", new[]
+            Db.Logger.LogTraceAsync<IDbManager>("EF generated query", logEntry, "Logging and timing the query", new[]
             {
                 KeyValuePair.Create("milliseconds", milliseconds.ToString(CultureInfo.InvariantCulture))
             });
