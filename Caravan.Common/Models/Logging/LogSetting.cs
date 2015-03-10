@@ -43,9 +43,10 @@ namespace Finsa.Caravan.Common.Models.Logging
     public enum LogType : byte
     {
         Debug = 0,
-        Info = 1,
-        Warn = 2,
-        Error = 3,
-        Fatal = 4
+        Trace = 1,
+        Info = 2,
+        Warn = 3,
+        Error = 4,
+        Fatal = 5,
     }
 }

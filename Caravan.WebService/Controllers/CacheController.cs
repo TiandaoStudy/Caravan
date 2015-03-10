@@ -10,6 +10,9 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using System.Globalization;
+using System.Linq;
+using PommaLabs.KVLite;
 using PommaLabs.KVLite.Web.Http;
 using System.Web.Http;
 
@@ -21,5 +24,25 @@ namespace Finsa.Caravan.WebService.Controllers
     [RoutePrefix("cache")]
     public sealed class CacheController : CacheControllerBase
     {
+        public override IQueryable<CacheItem> GetItems()
+        {
+            return base.GetItems().Where(ItemIsNotConnectionString).AsQueryable();
+        }
+
+        public override IQueryable<CacheItem> GetItems(string partition)
+        {
+            return base.GetItems(partition).Where(ItemIsNotConnectionString).AsQueryable();
+        }
+
+        public override CacheItem GetItem(string partition, string key)
+        {
+            var item = base.GetItem(partition, key);
+            return ItemIsNotConnectionString(item) ? item : null;
+        }
+
+        private static bool ItemIsNotConnectionString(CacheItem item)
+        {
+            return !item.Key.ToLower(CultureInfo.InvariantCulture).Contains("connectionstring");
+        }
     }
 }
