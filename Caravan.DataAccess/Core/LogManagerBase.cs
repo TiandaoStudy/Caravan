@@ -530,6 +530,10 @@ namespace Finsa.Caravan.DataAccess.Core
                     CommonLogging.Info(msg);
                     break;
 
+                case LogType.Trace:
+                    CommonLogging.Trace(msg);
+                    break;
+
                 case LogType.Warn:
                     CommonLogging.Warn(msg);
                     break;
