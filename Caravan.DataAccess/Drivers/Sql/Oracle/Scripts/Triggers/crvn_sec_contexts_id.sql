@@ -8,3 +8,4 @@ BEGIN
     INTO :new.cctx_id
     FROM DUAL;
 END;
+/

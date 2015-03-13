@@ -8,3 +8,4 @@ BEGIN
     INTO :new.csec_id
     FROM DUAL;
 END;
+/
