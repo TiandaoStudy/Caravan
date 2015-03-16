@@ -6,7 +6,7 @@ using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
 {
-    [Serializable, Table("CRVN_LOG_ENTRIES")]
+    [Serializable]
     public class SqlLogEntry
     {
         [Key, Column("CLOG_ID", Order = 0)]

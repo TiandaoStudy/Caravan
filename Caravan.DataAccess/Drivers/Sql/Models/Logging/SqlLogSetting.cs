@@ -7,7 +7,7 @@ using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
 {
-    [Serializable, Table("CRVN_LOG_SETTINGS")]
+    [Serializable]
     public class SqlLogSetting
     {
         [Key, Column("CAPP_ID", Order = 0)]
