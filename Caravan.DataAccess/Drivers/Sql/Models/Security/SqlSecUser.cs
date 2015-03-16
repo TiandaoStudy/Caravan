@@ -59,6 +59,12 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
         public SqlSecUserTypeConfiguration()
         {
             ToTable("CRVN_SEC_USERS", Properties.Settings.Default.SqlSchema);
+
+            // SqlSecUser(N) <-> SqlSecApp(1)
+            HasRequired(x => x.App)
+                .WithMany(x => x.Users)
+                .HasForeignKey(x => x.AppId)
+                .WillCascadeOnDelete(true);
         }
     }
 }

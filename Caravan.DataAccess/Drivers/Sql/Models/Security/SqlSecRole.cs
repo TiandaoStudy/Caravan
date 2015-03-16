@@ -46,6 +46,19 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
         public SqlSecRoleTypeConfiguration()
         {
             ToTable("CRVN_SEC_ROLES", Properties.Settings.Default.SqlSchema);
+
+            // SqlSecRole(N) <-> SqlSecGroup(1)
+            HasRequired(x => x.Group)
+                .WithMany(x => x.Roles)
+                .HasForeignKey(x => x.GroupId)
+                .WillCascadeOnDelete(true);
+
+            // SqlSecRole(N) <-> SqlSecUser(N)
+            HasMany(x => x.Users)
+                .WithMany(x => x.Roles)
+                .Map(x => x.MapLeftKey("CROL_ID")
+                           .MapRightKey("CUSR_ID")
+                           .ToTable("CRVN_SEC_USER_ROLES", Properties.Settings.Default.SqlSchema));
         }
     }
 }

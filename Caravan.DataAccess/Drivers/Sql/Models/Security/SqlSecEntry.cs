@@ -42,6 +42,30 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
         public SqlSecEntryTypeConfiguration()
         {
             ToTable("CRVN_SEC_ENTRIES", Properties.Settings.Default.SqlSchema);
+
+            // SqlSecEntry(N) <-> SqlSecUser(1)
+            HasOptional(x => x.User)
+                .WithMany(x => x.SecEntries)
+                .HasForeignKey(x => x.UserId)
+                .WillCascadeOnDelete(true);
+
+            // SqlSecEntry(N) <-> SqlSecGroup(1)
+            HasOptional(x => x.Group)
+                .WithMany(x => x.SecEntries)
+                .HasForeignKey(x => x.GroupId)
+                .WillCascadeOnDelete(true);
+
+            // SqlSecEntry(N) <-> SqlSecRole(1)
+            HasOptional(x => x.Role)
+                .WithMany(x => x.SecEntries)
+                .HasForeignKey(x => x.RoleId)
+                .WillCascadeOnDelete(true);
+
+            // SqlSecEntry(N) <-> SqlSecObject(1)
+            HasRequired(x => x.Object)
+                .WithMany(x => x.SecEntries)
+                .HasForeignKey(x => x.ObjectId)
+                .WillCascadeOnDelete(true);
         }
     }
 }

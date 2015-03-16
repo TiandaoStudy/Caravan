@@ -48,6 +48,19 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
         public SqlSecGroupTypeConfiguration()
         {
             ToTable("CRVN_SEC_GROUPS", Properties.Settings.Default.SqlSchema);
+
+            // SqlSecGroup(N) <-> SqlSecApp(1)
+            HasRequired(x => x.App)
+                .WithMany(x => x.Groups)
+                .HasForeignKey(x => x.AppId)
+                .WillCascadeOnDelete(true);
+
+            // SqlSecGroup(N) <-> SqlSecUser(N)
+            HasMany(x => x.Users)
+                .WithMany(x => x.Groups)
+                .Map(x => x.MapLeftKey("CGRP_ID")
+                           .MapRightKey("CUSR_ID")
+                           .ToTable("CRVN_SEC_USER_GROUPS", Properties.Settings.Default.SqlSchema));
         }
     }
 }

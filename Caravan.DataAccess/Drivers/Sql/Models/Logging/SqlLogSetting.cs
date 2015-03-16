@@ -40,6 +40,12 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
         public SqlLogSettingTypeConfiguration()
         {
             ToTable("CRVN_LOG_SETTINGS", Properties.Settings.Default.SqlSchema);
+
+            // SqlLogSettings(N) <-> SqlSecApp(1)
+            HasRequired(x => x.App)
+                .WithMany(x => x.LogSettings)
+                .HasForeignKey(x => x.AppId)
+                .WillCascadeOnDelete(true);
         }
     }
 }

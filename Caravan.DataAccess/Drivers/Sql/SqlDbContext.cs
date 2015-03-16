@@ -105,137 +105,15 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
             base.OnModelCreating(mb);
 
-            /************************************************
-             * SqlSecUser
-             ************************************************/
-
-            // SqlSecUser(N) <-> SqlSecApp(1)
-            mb.Entity<SqlSecUser>()
-                .HasRequired<SqlSecApp>(x => x.App)
-                .WithMany(x => x.Users)
-                .HasForeignKey(x => x.AppId)
-                .WillCascadeOnDelete(true);
-
-            /************************************************
-             * SqlSecGroup
-             ************************************************/
-
-            // SqlSecGroup(N) <-> SqlSecApp(1)
-            mb.Entity<SqlSecGroup>()
-                .HasRequired<SqlSecApp>(x => x.App)
-                .WithMany(x => x.Groups)
-                .HasForeignKey(x => x.AppId)
-                .WillCascadeOnDelete(true);
-
-            // SqlSecGroup(N) <-> SqlSecUser(N)
-            mb.Entity<SqlSecGroup>()
-                .HasMany<SqlSecUser>(x => x.Users)
-                .WithMany(x => x.Groups)
-                .Map(x => x.MapLeftKey("CGRP_ID")
-                           .MapRightKey("CUSR_ID")
-                           .ToTable("CRVN_SEC_USER_GROUPS"));
-
-            /************************************************
-             * SqlSecRole
-             ************************************************/
-
-            // SqlSecRole(N) <-> SqlSecGroup(1)
-            mb.Entity<SqlSecRole>()
-                .HasRequired<SqlSecGroup>(x => x.Group)
-                .WithMany(x => x.Roles)
-                .HasForeignKey(x => x.GroupId)
-                .WillCascadeOnDelete(true);
-
-            // SqlSecRole(N) <-> SqlSecUser(N)
-            mb.Entity<SqlSecRole>()
-                .HasMany<SqlSecUser>(x => x.Users)
-                .WithMany(x => x.Roles)
-                .Map(x => x.MapLeftKey("CROL_ID")
-                           .MapRightKey("CUSR_ID")
-                           .ToTable("CRVN_SEC_USER_ROLES"));
-
-            /************************************************
-             * SqlSecContext
-             ************************************************/
-
-            // SqlSecContext(N) <-> SqlSecApp(1)
-            mb.Entity<SqlSecContext>()
-                .HasRequired<SqlSecApp>(x => x.App)
-                .WithMany(x => x.Contexts)
-                .HasForeignKey(x => x.AppId)
-                .WillCascadeOnDelete(true);
-
-            /************************************************
-             * SqlSecObject
-             ************************************************/
-
-            // SqlSecObject(N) <-> SqlSecContext(1)
-            mb.Entity<SqlSecObject>()
-                .HasRequired<SqlSecContext>(x => x.Context)
-                .WithMany(x => x.Objects)
-                .HasForeignKey(x => x.ContextId)
-                .WillCascadeOnDelete(true);
-
-            /************************************************
-             * SqlSecEntry
-             ************************************************/
-
-            // SqlSecEntry(N) <-> SqlSecUser(1)
-            mb.Entity<SqlSecEntry>()
-                .HasOptional<SqlSecUser>(x => x.User)
-                .WithMany(x => x.SecEntries)
-                .HasForeignKey(x => x.UserId)
-                .WillCascadeOnDelete(true);
-
-            // SqlSecEntry(N) <-> SqlSecGroup(1)
-            mb.Entity<SqlSecEntry>()
-                .HasOptional<SqlSecGroup>(x => x.Group)
-                .WithMany(x => x.SecEntries)
-                .HasForeignKey(x => x.GroupId)
-                .WillCascadeOnDelete(true);
-
-            // SqlSecEntry(N) <-> SqlSecRole(1)
-            mb.Entity<SqlSecEntry>()
-                .HasOptional<SqlSecRole>(x => x.Role)
-                .WithMany(x => x.SecEntries)
-                .HasForeignKey(x => x.RoleId)
-                .WillCascadeOnDelete(true);
-
-            // SqlSecEntry(N) <-> SqlSecObject(1)
-            mb.Entity<SqlSecEntry>()
-                .HasRequired<SqlSecObject>(x => x.Object)
-                .WithMany(x => x.SecEntries)
-                .HasForeignKey(x => x.ObjectId)
-                .WillCascadeOnDelete(true);
-
-            /************************************************
-             * SqlLogSettings
-             ************************************************/
-
-            // SqlLogSettings(N) <-> SqlSecApp(1)
-            mb.Entity<SqlLogSetting>()
-                .HasRequired<SqlSecApp>(x => x.App)
-                .WithMany(x => x.LogSettings)
-                .HasForeignKey(x => x.AppId)
-                .WillCascadeOnDelete(true);
-
-            /************************************************
-             * SqlLogEntry
-             ************************************************/
-
-            // SqlLogEntry(N) <-> SqlSecApp(1)
-            mb.Entity<SqlLogEntry>()
-                .HasRequired<SqlSecApp>(x => x.App)
-                .WithMany(x => x.LogEntries)
-                .HasForeignKey(x => x.AppId)
-                .WillCascadeOnDelete(true);
-
-            // SqlLogEntry(N) <-> SqlLogSettings(1)
-            mb.Entity<SqlLogEntry>()
-                .HasRequired<SqlLogSetting>(x => x.LogSetting)
-                .WithMany(x => x.LogEntries)
-                .HasForeignKey(x => new { x.AppId, x.LogType })
-                .WillCascadeOnDelete(true);
+            mb.Configurations.Add(new SqlSecAppTypeConfiguration());
+            mb.Configurations.Add(new SqlSecContextTypeConfiguration());
+            mb.Configurations.Add(new SqlSecEntryTypeConfiguration());
+            mb.Configurations.Add(new SqlSecGroupTypeConfiguration());
+            mb.Configurations.Add(new SqlSecObjectTypeConfiguration());
+            mb.Configurations.Add(new SqlSecRoleTypeConfiguration());
+            mb.Configurations.Add(new SqlSecUserTypeConfiguration());
+            mb.Configurations.Add(new SqlLogSettingTypeConfiguration());
+            mb.Configurations.Add(new SqlLogEntryTypeConfiguration());
         }
     }
 

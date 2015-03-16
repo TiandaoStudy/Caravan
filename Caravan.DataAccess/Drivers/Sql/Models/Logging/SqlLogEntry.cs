@@ -143,6 +143,18 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
         public SqlLogEntryTypeConfiguration()
         {
             ToTable("CRVN_LOG_ENTRIES", Properties.Settings.Default.SqlSchema);
+
+            // SqlLogEntry(N) <-> SqlSecApp(1)
+            HasRequired(x => x.App)
+                .WithMany(x => x.LogEntries)
+                .HasForeignKey(x => x.AppId)
+                .WillCascadeOnDelete(true);
+
+            // SqlLogEntry(N) <-> SqlLogSettings(1)
+            HasRequired(x => x.LogSetting)
+                .WithMany(x => x.LogEntries)
+                .HasForeignKey(x => new { x.AppId, x.LogType })
+                .WillCascadeOnDelete(true);
         }
     }
 }
