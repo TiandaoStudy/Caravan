@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
@@ -32,5 +33,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
         public virtual ICollection<SqlLogEntry> LogEntries { get; set; }
 
         #endregion Relationships
+    }
+
+    public sealed class SqlLogSettingTypeConfiguration : EntityTypeConfiguration<SqlLogSetting>
+    {
+        public SqlLogSettingTypeConfiguration()
+        {
+            ToTable("CRVN_LOG_SETTINGS", Properties.Settings.Default.SqlSchema);
+        }
     }
 }

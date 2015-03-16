@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 {
-    [Serializable, Table("CRVN_SEC_USERS")]
+    [Serializable]
     public class SqlSecUser
     {
         [Key, Column("CUSR_ID", Order = 0)]
@@ -51,5 +52,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
         public virtual ICollection<SqlSecEntry> SecEntries { get; set; }
 
         #endregion
+    }
+
+    public sealed class SqlSecUserTypeConfiguration : EntityTypeConfiguration<SqlSecUser>
+    {
+        public SqlSecUserTypeConfiguration()
+        {
+            ToTable("CRVN_SEC_USERS", Properties.Settings.Default.SqlSchema);
+        }
     }
 }

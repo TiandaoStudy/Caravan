@@ -2,7 +2,9 @@
 -- REPLACE 'dst' WITH USER DB NAME
 
 -- Security
-grant select on src.crvn_sec_apps to dst;
+grant select, references on src.crvn_sec_apps to dst;
+grant select, references on src.crvn_sec_groups to dst;
+grant select, references on src.crvn_sec_users to dst;
 
 -- Log
 grant select on src.crvn_log_settings to dst;

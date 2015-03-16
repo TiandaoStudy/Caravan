@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 {
-    [Serializable, Table("CRVN_SEC_CONTEXTS")]
+    [Serializable]
     public class SqlSecContext
     {
         [Key, Column("CCTX_ID", Order = 0)]
@@ -32,5 +33,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
         public virtual ICollection<SqlSecObject> Objects { get; set; }
 
         #endregion Relationships
+    }
+
+    public sealed class SqlSecContextTypeConfiguration : EntityTypeConfiguration<SqlSecContext>
+    {
+        public SqlSecContextTypeConfiguration()
+        {
+            ToTable("CRVN_SEC_CONTEXTS", Properties.Settings.Default.SqlSchema);
+        }
     }
 }

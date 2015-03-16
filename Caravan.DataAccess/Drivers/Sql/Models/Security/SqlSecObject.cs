@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 {
-    [Serializable, Table("CRVN_SEC_OBJECTS")]
+    [Serializable]
     public class SqlSecObject
     {
         [Key, Column("COBJ_ID", Order = 0)]
@@ -36,5 +37,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
         public virtual ICollection<SqlSecEntry> SecEntries { get; set; }
 
         #endregion
+    }
+
+    public sealed class SqlSecObjectTypeConfiguration : EntityTypeConfiguration<SqlSecObject>
+    {
+        public SqlSecObjectTypeConfiguration()
+        {
+            ToTable("CRVN_SEC_OBJECTS", Properties.Settings.Default.SqlSchema);
+        }
     }
 }
