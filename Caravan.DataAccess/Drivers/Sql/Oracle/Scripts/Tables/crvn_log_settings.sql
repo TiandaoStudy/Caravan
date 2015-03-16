@@ -7,7 +7,7 @@ CREATE TABLE mydb.crvn_log_settings
    , clos_enabled     NUMBER(1)       NOT NULL
    , clos_days        NUMBER(3)       NOT NULL
    , clos_max_entries NUMBER(7)       NOT NULL
-   , CHECK (clos_type IN ('debug', 'info', 'warn', 'error', 'fatal')) ENABLE
+   , CHECK (clos_type IN ('debug', 'trace', 'info', 'warn', 'error', 'fatal')) ENABLE
    , CHECK (clos_enabled IN (0, 1)) ENABLE
    , CHECK (clos_days > 0 AND clos_max_entries > 0) ENABLE
    , CONSTRAINT pk_crvn_log_settings PRIMARY KEY (capp_id, clos_type) ENABLE

@@ -8,3 +8,4 @@ BEGIN
     INTO :new.cobj_id
     FROM DUAL;
 END;
+/

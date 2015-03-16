@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 {
-    [Serializable, Table("CRVN_SEC_ROLES")]
+    [Serializable]
     public class SqlSecRole
     {
         [Key, Column("CROL_ID", Order = 0)]
@@ -38,5 +39,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
         public virtual ICollection<SqlSecEntry> SecEntries { get; set; }
 
         #endregion
+    }
+
+    public sealed class SqlSecRoleTypeConfiguration : EntityTypeConfiguration<SqlSecRole>
+    {
+        public SqlSecRoleTypeConfiguration()
+        {
+            ToTable("CRVN_SEC_ROLES", Properties.Settings.Default.SqlSchema);
+        }
     }
 }

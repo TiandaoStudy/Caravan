@@ -24,7 +24,7 @@ CREATE TABLE mydb.crvn_log_settings
    , clos_enabled     NUMBER(1)       NOT NULL
    , clos_days        NUMBER(3)       NOT NULL
    , clos_max_entries NUMBER(7)       NOT NULL
-   , CHECK (clos_type IN ('debug', 'info', 'warn', 'error', 'fatal')) ENABLE
+   , CHECK (clos_type IN ('debug', 'trace', 'info', 'warn', 'error', 'fatal')) ENABLE
    , CHECK (clos_enabled IN (0, 1)) ENABLE
    , CHECK (clos_days > 0 AND clos_max_entries > 0) ENABLE
    , CONSTRAINT pk_crvn_log_settings PRIMARY KEY (capp_id, clos_type) ENABLE
@@ -264,6 +264,7 @@ BEGIN
     INTO :new.capp_id
     FROM DUAL;
 END;
+/
 
 -- Triggers: Log Entries Id
 -- REPLACE 'mydb' WITH DB NAME
@@ -276,6 +277,7 @@ BEGIN
     INTO :new.clog_id
     FROM DUAL;
 END;
+/
 
 -- Triggers: Users Id
 -- REPLACE 'mydb' WITH DB NAME
@@ -288,6 +290,7 @@ BEGIN
     INTO :new.cusr_id
     FROM DUAL;
 END;
+/
 
 -- Triggers: Groups Id
 -- REPLACE 'mydb' WITH DB NAME
@@ -300,6 +303,7 @@ BEGIN
     INTO :new.cgrp_id
     FROM DUAL;
 END;
+/
 
 -- Triggers: Roles Id
 -- REPLACE 'mydb' WITH DB NAME
@@ -312,6 +316,7 @@ BEGIN
     INTO :new.crol_id
     FROM DUAL;
 END;
+/
 
 -- Triggers: Contexts Id
 -- REPLACE 'mydb' WITH DB NAME
@@ -324,6 +329,7 @@ BEGIN
     INTO :new.cctx_id
     FROM DUAL;
 END;
+/
 
 -- Triggers: Objects Id
 -- REPLACE 'mydb' WITH DB NAME
@@ -336,6 +342,7 @@ BEGIN
     INTO :new.cobj_id
     FROM DUAL;
 END;
+/
 
 -- Triggers: Sec Entries Id
 -- REPLACE 'mydb' WITH DB NAME
@@ -348,3 +355,4 @@ BEGIN
     INTO :new.csec_id
     FROM DUAL;
 END;
+/

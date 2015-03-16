@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
+using System.Data.Entity.ModelConfiguration;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 {
-    [Serializable, Table("CRVN_SEC_APPS")]
+    [Serializable]
     public class SqlSecApp
     {
         [Key, Column("CAPP_ID", Order = 0)]
@@ -35,5 +36,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
         public virtual ICollection<SqlLogEntry> LogEntries { get; set; }
 
         #endregion Relationships
+    }
+
+    public sealed class SqlSecAppTypeConfiguration : EntityTypeConfiguration<SqlSecApp>
+    {
+        public SqlSecAppTypeConfiguration()
+        {
+            ToTable("CRVN_SEC_APPS", Properties.Settings.Default.SqlSchema);
+        }
     }
 }

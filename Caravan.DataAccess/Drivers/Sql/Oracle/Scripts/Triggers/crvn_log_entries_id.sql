@@ -8,3 +8,4 @@ BEGIN
     INTO :new.clog_id
     FROM DUAL;
 END;
+/

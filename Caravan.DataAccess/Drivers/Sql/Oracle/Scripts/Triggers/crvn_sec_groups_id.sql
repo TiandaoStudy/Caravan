@@ -8,3 +8,4 @@ BEGIN
     INTO :new.cgrp_id
     FROM DUAL;
 END;
+/

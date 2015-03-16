@@ -8,3 +8,4 @@ BEGIN
     INTO :new.cusr_id
     FROM DUAL;
 END;
+/

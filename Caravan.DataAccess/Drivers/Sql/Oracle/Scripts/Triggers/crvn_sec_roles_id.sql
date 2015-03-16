@@ -8,3 +8,4 @@ BEGIN
     INTO :new.crol_id
     FROM DUAL;
 END;
+/
