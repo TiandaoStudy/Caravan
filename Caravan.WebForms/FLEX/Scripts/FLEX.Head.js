@@ -1,10 +1,9 @@
-(function() {
+﻿(function() {
   var Common, Settings, root;
 
   root = typeof exports !== "undefined" && exports !== null ? exports : this;
 
   Settings = (function() {
-
     function Settings() {}
 
     Settings.dummyReturnValue = true;
@@ -30,7 +29,6 @@
   root.settings = Settings;
 
   Common = (function() {
-
     function Common() {}
 
     Common.disableButtonsBeforePostBack = true;
@@ -104,11 +102,13 @@
   root.displaySystemError = function() {
     var doFocus, modal;
     modal = window.open(root.settings.flexPath + "/Pages/ErrorHandler.aspx", "SystemError", "menubar=no,location=yes,resizable=yes,scrollbars=yes,status=no,height=500,width=800,modal=yes'");
-    modal.focus();
-    doFocus = function() {
-      return modal.focus();
-    };
-    window.setTimeout(doFocus, 100);
+    if (modal) {
+      modal.focus();
+      doFocus = function() {
+        return modal.focus();
+      };
+      window.setTimeout(doFocus, 100);
+    }
   };
 
   root.triggerAsyncPostBack = function(hiddenTriggerId) {
@@ -170,3 +170,5 @@
   };
 
 }).call(this);
+
+//# sourceMappingURL=FLEX.Head.js.map
