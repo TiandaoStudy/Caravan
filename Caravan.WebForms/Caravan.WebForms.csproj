@@ -876,6 +876,9 @@
     <None Include="FLEX\Fonts\glyphicons-halflings-regular.eot" />
     <None Include="FLEX\Fonts\glyphicons-halflings-regular.ttf" />
     <None Include="FLEX\Fonts\glyphicons-halflings-regular.woff" />
+    <None Include="FLEX\Scripts\FLEX.Head.js.map">
+      <DependentUpon>FLEX.Head.js</DependentUpon>
+    </None>
     <None Include="FLEX\Scripts\FLEX.Head.min.js.map">
       <DependentUpon>FLEX.Head.js</DependentUpon>
     </None>
