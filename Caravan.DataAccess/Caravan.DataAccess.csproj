@@ -65,9 +65,9 @@
       <HintPath>..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Dapper, Version=1.38.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Dapper.1.38\lib\net45\Dapper.dll</HintPath>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.39\lib\net45\Dapper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Effort">
       <HintPath>..\packages\Effort.EF6.1.1.4\lib\net45\Effort.dll</HintPath>
@@ -111,7 +111,7 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NMemory">
-      <HintPath>..\packages\NMemory.1.0.1\lib\net45\NMemory.dll</HintPath>
+      <HintPath>..\packages\NMemory.1.1.0\lib\net45\NMemory.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Npgsql">
@@ -129,12 +129,12 @@
       <HintPath>..\packages\Finsa.Odp.Net.Core.Unofficial.5.0.0\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PommaLabs.GRAMPA, Version=2.2.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.GRAMPA.2.2.4\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+    <Reference Include="PommaLabs.GRAMPA">
+      <HintPath>..\packages\PommaLabs.GRAMPA.2.2.5\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PommaLabs.KVLite">
-      <HintPath>..\packages\PommaLabs.KVLite.Core.1.5.1\lib\net45\PommaLabs.KVLite.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.KVLite.Core.1.5.2\lib\net45\PommaLabs.KVLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp, Version=105.0.0.0, Culture=neutral, processorArchitecture=MSIL">
