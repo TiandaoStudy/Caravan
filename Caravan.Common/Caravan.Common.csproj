@@ -86,6 +86,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache.cs" />
+    <Compile Include="Core\ServiceProvider.cs" />
+    <Compile Include="IJsonSerializer.cs" />
     <Compile Include="Models\Security\Exceptions\SecAppExistingException.cs" />
     <Compile Include="Models\Security\Exceptions\SecAppNotFoundException.cs" />
     <Compile Include="Models\Logging\Exceptions\LogEntryExistingException.cs" />
@@ -137,6 +139,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Serialization\Converters\IntToBoolConverter.cs" />
+    <Compile Include="Serialization\JsonNetSerializer.cs" />
     <Compile Include="WebService\IAuthManager.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="WebForms\ISearchControl.cs" />

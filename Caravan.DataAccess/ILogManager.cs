@@ -718,4 +718,15 @@ namespace Finsa.Caravan.DataAccess
 
         #endregion Settings
     }
+
+    /// <summary>
+    ///   Convenient if it is in the same namespace as <see cref="Db"/>.
+    /// </summary>
+    public static class LogManagerExtensions
+    {
+        public static string LogAsJson<TObj>(this TObj obj)
+        {
+            return ReferenceEquals(obj, null) ? String.Empty : Common.Core.ServiceProvider.JsonSerializer.SerializeObject(obj);
+        }
+    }
 }
