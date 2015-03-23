@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Runtime.Serialization.Formatters;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace Finsa.Caravan.Common.Serialization
@@ -11,7 +12,9 @@ namespace Finsa.Caravan.Common.Serialization
             Formatting = Formatting.None,
             NullValueHandling = NullValueHandling.Ignore,
             PreserveReferencesHandling = PreserveReferencesHandling.None,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
+            TypeNameHandling = TypeNameHandling.Objects,
         };
 
         public string SerializeObject<TObj>(TObj obj)

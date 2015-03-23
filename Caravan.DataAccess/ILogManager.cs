@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Finsa.Caravan.Common.Models.Logging;
+using PommaLabs;
 
 namespace Finsa.Caravan.DataAccess
 {
@@ -726,7 +727,7 @@ namespace Finsa.Caravan.DataAccess
     {
         public static string LogAsJson<TObj>(this TObj obj)
         {
-            return ReferenceEquals(obj, null) ? String.Empty : Common.Core.ServiceProvider.JsonSerializer.SerializeObject(obj);
+            return ReferenceEquals(obj, null) ? Constants.EmptyString : Common.Core.ServiceProvider.JsonSerializer.SerializeObject(obj);
         }
     }
 }
