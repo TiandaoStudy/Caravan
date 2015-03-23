@@ -51,16 +51,17 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NMemory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
-      <HintPath>..\packages\NMemory.1.0.1\lib\net45\NMemory.dll</HintPath>
+    <Reference Include="NMemory">
+      <HintPath>..\packages\NMemory.1.1.0\lib\net45\NMemory.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PommaLabs.GRAMPA, Version=2.2.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.GRAMPA.2.2.4\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+    <Reference Include="PommaLabs.GRAMPA">
+      <HintPath>..\packages\PommaLabs.GRAMPA.2.2.5\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations">

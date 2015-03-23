@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Finsa.Caravan.Common.Models.Logging;
+using PommaLabs;
 
 namespace Finsa.Caravan.DataAccess
 {
@@ -717,5 +718,16 @@ namespace Finsa.Caravan.DataAccess
         void RemoveSetting(string appName, LogType logType);
 
         #endregion Settings
+    }
+
+    /// <summary>
+    ///   Convenient if it is in the same namespace as <see cref="Db"/>.
+    /// </summary>
+    public static class LogManagerExtensions
+    {
+        public static string LogAsJson<TObj>(this TObj obj)
+        {
+            return ReferenceEquals(obj, null) ? Constants.EmptyString : Common.Core.ServiceProvider.JsonSerializer.SerializeObject(obj);
+        }
     }
 }
