@@ -11,6 +11,10 @@ namespace Finsa.Caravan.DataAccess.Core
 {
     internal abstract class SecurityManagerBase<TSec> : ISecurityManager where TSec : SecurityManagerBase<TSec>
     {
+        public SecApp CurrentApp { get; private set; }
+
+        public SecUser CurrentUser { get; private set; }
+
         #region Apps
 
         public IList<SecApp> Apps()

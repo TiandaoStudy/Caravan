@@ -7,6 +7,10 @@ namespace Finsa.Caravan.DataAccess
 {
     public interface ISecurityManager
     {
+        SecApp CurrentApp { get; }
+
+        SecUser CurrentUser { get; }
+
         #region Apps
 
         /// <summary>

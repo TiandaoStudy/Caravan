@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using Finsa.Caravan.Common.Models.Logging;
 using PommaLabs;
 
-namespace Finsa.Caravan.DataAccess
+namespace Finsa.Caravan.Common
 {
     /// <summary>
     ///   Handles logging and log settings.
     /// </summary>
-    public interface ILogManager
+    public interface ILogger
     {
         #region Logging
 
@@ -721,13 +721,19 @@ namespace Finsa.Caravan.DataAccess
     }
 
     /// <summary>
-    ///   Convenient if it is in the same namespace as <see cref="Db"/>.
+    ///   Convenient if it is in the same namespace as <see cref="ILogger"/>.
     /// </summary>
-    public static class LogManagerExtensions
+    public static class LoggerExtensions
     {
+        /// <summary>
+        ///   Converts given object in a very compact JSON format. If given object is null, an empty string is returned.
+        /// </summary>
+        /// <typeparam name="TObj">The type of the object. Used to avoid boxing.</typeparam>
+        /// <param name="obj">The object that should be converted.</param>
+        /// <returns>A very compact JSON corresponding to given object.</returns>
         public static string LogAsJson<TObj>(this TObj obj)
         {
-            return ReferenceEquals(obj, null) ? Constants.EmptyString : Common.Core.ServiceProvider.JsonSerializer.SerializeObject(obj);
+            return ReferenceEquals(obj, null) ? Constants.EmptyString : Core.ServiceProvider.JsonSerializer.SerializeObject(obj);
         }
     }
 }

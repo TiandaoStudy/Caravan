@@ -5,15 +5,16 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Web;
 using Common.Logging;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using PommaLabs.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
-    internal abstract class LogManagerBase<TLog> : ILogManager where TLog : LogManagerBase<TLog>
+    internal abstract class LoggerBase<TLog> : ILogger where TLog : LoggerBase<TLog>
     {
-        #region ILogManager Members
+        #region ILogger Members
 
         public Task<LogResult> LogRawAsync(LogType logType, string appName, string userLogin, string codeUnit, string function,
             string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null)
@@ -360,7 +361,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        #endregion ILogManager Members
+        #endregion ILogger Members
 
         protected abstract LogResult DoLogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context,
             IEnumerable<KeyValuePair<string, string>> args);

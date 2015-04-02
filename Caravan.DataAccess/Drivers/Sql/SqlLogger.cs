@@ -11,7 +11,7 @@ using PommaLabs.Extensions;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
-    internal sealed class SqlLogManager : LogManagerBase<SqlLogManager>
+    internal sealed class SqlLogger : LoggerBase<SqlLogger>
     {
         #region Constants
 

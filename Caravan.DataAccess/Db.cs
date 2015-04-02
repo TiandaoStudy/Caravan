@@ -31,7 +31,7 @@ namespace Finsa.Caravan.DataAccess
         private const string CachePartitionName = "Caravan.DataAccess";
         private const string ConnectionStringKey = "ConnectionString";
 
-        private static ILogManager _logManagerInstance;
+        private static ILogger _loggerInstance;
         private static ISecurityManager _securityManagerInstance;
         private static IDbManager _dbManagerInstance;
 
@@ -57,9 +57,9 @@ namespace Finsa.Caravan.DataAccess
             get { return _dbManagerInstance; }
         }
 
-        public static ILogManager Logger
+        public static ILogger Logger
         {
-            get { return _logManagerInstance; }
+            get { return _loggerInstance; }
         }
 
         public static ISecurityManager Security
@@ -202,7 +202,7 @@ namespace Finsa.Caravan.DataAccess
 
                 case DataAccessKind.MongoDb:
                     _dbManagerInstance = new MongoDbManager();
-                    _logManagerInstance = new MongoLogManager();
+                    _loggerInstance = new MongoLogger();
                     _securityManagerInstance = new MongoSecurityManager();
                     break;
 
@@ -219,7 +219,7 @@ namespace Finsa.Caravan.DataAccess
                     break;
 
                 case DataAccessKind.Rest:
-                    _logManagerInstance = new RestLogManager();
+                    _loggerInstance = new RestLogger();
                     _securityManagerInstance = new RestSecurityManager();
                     break;
 
@@ -241,7 +241,7 @@ namespace Finsa.Caravan.DataAccess
                 case DataAccessKind.PostgreSql:
                 case DataAccessKind.SqlServer:
                 case DataAccessKind.SqlServerCe:
-                    _logManagerInstance = new SqlLogManager();
+                    _loggerInstance = new SqlLogger();
                     _securityManagerInstance = new SqlSecurityManager();
                     break;
             }
