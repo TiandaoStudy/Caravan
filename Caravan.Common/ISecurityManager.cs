@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Models.Security.Exceptions;
 
-namespace Finsa.Caravan.DataAccess
+namespace Finsa.Caravan.Common
 {
     public interface ISecurityManager
     {

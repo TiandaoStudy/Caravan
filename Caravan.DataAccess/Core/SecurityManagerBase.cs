@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Models.Security.Exceptions;

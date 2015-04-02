@@ -58,12 +58,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Common.Logging">
-      <HintPath>..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Common.Logging.3.1.0\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Common.Logging.Core">
-      <HintPath>..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Common.Logging.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Common.Logging.Core.3.1.0\lib\net40\Common.Logging.Core.dll</HintPath>
     </Reference>
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.39\lib\net45\Dapper.dll</HintPath>
@@ -201,7 +200,6 @@
     <Compile Include="Drivers\Sql\Oracle\OracleDynamicParameters.cs" />
     <Compile Include="Db.cs" />
     <Compile Include="IDbManager.cs" />
-    <Compile Include="ISecurityManager.cs" />
     <Compile Include="Drivers\Sql\PostgreSql\PostgreSqlDbManager.cs" />
     <Compile Include="Drivers\Sql\SqlSecurityManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
