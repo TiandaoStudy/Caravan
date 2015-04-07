@@ -338,12 +338,14 @@
   <ItemGroup>
     <Compile Include="CandidateList.aspx.cs">
       <DependentUpon>CandidateList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CandidateList.aspx.designer.cs">
       <DependentUpon>CandidateList.aspx</DependentUpon>
     </Compile>
     <Compile Include="ControlsOverview.aspx.cs">
       <DependentUpon>ControlsOverview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ControlsOverview.aspx.designer.cs">
       <DependentUpon>ControlsOverview.aspx</DependentUpon>
