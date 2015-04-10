@@ -1,6 +1,6 @@
-﻿using System.Runtime.Serialization.Formatters;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Runtime.Serialization.Formatters;
 
 namespace Finsa.Caravan.Common.Serialization
 {

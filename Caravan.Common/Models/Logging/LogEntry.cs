@@ -1,11 +1,10 @@
+using Finsa.Caravan.Common.Utilities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
-using Finsa.Caravan.Common.Utilities;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using PommaLabs;
 
 namespace Finsa.Caravan.Common.Models.Logging
 {

@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Finsa.Caravan.Common.Utilities;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
-using Finsa.Caravan.Common.Utilities;
-using Newtonsoft.Json;
-using PommaLabs;
 
 namespace Finsa.Caravan.Common.Models.Security
 {

@@ -1,7 +1,7 @@
-﻿using System;
-using System.Net;
-using Finsa.Caravan.Common.Models.Logging;
+﻿using Finsa.Caravan.Common.Models.Logging;
 using Newtonsoft.Json;
+using System;
+using System.Net;
 
 namespace Finsa.Caravan.Common.Models.Rest
 {
