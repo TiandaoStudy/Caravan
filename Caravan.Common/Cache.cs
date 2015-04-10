@@ -1,6 +1,6 @@
 ﻿using Finsa.Caravan.Common.Properties;
+using Finsa.Caravan.Common.Utilities.Reflection;
 using PommaLabs.KVLite;
-using PommaLabs.Reflection;
 
 namespace Finsa.Caravan.Common
 {

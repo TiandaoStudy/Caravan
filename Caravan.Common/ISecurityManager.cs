@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Finsa.Caravan.Common.Models.Security;
+﻿using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Models.Security.Exceptions;
+using System;
+using System.Collections.Generic;
 
 namespace Finsa.Caravan.Common
 {
@@ -110,7 +110,9 @@ namespace Finsa.Caravan.Common
         /// <param name="appName"></param>
         /// <param name="newUser"></param>
         /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
-        /// <exception cref="SecUserExistingException">An user with given login already exists.</exception>
+        /// <exception cref="SecUserExistingException">
+        ///   An user with given login already exists.
+        /// </exception>
         void AddUser(string appName, SecUser newUser);
 
         /// <summary>

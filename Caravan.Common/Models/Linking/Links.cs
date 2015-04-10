@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using PommaLabs.Collections;
-using PommaLabs.Diagnostics;
+using Finsa.Caravan.Common.Utilities.Collections;
+using Finsa.Caravan.Common.Utilities.Diagnostics;
 
 namespace Finsa.Caravan.Common.Models.Linking
 {

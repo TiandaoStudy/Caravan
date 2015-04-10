@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Finsa.Caravan.Common.Utilities;
 using Newtonsoft.Json;
 using PommaLabs;
 

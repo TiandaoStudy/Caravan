@@ -14,7 +14,7 @@
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>677eb53b</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>400563ae</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,9 +44,9 @@
     <Reference Include="AutoMapper.Net4">
       <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
-    <Reference Include="CodeProject.ObjectPool, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CodeProject.ObjectPool, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CodeProject.ObjectPool.1.3.1\lib\net40-client\CodeProject.ObjectPool.dll</HintPath>
+      <HintPath>..\packages\CodeProject.ObjectPool.1.3.3\lib\net40-client\CodeProject.ObjectPool.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging, Version=3.1.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -56,18 +56,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Common.Logging.Core.3.1.0\lib\net40\Common.Logging.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Dapper">
-      <HintPath>..\packages\Dapper.1.39\lib\net45\Dapper.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Dapper.1.40\lib\net45\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="PommaLabs.GRAMPA, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.GRAMPA.2.2.5\lib\net40-client\PommaLabs.GRAMPA.dll</HintPath>
     </Reference>
     <Reference Include="PommaLabs.KVLite">
       <HintPath>..\packages\PommaLabs.KVLite.Core.1.5.2\lib\net45\PommaLabs.KVLite.dll</HintPath>
@@ -89,6 +85,12 @@
   <ItemGroup>
     <Compile Include="Cache.cs" />
     <Compile Include="Core\ServiceProvider.cs" />
+    <Compile Include="Finsa.Caravan.Common.XmlSchemas.MenuEntries.Item.Serialization.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Finsa.Caravan.Common.XmlSchemas.MenuEntries.Menu.Serialization.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
     <Compile Include="IJsonSerializer.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="ISecurityManager.cs" />
@@ -129,12 +131,6 @@
     <Compile Include="Models\Security\SecObject.cs" />
     <Compile Include="Models\Security\SecUser.cs" />
     <Compile Include="Models\Security\SecSession.cs" />
-    <Compile Include="Finsa.Caravan.Common.XmlSchemas.MenuEntries.Item.Serialization.cs">
-      <DependentUpon>XsdClassGen.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Finsa.Caravan.Common.XmlSchemas.MenuEntries.Menu.Serialization.cs">
-      <DependentUpon>XsdClassGen.tt</DependentUpon>
-    </Compile>
     <Compile Include="KeyValuePair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -144,6 +140,51 @@
     </Compile>
     <Compile Include="Serialization\Converters\IntToBoolConverter.cs" />
     <Compile Include="Serialization\JsonNetSerializer.cs" />
+    <Compile Include="Utilities\Collections\Concurrent\ConcurrentDictionary.cs" />
+    <Compile Include="Utilities\Collections\Concurrent\ConcurrentDoublyLinkedList.cs" />
+    <Compile Include="Utilities\Collections\Concurrent\ConcurrentHashLinkedList.cs" />
+    <Compile Include="Utilities\Collections\Concurrent\ConcurrentQueue.cs" />
+    <Compile Include="Utilities\Collections\Concurrent\ConcurrentSinglyLinkedList.cs" />
+    <Compile Include="Utilities\Collections\Concurrent\ConcurrentThinLinkedList.cs" />
+    <Compile Include="Utilities\Collections\Contracts\LinkedListsContracts.cs" />
+    <Compile Include="Utilities\Collections\Core\LinkedListsBases.cs" />
+    <Compile Include="Utilities\Collections\Core\LinkedListsNodes.cs" />
+    <Compile Include="Utilities\Collections\DoublyLinkedList.cs" />
+    <Compile Include="Utilities\Collections\HashLinkedList.cs" />
+    <Compile Include="Utilities\Collections\LinkedListsInterfaces.cs" />
+    <Compile Include="Utilities\Collections\LinkedQueue.cs" />
+    <Compile Include="Utilities\Collections\LinkedStack.cs" />
+    <Compile Include="Utilities\Collections\ReadOnly\ReadOnlyDictionary.cs" />
+    <Compile Include="Utilities\Collections\ReadOnly\ReadOnlyList.cs" />
+    <Compile Include="Utilities\Collections\SinglyLinkedList.cs" />
+    <Compile Include="Utilities\Collections\ThinLinkedList.cs" />
+    <Compile Include="Utilities\Constants.cs" />
+    <Compile Include="Utilities\Core\ErrorMessages.cs" />
+    <Compile Include="Utilities\Diagnostics\Raise.cs" />
+    <Compile Include="Utilities\Environment.cs" />
+    <Compile Include="Utilities\EquatableObject.cs" />
+    <Compile Include="Utilities\Extensions\BooleanExtensions.cs" />
+    <Compile Include="Utilities\Extensions\DataTableExtensions.cs" />
+    <Compile Include="Utilities\Extensions\DecimalExtensions.cs" />
+    <Compile Include="Utilities\Extensions\DelegateExtensions.cs" />
+    <Compile Include="Utilities\Extensions\DoubleExtensions.cs" />
+    <Compile Include="Utilities\Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Utilities\Extensions\EventExtensions.cs" />
+    <Compile Include="Utilities\Extensions\IntegerExtensions.cs" />
+    <Compile Include="Utilities\Extensions\ObjectExtensions.cs" />
+    <Compile Include="Utilities\Extensions\StringExtensions.cs" />
+    <Compile Include="Utilities\FormattableObject.cs" />
+    <Compile Include="Utilities\Option.cs" />
+    <Compile Include="Utilities\PairAndTriple.cs" />
+    <Compile Include="Utilities\Portability\SerializableAttribute.cs" />
+    <Compile Include="Utilities\Portability\TypeInfo.cs" />
+    <Compile Include="Utilities\Reflection\ServiceLocator.cs" />
+    <Compile Include="Utilities\Testing\RandomDataTableGenerator.cs" />
+    <Compile Include="Utilities\Text\DiffMatchPatch.cs" />
+    <Compile Include="Utilities\Text\FastReplacer.cs" />
+    <Compile Include="Utilities\Threading\ConcurrentWorkQueue.cs" />
+    <Compile Include="Utilities\Tuples.cs" />
+    <Compile Include="Utilities\XML\DynamicXml.cs" />
     <Compile Include="WebService\IAuthManager.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="WebForms\ISearchControl.cs" />
@@ -169,10 +210,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="XsdClassGen.mapping" />
-    <None Include="XsdClassGen.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>XsdClassGen.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -196,6 +233,10 @@
     <Content Include="KVLite\x86\SQLite.Interop.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="XsdClassGen.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>XsdClassGen.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -208,8 +249,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

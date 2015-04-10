@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Finsa.Caravan.Common.Utilities;
+using Finsa.Caravan.Common.Utilities.Diagnostics;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using Newtonsoft.Json;
-using PommaLabs;
-using PommaLabs.Diagnostics;
 
 namespace Finsa.Caravan.Common.Models.Linking
 {
