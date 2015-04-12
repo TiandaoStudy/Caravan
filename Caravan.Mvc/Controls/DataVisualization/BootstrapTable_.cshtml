@@ -3,8 +3,8 @@
 
 @using System.Web.Mvc
 @using System.Web.Mvc.Ajax
+@using Finsa.Caravan.Common.Utilities.Extensions
 @using Finsa.Caravan.Mvc.Controls.DataVisualization
-@using PommaLabs.Extensions
 
 @helper BootstrapTable(this AjaxHelper ajaxHelper, BootstrapTableOptions options)
 {
@@ -20,12 +20,12 @@
    </script>
 
    <div id="@options.ID-container">
-      @ajaxHelper.ActionLink(options.ID + "-updater", options.UpdateAction, new {searchCriteriaJson = "", pageIndex = 1}, new AjaxOptions
-      {
-         HttpMethod = "GET",
-         InsertionMode = InsertionMode.Replace,
-         UpdateTargetId = @options.ID + "-container"
-      }, new {id = options.ID + "-updater", @class = "hidden"})
+      @ajaxHelper.ActionLink(options.ID + "-updater", options.UpdateAction, new { searchCriteriaJson = "", pageIndex = 1 }, new AjaxOptions
+ {
+     HttpMethod = "GET",
+     InsertionMode = InsertionMode.Replace,
+     UpdateTargetId = @options.ID + "-container"
+ }, new { id = options.ID + "-updater", @class = "hidden" })
 
       <table id="@options.ID" class="table table-striped table-condensed table-hover" data-toggle="table"
              data-pagination="@options.ShowPagination.ToJavaScriptBoolean()" 

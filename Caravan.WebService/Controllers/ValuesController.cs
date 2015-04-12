@@ -15,7 +15,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Http;
 using LinqToQuerystring.WebApi;
-using PommaLabs.Extensions;
+using Finsa.Caravan.Common.Utilities.Extensions;
 using PommaLabs.KVLite;
 using WebApi.OutputCache.V2;
 
