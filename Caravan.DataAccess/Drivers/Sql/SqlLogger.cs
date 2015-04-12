@@ -4,10 +4,10 @@ using System.Data.Entity;
 using System.Linq;
 using AutoMapper;
 using Finsa.Caravan.Common.Models.Logging;
+using Finsa.Caravan.Common.Utilities.Diagnostics;
+using Finsa.Caravan.Common.Utilities.Extensions;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
-using PommaLabs.Diagnostics;
-using PommaLabs.Extensions;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {

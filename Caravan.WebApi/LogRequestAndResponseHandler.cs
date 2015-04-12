@@ -1,9 +1,9 @@
 ﻿using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Properties;
+using Finsa.Caravan.Common.Utilities.Extensions;
 using Finsa.Caravan.DataAccess;
 using Microsoft.Owin;
-using PommaLabs.Extensions;
 using System;
 using System.Net.Http;
 using System.ServiceModel.Channels;

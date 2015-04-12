@@ -6,7 +6,7 @@ using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Models.Security.Exceptions;
-using PommaLabs.Diagnostics;
+using Finsa.Caravan.Common.Utilities.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
 {

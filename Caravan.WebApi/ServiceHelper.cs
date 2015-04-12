@@ -41,7 +41,7 @@ namespace Finsa.Caravan.WebApi
             }
 
             // Imposta KVLite come gestore della cache di output.
-            ApiOutputCache.RegisterAsCacheOutputProvider(configuration);
+            ApiOutputCache.RegisterAsCacheOutputProvider(configuration, Cache.Instance);
 
             // Registra l'handler che si occupa del logging.
             configuration.MessageHandlers.Add(new LogRequestAndResponseHandler());

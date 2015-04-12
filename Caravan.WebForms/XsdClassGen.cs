@@ -7,6 +7,25 @@
 // </auto-generated>
 //-----------------------------------------------------------------------------------------------------
 
+// If you use this template inside a _portable_ class library,
+// then you should define the PORTABLE conditional compilation symbol
+// in order to enable the creation of some necessary stub classes.
+#if PORTABLE
+
+namespace System
+{
+    /// <summary>
+    ///   Fake, this is used only to allow serialization on portable platforms.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Enum, AllowMultiple = true, Inherited = false)]
+    internal sealed class SerializableAttribute : Attribute
+    {
+        // This does nothing and should do nothing.
+    }
+}
+
+#endif
+
 namespace Finsa.Caravan.WebForms {
     
     

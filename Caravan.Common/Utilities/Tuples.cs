@@ -25,8 +25,8 @@ using Finsa.Caravan.Common.Utilities.Extensions;
 
 namespace Finsa.Caravan.Common.Utilities
 {
-    internal static class GTuple
-    {
+	internal static class GTuple 
+	{
         public static GTuple<T1> Create<T1>(T1 item1)
         {
             var tuple = new GTuple<T1>();
@@ -383,11 +383,12 @@ namespace Finsa.Caravan.Common.Utilities
             tuple.Item21 = item21;
             return tuple;
         }
-    }
 
-    [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
+	}
+
+	[System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal abstract class GTupleBase<TTuple> : EquatableObject<TTuple>, System.Collections.Generic.IList<object>
-        where TTuple : GTupleBase<TTuple>
+		where TTuple : GTupleBase<TTuple>
     {
         #region System.Collections.Generic.IList<object> Members
 
@@ -418,7 +419,7 @@ namespace Finsa.Caravan.Common.Utilities
         }
 
         /// <summary>
-        ///   The number of elements contained in the tuple.
+        ///  The number of elements contained in the tuple.
         /// </summary>
         public abstract int Count { get; }
 
@@ -450,38 +451,40 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1> : GTupleBase<GTuple<T1>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
         }
 
-        #endregion EquatableObject<GTuple<T1>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
         public override System.Collections.Generic.IEnumerator<object> GetEnumerator()
         {
             yield return Item1;
+ 
         }
 
         public override bool Contains(object item)
@@ -512,14 +515,13 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                 (object) null;
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
@@ -536,41 +538,42 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2> : GTupleBase<GTuple<T1, T2>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
             yield return Item2;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -578,6 +581,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             yield return Item1;
             yield return Item2;
+ 
         }
 
         public override bool Contains(object item)
@@ -611,19 +615,17 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                 (object) null;
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
@@ -640,42 +642,43 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3> : GTupleBase<GTuple<T1, T2, T3>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -683,7 +686,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item3;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -692,6 +695,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item1;
             yield return Item2;
             yield return Item3;
+ 
         }
 
         public override bool Contains(object item)
@@ -728,7 +732,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -736,16 +740,13 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
@@ -762,50 +763,51 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4> : GTupleBase<GTuple<T1, T2, T3, T4>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -814,7 +816,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item4;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -824,6 +826,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item2;
             yield return Item3;
             yield return Item4;
+ 
         }
 
         public override bool Contains(object item)
@@ -863,7 +866,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -872,20 +875,16 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
@@ -902,58 +901,59 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5> : GTupleBase<GTuple<T1, T2, T3, T4, T5>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -963,7 +963,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item5;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -974,6 +974,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item3;
             yield return Item4;
             yield return Item5;
+ 
         }
 
         public override bool Contains(object item)
@@ -1016,7 +1017,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -1026,24 +1027,19 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
@@ -1060,66 +1056,67 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5, T6> : GTupleBase<GTuple<T1, T2, T3, T4, T5, T6>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 6.
-        /// </summary>
-        /// <value>The item at position 6.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 5)]
+		/// <summary>
+		///   Gets or sets the item at position 6.
+		/// </summary>
+		/// <value>The item at position 6.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 5)]
         public T6 Item6 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5, T6>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
-            yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -1130,7 +1127,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item6;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5, T6>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -1142,6 +1139,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item4;
             yield return Item5;
             yield return Item6;
+ 
         }
 
         public override bool Contains(object item)
@@ -1187,7 +1185,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -1198,28 +1196,22 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
-
                     case 5:
                         Item6 = (T6) value;
                         break;
@@ -1236,74 +1228,75 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5, T6, T7> : GTupleBase<GTuple<T1, T2, T3, T4, T5, T6, T7>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 6.
-        /// </summary>
-        /// <value>The item at position 6.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 5)]
+		/// <summary>
+		///   Gets or sets the item at position 6.
+		/// </summary>
+		/// <value>The item at position 6.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 5)]
         public T6 Item6 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 7.
-        /// </summary>
-        /// <value>The item at position 7.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 6)]
+		/// <summary>
+		///   Gets or sets the item at position 7.
+		/// </summary>
+		/// <value>The item at position 7.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 6)]
         public T7 Item7 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
-            yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
-            yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
+			yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -1315,7 +1308,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item7;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -1328,6 +1321,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item5;
             yield return Item6;
             yield return Item7;
+ 
         }
 
         public override bool Contains(object item)
@@ -1376,7 +1370,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -1388,32 +1382,25 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
-
                     case 5:
                         Item6 = (T6) value;
                         break;
-
                     case 6:
                         Item7 = (T7) value;
                         break;
@@ -1430,82 +1417,83 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8> : GTupleBase<GTuple<T1, T2, T3, T4, T5, T6, T7, T8>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 6.
-        /// </summary>
-        /// <value>The item at position 6.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 5)]
+		/// <summary>
+		///   Gets or sets the item at position 6.
+		/// </summary>
+		/// <value>The item at position 6.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 5)]
         public T6 Item6 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 7.
-        /// </summary>
-        /// <value>The item at position 7.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 6)]
+		/// <summary>
+		///   Gets or sets the item at position 7.
+		/// </summary>
+		/// <value>The item at position 7.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 6)]
         public T7 Item7 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 8.
-        /// </summary>
-        /// <value>The item at position 8.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 7)]
+		/// <summary>
+		///   Gets or sets the item at position 8.
+		/// </summary>
+		/// <value>The item at position 8.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 7)]
         public T8 Item8 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
-            yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
-            yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
-            yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
+			yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
+			yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -1518,7 +1506,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item8;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -1532,6 +1520,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item6;
             yield return Item7;
             yield return Item8;
+ 
         }
 
         public override bool Contains(object item)
@@ -1583,7 +1572,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -1596,36 +1585,28 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
-
                     case 5:
                         Item6 = (T6) value;
                         break;
-
                     case 6:
                         Item7 = (T7) value;
                         break;
-
                     case 7:
                         Item8 = (T8) value;
                         break;
@@ -1642,90 +1623,91 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> : GTupleBase<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 6.
-        /// </summary>
-        /// <value>The item at position 6.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 5)]
+		/// <summary>
+		///   Gets or sets the item at position 6.
+		/// </summary>
+		/// <value>The item at position 6.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 5)]
         public T6 Item6 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 7.
-        /// </summary>
-        /// <value>The item at position 7.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 6)]
+		/// <summary>
+		///   Gets or sets the item at position 7.
+		/// </summary>
+		/// <value>The item at position 7.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 6)]
         public T7 Item7 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 8.
-        /// </summary>
-        /// <value>The item at position 8.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 7)]
+		/// <summary>
+		///   Gets or sets the item at position 8.
+		/// </summary>
+		/// <value>The item at position 8.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 7)]
         public T8 Item8 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 9.
-        /// </summary>
-        /// <value>The item at position 9.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 8)]
+		/// <summary>
+		///   Gets or sets the item at position 9.
+		/// </summary>
+		/// <value>The item at position 9.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 8)]
         public T9 Item9 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
-            yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
-            yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
-            yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
-            yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
+			yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
+			yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
+			yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -1739,7 +1721,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item9;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -1754,6 +1736,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item7;
             yield return Item8;
             yield return Item9;
+ 
         }
 
         public override bool Contains(object item)
@@ -1808,7 +1791,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -1822,40 +1805,31 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
-
                     case 5:
                         Item6 = (T6) value;
                         break;
-
                     case 6:
                         Item7 = (T7) value;
                         break;
-
                     case 7:
                         Item8 = (T8) value;
                         break;
-
                     case 8:
                         Item9 = (T9) value;
                         break;
@@ -1872,98 +1846,99 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : GTupleBase<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 6.
-        /// </summary>
-        /// <value>The item at position 6.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 5)]
+		/// <summary>
+		///   Gets or sets the item at position 6.
+		/// </summary>
+		/// <value>The item at position 6.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 5)]
         public T6 Item6 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 7.
-        /// </summary>
-        /// <value>The item at position 7.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 6)]
+		/// <summary>
+		///   Gets or sets the item at position 7.
+		/// </summary>
+		/// <value>The item at position 7.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 6)]
         public T7 Item7 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 8.
-        /// </summary>
-        /// <value>The item at position 8.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 7)]
+		/// <summary>
+		///   Gets or sets the item at position 8.
+		/// </summary>
+		/// <value>The item at position 8.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 7)]
         public T8 Item8 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 9.
-        /// </summary>
-        /// <value>The item at position 9.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 8)]
+		/// <summary>
+		///   Gets or sets the item at position 9.
+		/// </summary>
+		/// <value>The item at position 9.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 8)]
         public T9 Item9 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 10.
-        /// </summary>
-        /// <value>The item at position 10.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 9)]
+		/// <summary>
+		///   Gets or sets the item at position 10.
+		/// </summary>
+		/// <value>The item at position 10.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 9)]
         public T10 Item10 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
-            yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
-            yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
-            yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
-            yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
-            yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
+			yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
+			yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
+			yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
+			yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -1978,7 +1953,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item10;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -1994,6 +1969,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item8;
             yield return Item9;
             yield return Item10;
+ 
         }
 
         public override bool Contains(object item)
@@ -2051,7 +2027,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -2066,44 +2042,34 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
-
                     case 5:
                         Item6 = (T6) value;
                         break;
-
                     case 6:
                         Item7 = (T7) value;
                         break;
-
                     case 7:
                         Item8 = (T8) value;
                         break;
-
                     case 8:
                         Item9 = (T9) value;
                         break;
-
                     case 9:
                         Item10 = (T10) value;
                         break;
@@ -2120,106 +2086,107 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : GTupleBase<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 6.
-        /// </summary>
-        /// <value>The item at position 6.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 5)]
+		/// <summary>
+		///   Gets or sets the item at position 6.
+		/// </summary>
+		/// <value>The item at position 6.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 5)]
         public T6 Item6 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 7.
-        /// </summary>
-        /// <value>The item at position 7.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 6)]
+		/// <summary>
+		///   Gets or sets the item at position 7.
+		/// </summary>
+		/// <value>The item at position 7.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 6)]
         public T7 Item7 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 8.
-        /// </summary>
-        /// <value>The item at position 8.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 7)]
+		/// <summary>
+		///   Gets or sets the item at position 8.
+		/// </summary>
+		/// <value>The item at position 8.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 7)]
         public T8 Item8 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 9.
-        /// </summary>
-        /// <value>The item at position 9.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 8)]
+		/// <summary>
+		///   Gets or sets the item at position 9.
+		/// </summary>
+		/// <value>The item at position 9.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 8)]
         public T9 Item9 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 10.
-        /// </summary>
-        /// <value>The item at position 10.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 9)]
+		/// <summary>
+		///   Gets or sets the item at position 10.
+		/// </summary>
+		/// <value>The item at position 10.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 9)]
         public T10 Item10 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 11.
-        /// </summary>
-        /// <value>The item at position 11.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 10)]
+		/// <summary>
+		///   Gets or sets the item at position 11.
+		/// </summary>
+		/// <value>The item at position 11.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 10)]
         public T11 Item11 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
-            yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
-            yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
-            yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
-            yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
-            yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
-            yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
+			yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
+			yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
+			yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
+			yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
+			yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -2235,7 +2202,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item11;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -2252,6 +2219,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item9;
             yield return Item10;
             yield return Item11;
+ 
         }
 
         public override bool Contains(object item)
@@ -2312,7 +2280,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -2328,48 +2296,37 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
-
                     case 5:
                         Item6 = (T6) value;
                         break;
-
                     case 6:
                         Item7 = (T7) value;
                         break;
-
                     case 7:
                         Item8 = (T8) value;
                         break;
-
                     case 8:
                         Item9 = (T9) value;
                         break;
-
                     case 9:
                         Item10 = (T10) value;
                         break;
-
                     case 10:
                         Item11 = (T11) value;
                         break;
@@ -2386,114 +2343,115 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : GTupleBase<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 6.
-        /// </summary>
-        /// <value>The item at position 6.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 5)]
+		/// <summary>
+		///   Gets or sets the item at position 6.
+		/// </summary>
+		/// <value>The item at position 6.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 5)]
         public T6 Item6 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 7.
-        /// </summary>
-        /// <value>The item at position 7.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 6)]
+		/// <summary>
+		///   Gets or sets the item at position 7.
+		/// </summary>
+		/// <value>The item at position 7.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 6)]
         public T7 Item7 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 8.
-        /// </summary>
-        /// <value>The item at position 8.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 7)]
+		/// <summary>
+		///   Gets or sets the item at position 8.
+		/// </summary>
+		/// <value>The item at position 8.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 7)]
         public T8 Item8 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 9.
-        /// </summary>
-        /// <value>The item at position 9.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 8)]
+		/// <summary>
+		///   Gets or sets the item at position 9.
+		/// </summary>
+		/// <value>The item at position 9.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 8)]
         public T9 Item9 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 10.
-        /// </summary>
-        /// <value>The item at position 10.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 9)]
+		/// <summary>
+		///   Gets or sets the item at position 10.
+		/// </summary>
+		/// <value>The item at position 10.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 9)]
         public T10 Item10 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 11.
-        /// </summary>
-        /// <value>The item at position 11.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 10)]
+		/// <summary>
+		///   Gets or sets the item at position 11.
+		/// </summary>
+		/// <value>The item at position 11.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 10)]
         public T11 Item11 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 12.
-        /// </summary>
-        /// <value>The item at position 12.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 11)]
+		/// <summary>
+		///   Gets or sets the item at position 12.
+		/// </summary>
+		/// <value>The item at position 12.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 11)]
         public T12 Item12 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
-            yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
-            yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
-            yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
-            yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
-            yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
-            yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
-            yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
+			yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
+			yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
+			yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
+			yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
+			yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
+			yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -2510,7 +2468,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item12;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -2528,6 +2486,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item10;
             yield return Item11;
             yield return Item12;
+ 
         }
 
         public override bool Contains(object item)
@@ -2591,7 +2550,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -2608,52 +2567,40 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
-
                     case 5:
                         Item6 = (T6) value;
                         break;
-
                     case 6:
                         Item7 = (T7) value;
                         break;
-
                     case 7:
                         Item8 = (T8) value;
                         break;
-
                     case 8:
                         Item9 = (T9) value;
                         break;
-
                     case 9:
                         Item10 = (T10) value;
                         break;
-
                     case 10:
                         Item11 = (T11) value;
                         break;
-
                     case 11:
                         Item12 = (T12) value;
                         break;
@@ -2670,122 +2617,123 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : GTupleBase<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 6.
-        /// </summary>
-        /// <value>The item at position 6.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 5)]
+		/// <summary>
+		///   Gets or sets the item at position 6.
+		/// </summary>
+		/// <value>The item at position 6.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 5)]
         public T6 Item6 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 7.
-        /// </summary>
-        /// <value>The item at position 7.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 6)]
+		/// <summary>
+		///   Gets or sets the item at position 7.
+		/// </summary>
+		/// <value>The item at position 7.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 6)]
         public T7 Item7 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 8.
-        /// </summary>
-        /// <value>The item at position 8.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 7)]
+		/// <summary>
+		///   Gets or sets the item at position 8.
+		/// </summary>
+		/// <value>The item at position 8.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 7)]
         public T8 Item8 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 9.
-        /// </summary>
-        /// <value>The item at position 9.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 8)]
+		/// <summary>
+		///   Gets or sets the item at position 9.
+		/// </summary>
+		/// <value>The item at position 9.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 8)]
         public T9 Item9 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 10.
-        /// </summary>
-        /// <value>The item at position 10.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 9)]
+		/// <summary>
+		///   Gets or sets the item at position 10.
+		/// </summary>
+		/// <value>The item at position 10.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 9)]
         public T10 Item10 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 11.
-        /// </summary>
-        /// <value>The item at position 11.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 10)]
+		/// <summary>
+		///   Gets or sets the item at position 11.
+		/// </summary>
+		/// <value>The item at position 11.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 10)]
         public T11 Item11 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 12.
-        /// </summary>
-        /// <value>The item at position 12.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 11)]
+		/// <summary>
+		///   Gets or sets the item at position 12.
+		/// </summary>
+		/// <value>The item at position 12.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 11)]
         public T12 Item12 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 13.
-        /// </summary>
-        /// <value>The item at position 13.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 12)]
+		/// <summary>
+		///   Gets or sets the item at position 13.
+		/// </summary>
+		/// <value>The item at position 13.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 12)]
         public T13 Item13 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
-            yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
-            yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
-            yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
-            yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
-            yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
-            yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
-            yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
-            yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
+			yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
+			yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
+			yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
+			yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
+			yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
+			yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
+			yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -2803,7 +2751,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item13;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -2822,6 +2770,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item11;
             yield return Item12;
             yield return Item13;
+ 
         }
 
         public override bool Contains(object item)
@@ -2888,7 +2837,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -2906,56 +2855,43 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
-
                     case 5:
                         Item6 = (T6) value;
                         break;
-
                     case 6:
                         Item7 = (T7) value;
                         break;
-
                     case 7:
                         Item8 = (T8) value;
                         break;
-
                     case 8:
                         Item9 = (T9) value;
                         break;
-
                     case 9:
                         Item10 = (T10) value;
                         break;
-
                     case 10:
                         Item11 = (T11) value;
                         break;
-
                     case 11:
                         Item12 = (T12) value;
                         break;
-
                     case 12:
                         Item13 = (T13) value;
                         break;
@@ -2972,130 +2908,131 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : GTupleBase<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 6.
-        /// </summary>
-        /// <value>The item at position 6.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 5)]
+		/// <summary>
+		///   Gets or sets the item at position 6.
+		/// </summary>
+		/// <value>The item at position 6.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 5)]
         public T6 Item6 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 7.
-        /// </summary>
-        /// <value>The item at position 7.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 6)]
+		/// <summary>
+		///   Gets or sets the item at position 7.
+		/// </summary>
+		/// <value>The item at position 7.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 6)]
         public T7 Item7 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 8.
-        /// </summary>
-        /// <value>The item at position 8.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 7)]
+		/// <summary>
+		///   Gets or sets the item at position 8.
+		/// </summary>
+		/// <value>The item at position 8.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 7)]
         public T8 Item8 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 9.
-        /// </summary>
-        /// <value>The item at position 9.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 8)]
+		/// <summary>
+		///   Gets or sets the item at position 9.
+		/// </summary>
+		/// <value>The item at position 9.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 8)]
         public T9 Item9 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 10.
-        /// </summary>
-        /// <value>The item at position 10.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 9)]
+		/// <summary>
+		///   Gets or sets the item at position 10.
+		/// </summary>
+		/// <value>The item at position 10.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 9)]
         public T10 Item10 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 11.
-        /// </summary>
-        /// <value>The item at position 11.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 10)]
+		/// <summary>
+		///   Gets or sets the item at position 11.
+		/// </summary>
+		/// <value>The item at position 11.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 10)]
         public T11 Item11 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 12.
-        /// </summary>
-        /// <value>The item at position 12.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 11)]
+		/// <summary>
+		///   Gets or sets the item at position 12.
+		/// </summary>
+		/// <value>The item at position 12.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 11)]
         public T12 Item12 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 13.
-        /// </summary>
-        /// <value>The item at position 13.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 12)]
+		/// <summary>
+		///   Gets or sets the item at position 13.
+		/// </summary>
+		/// <value>The item at position 13.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 12)]
         public T13 Item13 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 14.
-        /// </summary>
-        /// <value>The item at position 14.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 13)]
+		/// <summary>
+		///   Gets or sets the item at position 14.
+		/// </summary>
+		/// <value>The item at position 14.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 13)]
         public T14 Item14 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
-            yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
-            yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
-            yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
-            yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
-            yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
-            yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
-            yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
-            yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
-            yield return GKeyValuePair.Create("Item14", Item14.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
+			yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
+			yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
+			yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
+			yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
+			yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
+			yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
+			yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
+			yield return GKeyValuePair.Create("Item14", Item14.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -3114,7 +3051,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item14;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -3134,6 +3071,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item12;
             yield return Item13;
             yield return Item14;
+ 
         }
 
         public override bool Contains(object item)
@@ -3203,7 +3141,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -3222,60 +3160,46 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
-
                     case 5:
                         Item6 = (T6) value;
                         break;
-
                     case 6:
                         Item7 = (T7) value;
                         break;
-
                     case 7:
                         Item8 = (T8) value;
                         break;
-
                     case 8:
                         Item9 = (T9) value;
                         break;
-
                     case 9:
                         Item10 = (T10) value;
                         break;
-
                     case 10:
                         Item11 = (T11) value;
                         break;
-
                     case 11:
                         Item12 = (T12) value;
                         break;
-
                     case 12:
                         Item13 = (T13) value;
                         break;
-
                     case 13:
                         Item14 = (T14) value;
                         break;
@@ -3292,138 +3216,139 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> : GTupleBase<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 6.
-        /// </summary>
-        /// <value>The item at position 6.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 5)]
+		/// <summary>
+		///   Gets or sets the item at position 6.
+		/// </summary>
+		/// <value>The item at position 6.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 5)]
         public T6 Item6 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 7.
-        /// </summary>
-        /// <value>The item at position 7.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 6)]
+		/// <summary>
+		///   Gets or sets the item at position 7.
+		/// </summary>
+		/// <value>The item at position 7.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 6)]
         public T7 Item7 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 8.
-        /// </summary>
-        /// <value>The item at position 8.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 7)]
+		/// <summary>
+		///   Gets or sets the item at position 8.
+		/// </summary>
+		/// <value>The item at position 8.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 7)]
         public T8 Item8 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 9.
-        /// </summary>
-        /// <value>The item at position 9.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 8)]
+		/// <summary>
+		///   Gets or sets the item at position 9.
+		/// </summary>
+		/// <value>The item at position 9.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 8)]
         public T9 Item9 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 10.
-        /// </summary>
-        /// <value>The item at position 10.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 9)]
+		/// <summary>
+		///   Gets or sets the item at position 10.
+		/// </summary>
+		/// <value>The item at position 10.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 9)]
         public T10 Item10 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 11.
-        /// </summary>
-        /// <value>The item at position 11.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 10)]
+		/// <summary>
+		///   Gets or sets the item at position 11.
+		/// </summary>
+		/// <value>The item at position 11.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 10)]
         public T11 Item11 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 12.
-        /// </summary>
-        /// <value>The item at position 12.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 11)]
+		/// <summary>
+		///   Gets or sets the item at position 12.
+		/// </summary>
+		/// <value>The item at position 12.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 11)]
         public T12 Item12 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 13.
-        /// </summary>
-        /// <value>The item at position 13.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 12)]
+		/// <summary>
+		///   Gets or sets the item at position 13.
+		/// </summary>
+		/// <value>The item at position 13.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 12)]
         public T13 Item13 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 14.
-        /// </summary>
-        /// <value>The item at position 14.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 13)]
+		/// <summary>
+		///   Gets or sets the item at position 14.
+		/// </summary>
+		/// <value>The item at position 14.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 13)]
         public T14 Item14 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 15.
-        /// </summary>
-        /// <value>The item at position 15.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 14)]
+		/// <summary>
+		///   Gets or sets the item at position 15.
+		/// </summary>
+		/// <value>The item at position 15.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 14)]
         public T15 Item15 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
-            yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
-            yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
-            yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
-            yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
-            yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
-            yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
-            yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
-            yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
-            yield return GKeyValuePair.Create("Item14", Item14.SafeToString());
-            yield return GKeyValuePair.Create("Item15", Item15.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
+			yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
+			yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
+			yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
+			yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
+			yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
+			yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
+			yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
+			yield return GKeyValuePair.Create("Item14", Item14.SafeToString());
+			yield return GKeyValuePair.Create("Item15", Item15.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -3443,7 +3368,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item15;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -3464,6 +3389,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item13;
             yield return Item14;
             yield return Item15;
+ 
         }
 
         public override bool Contains(object item)
@@ -3536,7 +3462,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -3556,64 +3482,49 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
-
                     case 5:
                         Item6 = (T6) value;
                         break;
-
                     case 6:
                         Item7 = (T7) value;
                         break;
-
                     case 7:
                         Item8 = (T8) value;
                         break;
-
                     case 8:
                         Item9 = (T9) value;
                         break;
-
                     case 9:
                         Item10 = (T10) value;
                         break;
-
                     case 10:
                         Item11 = (T11) value;
                         break;
-
                     case 11:
                         Item12 = (T12) value;
                         break;
-
                     case 12:
                         Item13 = (T13) value;
                         break;
-
                     case 13:
                         Item14 = (T14) value;
                         break;
-
                     case 14:
                         Item15 = (T15) value;
                         break;
@@ -3630,146 +3541,147 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> : GTupleBase<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 6.
-        /// </summary>
-        /// <value>The item at position 6.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 5)]
+		/// <summary>
+		///   Gets or sets the item at position 6.
+		/// </summary>
+		/// <value>The item at position 6.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 5)]
         public T6 Item6 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 7.
-        /// </summary>
-        /// <value>The item at position 7.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 6)]
+		/// <summary>
+		///   Gets or sets the item at position 7.
+		/// </summary>
+		/// <value>The item at position 7.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 6)]
         public T7 Item7 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 8.
-        /// </summary>
-        /// <value>The item at position 8.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 7)]
+		/// <summary>
+		///   Gets or sets the item at position 8.
+		/// </summary>
+		/// <value>The item at position 8.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 7)]
         public T8 Item8 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 9.
-        /// </summary>
-        /// <value>The item at position 9.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 8)]
+		/// <summary>
+		///   Gets or sets the item at position 9.
+		/// </summary>
+		/// <value>The item at position 9.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 8)]
         public T9 Item9 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 10.
-        /// </summary>
-        /// <value>The item at position 10.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 9)]
+		/// <summary>
+		///   Gets or sets the item at position 10.
+		/// </summary>
+		/// <value>The item at position 10.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 9)]
         public T10 Item10 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 11.
-        /// </summary>
-        /// <value>The item at position 11.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 10)]
+		/// <summary>
+		///   Gets or sets the item at position 11.
+		/// </summary>
+		/// <value>The item at position 11.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 10)]
         public T11 Item11 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 12.
-        /// </summary>
-        /// <value>The item at position 12.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 11)]
+		/// <summary>
+		///   Gets or sets the item at position 12.
+		/// </summary>
+		/// <value>The item at position 12.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 11)]
         public T12 Item12 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 13.
-        /// </summary>
-        /// <value>The item at position 13.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 12)]
+		/// <summary>
+		///   Gets or sets the item at position 13.
+		/// </summary>
+		/// <value>The item at position 13.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 12)]
         public T13 Item13 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 14.
-        /// </summary>
-        /// <value>The item at position 14.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 13)]
+		/// <summary>
+		///   Gets or sets the item at position 14.
+		/// </summary>
+		/// <value>The item at position 14.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 13)]
         public T14 Item14 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 15.
-        /// </summary>
-        /// <value>The item at position 15.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 14)]
+		/// <summary>
+		///   Gets or sets the item at position 15.
+		/// </summary>
+		/// <value>The item at position 15.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 14)]
         public T15 Item15 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 16.
-        /// </summary>
-        /// <value>The item at position 16.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 15)]
+		/// <summary>
+		///   Gets or sets the item at position 16.
+		/// </summary>
+		/// <value>The item at position 16.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 15)]
         public T16 Item16 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
-            yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
-            yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
-            yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
-            yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
-            yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
-            yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
-            yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
-            yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
-            yield return GKeyValuePair.Create("Item14", Item14.SafeToString());
-            yield return GKeyValuePair.Create("Item15", Item15.SafeToString());
-            yield return GKeyValuePair.Create("Item16", Item16.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
+			yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
+			yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
+			yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
+			yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
+			yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
+			yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
+			yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
+			yield return GKeyValuePair.Create("Item14", Item14.SafeToString());
+			yield return GKeyValuePair.Create("Item15", Item15.SafeToString());
+			yield return GKeyValuePair.Create("Item16", Item16.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -3790,7 +3702,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item16;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -3812,6 +3724,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item14;
             yield return Item15;
             yield return Item16;
+ 
         }
 
         public override bool Contains(object item)
@@ -3887,7 +3800,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -3908,68 +3821,52 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
-
                     case 5:
                         Item6 = (T6) value;
                         break;
-
                     case 6:
                         Item7 = (T7) value;
                         break;
-
                     case 7:
                         Item8 = (T8) value;
                         break;
-
                     case 8:
                         Item9 = (T9) value;
                         break;
-
                     case 9:
                         Item10 = (T10) value;
                         break;
-
                     case 10:
                         Item11 = (T11) value;
                         break;
-
                     case 11:
                         Item12 = (T12) value;
                         break;
-
                     case 12:
                         Item13 = (T13) value;
                         break;
-
                     case 13:
                         Item14 = (T14) value;
                         break;
-
                     case 14:
                         Item15 = (T15) value;
                         break;
-
                     case 15:
                         Item16 = (T16) value;
                         break;
@@ -3986,154 +3883,155 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> : GTupleBase<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 6.
-        /// </summary>
-        /// <value>The item at position 6.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 5)]
+		/// <summary>
+		///   Gets or sets the item at position 6.
+		/// </summary>
+		/// <value>The item at position 6.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 5)]
         public T6 Item6 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 7.
-        /// </summary>
-        /// <value>The item at position 7.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 6)]
+		/// <summary>
+		///   Gets or sets the item at position 7.
+		/// </summary>
+		/// <value>The item at position 7.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 6)]
         public T7 Item7 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 8.
-        /// </summary>
-        /// <value>The item at position 8.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 7)]
+		/// <summary>
+		///   Gets or sets the item at position 8.
+		/// </summary>
+		/// <value>The item at position 8.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 7)]
         public T8 Item8 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 9.
-        /// </summary>
-        /// <value>The item at position 9.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 8)]
+		/// <summary>
+		///   Gets or sets the item at position 9.
+		/// </summary>
+		/// <value>The item at position 9.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 8)]
         public T9 Item9 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 10.
-        /// </summary>
-        /// <value>The item at position 10.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 9)]
+		/// <summary>
+		///   Gets or sets the item at position 10.
+		/// </summary>
+		/// <value>The item at position 10.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 9)]
         public T10 Item10 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 11.
-        /// </summary>
-        /// <value>The item at position 11.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 10)]
+		/// <summary>
+		///   Gets or sets the item at position 11.
+		/// </summary>
+		/// <value>The item at position 11.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 10)]
         public T11 Item11 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 12.
-        /// </summary>
-        /// <value>The item at position 12.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 11)]
+		/// <summary>
+		///   Gets or sets the item at position 12.
+		/// </summary>
+		/// <value>The item at position 12.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 11)]
         public T12 Item12 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 13.
-        /// </summary>
-        /// <value>The item at position 13.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 12)]
+		/// <summary>
+		///   Gets or sets the item at position 13.
+		/// </summary>
+		/// <value>The item at position 13.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 12)]
         public T13 Item13 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 14.
-        /// </summary>
-        /// <value>The item at position 14.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 13)]
+		/// <summary>
+		///   Gets or sets the item at position 14.
+		/// </summary>
+		/// <value>The item at position 14.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 13)]
         public T14 Item14 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 15.
-        /// </summary>
-        /// <value>The item at position 15.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 14)]
+		/// <summary>
+		///   Gets or sets the item at position 15.
+		/// </summary>
+		/// <value>The item at position 15.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 14)]
         public T15 Item15 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 16.
-        /// </summary>
-        /// <value>The item at position 16.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 15)]
+		/// <summary>
+		///   Gets or sets the item at position 16.
+		/// </summary>
+		/// <value>The item at position 16.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 15)]
         public T16 Item16 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 17.
-        /// </summary>
-        /// <value>The item at position 17.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 16)]
+		/// <summary>
+		///   Gets or sets the item at position 17.
+		/// </summary>
+		/// <value>The item at position 17.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 16)]
         public T17 Item17 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
-            yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
-            yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
-            yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
-            yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
-            yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
-            yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
-            yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
-            yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
-            yield return GKeyValuePair.Create("Item14", Item14.SafeToString());
-            yield return GKeyValuePair.Create("Item15", Item15.SafeToString());
-            yield return GKeyValuePair.Create("Item16", Item16.SafeToString());
-            yield return GKeyValuePair.Create("Item17", Item17.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
+			yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
+			yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
+			yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
+			yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
+			yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
+			yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
+			yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
+			yield return GKeyValuePair.Create("Item14", Item14.SafeToString());
+			yield return GKeyValuePair.Create("Item15", Item15.SafeToString());
+			yield return GKeyValuePair.Create("Item16", Item16.SafeToString());
+			yield return GKeyValuePair.Create("Item17", Item17.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -4155,7 +4053,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item17;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -4178,6 +4076,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item15;
             yield return Item16;
             yield return Item17;
+ 
         }
 
         public override bool Contains(object item)
@@ -4256,7 +4155,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -4278,72 +4177,55 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
-
                     case 5:
                         Item6 = (T6) value;
                         break;
-
                     case 6:
                         Item7 = (T7) value;
                         break;
-
                     case 7:
                         Item8 = (T8) value;
                         break;
-
                     case 8:
                         Item9 = (T9) value;
                         break;
-
                     case 9:
                         Item10 = (T10) value;
                         break;
-
                     case 10:
                         Item11 = (T11) value;
                         break;
-
                     case 11:
                         Item12 = (T12) value;
                         break;
-
                     case 12:
                         Item13 = (T13) value;
                         break;
-
                     case 13:
                         Item14 = (T14) value;
                         break;
-
                     case 14:
                         Item15 = (T15) value;
                         break;
-
                     case 15:
                         Item16 = (T16) value;
                         break;
-
                     case 16:
                         Item17 = (T17) value;
                         break;
@@ -4360,162 +4242,163 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> : GTupleBase<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 6.
-        /// </summary>
-        /// <value>The item at position 6.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 5)]
+		/// <summary>
+		///   Gets or sets the item at position 6.
+		/// </summary>
+		/// <value>The item at position 6.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 5)]
         public T6 Item6 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 7.
-        /// </summary>
-        /// <value>The item at position 7.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 6)]
+		/// <summary>
+		///   Gets or sets the item at position 7.
+		/// </summary>
+		/// <value>The item at position 7.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 6)]
         public T7 Item7 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 8.
-        /// </summary>
-        /// <value>The item at position 8.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 7)]
+		/// <summary>
+		///   Gets or sets the item at position 8.
+		/// </summary>
+		/// <value>The item at position 8.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 7)]
         public T8 Item8 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 9.
-        /// </summary>
-        /// <value>The item at position 9.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 8)]
+		/// <summary>
+		///   Gets or sets the item at position 9.
+		/// </summary>
+		/// <value>The item at position 9.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 8)]
         public T9 Item9 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 10.
-        /// </summary>
-        /// <value>The item at position 10.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 9)]
+		/// <summary>
+		///   Gets or sets the item at position 10.
+		/// </summary>
+		/// <value>The item at position 10.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 9)]
         public T10 Item10 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 11.
-        /// </summary>
-        /// <value>The item at position 11.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 10)]
+		/// <summary>
+		///   Gets or sets the item at position 11.
+		/// </summary>
+		/// <value>The item at position 11.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 10)]
         public T11 Item11 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 12.
-        /// </summary>
-        /// <value>The item at position 12.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 11)]
+		/// <summary>
+		///   Gets or sets the item at position 12.
+		/// </summary>
+		/// <value>The item at position 12.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 11)]
         public T12 Item12 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 13.
-        /// </summary>
-        /// <value>The item at position 13.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 12)]
+		/// <summary>
+		///   Gets or sets the item at position 13.
+		/// </summary>
+		/// <value>The item at position 13.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 12)]
         public T13 Item13 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 14.
-        /// </summary>
-        /// <value>The item at position 14.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 13)]
+		/// <summary>
+		///   Gets or sets the item at position 14.
+		/// </summary>
+		/// <value>The item at position 14.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 13)]
         public T14 Item14 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 15.
-        /// </summary>
-        /// <value>The item at position 15.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 14)]
+		/// <summary>
+		///   Gets or sets the item at position 15.
+		/// </summary>
+		/// <value>The item at position 15.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 14)]
         public T15 Item15 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 16.
-        /// </summary>
-        /// <value>The item at position 16.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 15)]
+		/// <summary>
+		///   Gets or sets the item at position 16.
+		/// </summary>
+		/// <value>The item at position 16.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 15)]
         public T16 Item16 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 17.
-        /// </summary>
-        /// <value>The item at position 17.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 16)]
+		/// <summary>
+		///   Gets or sets the item at position 17.
+		/// </summary>
+		/// <value>The item at position 17.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 16)]
         public T17 Item17 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 18.
-        /// </summary>
-        /// <value>The item at position 18.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 17)]
+		/// <summary>
+		///   Gets or sets the item at position 18.
+		/// </summary>
+		/// <value>The item at position 18.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 17)]
         public T18 Item18 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
-            yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
-            yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
-            yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
-            yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
-            yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
-            yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
-            yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
-            yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
-            yield return GKeyValuePair.Create("Item14", Item14.SafeToString());
-            yield return GKeyValuePair.Create("Item15", Item15.SafeToString());
-            yield return GKeyValuePair.Create("Item16", Item16.SafeToString());
-            yield return GKeyValuePair.Create("Item17", Item17.SafeToString());
-            yield return GKeyValuePair.Create("Item18", Item18.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
+			yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
+			yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
+			yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
+			yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
+			yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
+			yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
+			yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
+			yield return GKeyValuePair.Create("Item14", Item14.SafeToString());
+			yield return GKeyValuePair.Create("Item15", Item15.SafeToString());
+			yield return GKeyValuePair.Create("Item16", Item16.SafeToString());
+			yield return GKeyValuePair.Create("Item17", Item17.SafeToString());
+			yield return GKeyValuePair.Create("Item18", Item18.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -4538,7 +4421,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item18;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -4562,6 +4445,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item16;
             yield return Item17;
             yield return Item18;
+ 
         }
 
         public override bool Contains(object item)
@@ -4643,7 +4527,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -4666,76 +4550,58 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
-
                     case 5:
                         Item6 = (T6) value;
                         break;
-
                     case 6:
                         Item7 = (T7) value;
                         break;
-
                     case 7:
                         Item8 = (T8) value;
                         break;
-
                     case 8:
                         Item9 = (T9) value;
                         break;
-
                     case 9:
                         Item10 = (T10) value;
                         break;
-
                     case 10:
                         Item11 = (T11) value;
                         break;
-
                     case 11:
                         Item12 = (T12) value;
                         break;
-
                     case 12:
                         Item13 = (T13) value;
                         break;
-
                     case 13:
                         Item14 = (T14) value;
                         break;
-
                     case 14:
                         Item15 = (T15) value;
                         break;
-
                     case 15:
                         Item16 = (T16) value;
                         break;
-
                     case 16:
                         Item17 = (T17) value;
                         break;
-
                     case 17:
                         Item18 = (T18) value;
                         break;
@@ -4752,170 +4618,171 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> : GTupleBase<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 6.
-        /// </summary>
-        /// <value>The item at position 6.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 5)]
+		/// <summary>
+		///   Gets or sets the item at position 6.
+		/// </summary>
+		/// <value>The item at position 6.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 5)]
         public T6 Item6 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 7.
-        /// </summary>
-        /// <value>The item at position 7.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 6)]
+		/// <summary>
+		///   Gets or sets the item at position 7.
+		/// </summary>
+		/// <value>The item at position 7.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 6)]
         public T7 Item7 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 8.
-        /// </summary>
-        /// <value>The item at position 8.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 7)]
+		/// <summary>
+		///   Gets or sets the item at position 8.
+		/// </summary>
+		/// <value>The item at position 8.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 7)]
         public T8 Item8 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 9.
-        /// </summary>
-        /// <value>The item at position 9.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 8)]
+		/// <summary>
+		///   Gets or sets the item at position 9.
+		/// </summary>
+		/// <value>The item at position 9.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 8)]
         public T9 Item9 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 10.
-        /// </summary>
-        /// <value>The item at position 10.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 9)]
+		/// <summary>
+		///   Gets or sets the item at position 10.
+		/// </summary>
+		/// <value>The item at position 10.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 9)]
         public T10 Item10 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 11.
-        /// </summary>
-        /// <value>The item at position 11.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 10)]
+		/// <summary>
+		///   Gets or sets the item at position 11.
+		/// </summary>
+		/// <value>The item at position 11.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 10)]
         public T11 Item11 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 12.
-        /// </summary>
-        /// <value>The item at position 12.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 11)]
+		/// <summary>
+		///   Gets or sets the item at position 12.
+		/// </summary>
+		/// <value>The item at position 12.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 11)]
         public T12 Item12 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 13.
-        /// </summary>
-        /// <value>The item at position 13.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 12)]
+		/// <summary>
+		///   Gets or sets the item at position 13.
+		/// </summary>
+		/// <value>The item at position 13.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 12)]
         public T13 Item13 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 14.
-        /// </summary>
-        /// <value>The item at position 14.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 13)]
+		/// <summary>
+		///   Gets or sets the item at position 14.
+		/// </summary>
+		/// <value>The item at position 14.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 13)]
         public T14 Item14 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 15.
-        /// </summary>
-        /// <value>The item at position 15.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 14)]
+		/// <summary>
+		///   Gets or sets the item at position 15.
+		/// </summary>
+		/// <value>The item at position 15.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 14)]
         public T15 Item15 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 16.
-        /// </summary>
-        /// <value>The item at position 16.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 15)]
+		/// <summary>
+		///   Gets or sets the item at position 16.
+		/// </summary>
+		/// <value>The item at position 16.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 15)]
         public T16 Item16 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 17.
-        /// </summary>
-        /// <value>The item at position 17.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 16)]
+		/// <summary>
+		///   Gets or sets the item at position 17.
+		/// </summary>
+		/// <value>The item at position 17.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 16)]
         public T17 Item17 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 18.
-        /// </summary>
-        /// <value>The item at position 18.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 17)]
+		/// <summary>
+		///   Gets or sets the item at position 18.
+		/// </summary>
+		/// <value>The item at position 18.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 17)]
         public T18 Item18 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 19.
-        /// </summary>
-        /// <value>The item at position 19.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 18)]
+		/// <summary>
+		///   Gets or sets the item at position 19.
+		/// </summary>
+		/// <value>The item at position 19.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 18)]
         public T19 Item19 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
-            yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
-            yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
-            yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
-            yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
-            yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
-            yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
-            yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
-            yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
-            yield return GKeyValuePair.Create("Item14", Item14.SafeToString());
-            yield return GKeyValuePair.Create("Item15", Item15.SafeToString());
-            yield return GKeyValuePair.Create("Item16", Item16.SafeToString());
-            yield return GKeyValuePair.Create("Item17", Item17.SafeToString());
-            yield return GKeyValuePair.Create("Item18", Item18.SafeToString());
-            yield return GKeyValuePair.Create("Item19", Item19.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
+			yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
+			yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
+			yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
+			yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
+			yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
+			yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
+			yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
+			yield return GKeyValuePair.Create("Item14", Item14.SafeToString());
+			yield return GKeyValuePair.Create("Item15", Item15.SafeToString());
+			yield return GKeyValuePair.Create("Item16", Item16.SafeToString());
+			yield return GKeyValuePair.Create("Item17", Item17.SafeToString());
+			yield return GKeyValuePair.Create("Item18", Item18.SafeToString());
+			yield return GKeyValuePair.Create("Item19", Item19.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -4939,7 +4806,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item19;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -4964,6 +4831,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item17;
             yield return Item18;
             yield return Item19;
+ 
         }
 
         public override bool Contains(object item)
@@ -5048,7 +4916,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -5072,80 +4940,61 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
-
                     case 5:
                         Item6 = (T6) value;
                         break;
-
                     case 6:
                         Item7 = (T7) value;
                         break;
-
                     case 7:
                         Item8 = (T8) value;
                         break;
-
                     case 8:
                         Item9 = (T9) value;
                         break;
-
                     case 9:
                         Item10 = (T10) value;
                         break;
-
                     case 10:
                         Item11 = (T11) value;
                         break;
-
                     case 11:
                         Item12 = (T12) value;
                         break;
-
                     case 12:
                         Item13 = (T13) value;
                         break;
-
                     case 13:
                         Item14 = (T14) value;
                         break;
-
                     case 14:
                         Item15 = (T15) value;
                         break;
-
                     case 15:
                         Item16 = (T16) value;
                         break;
-
                     case 16:
                         Item17 = (T17) value;
                         break;
-
                     case 17:
                         Item18 = (T18) value;
                         break;
-
                     case 18:
                         Item19 = (T19) value;
                         break;
@@ -5162,178 +5011,179 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> : GTupleBase<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 6.
-        /// </summary>
-        /// <value>The item at position 6.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 5)]
+		/// <summary>
+		///   Gets or sets the item at position 6.
+		/// </summary>
+		/// <value>The item at position 6.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 5)]
         public T6 Item6 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 7.
-        /// </summary>
-        /// <value>The item at position 7.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 6)]
+		/// <summary>
+		///   Gets or sets the item at position 7.
+		/// </summary>
+		/// <value>The item at position 7.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 6)]
         public T7 Item7 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 8.
-        /// </summary>
-        /// <value>The item at position 8.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 7)]
+		/// <summary>
+		///   Gets or sets the item at position 8.
+		/// </summary>
+		/// <value>The item at position 8.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 7)]
         public T8 Item8 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 9.
-        /// </summary>
-        /// <value>The item at position 9.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 8)]
+		/// <summary>
+		///   Gets or sets the item at position 9.
+		/// </summary>
+		/// <value>The item at position 9.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 8)]
         public T9 Item9 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 10.
-        /// </summary>
-        /// <value>The item at position 10.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 9)]
+		/// <summary>
+		///   Gets or sets the item at position 10.
+		/// </summary>
+		/// <value>The item at position 10.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 9)]
         public T10 Item10 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 11.
-        /// </summary>
-        /// <value>The item at position 11.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 10)]
+		/// <summary>
+		///   Gets or sets the item at position 11.
+		/// </summary>
+		/// <value>The item at position 11.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 10)]
         public T11 Item11 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 12.
-        /// </summary>
-        /// <value>The item at position 12.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 11)]
+		/// <summary>
+		///   Gets or sets the item at position 12.
+		/// </summary>
+		/// <value>The item at position 12.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 11)]
         public T12 Item12 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 13.
-        /// </summary>
-        /// <value>The item at position 13.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 12)]
+		/// <summary>
+		///   Gets or sets the item at position 13.
+		/// </summary>
+		/// <value>The item at position 13.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 12)]
         public T13 Item13 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 14.
-        /// </summary>
-        /// <value>The item at position 14.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 13)]
+		/// <summary>
+		///   Gets or sets the item at position 14.
+		/// </summary>
+		/// <value>The item at position 14.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 13)]
         public T14 Item14 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 15.
-        /// </summary>
-        /// <value>The item at position 15.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 14)]
+		/// <summary>
+		///   Gets or sets the item at position 15.
+		/// </summary>
+		/// <value>The item at position 15.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 14)]
         public T15 Item15 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 16.
-        /// </summary>
-        /// <value>The item at position 16.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 15)]
+		/// <summary>
+		///   Gets or sets the item at position 16.
+		/// </summary>
+		/// <value>The item at position 16.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 15)]
         public T16 Item16 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 17.
-        /// </summary>
-        /// <value>The item at position 17.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 16)]
+		/// <summary>
+		///   Gets or sets the item at position 17.
+		/// </summary>
+		/// <value>The item at position 17.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 16)]
         public T17 Item17 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 18.
-        /// </summary>
-        /// <value>The item at position 18.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 17)]
+		/// <summary>
+		///   Gets or sets the item at position 18.
+		/// </summary>
+		/// <value>The item at position 18.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 17)]
         public T18 Item18 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 19.
-        /// </summary>
-        /// <value>The item at position 19.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 18)]
+		/// <summary>
+		///   Gets or sets the item at position 19.
+		/// </summary>
+		/// <value>The item at position 19.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 18)]
         public T19 Item19 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 20.
-        /// </summary>
-        /// <value>The item at position 20.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 19)]
+		/// <summary>
+		///   Gets or sets the item at position 20.
+		/// </summary>
+		/// <value>The item at position 20.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 19)]
         public T20 Item20 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
-            yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
-            yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
-            yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
-            yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
-            yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
-            yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
-            yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
-            yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
-            yield return GKeyValuePair.Create("Item14", Item14.SafeToString());
-            yield return GKeyValuePair.Create("Item15", Item15.SafeToString());
-            yield return GKeyValuePair.Create("Item16", Item16.SafeToString());
-            yield return GKeyValuePair.Create("Item17", Item17.SafeToString());
-            yield return GKeyValuePair.Create("Item18", Item18.SafeToString());
-            yield return GKeyValuePair.Create("Item19", Item19.SafeToString());
-            yield return GKeyValuePair.Create("Item20", Item20.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
+			yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
+			yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
+			yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
+			yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
+			yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
+			yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
+			yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
+			yield return GKeyValuePair.Create("Item14", Item14.SafeToString());
+			yield return GKeyValuePair.Create("Item15", Item15.SafeToString());
+			yield return GKeyValuePair.Create("Item16", Item16.SafeToString());
+			yield return GKeyValuePair.Create("Item17", Item17.SafeToString());
+			yield return GKeyValuePair.Create("Item18", Item18.SafeToString());
+			yield return GKeyValuePair.Create("Item19", Item19.SafeToString());
+			yield return GKeyValuePair.Create("Item20", Item20.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -5358,7 +5208,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item20;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -5384,6 +5234,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item18;
             yield return Item19;
             yield return Item20;
+ 
         }
 
         public override bool Contains(object item)
@@ -5471,7 +5322,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -5496,84 +5347,64 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
-
                     case 5:
                         Item6 = (T6) value;
                         break;
-
                     case 6:
                         Item7 = (T7) value;
                         break;
-
                     case 7:
                         Item8 = (T8) value;
                         break;
-
                     case 8:
                         Item9 = (T9) value;
                         break;
-
                     case 9:
                         Item10 = (T10) value;
                         break;
-
                     case 10:
                         Item11 = (T11) value;
                         break;
-
                     case 11:
                         Item12 = (T12) value;
                         break;
-
                     case 12:
                         Item13 = (T13) value;
                         break;
-
                     case 13:
                         Item14 = (T14) value;
                         break;
-
                     case 14:
                         Item15 = (T15) value;
                         break;
-
                     case 15:
                         Item16 = (T16) value;
                         break;
-
                     case 16:
                         Item17 = (T17) value;
                         break;
-
                     case 17:
                         Item18 = (T18) value;
                         break;
-
                     case 18:
                         Item19 = (T19) value;
                         break;
-
                     case 19:
                         Item20 = (T20) value;
                         break;
@@ -5590,186 +5421,187 @@ namespace Finsa.Caravan.Common.Utilities
     [System.Serializable, Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     internal sealed class GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> : GTupleBase<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>
     {
-        /// <summary>
-        ///   Gets or sets the item at position 1.
-        /// </summary>
-        /// <value>The item at position 1.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 0)]
+		/// <summary>
+		///   Gets or sets the item at position 1.
+		/// </summary>
+		/// <value>The item at position 1.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 0)]
         public T1 Item1 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 2.
-        /// </summary>
-        /// <value>The item at position 2.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 1)]
+		/// <summary>
+		///   Gets or sets the item at position 2.
+		/// </summary>
+		/// <value>The item at position 2.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 1)]
         public T2 Item2 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 3.
-        /// </summary>
-        /// <value>The item at position 3.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 2)]
+		/// <summary>
+		///   Gets or sets the item at position 3.
+		/// </summary>
+		/// <value>The item at position 3.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 2)]
         public T3 Item3 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 4.
-        /// </summary>
-        /// <value>The item at position 4.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 3)]
+		/// <summary>
+		///   Gets or sets the item at position 4.
+		/// </summary>
+		/// <value>The item at position 4.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 3)]
         public T4 Item4 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 5.
-        /// </summary>
-        /// <value>The item at position 5.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 4)]
+		/// <summary>
+		///   Gets or sets the item at position 5.
+		/// </summary>
+		/// <value>The item at position 5.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 4)]
         public T5 Item5 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 6.
-        /// </summary>
-        /// <value>The item at position 6.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 5)]
+		/// <summary>
+		///   Gets or sets the item at position 6.
+		/// </summary>
+		/// <value>The item at position 6.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 5)]
         public T6 Item6 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 7.
-        /// </summary>
-        /// <value>The item at position 7.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 6)]
+		/// <summary>
+		///   Gets or sets the item at position 7.
+		/// </summary>
+		/// <value>The item at position 7.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 6)]
         public T7 Item7 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 8.
-        /// </summary>
-        /// <value>The item at position 8.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 7)]
+		/// <summary>
+		///   Gets or sets the item at position 8.
+		/// </summary>
+		/// <value>The item at position 8.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 7)]
         public T8 Item8 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 9.
-        /// </summary>
-        /// <value>The item at position 9.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 8)]
+		/// <summary>
+		///   Gets or sets the item at position 9.
+		/// </summary>
+		/// <value>The item at position 9.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 8)]
         public T9 Item9 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 10.
-        /// </summary>
-        /// <value>The item at position 10.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 9)]
+		/// <summary>
+		///   Gets or sets the item at position 10.
+		/// </summary>
+		/// <value>The item at position 10.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 9)]
         public T10 Item10 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 11.
-        /// </summary>
-        /// <value>The item at position 11.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 10)]
+		/// <summary>
+		///   Gets or sets the item at position 11.
+		/// </summary>
+		/// <value>The item at position 11.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 10)]
         public T11 Item11 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 12.
-        /// </summary>
-        /// <value>The item at position 12.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 11)]
+		/// <summary>
+		///   Gets or sets the item at position 12.
+		/// </summary>
+		/// <value>The item at position 12.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 11)]
         public T12 Item12 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 13.
-        /// </summary>
-        /// <value>The item at position 13.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 12)]
+		/// <summary>
+		///   Gets or sets the item at position 13.
+		/// </summary>
+		/// <value>The item at position 13.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 12)]
         public T13 Item13 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 14.
-        /// </summary>
-        /// <value>The item at position 14.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 13)]
+		/// <summary>
+		///   Gets or sets the item at position 14.
+		/// </summary>
+		/// <value>The item at position 14.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 13)]
         public T14 Item14 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 15.
-        /// </summary>
-        /// <value>The item at position 15.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 14)]
+		/// <summary>
+		///   Gets or sets the item at position 15.
+		/// </summary>
+		/// <value>The item at position 15.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 14)]
         public T15 Item15 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 16.
-        /// </summary>
-        /// <value>The item at position 16.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 15)]
+		/// <summary>
+		///   Gets or sets the item at position 16.
+		/// </summary>
+		/// <value>The item at position 16.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 15)]
         public T16 Item16 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 17.
-        /// </summary>
-        /// <value>The item at position 17.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 16)]
+		/// <summary>
+		///   Gets or sets the item at position 17.
+		/// </summary>
+		/// <value>The item at position 17.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 16)]
         public T17 Item17 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 18.
-        /// </summary>
-        /// <value>The item at position 18.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 17)]
+		/// <summary>
+		///   Gets or sets the item at position 18.
+		/// </summary>
+		/// <value>The item at position 18.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 17)]
         public T18 Item18 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 19.
-        /// </summary>
-        /// <value>The item at position 19.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 18)]
+		/// <summary>
+		///   Gets or sets the item at position 19.
+		/// </summary>
+		/// <value>The item at position 19.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 18)]
         public T19 Item19 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 20.
-        /// </summary>
-        /// <value>The item at position 20.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 19)]
+		/// <summary>
+		///   Gets or sets the item at position 20.
+		/// </summary>
+		/// <value>The item at position 20.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 19)]
         public T20 Item20 { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the item at position 21.
-        /// </summary>
-        /// <value>The item at position 21.</value>
-        [Newtonsoft.Json.JsonProperty(Order = 20)]
+		/// <summary>
+		///   Gets or sets the item at position 21.
+		/// </summary>
+		/// <value>The item at position 21.</value>
+		[Newtonsoft.Json.JsonProperty(Order = 20)]
         public T21 Item21 { get; set; }
 
+        
         #region EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> Members
 
         /// <summary>
-        ///   Gets members used to implement ToString.
-        /// </summary>
-        protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+		///   Gets members used to implement ToString.
+		/// </summary>
+		protected override System.Collections.Generic.IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
-            yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
-            yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
-            yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
-            yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
-            yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
-            yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
-            yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
-            yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
-            yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
-            yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
-            yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
-            yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
-            yield return GKeyValuePair.Create("Item14", Item14.SafeToString());
-            yield return GKeyValuePair.Create("Item15", Item15.SafeToString());
-            yield return GKeyValuePair.Create("Item16", Item16.SafeToString());
-            yield return GKeyValuePair.Create("Item17", Item17.SafeToString());
-            yield return GKeyValuePair.Create("Item18", Item18.SafeToString());
-            yield return GKeyValuePair.Create("Item19", Item19.SafeToString());
-            yield return GKeyValuePair.Create("Item20", Item20.SafeToString());
-            yield return GKeyValuePair.Create("Item21", Item21.SafeToString());
+			yield return GKeyValuePair.Create("Item1", Item1.SafeToString());
+			yield return GKeyValuePair.Create("Item2", Item2.SafeToString());
+			yield return GKeyValuePair.Create("Item3", Item3.SafeToString());
+			yield return GKeyValuePair.Create("Item4", Item4.SafeToString());
+			yield return GKeyValuePair.Create("Item5", Item5.SafeToString());
+			yield return GKeyValuePair.Create("Item6", Item6.SafeToString());
+			yield return GKeyValuePair.Create("Item7", Item7.SafeToString());
+			yield return GKeyValuePair.Create("Item8", Item8.SafeToString());
+			yield return GKeyValuePair.Create("Item9", Item9.SafeToString());
+			yield return GKeyValuePair.Create("Item10", Item10.SafeToString());
+			yield return GKeyValuePair.Create("Item11", Item11.SafeToString());
+			yield return GKeyValuePair.Create("Item12", Item12.SafeToString());
+			yield return GKeyValuePair.Create("Item13", Item13.SafeToString());
+			yield return GKeyValuePair.Create("Item14", Item14.SafeToString());
+			yield return GKeyValuePair.Create("Item15", Item15.SafeToString());
+			yield return GKeyValuePair.Create("Item16", Item16.SafeToString());
+			yield return GKeyValuePair.Create("Item17", Item17.SafeToString());
+			yield return GKeyValuePair.Create("Item18", Item18.SafeToString());
+			yield return GKeyValuePair.Create("Item19", Item19.SafeToString());
+			yield return GKeyValuePair.Create("Item20", Item20.SafeToString());
+			yield return GKeyValuePair.Create("Item21", Item21.SafeToString());
         }
 
         /// <summary>
-        ///   Gets members used to implement Equals.
-        /// </summary>
+		///   Gets members used to implement Equals.
+		/// </summary>
         protected override System.Collections.Generic.IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Item1;
@@ -5795,7 +5627,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item21;
         }
 
-        #endregion EquatableObject<GTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> Members
+        #endregion
 
         #region System.Collections.Generic.IList<object> Members
 
@@ -5822,6 +5654,7 @@ namespace Finsa.Caravan.Common.Utilities
             yield return Item19;
             yield return Item20;
             yield return Item21;
+ 
         }
 
         public override bool Contains(object item)
@@ -5912,7 +5745,7 @@ namespace Finsa.Caravan.Common.Utilities
         {
             get
             {
-                return
+                return 
                        (index == 0) ? Item1 :
                        (index == 1) ? Item2 :
                        (index == 2) ? Item3 :
@@ -5938,88 +5771,67 @@ namespace Finsa.Caravan.Common.Utilities
             }
             set
             {
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         Item1 = (T1) value;
                         break;
-
                     case 1:
                         Item2 = (T2) value;
                         break;
-
                     case 2:
                         Item3 = (T3) value;
                         break;
-
                     case 3:
                         Item4 = (T4) value;
                         break;
-
                     case 4:
                         Item5 = (T5) value;
                         break;
-
                     case 5:
                         Item6 = (T6) value;
                         break;
-
                     case 6:
                         Item7 = (T7) value;
                         break;
-
                     case 7:
                         Item8 = (T8) value;
                         break;
-
                     case 8:
                         Item9 = (T9) value;
                         break;
-
                     case 9:
                         Item10 = (T10) value;
                         break;
-
                     case 10:
                         Item11 = (T11) value;
                         break;
-
                     case 11:
                         Item12 = (T12) value;
                         break;
-
                     case 12:
                         Item13 = (T13) value;
                         break;
-
                     case 13:
                         Item14 = (T14) value;
                         break;
-
                     case 14:
                         Item15 = (T15) value;
                         break;
-
                     case 15:
                         Item16 = (T16) value;
                         break;
-
                     case 16:
                         Item17 = (T17) value;
                         break;
-
                     case 17:
                         Item18 = (T18) value;
                         break;
-
                     case 18:
                         Item19 = (T19) value;
                         break;
-
                     case 19:
                         Item20 = (T20) value;
                         break;
-
                     case 20:
                         Item21 = (T21) value;
                         break;
@@ -6029,4 +5841,6 @@ namespace Finsa.Caravan.Common.Utilities
 
         #endregion System.Collections.Generic.IList<object> Members
     }
+
 }
+
