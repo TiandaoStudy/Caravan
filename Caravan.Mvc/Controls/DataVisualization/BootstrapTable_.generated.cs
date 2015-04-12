@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Finsa.Caravan.Mvc.Controls.DataVisualization
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -38,19 +38,19 @@ namespace Finsa.Caravan.Mvc.Controls.DataVisualization
     using System.Web.WebPages;
     
     #line 6 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
-    using Finsa.Caravan.Mvc.Controls.DataVisualization;
+    using Finsa.Caravan.Common.Utilities.Extensions;
     
     #line default
     #line hidden
     
     #line 7 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
-    using PommaLabs.Extensions;
+    using Finsa.Caravan.Mvc.Controls.DataVisualization;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    public static class BootstrapTable_
+    public static class _Controls_DataVisualization_BootstrapTable__cshtml
     {
 
 public static System.Web.WebPages.HelperResult BootstrapTable(this AjaxHelper ajaxHelper, BootstrapTableOptions options)
@@ -112,12 +112,12 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "-container\">\r\n      ");
 
 
 #line 23 "..\..\Controls\DataVisualization\BootstrapTable_.cshtml"
-WebViewPage.WriteTo(@__razor_helper_writer, ajaxHelper.ActionLink(options.ID + "-updater", options.UpdateAction, new {searchCriteriaJson = "", pageIndex = 1}, new AjaxOptions
-      {
-         HttpMethod = "GET",
-         InsertionMode = InsertionMode.Replace,
-         UpdateTargetId = @options.ID + "-container"
-      }, new {id = options.ID + "-updater", @class = "hidden"}));
+WebViewPage.WriteTo(@__razor_helper_writer, ajaxHelper.ActionLink(options.ID + "-updater", options.UpdateAction, new { searchCriteriaJson = "", pageIndex = 1 }, new AjaxOptions
+ {
+     HttpMethod = "GET",
+     InsertionMode = InsertionMode.Replace,
+     UpdateTargetId = @options.ID + "-container"
+ }, new { id = options.ID + "-updater", @class = "hidden" }));
 
 #line default
 #line hidden

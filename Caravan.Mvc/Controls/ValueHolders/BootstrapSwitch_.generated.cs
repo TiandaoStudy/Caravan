@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Finsa.Caravan.Mvc.Controls.ValueHolders
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -33,28 +33,29 @@ namespace Finsa.Caravan.Mvc.Controls.ValueHolders
     using System.Web.WebPages;
     
     #line 5 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
-    using Finsa.Caravan.Mvc.Controls.ValueHolders;
+    using Finsa.Caravan.Common.Utilities.Extensions;
     
     #line default
     #line hidden
     
     #line 6 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
-    using PommaLabs.Extensions;
+    using Finsa.Caravan.Mvc.Controls.ValueHolders;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    public static class BootstrapSwitch_
+    public static class _Controls_ValueHolders_BootstrapSwitch__cshtml
     {
 
-public static System.Web.WebPages.HelperResult BootstrapSwitch(this HtmlHelper htmlHelper, BootstrapSwitchOptions options) {
+public static System.Web.WebPages.HelperResult BootstrapSwitch(this HtmlHelper htmlHelper, BootstrapSwitchOptions options)
+{
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 
 
-#line 8 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
-                                                                                     
+#line 9 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+ 
 
 
 #line default
@@ -64,7 +65,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "   <input id=\"");
 
 
 
-#line 10 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+#line 11 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.ID);
 
 #line default
@@ -74,7 +75,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\" type=\"checkbox\" />\r\n"
 
 
 
-#line 11 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+#line 12 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
 
 
 #line default
@@ -85,7 +86,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "   <script type=\"text/javas
 
 
 
-#line 14 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+#line 15 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.ID);
 
 #line default
@@ -95,7 +96,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\").bootstrapSwitch({\r\n   
 
 
 
-#line 15 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+#line 16 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.State.ToJavaScriptBoolean());
 
 #line default
@@ -105,7 +106,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, ",\r\n            size: \"");
 
 
 
-#line 16 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+#line 17 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.SizeString);
 
 #line default
@@ -115,7 +116,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\"\r\n         });\r\n\r\n  
 
 
 
-#line 19 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+#line 20 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.ID);
 
 #line default
@@ -126,7 +127,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\").on(\'switchChange.bootst
 
 
 
-#line 21 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+#line 22 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.OnChange);
 
 #line default
@@ -137,7 +138,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "(event, state);\r\n         
 
 
 
-#line 24 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+#line 25 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
          WebViewPage.WriteTo(@__razor_helper_writer, options.SearchCriteriaID);
 
 #line default
@@ -148,7 +149,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\");\r\n            if (sear
 
 
 
-#line 27 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+#line 28 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
 WebViewPage.WriteTo(@__razor_helper_writer, options.SafeID);
 
 #line default
@@ -159,7 +160,7 @@ WebViewPage.WriteLiteralTo(@__razor_helper_writer, "\"] = state;\r\n            
 
 
 
-#line 33 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
+#line 34 "..\..\Controls\ValueHolders\BootstrapSwitch_.cshtml"
 
 #line default
 #line hidden

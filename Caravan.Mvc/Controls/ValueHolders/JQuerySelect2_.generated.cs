@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Finsa.Caravan.Mvc.Controls.ValueHolders
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -33,19 +33,19 @@ namespace Finsa.Caravan.Mvc.Controls.ValueHolders
     using System.Web.WebPages;
     
     #line 5 "..\..\Controls\ValueHolders\JQuerySelect2_.cshtml"
-    using Finsa.Caravan.Mvc.Controls.ValueHolders;
+    using Finsa.Caravan.Common.Utilities.Extensions;
     
     #line default
     #line hidden
     
     #line 6 "..\..\Controls\ValueHolders\JQuerySelect2_.cshtml"
-    using PommaLabs.Extensions;
+    using Finsa.Caravan.Mvc.Controls.ValueHolders;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    public static class JQuerySelect2_
+    public static class _Controls_ValueHolders_JQuerySelect2__cshtml
     {
 
 public static System.Web.WebPages.HelperResult JQuerySelect2(this HtmlHelper htmlHelper, JQuerySelect2Options options) {
