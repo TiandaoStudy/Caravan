@@ -56,11 +56,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{349512
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess", "Caravan.DataAccess\Caravan.DataAccess.csproj", "{418B2D91-D53E-49BF-98FC-66DA9490DC37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.WebUI.Mvc", "Sample.WebUI.Mvc\Sample.WebUI.Mvc.csproj", "{A65D507D-03A2-49BE-A056-72AE6964140A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebApi", "Caravan.WebApi\Caravan.WebApi.csproj", "{27D82597-28B1-4441-8C42-0A220C38C4D8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataModel", "Sample.DataModel\Sample.DataModel.csproj", "{33A9CD5A-87C6-4BB3-B304-4DC6411BEF4F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External Libraries", "External Libraries", "{EEB0F070-8283-4D00-8129-64D81E908DCE}"
 	ProjectSection(SolutionItems) = preProject
@@ -72,8 +68,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Architecture", "Architecture", "{E396B46C-8975-4804-8C42-A44285FE8759}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security", "Security", "{1CEF0D42-66BA-44E0-865E-50DC4905FB39}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Mvc", "Caravan.Mvc\Caravan.Mvc.csproj", "{DAA22A2C-A101-4F71-B4E1-F0DB283A642C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests (DataAccess)", "UnitTests.DataAccess\Unit Tests (DataAccess).csproj", "{B41960F5-4A94-4AFA-8AF6-9B368787D846}"
 EndProject
@@ -115,22 +109,10 @@ Global
 		{418B2D91-D53E-49BF-98FC-66DA9490DC37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{418B2D91-D53E-49BF-98FC-66DA9490DC37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{418B2D91-D53E-49BF-98FC-66DA9490DC37}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A65D507D-03A2-49BE-A056-72AE6964140A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A65D507D-03A2-49BE-A056-72AE6964140A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A65D507D-03A2-49BE-A056-72AE6964140A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A65D507D-03A2-49BE-A056-72AE6964140A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{27D82597-28B1-4441-8C42-0A220C38C4D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{27D82597-28B1-4441-8C42-0A220C38C4D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27D82597-28B1-4441-8C42-0A220C38C4D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27D82597-28B1-4441-8C42-0A220C38C4D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{33A9CD5A-87C6-4BB3-B304-4DC6411BEF4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33A9CD5A-87C6-4BB3-B304-4DC6411BEF4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33A9CD5A-87C6-4BB3-B304-4DC6411BEF4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33A9CD5A-87C6-4BB3-B304-4DC6411BEF4F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DAA22A2C-A101-4F71-B4E1-F0DB283A642C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DAA22A2C-A101-4F71-B4E1-F0DB283A642C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DAA22A2C-A101-4F71-B4E1-F0DB283A642C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DAA22A2C-A101-4F71-B4E1-F0DB283A642C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B41960F5-4A94-4AFA-8AF6-9B368787D846}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B41960F5-4A94-4AFA-8AF6-9B368787D846}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B41960F5-4A94-4AFA-8AF6-9B368787D846}.Release|Any CPU.ActiveCfg = Release|Any CPU
