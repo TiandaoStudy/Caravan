@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Common.Logging;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess;
 using Newtonsoft.Json;
@@ -44,7 +45,9 @@ namespace Finsa.Caravan.WebApi
             ApiOutputCache.RegisterAsCacheOutputProvider(configuration, Cache.Instance);
 
             // Registra l'handler che si occupa del logging.
-            configuration.MessageHandlers.Add(new LogRequestAndResponseHandler());
+            var log = LogManager.GetLogger<LogRequestAndResponseHandler>();
+            log.Debug("PING");
+            configuration.MessageHandlers.Add(new LogRequestAndResponseHandler(log));
         }
     }
 }

@@ -2,6 +2,7 @@
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Properties;
+using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.Common.Utilities.Extensions;
 using Finsa.Caravan.DataAccess;
 using Microsoft.Owin;
@@ -16,6 +17,14 @@ namespace Finsa.Caravan.WebApi
 {
     public sealed class LogRequestAndResponseHandler : DelegatingHandler
     {
+        private readonly ILog _log;
+
+        public LogRequestAndResponseHandler(ILog log)
+        {
+            Raise<ArgumentNullException>.IfIsNull(log);
+            _log = log;
+        }
+
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             // Utilizzato per associare request e response nel log.
@@ -35,6 +44,8 @@ namespace Finsa.Caravan.WebApi
                     KeyValuePair.Create("method", request.Method.SafeToString()),
                     KeyValuePair.Create("headers", request.Headers.SafeToString())
                 };
+
+                _log.Trace(String.Format("Request \"{0}\" at \"{1}\"", requestId, request.RequestUri.SafeToString()));
 
                 Db.Logger.LogRawAsync(
                     LogLevel.Trace,
