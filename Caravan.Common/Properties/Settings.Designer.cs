@@ -9,45 +9,45 @@
 //------------------------------------------------------------------------------
 
 namespace Finsa.Caravan.Common.Properties {
-	
-	
-	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("ICSharpCode.SettingsEditor.SettingsCodeGeneratorTool", "5.1.0.4936")]
-	public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-		
-		private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-		
-		public static Settings Default {
-			get {
-				return defaultInstance;
-			}
-		}
-		
-		[global::System.Configuration.ApplicationScopedSettingAttribute()]
-		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-		[global::System.Configuration.DefaultSettingValueAttribute("My Wow Caravan App")]
-		public string ApplicationDescription {
-			get {
-				return ((string)(this["ApplicationDescription"]));
-			}
-		}
-		
-		[global::System.Configuration.ApplicationScopedSettingAttribute()]
-		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-		[global::System.Configuration.DefaultSettingValueAttribute("my_caravan_app")]
-		public string ApplicationName {
-			get {
-				return ((string)(this["ApplicationName"]));
-			}
-		}
-		
-		[global::System.Configuration.ApplicationScopedSettingAttribute()]
-		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-		[global::System.Configuration.DefaultSettingValueAttribute("PommaLabs.KVLite.PersistentCache, PommaLabs.KVLite")]
-		public string CacheType {
-			get {
-				return ((string)(this["CacheType"]));
-			}
-		}
-	}
+    
+    
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
+    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("My Wow Caravan App")]
+        public string ApplicationDescription {
+            get {
+                return ((string)(this["ApplicationDescription"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("my_caravan_app")]
+        public string ApplicationName {
+            get {
+                return ((string)(this["ApplicationName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Persistent")]
+        public string CacheType {
+            get {
+                return ((string)(this["CacheType"]));
+            }
+        }
+    }
 }

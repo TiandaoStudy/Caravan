@@ -1,5 +1,4 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="OnOffSwitch.ascx.cs" Inherits="FLEX.Web.UserControls.Ajax.OnOffSwitch" %>
-<%@ Import Namespace="PommaLabs.Extensions" %>
 <%@ Register TagPrefix="ajax" Namespace="System.Web.UI" Assembly="System.Web.Extensions" %>
 
 <script type="text/javascript">
@@ -12,8 +11,8 @@
       btnON.attr("class", checked ? "<%= ActiveOnClass %>" : "<%= InactiveOnClass %>");
       btnOFF.attr("class", checked ? "<%= InactiveOffClass %>" : "<%= ActiveOffClass %>");
 
-      var onValue = <%= OnValue.ToJavaScriptString() %>;
-      var offValue = <%= OffValue.ToJavaScriptString() %>;
+      var onValue = <%= ToJavaScriptString(OnValue) %>;
+      var offValue = <%= ToJavaScriptString(OffValue) %>;
       // This may trigger the real postback.
       $("#<%= txtSwitched.ClientID %>").val(checked ? onValue : offValue);
    }

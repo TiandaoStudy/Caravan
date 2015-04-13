@@ -1,6 +1,6 @@
 ﻿using Finsa.Caravan.Common.Properties;
-using Finsa.Caravan.Common.Utilities.Reflection;
 using PommaLabs.KVLite;
+using System.Globalization;
 
 namespace Finsa.Caravan.Common
 {
@@ -9,7 +9,25 @@ namespace Finsa.Caravan.Common
     /// </summary>
     public static class Cache
     {
-        private static readonly ICache CachedInstance = ServiceLocator.Load<ICache>(Settings.Default.CacheType);
+        private static readonly ICache CachedInstance;
+
+        static Cache()
+        {
+            switch (Settings.Default.CacheType.ToLower(CultureInfo.InvariantCulture))
+            {
+                case "persistent":
+                    CachedInstance = PersistentCache.DefaultInstance;
+                    break;
+
+                case "volatile":
+                    CachedInstance = VolatileCache.DefaultInstance;
+                    break;
+
+                default:
+                    CachedInstance = PersistentCache.DefaultInstance;
+                    break;
+            }
+        }
 
         /// <summary>
         ///   The cache instance.
