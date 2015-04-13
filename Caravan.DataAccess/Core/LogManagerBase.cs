@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ using Finsa.Caravan.Common.Utilities.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
-    internal abstract class LoggerBase<TLog> : ILogger where TLog : LoggerBase<TLog>
+    internal abstract class LogManagerBase<TLog> : ILogger where TLog : LogManagerBase<TLog>
     {
         #region ILogger Members
 
@@ -386,13 +387,12 @@ namespace Finsa.Caravan.DataAccess.Core
             try
             {
                 Raise<ArgumentNullException>.IfIsNull(shortMessage);
-                AuxCommonLogging(logLevel, shortMessage, context);
             }
             catch (Exception ex)
             {
                 try
                 {
-                    CommonLogging.Error(ex.Message);
+                    Trace.TraceWarning(ex.Message);
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
                 catch { }
@@ -406,13 +406,12 @@ namespace Finsa.Caravan.DataAccess.Core
             try
             {
                 Raise<ArgumentException>.IfIsEmpty(shortMessage);
-                AuxCommonLogging(logLevel, shortMessage, context);
             }
             catch (Exception ex)
             {
                 try
                 {
-                    CommonLogging.Error(ex.Message);
+                    Trace.TraceWarning(ex.Message);
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
                 catch { }
@@ -427,13 +426,12 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 Raise<ArgumentNullException>.IfIsNull(exception);
                 exception = FindInnermostException(exception);
-                AuxCommonLogging(logLevel, exception.Message, context);
             }
             catch (Exception ex)
             {
                 try
                 {
-                    CommonLogging.Error(ex.Message);
+                    Trace.TraceWarning(ex.Message);
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
                 catch { }
@@ -448,13 +446,12 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 Raise<ArgumentNullException>.IfIsNull(exception);
                 exception = FindInnermostException(exception);
-                AuxCommonLogging(logLevel, exception.Message, context);
             }
             catch (Exception ex)
             {
                 try
                 {
-                    CommonLogging.Error(ex.Message);
+                    Trace.TraceWarning(ex.Message);
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
                 catch { }
@@ -501,46 +498,5 @@ namespace Finsa.Caravan.DataAccess.Core
         }
 
         #endregion Shortcuts
-
-        #region Common.Logging
-
-        private static readonly ILog CommonLogging = LogManager.GetLogger<TLog>();
-
-        private static void AuxCommonLogging(LogLevel logLevel, string shortMessage, string context)
-        {
-            var msg = shortMessage;
-            if (!String.IsNullOrWhiteSpace(context))
-            {
-                msg += " @ " + context;
-            }
-            switch (logLevel)
-            {
-                case LogLevel.Debug:
-                    CommonLogging.Debug(msg);
-                    break;
-
-                case LogLevel.Error:
-                    CommonLogging.Error(msg);
-                    break;
-
-                case LogLevel.Fatal:
-                    CommonLogging.Fatal(msg);
-                    break;
-
-                case LogLevel.Info:
-                    CommonLogging.Info(msg);
-                    break;
-
-                case LogLevel.Trace:
-                    CommonLogging.Trace(msg);
-                    break;
-
-                case LogLevel.Warn:
-                    CommonLogging.Warn(msg);
-                    break;
-            }
-        }
-
-        #endregion Common.Logging
     }
 }

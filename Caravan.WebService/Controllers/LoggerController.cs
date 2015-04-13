@@ -34,6 +34,8 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("ping")]
         public HttpResponseMessage GetPing()
         {
+            var log = LogManager.GetLogger<LoggerController>();
+            log.Debug("PING");
             return GetPing(null);
         }
 

@@ -199,7 +199,7 @@ namespace Finsa.Caravan.DataAccess
 
                 case DataAccessKind.MongoDb:
                     _dbManagerInstance = new MongoDbManager();
-                    _loggerInstance = new MongoLogger();
+                    _loggerInstance = new MongoLogManager();
                     _securityManagerInstance = new MongoSecurityManager();
                     break;
 
@@ -216,7 +216,7 @@ namespace Finsa.Caravan.DataAccess
                     break;
 
                 case DataAccessKind.Rest:
-                    _loggerInstance = new RestLogger();
+                    _loggerInstance = new RestLogManager();
                     _securityManagerInstance = new RestSecurityManager();
                     break;
 
@@ -238,7 +238,7 @@ namespace Finsa.Caravan.DataAccess
                 case DataAccessKind.PostgreSql:
                 case DataAccessKind.SqlServer:
                 case DataAccessKind.SqlServerCe:
-                    _loggerInstance = new SqlLogger();
+                    _loggerInstance = new SqlLogManager();
                     _securityManagerInstance = new SqlSecurityManager();
                     break;
             }
