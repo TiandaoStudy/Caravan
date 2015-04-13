@@ -1,6 +1,6 @@
 ﻿using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
-using PommaLabs.Extensions;
+using Finsa.Caravan.Common.Utilities.Extensions;
 using PommaLabs.KVLite;
 using System;
 using System.Linq;

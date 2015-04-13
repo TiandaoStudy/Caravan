@@ -9,14 +9,14 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using System.Xml;
 using Dapper;
+using Finsa.Caravan.Common.Utilities;
+using Finsa.Caravan.Common.Utilities.Diagnostics;
+using Finsa.Caravan.Common.Utilities.Text;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebForms.Properties;
 using FLEX.Web.XmlSettings.AjaxLookup;
-using PommaLabs;
-using PommaLabs.Diagnostics;
-using PommaLabs.Extensions;
+using Finsa.Caravan.Common.Utilities.Extensions;
 using PommaLabs.KVLite;
-using PommaLabs.Text;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.UI.WebControls;
+using Finsa.Caravan.Common.Utilities.Text;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebForms.Properties;
-using PommaLabs;
-using PommaLabs.Text;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -23,10 +22,9 @@ namespace FLEX.Web.Pages
          if (!Page.IsPostBack)
          {
             ViewState["dictFilesPath"] = _filesPath;
-            var scriptsPath = PommaLabs.Armando.My.MySettings.Default.ScriptsPath.MapPath();
             var xmlPath = Server.MapPath(Settings.Default.AjaxLookupsXmlPath);
             var menuPath = Server.MapPath(Settings.Default.MenuBarXmlPath);
-            var files = new Dictionary<string, string> {{"Data Scripts", scriptsPath}, {"Ajax Lookup", xmlPath}, {"Menu", menuPath}};
+            var files = new Dictionary<string, string> {{"Ajax Lookup", xmlPath}, {"Menu", menuPath}};
             BuildTreeView(files);
          }
       }

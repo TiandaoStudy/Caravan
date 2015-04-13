@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Finsa.Caravan.Common.Utilities.Collections.ReadOnly;
+using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.Common.WebForms;
-using PommaLabs.Collections.ReadOnly;
-using PommaLabs.Diagnostics;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

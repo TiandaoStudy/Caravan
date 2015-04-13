@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Globalization;
 using Finsa.Caravan.Common.Models.Security;
+using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.DataAccess;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 using System.Linq;
 using System.Data;
-using PommaLabs.Diagnostics;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -65,25 +64,25 @@ namespace Finsa.Caravan.WebForms.Pages
          var allowedUsers = Db.Security.Users(Common.Properties.Settings.Default.ApplicationName);
 
           //Users
-          DataTable _tableLeft = new DataTable();
-          _tableLeft.Columns.Add("Login", typeof(string));
-          _tableLeft.Columns.Add("FirstName", typeof(string));
-          _tableLeft.Columns.Add("LastName", typeof(string));
+          DataTable tableLeft = new DataTable();
+          tableLeft.Columns.Add("Login", typeof(string));
+          tableLeft.Columns.Add("FirstName", typeof(string));
+          tableLeft.Columns.Add("LastName", typeof(string));
 
 
-          DataTable _tableRight = new DataTable();
-          _tableRight.Columns.Add("Login", typeof(string));
-          _tableRight.Columns.Add("FirstName", typeof(string));
-          _tableRight.Columns.Add("LastName", typeof(string));
+          DataTable tableRight = new DataTable();
+          tableRight.Columns.Add("Login", typeof(string));
+          tableRight.Columns.Add("FirstName", typeof(string));
+          tableRight.Columns.Add("LastName", typeof(string));
 
 
           foreach (var item in allowedUsers)
           {
-              _tableLeft.Rows.Add(item.Login, item.FirstName, item.LastName);
+              tableLeft.Rows.Add(item.Login, item.FirstName, item.LastName);
           }
 
-          crvnMultiSelectUsersGroups.SetLeftDataSource(_tableLeft);
-          crvnMultiSelectUsersGroups.SetRightDataSource(_tableRight);
+          crvnMultiSelectUsersGroups.SetLeftDataSource(tableLeft);
+          crvnMultiSelectUsersGroups.SetRightDataSource(tableRight);
           crvnMultiSelectUsersGroups.LeftPanelTitle = "Available Users";
           crvnMultiSelectUsersGroups.RightPanelTitle = "Chosen Users";
       }

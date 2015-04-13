@@ -2,10 +2,10 @@
 using System.Globalization;
 using System.Threading;
 using System.Web.UI;
+using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebForms.Properties;
 using FLEX.WebForms;
-using PommaLabs.Diagnostics;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

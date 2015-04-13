@@ -6,17 +6,16 @@ using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Dapper;
-using Finsa.Caravan;
+using Finsa.Caravan.Common.Utilities.Extensions;
+using Finsa.Caravan.Common.Utilities;
+using Finsa.Caravan.Common.Utilities.Diagnostics;
+using Finsa.Caravan.Common.Utilities.Xml;
 using Finsa.Caravan.Common.WebForms;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebForms.Properties;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 using Newtonsoft.Json;
-using PommaLabs;
-using PommaLabs.Diagnostics;
-using PommaLabs.Extensions;
-using PommaLabs.Xml;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
