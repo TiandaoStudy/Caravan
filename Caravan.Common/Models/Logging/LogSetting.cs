@@ -1,4 +1,5 @@
-﻿using Finsa.Caravan.Common.Utilities;
+﻿using Common.Logging;
+using Finsa.Caravan.Common.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -15,7 +16,7 @@ namespace Finsa.Caravan.Common.Models.Logging
         public string AppName { get; set; }
 
         [JsonProperty(Order = 1), DataMember(Order = 1), JsonConverter(typeof(StringEnumConverter))]
-        public LogType LogType { get; set; }
+        public LogLevel LogLevel { get; set; }
 
         [JsonProperty(Order = 2), DataMember(Order = 2)]
         public bool Enabled { get; set; }
@@ -29,24 +30,14 @@ namespace Finsa.Caravan.Common.Models.Logging
         protected override IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
             yield return GKeyValuePair.Create("AppName", AppName);
-            yield return GKeyValuePair.Create("LogType", LogType.ToString());
+            yield return GKeyValuePair.Create("LogLevel", LogLevel.ToString());
             yield return GKeyValuePair.Create("Enabled", Enabled.ToString(CultureInfo.InvariantCulture));
         }
 
         protected override IEnumerable<object> GetIdentifyingMembers()
         {
-            yield return LogType;
+            yield return LogLevel;
             yield return AppName;
         }
-    }
-
-    public enum LogType : byte
-    {
-        Debug = 0,
-        Trace = 1,
-        Info = 2,
-        Warn = 3,
-        Error = 4,
-        Fatal = 5,
     }
 }

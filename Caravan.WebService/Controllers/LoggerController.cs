@@ -10,6 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.DataAccess;
@@ -67,15 +68,15 @@ namespace Finsa.Caravan.WebService.Controllers
         }
 
         /// <summary>
-        ///   returns all logs of a specified logType
+        ///   returns all logs of a specified logLevel
         /// </summary>
         /// <param name="appName">Application name</param>
-        /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+        /// <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
         /// <returns></returns>
-        [Route("{appName}/entries/{logType:alpha}"), LinqToQueryable]
-        public IQueryable<LogEntry> GetEntries(string appName, LogType logType)
+        [Route("{appName}/entries/{logLevel:alpha}"), LinqToQueryable]
+        public IQueryable<LogEntry> GetEntries(string appName, LogLevel logLevel)
         {
-            return Db.Logger.Entries(appName, logType).AsQueryable();
+            return Db.Logger.Entries(appName, logLevel).AsQueryable();
         }
 
         /// <summary>
@@ -98,19 +99,19 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries")]
         public void PostLog(string appName, [FromBody] LogEntry log)
         {
-            Db.Logger.LogRaw(log.LogType, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
+            Db.Logger.LogRaw(log.LogLevel, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
         }
 
         /// <summary>
         ///   Add
         /// </summary>
         /// <param name="appName">Application name</param>
-        /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+        /// <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
         /// <param name="log">The log to add</param>
-        [Route("{appName}/entries/{logType}"), LinqToQueryable]
-        public void PostLog(string appName, LogType logType, [FromBody] LogEntry log)
+        [Route("{appName}/entries/{logLevel}"), LinqToQueryable]
+        public void PostLog(string appName, LogLevel logLevel, [FromBody] LogEntry log)
         {
-            Db.Logger.LogRaw(logType, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
+            Db.Logger.LogRaw(logLevel, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
         }
 
         /// <summary>
@@ -155,15 +156,15 @@ namespace Finsa.Caravan.WebService.Controllers
         }
 
         /// <summary>
-        ///   Returns all settings of a specified logType
+        ///   Returns all settings of a specified logLevel
         /// </summary>
         /// <param name="appName"></param>
-        /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+        /// <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
         /// <returns></returns>
-        [Route("{appName}/settings/{logType}")]
-        public LogSetting GetSettings(string appName, LogType logType)
+        [Route("{appName}/settings/{logLevel}")]
+        public LogSetting GetSettings(string appName, LogLevel logLevel)
         {
-            var settings = Db.Logger.Settings(appName, logType);
+            var settings = Db.Logger.Settings(appName, logLevel);
             if (settings == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -172,40 +173,40 @@ namespace Finsa.Caravan.WebService.Controllers
         }
 
         /// <summary>
-        ///   Add a new setting of type = logType
+        ///   Add a new setting of type = logLevel
         /// </summary>
         /// <param name="appName">Application name</param>
-        /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+        /// <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
         /// <param name="settings">The setting to add</param>
-        [Route("{appName}/settings/{logType}")]
-        public void PostSetting(string appName, LogType logType, [FromBody] LogSetting settings)
+        [Route("{appName}/settings/{logLevel}")]
+        public void PostSetting(string appName, LogLevel logLevel, [FromBody] LogSetting settings)
         {
-            Db.Logger.AddSetting(appName, logType, settings);
+            Db.Logger.AddSetting(appName, logLevel, settings);
         }
 
         /// <summary>
-        ///   Update the setting of a particular logType
+        ///   Update the setting of a particular logLevel
         /// </summary>
         /// <param name="appName">Application name</param>
-        /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
+        /// <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
         /// <param name="settings">The new data setting</param>
-        [Route("{appName}/settings/{logType}")]
-        public void PutSetting(string appName, LogType logType, [FromBody] LogSetting settings)
+        [Route("{appName}/settings/{logLevel}")]
+        public void PutSetting(string appName, LogLevel logLevel, [FromBody] LogSetting settings)
         {
-            Db.Logger.UpdateSetting(appName, logType, settings);
+            Db.Logger.UpdateSetting(appName, logLevel, settings);
         }
 
         /// <summary>
         ///   Deletes setting of the logtype specified in the specified application
         /// </summary>
         /// <param name="appName">Application name</param>
-        /// <param name="logType">Type of log which can be "warn", "info" or "error"</param>
-        [Route("{appName}/settings/{logType}")]
-        public HttpResponseMessage DeleteSetting(string appName, LogType logType)
+        /// <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
+        [Route("{appName}/settings/{logLevel}")]
+        public HttpResponseMessage DeleteSetting(string appName, LogLevel logLevel)
         {
             try
             {
-                Db.Logger.RemoveSetting(appName, logType);
+                Db.Logger.RemoveSetting(appName, logLevel);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (LogSettingNotFoundException)

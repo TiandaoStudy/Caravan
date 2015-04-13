@@ -8,6 +8,7 @@ using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.Common.Utilities.Extensions;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
+using Common.Logging;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -20,7 +21,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         #endregion Constants
 
-        protected override LogResult DoLogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function,
+        protected override LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function,
            string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
         {
             try
@@ -32,23 +33,23 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 using (var ctx = SqlDbContext.CreateWriteContext())
                 {
                     var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
-                    var typeId = logType.ToString().ToLower();
-                    var settings = ctx.LogSettings.First(s => s.AppId == appId && s.LogType == typeId);
+                    var typeId = logLevel.ToString().ToLower();
+                    var settings = ctx.LogSettings.First(s => s.AppId == appId && s.LogLevel == typeId);
 
                     // We delete logs older than "settings.Days"
                     var minDate = DateTime.Now.Subtract(TimeSpan.FromDays(settings.Days));
                     var oldLogs = from l in ctx.LogEntries
-                                  where l.AppId == appId && l.LogType == typeId
+                                  where l.AppId == appId && l.LogLevel == typeId
                                   where l.Date < minDate
                                   select l;
                     ctx.LogEntries.RemoveRange(oldLogs);
 
                     // We delete enough entries to preserve the upper limit
-                    var logCount = ctx.LogEntries.Count(e => e.AppId == appId && e.LogType == typeId);
+                    var logCount = ctx.LogEntries.Count(e => e.AppId == appId && e.LogLevel == typeId);
                     if (logCount >= settings.MaxEntries)
                     {
                         var olderLogs = (from l in ctx.LogEntries
-                                         where l.AppId == appId && l.LogType == typeId
+                                         where l.AppId == appId && l.LogLevel == typeId
                                          orderby l.Date ascending
                                          select l).Take(logCount - settings.MaxEntries + 1);
                         ctx.LogEntries.RemoveRange(olderLogs);
@@ -61,7 +62,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                         {
                             Date = DateTime.Now,
                             AppId = appId,
-                            LogType = typeId,
+                            LogLevel = typeId,
                             UserLogin = userLogin.Truncate(MaxStringLength).ToLower(),
                             CodeUnit = codeUnit.Truncate(MaxStringLength).ToLower(),
                             Function = function.Truncate(MaxStringLength).ToLower(),
@@ -141,7 +142,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        protected override IList<LogEntry> GetEntries(string appName, LogType? logType)
+        protected override IList<LogEntry> GetEntries(string appName, LogLevel? logLevel)
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
@@ -150,10 +151,10 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 {
                     q = q.Where(s => s.App.Name == appName);
                 }
-                if (logType != null)
+                if (logLevel != null)
                 {
-                    var logTypeString = logType.ToString().ToLower();
-                    q = q.Where(s => s.LogType == logTypeString);
+                    var logLevelString = logLevel.ToString().ToLower();
+                    q = q.Where(s => s.LogLevel == logLevelString);
                 }
                 return q.OrderByDescending(s => s.Id)
                     .ThenByDescending(s => s.Date)
@@ -181,7 +182,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        protected override IList<LogSetting> GetSettings(string appName, LogType? logType)
+        protected override IList<LogSetting> GetSettings(string appName, LogLevel? logLevel)
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
@@ -190,29 +191,29 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 {
                     q = q.Where(s => s.App.Name == appName);
                 }
-                if (logType != null)
+                if (logLevel != null)
                 {
-                    var logTypeString = logType.ToString().ToLower();
-                    q = q.Where(s => s.LogType == logTypeString);
+                    var logLevelString = logLevel.ToString().ToLower();
+                    q = q.Where(s => s.LogLevel == logLevelString);
                 }
                 return q.OrderBy(s => s.App.Name)
-                    .ThenBy(s => s.LogType)
+                    .ThenBy(s => s.LogLevel)
                     .AsEnumerable()
                     .Select(Mapper.Map<LogSetting>)
                     .ToList();
             }
         }
 
-        protected override bool DoAddSetting(string appName, LogType logType, LogSetting setting)
+        protected override bool DoAddSetting(string appName, LogLevel logLevel, LogSetting setting)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var added = false;
                 var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
-                var typeId = logType.ToString().ToLower();
+                var typeId = logLevel.ToString().ToLower();
 
-                if (!ctx.LogSettings.Any(s => s.AppId == appId && s.LogType == typeId))
+                if (!ctx.LogSettings.Any(s => s.AppId == appId && s.LogLevel == typeId))
                 {
                     var newSetting = new SqlLogSetting
                     {
@@ -220,7 +221,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                         Days = setting.Days,
                         Enabled = setting.Enabled,
                         MaxEntries = setting.MaxEntries,
-                        LogType = typeId
+                        LogLevel = typeId
                     };
 
                     ctx.LogSettings.Add(newSetting);
@@ -233,15 +234,15 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        protected override bool DoRemoveSetting(string appName, LogType logType)
+        protected override bool DoRemoveSetting(string appName, LogLevel logLevel)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var deleted = false;
                 var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
-                var typeId = logType.ToString().ToLower();
-                var settings = ctx.LogSettings.FirstOrDefault(a => a.AppId == appId && a.LogType == typeId);
+                var typeId = logLevel.ToString().ToLower();
+                var settings = ctx.LogSettings.FirstOrDefault(a => a.AppId == appId && a.LogLevel == typeId);
 
                 if (settings != null)
                 {
@@ -254,16 +255,16 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        protected override bool DoUpdateSetting(string appName, LogType logType, LogSetting setting)
+        protected override bool DoUpdateSetting(string appName, LogLevel logLevel, LogSetting setting)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
                 var update = false;
                 var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
-                var typeId = logType.ToString().ToLower();
+                var typeId = logLevel.ToString().ToLower();
 
-                var settingToUpdate = ctx.LogSettings.First(s => s.AppId == appId && s.LogType == typeId);
+                var settingToUpdate = ctx.LogSettings.First(s => s.AppId == appId && s.LogLevel == typeId);
 
                 if (settingToUpdate != null)
                 {

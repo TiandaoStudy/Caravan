@@ -9,6 +9,7 @@ using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Models.Security.Exceptions;
 using Finsa.Caravan.DataAccess;
 using NUnit.Framework;
+using Common.Logging;
 
 namespace UnitTests.DataAccess
 {
@@ -28,11 +29,11 @@ namespace UnitTests.DataAccess
             Db.Security.AddApp(_myApp2);
             _settingError = new LogSetting() { Days = 30, Enabled = true, MaxEntries = 100 };
 
-            Db.Logger.AddSetting(_myApp.Name, LogType.Error, _settingError);
-            Db.Logger.AddSetting(_myApp.Name, LogType.Fatal, _settingError);
-            Db.Logger.AddSetting(_myApp.Name, LogType.Info, _settingError);
-            Db.Logger.AddSetting(_myApp.Name, LogType.Debug, _settingError);
-            Db.Logger.AddSetting(_myApp.Name, LogType.Warn, _settingError);
+            Db.Logger.AddSetting(_myApp.Name, LogLevel.Error, _settingError);
+            Db.Logger.AddSetting(_myApp.Name, LogLevel.Fatal, _settingError);
+            Db.Logger.AddSetting(_myApp.Name, LogLevel.Info, _settingError);
+            Db.Logger.AddSetting(_myApp.Name, LogLevel.Debug, _settingError);
+            Db.Logger.AddSetting(_myApp.Name, LogLevel.Warn, _settingError);
         }
 
         [TearDown]

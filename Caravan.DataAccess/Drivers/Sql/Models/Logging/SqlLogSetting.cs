@@ -15,7 +15,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
 
         [Key, Column("CLOS_TYPE", Order = 1)]
         [MaxLength(SqlDbContext.TinyLength)]
-        public string LogType { get; set; }
+        public string LogLevel { get; set; }
 
         [Required, Column("CLOS_ENABLED", Order = 3)]
         public bool Enabled { get; set; }

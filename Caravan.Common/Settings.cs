@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Finsa.Caravan.Common.Models.Logging;
+using Common.Logging;
 using System;
 
 namespace Finsa.Caravan.Common.Properties
@@ -22,10 +22,10 @@ namespace Finsa.Caravan.Common.Properties
         static Settings()
         {
             // Mappings
-            Mapper.CreateMap<string, LogType>().ConvertUsing(str =>
+            Mapper.CreateMap<string, LogLevel>().ConvertUsing(str =>
             {
-                LogType logType;
-                return Enum.TryParse(str, true, out logType) ? logType : LogType.Debug;
+                LogLevel logLevel;
+                return Enum.TryParse(str, true, out logLevel) ? logLevel : LogLevel.Debug;
             });
         }
 

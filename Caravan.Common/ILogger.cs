@@ -1,4 +1,5 @@
-﻿using Finsa.Caravan.Common.Models.Logging;
+﻿using Common.Logging;
+using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Utilities;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Finsa.Caravan.Common
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
         /// <param name="appName">The application name.</param>
         /// <param name="userLogin">The user logged in at the moment in which this log was produced.</param>
         /// <param name="codeUnit">The class, module or package in which this log was produced.</param>
@@ -31,12 +32,12 @@ namespace Finsa.Caravan.Common
         /// </param>
         /// <param name="args">Further information that should be logged.</param>
         /// <returns></returns>
-        LogResult LogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
+        LogResult LogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
 
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
         /// <param name="appName">The application name.</param>
         /// <param name="userLogin">The user logged in at the moment in which this log was produced.</param>
         /// <param name="codeUnit">The class, module or package in which this log was produced.</param>
@@ -50,7 +51,7 @@ namespace Finsa.Caravan.Common
         /// </param>
         /// <param name="args">Further information that should be logged.</param>
         /// <returns></returns>
-        Task<LogResult> LogRawAsync(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
+        Task<LogResult> LogRawAsync(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
 
         /// <summary>
         ///   TODO
@@ -58,7 +59,7 @@ namespace Finsa.Caravan.Common
         /// <typeparam name="TCodeUnit">
         ///   The class, module or package in which this log was produced.
         /// </typeparam>
-        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
         /// <param name="shortMessage"></param>
         /// <param name="longMessage"></param>
         /// <param name="context">
@@ -71,7 +72,7 @@ namespace Finsa.Caravan.Common
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        LogResult Log<TCodeUnit>(LogType logType, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        LogResult Log<TCodeUnit>(LogLevel logLevel, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -80,7 +81,7 @@ namespace Finsa.Caravan.Common
         /// <typeparam name="TCodeUnit">
         ///   The class, module or package in which this log was produced.
         /// </typeparam>
-        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
         /// <param name="shortMessage"></param>
         /// <param name="longMessage"></param>
         /// <param name="context">
@@ -93,7 +94,7 @@ namespace Finsa.Caravan.Common
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        Task<LogResult> LogAsync<TCodeUnit>(LogType logType, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        Task<LogResult> LogAsync<TCodeUnit>(LogLevel logLevel, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -533,7 +534,7 @@ namespace Finsa.Caravan.Common
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
         /// <param name="appName">The application name.</param>
         /// <param name="userLogin">The user logged in at the moment in which this log was produced.</param>
         /// <param name="codeUnit">The class, module or package in which this log was produced.</param>
@@ -546,12 +547,12 @@ namespace Finsa.Caravan.Common
         /// </param>
         /// <param name="args">Further information that should be logged.</param>
         /// <returns></returns>
-        LogResult LogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
+        LogResult LogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
 
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
         /// <param name="appName">The application name.</param>
         /// <param name="userLogin">The user logged in at the moment in which this log was produced.</param>
         /// <param name="codeUnit">The class, module or package in which this log was produced.</param>
@@ -564,7 +565,7 @@ namespace Finsa.Caravan.Common
         /// </param>
         /// <param name="args">Further information that should be logged.</param>
         /// <returns></returns>
-        Task<LogResult> LogRawAsync(LogType logType, string appName, string userLogin, string codeUnit, string function, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
+        Task<LogResult> LogRawAsync(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
 
         /// <summary>
         ///   TODO
@@ -572,7 +573,7 @@ namespace Finsa.Caravan.Common
         /// <typeparam name="TCodeUnit">
         ///   The class, module or package in which this log was produced.
         /// </typeparam>
-        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
         /// <param name="exception">The exception to be logged.</param>
         /// <param name="context">
         ///   Contextual information which may add more meaning to the log message.
@@ -584,7 +585,7 @@ namespace Finsa.Caravan.Common
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        LogResult Log<TCodeUnit>(LogType logType, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        LogResult Log<TCodeUnit>(LogLevel logLevel, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -593,7 +594,7 @@ namespace Finsa.Caravan.Common
         /// <typeparam name="TCodeUnit">
         ///   The class, module or package in which this log was produced.
         /// </typeparam>
-        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
         /// <param name="exception">The exception to be logged.</param>
         /// <param name="context">
         ///   Contextual information which may add more meaning to the log message.
@@ -605,7 +606,7 @@ namespace Finsa.Caravan.Common
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        Task<LogResult> LogAsync<TCodeUnit>(LogType logType, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        Task<LogResult> LogAsync<TCodeUnit>(LogLevel logLevel, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -869,23 +870,23 @@ namespace Finsa.Caravan.Common
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">
-        ///   <paramref name="logType"/> is not a valid <see cref="LogType"/>.
+        ///   <paramref name="logLevel"/> is not a valid <see cref="logLevel"/>.
         /// </exception>
-        IList<LogEntry> Entries(LogType logType);
+        IList<LogEntry> Entries(LogLevel logLevel);
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <param name="appName">The application name.</param>
-        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">
-        ///   <paramref name="appName"/> is null or empty. <paramref name="logType"/> is not a valid <see cref="LogType"/>.
+        ///   <paramref name="appName"/> is null or empty. <paramref name="logLevel"/> is not a valid <see cref="logLevel"/>.
         /// </exception>
-        IList<LogEntry> Entries(string appName, LogType logType);
+        IList<LogEntry> Entries(string appName, LogLevel logLevel);
 
         /// <summary>
         ///   Removes a log entry. Use it to delete logs that contain sensitive information!
@@ -916,46 +917,46 @@ namespace Finsa.Caravan.Common
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">
-        ///   <paramref name="logType"/> is not a valid <see cref="LogType"/>.
+        ///   <paramref name="logLevel"/> is not a valid <see cref="logLevel"/>.
         /// </exception>
-        IList<LogSetting> Settings(LogType logType);
+        IList<LogSetting> Settings(LogLevel logLevel);
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <param name="appName">The application name.</param>
-        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">
-        ///   <paramref name="appName"/> is null or empty. <paramref name="logType"/> is not a valid <see cref="LogType"/>.
+        ///   <paramref name="appName"/> is null or empty. <paramref name="logLevel"/> is not a valid <see cref="logLevel"/>.
         /// </exception>
-        LogSetting Settings(string appName, LogType logType);
+        LogSetting Settings(string appName, LogLevel logLevel);
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <param name="appName">The application name.</param>
-        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
         /// <param name="setting"></param>
-        void AddSetting(string appName, LogType logType, LogSetting setting);
+        void AddSetting(string appName, LogLevel logLevel, LogSetting setting);
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <param name="appName">The application name.</param>
-        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
         /// <param name="setting"></param>
-        void UpdateSetting(string appName, LogType logType, LogSetting setting);
+        void UpdateSetting(string appName, LogLevel logLevel, LogSetting setting);
 
         /// <summary>
         ///   Removes a setting with a specificed log type in a specified application.
         /// </summary>
         /// <param name="appName">The application name.</param>
-        /// <param name="logType">The log type: INFO, DEBUG, etc etc.</param>
-        void RemoveSetting(string appName, LogType logType);
+        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
+        void RemoveSetting(string appName, LogLevel logLevel);
 
         #endregion Settings
     }

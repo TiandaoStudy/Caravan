@@ -6,12 +6,13 @@ using Finsa.Caravan.Common.Models.Rest;
 using Finsa.Caravan.Common.Models.Security.Exceptions;
 using Finsa.Caravan.DataAccess.Core;
 using RestSharp;
+using Common.Logging;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Rest
 {
     internal sealed class RestLogger : LoggerBase<RestLogger>
     {
-        protected override LogResult DoLogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
+        protected override LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
         {
             var client = new RestClient("http://localhost/Caravan.RestService/security");
             var request = new RestRequest("{appName}/entries", Method.POST);
@@ -21,25 +22,25 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             throw new NotImplementedException();
         }
 
-        protected override IList<LogEntry> GetEntries(string appName, LogType? logType)
+        protected override IList<LogEntry> GetEntries(string appName, LogLevel? logLevel)
         {
             var client = new RestClient("http://localhost/Caravan.RestService/security");
-            var request = new RestRequest("{appName}/entries/{logType}", Method.POST);
+            var request = new RestRequest("{appName}/entries/{logLevel}", Method.POST);
             throw new NotImplementedException();
         }
 
-        protected override IList<LogSetting> GetSettings(string appName, LogType? logType)
+        protected override IList<LogSetting> GetSettings(string appName, LogLevel? logLevel)
         {
             try
             {
                 var client = new RestClient("http://localhost/Caravan.RestService/security");
-                var request = new RestRequest("{appName}/settings/{logType}", Method.POST);
+                var request = new RestRequest("{appName}/settings/{logLevel}", Method.POST);
 
                 request.AddUrlSegment("appName", appName);
 
-                if (logType != null)
+                if (logLevel != null)
                 {
-                    request.AddUrlSegment("logType", logType.ToString()); //?????;
+                    request.AddUrlSegment("logLevel", logLevel.ToString()); //?????;
                 }
 
                 request.AddJsonBody(new RestRequest<object> { Auth = "AA", Body = new object() });
@@ -67,15 +68,15 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             throw new NotImplementedException();
         }
 
-        protected override bool DoAddSetting(string appName, LogType logType, LogSetting setting)
+        protected override bool DoAddSetting(string appName, LogLevel logLevel, LogSetting setting)
         {
             try
             {
                 var client = new RestClient("http://localhost/Caravan.RestService/security");
-                var request = new RestRequest("{appName}/settings/{logType}", Method.PUT);
+                var request = new RestRequest("{appName}/settings/{logLevel}", Method.PUT);
 
                 request.AddUrlSegment("appName", appName);
-                request.AddUrlSegment("logType", logType.ToString()); //?????;
+                request.AddUrlSegment("logLevel", logLevel.ToString()); //?????;
                 request.AddJsonBody(new RestRequest<LogSetting>
                 {
                     Auth = "AA",
@@ -108,15 +109,15 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override bool DoUpdateSetting(string appName, LogType logType, LogSetting setting)
+        protected override bool DoUpdateSetting(string appName, LogLevel logLevel, LogSetting setting)
         {
             try
             {
                 var client = new RestClient("http://localhost/Caravan.RestService/security");
-                var request = new RestRequest("{appName}/settings/{logType}", Method.PATCH);
+                var request = new RestRequest("{appName}/settings/{logLevel}", Method.PATCH);
 
                 request.AddUrlSegment("appName", appName);
-                request.AddUrlSegment("logType", logType.ToString()); //?????;
+                request.AddUrlSegment("logLevel", logLevel.ToString()); //?????;
                 request.AddJsonBody(new RestRequest<LogSetting>
                 {
                     Auth = "AA",
@@ -149,7 +150,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override bool DoRemoveSetting(string appName, LogType logType)
+        protected override bool DoRemoveSetting(string appName, LogLevel logLevel)
         {
             throw new NotImplementedException();
         }

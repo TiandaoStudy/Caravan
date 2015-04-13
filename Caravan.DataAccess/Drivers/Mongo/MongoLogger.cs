@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Logging;
@@ -12,12 +11,13 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Driver.Linq;
+using Common.Logging;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 {
     internal sealed class MongoLogger : LoggerBase<MongoLogger>
     {
-        protected override LogResult DoLogRaw(LogType logType, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
+        protected override LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
         {
             var app = MongoUtilities.GetSecAppCollection().AsQueryable().First(a => a.Name == appName);
 
@@ -29,13 +29,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
                 Upsert = true, // Creates a new document if it does not exist.
             }).GetModifiedDocumentAs<MongoSequence>().LastNumber;
 
-            var logTypeStr = logType.ToString().ToLower();
+            var logLevelStr = logLevel.ToString().ToLower();
             MongoUtilities.GetLogEntryCollection().Insert(new MongoLogEntry
             {
                 Id = MongoUtilities.CreateObjectId(newLogId),
                 AppId = app.Id,
                 LogId = newLogId,
-                Type = logTypeStr,
+                Type = logLevelStr,
                 ShortMessage = shortMessage,
                 CodeUnit = codeUnit
             });
@@ -43,7 +43,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
             return LogResult.Success;
         }
 
-        protected override IList<LogEntry> GetEntries(string appName, LogType? logType)
+        protected override IList<LogEntry> GetEntries(string appName, LogLevel? logLevel)
         {
             var apps = MongoUtilities.GetSecAppCollection().AsQueryable();
             Dictionary<ObjectId, MongoSecApp> appMap;
@@ -64,17 +64,17 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
                 var appId = appMap.First().Key;
                 logEntries = logEntries.Where(l => l.AppId == appId);
             }
-            if (logType != null)
+            if (logLevel != null)
             {
-                var logTypeStr = logType.ToString().ToLower();
-                logEntries = logEntries.Where(l => l.Type == logTypeStr);
+                var logLevelStr = logLevel.ToString().ToLower();
+                logEntries = logEntries.Where(l => l.Type == logLevelStr);
             }
 
             return logEntries.AsEnumerable().Select(l => new LogEntry
             {
                 Id = l.LogId,
                 AppName = appMap[l.AppId].Name,
-                LogType = (LogType) Enum.Parse(typeof(LogType), l.Type, true),
+                LogLevel = (LogLevel) Enum.Parse(typeof(LogLevel), l.Type, true),
                 ShortMessage = l.ShortMessage,
                 CodeUnit = l.CodeUnit
             }).ToList();
@@ -82,10 +82,10 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 
         protected override bool DoRemoveEntry(string appName, int logId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        protected override IList<LogSetting> GetSettings(string appName, LogType? logType)
+        protected override IList<LogSetting> GetSettings(string appName, LogLevel? logLevel)
         {
             var apps = MongoUtilities.GetSecAppCollection();
             var query = apps.AsQueryable();
@@ -95,25 +95,25 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
                 query = query.Where(a => a.Name == appName);
             }
 
-            var logTypeStr = (logType == null) ? null : logType.ToString().ToLower();
+            var logLevelStr = (logLevel == null) ? null : logLevel.ToString().ToLower();
 
             return (from a in query.AsEnumerable()
-                    from s in a.LogSettings.Where(s => logTypeStr == null || s.Type == logTypeStr)
+                    from s in a.LogSettings.Where(s => logLevelStr == null || s.Type == logLevelStr)
                     select new LogSetting
                     {
                         AppName = a.Name
                     }).ToList();
         }
 
-        protected override bool DoAddSetting(string appName, LogType logType, LogSetting setting)
+        protected override bool DoAddSetting(string appName, LogLevel logLevel, LogSetting setting)
         {
             // Update preparation
-            var logTypeStr = logType.ToString().ToLower();
+            var logLevelStr = logLevel.ToString().ToLower();
             var query = Query<MongoSecApp>.EQ(a => a.Name, appName);
             var update = Update<MongoSecApp>.AddToSet(a => a.LogSettings, new MongoLogSettings
             {
-                Id = MongoUtilities.CreateObjectId(logTypeStr),
-                Type = logTypeStr
+                Id = MongoUtilities.CreateObjectId(logLevelStr),
+                Type = logLevelStr
             });
 
             // Real update
@@ -121,11 +121,11 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
             return apps.Update(query, update).Ok;
         }
 
-        protected override bool DoUpdateSetting(string appName, LogType logType, LogSetting setting)
+        protected override bool DoUpdateSetting(string appName, LogLevel logLevel, LogSetting setting)
         {
             // Update preparation
-            var logTypeStr = logType.ToString().ToLower();
-            var docId = MongoUtilities.CreateObjectId(logTypeStr);
+            var logLevelStr = logLevel.ToString().ToLower();
+            var docId = MongoUtilities.CreateObjectId(logLevelStr);
             var query = Query<MongoSecApp>.EQ(a => a.Name, appName);
             var update = Update<MongoSecApp>.Pull(a => a.LogSettings, new MongoLogSettings
             {
@@ -133,7 +133,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
             }).AddToSet(a => a.LogSettings, new MongoLogSettings
             {
                 Id = docId,
-                Type = logTypeStr
+                Type = logLevelStr
             });
 
             // Real update
@@ -141,9 +141,9 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
             return apps.Update(query, update).Ok;
         }
 
-        protected override bool DoRemoveSetting(string appName, LogType logType)
+        protected override bool DoRemoveSetting(string appName, LogLevel logLevel)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

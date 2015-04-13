@@ -1,4 +1,5 @@
-﻿using Finsa.Caravan.Common;
+﻿using Common.Logging;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Properties;
 using Finsa.Caravan.Common.Utilities.Extensions;
@@ -36,7 +37,7 @@ namespace Finsa.Caravan.WebApi
                 };
 
                 Db.Logger.LogRawAsync(
-                    LogType.Trace,
+                    LogLevel.Trace,
                     Settings.Default.ApplicationName,
                     userLogin,
                     GetType().FullName,
@@ -50,7 +51,7 @@ namespace Finsa.Caravan.WebApi
             catch (Exception ex)
             {
                 Db.Logger.LogRawAsync(
-                    LogType.Trace,
+                    LogLevel.Trace,
                     Settings.Default.ApplicationName,
                     userLogin,
                     GetType().FullName,
@@ -80,7 +81,7 @@ namespace Finsa.Caravan.WebApi
                     };
 
                     Db.Logger.LogRawAsync(
-                        LogType.Debug,
+                        LogLevel.Debug,
                         Settings.Default.ApplicationName,
                         userLogin,
                         GetType().FullName,
@@ -94,7 +95,7 @@ namespace Finsa.Caravan.WebApi
                 catch (Exception ex)
                 {
                     Db.Logger.LogRawAsync(
-                        LogType.Error,
+                        LogLevel.Error,
                         Settings.Default.ApplicationName,
                         userLogin,
                         GetType().FullName,

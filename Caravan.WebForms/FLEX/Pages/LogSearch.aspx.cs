@@ -38,7 +38,7 @@ namespace FLEX.WebForms.Pages
                l.Id,
                l.Date,
                l.UserLogin,
-               Type = l.LogType.ToString(),
+               Type = l.LogLevel.ToString(),
                l.CodeUnit,
                l.Function,
                l.ShortMessage,

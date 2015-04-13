@@ -1,3 +1,4 @@
+using Common.Logging;
 using Finsa.Caravan.Common.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -21,7 +22,7 @@ namespace Finsa.Caravan.Common.Models.Logging
         public long Id { get; set; }
 
         [JsonProperty(Order = 2), DataMember(Order = 2), JsonConverter(typeof(StringEnumConverter))]
-        public LogType LogType { get; set; }
+        public LogLevel LogLevel { get; set; }
 
         [JsonProperty(Order = 3), DataMember(Order = 3)]
         public DateTime Date { get; set; }
@@ -51,7 +52,7 @@ namespace Finsa.Caravan.Common.Models.Logging
         {
             yield return GKeyValuePair.Create("AppName", AppName);
             yield return GKeyValuePair.Create("Id", Id.ToString(CultureInfo.InvariantCulture));
-            yield return GKeyValuePair.Create("LogType", LogType.ToString());
+            yield return GKeyValuePair.Create("LogLevel", LogLevel.ToString());
             yield return GKeyValuePair.Create("Date", Date.ToString(CultureInfo.InvariantCulture));
         }
 

@@ -20,7 +20,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
         [Required, Column("CLOS_TYPE", Order = 2)]
         [MaxLength(SqlDbContext.TinyLength)]
         [Index("IX_CRVN_LOG_TYPE", 1)]
-        public string LogType { get; set; }
+        public string LogLevel { get; set; }
 
         [Required, Column("CLOG_DATE", Order = 3)]
         [Index("IX_CRVN_LOG_DATE", 1)]
@@ -153,7 +153,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
             // SqlLogEntry(N) <-> SqlLogSettings(1)
             HasRequired(x => x.LogSetting)
                 .WithMany(x => x.LogEntries)
-                .HasForeignKey(x => new { x.AppId, x.LogType })
+                .HasForeignKey(x => new { x.AppId, x.LogLevel })
                 .WillCascadeOnDelete(true);
         }
     }
