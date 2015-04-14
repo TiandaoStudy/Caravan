@@ -45,7 +45,7 @@ namespace Finsa.Caravan.WebApi
                     KeyValuePair.Create("headers", request.Headers.SafeToString())
                 };
 
-                _log.Trace(() => new JsonMessageFormat {
+                _log.Trace(() => new LogMessage {
                     ShortMessage = String.Format("Request \"{0}\" at \"{1}\"", requestId, request.RequestUri.SafeToString()),
                     LongMessage = requestBody,
                     Context = "Logging request"
@@ -65,7 +65,7 @@ namespace Finsa.Caravan.WebApi
             }
             catch (Exception ex)
             {
-                _log.Trace(() => new JsonMessageFormat
+                _log.Trace(() => new LogMessage
                 {
                     Exception = ex,
                     Context = "Logging request"
@@ -101,7 +101,7 @@ namespace Finsa.Caravan.WebApi
                         KeyValuePair.Create("status_code", response.StatusCode.SafeToString())
                     };
 
-                    _log.Trace(() => new JsonMessageFormat
+                    _log.Trace(() => new LogMessage
                     {
                         ShortMessage = String.Format("Response \"{0}\" for \"{1}\"", requestId, request.RequestUri.SafeToString()),
                         LongMessage = responseBody,
@@ -122,7 +122,7 @@ namespace Finsa.Caravan.WebApi
                 }
                 catch (Exception ex)
                 {
-                    _log.Trace(() => new JsonMessageFormat
+                    _log.Trace(() => new LogMessage
                     {
                         Exception = ex,
                         Context = "Logging response"

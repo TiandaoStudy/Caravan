@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Reflection;
 using Common.Logging;
+using Common.Logging.NLog;
 using Finsa.Caravan.Common.Serialization;
 using Finsa.Caravan.Common.Utilities;
 using Newtonsoft.Json;
+using NLog;
+using LogLevel = Common.Logging.LogLevel;
 
 namespace Finsa.Caravan.Common
 {
@@ -17,6 +21,8 @@ namespace Finsa.Caravan.Common
         public const string JsonMessagePrefix = "#JSON#";
 
         private static readonly IJsonSerializer CachedJsonSerializer = new JsonNetSerializer();
+
+        
 
         /// <summary>
         ///   The JSON serializer used to pack messages.
@@ -47,19 +53,19 @@ namespace Finsa.Caravan.Common
         /// <param name="context"></param>
         public static void Trace(this ILog log, string shortMessage, string longMessage = null, string context = null)
         {
-            log.Trace(JsonFormatMessageHandler(shortMessage, longMessage, context));
+            WriteInternal(log, LogLevel.Trace, LogMessageHandler(shortMessage, longMessage, context));
         }
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <param name="log"></param>
-        /// <param name="messageFormat"></param>
-        public static void Trace(this ILog log, Func<JsonMessageFormat> messageFormat)
+        /// <param name="logMessageCallback"></param>
+        public static void Trace(this ILog log, Func<LogMessage> logMessageCallback)
         {
             if (log.IsTraceEnabled)
             {
-                log.Trace(JsonFormatMessageHandler(messageFormat));
+                WriteInternal(log, LogLevel.Trace, LogMessageHandler(logMessageCallback));
             }
         }
 
@@ -72,19 +78,19 @@ namespace Finsa.Caravan.Common
         /// <param name="context"></param>
         public static void Debug(this ILog log, string shortMessage, string longMessage = null, string context = null)
         {
-            log.Debug(JsonFormatMessageHandler(shortMessage, longMessage, context));
+            log.Debug(LogMessageHandler(shortMessage, longMessage, context));
         }
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <param name="log"></param>
-        /// <param name="messageFormat"></param>
-        public static void Debug(this ILog log, Func<JsonMessageFormat> messageFormat)
+        /// <param name="logMessageCallback"></param>
+        public static void Debug(this ILog log, Func<LogMessage> logMessageCallback)
         {
             if (log.IsDebugEnabled)
             {
-                log.Debug(JsonFormatMessageHandler(messageFormat));
+                log.Debug(LogMessageHandler(logMessageCallback));
             }
         }
 
@@ -97,19 +103,19 @@ namespace Finsa.Caravan.Common
         /// <param name="context"></param>
         public static void Info(this ILog log, string shortMessage, string longMessage = null, string context = null)
         {
-            log.Info(JsonFormatMessageHandler(shortMessage, longMessage, context));
+            log.Info(LogMessageHandler(shortMessage, longMessage, context));
         }
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <param name="log"></param>
-        /// <param name="messageFormat"></param>
-        public static void Info(this ILog log, Func<JsonMessageFormat> messageFormat)
+        /// <param name="logMessageCallback"></param>
+        public static void Info(this ILog log, Func<LogMessage> logMessageCallback)
         {
             if (log.IsInfoEnabled)
             {
-                log.Info(JsonFormatMessageHandler(messageFormat));
+                log.Info(LogMessageHandler(logMessageCallback));
             }
         }
 
@@ -122,19 +128,19 @@ namespace Finsa.Caravan.Common
         /// <param name="context"></param>
         public static void Warn(this ILog log, string shortMessage, string longMessage = null, string context = null)
         {
-            log.Warn(JsonFormatMessageHandler(shortMessage, longMessage, context));
+            log.Warn(LogMessageHandler(shortMessage, longMessage, context));
         }
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <param name="log"></param>
-        /// <param name="messageFormat"></param>
-        public static void Warn(this ILog log, Func<JsonMessageFormat> messageFormat)
+        /// <param name="logMessageCallback"></param>
+        public static void Warn(this ILog log, Func<LogMessage> logMessageCallback)
         {
             if (log.IsWarnEnabled)
             {
-                log.Warn(JsonFormatMessageHandler(messageFormat));
+                log.Warn(LogMessageHandler(logMessageCallback));
             }
         }
 
@@ -147,19 +153,19 @@ namespace Finsa.Caravan.Common
         /// <param name="context"></param>
         public static void Error(this ILog log, string shortMessage, string longMessage = null, string context = null)
         {
-            log.Error(JsonFormatMessageHandler(shortMessage, longMessage, context));
+            log.Error(LogMessageHandler(shortMessage, longMessage, context));
         }
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <param name="log"></param>
-        /// <param name="messageFormat"></param>
-        public static void Error(this ILog log, Func<JsonMessageFormat> messageFormat)
+        /// <param name="logMessageCallback"></param>
+        public static void Error(this ILog log, Func<LogMessage> logMessageCallback)
         {
             if (log.IsErrorEnabled)
             {
-                log.Error(JsonFormatMessageHandler(messageFormat));
+                log.Error(LogMessageHandler(logMessageCallback));
             }
         }
 
@@ -172,31 +178,33 @@ namespace Finsa.Caravan.Common
         /// <param name="context"></param>
         public static void Fatal(this ILog log, string shortMessage, string longMessage = null, string context = null)
         {
-            log.Fatal(JsonFormatMessageHandler(shortMessage, longMessage, context));
+            log.Fatal(LogMessageHandler(shortMessage, longMessage, context));
         }
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <param name="log"></param>
-        /// <param name="messageFormat"></param>
-        public static void Fatal(this ILog log, Func<JsonMessageFormat> messageFormat)
+        /// <param name="logMessageCallback"></param>
+        public static void Fatal(this ILog log, Func<LogMessage> logMessageCallback)
         {
             if (log.IsFatalEnabled)
             {
-                log.Fatal(JsonFormatMessageHandler(messageFormat));
+                log.Fatal(LogMessageHandler(logMessageCallback));
             }
         }
 
-        private static string JsonFormatMessageHandler(Func<JsonMessageFormat> messageFormat)
+        #region Private methods
+
+        private static string LogMessageHandler(Func<LogMessage> logMessageCallback)
         {
-            var safeMessageFormat = messageFormat;
-            return safeMessageFormat == null ? Constants.EmptyString : SerializeJsonMessageFormat(safeMessageFormat());
+            var safeCallback = logMessageCallback;
+            return safeCallback == null ? Constants.EmptyString : SerializeJsonlogMessageCallback(safeCallback());
         }
 
-        private static string JsonFormatMessageHandler(string shortMsg, string longMsg, string context)
+        private static string LogMessageHandler(string shortMsg, string longMsg, string context)
         {
-            return SerializeJsonMessageFormat(new JsonMessageFormat
+            return SerializeJsonlogMessageCallback(new LogMessage
             {
                 ShortMessage = shortMsg,
                 LongMessage = longMsg,
@@ -204,28 +212,76 @@ namespace Finsa.Caravan.Common
             });
         }
 
-        private static string SerializeJsonMessageFormat(JsonMessageFormat jsonMessageFormat)
+        private static string SerializeJsonlogMessageCallback(LogMessage logMessage)
         {
-            if (jsonMessageFormat.Exception != null)
+            if (logMessage.Exception != null)
             {
-                var exception = jsonMessageFormat.Exception;
-                jsonMessageFormat.Exception = null;
+                var exception = logMessage.Exception;
+                logMessage.Exception = null;
                 while (exception.InnerException != null)
                 {
                     exception = exception.InnerException;
                 }
-                jsonMessageFormat.ShortMessage = exception.Message;
-                jsonMessageFormat.LongMessage = exception.StackTrace;
+                logMessage.ShortMessage = exception.Message;
+                logMessage.LongMessage = exception.StackTrace;
             }
-            return JsonMessagePrefix + CachedJsonSerializer.SerializeObject(jsonMessageFormat);
+            return JsonMessagePrefix + CachedJsonSerializer.SerializeObject(logMessage);
         }
+
+        private static void WriteInternal(ILog log, LogLevel logLevel, string message)
+        {
+            if (log is NLogLogger)
+            {
+                var nlog = NLogLogger.GetValue(log) as Logger;
+                var nlogEvent = new LogEventInfo(GetNLogLevel(logLevel), nlog.Name, message);
+                nlog.Log(typeof(LogExtensions), nlogEvent);
+            }
+            else
+            {
+                switch (logLevel)
+                {
+                    case LogLevel.Trace:
+                        log.Trace(message);
+                        break;
+                }
+            }
+        }
+
+        #endregion
+
+        #region NLog-specific code
+
+        private static readonly FieldInfo NLogLogger = typeof(NLogLogger).GetField("_logger", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        private static NLog.LogLevel GetNLogLevel(LogLevel logLevel)
+        {
+            switch (logLevel)
+            {
+                case LogLevel.Trace:
+                    return NLog.LogLevel.Trace;
+                case LogLevel.Debug:
+                    return NLog.LogLevel.Debug;
+                case LogLevel.Info:
+                    return NLog.LogLevel.Info;
+                case LogLevel.Warn:
+                    return NLog.LogLevel.Warn;
+                case LogLevel.Error:
+                    return NLog.LogLevel.Error;
+                case LogLevel.Fatal:
+                    return NLog.LogLevel.Fatal;
+                default:
+                    throw new ArgumentOutOfRangeException("logLevel", logLevel, "Unknown log level");
+            }
+        }
+
+        #endregion
     }
 
     /// <summary>
     ///   Internal format used for complex log message passing.
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public struct JsonMessageFormat
+    public struct LogMessage
     {
         /// <summary>
         ///   Short message.
@@ -246,7 +302,7 @@ namespace Finsa.Caravan.Common
         public string Context { get; set; }
 
         /// <summary>
-        ///   Exception (optional), must not be serialized.
+        ///   Exception (optional), must _not_ be serialized.
         /// </summary>
         public Exception Exception { get; set; }
     }

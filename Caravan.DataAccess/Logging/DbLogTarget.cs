@@ -64,7 +64,7 @@ namespace Finsa.Caravan.DataAccess.Logging
             if (!String.IsNullOrWhiteSpace(msg) && msg.StartsWith(LogExtensions.JsonMessagePrefix))
             {
                 var json = msg.Substring(LogExtensions.JsonMessagePrefix.Length);
-                var fmt = LogExtensions.JsonSerializer.DeserializeObject<JsonMessageFormat>(json);
+                var fmt = LogExtensions.JsonSerializer.DeserializeObject<LogMessage>(json);
                 shortMsg = fmt.ShortMessage;
                 longMsg = fmt.LongMessage;
                 context = fmt.Context;
