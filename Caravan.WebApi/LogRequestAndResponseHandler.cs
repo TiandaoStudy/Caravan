@@ -45,35 +45,45 @@ namespace Finsa.Caravan.WebApi
                     KeyValuePair.Create("headers", request.Headers.SafeToString())
                 };
 
-                _log.Trace(String.Format("Request \"{0}\" at \"{1}\"", requestId, request.RequestUri.SafeToString()));
+                _log.Trace(() => new JsonMessageFormat {
+                    ShortMessage = String.Format("Request \"{0}\" at \"{1}\"", requestId, request.RequestUri.SafeToString()),
+                    LongMessage = requestBody,
+                    Context = "Logging request"
+                });
 
-                Db.Logger.LogRawAsync(
-                    LogLevel.Trace,
-                    Settings.Default.ApplicationName,
-                    userLogin,
-                    GetType().FullName,
-                    "SendAsync",
-                    String.Format("Request \"{0}\" at \"{1}\"", requestId, request.RequestUri.SafeToString()),
-                    requestBody,
-                    "Logging request",
-                    args
-                );
+                //Db.Logger.LogRawAsync(
+                //    LogLevel.Trace,
+                //    Settings.Default.ApplicationName,
+                //    userLogin,
+                //    GetType().FullName,
+                //    "SendAsync",
+                //    String.Format("Request \"{0}\" at \"{1}\"", requestId, request.RequestUri.SafeToString()),
+                //    requestBody,
+                //    "Logging request",
+                //    args
+                //);
             }
             catch (Exception ex)
             {
-                Db.Logger.LogRawAsync(
-                    LogLevel.Trace,
-                    Settings.Default.ApplicationName,
-                    userLogin,
-                    GetType().FullName,
-                    "SendAsync",
-                    ex,
-                    "Logging request",
-                    new[]
-                    {
-                        KeyValuePair.Create("request_id", requestId)
-                    }
-                );
+                _log.Trace(() => new JsonMessageFormat
+                {
+                    Exception = ex,
+                    Context = "Logging request"
+                });
+
+                //Db.Logger.LogRawAsync(
+                //    LogLevel.Trace,
+                //    Settings.Default.ApplicationName,
+                //    userLogin,
+                //    GetType().FullName,
+                //    "SendAsync",
+                //    ex,
+                //    "Logging request",
+                //    new[]
+                //    {
+                //        KeyValuePair.Create("request_id", requestId)
+                //    }
+                //);
             }
 
             // Let other handlers process the request
@@ -91,33 +101,46 @@ namespace Finsa.Caravan.WebApi
                         KeyValuePair.Create("status_code", response.StatusCode.SafeToString())
                     };
 
-                    Db.Logger.LogRawAsync(
-                        LogLevel.Debug,
-                        Settings.Default.ApplicationName,
-                        userLogin,
-                        GetType().FullName,
-                        "SendAsync",
-                        String.Format("Response \"{0}\" for \"{1}\"", requestId, request.RequestUri.SafeToString()),
-                        responseBody,
-                        "Logging response",
-                        args
-                    );
+                    _log.Trace(() => new JsonMessageFormat
+                    {
+                        ShortMessage = String.Format("Response \"{0}\" for \"{1}\"", requestId, request.RequestUri.SafeToString()),
+                        LongMessage = responseBody,
+                        Context = "Logging response"
+                    });
+
+                    //Db.Logger.LogRawAsync(
+                    //    LogLevel.Debug,
+                    //    Settings.Default.ApplicationName,
+                    //    userLogin,
+                    //    GetType().FullName,
+                    //    "SendAsync",
+                    //    ,
+                    //    responseBody,
+                    //    "Logging response",
+                    //    args
+                    //);
                 }
                 catch (Exception ex)
                 {
-                    Db.Logger.LogRawAsync(
-                        LogLevel.Error,
-                        Settings.Default.ApplicationName,
-                        userLogin,
-                        GetType().FullName,
-                        "SendAsync",
-                        ex,
-                        "Logging response",
-                        new[]
-                        {
-                            KeyValuePair.Create("request_id", requestId)
-                        }
-                    );
+                    _log.Trace(() => new JsonMessageFormat
+                    {
+                        Exception = ex,
+                        Context = "Logging response"
+                    });
+
+                    //Db.Logger.LogRawAsync(
+                    //    LogLevel.Error,
+                    //    Settings.Default.ApplicationName,
+                    //    userLogin,
+                    //    GetType().FullName,
+                    //    "SendAsync",
+                    //    ex,
+                    //    "Logging response",
+                    //    new[]
+                    //    {
+                    //        KeyValuePair.Create("request_id", requestId)
+                    //    }
+                    //);
                 }
 
                 return response;

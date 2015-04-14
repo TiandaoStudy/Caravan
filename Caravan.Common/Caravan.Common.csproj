@@ -101,6 +101,7 @@
     <Compile Include="IJsonSerializer.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="ISecurityManager.cs" />
+    <Compile Include="LogExtensions.cs" />
     <Compile Include="Models\Security\Exceptions\SecAppExistingException.cs" />
     <Compile Include="Models\Security\Exceptions\SecAppNotFoundException.cs" />
     <Compile Include="Models\Logging\Exceptions\LogEntryExistingException.cs" />
