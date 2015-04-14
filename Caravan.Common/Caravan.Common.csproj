@@ -14,7 +14,7 @@
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>400563ae</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>591508b8</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -63,17 +63,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Dapper.1.40\lib\net45\Dapper.dll</HintPath>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Clock">
+    <Reference Include="Finsa.CodeServices.Clock, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Finsa.CodeServices.Clock.1.0.1\lib\net40\Finsa.CodeServices.Clock.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Testing">
+    <Reference Include="Finsa.CodeServices.Testing, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Finsa.CodeServices.Testing.1.0.1\lib\net40\Finsa.CodeServices.Testing.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=3.2.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
