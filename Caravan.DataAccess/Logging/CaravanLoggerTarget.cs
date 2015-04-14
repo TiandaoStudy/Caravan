@@ -1,5 +1,6 @@
 ﻿using System;
 using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Utilities;
 using NLog;
 using NLog.Config;
@@ -12,12 +13,12 @@ namespace Finsa.Caravan.DataAccess.Logging
     /// <summary>
     ///   Target per il log di Caravan su database.
     /// </summary>
-    [Target("CaravanLog")]
-    public class DbLogTarget : Target
+    [Target("CaravanLogger")]
+    public class CaravanLoggerTarget : Target
     {
         private static readonly SimpleLayout DefaultLogLevel = new SimpleLayout("${level}");
 
-        public DbLogTarget()
+        public CaravanLoggerTarget()
         {
             LogLevel = DefaultLogLevel;
             UserLogin = new SimpleLayout("${identity:name=true:lowercase=true}");
@@ -61,13 +62,13 @@ namespace Finsa.Caravan.DataAccess.Logging
 
         private static void ParseMessage(string msg, out string shortMsg, out string longMsg, out string context)
         {
-            if (!String.IsNullOrWhiteSpace(msg) && msg.StartsWith(LogExtensions.JsonMessagePrefix))
+            if (!String.IsNullOrWhiteSpace(msg) && msg.StartsWith(CaravanLogger.JsonMessagePrefix))
             {
-                var json = msg.Substring(LogExtensions.JsonMessagePrefix.Length);
-                var fmt = LogExtensions.JsonSerializer.DeserializeObject<LogMessage>(json);
-                shortMsg = fmt.ShortMessage;
-                longMsg = fmt.LongMessage;
-                context = fmt.Context;
+                var json = msg.Substring(CaravanLogger.JsonMessagePrefix.Length);
+                var fmt = CaravanLogger.JsonSerializer.DeserializeObject<LogMessage>(json);
+                shortMsg = fmt.ShortMessage.ToString();
+                longMsg = fmt.LongMessage.ToString();
+                context = fmt.Context.ToString();
             }
             else
             {

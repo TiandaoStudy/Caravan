@@ -138,9 +138,9 @@
       <HintPath>..\packages\Finsa.Odp.Net.Core.Unofficial.5.0.0\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PommaLabs.KVLite, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PommaLabs.KVLite, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PommaLabs.KVLite.Core.2.1.1\lib\net45\PommaLabs.KVLite.dll</HintPath>
+      <HintPath>..\packages\PommaLabs.KVLite.Core.2.1.2\lib\net45\PommaLabs.KVLite.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=105.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -167,7 +167,7 @@
     <Compile Include="Activities\Logging\LogActivityBase.cs" />
     <Compile Include="Logging\CaravanLogger.cs" />
     <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />
-    <Compile Include="Logging\DbLogTarget.cs" />
+    <Compile Include="Logging\CaravanLoggerTarget.cs" />
     <Compile Include="Drivers\Sql\Models\Security\SqlSecRole.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Core\DbManagerBase.cs" />

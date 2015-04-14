@@ -80,8 +80,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.KVLite">
-      <HintPath>..\packages\PommaLabs.KVLite.Core.2.1.1\lib\net45\PommaLabs.KVLite.dll</HintPath>
+    <Reference Include="PommaLabs.KVLite, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PommaLabs.KVLite.Core.2.1.2\lib\net45\PommaLabs.KVLite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -109,6 +110,8 @@
     <Compile Include="ILogger.cs" />
     <Compile Include="ISecurityManager.cs" />
     <Compile Include="LogExtensions.cs" />
+    <Compile Include="Logging\ICaravanLog.cs" />
+    <Compile Include="Models\Logging\LogMessage.cs" />
     <Compile Include="Models\Security\Exceptions\SecAppExistingException.cs" />
     <Compile Include="Models\Security\Exceptions\SecAppNotFoundException.cs" />
     <Compile Include="Models\Logging\Exceptions\LogEntryExistingException.cs" />

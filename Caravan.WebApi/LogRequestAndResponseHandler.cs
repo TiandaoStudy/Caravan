@@ -1,5 +1,6 @@
 ﻿using Common.Logging;
 using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Properties;
 using Finsa.Caravan.Common.Utilities.Diagnostics;
@@ -17,9 +18,9 @@ namespace Finsa.Caravan.WebApi
 {
     public sealed class LogRequestAndResponseHandler : DelegatingHandler
     {
-        private readonly ILog _log;
+        private readonly ICaravanLog _log;
 
-        public LogRequestAndResponseHandler(ILog log)
+        public LogRequestAndResponseHandler(ICaravanLog log)
         {
             Raise<ArgumentNullException>.IfIsNull(log);
             _log = log;
@@ -45,7 +46,7 @@ namespace Finsa.Caravan.WebApi
                     KeyValuePair.Create("headers", request.Headers.SafeToString())
                 };
 
-                _log.Trace(() => new LogMessage {
+                _log.TraceArgs(() => new LogMessage {
                     ShortMessage = String.Format("Request \"{0}\" at \"{1}\"", requestId, request.RequestUri.SafeToString()),
                     LongMessage = requestBody,
                     Context = "Logging request"
@@ -65,7 +66,7 @@ namespace Finsa.Caravan.WebApi
             }
             catch (Exception ex)
             {
-                _log.Trace(() => new LogMessage
+                _log.TraceArgs(() => new LogMessage
                 {
                     Exception = ex,
                     Context = "Logging request"
@@ -101,7 +102,7 @@ namespace Finsa.Caravan.WebApi
                         KeyValuePair.Create("status_code", response.StatusCode.SafeToString())
                     };
 
-                    _log.Trace(() => new LogMessage
+                    _log.TraceArgs(() => new LogMessage
                     {
                         ShortMessage = String.Format("Response \"{0}\" for \"{1}\"", requestId, request.RequestUri.SafeToString()),
                         LongMessage = responseBody,
@@ -122,7 +123,7 @@ namespace Finsa.Caravan.WebApi
                 }
                 catch (Exception ex)
                 {
-                    _log.Trace(() => new LogMessage
+                    _log.TraceArgs(() => new LogMessage
                     {
                         Exception = ex,
                         Context = "Logging response"
