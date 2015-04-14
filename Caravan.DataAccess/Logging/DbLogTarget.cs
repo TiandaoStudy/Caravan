@@ -44,7 +44,7 @@ namespace Finsa.Caravan.DataAccess.Logging
             var codeUnit = CodeUnit.Render(logEvent);
             var function = Function.Render(logEvent);
             string shortMsg, longMsg, context;
-            ParseMessage(logEvent.Message, out shortMsg, out longMsg, out context);
+            ParseMessage(logEvent.FormattedMessage, out shortMsg, out longMsg, out context);
             
             // In order to be able to use thread local information, it must _not_ be async.
             var result = Db.Logger.LogRaw(
