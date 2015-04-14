@@ -31,7 +31,7 @@ namespace Finsa.Caravan.WebApi
 
             // Loggo l'avvio dell'applicazione.
             var serviceHelperLog = logManager.GetLogger<ServiceHelper>();
-            serviceHelperLog.Info(m => m("Application {0} started", Common.Properties.Settings.Default.ApplicationName));
+            serviceHelperLog.Info(m => m("Application {0} started", Common.Properties.Settings.Default.ApplicationDescription));
 
             // Run vacuum on the persistent cache. It should be put AFTER the connection string is
             // set, since that string it stored on the cache itself and we do not want conflicts, right?
