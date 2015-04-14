@@ -59,7 +59,7 @@ namespace Finsa.Caravan.Common
         {
             if (log.IsTraceEnabled)
             {
-                log.Trace(m => JsonFormatMessageHandler(messageFormat));
+                log.Trace(JsonFormatMessageHandler(messageFormat));
             }
         }
 
@@ -84,7 +84,7 @@ namespace Finsa.Caravan.Common
         {
             if (log.IsDebugEnabled)
             {
-                log.Debug(m => JsonFormatMessageHandler(messageFormat));
+                log.Debug(JsonFormatMessageHandler(messageFormat));
             }
         }
 
@@ -109,7 +109,7 @@ namespace Finsa.Caravan.Common
         {
             if (log.IsInfoEnabled)
             {
-                log.Info(m => JsonFormatMessageHandler(messageFormat));
+                log.Info(JsonFormatMessageHandler(messageFormat));
             }
         }
 
@@ -134,7 +134,7 @@ namespace Finsa.Caravan.Common
         {
             if (log.IsWarnEnabled)
             {
-                log.Warn(m => JsonFormatMessageHandler(messageFormat));
+                log.Warn(JsonFormatMessageHandler(messageFormat));
             }
         }
 
@@ -159,7 +159,7 @@ namespace Finsa.Caravan.Common
         {
             if (log.IsErrorEnabled)
             {
-                log.Error(m => JsonFormatMessageHandler(messageFormat));
+                log.Error(JsonFormatMessageHandler(messageFormat));
             }
         }
 
@@ -184,7 +184,7 @@ namespace Finsa.Caravan.Common
         {
             if (log.IsFatalEnabled)
             {
-                log.Fatal(m => JsonFormatMessageHandler(messageFormat));
+                log.Fatal(JsonFormatMessageHandler(messageFormat));
             }
         }
 
