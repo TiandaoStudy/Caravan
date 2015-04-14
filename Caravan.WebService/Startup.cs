@@ -1,4 +1,5 @@
-﻿using Finsa.Caravan.WebApi;
+﻿using Common.Logging;
+using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebService;
 using Microsoft.Owin;
 using Owin;
@@ -22,7 +23,8 @@ namespace Finsa.Caravan.WebService
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
             // Inizializzatore per Caravan.
-            ServiceHelper.OnStart(GlobalConfiguration.Configuration);
+            var log = LogManager.GetLogger<ServiceHelper>();
+            ServiceHelper.OnStart(GlobalConfiguration.Configuration, new LogManager());
         }
     }
 }

@@ -1,11 +1,10 @@
-﻿using System.Web.Http;
-using Common.Logging;
+﻿using Common.Logging;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.DataAccess;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PommaLabs.KVLite;
 using PommaLabs.KVLite.Web.Http;
+using System.Web.Http;
 
 namespace Finsa.Caravan.WebApi
 {
@@ -14,7 +13,7 @@ namespace Finsa.Caravan.WebApi
     /// </summary>
     public sealed class ServiceHelper
     {
-        public static void OnStart(HttpConfiguration configuration)
+        public static void OnStart(HttpConfiguration configuration, ILogManager logManager)
         {
             // Personalizzo le impostazioni del serializzatore JSON.
             configuration.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
@@ -31,7 +30,8 @@ namespace Finsa.Caravan.WebApi
             xml.Indent = false;
 
             // Loggo l'avvio dell'applicazione.
-            Db.Logger.LogInfoAsync<ServiceHelper>("Application started");
+            var serviceHelperLog = logManager.GetLogger<ServiceHelper>();
+            serviceHelperLog.Info(m => m("Application {0} started", Common.Properties.Settings.Default.ApplicationName));
 
             // Run vacuum on the persistent cache. It should be put AFTER the connection string is
             // set, since that string it stored on the cache itself and we do not want conflicts, right?
@@ -45,9 +45,8 @@ namespace Finsa.Caravan.WebApi
             ApiOutputCache.RegisterAsCacheOutputProvider(configuration, Cache.Instance);
 
             // Registra l'handler che si occupa del logging.
-            var log = LogManager.GetLogger<LogRequestAndResponseHandler>();
-            log.Debug("PING");
-            configuration.MessageHandlers.Add(new LogRequestAndResponseHandler(log));
+            var requestAndResponseLog = logManager.GetLogger<LogRequestAndResponseHandler>();
+            configuration.MessageHandlers.Add(new LogRequestAndResponseHandler(requestAndResponseLog));
         }
     }
 }
