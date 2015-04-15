@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Utilities;
+using Finsa.Caravan.Common.Utilities.Collections.ReadOnly;
 using NLog;
 using NLog.Config;
 using NLog.Layouts;
@@ -44,8 +48,7 @@ namespace Finsa.Caravan.DataAccess.Logging
             var userLogin = UserLogin.Render(logEvent);
             var codeUnit = CodeUnit.Render(logEvent);
             var function = Function.Render(logEvent);
-            string shortMsg, longMsg, context;
-            ParseMessage(logEvent.FormattedMessage, out shortMsg, out longMsg, out context);
+            var logMessage = ParseMessage(logEvent.FormattedMessage);
             
             // In order to be able to use thread local information, it must _not_ be async.
             var result = Db.Logger.LogRaw(
@@ -54,28 +57,43 @@ namespace Finsa.Caravan.DataAccess.Logging
                 userLogin,
                 codeUnit,
                 function,
-                shortMsg,
-                longMsg,
-                context
+                logMessage.ShortMessage,
+                logMessage.LongMessage,
+                logMessage.Context,
+                logMessage.Arguments
             );
         }
 
-        private static void ParseMessage(string msg, out string shortMsg, out string longMsg, out string context)
+        private static LogMessage ParseMessage(string msg)
         {
             if (!String.IsNullOrWhiteSpace(msg) && msg.StartsWith(CaravanLogger.JsonMessagePrefix))
             {
                 var json = msg.Substring(CaravanLogger.JsonMessagePrefix.Length);
-                var fmt = CaravanLogger.JsonSerializer.DeserializeObject<LogMessage>(json);
-                shortMsg = fmt.ShortMessage.ToString();
-                longMsg = fmt.LongMessage.ToString();
-                context = fmt.Context.ToString();
+                var entry = CaravanLogger.JsonSerializer.DeserializeObject<LogMessage>(json);
+                entry.LongMessage = entry.LongMessage ?? Constants.EmptyString;
+                entry.Context = entry.Context ?? Constants.EmptyString;
+                entry.Arguments = entry.Arguments ?? ReadOnlyList.Empty<KeyValuePair<string, string>>();
+                return entry;
             }
-            else
+            return new LogMessage
             {
-                shortMsg = msg;
-                longMsg = Constants.EmptyString;
-                context = Constants.EmptyString;
-            }
+                ShortMessage = msg,
+                LongMessage = Constants.EmptyString,
+                Context = Constants.EmptyString,
+                Arguments = ReadOnlyList.Empty<KeyValuePair<string, string>>()
+            };
         }
+
+        #region Reflection on NLog...
+
+        private static readonly FieldInfo GlobalDict = typeof (GlobalDiagnosticsContext).GetField("dict", BindingFlags.NonPublic);
+        private static readonly PropertyInfo ThreadDict = typeof (MappedDiagnosticsContext).GetProperty("ThreadVariables", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static IEnumerable<KeyValuePair<string, string>> GetGlobalVariables()
+        {
+            var globalDict = GlobalDict.GetValue(null) as Dictionary<string, string>;
+            return globalDict.Select(kv => KeyValuePair.Create(kv.Key, kv.Value));
+        }
+
+        #endregion
     }
 }

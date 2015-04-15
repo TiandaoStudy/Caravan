@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Common.Logging;
+﻿using Common.Logging;
 using Common.Logging.Factory;
 using Common.Logging.NLog;
 using Finsa.Caravan.Common;
@@ -9,6 +8,7 @@ using Finsa.Caravan.Common.Serialization;
 using Finsa.Caravan.Common.Utilities;
 using NLog;
 using System;
+using System.Collections.Generic;
 using FormatMessageCallback = System.Action<Common.Logging.FormatMessageHandler>;
 using LoggerNLog = NLog.Logger;
 using LogLevel = Common.Logging.LogLevel;
@@ -43,6 +43,10 @@ namespace Finsa.Caravan.DataAccess.Logging
 
         #region Construction
 
+        /// <summary>
+        ///   Builds an instance of the Caravan logger.
+        /// </summary>
+        /// <param name="logger">The <see cref="LoggerNLog"/> that will be used as backend.</param>
         public CaravanLogger(LoggerNLog logger)
         {
             _logger = logger;
@@ -59,6 +63,22 @@ namespace Finsa.Caravan.DataAccess.Logging
         }
 
         #region ILog Members
+
+        /// <summary>
+        ///   Returns the global context for variables.
+        /// </summary>
+        public override IVariablesContext GlobalVariablesContext
+        {
+            get { return new NLogGlobalVariablesContext(); }
+        }
+
+        /// <summary>
+        ///   Returns the thread-specific context for variables.
+        /// </summary>
+        public override IVariablesContext ThreadVariablesContext
+        {
+            get { return new NLogThreadVariablesContext(); }
+        }
 
         /// <summary>
         ///   Gets a value indicating whether this instance is trace enabled.
@@ -1042,7 +1062,7 @@ namespace Finsa.Caravan.DataAccess.Logging
 
         #region ICaravanLog Members
 
-        public void TraceArgs(object shortMessage, object longMessage = null, object context = null, IEnumerable<KeyValuePair<string, object>> args = null)
+        public void TraceArgs(string shortMessage, string longMessage = null, string context = null, IEnumerable<KeyValuePair<string, string>> args = null)
         {
             if (IsTraceEnabled)
             {
@@ -1064,7 +1084,7 @@ namespace Finsa.Caravan.DataAccess.Logging
             return safeCallback == null ? Constants.EmptyString : SerializeJsonlogMessageCallback(safeCallback());
         }
 
-        private static string LogMessageHandler(object shortMsg, object longMsg, object context)
+        private static string LogMessageHandler(string shortMsg, string longMsg, string context)
         {
             return SerializeJsonlogMessageCallback(new LogMessage
             {
@@ -1090,7 +1110,7 @@ namespace Finsa.Caravan.DataAccess.Logging
             return JsonMessagePrefix + CachedJsonSerializer.SerializeObject(logMessage);
         }
 
-        #endregion
+        #endregion ICaravanLog Members
 
         /// <summary>
         ///   Actually sends the message to the underlying log system.

@@ -1,11 +1,8 @@
-﻿using Common.Logging;
-using Finsa.Caravan.Common;
+﻿using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Properties;
 using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.Common.Utilities.Extensions;
-using Finsa.Caravan.DataAccess;
 using Microsoft.Owin;
 using System;
 using System.Net.Http;
@@ -16,10 +13,17 @@ using System.Web;
 
 namespace Finsa.Caravan.WebApi
 {
+    /// <summary>
+    ///   An handler to log both request and response information.
+    /// </summary>
     public sealed class LogRequestAndResponseHandler : DelegatingHandler
     {
         private readonly ICaravanLog _log;
 
+        /// <summary>
+        ///   Builds the handler using given log.
+        /// </summary>
+        /// <param name="log">The log used by the handler.</param>
         public LogRequestAndResponseHandler(ICaravanLog log)
         {
             Raise<ArgumentNullException>.IfIsNull(log);
@@ -29,40 +33,27 @@ namespace Finsa.Caravan.WebApi
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             // Utilizzato per associare request e response nel log.
-            var requestId = Guid.NewGuid().SafeToString();
-            var userLogin = "TODO!!!";
+            var requestId = Guid.NewGuid();
+            _log.GlobalVariablesContext.Set("request_id", requestId);
 
             try
             {
                 var requestBody = (request.Content == null) ? String.Empty : request.Content.ReadAsStringAsync().Result;
 
-                var args = new[]
+                _log.TraceArgs(() => new LogMessage
                 {
-                    KeyValuePair.Create("request_id", requestId),
-                    KeyValuePair.Create("from", GetClientIP(request)),
-                    KeyValuePair.Create("user_agent", request.Headers.UserAgent.SafeToString()),
-                    KeyValuePair.Create("uri", request.RequestUri.SafeToString()),
-                    KeyValuePair.Create("method", request.Method.SafeToString()),
-                    KeyValuePair.Create("headers", request.Headers.SafeToString())
-                };
-
-                _log.TraceArgs(() => new LogMessage {
                     ShortMessage = String.Format("Request \"{0}\" at \"{1}\"", requestId, request.RequestUri.SafeToString()),
                     LongMessage = requestBody,
-                    Context = "Logging request"
+                    Context = "Logging request",
+                    Arguments = new[]
+                    {
+                        KeyValuePair.Create("from", GetClientIP(request)),
+                        KeyValuePair.Create("user_agent", request.Headers.UserAgent.SafeToString()),
+                        KeyValuePair.Create("uri", request.RequestUri.SafeToString()),
+                        KeyValuePair.Create("method", request.Method.SafeToString()),
+                        KeyValuePair.Create("headers", request.Headers.SafeToString())
+                    }
                 });
-
-                //Db.Logger.LogRawAsync(
-                //    LogLevel.Trace,
-                //    Settings.Default.ApplicationName,
-                //    userLogin,
-                //    GetType().FullName,
-                //    "SendAsync",
-                //    String.Format("Request \"{0}\" at \"{1}\"", requestId, request.RequestUri.SafeToString()),
-                //    requestBody,
-                //    "Logging request",
-                //    args
-                //);
             }
             catch (Exception ex)
             {
@@ -71,20 +62,6 @@ namespace Finsa.Caravan.WebApi
                     Exception = ex,
                     Context = "Logging request"
                 });
-
-                //Db.Logger.LogRawAsync(
-                //    LogLevel.Trace,
-                //    Settings.Default.ApplicationName,
-                //    userLogin,
-                //    GetType().FullName,
-                //    "SendAsync",
-                //    ex,
-                //    "Logging request",
-                //    new[]
-                //    {
-                //        KeyValuePair.Create("request_id", requestId)
-                //    }
-                //);
             }
 
             // Let other handlers process the request
@@ -96,30 +73,18 @@ namespace Finsa.Caravan.WebApi
                 {
                     var responseBody = (response.Content == null) ? String.Empty : response.Content.ReadAsStringAsync().Result;
 
-                    var args = new[]
-                    {
-                        KeyValuePair.Create("request_id", requestId),
-                        KeyValuePair.Create("status_code", response.StatusCode.SafeToString())
-                    };
+                    _log.GlobalVariablesContext.Set("request_id", requestId);
 
                     _log.TraceArgs(() => new LogMessage
                     {
                         ShortMessage = String.Format("Response \"{0}\" for \"{1}\"", requestId, request.RequestUri.SafeToString()),
                         LongMessage = responseBody,
-                        Context = "Logging response"
+                        Context = "Logging response",
+                        Arguments = new[]
+                        {
+                            KeyValuePair.Create("status_code", response.StatusCode.SafeToString())
+                        }
                     });
-
-                    //Db.Logger.LogRawAsync(
-                    //    LogLevel.Debug,
-                    //    Settings.Default.ApplicationName,
-                    //    userLogin,
-                    //    GetType().FullName,
-                    //    "SendAsync",
-                    //    ,
-                    //    responseBody,
-                    //    "Logging response",
-                    //    args
-                    //);
                 }
                 catch (Exception ex)
                 {
@@ -128,20 +93,6 @@ namespace Finsa.Caravan.WebApi
                         Exception = ex,
                         Context = "Logging response"
                     });
-
-                    //Db.Logger.LogRawAsync(
-                    //    LogLevel.Error,
-                    //    Settings.Default.ApplicationName,
-                    //    userLogin,
-                    //    GetType().FullName,
-                    //    "SendAsync",
-                    //    ex,
-                    //    "Logging response",
-                    //    new[]
-                    //    {
-                    //        KeyValuePair.Create("request_id", requestId)
-                    //    }
-                    //);
                 }
 
                 return response;

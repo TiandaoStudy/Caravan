@@ -14,25 +14,25 @@ namespace Finsa.Caravan.Common.Models.Logging
         ///   Short message.
         /// </summary>
         [JsonProperty("s")]
-        public object ShortMessage { get; set; }
+        public string ShortMessage { get; set; }
 
         /// <summary>
         ///   Long message.
         /// </summary>
         [JsonProperty("l")]
-        public object LongMessage { get; set; }
+        public string LongMessage { get; set; }
 
         /// <summary>
         ///   Context.
         /// </summary>
         [JsonProperty("c")]
-        public object Context { get; set; }
+        public string Context { get; set; }
 
         /// <summary>
         ///   Arguments.
         /// </summary>
         [JsonProperty("a")]
-        public IEnumerable<KeyValuePair<string, object>> Arguments { get; set; } 
+        public IEnumerable<KeyValuePair<string, string>> Arguments { get; set; } 
 
         /// <summary>
         ///   Exception (optional), must _not_ be serialized.
