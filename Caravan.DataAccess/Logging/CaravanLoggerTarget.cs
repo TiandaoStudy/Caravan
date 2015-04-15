@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Utilities;
@@ -22,6 +24,9 @@ namespace Finsa.Caravan.DataAccess.Logging
     {
         private static readonly SimpleLayout DefaultLogLevel = new SimpleLayout("${level}");
 
+        /// <summary>
+        ///   Builds the target with default layout formats.
+        /// </summary>
         public CaravanLoggerTarget()
         {
             LogLevel = DefaultLogLevel;
@@ -49,6 +54,7 @@ namespace Finsa.Caravan.DataAccess.Logging
             var codeUnit = CodeUnit.Render(logEvent);
             var function = Function.Render(logEvent);
             var logMessage = ParseMessage(logEvent.FormattedMessage);
+            var arguments = GetGlobalVariables().Union(GetThreadVariables()).Union(logMessage.Arguments);
             
             // In order to be able to use thread local information, it must _not_ be async.
             var result = Db.Logger.LogRaw(
@@ -60,7 +66,7 @@ namespace Finsa.Caravan.DataAccess.Logging
                 logMessage.ShortMessage,
                 logMessage.LongMessage,
                 logMessage.Context,
-                logMessage.Arguments
+                arguments
             );
         }
 
@@ -84,14 +90,28 @@ namespace Finsa.Caravan.DataAccess.Logging
             };
         }
 
-        #region Reflection on NLog...
+        #region Raw reflection for NLog
 
-        private static readonly FieldInfo GlobalDict = typeof (GlobalDiagnosticsContext).GetField("dict", BindingFlags.NonPublic);
-        private static readonly PropertyInfo ThreadDict = typeof (MappedDiagnosticsContext).GetProperty("ThreadVariables", BindingFlags.NonPublic | BindingFlags.Instance);
+        private const BindingFlags DictBindingFlags = BindingFlags.Static | BindingFlags.NonPublic;
+        private static readonly FieldInfo GlobalDict = typeof (GlobalDiagnosticsContext).GetField("dict", DictBindingFlags);
+        private static readonly PropertyInfo ThreadDict = typeof (MappedDiagnosticsContext).GetProperty("ThreadDictionary", DictBindingFlags);
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static IEnumerable<KeyValuePair<string, string>> GetGlobalVariables()
         {
             var globalDict = GlobalDict.GetValue(null) as Dictionary<string, string>;
-            return globalDict.Select(kv => KeyValuePair.Create(kv.Key, kv.Value));
+            Debug.Assert(globalDict != null, "This should always be true for NLog 3.2.0, check before using other versions.");
+            // We make a snapshot of the dictionary, since it may easily change.
+            return globalDict.Select(kv => KeyValuePair.Create(kv.Key, kv.Value)).ToList();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static IEnumerable<KeyValuePair<string, string>> GetThreadVariables()
+        {
+            var threadDict = ThreadDict.GetValue(null) as Dictionary<string, string>;
+            Debug.Assert(threadDict != null, "This should always be true for NLog 3.2.0, check before using other versions.");
+            // We make a snapshot of the dictionary, since it may easily change.
+            return threadDict.Select(kv => KeyValuePair.Create(kv.Key, kv.Value)).ToList();
         }
 
         #endregion

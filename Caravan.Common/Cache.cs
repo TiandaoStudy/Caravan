@@ -9,8 +9,8 @@ namespace Finsa.Caravan.Common
     /// </summary>
     public static class Cache
     {
-        private static readonly ICache CachedInstance = (Settings.Default.CacheType.ToLower(CultureInfo.InvariantCulture) == "volatile") 
-            ? VolatileCache.DefaultInstance as ICache 
+        private static readonly ICache CachedInstance = (Settings.Default.CacheType.ToLower(CultureInfo.InvariantCulture) == "volatile")
+            ? VolatileCache.DefaultInstance as ICache
             : PersistentCache.DefaultInstance;
 
         /// <summary>
