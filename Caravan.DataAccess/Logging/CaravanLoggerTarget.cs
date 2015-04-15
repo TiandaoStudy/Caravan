@@ -57,6 +57,7 @@ namespace Finsa.Caravan.DataAccess.Logging
             var arguments = GetGlobalVariables().Union(GetThreadVariables()).Union(logMessage.Arguments);
             
             // In order to be able to use thread local information, it must _not_ be async.
+            // ReSharper disable once UnusedVariable
             var result = Db.Logger.LogRaw(
                 logLevel,
                 Common.Properties.Settings.Default.ApplicationName,

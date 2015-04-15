@@ -1062,6 +1062,8 @@ namespace Finsa.Caravan.DataAccess.Logging
 
         #region ICaravanLog Members
 
+        #region Trace
+
         public void TraceArgs(string shortMessage, string longMessage = null, string context = null, IEnumerable<KeyValuePair<string, string>> args = null)
         {
             if (IsTraceEnabled)
@@ -1077,6 +1079,108 @@ namespace Finsa.Caravan.DataAccess.Logging
                 WriteInternal(LogLevel.Trace, LogMessageHandler(logMessageCallback), null);
             }
         }
+
+        #endregion
+
+        #region Debug
+
+        public void DebugArgs(string shortMessage, string longMessage = null, string context = null, IEnumerable<KeyValuePair<string, string>> args = null)
+        {
+            if (IsDebugEnabled)
+            {
+                WriteInternal(LogLevel.Debug, LogMessageHandler(shortMessage, longMessage, context), null);
+            }
+        }
+
+        public void DebugArgs(Func<LogMessage> logMessageCallback)
+        {
+            if (IsDebugEnabled)
+            {
+                WriteInternal(LogLevel.Debug, LogMessageHandler(logMessageCallback), null);
+            }
+        }
+
+        #endregion
+
+        #region Info
+
+        public void InfoArgs(string shortMessage, string longMessage = null, string context = null, IEnumerable<KeyValuePair<string, string>> args = null)
+        {
+            if (IsInfoEnabled)
+            {
+                WriteInternal(LogLevel.Info, LogMessageHandler(shortMessage, longMessage, context), null);
+            }
+        }
+
+        public void InfoArgs(Func<LogMessage> logMessageCallback)
+        {
+            if (IsInfoEnabled)
+            {
+                WriteInternal(LogLevel.Info, LogMessageHandler(logMessageCallback), null);
+            }
+        }
+
+        #endregion
+
+        #region Warn
+
+        public void WarnArgs(string shortMessage, string longMessage = null, string context = null, IEnumerable<KeyValuePair<string, string>> args = null)
+        {
+            if (IsWarnEnabled)
+            {
+                WriteInternal(LogLevel.Warn, LogMessageHandler(shortMessage, longMessage, context), null);
+            }
+        }
+
+        public void WarnArgs(Func<LogMessage> logMessageCallback)
+        {
+            if (IsWarnEnabled)
+            {
+                WriteInternal(LogLevel.Warn, LogMessageHandler(logMessageCallback), null);
+            }
+        }
+
+        #endregion
+
+        #region Error
+
+        public void ErrorArgs(string shortMessage, string longMessage = null, string context = null, IEnumerable<KeyValuePair<string, string>> args = null)
+        {
+            if (IsErrorEnabled)
+            {
+                WriteInternal(LogLevel.Error, LogMessageHandler(shortMessage, longMessage, context), null);
+            }
+        }
+
+        public void ErrorArgs(Func<LogMessage> logMessageCallback)
+        {
+            if (IsErrorEnabled)
+            {
+                WriteInternal(LogLevel.Error, LogMessageHandler(logMessageCallback), null);
+            }
+        }
+
+        #endregion
+
+        #region Fatal
+
+        public void FatalArgs(string shortMessage, string longMessage = null, string context = null, IEnumerable<KeyValuePair<string, string>> args = null)
+        {
+            if (IsFatalEnabled)
+            {
+                WriteInternal(LogLevel.Fatal, LogMessageHandler(shortMessage, longMessage, context), null);
+            }
+        }
+
+        public void FatalArgs(Func<LogMessage> logMessageCallback)
+        {
+            if (IsFatalEnabled)
+            {
+                WriteInternal(LogLevel.Fatal, LogMessageHandler(logMessageCallback), null);
+            }
+        }
+
+        #endregion
 
         private static string LogMessageHandler(Func<LogMessage> logMessageCallback)
         {
