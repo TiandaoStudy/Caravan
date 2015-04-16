@@ -106,9 +106,9 @@
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
     <Compile Include="IJsonSerializer.cs" />
-    <Compile Include="ILogger.cs" />
-    <Compile Include="ISecurityManager.cs" />
-    <Compile Include="LogExtensions.cs" />
+    <Compile Include="Logging\ICaravanLogRepository.cs" />
+    <Compile Include="Logging\LogExtensions.cs" />
+    <Compile Include="Security\ISecurityRepository.cs" />
     <Compile Include="Logging\ICaravanLog.cs" />
     <Compile Include="Models\Logging\LogMessage.cs" />
     <Compile Include="Models\Security\Exceptions\SecAppExistingException.cs" />

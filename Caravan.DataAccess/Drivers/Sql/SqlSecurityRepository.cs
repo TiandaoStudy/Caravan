@@ -10,7 +10,7 @@ using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
-    internal sealed class SqlSecurityManager : SecurityManagerBase<SqlSecurityManager>
+    internal sealed class SqlSecurityRepository : SecurityRepositoryBase<SqlSecurityRepository>
     {
         #region Apps
 

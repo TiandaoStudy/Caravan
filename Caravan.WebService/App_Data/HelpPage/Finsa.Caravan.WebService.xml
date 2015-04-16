@@ -25,6 +25,11 @@
               Controller che si occupa della parte di logging.
             </summary>
         </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.#ctor(Finsa.Caravan.Common.Logging.ICaravanLog)">
+            <summary>
+              Inizializza il controller con l'istanza del log di Caravan.
+            </summary>
+        </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetPing">
             <summary>
               Writes a silly message into the log.

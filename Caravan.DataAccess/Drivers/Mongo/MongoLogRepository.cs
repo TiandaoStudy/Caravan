@@ -15,7 +15,7 @@ using Common.Logging;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 {
-    internal sealed class MongoLogManager : LogManagerBase<MongoLogManager>
+    internal sealed class MongoLogRepository : LogRepositoryBase<MongoLogRepository>
     {
         protected override LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
         {

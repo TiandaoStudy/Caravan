@@ -1,11 +1,11 @@
-﻿using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.Common.Models.Security.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Finsa.Caravan.Common.Models.Security;
+using Finsa.Caravan.Common.Models.Security.Exceptions;
 
-namespace Finsa.Caravan.Common
+namespace Finsa.Caravan.Common.Security
 {
-    public interface ISecurityManager
+    public interface ISecurityRepository
     {
         SecApp CurrentApp { get; }
 

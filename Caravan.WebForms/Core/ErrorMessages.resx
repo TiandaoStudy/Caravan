@@ -127,7 +127,7 @@
     <value>Could not load the IPageManager implementation. See inner exception for more details.</value>
   </data>
   <data name="TopLevel_SecurityManager_ErrorLoadingType" xml:space="preserve">
-    <value>Could not load the ISecurityManager implementation. See inner exception for more details.</value>
+    <value>Could not load the ISecurityRepository implementation. See inner exception for more details.</value>
   </data>
   <data name="UserControls_AutoSuggest_NullOrEmptyLookupBy" xml:space="preserve">
     <value>The specified XML lookup field must not be neither null nor empty.</value>

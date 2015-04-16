@@ -11,7 +11,7 @@ using MongoDB.Driver.Builders;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 {
-    internal sealed class MongoSecurityManager : SecurityManagerBase<MongoSecurityManager>
+    internal sealed class MongoSecurityRepository : SecurityRepositoryBase<MongoSecurityRepository>
     {
         protected override IList<SecApp> GetApps()
         {

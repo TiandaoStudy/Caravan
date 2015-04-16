@@ -10,7 +10,7 @@ using RestSharp;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Rest
 {
-    internal sealed class RestSecurityManager : SecurityManagerBase<RestSecurityManager>
+    internal sealed class RestSecurityRepository : SecurityRepositoryBase<RestSecurityRepository>
     {
         protected override IList<SecApp> GetApps()
         {

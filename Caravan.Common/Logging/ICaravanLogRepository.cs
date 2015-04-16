@@ -1,16 +1,16 @@
-﻿using Common.Logging;
-using Finsa.Caravan.Common.Models.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Common.Logging;
+using Finsa.Caravan.Common.Models.Logging;
 
-namespace Finsa.Caravan.Common
+namespace Finsa.Caravan.Common.Logging
 {
     /// <summary>
     ///   Handles logging and log settings.
     /// </summary>
-    public interface ILogger
+    public interface ICaravanLogRepository
     {
         #region Logging
 

@@ -4,6 +4,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
 using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.DataAccess.Drivers.Mongo;
 using Finsa.Caravan.DataAccess.Drivers.Rest;
@@ -28,8 +30,8 @@ namespace Finsa.Caravan.DataAccess
         private const string CachePartitionName = "Caravan.DataAccess";
         private const string ConnectionStringKey = "ConnectionString";
 
-        private static ILogger _loggerInstance;
-        private static ISecurityManager _securityManagerInstance;
+        private static ICaravanLogRepository _loggerInstance;
+        private static ISecurityRepository _securityRepositoryInstance;
         private static IDbManager _dbManagerInstance;
 
         static Db()
@@ -54,14 +56,14 @@ namespace Finsa.Caravan.DataAccess
             get { return _dbManagerInstance; }
         }
 
-        public static ILogger Logger
+        public static ICaravanLogRepository Logger
         {
             get { return _loggerInstance; }
         }
 
-        public static ISecurityManager Security
+        public static ISecurityRepository Security
         {
-            get { return _securityManagerInstance; }
+            get { return _securityRepositoryInstance; }
         }
 
         #endregion Public Properties - Instances
@@ -199,8 +201,8 @@ namespace Finsa.Caravan.DataAccess
 
                 case DataAccessKind.MongoDb:
                     _dbManagerInstance = new MongoDbManager();
-                    _loggerInstance = new MongoLogManager();
-                    _securityManagerInstance = new MongoSecurityManager();
+                    _loggerInstance = new MongoLogRepository();
+                    _securityRepositoryInstance = new MongoSecurityRepository();
                     break;
 
                 case DataAccessKind.MySql:
@@ -216,8 +218,8 @@ namespace Finsa.Caravan.DataAccess
                     break;
 
                 case DataAccessKind.Rest:
-                    _loggerInstance = new RestLogManager();
-                    _securityManagerInstance = new RestSecurityManager();
+                    _loggerInstance = new RestLogRepository();
+                    _securityRepositoryInstance = new RestSecurityRepository();
                     break;
 
                 case DataAccessKind.SqlServer:
@@ -238,8 +240,8 @@ namespace Finsa.Caravan.DataAccess
                 case DataAccessKind.PostgreSql:
                 case DataAccessKind.SqlServer:
                 case DataAccessKind.SqlServerCe:
-                    _loggerInstance = new SqlLogManager();
-                    _securityManagerInstance = new SqlSecurityManager();
+                    _loggerInstance = new SqlLogRepository();
+                    _securityRepositoryInstance = new SqlSecurityRepository();
                     break;
             }
         }

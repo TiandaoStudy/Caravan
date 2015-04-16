@@ -13,6 +13,7 @@ using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
 using LogLevel = Common.Logging.LogLevel;
+using Fasterflect;
 
 namespace Finsa.Caravan.DataAccess.Logging
 {
@@ -93,14 +94,14 @@ namespace Finsa.Caravan.DataAccess.Logging
 
         #region Raw reflection for NLog
 
-        private const BindingFlags DictBindingFlags = BindingFlags.Static | BindingFlags.NonPublic;
-        private static readonly FieldInfo GlobalDict = typeof (GlobalDiagnosticsContext).GetField("dict", DictBindingFlags);
-        private static readonly PropertyInfo ThreadDict = typeof (MappedDiagnosticsContext).GetProperty("ThreadDictionary", DictBindingFlags);
+        private static readonly Flags DictFlags = Flags.Static | Flags.NonPublic;
+        private static readonly MemberGetter GlobalDict = typeof(GlobalDiagnosticsContext).DelegateForGetFieldValue("dict", DictFlags);
+        private static readonly MemberGetter ThreadDict = typeof(MappedDiagnosticsContext).DelegateForGetPropertyValue("ThreadDictionary", DictFlags);
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static IEnumerable<KeyValuePair<string, string>> GetGlobalVariables()
         {
-            var globalDict = GlobalDict.GetValue(null) as Dictionary<string, string>;
+            var globalDict = GlobalDict.Invoke(null) as Dictionary<string, string>;
             Debug.Assert(globalDict != null, "This should always be true for NLog 3.2.0, check before using other versions.");
             // We make a snapshot of the dictionary, since it may easily change.
             return globalDict.Select(kv => KeyValuePair.Create(kv.Key, kv.Value)).ToList();
@@ -109,7 +110,7 @@ namespace Finsa.Caravan.DataAccess.Logging
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static IEnumerable<KeyValuePair<string, string>> GetThreadVariables()
         {
-            var threadDict = ThreadDict.GetValue(null) as Dictionary<string, string>;
+            var threadDict = ThreadDict.Invoke(null) as Dictionary<string, string>;
             Debug.Assert(threadDict != null, "This should always be true for NLog 3.2.0, check before using other versions.");
             // We make a snapshot of the dictionary, since it may easily change.
             return threadDict.Select(kv => KeyValuePair.Create(kv.Key, kv.Value)).ToList();

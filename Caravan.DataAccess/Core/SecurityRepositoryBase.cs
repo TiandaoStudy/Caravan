@@ -6,11 +6,12 @@ using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Models.Security.Exceptions;
+using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.Common.Utilities.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
-    internal abstract class SecurityManagerBase<TSec> : ISecurityManager where TSec : SecurityManagerBase<TSec>
+    internal abstract class SecurityRepositoryBase<TSec> : ISecurityRepository where TSec : SecurityRepositoryBase<TSec>
     {
         public SecApp CurrentApp { get; private set; }
 
@@ -51,7 +52,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx);
+                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx);
                 throw;
             }
         }
@@ -97,7 +98,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx, appName: appName);
+                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -119,7 +120,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx, appName: appName);
+                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -144,7 +145,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx, appName: appName);
+                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -190,7 +191,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx, appName: appName);
+                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -212,7 +213,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx, appName: appName);
+                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -237,7 +238,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx, appName: appName);
+                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -260,7 +261,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx, appName: appName);
+                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -283,7 +284,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityManagerBase<TSec>>(ex, logCtx, appName: appName);
+                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }

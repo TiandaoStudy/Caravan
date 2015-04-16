@@ -84,6 +84,9 @@
       <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fasterflect">
+      <HintPath>..\packages\fasterflect.2.1.3\lib\net40\Fasterflect.dll</HintPath>
+    </Reference>
     <Reference Include="Finsa.CodeServices.Clock">
       <HintPath>..\packages\Finsa.CodeServices.Clock.1.0.1\lib\net40\Finsa.CodeServices.Clock.dll</HintPath>
       <Private>True</Private>
@@ -172,8 +175,8 @@
     <Compile Include="Drivers\Sql\Models\Security\SqlSecRole.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Core\DbManagerBase.cs" />
-    <Compile Include="Core\LogManagerBase.cs" />
-    <Compile Include="Core\SecurityManagerBase.cs" />
+    <Compile Include="Core\LogRepositoryBase.cs" />
+    <Compile Include="Core\SecurityRepositoryBase.cs" />
     <Compile Include="Core\ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -185,8 +188,8 @@
     <Compile Include="Drivers\Mongo\Models\MongoSequence.cs" />
     <Compile Include="Drivers\Mongo\Models\Security\MongoSecApp.cs" />
     <Compile Include="Drivers\Mongo\MongoDbManager.cs" />
-    <Compile Include="Drivers\Mongo\MongoLogManager.cs" />
-    <Compile Include="Drivers\Mongo\MongoSecurityManager.cs" />
+    <Compile Include="Drivers\Mongo\MongoLogRepository.cs" />
+    <Compile Include="Drivers\Mongo\MongoSecurityRepository.cs" />
     <Compile Include="Drivers\Mongo\MongoUtilities.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -207,12 +210,12 @@
     <Compile Include="Db.cs" />
     <Compile Include="IDbManager.cs" />
     <Compile Include="Drivers\Sql\PostgreSql\PostgreSqlDbManager.cs" />
-    <Compile Include="Drivers\Sql\SqlSecurityManager.cs" />
+    <Compile Include="Drivers\Sql\SqlSecurityRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Drivers\Sql\SqlLogManager.cs" />
+    <Compile Include="Drivers\Sql\SqlLogRepository.cs" />
     <Compile Include="Drivers\Sql\Oracle\OracleDbManager.cs" />
-    <Compile Include="Drivers\Rest\RestLogManager.cs" />
-    <Compile Include="Drivers\Rest\RestSecurityManager.cs" />
+    <Compile Include="Drivers\Rest\RestLogRepository.cs" />
+    <Compile Include="Drivers\Rest\RestSecurityRepository.cs" />
     <Compile Include="Drivers\Sql\SqlServerCe\SqlServerCeDbManager.cs" />
     <Compile Include="Drivers\Sql\SqlDbContext.cs" />
     <Compile Include="Drivers\Sql\SqlServer\SqlServerDbManager.cs" />

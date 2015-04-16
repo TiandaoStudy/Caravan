@@ -1,12 +1,17 @@
-﻿using Common.Logging;
+﻿using System.Web;
+using Common.Logging;
+using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.WebApi;
+using Finsa.Caravan.WebApi.Middlewares;
 using Finsa.Caravan.WebService;
+using Finsa.WebApi.HelpPage.AnyHost;
 using Microsoft.Owin;
+using Ninject;
+using Ninject.Web.Common.OwinHost;
+using Ninject.Web.WebApi.OwinHost;
 using Owin;
 using System.Web.Http;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
+using PommaLabs.KVLite;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -16,15 +21,29 @@ namespace Finsa.Caravan.WebService
     {
         public void Configuration(IAppBuilder app)
         {
-            // Inizializzatori di default per MVC & Web API.
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+            var config = new HttpConfiguration();
+
+            // Inizializzatore per Ninject.
+            app.UseNinjectMiddleware(CreateKernel).UseNinjectWebApi(config);
+
+            // Middleware definiti dentro Caravan, da porre prima delle Web API.
+            app.Use(new ExceptionHandlingMiddleware(LogManager.GetLogger<ExceptionHandlingMiddleware>()));
+            app.Use(new LoggingMiddleware(LogManager.GetLogger<ExceptionHandlingMiddleware>() as ICaravanLog));
+
+            // Inizializzatori di default per Web API.
+            config.MapHttpAttributeRoutes(new HelpDirectRouteProvider());
+            var xmlDocPath = HttpContext.Current.Server.MapPath(@"~/App_Data/HelpPage/Finsa.Caravan.WebService.xml");
+            config.SetDocumentationProvider(new XmlDocumentationProvider(xmlDocPath));
+            app.UseWebApi(config);
 
             // Inizializzatore per Caravan.
-            var log = LogManager.GetLogger<ServiceHelper>();
-            ServiceHelper.OnStart(GlobalConfiguration.Configuration, new LogManager());
+            ServiceHelper.ConfigureFormatters(config);
+            ServiceHelper.ConfigurateOutputCache(config, PersistentCache.DefaultInstance);
+        }
+
+        private static IKernel CreateKernel()
+        {
+            return new StandardKernel(new NinjectConfig());
         }
     }
 }

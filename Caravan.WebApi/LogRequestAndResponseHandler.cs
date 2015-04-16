@@ -73,8 +73,6 @@ namespace Finsa.Caravan.WebApi
                 {
                     var responseBody = (response.Content == null) ? String.Empty : response.Content.ReadAsStringAsync().Result;
 
-                    _log.GlobalVariablesContext.Set("request_id", requestId);
-
                     _log.TraceArgs(() => new LogMessage
                     {
                         ShortMessage = String.Format("Response \"{0}\" for \"{1}\"", requestId, request.RequestUri.SafeToString()),

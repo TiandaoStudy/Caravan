@@ -10,9 +10,12 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using System;
 using Common.Logging;
+using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Logging.Exceptions;
+using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.DataAccess;
 using LinqToQuerystring.WebApi;
 using System.Linq;
@@ -28,6 +31,17 @@ namespace Finsa.Caravan.WebService.Controllers
     [RoutePrefix("logger")]
     public sealed class LoggerController : ApiController
     {
+        private readonly ICaravanLog _log;
+
+        /// <summary>
+        ///   Inizializza il controller con l'istanza del log di Caravan.
+        /// </summary>
+        public LoggerController(ICaravanLog log)
+        {
+            Raise<ArgumentNullException>.IfIsNull(log);
+            _log = log;
+        }
+
         /// <summary>
         ///   Writes a silly message into the log.
         /// </summary>

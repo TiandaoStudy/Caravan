@@ -67,7 +67,7 @@ namespace FLEX.WebForms
             try {
                CachedInstance = ServiceLocator.Load<ISecurityManager>(Settings.Default.SecurityManagerTypeInfo);
             } catch (Exception ex) {
-                Db.Logger.LogFatal<ISecurityManager>(ex, "Loading ISecurityManager");
+                Db.Logger.LogFatal<ISecurityManager>(ex, "Loading ISecurityRepository");
                 throw new ConfigurationErrorsException(ErrorMessages.TopLevel_SecurityManager_ErrorLoadingType, ex);
             }
         }
