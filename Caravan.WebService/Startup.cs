@@ -26,10 +26,7 @@ namespace Finsa.Caravan.WebService
             app.UseNinjectMiddleware(CreateKernel).UseNinjectWebApi(config);
 
             // Inizializzatori di default per Web API.
-            config.MapHttpAttributeRoutes(new HelpDirectRouteProvider());
-            var xmlDocPath = HttpContext.Current.Server.MapPath(@"~/App_Data/HelpPage/Finsa.Caravan.WebService.xml");
-            config.SetDocumentationProvider(new XmlDocumentationProvider(xmlDocPath));
-            app.UseWebApi(config);
+            ConfigureWebApi(app, config);
 
             // Inizializzatore per Caravan.
             config.MessageHandlers.Add(kernel.Get<LoggingDelegatingHandler>());
@@ -40,6 +37,16 @@ namespace Finsa.Caravan.WebService
         private static IKernel CreateKernel()
         {
             return new StandardKernel(new NinjectConfig());
+        }
+
+        private static void ConfigureWebApi(IAppBuilder app, HttpConfiguration config)
+        {
+            // REQUIRED TO ENABLE HELP PAGES :)
+            config.MapHttpAttributeRoutes(new HelpDirectRouteProvider());
+            var xmlDocPath = HttpContext.Current.Server.MapPath(@"~/App_Data/HelpPages/WebServiceHelp.xml");
+            config.SetDocumentationProvider(new XmlDocumentationProvider(xmlDocPath));
+
+            app.UseWebApi(config);
         }
     }
 }
