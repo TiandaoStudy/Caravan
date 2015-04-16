@@ -9,8 +9,8 @@ namespace Finsa.Caravan.WebService
     {
         public override void Load()
         {
-            Bind<ILog, ICaravanLog>().ToMethod(ctx => LogManager.GetLogger(ctx.Request.Target.Member.ReflectedType) as ICaravanLog);
             Bind<ICache>().ToMethod(ctx => PersistentCache.DefaultInstance);
+            Bind<ILog, ICaravanLog>().ToMethod(ctx => LogManager.GetLogger(ctx.Request.Target.Member.ReflectedType) as ICaravanLog);
         }
     }
 }
