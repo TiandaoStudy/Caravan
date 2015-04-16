@@ -48,7 +48,15 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("ping")]
         public HttpResponseMessage GetPing()
         {
-            return GetPing(null);
+            try
+            {
+                _log.Info("Ping pong :)");
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
         }
 
         /// <summary>

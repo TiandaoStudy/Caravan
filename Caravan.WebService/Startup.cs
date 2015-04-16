@@ -1,8 +1,5 @@
-﻿using System.Web;
-using Common.Logging;
-using Finsa.Caravan.Common.Logging;
-using Finsa.Caravan.WebApi;
-using Finsa.Caravan.WebApi.Middlewares;
+﻿using Finsa.Caravan.WebApi;
+using Finsa.Caravan.WebApi.DelegatingHandlers;
 using Finsa.Caravan.WebService;
 using Finsa.WebApi.HelpPage.AnyHost;
 using Microsoft.Owin;
@@ -10,8 +7,9 @@ using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
-using System.Web.Http;
 using PommaLabs.KVLite;
+using System.Web;
+using System.Web.Http;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -22,13 +20,10 @@ namespace Finsa.Caravan.WebService
         public void Configuration(IAppBuilder app)
         {
             var config = new HttpConfiguration();
+            var kernel = CreateKernel();
 
             // Inizializzatore per Ninject.
             app.UseNinjectMiddleware(CreateKernel).UseNinjectWebApi(config);
-
-            // Middleware definiti dentro Caravan, da porre prima delle Web API.
-            app.Use(new ExceptionHandlingMiddleware(LogManager.GetLogger<ExceptionHandlingMiddleware>()));
-            app.Use(new LoggingMiddleware(LogManager.GetLogger<ExceptionHandlingMiddleware>() as ICaravanLog));
 
             // Inizializzatori di default per Web API.
             config.MapHttpAttributeRoutes(new HelpDirectRouteProvider());
@@ -37,8 +32,9 @@ namespace Finsa.Caravan.WebService
             app.UseWebApi(config);
 
             // Inizializzatore per Caravan.
+            config.MessageHandlers.Add(kernel.Get<LoggingDelegatingHandler>());
             ServiceHelper.ConfigureFormatters(config);
-            ServiceHelper.ConfigurateOutputCache(config, PersistentCache.DefaultInstance);
+            ServiceHelper.ConfigureOutputCache(config, kernel.Get<ICache>());
         }
 
         private static IKernel CreateKernel()

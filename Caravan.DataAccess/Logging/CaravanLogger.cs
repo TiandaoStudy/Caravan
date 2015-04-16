@@ -35,7 +35,7 @@ namespace Finsa.Caravan.DataAccess.Logging
         ///   Stack unwinding algorithm was changed in NLog2 (now it checks for system assemblies
         ///   and logger type) so we need this workaround to make it display correct stack trace.
         /// </summary>
-        private static readonly Type DeclaringType = typeof(NLogLogger);
+        private static readonly Type DeclaringType = typeof(CaravanLogger);
 
         private readonly LoggerNLog _logger;
 

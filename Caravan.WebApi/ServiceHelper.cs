@@ -1,11 +1,11 @@
-﻿using System;
-using Common.Logging;
+﻿using Common.Logging;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PommaLabs.KVLite;
 using PommaLabs.KVLite.Web.Http;
+using System;
 using System.Web.Http;
 
 namespace Finsa.Caravan.WebApi
@@ -30,10 +30,6 @@ namespace Finsa.Caravan.WebApi
             {
                 persistentCache.VacuumAsync();
             }
-
-            // Registra l'handler che si occupa del logging.
-            //var requestAndResponseLog = logManager.GetLogger<LogRequestAndResponseHandler>() as ICaravanLog;
-            //configuration.MessageHandlers.Add(new LogRequestAndResponseHandler(requestAndResponseLog));
         }
 
         public static void ConfigureFormatters(HttpConfiguration configuration)
@@ -56,7 +52,7 @@ namespace Finsa.Caravan.WebApi
             xml.Indent = false;
         }
 
-        public static void ConfigurateOutputCache(HttpConfiguration configuration, ICache cache)
+        public static void ConfigureOutputCache(HttpConfiguration configuration, ICache cache)
         {
             // Controlli di integrità.
             Raise<ArgumentNullException>.IfIsNull(configuration);

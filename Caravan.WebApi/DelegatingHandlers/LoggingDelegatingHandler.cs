@@ -11,12 +11,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Finsa.Caravan.WebApi
+namespace Finsa.Caravan.WebApi.DelegatingHandlers
 {
     /// <summary>
     ///   An handler to log both request and response information.
     /// </summary>
-    public sealed class LogRequestAndResponseHandler : DelegatingHandler
+    public class LoggingDelegatingHandler : DelegatingHandler
     {
         private readonly ICaravanLog _log;
 
@@ -24,7 +24,7 @@ namespace Finsa.Caravan.WebApi
         ///   Builds the handler using given log.
         /// </summary>
         /// <param name="log">The log used by the handler.</param>
-        public LogRequestAndResponseHandler(ICaravanLog log)
+        public LoggingDelegatingHandler(ICaravanLog log)
         {
             Raise<ArgumentNullException>.IfIsNull(log);
             _log = log;
@@ -57,7 +57,7 @@ namespace Finsa.Caravan.WebApi
             }
             catch (Exception ex)
             {
-                _log.TraceArgs(() => new LogMessage
+                _log.ErrorArgs(() => new LogMessage
                 {
                     Exception = ex,
                     Context = "Logging request"
@@ -65,36 +65,50 @@ namespace Finsa.Caravan.WebApi
             }
 
             // Let other handlers process the request
-            return await base.SendAsync(request, cancellationToken).ContinueWith(task =>
+            try
             {
-                var response = task.Result;
-
-                try
+                return await base.SendAsync(request, cancellationToken).ContinueWith(task =>
                 {
-                    var responseBody = (response.Content == null) ? String.Empty : response.Content.ReadAsStringAsync().Result;
+                    var response = task.Result;
 
-                    _log.TraceArgs(() => new LogMessage
+                    try
                     {
-                        ShortMessage = String.Format("Response \"{0}\" for \"{1}\"", requestId, request.RequestUri.SafeToString()),
-                        LongMessage = responseBody,
-                        Context = "Logging response",
-                        Arguments = new[]
+                        var responseBody = (response.Content == null) ? String.Empty : response.Content.ReadAsStringAsync().Result;
+
+                        _log.TraceArgs(() => new LogMessage
                         {
-                            KeyValuePair.Create("status_code", response.StatusCode.SafeToString())
-                        }
-                    });
-                }
-                catch (Exception ex)
-                {
-                    _log.TraceArgs(() => new LogMessage
+                            ShortMessage = String.Format("Response \"{0}\" for \"{1}\"", requestId, request.RequestUri.SafeToString()),
+                            LongMessage = responseBody,
+                            Context = "Logging response",
+                            Arguments = new[]
+                            {
+                                KeyValuePair.Create("status_code", response.StatusCode.SafeToString())
+                            }
+                        });
+                    }
+                    catch (Exception ex)
                     {
-                        Exception = ex,
-                        Context = "Logging response"
-                    });
-                }
+                        _log.ErrorArgs(() => new LogMessage
+                        {
+                            Exception = ex,
+                            Context = "Logging response"
+                        });
+                    }
 
-                return response;
-            }, cancellationToken);
+                    return response;
+                }, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                _log.FatalArgs(() => new LogMessage
+                {
+                    Exception = ex,
+                    Context = "Processing response"
+                });
+
+                // Should return a custom message?
+                throw;
+            }
         }
 
         #region Lettura IP della sorgente della richiesta

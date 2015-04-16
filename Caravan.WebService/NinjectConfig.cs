@@ -1,6 +1,7 @@
 ﻿using Common.Logging;
 using Finsa.Caravan.Common.Logging;
 using Ninject.Modules;
+using PommaLabs.KVLite;
 
 namespace Finsa.Caravan.WebService
 {
@@ -8,7 +9,8 @@ namespace Finsa.Caravan.WebService
     {
         public override void Load()
         {
-            Bind<ILog, ICaravanLog>().ToMethod(ctx => LogManager.GetLogger(ctx.GetScope().GetType()) as ICaravanLog);
+            Bind<ILog, ICaravanLog>().ToMethod(ctx => LogManager.GetLogger(ctx.Request.Target.Member.ReflectedType) as ICaravanLog);
+            Bind<ICache>().ToMethod(ctx => PersistentCache.DefaultInstance);
         }
     }
 }
