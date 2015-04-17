@@ -33,7 +33,7 @@
     <DefineConstants>TRACE;DEBUG;USETHROWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>App_Data/HelpPage/Finsa.Caravan.WebService.xml</DocumentationFile>
+    <DocumentationFile>App_Data\HelpPages\WebServiceHelp.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,7 +42,7 @@
     <DefineConstants>TRACE;USETHROWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>App_Data/HelpPage/Finsa.Caravan.WebService.xml</DocumentationFile>
+    <DocumentationFile>App_Data\HelpPages\WebServiceHelp.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime">
@@ -263,10 +263,6 @@
     <Folder Include="Views\Index\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CacheController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
@@ -287,7 +283,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\HelpPage\Finsa.Caravan.WebService.xml" />
+    <Content Include="App_Data\HelpPages\WebServiceHelp.xml" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
