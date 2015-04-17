@@ -10,14 +10,13 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using System;
 using Common.Logging;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Logging.Exceptions;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.DataAccess;
 using LinqToQuerystring.WebApi;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -38,7 +37,10 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         public LoggerController(ICaravanLog log)
         {
-            Raise<ArgumentNullException>.IfIsNull(log);
+            if (log == null)
+            {
+                throw new ArgumentNullException("log");
+            }
             _log = log;
         }
 
