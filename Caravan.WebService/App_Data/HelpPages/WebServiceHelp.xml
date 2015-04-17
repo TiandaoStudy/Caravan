@@ -1,0 +1,360 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Finsa.Caravan.WebService</name>
+    </assembly>
+    <members>
+        <member name="T:Finsa.Caravan.WebService.Controllers.CacheController">
+            <summary>
+              Controller che si occupa della gestione della cache locale al server.
+            </summary>
+        </member>
+        <member name="T:Finsa.Caravan.WebService.Controllers.HelpController">
+            <summary>
+              The HELP controller.
+            </summary>
+            <remarks>Adjust routing prefix according to your own needs.</remarks>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.#ctor">
+            <summary>
+              Override here default info.
+            </summary>
+        </member>
+        <member name="T:Finsa.Caravan.WebService.Controllers.LoggerController">
+            <summary>
+              Controller che si occupa della parte di logging.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.#ctor(Finsa.Caravan.Common.Logging.ICaravanLog)">
+            <summary>
+              Inizializza il controller con l'istanza del log di Caravan.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetPing">
+            <summary>
+              Writes a silly message into the log.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetPing(System.String)">
+            <summary>
+              Writes a silly message into the log.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetEntries(System.String)">
+            <summary>
+              Returns all log entries.
+            </summary>
+            <param name="appName">Application name</param>
+            <returns>All log entries.</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetEntries(System.String,Common.Logging.LogLevel)">
+            <summary>
+              returns all logs of a specified logLevel
+            </summary>
+            <param name="appName">Application name</param>
+            <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetEntry(System.String,System.Int64)">
+            <summary>
+              returns a logs of with specified ID
+            </summary>
+            <param name="appName">Application name</param>
+            <param name="logId">ID of the entry</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.PostLog(System.String,Finsa.Caravan.Common.Models.Logging.LogEntry)">
+            <summary>
+              Add a new log with the features specified in the body of the request
+            </summary>
+            <param name="appName">Application name</param>
+            <param name="log">The log to add</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.PostLog(System.String,Common.Logging.LogLevel,Finsa.Caravan.Common.Models.Logging.LogEntry)">
+            <summary>
+              Add
+            </summary>
+            <param name="appName">Application name</param>
+            <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
+            <param name="log">The log to add</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.DeleteLog(System.String,System.Int32)">
+            <summary>
+              Delete log with the specified id in the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="logId">The id of the log to delete which can be "warn", "info" or "error"</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetSettings">
+            <summary>
+              Returns all settings of the current application
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetSettings(System.String)">
+            <summary>
+              Returns all settings of the specified application
+            </summary>
+            <param name="appName">Application name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetSettings(System.String,Common.Logging.LogLevel)">
+            <summary>
+              Returns all settings of a specified logLevel
+            </summary>
+            <param name="appName"></param>
+            <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.PostSetting(System.String,Common.Logging.LogLevel,Finsa.Caravan.Common.Models.Logging.LogSetting)">
+            <summary>
+              Add a new setting of type = logLevel
+            </summary>
+            <param name="appName">Application name</param>
+            <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
+            <param name="settings">The setting to add</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.PutSetting(System.String,Common.Logging.LogLevel,Finsa.Caravan.Common.Models.Logging.LogSetting)">
+            <summary>
+              Update the setting of a particular logLevel
+            </summary>
+            <param name="appName">Application name</param>
+            <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
+            <param name="settings">The new data setting</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.DeleteSetting(System.String,Common.Logging.LogLevel)">
+            <summary>
+              Deletes setting of the logtype specified in the specified application
+            </summary>
+            <param name="appName">Application name</param>
+            <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
+        </member>
+        <member name="T:Finsa.Caravan.WebService.Controllers.SecurityController">
+            <summary>
+              Controller che si occupa della gestione della sicurezza.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetApps">
+            <summary>
+              Returns all the applications
+            </summary>
+            <returns>All the applications</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetApp(System.String)">
+            <summary>
+              Returns all details of the specified application
+            </summary>
+            <param name="appName">The application to show</param>
+            <returns>All the details of the specified application</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostApp(Finsa.Caravan.Common.Models.Security.SecApp)">
+            <summary>
+              Insert a new application
+            </summary>
+            <param name="app">The application to insert</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetUsers(System.String)">
+            <summary>
+              Returns all the users of the specified application
+            </summary>
+            <param name="appName">Application name</param>
+            <returns>All the users of the specified application</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostUser(System.String,Finsa.Caravan.Common.Models.Security.SecUser)">
+            <summary>
+              Add a new user in the specified application
+            </summary>
+            <param name="appName">Application name</param>
+            <param name="user">The new user to add</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutUser(System.String,System.String,Finsa.Caravan.Common.Models.Security.SecUser)">
+            <summary>
+              Update the user with the specified userLogin in the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="userLogin">The user login</param>
+            <param name="user">The user containing element to update</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteUser(System.String,System.String)">
+            <summary>
+              Delete the user with the specified user login from the specified application
+            </summary>
+            <param name="appName">the application name</param>
+            <param name="userLogin">the user login</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostUserToGroup(System.String,System.String,System.String)">
+            <summary>
+              Add a user to a the specified group of the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="userLogin">The user login of the user to add</param>
+            <param name="groupName">The group name</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteUserToGroup(System.String,System.String,System.String)">
+            <summary>
+              Delete the user with the specified login from the specified group
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="userLogin">The user login</param>
+            <param name="groupName">The group name</param>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetGroups(System.String)">
+            <summary>
+              Returns all groups of the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetGroup(System.String,System.String)">
+            <summary>
+              Return details on the specified group belong to the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="groupName">The group name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostGroup(System.String,Finsa.Caravan.Common.Models.Security.SecGroup)">
+            <summary>
+              Add a new group to the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="group">Group to add</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteGroup(System.String,System.String)">
+            <summary>
+              Remove the group specified from the application specified
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="groupName">The group name</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutGroup(System.String,System.String,Finsa.Caravan.Common.Models.Security.SecGroup)">
+            <summary>
+              Update the specified group
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="groupName">The group name</param>
+            <param name="group">The group containing element/s to update</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetContexts(System.String)">
+            <summary>
+              Returns all contexts of the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <returns>All contexts of the specified application</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetObjects(System.String)">
+            <summary>
+              Returns all objects belong to the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <returns>All objects belong to the specified application</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetObjects(System.String,System.String)">
+            <summary>
+              Returns all objects in the specified context
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="contextName">the context name</param>
+            <returns>All objects in the specified context</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetEntries(System.String)">
+            <summary>
+              Returns all entries of the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <returns>All entries of the specified application</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetEntries(System.String,System.String)">
+            <summary>
+              Returns all the entries of the specified context
+            </summary>
+            <param name="appName">the application name</param>
+            <param name="contextName">The context name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetEntries(System.String,System.String,System.String)">
+            <summary>
+              Returns all the entries of the specified user
+            </summary>
+            <param name="appName">the application name</param>
+            <param name="contextName">The context name</param>
+            <param name="userLogin">The user login name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetEntriesForObject(System.String,System.String,System.String)">
+            <summary>
+              Returns all the entries of the specified object
+            </summary>
+            <param name="appName">the application name</param>
+            <param name="contextName">The context name</param>
+            <param name="objectName">The object name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetEntriesForObject(System.String,System.String,System.String,System.String)">
+            <summary>
+              Returns all the entries of the specified object
+            </summary>
+            <param name="appName">the application name</param>
+            <param name="contextName">The context name</param>
+            <param name="objectName">The object name</param>
+            <param name="userLogin">The user login</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostEntry(System.String,Finsa.Caravan.WebService.Controllers.SecurityController.SecEntryForAdd)">
+            <summary>
+              Add a new entry in the specified application withe the specified parameters
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="entry">The entry to add</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteEntry(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+              Delete the specified entry from the application
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="contextname">The context name</param>
+            <param name="objectName">The object name</param>
+            <param name="userLogin">The user login (must be null if the group name is present)</param>
+            <param name="groupName">The group name (must be null if the user login is present)</param>
+        </member>
+        <member name="T:Finsa.Caravan.WebService.Controllers.ValuesController">
+            <summary>
+              Sample controller with basic interactions.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.ValuesController.Get">
+            <summary>
+              Returns all values.
+            </summary>
+            <returns>All values.</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.ValuesController.Get(System.Int32)">
+            <summary>
+              Looks up some data from ID.
+            </summary>
+            <param name="id">The id of the data.</param>
+            <returns>The value of the data.</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.ValuesController.Post(System.String)">
+            <summary>
+              Adds given value.
+            </summary>
+            <param name="value">Value of the api</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.ValuesController.Put(System.Int32,System.String)">
+            <summary>
+              Add at the api with id "id", the value "value"
+            </summary>
+            <param name="id">id of the api</param>
+            <param name="value">the value to add</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.ValuesController.Delete(System.Int32)">
+            <summary>
+              Delete the api with the Id retrieve from the body
+            </summary>
+            <param name="id">The id of the api to remove</param>
+        </member>
+    </members>
+</doc>
