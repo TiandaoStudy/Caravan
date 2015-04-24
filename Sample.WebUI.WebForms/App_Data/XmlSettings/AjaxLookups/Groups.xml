@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<AjaxLookupData xmlns="FLEX.Web.XmlSettings.AjaxLookup">
+  <LookupBy>
+    <SuggestionField>CGRP_NAME</SuggestionField>
+    <KeyField>CGRP_NAME</KeyField>
+    <DescriptionField>CGRP_DESCRIPTION</DescriptionField>
+    <SortField>CGRP_DESCRIPTION</SortField>
+    <LookupQuery>
+      select CGRP_NAME, CGRP_DESCRIPTION
+      from ASCESI.CARAVAN_SEC_GROUP
+      where CAPP_ID= 3 and  lower(CGRP_NAME || ' '|| CGRP_DESCRIPTION ) like lower('%{:UserQuery:}%')
+    </LookupQuery>
+  </LookupBy>
+</AjaxLookupData>

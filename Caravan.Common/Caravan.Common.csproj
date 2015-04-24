@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{11904ED0-33D2-4005-8766-B1E393A32EA7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Finsa.Caravan.Common</RootNamespace>
+    <AssemblyName>Finsa.Caravan.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>591508b8</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;USETHROWER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Finsa.Caravan.Common.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;USETHROWER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Finsa.Caravan.Common.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="CodeProject.ObjectPool, Version=1.3.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CodeProject.ObjectPool.1.3.5\lib\net40-client\CodeProject.ObjectPool.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.1.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Common.Logging.3.1.0\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Common.Logging.Core.3.1.0\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.NLog32">
+      <HintPath>..\packages\Common.Logging.NLog32.3.1.0\lib\net40\Common.Logging.NLog32.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Dapper.1.40\lib\net45\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Finsa.CodeServices.Clock, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Finsa.CodeServices.Clock.1.0.1\lib\net40\Finsa.CodeServices.Clock.dll</HintPath>
+    </Reference>
+    <Reference Include="Finsa.CodeServices.Testing, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Finsa.CodeServices.Testing.1.0.1\lib\net40\Finsa.CodeServices.Testing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=3.2.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="PommaLabs.KVLite">
+      <HintPath>..\packages\PommaLabs.KVLite.Core.2.1.3\lib\net45\PommaLabs.KVLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.Core.MSIL.1.0.96.0\lib\net45\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cache.cs" />
+    <Compile Include="Core\ServiceProvider.cs" />
+    <Compile Include="Finsa.Caravan.Common.XmlSchemas.MenuEntries.Item.Serialization.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Finsa.Caravan.Common.XmlSchemas.MenuEntries.Menu.Serialization.cs">
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IJsonSerializer.cs" />
+    <Compile Include="Logging\CaravanLogger.cs" />
+    <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />
+    <Compile Include="Logging\NoOpCaravanLogger.cs" />
+    <Compile Include="Logging\NoOpCaravanLoggerFactoryAdapter.cs" />
+    <Compile Include="Logging\ICaravanLogRepository.cs" />
+    <Compile Include="Logging\LogExtensions.cs" />
+    <Compile Include="Security\ISecurityRepository.cs" />
+    <Compile Include="Logging\ICaravanLog.cs" />
+    <Compile Include="Models\Logging\LogMessage.cs" />
+    <Compile Include="Models\Security\Exceptions\SecAppExistingException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecAppNotFoundException.cs" />
+    <Compile Include="Models\Logging\Exceptions\LogEntryExistingException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecGroupExistingException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecGroupNotFoundException.cs" />
+    <Compile Include="Models\Logging\Exceptions\LogEntryNotFoundException.cs" />
+    <Compile Include="Models\Logging\Exceptions\LogSettingExistingException.cs" />
+    <Compile Include="Models\Logging\Exceptions\LogSettingNotFoundException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecUserExistingException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecUserNotFoundException.cs" />
+    <Compile Include="Models\Formatting\TextAlignment.cs" />
+    <Compile Include="Models\Linking\AlternateLink.cs" />
+    <Compile Include="Models\Linking\CollectionLink.cs" />
+    <Compile Include="Models\Linking\EditLink.cs" />
+    <Compile Include="Models\Linking\EditMediaLink.cs" />
+    <Compile Include="Models\Linking\FirstLink.cs" />
+    <Compile Include="Models\Linking\LastLink.cs" />
+    <Compile Include="Models\Linking\Link.cs" />
+    <Compile Include="Models\Linking\LinkedObject.cs" />
+    <Compile Include="Models\Linking\Links.cs" />
+    <Compile Include="Models\Linking\NextLink.cs" />
+    <Compile Include="Models\Linking\PreviousLink.cs" />
+    <Compile Include="Models\Linking\RelatedLink.cs" />
+    <Compile Include="Models\Linking\SelfLink.cs" />
+    <Compile Include="Models\Logging\LogEntry.cs" />
+    <Compile Include="Models\Logging\LogResult.cs" />
+    <Compile Include="Models\Logging\LogSetting.cs" />
+    <Compile Include="Models\Rest\RestRequest.cs" />
+    <Compile Include="Models\Rest\RestResponse.cs" />
+    <Compile Include="Models\Security\SecApp.cs" />
+    <Compile Include="Models\Security\SecContext.cs" />
+    <Compile Include="Models\Security\SecEntry.cs" />
+    <Compile Include="Models\Security\SecRole.cs" />
+    <Compile Include="Models\Security\SecGroup.cs" />
+    <Compile Include="Models\Security\SecObject.cs" />
+    <Compile Include="Models\Security\SecUser.cs" />
+    <Compile Include="Models\Security\SecSession.cs" />
+    <Compile Include="KeyValuePair.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Serialization\Converters\IntToBoolConverter.cs" />
+    <Compile Include="Serialization\JsonNetSerializer.cs" />
+    <Compile Include="Utilities\Collections\Concurrent\ConcurrentDictionary.cs" />
+    <Compile Include="Utilities\Collections\Concurrent\ConcurrentDoublyLinkedList.cs" />
+    <Compile Include="Utilities\Collections\Concurrent\ConcurrentHashLinkedList.cs" />
+    <Compile Include="Utilities\Collections\Concurrent\ConcurrentQueue.cs" />
+    <Compile Include="Utilities\Collections\Concurrent\ConcurrentSinglyLinkedList.cs" />
+    <Compile Include="Utilities\Collections\Concurrent\ConcurrentThinLinkedList.cs" />
+    <Compile Include="Utilities\Collections\Contracts\LinkedListsContracts.cs" />
+    <Compile Include="Utilities\Collections\Core\LinkedListsBases.cs" />
+    <Compile Include="Utilities\Collections\Core\LinkedListsNodes.cs" />
+    <Compile Include="Utilities\Collections\DoublyLinkedList.cs" />
+    <Compile Include="Utilities\Collections\HashLinkedList.cs" />
+    <Compile Include="Utilities\Collections\LinkedListsInterfaces.cs" />
+    <Compile Include="Utilities\Collections\LinkedQueue.cs" />
+    <Compile Include="Utilities\Collections\LinkedStack.cs" />
+    <Compile Include="Utilities\Collections\ReadOnly\ReadOnlyDictionary.cs" />
+    <Compile Include="Utilities\Collections\ReadOnly\ReadOnlyList.cs" />
+    <Compile Include="Utilities\Collections\SinglyLinkedList.cs" />
+    <Compile Include="Utilities\Collections\ThinLinkedList.cs" />
+    <Compile Include="Utilities\Constants.cs" />
+    <Compile Include="Utilities\Core\ErrorMessages.cs" />
+    <Compile Include="Utilities\Diagnostics\Raise.cs" />
+    <Compile Include="Utilities\Environment.cs" />
+    <Compile Include="Utilities\EquatableObject.cs" />
+    <Compile Include="Utilities\Extensions\BooleanExtensions.cs" />
+    <Compile Include="Utilities\Extensions\DataTableExtensions.cs" />
+    <Compile Include="Utilities\Extensions\DecimalExtensions.cs" />
+    <Compile Include="Utilities\Extensions\DelegateExtensions.cs" />
+    <Compile Include="Utilities\Extensions\DoubleExtensions.cs" />
+    <Compile Include="Utilities\Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Utilities\Extensions\EventExtensions.cs" />
+    <Compile Include="Utilities\Extensions\IntegerExtensions.cs" />
+    <Compile Include="Utilities\Extensions\ObjectExtensions.cs" />
+    <Compile Include="Utilities\Extensions\StringExtensions.cs" />
+    <Compile Include="Utilities\FormattableObject.cs" />
+    <Compile Include="Utilities\Option.cs" />
+    <Compile Include="Utilities\PairAndTriple.cs" />
+    <Compile Include="Utilities\Portability\SerializableAttribute.cs" />
+    <Compile Include="Utilities\Portability\TypeInfo.cs" />
+    <Compile Include="Utilities\Reflection\ServiceLocator.cs" />
+    <Compile Include="Utilities\Testing\RandomDataTableGenerator.cs" />
+    <Compile Include="Utilities\Text\DiffMatchPatch.cs" />
+    <Compile Include="Utilities\Text\FastReplacer.cs" />
+    <Compile Include="Utilities\Threading\ConcurrentWorkQueue.cs" />
+    <Compile Include="Utilities\Tuples.cs" />
+    <Compile Include="Utilities\XML\DynamicXml.cs" />
+    <Compile Include="WebService\IAuthManager.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="WebForms\ISearchControl.cs" />
+    <Compile Include="WebForms\SearchCriteria.cs" />
+    <Compile Include="XsdClassGen.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XsdClassGen.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="XmlSchemas\MenuEntries.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XsdClassGen.mapping" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="KVLite\x64\Crc32C.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KVLite\x64\Snappy.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KVLite\x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KVLite\x86\Crc32C.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KVLite\x86\Snappy.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KVLite\x86\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XsdClassGen.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>XsdClassGen.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
