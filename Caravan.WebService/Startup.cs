@@ -1,4 +1,7 @@
-﻿using Finsa.Caravan.WebApi;
+﻿using System.Data.Entity.Infrastructure.Interception;
+using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.DataAccess.Drivers.Sql;
+using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebApi.DelegatingHandlers;
 using Finsa.Caravan.WebService;
 using Finsa.WebApi.HelpPage.AnyHost;
@@ -29,6 +32,7 @@ namespace Finsa.Caravan.WebService
             ConfigureWebApi(app, config);
 
             // Inizializzatore per Caravan.
+            DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
             config.MessageHandlers.Add(kernel.Get<LoggingDelegatingHandler>());
             ServiceHelper.ConfigureFormatters(config);
             ServiceHelper.ConfigureOutputCache(config, kernel.Get<ICache>());

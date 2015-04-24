@@ -169,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\Logging\LogActivityBase.cs" />
+    <Compile Include="Drivers\Sql\SqlDbCommandLogger.cs" />
     <Compile Include="Logging\CaravanLoggerTarget.cs" />
     <Compile Include="Drivers\Sql\Models\Security\SqlSecRole.cs" />
     <Compile Include="Settings.cs" />
