@@ -1,19 +1,15 @@
 ﻿using Common.Logging;
 using Common.Logging.Factory;
 using Common.Logging.NLog;
-using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Serialization;
 using Finsa.Caravan.Common.Utilities;
 using NLog;
 using System;
 using System.Collections.Generic;
-using LoggerNLog = NLog.Logger;
 using LogLevel = Common.Logging.LogLevel;
-using LogLevelNLog = NLog.LogLevel;
 
-namespace Finsa.Caravan.DataAccess.Logging
+namespace Finsa.Caravan.Common.Logging
 {
     /// <summary>
     ///   Concrete implementation of <see cref="ILog"/> interface specific to Caravan.
@@ -30,7 +26,7 @@ namespace Finsa.Caravan.DataAccess.Logging
 
         private static readonly IJsonSerializer CachedJsonSerializer = new JsonNetSerializer();
 
-        private readonly LoggerNLog _logger;
+        private readonly Logger _logger;
 
         #endregion Fields
 
@@ -39,8 +35,8 @@ namespace Finsa.Caravan.DataAccess.Logging
         /// <summary>
         ///   Builds an instance of the Caravan logger.
         /// </summary>
-        /// <param name="logger">The <see cref="LoggerNLog"/> that will be used as backend.</param>
-        public CaravanLogger(LoggerNLog logger)
+        /// <param name="logger">The <see cref="Logger"/> that will be used as backend.</param>
+        public CaravanLogger(Logger logger)
         {
             _logger = logger;
         }
@@ -1267,6 +1263,12 @@ namespace Finsa.Caravan.DataAccess.Logging
                 }
                 logMessage.ShortMessage = exception.Message;
                 logMessage.LongMessage = exception.StackTrace;
+                // Keep aligned with Finsa.DataAccess.CaravanLoggerTarget.ParseMessage
+                logMessage.Arguments = new List<KeyValuePair<string, string>>(logMessage.Arguments)
+                {
+                    KeyValuePair.Create("exception_data", exception.Data.LogAsJson()),
+                    KeyValuePair.Create("exception_source", exception.Source ?? Constants.EmptyString)
+                };
             }
             return JsonMessagePrefix + CachedJsonSerializer.SerializeObject(logMessage);
         }
@@ -1288,33 +1290,33 @@ namespace Finsa.Caravan.DataAccess.Logging
             _logger.Log(typeof(CaravanLogger), logEvent);
         }
 
-        private static LogLevelNLog GetLevel(LogLevel logLevel)
+        private static NLog.LogLevel GetLevel(LogLevel logLevel)
         {
             switch (logLevel)
             {
                 case LogLevel.All:
-                    return LogLevelNLog.Trace;
+                    return NLog.LogLevel.Trace;
 
                 case LogLevel.Trace:
-                    return LogLevelNLog.Trace;
+                    return NLog.LogLevel.Trace;
 
                 case LogLevel.Debug:
-                    return LogLevelNLog.Debug;
+                    return NLog.LogLevel.Debug;
 
                 case LogLevel.Info:
-                    return LogLevelNLog.Info;
+                    return NLog.LogLevel.Info;
 
                 case LogLevel.Warn:
-                    return LogLevelNLog.Warn;
+                    return NLog.LogLevel.Warn;
 
                 case LogLevel.Error:
-                    return LogLevelNLog.Error;
+                    return NLog.LogLevel.Error;
 
                 case LogLevel.Fatal:
-                    return LogLevelNLog.Fatal;
+                    return NLog.LogLevel.Fatal;
 
                 case LogLevel.Off:
-                    return LogLevelNLog.Off;
+                    return NLog.LogLevel.Off;
 
                 default:
                     throw new ArgumentOutOfRangeException("logLevel", logLevel, @"Unknown log level");

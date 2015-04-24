@@ -106,8 +106,10 @@
       <DependentUpon>XsdClassGen.tt</DependentUpon>
     </Compile>
     <Compile Include="IJsonSerializer.cs" />
-    <Compile Include="Logging\CaravanNoOpLogger.cs" />
-    <Compile Include="Logging\CaravanNoOpLoggerFactoryAdapter.cs" />
+    <Compile Include="Logging\CaravanLogger.cs" />
+    <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />
+    <Compile Include="Logging\NoOpCaravanLogger.cs" />
+    <Compile Include="Logging\NoOpCaravanLoggerFactoryAdapter.cs" />
     <Compile Include="Logging\ICaravanLogRepository.cs" />
     <Compile Include="Logging\LogExtensions.cs" />
     <Compile Include="Security\ISecurityRepository.cs" />

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using Fasterflect;
 using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Utilities;
 using Finsa.Caravan.Common.Utilities.Collections.ReadOnly;
@@ -12,15 +8,19 @@ using NLog;
 using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using LogLevel = Common.Logging.LogLevel;
-using Fasterflect;
 
 namespace Finsa.Caravan.DataAccess.Logging
 {
     /// <summary>
     ///   Target per il log di Caravan su database.
     /// </summary>
-    [Target("CaravanLogger")]
+    [Target("CaravanDbLogger")]
     public class CaravanLoggerTarget : Target
     {
         private static readonly SimpleLayout DefaultLogLevel = new SimpleLayout("${level}");
@@ -48,15 +48,24 @@ namespace Finsa.Caravan.DataAccess.Logging
         [RequiredParameter]
         public Layout Function { get; set; }
 
+        public Layout ShortMessage { get; set; }
+
+        public Layout LongMessage { get; set; }
+
+        public Layout Context { get; set; }
+
         protected override void Write(LogEventInfo logEvent)
         {
-            var logLevel = (LogLevel) Enum.Parse(typeof (LogLevel), LogLevel.Render(logEvent));
+            var logLevel = (LogLevel) Enum.Parse(typeof(LogLevel), LogLevel.Render(logEvent));
             var userLogin = UserLogin.Render(logEvent);
             var codeUnit = CodeUnit.Render(logEvent);
             var function = Function.Render(logEvent);
-            var logMessage = ParseMessage(logEvent.FormattedMessage);
+            var logMessage = ParseMessage(logEvent);
+            logMessage.ShortMessage = (ShortMessage != null) ? ShortMessage.Render(logEvent) : logMessage.ShortMessage;
+            logMessage.LongMessage = (LongMessage != null) ? LongMessage.Render(logEvent) : logMessage.LongMessage;
+            logMessage.Context = (Context != null) ? Context.Render(logEvent) : logMessage.Context;
             var arguments = GetGlobalVariables().Union(GetThreadVariables()).Union(logMessage.Arguments);
-            
+
             // In order to be able to use thread local information, it must _not_ be async.
             // ReSharper disable once UnusedVariable
             var result = Db.Logger.LogRaw(
@@ -72,8 +81,30 @@ namespace Finsa.Caravan.DataAccess.Logging
             );
         }
 
-        private static LogMessage ParseMessage(string msg)
+        private static LogMessage ParseMessage(LogEventInfo logEvent)
         {
+            var msg = logEvent.FormattedMessage;
+            var ex = logEvent.Exception;
+            if (ex != null)
+            {
+                // Get the innermost exception.
+                while (ex.InnerException != null)
+                {
+                    ex = ex.InnerException;
+                }
+                return new LogMessage
+                {
+                    ShortMessage = ((msg != null) ? msg + " - " : Constants.EmptyString),
+                    LongMessage = ex.StackTrace,
+                    Context = Constants.EmptyString,
+                    Arguments = new[]
+                    {
+                        // Keep aligned with Finsa.Common.Logging.CaravanLogger.SerializeJsonlogMessageCallback
+                        KeyValuePair.Create("exception_data", ex.Data.LogAsJson()),
+                        KeyValuePair.Create("exception_source", ex.Source ?? Constants.EmptyString)
+                    }
+                };
+            }
             if (!String.IsNullOrWhiteSpace(msg) && msg.StartsWith(CaravanLogger.JsonMessagePrefix))
             {
                 var json = msg.Substring(CaravanLogger.JsonMessagePrefix.Length);
@@ -97,7 +128,7 @@ namespace Finsa.Caravan.DataAccess.Logging
         private static readonly Flags DictFlags = Flags.Static | Flags.NonPublic;
         private static readonly MemberGetter GlobalDict = typeof(GlobalDiagnosticsContext).DelegateForGetFieldValue("dict", DictFlags);
         private static readonly MemberGetter ThreadDict = typeof(MappedDiagnosticsContext).DelegateForGetPropertyValue("ThreadDictionary", DictFlags);
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static IEnumerable<KeyValuePair<string, string>> GetGlobalVariables()
         {
@@ -116,6 +147,6 @@ namespace Finsa.Caravan.DataAccess.Logging
             return threadDict.Select(kv => KeyValuePair.Create(kv.Key, kv.Value)).ToList();
         }
 
-        #endregion
+        #endregion Raw reflection for NLog
     }
 }

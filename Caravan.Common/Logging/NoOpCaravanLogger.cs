@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Finsa.Caravan.Common.Logging
 {
-    public sealed class CaravanNoOpLogger : ICaravanLog
+    public sealed class NoOpCaravanLogger : ICaravanLog
     {
         #region ILog Members
 

@@ -169,8 +169,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\Logging\LogActivityBase.cs" />
-    <Compile Include="Logging\CaravanLogger.cs" />
-    <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />
     <Compile Include="Logging\CaravanLoggerTarget.cs" />
     <Compile Include="Drivers\Sql\Models\Security\SqlSecRole.cs" />
     <Compile Include="Settings.cs" />
@@ -297,6 +295,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Activities\Security\" />
+    <Folder Include="Security\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\ErrorMessages.resx">

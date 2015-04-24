@@ -6,7 +6,7 @@ using System;
 using System.IO;
 using LogManager = NLog.LogManager;
 
-namespace Finsa.Caravan.DataAccess.Logging
+namespace Finsa.Caravan.Common.Logging
 {
     public sealed class CaravanLoggerFactoryAdapter : AbstractCachingLoggerFactoryAdapter
     {
