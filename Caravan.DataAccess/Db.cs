@@ -90,13 +90,13 @@ namespace Finsa.Caravan.DataAccess
                 {
                     // If connection string is not in the configuration file, then return the cached
                     // one, even if empty.
-                    return cachedConnectionString;
+                    return cachedConnectionString.HasValue ? cachedConnectionString.Value : string.Empty;
                 }
                 Manager.ElaborateConnectionString(ref configConnectionString);
-                if (configConnectionString == cachedConnectionString)
+                if (cachedConnectionString == configConnectionString)
                 {
                     // Connection string has _not_ changed, return the cached one.
-                    return cachedConnectionString;
+                    return cachedConnectionString.Value;
                 }
 
                 // Connection string _has_ changed, update the cached one.

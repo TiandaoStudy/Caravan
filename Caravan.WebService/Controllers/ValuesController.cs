@@ -16,7 +16,6 @@ using System.Linq;
 using System.Web.Http;
 using LinqToQuerystring.WebApi;
 using Finsa.Caravan.Common.Utilities.Extensions;
-using PommaLabs.KVLite;
 using WebApi.OutputCache.V2;
 
 namespace Finsa.Caravan.WebService.Controllers
@@ -40,7 +39,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route(""), LinqToQueryable, CacheOutput(ServerTimeSpan = OutputCacheSeconds, ClientTimeSpan = OutputCacheSeconds)]
         public IQueryable<string> Get()
         {
-            return Common.Cache.Instance.GetManyItems(CachePartition).Select(i => i.Value).Cast<string>().AsQueryable();
+            return Common.Cache.Instance.GetItems<object>(CachePartition).Select(i => i.Value).Cast<string>().AsQueryable();
         }
 
         /// <summary>
@@ -51,7 +50,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{id}"), CacheOutput(ServerTimeSpan = OutputCacheSeconds, ClientTimeSpan = OutputCacheSeconds)]
         public string Get(int id)
         {
-            return Common.Cache.Instance.Get<string>(CachePartition, id.ToString(CultureInfo.InvariantCulture));
+            return Common.Cache.Instance.Get<string>(CachePartition, id.ToString(CultureInfo.InvariantCulture)).Value;
         }
 
         /// <summary>

@@ -15,6 +15,7 @@ using System.Linq;
 using PommaLabs.KVLite;
 using PommaLabs.KVLite.Web.Http;
 using System.Web.Http;
+using Finsa.CodeServices.Common;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -24,23 +25,37 @@ namespace Finsa.Caravan.WebService.Controllers
     [RoutePrefix("cache")]
     public sealed class CacheController : CacheControllerBase
     {
-        public override IQueryable<CacheItem> GetItems()
+        public override IQueryable<CacheItem<object>> GetItems()
         {
             return base.GetItems().Where(ItemIsNotConnectionString).AsQueryable();
         }
 
-        public override IQueryable<CacheItem> GetItems(string partition)
+        public override IQueryable<CacheItem<object>> GetItemsWithValues()
+        {
+            return base.GetItemsWithValues().Where(ItemIsNotConnectionString).AsQueryable();
+        }
+
+        public override IQueryable<CacheItem<object>> GetItems(string partition)
         {
             return base.GetItems(partition).Where(ItemIsNotConnectionString).AsQueryable();
         }
 
-        public override CacheItem GetItem(string partition, string key)
+        public override IQueryable<CacheItem<object>> GetItemsWithValues(string partition)
         {
-            var item = base.GetItem(partition, key);
-            return ItemIsNotConnectionString(item) ? item : null;
+            return base.GetItemsWithValues(partition).Where(ItemIsNotConnectionString).AsQueryable();
         }
 
-        private static bool ItemIsNotConnectionString(CacheItem item)
+        public override Option<CacheItem<object>> GetItem(string partition, string key)
+        {
+            var item = base.GetItem(partition, key);
+            if (item.HasValue && ItemIsNotConnectionString(item.Value))
+            {
+                return item;
+            }
+            return Option.None<CacheItem<object>>();
+        }
+
+        private static bool ItemIsNotConnectionString(CacheItem<object> item)
         {
             return !item.Key.ToLower(CultureInfo.InvariantCulture).Contains("connectionstring");
         }
