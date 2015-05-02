@@ -19,7 +19,7 @@ namespace Finsa.Caravan.WebService.Controllers
     ///   The HELP controller.
     /// </summary>
     /// <remarks>Adjust routing prefix according to your own needs.</remarks>
-    [RoutePrefix("help")]
+    [RoutePrefix("")]
     public sealed class HelpController : HelpControllerBase
     {
         /// <summary>
