@@ -131,8 +131,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Finsa.Odp.Net.Core.Unofficial.5.0.0\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.KVLite, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PommaLabs.KVLite.Core.3.0.2\lib\net45\PommaLabs.KVLite.dll</HintPath>
+    <Reference Include="PommaLabs.KVLite, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PommaLabs.KVLite.Core.3.0.3\lib\net45\PommaLabs.KVLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -397,12 +397,14 @@
   <ItemGroup>
     <Compile Include="CandidateList.aspx.cs">
       <DependentUpon>CandidateList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CandidateList.aspx.designer.cs">
       <DependentUpon>CandidateList.aspx</DependentUpon>
     </Compile>
     <Compile Include="ControlsOverview.aspx.cs">
       <DependentUpon>ControlsOverview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ControlsOverview.aspx.designer.cs">
       <DependentUpon>ControlsOverview.aspx</DependentUpon>
