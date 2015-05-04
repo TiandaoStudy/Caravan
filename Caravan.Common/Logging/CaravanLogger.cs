@@ -4,6 +4,7 @@ using Common.Logging.NLog;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Serialization;
 using Finsa.Caravan.Common.Utilities;
+using Finsa.Caravan.Common.Utilities.Collections.ReadOnly;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -1264,7 +1265,7 @@ namespace Finsa.Caravan.Common.Logging
                 logMessage.ShortMessage = exception.Message;
                 logMessage.LongMessage = exception.StackTrace;
                 // Keep aligned with Finsa.DataAccess.CaravanLoggerTarget.ParseMessage
-                logMessage.Arguments = new List<KeyValuePair<string, string>>(logMessage.Arguments)
+                logMessage.Arguments = new List<KeyValuePair<string, string>>(logMessage.Arguments ?? ReadOnlyList<KeyValuePair<string, string>>.EmptyList)
                 {
                     KeyValuePair.Create("exception_data", exception.Data.LogAsJson()),
                     KeyValuePair.Create("exception_source", exception.Source ?? Constants.EmptyString)
