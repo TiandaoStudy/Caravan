@@ -7,6 +7,7 @@ using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
 using NUnit.Framework;
 using Common.Logging;
+using Finsa.CodeServices.Common;
 
 namespace UnitTests.DataAccess
 {

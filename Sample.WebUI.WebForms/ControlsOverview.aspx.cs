@@ -6,6 +6,7 @@ using Finsa.Caravan.Common.WebForms;
 using Finsa.Caravan.DataAccess;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
+using Finsa.CodeServices.Common;
 
 namespace FLEX.Sample.WebUI
 {

@@ -3,6 +3,7 @@ using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.Common.Utilities.Extensions;
+using Finsa.CodeServices.Common;
 using Microsoft.Owin;
 using System;
 using System.Net.Http;

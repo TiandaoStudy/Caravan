@@ -5,6 +5,7 @@ using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Serialization;
 using Finsa.Caravan.Common.Utilities;
 using Finsa.Caravan.Common.Utilities.Collections.ReadOnly;
+using Finsa.CodeServices.Common;
 using NLog;
 using System;
 using System.Collections.Generic;

@@ -10,6 +10,7 @@ using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using Finsa.Caravan.DataAccess.Properties;
+using Finsa.CodeServices.Common;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {

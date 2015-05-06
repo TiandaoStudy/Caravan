@@ -6,6 +6,7 @@ using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
+using Finsa.CodeServices.Common;
 
 namespace Finsa.Caravan.DataAccess.Properties
 {

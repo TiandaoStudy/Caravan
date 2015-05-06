@@ -3,6 +3,7 @@ using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Utilities;
 using Finsa.Caravan.Common.Utilities.Diagnostics;
+using Finsa.CodeServices.Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
