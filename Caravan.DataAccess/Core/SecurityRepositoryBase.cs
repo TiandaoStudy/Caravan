@@ -11,7 +11,7 @@ using Finsa.Caravan.Common.Utilities.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
-    internal abstract class SecurityRepositoryBase<TSec> : ISecurityRepository where TSec : SecurityRepositoryBase<TSec>
+    internal abstract class SecurityRepositoryBase<TSec> : ICaravanSecurityRepository where TSec : SecurityRepositoryBase<TSec>
     {
         public SecApp CurrentApp { get; private set; }
 

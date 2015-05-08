@@ -112,6 +112,10 @@
       <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.IdentityModel.Protocol.Extensions">
       <HintPath>..\packages\Microsoft.IdentityModel.Protocol.Extensions.1.0.2.202250711\lib\net45\Microsoft.IdentityModel.Protocol.Extensions.dll</HintPath>
@@ -260,12 +264,18 @@
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Thinktecture.IdentityModel.Core">
+      <HintPath>..\packages\Thinktecture.IdentityModel.Core.1.4.0\lib\net45\Thinktecture.IdentityModel.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Thinktecture.IdentityServer3, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thinktecture.IdentityServer3.1.6.0\lib\net45\Thinktecture.IdentityServer3.dll</HintPath>
     </Reference>
     <Reference Include="Thinktecture.IdentityServer3.AccessTokenValidation">
       <HintPath>..\packages\Thinktecture.IdentityServer3.AccessTokenValidation.1.2.2\lib\net45\Thinktecture.IdentityServer3.AccessTokenValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Thinktecture.IdentityServer3.AspNetIdentity">
+      <HintPath>..\packages\Thinktecture.IdentityServer3.AspNetIdentity.1.0.0\lib\net45\Thinktecture.IdentityServer3.AspNetIdentity.dll</HintPath>
     </Reference>
     <Reference Include="WebApi.OutputCache.Core">
       <HintPath>..\packages\Strathweb.CacheOutput.WebApi2.0.6\lib\net45\WebApi.OutputCache.Core.dll</HintPath>

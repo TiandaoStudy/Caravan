@@ -31,7 +31,7 @@ namespace Finsa.Caravan.DataAccess
         private const string ConnectionStringKey = "ConnectionString";
 
         private static ICaravanLogRepository _loggerInstance;
-        private static ISecurityRepository _securityRepositoryInstance;
+        private static ICaravanSecurityRepository _securityRepositoryInstance;
         private static IDbManager _dbManagerInstance;
 
         static Db()
@@ -61,7 +61,7 @@ namespace Finsa.Caravan.DataAccess
             get { return _loggerInstance; }
         }
 
-        public static ISecurityRepository Security
+        public static ICaravanSecurityRepository Security
         {
             get { return _securityRepositoryInstance; }
         }

@@ -79,6 +79,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Finsa.CodeServices.Testing.1.0.8\lib\net40\Finsa.CodeServices.Testing.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -116,7 +119,8 @@
     <Compile Include="Logging\NoOpCaravanLoggerFactoryAdapter.cs" />
     <Compile Include="Logging\ICaravanLogRepository.cs" />
     <Compile Include="Logging\LogExtensions.cs" />
-    <Compile Include="Security\ISecurityRepository.cs" />
+    <Compile Include="Security\CaravanUserStore.cs" />
+    <Compile Include="Security\ICaravanSecurityRepository.cs" />
     <Compile Include="Logging\ICaravanLog.cs" />
     <Compile Include="Models\Logging\LogMessage.cs" />
     <Compile Include="Models\Security\Exceptions\SecAppExistingException.cs" />

@@ -5,7 +5,7 @@ using Finsa.Caravan.Common.Models.Security.Exceptions;
 
 namespace Finsa.Caravan.Common.Security
 {
-    public interface ISecurityRepository
+    public interface ICaravanSecurityRepository
     {
         SecApp CurrentApp { get; }
 

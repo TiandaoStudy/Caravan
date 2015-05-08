@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using Finsa.Caravan.Common.Models.Security;
+using Finsa.Caravan.Common.Security;
+using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common.Portability;
+using Microsoft.AspNet.Identity;
 using Owin;
+using Thinktecture.IdentityServer.AspNetIdentity;
 using Thinktecture.IdentityServer.Core.Configuration;
 using Thinktecture.IdentityServer.Core.Models;
 using Thinktecture.IdentityServer.Core.Services;
@@ -55,7 +60,7 @@ namespace Finsa.Caravan.WebService
         {
             var factory = new IdentityServerServiceFactory
             {
-                UserService = new Registration<IUserService>(resolver => new CaravanUserService())
+                UserService = new Registration<IUserService>(resolver => new AspNetIdentityUserService<SecUser, string>(new UserManager<SecUser, string>(new CaravanUserStore(Db.Security))))
             };
 
             var scopeStore = new InMemoryScopeStore(Scopes());
