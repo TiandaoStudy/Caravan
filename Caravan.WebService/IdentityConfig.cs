@@ -53,10 +53,10 @@ namespace Finsa.Caravan.WebService
 
         public static IdentityServerServiceFactory Configure(string connString)
         {
-            var factory = new IdentityServerServiceFactory();
-
-            factory.UserService =
-                new Registration<IUserService>(resolver => new CaravanUserService());
+            var factory = new IdentityServerServiceFactory
+            {
+                UserService = new Registration<IUserService>(resolver => new CaravanUserService())
+            };
 
             var scopeStore = new InMemoryScopeStore(Scopes());
             factory.ScopeStore = new Registration<IScopeStore>(resolver => scopeStore);

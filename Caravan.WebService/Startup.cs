@@ -1,16 +1,15 @@
 ﻿using Finsa.Caravan.DataAccess.Drivers.Sql;
 using Finsa.Caravan.WebApi;
-using Finsa.Caravan.WebApi.DelegatingHandlers;
 using Finsa.Caravan.WebApi.Middlewares;
 using Finsa.Caravan.WebService;
 using Finsa.WebApi.HelpPage.AnyHost;
 using Microsoft.Owin;
 using Ninject;
-using Ninject.Parameters;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
 using PommaLabs.KVLite;
+using PommaLabs.KVLite.Web.Http;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Web;
 using System.Web.Http;
@@ -29,14 +28,14 @@ namespace Finsa.Caravan.WebService
             // Inizializzatore per Caravan.
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
             app.Use(kernel.Get<HttpLoggingMiddleware>());
+            ApiOutputCache.RegisterAsCacheOutputProvider(config, kernel.Get<ICache>());
             ServiceHelper.ConfigureFormatters(config);
-            ServiceHelper.ConfigureOutputCache(config, kernel.Get<ICache>());
 
             // Inizializzatore per Ninject.
             app.UseNinjectMiddleware(CreateKernel).UseNinjectWebApi(config);
 
-            // Inizializzatori di default per Web API.
-            ConfigureWebApi(app, config);
+            // Inizializzatore per le pagine di Help.
+            ConfigureHelpPages(config);
 
             // Inizializzazione gestione identità.
             IdentityConfig.Build(app);
@@ -47,7 +46,7 @@ namespace Finsa.Caravan.WebService
             return new StandardKernel(new NinjectConfig());
         }
 
-        private static void ConfigureWebApi(IAppBuilder app, HttpConfiguration config)
+        private static void ConfigureHelpPages(HttpConfiguration config)
         {
             // REQUIRED TO ENABLE HELP PAGES :)
             config.MapHttpAttributeRoutes(new HelpDirectRouteProvider());
