@@ -57,9 +57,6 @@ namespace Finsa.Caravan.Common.Logging
                 case "FILE":
                     LogManager.Configuration = new XmlLoggingConfiguration(configFile);
                     break;
-
-                default:
-                    break;
             }
         }
 

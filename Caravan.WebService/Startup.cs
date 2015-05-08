@@ -13,6 +13,7 @@ using Owin;
 using PommaLabs.KVLite;
 using System.Web;
 using System.Web.Http;
+using Thinktecture.IdentityServer.Core.Configuration;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -31,10 +32,15 @@ namespace Finsa.Caravan.WebService
             // Inizializzatori di default per Web API.
             ConfigureWebApi(app, config);
 
+            // Inizializzazione gestione identità.
+            var options = new IdentityServerOptions
+            {                
+            };
+
             // Inizializzatore per Caravan.
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
-            config.MessageHandlers.Add(kernel.Get<LoggingDelegatingHandler>());
             ServiceHelper.ConfigureFormatters(config);
+            ServiceHelper.ConfigureHandlers(config, kernel.Get<LoggingDelegatingHandler>());
             ServiceHelper.ConfigureOutputCache(config, kernel.Get<ICache>());
         }
 

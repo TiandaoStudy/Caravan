@@ -1,6 +1,8 @@
 ﻿using Common.Logging;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Utilities.Diagnostics;
+using Finsa.Caravan.DataAccess.Drivers.Sql;
+using Finsa.Caravan.WebApi.DelegatingHandlers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PommaLabs.KVLite;
@@ -50,6 +52,17 @@ namespace Finsa.Caravan.WebApi
             // Personalizzo le impostazioni del serializzatore XML.
             var xml = configuration.Formatters.XmlFormatter;
             xml.Indent = false;
+        }
+
+        public static void ConfigureHandlers(HttpConfiguration configuration, LoggingDelegatingHandler loggingDelegatingHandler)
+        {
+            // Controlli di integrità.
+            Raise<ArgumentNullException>.IfIsNull(configuration);
+
+            if (loggingDelegatingHandler != null)
+            {
+                configuration.MessageHandlers.Add(loggingDelegatingHandler);
+            }
         }
 
         public static void ConfigureOutputCache(HttpConfiguration configuration, ICache cache)
