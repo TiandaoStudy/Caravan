@@ -29,7 +29,7 @@ namespace Finsa.Caravan.WebService
                     Enabled = true,
 
                     ClientId = "CaravanWebServiceDemo",
-                    ClientSecrets = new List<ClientSecret> {new ClientSecret("CaravanSecret")},
+                    ClientSecrets = new List<ClientSecret> {new ClientSecret("CaravanSecret".Sha256())},
 
                     Flow = Flows.ResourceOwner,
                     AccessTokenType = AccessTokenType.Jwt,
