@@ -1,4 +1,6 @@
-﻿using Common.Logging;
+﻿using System.Net.Http;
+using System.Web.Http.Dispatcher;
+using Common.Logging;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.DataAccess.Drivers.Sql;

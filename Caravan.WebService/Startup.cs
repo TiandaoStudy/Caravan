@@ -1,19 +1,19 @@
-﻿using System.Data.Entity.Infrastructure.Interception;
-using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.DataAccess.Drivers.Sql;
+﻿using Finsa.Caravan.DataAccess.Drivers.Sql;
 using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebApi.DelegatingHandlers;
+using Finsa.Caravan.WebApi.Middlewares;
 using Finsa.Caravan.WebService;
 using Finsa.WebApi.HelpPage.AnyHost;
 using Microsoft.Owin;
 using Ninject;
+using Ninject.Parameters;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
 using PommaLabs.KVLite;
+using System.Data.Entity.Infrastructure.Interception;
 using System.Web;
 using System.Web.Http;
-using Thinktecture.IdentityServer.Core.Configuration;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -26,6 +26,12 @@ namespace Finsa.Caravan.WebService
             var config = new HttpConfiguration();
             var kernel = CreateKernel();
 
+            // Inizializzatore per Caravan.
+            DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
+            app.Use(kernel.Get<HttpLoggingMiddleware>());
+            ServiceHelper.ConfigureFormatters(config);
+            ServiceHelper.ConfigureOutputCache(config, kernel.Get<ICache>());
+
             // Inizializzatore per Ninject.
             app.UseNinjectMiddleware(CreateKernel).UseNinjectWebApi(config);
 
@@ -33,15 +39,7 @@ namespace Finsa.Caravan.WebService
             ConfigureWebApi(app, config);
 
             // Inizializzazione gestione identità.
-            var options = new IdentityServerOptions
-            {                
-            };
-
-            // Inizializzatore per Caravan.
-            DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
-            ServiceHelper.ConfigureFormatters(config);
-            ServiceHelper.ConfigureHandlers(config, kernel.Get<LoggingDelegatingHandler>());
-            ServiceHelper.ConfigureOutputCache(config, kernel.Get<ICache>());
+            IdentityConfig.Build(app);
         }
 
         private static IKernel CreateKernel()
@@ -55,8 +53,6 @@ namespace Finsa.Caravan.WebService
             config.MapHttpAttributeRoutes(new HelpDirectRouteProvider());
             var xmlDocPath = HttpContext.Current.Server.MapPath(@"~/App_Data/HelpPages/WebServiceHelp.xml");
             config.SetDocumentationProvider(new XmlDocumentationProvider(xmlDocPath));
-
-            app.UseWebApi(config);
         }
     }
 }
