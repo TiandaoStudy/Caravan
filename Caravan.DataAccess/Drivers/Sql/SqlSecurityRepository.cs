@@ -188,7 +188,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                         Active = newUser.Active,
                         Email = newUser.Email,
                         FirstName = newUser.FirstName,
-                        HashedPassword = newUser.Password, // TODO Applicare HASH
+                        HashedPassword = newUser.HashedPassword, // TODO Applicare HASH
                         LastName = newUser.LastName,
                         Login = newUser.Login
                     });

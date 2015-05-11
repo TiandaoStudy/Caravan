@@ -10,6 +10,8 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using PommaLabs.KVLite;
@@ -23,26 +25,30 @@ namespace Finsa.Caravan.WebService.Controllers
     ///   Controller che si occupa della gestione della cache locale al server.
     /// </summary>
     [RoutePrefix("cache")]
-    public sealed class CacheController : CacheControllerBase
+    public sealed class CacheController : AbstractCacheController
     {
-        public override IQueryable<CacheItem<object>> GetItems()
+        public CacheController(ICache cache) : base(cache)
         {
-            return base.GetItems().Where(ItemIsNotConnectionString).AsQueryable();
         }
 
-        public override IQueryable<CacheItem<object>> GetItemsWithValues()
+        public override IEnumerable<CacheItem<object>> GetItems(string partitionLike = null, string keyLike = null, DateTime? fromExpiry = null, DateTime? toExpiry = null, DateTime? fromCreation = null, DateTime? toCreation = null)
         {
-            return base.GetItemsWithValues().Where(ItemIsNotConnectionString).AsQueryable();
+            return base.GetItems(partitionLike, keyLike, fromExpiry, toExpiry, fromCreation, toCreation).Where(ItemIsNotConnectionString);
         }
 
-        public override IQueryable<CacheItem<object>> GetItems(string partition)
+        public override IEnumerable<CacheItem<object>> GetItemsWithValues(string partitionLike = null, string keyLike = null, DateTime? fromExpiry = null, DateTime? toExpiry = null, DateTime? fromCreation = null, DateTime? toCreation = null)
         {
-            return base.GetItems(partition).Where(ItemIsNotConnectionString).AsQueryable();
+            return base.GetItemsWithValues(partitionLike, keyLike, fromExpiry, toExpiry, fromCreation, toCreation).Where(ItemIsNotConnectionString);
         }
 
-        public override IQueryable<CacheItem<object>> GetItemsWithValues(string partition)
+        public override IEnumerable<CacheItem<object>> GetPartitionItems(string partition, string keyLike = null, DateTime? fromExpiry = null, DateTime? toExpiry = null, DateTime? fromCreation = null, DateTime? toCreation = null)
         {
-            return base.GetItemsWithValues(partition).Where(ItemIsNotConnectionString).AsQueryable();
+            return base.GetPartitionItems(partition, keyLike, fromExpiry, toExpiry, fromCreation, toCreation).Where(ItemIsNotConnectionString);
+        }
+
+        public override IEnumerable<CacheItem<object>> GetPartitionItemsWithValues(string partition, string keyLike = null, DateTime? fromExpiry = null, DateTime? toExpiry = null, DateTime? fromCreation = null, DateTime? toCreation = null)
+        {
+            return base.GetPartitionItemsWithValues(partition, keyLike, fromExpiry, toExpiry, fromCreation, toCreation).Where(ItemIsNotConnectionString);
         }
 
         public override Option<CacheItem<object>> GetItem(string partition, string key)
