@@ -1,4 +1,5 @@
 ﻿using Finsa.Caravan.Common.Utilities;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

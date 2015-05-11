@@ -7,7 +7,7 @@ namespace Finsa.Caravan.Common.Security
 {
     public class CaravanUserManager : UserManager<SecUser, string>
     {
-        public CaravanUserManager(IUserStore<SecUser> store, IPasswordHasher passwordHasher)
+        public CaravanUserManager(IUserStore<SecUser, string> store, IPasswordHasher passwordHasher)
             : base(store)
         {
             Raise<ArgumentNullException>.IfIsNull(passwordHasher);

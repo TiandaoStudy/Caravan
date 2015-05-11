@@ -7,8 +7,8 @@ using System.Runtime.Serialization;
 
 namespace Finsa.Caravan.Common.Models.Security
 {
-    [Serializable, DataContract]
-    public class SecUser : EquatableObject<SecUser>, IUser
+    [Serializable, JsonObject(MemberSerialization.OptIn), DataContract]
+    public class SecUser : EquatableObject<SecUser>, IUser<string>
     {
         [JsonProperty(Order = 0), DataMember(Order = 0)]
         public string AppName { get; set; }
@@ -32,9 +32,12 @@ namespace Finsa.Caravan.Common.Models.Security
         public string Email { get; set; }
 
         [JsonProperty(Order = 7), DataMember(Order = 7)]
-        public SecGroup[] Groups { get; set; }
+        public string PhoneNumber { get; set; }
 
         [JsonProperty(Order = 8), DataMember(Order = 8)]
+        public SecGroup[] Groups { get; set; }
+
+        [JsonProperty(Order = 9), DataMember(Order = 9)]
         public SecRole[] Roles { get; set; }
 
         #region IUser members

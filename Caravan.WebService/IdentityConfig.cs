@@ -7,6 +7,7 @@ using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common.Portability;
+using Finsa.CodeServices.Security.PasswordHashing;
 using Microsoft.AspNet.Identity;
 using Owin;
 using Thinktecture.IdentityServer.AspNetIdentity;

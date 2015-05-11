@@ -7,7 +7,7 @@ using Microsoft.AspNet.Identity;
 
 namespace Finsa.Caravan.Common.Security
 {
-    public sealed class CaravanUserStore : IUserStore<SecUser>, IUserLoginStore<SecUser>, IUserPasswordStore<SecUser>
+    public class CaravanUserStore : IUserStore<SecUser>, IUserEmailStore<SecUser>, IUserLoginStore<SecUser>, IUserPasswordStore<SecUser>
     {
         private readonly ICaravanSecurityRepository _securityRepository;
 
@@ -52,6 +52,35 @@ namespace Finsa.Caravan.Common.Security
 
         #endregion
 
+        #region IUserEmailStore members
+
+        public Task SetEmailAsync(SecUser user, string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> GetEmailAsync(SecUser user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> GetEmailConfirmedAsync(SecUser user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SetEmailConfirmedAsync(SecUser user, bool confirmed)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<SecUser> FindByEmailAsync(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion IUserEmailStore members
+
         #region IUserLoginStore members
 
         public Task AddLoginAsync(SecUser user, UserLoginInfo login)
@@ -83,6 +112,7 @@ namespace Finsa.Caravan.Common.Security
             return Task.Run(() =>
             {
                 user.HashedPassword = passwordHash;
+                throw new NotImplementedException();
             });
         }
 

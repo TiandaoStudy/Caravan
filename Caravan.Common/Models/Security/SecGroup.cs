@@ -1,4 +1,5 @@
 ﻿using Finsa.Caravan.Common.Utilities;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,8 +7,8 @@ using System.Runtime.Serialization;
 
 namespace Finsa.Caravan.Common.Models.Security
 {
-    [Serializable, DataContract]
-    public class SecGroup : EquatableObject<SecGroup>
+    [Serializable, JsonObject(MemberSerialization.OptIn), DataContract]
+    public class SecGroup : EquatableObject<SecGroup>, IRole<string>
     {
         [JsonProperty(Order = 0), DataMember(Order = 0)]
         public string AppName { get; set; }
@@ -27,6 +28,14 @@ namespace Finsa.Caravan.Common.Models.Security
         [JsonProperty(Order = 5), DataMember(Order = 5)]
         public SecRole[] Roles { get; set; }
 
+        #region IRole members
+
+        public string Id { get; private set; }
+
+        #endregion
+
+        #region FormattableObject members
+
         protected override IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
         {
             yield return GKeyValuePair.Create("AppName", AppName);
@@ -39,5 +48,7 @@ namespace Finsa.Caravan.Common.Models.Security
             yield return Name;
             yield return AppName;
         }
+
+        #endregion
     }
 }
