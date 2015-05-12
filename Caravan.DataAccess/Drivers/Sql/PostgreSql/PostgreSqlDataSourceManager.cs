@@ -1,13 +1,14 @@
 ﻿using System.Data.Common;
 using Finsa.Caravan.DataAccess.Core;
+using Npgsql;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.MySql
+namespace Finsa.Caravan.DataAccess.Drivers.Sql.PostgreSql
 {
-    internal sealed class MySqlDbManager : DbManagerBase
+    internal sealed class PostgreSqlDataSourceManager : AbstractDataSourceManager
     {
-        public override DataAccessKind Kind
+        public override DataSourceKind DataSourceKind
         {
-            get { return DataAccessKind.MySql; }
+            get { return DataSourceKind.PostgreSql; }
         }
 
         public override void ElaborateConnectionString(ref string connectionString)
@@ -17,7 +18,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.MySql
 
         public override DbConnection CreateConnection()
         {
-            var connection = global::MySql.Data.MySqlClient.MySqlClientFactory.Instance.CreateConnection();
+            var connection = NpgsqlFactory.Instance.CreateConnection();
             connection.ConnectionString = Db.ConnectionString;
             return connection;
         }

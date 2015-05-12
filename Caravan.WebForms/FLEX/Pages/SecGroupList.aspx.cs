@@ -53,14 +53,14 @@ namespace Finsa.Caravan.WebForms.Pages
           {
               var groupName = SearchCriteria["CGRP_NAME"][0];
               // This should not catch any exception, others will do.
-              groups = (from g in DataAccess.Db.Security.Groups(Common.Properties.Settings.Default.ApplicationName)
+              groups = (from g in DataAccess.Db.Security.GetGroups(Common.Properties.Settings.Default.ApplicationName)
                             select new SecGroup { Name = g.Name, Description = g.Description, Notes = g.Notes }).Where(x => x.Name == groupName.ToString())
                             .ToDataTable();
           }
 
           else
           {
-             groups = (from g in DataAccess.Db.Security.Groups(Common.Properties.Settings.Default.ApplicationName)
+             groups = (from g in DataAccess.Db.Security.GetGroups(Common.Properties.Settings.Default.ApplicationName)
                     select new SecGroup { Name = g.Name, Description = g.Description, Notes = g.Notes })
                            .ToDataTable();
           }

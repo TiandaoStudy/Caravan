@@ -3,18 +3,18 @@ using Finsa.Caravan.DataAccess.Core;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.FakeSql
 {
-    internal sealed class FakeSqlDbManager : DbManagerBase
+    internal sealed class FakeSqlDataSourceManager : AbstractDataSourceManager
     {
         private DbConnection _connection;
 
-        public FakeSqlDbManager()
+        public FakeSqlDataSourceManager()
         {
             ResetConnection();
         }
 
-        public override DataAccessKind Kind
+        public override DataSourceKind DataSourceKind
         {
-            get { return DataAccessKind.FakeSql; }
+            get { return DataSourceKind.FakeSql; }
         }
 
         public override void ElaborateConnectionString(ref string connectionString)

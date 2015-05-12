@@ -17,7 +17,7 @@ namespace Finsa.Caravan.Common.Models.Security
         public string Login { get; set; }
 
         [JsonProperty(Order = 2), DataMember(Order = 2)]
-        public string HashedPassword { get; set; }
+        public string PasswordHash { get; set; }
 
         [JsonProperty(Order = 3), DataMember(Order = 3)]
         public bool Active { get; set; }
@@ -32,12 +32,18 @@ namespace Finsa.Caravan.Common.Models.Security
         public string Email { get; set; }
 
         [JsonProperty(Order = 7), DataMember(Order = 7)]
-        public string PhoneNumber { get; set; }
+        public bool EmailConfirmed { get; set; }
 
         [JsonProperty(Order = 8), DataMember(Order = 8)]
-        public SecGroup[] Groups { get; set; }
+        public string PhoneNumber { get; set; }
 
         [JsonProperty(Order = 9), DataMember(Order = 9)]
+        public bool PhoneNumberConfirmed { get; set; }
+
+        [JsonProperty(Order = 10), DataMember(Order = 10)]
+        public SecGroup[] Groups { get; set; }
+
+        [JsonProperty(Order = 11), DataMember(Order = 11)]
         public SecRole[] Roles { get; set; }
 
         #region IUser members

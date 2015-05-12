@@ -1,14 +1,14 @@
 using System.Data.Common;
-using System.Data.SqlServerCe;
+using System.Data.SqlClient;
 using Finsa.Caravan.DataAccess.Core;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.SqlServerCe
+namespace Finsa.Caravan.DataAccess.Drivers.Sql.SqlServer
 {
-    internal sealed class SqlServerCeDbManager : DbManagerBase
+    internal sealed class SqlServerDataSourceManager : AbstractDataSourceManager
     {
-        public override DataAccessKind Kind
+        public override DataSourceKind DataSourceKind
         {
-            get { return DataAccessKind.SqlServerCe; }
+            get { return DataSourceKind.SqlServer; }
         }
 
         public override void ElaborateConnectionString(ref string connectionString)
@@ -18,7 +18,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.SqlServerCe
 
         public override DbConnection CreateConnection()
         {
-            var connection = SqlCeProviderFactory.Instance.CreateConnection();
+            var connection = SqlClientFactory.Instance.CreateConnection();
             connection.ConnectionString = Db.ConnectionString;
             return connection;
         }

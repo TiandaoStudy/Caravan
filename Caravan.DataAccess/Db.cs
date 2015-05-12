@@ -32,14 +32,14 @@ namespace Finsa.Caravan.DataAccess
 
         private static ICaravanLogRepository _loggerInstance;
         private static ICaravanSecurityRepository _securityRepositoryInstance;
-        private static IDbManager _dbManagerInstance;
+        private static IDataSourceManager _dataSourceManagerInstance;
 
         static Db()
         {
-            DataAccessKind accessKind;
-            if (Enum.TryParse(Settings.Default.DataAccessKind, true, out accessKind))
+            DataSourceKind dataSourceKind;
+            if (Enum.TryParse(Settings.Default.DataAccessKind, true, out dataSourceKind))
             {
-                SetDataAccessKind(accessKind);
+                SetDataAccessKind(dataSourceKind);
             }
             else
             {
@@ -49,11 +49,11 @@ namespace Finsa.Caravan.DataAccess
 
         #region Public Properties - Instances
 
-        public static DataAccessKind AccessKind { get; set; }
+        public static DataSourceKind DataSourceKind { get; set; }
 
-        public static IDbManager Manager
+        public static IDataSourceManager Manager
         {
-            get { return _dbManagerInstance; }
+            get { return _dataSourceManagerInstance; }
         }
 
         public static ICaravanLogRepository Logger
@@ -116,17 +116,17 @@ namespace Finsa.Caravan.DataAccess
 
         internal static void ChangeDataAccessKindUseOnlyForUnitTestsPlease()
         {
-            SetDataAccessKind(DataAccessKind.FakeSql);
+            SetDataAccessKind(DataSourceKind.FakeSql);
         }
 
         internal static void ClearAllTablesUseOnlyInsideUnitTestsPlease()
         {
-            switch (AccessKind)
+            switch (DataSourceKind)
             {
                 // Custom actions are required for Effort.
-                case DataAccessKind.FakeSql:
+                case DataSourceKind.FakeSql:
                     // A new connection is created and persisted for the whole test duration.
-                    (Manager as FakeSqlDbManager).ResetConnection();
+                    (Manager as FakeSqlDataSourceManager).ResetConnection();
                     // The database is recreated, since it is in-memory and probably it does not exist.
                     using (var ctx = SqlDbContext.CreateWriteContext())
                     {
@@ -137,11 +137,11 @@ namespace Finsa.Caravan.DataAccess
                     }
                     break;
 
-                case DataAccessKind.MySql:
-                case DataAccessKind.Oracle:
-                case DataAccessKind.PostgreSql:
-                case DataAccessKind.SqlServer:
-                case DataAccessKind.SqlServerCe:
+                case DataSourceKind.MySql:
+                case DataSourceKind.Oracle:
+                case DataSourceKind.PostgreSql:
+                case DataSourceKind.SqlServer:
+                case DataSourceKind.SqlServerCe:
                     using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
                     using (var ctx = SqlDbContext.CreateWriteContext())
                     {
@@ -165,13 +165,13 @@ namespace Finsa.Caravan.DataAccess
                     }
                     break;
 
-                case DataAccessKind.Rest:
+                case DataSourceKind.Rest:
                     var client = new RestClient(Settings.Default.RestServiceUrl);
                     var request = new RestRequest("testing/clearAllTablesUseOnlyInsideUnitTestsPlease", Method.POST);
                     client.Execute(request);
                     break;
 
-                case DataAccessKind.MongoDb:
+                case DataSourceKind.MongoDb:
                     MongoUtilities.GetLogEntryCollection().Drop();
                     MongoUtilities.GetSecAppCollection().Drop();
                     MongoUtilities.GetSequenceCollection().Drop();
@@ -188,58 +188,58 @@ namespace Finsa.Caravan.DataAccess
 
         #region Private Methods
 
-        private static void SetDataAccessKind(DataAccessKind kind)
+        private static void SetDataAccessKind(DataSourceKind kind)
         {
-            Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(DataAccessKind), kind));
-            AccessKind = kind;
+            Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(DataSourceKind), kind));
+            DataSourceKind = kind;
 
             switch (kind)
             {
-                case DataAccessKind.FakeSql:
-                    _dbManagerInstance = new FakeSqlDbManager();
+                case DataSourceKind.FakeSql:
+                    _dataSourceManagerInstance = new FakeSqlDataSourceManager();
                     break;
 
-                case DataAccessKind.MongoDb:
-                    _dbManagerInstance = new MongoDbManager();
+                case DataSourceKind.MongoDb:
+                    _dataSourceManagerInstance = new MongoDataSourceManager();
                     _loggerInstance = new MongoLogRepository();
                     _securityRepositoryInstance = new MongoSecurityRepository();
                     break;
 
-                case DataAccessKind.MySql:
-                    _dbManagerInstance = new MySqlDbManager();
+                case DataSourceKind.MySql:
+                    _dataSourceManagerInstance = new MySqlDataSourceManager();
                     break;
 
-                case DataAccessKind.Oracle:
-                    _dbManagerInstance = new OracleDbManager();
+                case DataSourceKind.Oracle:
+                    _dataSourceManagerInstance = new OracleDataSourceManager();
                     break;
 
-                case DataAccessKind.PostgreSql:
-                    _dbManagerInstance = new PostgreSqlDbManager();
+                case DataSourceKind.PostgreSql:
+                    _dataSourceManagerInstance = new PostgreSqlDataSourceManager();
                     break;
 
-                case DataAccessKind.Rest:
+                case DataSourceKind.Rest:
                     _loggerInstance = new RestLogRepository();
                     _securityRepositoryInstance = new RestSecurityRepository();
                     break;
 
-                case DataAccessKind.SqlServer:
-                    _dbManagerInstance = new SqlServerDbManager();
+                case DataSourceKind.SqlServer:
+                    _dataSourceManagerInstance = new SqlServerDataSourceManager();
                     break;
 
-                case DataAccessKind.SqlServerCe:
-                    _dbManagerInstance = new SqlServerCeDbManager();
+                case DataSourceKind.SqlServerCe:
+                    _dataSourceManagerInstance = new SqlServerCeDataSourceManager();
                     break;
             }
 
             // Sets the implementations which are shared between SQL drivers.
             switch (kind)
             {
-                case DataAccessKind.FakeSql:
-                case DataAccessKind.MySql:
-                case DataAccessKind.Oracle:
-                case DataAccessKind.PostgreSql:
-                case DataAccessKind.SqlServer:
-                case DataAccessKind.SqlServerCe:
+                case DataSourceKind.FakeSql:
+                case DataSourceKind.MySql:
+                case DataSourceKind.Oracle:
+                case DataSourceKind.PostgreSql:
+                case DataSourceKind.SqlServer:
+                case DataSourceKind.SqlServerCe:
                     _loggerInstance = new SqlLogRepository();
                     _securityRepositoryInstance = new SqlSecurityRepository();
                     break;

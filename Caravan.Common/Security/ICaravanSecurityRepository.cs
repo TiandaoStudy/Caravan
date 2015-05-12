@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Finsa.Caravan.Common.Models.Security;
+﻿using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Models.Security.Exceptions;
+using System;
+using System.Collections.Generic;
 
 namespace Finsa.Caravan.Common.Security
 {
@@ -16,7 +16,7 @@ namespace Finsa.Caravan.Common.Security
         /// <summary>
         ///   </summary>
         /// <returns></returns>
-        IList<SecApp> Apps();
+        SecApp[] GetApps();
 
         /// <summary>
         ///   </summary>
@@ -24,7 +24,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns></returns>
         /// <exception cref="SecAppNotFoundException">There is no app with given <paramref name="appName"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
-        SecApp App(string appName);
+        SecApp GetApp(string appName);
 
         /// <summary>
         ///   TODO
@@ -46,7 +46,7 @@ namespace Finsa.Caravan.Common.Security
         /// <param name="appName"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
-        IList<SecGroup> Groups(string appName);
+        SecGroup[] GetGroups(string appName);
 
         /// <summary>
         ///   </summary>
@@ -56,7 +56,7 @@ namespace Finsa.Caravan.Common.Security
         /// <exception cref="ArgumentException">
         ///   <paramref name="appName"/> or <paramref name="groupName"/> are null or empty.
         /// </exception>
-        SecGroup Group(string appName, string groupName);
+        SecGroup GetGroupByName(string appName, string groupName);
 
         /// <summary>
         ///   </summary>
@@ -81,21 +81,27 @@ namespace Finsa.Caravan.Common.Security
         ///   </summary>
         /// <param name="appName"></param>
         /// <param name="groupName"></param>
-        /// <param name="newGroup"></param>
+        /// <param name="groupUpdates"></param>
         /// <exception cref="ArgumentException">
         ///   <paramref name="appName"/>, <paramref name="groupName"/> or
-        ///   <paramref name="newGroup.Name"/> are null or empty.
+        ///   <paramref name="groupUpdates.Name"/> are null or empty.
         /// </exception>
-        void UpdateGroup(string appName, string groupName, SecGroup newGroup);
+        void UpdateGroup(string appName, string groupName, SecGroupUpdates groupUpdates);
 
         #endregion Groups
 
         #region Users
 
-        IList<SecUser> Users(string appName);
+        /// <summary>
+        ///   La lista di tutti gli utenti.
+        /// </summary>
+        /// <param name="appName"></param>
+        /// <returns></returns>
+        SecUser[] GetUsers(string appName);
 
         /// <summary>
-        ///   </summary>
+        ///   Recupera un utente cercandolo per login.
+        /// </summary>
         /// <param name="appName"></param>
         /// <param name="userLogin"></param>
         /// <returns></returns>
@@ -103,7 +109,19 @@ namespace Finsa.Caravan.Common.Security
         /// <exception cref="SecUserNotFoundException">
         ///   An user with given login does not exist.
         /// </exception>
-        SecUser User(string appName, string userLogin);
+        SecUser GetUserByLogin(string appName, string userLogin);
+
+        /// <summary>
+        ///   Recupera un utente cercandolo per indirizzo email.
+        /// </summary>
+        /// <param name="appName"></param>
+        /// <param name="userEmail"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
+        /// <exception cref="SecUserNotFoundException">
+        ///   An user with given email address does not exist.
+        /// </exception>
+        SecUser GetUserByEmail(string appName, string userEmail);
 
         /// <summary>
         ///   </summary>
@@ -126,9 +144,9 @@ namespace Finsa.Caravan.Common.Security
         ///   </summary>
         /// <param name="appName"></param>
         /// <param name="userLogin"></param>
-        /// <param name="newUser"></param>
+        /// <param name="userUpdates"></param>
         /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
-        void UpdateUser(string appName, string userLogin, SecUser newUser);
+        void UpdateUser(string appName, string userLogin, SecUserUpdates userUpdates);
 
         /// <summary>
         ///   </summary>
@@ -156,29 +174,29 @@ namespace Finsa.Caravan.Common.Security
 
         #region Contexts
 
-        IList<SecContext> Contexts(string appName);
+        SecContext[] GetContexts(string appName);
 
         #endregion Contexts
 
         #region Objects
 
-        IList<SecObject> Objects(string appName);
+        SecObject[] GetObjects(string appName);
 
-        IList<SecObject> Objects(string appName, string contextName);
+        SecObject[] GetObjects(string appName, string contextName);
 
         #endregion Objects
 
         #region Entries
 
-        IList<SecEntry> Entries(string appName);
+        SecEntry[] GetEntries(string appName);
 
-        IList<SecEntry> Entries(string appName, string contextName);
+        SecEntry[] GetEntries(string appName, string contextName);
 
-        IList<SecEntry> Entries(string appName, string contextName, string userLogin);
+        SecEntry[] GetEntriesForUser(string appName, string contextName, string userLogin);
 
-        IList<SecEntry> EntriesForObject(string appName, string contextName, string objectName);
+        SecEntry[] GetEntriesForObject(string appName, string contextName, string objectName);
 
-        IList<SecEntry> EntriesForObject(string appName, string contextName, string objectName, string userLogin);
+        SecEntry[] GetEntriesForObjectAndUser(string appName, string contextName, string objectName, string userLogin);
 
         void AddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName);
 

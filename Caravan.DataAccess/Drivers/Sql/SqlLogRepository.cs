@@ -12,7 +12,7 @@ using Common.Logging;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
-    internal sealed class SqlLogRepository : LogRepositoryBase<SqlLogRepository>
+    internal sealed class SqlLogRepository : AbstractLogRepository<SqlLogRepository>
     {
         #region Constants
 

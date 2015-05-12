@@ -52,10 +52,10 @@ namespace UnitTests.DataAccess
             Db.Security.AddUser(_myApp.Name, user1);
             Db.Security.AddUser(_myApp.Name, user2);
 
-            IEnumerable<SecUser> retValue = Db.Security.Users(_myApp.Name);
+            IEnumerable<SecUser> retValue = Db.Security.GetUsers(_myApp.Name);
             Assert.That(retValue.Count(), Is.EqualTo(2));
 
-            var q = (from user in Db.Security.Users(_myApp2.Name)
+            var q = (from user in Db.Security.GetUsers(_myApp2.Name)
                      where (user.Login == user1.Login || user.Login == user2.Login)
                      select user).ToList();
 
@@ -65,7 +65,7 @@ namespace UnitTests.DataAccess
         [Test]
         public void Users_NoUsers_ReturnsNull()
         {
-            IEnumerable<SecUser> retValue = Db.Security.Users(_myApp.Name);
+            IEnumerable<SecUser> retValue = Db.Security.GetUsers(_myApp.Name);
             Assert.That(retValue.Count(), Is.EqualTo(0));
         }
 
@@ -73,14 +73,14 @@ namespace UnitTests.DataAccess
         [ExpectedException(typeof(ArgumentException))]
         public void Users_NullAppName_ThrowsArgumentException()
         {
-            Db.Security.Users(null);
+            Db.Security.GetUsers(null);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void Users_EmptyAppName_ThrowsArgumentException()
         {
-            Db.Security.Users("");
+            Db.Security.GetUsers("");
         }
 
         #endregion Users_Tests
@@ -94,7 +94,7 @@ namespace UnitTests.DataAccess
 
             Db.Security.AddUser(_myApp.Name, user1);
 
-            var u = Db.Security.User(_myApp.Name, user1.Login);
+            var u = Db.Security.GetUserByLogin(_myApp.Name, user1.Login);
             Assert.That(u, Is.Not.Null);
             Assert.That(u.FirstName, Is.EqualTo("pippo"));
             Assert.That(u.Login, Is.EqualTo("blabla"));
@@ -107,7 +107,7 @@ namespace UnitTests.DataAccess
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla" };
 
             Db.Security.AddUser(_myApp.Name, user1);
-            Db.Security.User(null, user1.Login);
+            Db.Security.GetUserByLogin(null, user1.Login);
         }
 
         [Test]
@@ -117,21 +117,21 @@ namespace UnitTests.DataAccess
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla" };
 
             Db.Security.AddUser(_myApp.Name, user1);
-            Db.Security.User("", user1.Login);
+            Db.Security.GetUserByLogin("", user1.Login);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void User_NullUserLogin_ThrowsArgumentException()
         {
-            Db.Security.User(_myApp.Name, null);
+            Db.Security.GetUserByLogin(_myApp.Name, null);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void User_EmptyUserLogin_ThrowsArgumentException()
         {
-            Db.Security.User(_myApp.Name, "");
+            Db.Security.GetUserByLogin(_myApp.Name, "");
         }
 
         #endregion User_Tests
@@ -148,7 +148,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddUser(_myApp.Name, user2);
 
             //verifico che sia stato inserito user1
-            var q = (from c in Db.Security.Users(_myApp.Name)
+            var q = (from c in Db.Security.GetUsers(_myApp.Name)
                      where ((c.FirstName == user1.FirstName) && (c.Login == user1.Login))
                      select c).ToList();
 
@@ -156,7 +156,7 @@ namespace UnitTests.DataAccess
             Assert.That(q.First().Login, Is.EqualTo("blabla1"));
 
             //verifico che sia stato inserito correttamente user2
-            var q2 = (from c in Db.Security.Users(_myApp.Name)
+            var q2 = (from c in Db.Security.GetUsers(_myApp.Name)
                       where ((c.FirstName == user2.FirstName) && (c.Login == user2.Login))
                       select c).ToList();
 
@@ -178,7 +178,7 @@ namespace UnitTests.DataAccess
             for (var i = 1; i <= userCount; ++i)
             {
                 //verifico che sia stato inserito user
-                var q = (from c in Db.Security.Users(_myApp.Name)
+                var q = (from c in Db.Security.GetUsers(_myApp.Name)
                          where ((c.FirstName == "pippo" + i) && (c.Login == "blabla" + i))
                          select c).FirstOrDefault();
 
@@ -194,7 +194,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddUser(_myApp.Name, user1);
             Db.Security.AddUser(_myApp2.Name, user1);
 
-            var q = (from c in Db.Security.Users(_myApp.Name)
+            var q = (from c in Db.Security.GetUsers(_myApp.Name)
                      where ((c.FirstName == user1.FirstName) && (c.Login == user1.Login))
                      select c).ToList();
 
@@ -202,7 +202,7 @@ namespace UnitTests.DataAccess
             Assert.That(q.First().Login, Is.EqualTo("blabla1"));
 
             //verifico che sia stato inserito correttamente user2
-            var q2 = (from c in Db.Security.Users(_myApp2.Name)
+            var q2 = (from c in Db.Security.GetUsers(_myApp2.Name)
                       where ((c.FirstName == user1.FirstName) && (c.Login == user1.Login))
                       select c).ToList();
 
@@ -290,7 +290,7 @@ namespace UnitTests.DataAccess
 
             Db.Security.RemoveUser(_myApp.Name, user1.Login);
 
-            var q = (from u in Db.Security.Users(_myApp.Name) where u.Login == user1.Login select u).ToList();
+            var q = (from u in Db.Security.GetUsers(_myApp.Name) where u.Login == user1.Login select u).ToList();
 
             Assert.That(q.Count(), Is.EqualTo(0));
         }
@@ -310,7 +310,7 @@ namespace UnitTests.DataAccess
             for (var i = 1; i <= userCount; ++i)
             {
                 //verifico che siano stati eliminati tutti gli user
-                var q = (from u in Db.Security.Users(_myApp.Name) where u.Login == "blabla" + i select u).ToList();
+                var q = (from u in Db.Security.GetUsers(_myApp.Name) where u.Login == "blabla" + i select u).ToList();
 
                 Assert.IsEmpty(q);
             }
@@ -392,14 +392,14 @@ namespace UnitTests.DataAccess
 
             Db.Security.UpdateUser(_myApp.Name, "blabla", user1);
 
-            var q = (from u in Db.Security.Users(_myApp.Name)
+            var q = (from u in Db.Security.GetUsers(_myApp.Name)
                      where u.Login == user1.Login
                      select u).ToList();
 
             Assert.That(q.Count(), Is.EqualTo(1));
             Assert.That(q.First().Login, Is.EqualTo("updatedLogin".ToLower()));
 
-            var q2 = (from u in Db.Security.Users(_myApp.Name)
+            var q2 = (from u in Db.Security.GetUsers(_myApp.Name)
                       where u.Login == "blabla"
                       select u).ToList();
             Assert.That(q2.Count, Is.EqualTo(0));
@@ -423,7 +423,7 @@ namespace UnitTests.DataAccess
             for (var i = 1; i <= userCount; ++i)
             {
                 //verifico che sia stato aggiornato user
-                var q = (from u in Db.Security.Users(_myApp.Name)
+                var q = (from u in Db.Security.GetUsers(_myApp.Name)
                          where u.Login == ("updatedLogin" + i).ToLower()
                          select u).ToList();
 
@@ -431,7 +431,7 @@ namespace UnitTests.DataAccess
                 Assert.That(q.First().Login, Is.EqualTo(("updatedLogin" + i).ToLower()));
 
                 //verifico che non sia più presente l'utente con login "blabla" (vecchia login)
-                var q2 = (from u in Db.Security.Users(_myApp.Name)
+                var q2 = (from u in Db.Security.GetUsers(_myApp.Name)
                           where u.Login == "blabla" + i
                           select u).ToList();
 
@@ -601,9 +601,9 @@ namespace UnitTests.DataAccess
             Db.Security.AddGroup(_myApp.Name, group2);
             Db.Security.AddUserToGroup(_myApp.Name, user1.Login, group1.Name);
 
-            user1 = Db.Security.User(_myApp.Name, user1.Login);
-            group1 = Db.Security.Group(_myApp.Name, group1.Name);
-            group2 = Db.Security.Group(_myApp.Name, group2.Name);
+            user1 = Db.Security.GetUserByLogin(_myApp.Name, user1.Login);
+            group1 = Db.Security.GetGroupByName(_myApp.Name, group1.Name);
+            group2 = Db.Security.GetGroupByName(_myApp.Name, group2.Name);
 
             Assert.True(user1.Groups.Any(g => g.Equals(group1)));
             Assert.False(user1.Groups.Any(g => g.Equals(group2)));
@@ -633,15 +633,15 @@ namespace UnitTests.DataAccess
 
                 Db.Security.AddUserToGroup(_myApp.Name, user1.Login, group1.Name);
             });
-            group1 = Db.Security.Group(_myApp.Name, group1.Name);
-            group2 = Db.Security.Group(_myApp.Name, group2.Name);
+            group1 = Db.Security.GetGroupByName(_myApp.Name, group1.Name);
+            group2 = Db.Security.GetGroupByName(_myApp.Name, group2.Name);
             Assert.AreEqual(userCount, group1.Users.Length);
             Assert.AreEqual(0, group2.Users.Length);
 
             for (var i = 1; i <= userCount; ++i)
             {
                 var q =
-                   (from u in Db.Security.Users(_myApp.Name) where u.Login == ("blabla" + i) select u.Groups).ToList();
+                   (from u in Db.Security.GetUsers(_myApp.Name) where u.Login == ("blabla" + i) select u.Groups).ToList();
                 Assert.That(q.Count, Is.EqualTo(1));
                 Assert.True(q.First().Contains(group1));
                 Assert.False(q.First().Contains(group2));
@@ -727,10 +727,10 @@ namespace UnitTests.DataAccess
             Db.Security.AddGroup(_myApp.Name, group1);
             Db.Security.AddGroup(_myApp.Name, group2);
 
-            var retValue = Db.Security.Groups(_myApp.Name);
+            var retValue = Db.Security.GetGroups(_myApp.Name);
             Assert.That(retValue.Count(), Is.EqualTo(2));
 
-            var retValue2 = Db.Security.Groups(_myApp2.Name);
+            var retValue2 = Db.Security.GetGroups(_myApp2.Name);
             Assert.That(retValue2.Count(), Is.EqualTo(0));
         }
 
@@ -747,21 +747,21 @@ namespace UnitTests.DataAccess
 
             for (var i = 1; i <= userCount; ++i)
             {
-                var q = Db.Security.Groups(_myApp.Name).Where(g => g.Name == ("g1" + i));
+                var q = Db.Security.GetGroups(_myApp.Name).Where(g => g.Name == ("g1" + i));
                 Assert.IsNotNull(q.FirstOrDefault());
             }
 
-            var retValue = Db.Security.Groups(_myApp.Name);
+            var retValue = Db.Security.GetGroups(_myApp.Name);
             Assert.That(retValue.Count(), Is.EqualTo(userCount));
 
-            var retValue2 = Db.Security.Groups(_myApp2.Name);
+            var retValue2 = Db.Security.GetGroups(_myApp2.Name);
             Assert.That(retValue2.Count(), Is.EqualTo(0));
         }
 
         [Test]
         public void Groups_NoGroups_ReturnsNoGroups()
         {
-            var retvalue = Db.Security.Groups(_myApp.Name);
+            var retvalue = Db.Security.GetGroups(_myApp.Name);
             Assert.That(retvalue.Count(), Is.EqualTo(0));
         }
 
@@ -769,14 +769,14 @@ namespace UnitTests.DataAccess
         [ExpectedException(typeof(ArgumentException))]
         public void Groups_NullAppName_ThrowsArgumentException()
         {
-            Db.Security.Groups(null);
+            Db.Security.GetGroups(null);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void Groups_EmptyAppName_ThrowsArgumentException()
         {
-            Db.Security.Groups("");
+            Db.Security.GetGroups("");
         }
 
         #endregion Groups_Tests
@@ -790,7 +790,7 @@ namespace UnitTests.DataAccess
 
             Db.Security.AddGroup(_myApp.Name, group1);
 
-            var ret = Db.Security.Group(_myApp.Name, group1.Name);
+            var ret = Db.Security.GetGroupByName(_myApp.Name, group1.Name);
 
             Assert.That(ret.Name, Is.EqualTo("my_group"));
             Assert.That(ret, Is.Not.Null);
@@ -809,7 +809,7 @@ namespace UnitTests.DataAccess
 
             for (var i = 1; i <= userCount; ++i)
             {
-                var ret = Db.Security.Group(_myApp.Name, "g1" + i);
+                var ret = Db.Security.GetGroupByName(_myApp.Name, "g1" + i);
                 Assert.That(ret, Is.Not.Null);
             }
         }
@@ -822,7 +822,7 @@ namespace UnitTests.DataAccess
 
             Db.Security.AddGroup(_myApp.Name, group1);
 
-            Db.Security.Group(null, group1.Name);
+            Db.Security.GetGroupByName(null, group1.Name);
         }
 
         [Test]
@@ -833,7 +833,7 @@ namespace UnitTests.DataAccess
 
             Db.Security.AddGroup(_myApp.Name, group1);
 
-            Db.Security.Group("", group1.Name);
+            Db.Security.GetGroupByName("", group1.Name);
         }
 
         [Test]
@@ -844,7 +844,7 @@ namespace UnitTests.DataAccess
 
             Db.Security.AddGroup(_myApp.Name, group1);
 
-            Db.Security.Group(_myApp.Name, null);
+            Db.Security.GetGroupByName(_myApp.Name, null);
         }
 
         [Test]
@@ -855,7 +855,7 @@ namespace UnitTests.DataAccess
 
             Db.Security.AddGroup(_myApp.Name, group1);
 
-            Db.Security.Group(_myApp.Name, "");
+            Db.Security.GetGroupByName(_myApp.Name, "");
         }
 
         #endregion Group_Tests
@@ -871,19 +871,19 @@ namespace UnitTests.DataAccess
             Db.Security.AddGroup(_myApp.Name, group1);
             Db.Security.AddGroup(_myApp.Name, group2);
 
-            var q1 = (from g in Db.Security.Groups(_myApp.Name)
+            var q1 = (from g in Db.Security.GetGroups(_myApp.Name)
                       where g.Name == group1.Name
                       select g).ToList();
 
             Assert.That(q1.First().Name, Is.EqualTo("my_group"));
 
-            var q2 = (from g in Db.Security.Groups(_myApp.Name)
+            var q2 = (from g in Db.Security.GetGroups(_myApp.Name)
                       where g.Name == group2.Name
                       select g).ToList();
 
             Assert.That(q2.First().Name, Is.EqualTo("other_group"));
 
-            var q3 = (from g in Db.Security.Groups(_myApp2.Name)
+            var q3 = (from g in Db.Security.GetGroups(_myApp2.Name)
                       where g.Name == group1.Name || g.Name == group2.Name
                       select g).ToList();
 
@@ -903,7 +903,7 @@ namespace UnitTests.DataAccess
 
             for (var i = 1; i <= groupCount; ++i)
             {
-                var q1 = (from g in Db.Security.Groups(_myApp.Name)
+                var q1 = (from g in Db.Security.GetGroups(_myApp.Name)
                           where g.Name == "my_group" + i
                           select g).ToList();
 
@@ -920,10 +920,10 @@ namespace UnitTests.DataAccess
             Db.Security.AddGroup(_myApp.Name, group1);
             Db.Security.AddGroup(_myApp2.Name, group1);
 
-            var q = (from g in Db.Security.Groups(_myApp.Name) where g.Name == group1.Name select g).ToList();
+            var q = (from g in Db.Security.GetGroups(_myApp.Name) where g.Name == group1.Name select g).ToList();
             Assert.That(q.First().Name, Is.EqualTo("my_group"));
 
-            var q2 = (from g in Db.Security.Groups(_myApp2.Name) where g.Name == group1.Name select g).ToList();
+            var q2 = (from g in Db.Security.GetGroups(_myApp2.Name) where g.Name == group1.Name select g).ToList();
             Assert.That(q2.First().Name, Is.EqualTo("my_group"));
         }
 
@@ -994,7 +994,7 @@ namespace UnitTests.DataAccess
 
             Db.Security.RemoveGroup(_myApp.Name, group1.Name);
 
-            var q = (from g in Db.Security.Groups(_myApp.Name) where g.Name == group1.Name select g).ToList();
+            var q = (from g in Db.Security.GetGroups(_myApp.Name) where g.Name == group1.Name select g).ToList();
 
             Assert.That(q.Count(), Is.EqualTo(0));
         }
@@ -1014,7 +1014,7 @@ namespace UnitTests.DataAccess
 
             for (var i = 0; i <= groupCount; ++i)
             {
-                var q = (from g in Db.Security.Groups(_myApp.Name) where g.Name == "my_group" + i select g).ToList();
+                var q = (from g in Db.Security.GetGroups(_myApp.Name) where g.Name == "my_group" + i select g).ToList();
 
                 Assert.That(q.Count(), Is.EqualTo(0));
             }
@@ -1077,14 +1077,14 @@ namespace UnitTests.DataAccess
             group1.Name = "updated_group";
             Db.Security.UpdateGroup(_myApp.Name, "my_group", group1);
 
-            var q = (from g in Db.Security.Groups(_myApp.Name)
+            var q = (from g in Db.Security.GetGroups(_myApp.Name)
                      where g.Name == group1.Name
                      select g).ToList();
 
             Assert.That(q.Count(), Is.EqualTo(1));
             Assert.That(q.First().Name, Is.EqualTo("updated_group"));
 
-            var q2 = (from g in Db.Security.Groups(_myApp.Name)
+            var q2 = (from g in Db.Security.GetGroups(_myApp.Name)
                       where g.Name == "my_group"
                       select g).ToList();
 
@@ -1106,7 +1106,7 @@ namespace UnitTests.DataAccess
 
             for (var i = 1; i <= groupCount; ++i)
             {
-                var q = (from g in Db.Security.Groups(_myApp.Name)
+                var q = (from g in Db.Security.GetGroups(_myApp.Name)
                          where g.Name == "updated_group" + i
                          select g).ToList();
 
@@ -1210,7 +1210,7 @@ namespace UnitTests.DataAccess
         [Test]
         public void Apps_ValidArgs_ReturnlistOfApps()
         {
-            var a = Db.Security.Apps();
+            var a = Db.Security.GetApps();
 
             Assert.That(a.Count(), Is.EqualTo(2));
             Assert.That(a.Contains(_myApp));
@@ -1224,7 +1224,7 @@ namespace UnitTests.DataAccess
         [Test]
         public void App_ValidArgs_ReturnsApp()
         {
-            var a = Db.Security.App(_myApp.Name);
+            var a = Db.Security.GetApp(_myApp.Name);
             Assert.That(a, Is.Not.Null);
             Assert.That(a.Name, Is.EqualTo("mio_test"));
         }
@@ -1233,14 +1233,14 @@ namespace UnitTests.DataAccess
         [ExpectedException(typeof(ArgumentException))]
         public void App_NullAppName_ThrowsArgumentException()
         {
-            Db.Security.App(null);
+            Db.Security.GetApp(null);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void App_EmptyAppName_ThrowsArgumentException()
         {
-            Db.Security.App("");
+            Db.Security.GetApp("");
         }
 
         #endregion App_Tests
@@ -1252,7 +1252,7 @@ namespace UnitTests.DataAccess
         {
             var newApp = new SecApp { Name = "AddedApp", Description = "my new application" };
             Db.Security.AddApp(newApp);
-            var a = Db.Security.Apps();
+            var a = Db.Security.GetApps();
             Assert.That(a.Contains(newApp));
         }
 
@@ -1265,13 +1265,13 @@ namespace UnitTests.DataAccess
             {
                 var newApp = new SecApp { Name = "AddedApp" + i, Description = "my new application" + i };
                 Db.Security.AddApp(newApp);
-                var a = Db.Security.App("AddedApp" + i);
+                var a = Db.Security.GetApp("AddedApp" + i);
                 Assert.IsNotNull(a);
             });
 
             for (var i = 1; i <= appCount; ++i)
             {
-                var a = Db.Security.Apps().ToList();
+                var a = Db.Security.GetApps().ToList();
                 Assert.AreEqual(appCount + 2, a.Count);
             }
         }
@@ -1353,7 +1353,7 @@ namespace UnitTests.DataAccess
 
             Db.Security.AddEntry(_myApp.Name, c2, obj1, user1.Login, null);
 
-            var l = Db.Security.Contexts(_myApp.Name);
+            var l = Db.Security.GetContexts(_myApp.Name);
 
             Assert.That(l.Count(), Is.EqualTo(2));
             Assert.That(l.Contains(c1));
@@ -1382,7 +1382,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
             Db.Security.AddEntry(_myApp.Name, c2, obj1, group1.Name, null);
 
-            var l = Db.Security.Contexts(_myApp.Name);
+            var l = Db.Security.GetContexts(_myApp.Name);
 
             Assert.That(l.Count(), Is.EqualTo(2));
             Assert.That(l.Contains(c1));
@@ -1411,7 +1411,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
             Db.Security.AddEntry(_myApp.Name, c2, obj1, null, group1.Name);
 
-            var l = Db.Security.Contexts(_myApp.Name);
+            var l = Db.Security.GetContexts(_myApp.Name);
 
             Assert.That(l.Count(), Is.EqualTo(2));
             Assert.That(l.Contains(c1));
@@ -1440,7 +1440,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
             Db.Security.AddEntry(_myApp.Name, c2, obj1, null, group1.Name);
 
-            var l = Db.Security.Contexts(_myApp.Name);
+            var l = Db.Security.GetContexts(_myApp.Name);
 
             Assert.That(l.Count(), Is.EqualTo(2));
             Assert.That(l.Contains(c1));
@@ -1450,7 +1450,7 @@ namespace UnitTests.DataAccess
         [Test]
         public void Contexts_NotExistingContext_ReturnsZero()
         {
-            var l = Db.Security.Contexts(_myApp.Name);
+            var l = Db.Security.GetContexts(_myApp.Name);
 
             Assert.That(l.Count(), Is.EqualTo(0));
         }
@@ -1459,14 +1459,14 @@ namespace UnitTests.DataAccess
         [ExpectedException(typeof(ArgumentException))]
         public void Contexts_NullAppName_ThrowsArgumentException()
         {
-            Db.Security.Contexts(null);
+            Db.Security.GetContexts(null);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void Contexts_EmptyAppName_ThrowsArgumentException()
         {
-            Db.Security.Contexts("");
+            Db.Security.GetContexts("");
         }
 
         #endregion Contexts_Tests
@@ -1492,11 +1492,11 @@ namespace UnitTests.DataAccess
 
             Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-            var l = Db.Security.Objects(_myApp.Name);
+            var l = Db.Security.GetObjects(_myApp.Name);
 
             Assert.That(l.Count(), Is.EqualTo(1));
 
-            var l1 = Db.Security.Objects(_myApp2.Name);
+            var l1 = Db.Security.GetObjects(_myApp2.Name);
 
             Assert.That(l1.Count(), Is.EqualTo(0));
         }
@@ -1520,7 +1520,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddGroup(_myApp.Name, group1);
             Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            Db.Security.Objects(null);
+            Db.Security.GetObjects(null);
         }
 
         [Test]
@@ -1542,7 +1542,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddGroup(_myApp.Name, group1);
             Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            Db.Security.Objects("");
+            Db.Security.GetObjects("");
         }
 
         #endregion Objects_Tests
@@ -1568,9 +1568,9 @@ namespace UnitTests.DataAccess
             Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
             Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-            var l = Db.Security.Entries(_myApp.Name, c1.Name);
-            var l1 = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj1.Name);
-            var l3 = Db.Security.Entries(_myApp.Name, c1.Name, user1.Login);
+            var l = Db.Security.GetEntries(_myApp.Name, c1.Name);
+            var l1 = Db.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj1.Name);
+            var l3 = Db.Security.GetEntriesForUser(_myApp.Name, c1.Name, user1.Login);
 
             Assert.That(l.Count(), Is.EqualTo(2));
             Assert.That(l3.Count(), Is.EqualTo(1));
@@ -1587,7 +1587,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddUser(_myApp.Name, user1);
             Db.Security.AddGroup(_myApp.Name, group1);
 
-            var l = Db.Security.Entries(_myApp.Name, c1.Name);
+            var l = Db.Security.GetEntries(_myApp.Name, c1.Name);
 
             Assert.That(l.Count(), Is.EqualTo(0));
         }
@@ -1603,7 +1603,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddUser(_myApp.Name, user1);
             Db.Security.AddGroup(_myApp.Name, group1);
 
-            var l = Db.Security.Entries(null, c1.Name);
+            var l = Db.Security.GetEntries(null, c1.Name);
         }
 
         [Test]
@@ -1617,7 +1617,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddUser(_myApp.Name, user1);
             Db.Security.AddGroup(_myApp.Name, group1);
 
-            var l = Db.Security.Entries("", c1.Name);
+            var l = Db.Security.GetEntries("", c1.Name);
         }
 
         [Test]
@@ -1631,7 +1631,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddUser(_myApp.Name, user1);
             Db.Security.AddGroup(_myApp.Name, group1);
 
-            Db.Security.Entries(_myApp.Name, null);
+            Db.Security.GetEntries(_myApp.Name, null);
         }
 
         [Test]
@@ -1645,7 +1645,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddUser(_myApp.Name, user1);
             Db.Security.AddGroup(_myApp.Name, group1);
 
-            Db.Security.Entries(_myApp.Name, "");
+            Db.Security.GetEntries(_myApp.Name, "");
         }
 
         [Test]
@@ -1667,7 +1667,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddGroup(_myApp.Name, group1);
             Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            Db.Security.EntriesForObject(_myApp.Name, c1.Name, "");
+            Db.Security.GetEntriesForObject(_myApp.Name, c1.Name, "");
         }
 
         [Test]
@@ -1689,7 +1689,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddGroup(_myApp.Name, group1);
             Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            Db.Security.EntriesForObject(_myApp.Name, c1.Name, null);
+            Db.Security.GetEntriesForObject(_myApp.Name, c1.Name, null);
         }
 
         [Test]
@@ -1711,7 +1711,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddGroup(_myApp.Name, group1);
             Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            Db.Security.Entries(_myApp.Name, c1.Name, "");
+            Db.Security.GetEntriesForUser(_myApp.Name, c1.Name, "");
         }
 
         [Test]
@@ -1733,7 +1733,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddGroup(_myApp.Name, group1);
             Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            Db.Security.Entries(_myApp.Name, c1.Name, null);
+            Db.Security.GetEntriesForUser(_myApp.Name, c1.Name, null);
         }
 
         [Test]
@@ -1755,7 +1755,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddGroup(_myApp.Name, group1);
             Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj1.Name, "");
+            Db.Security.GetEntriesForObjectAndUser(_myApp.Name, c1.Name, obj1.Name, "");
         }
 
         [Test]
@@ -1777,7 +1777,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddGroup(_myApp.Name, group1);
             Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj1.Name, null);
+            Db.Security.GetEntriesForObjectAndUser(_myApp.Name, c1.Name, obj1.Name, null);
         }
 
         #endregion Entries_tests
@@ -1802,7 +1802,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddGroup(_myApp.Name, group1);
             Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            var l = Db.Security.Entries(_myApp.Name, c1.Name);
+            var l = Db.Security.GetEntries(_myApp.Name, c1.Name);
 
             Assert.That(l.Count(), Is.EqualTo(1));
             Assert.That(l.First().ContextName, Is.EqualTo("c1"));
@@ -1828,7 +1828,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddGroup(_myApp.Name, group1);
             Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-            var l = Db.Security.Entries(_myApp.Name, c1.Name);
+            var l = Db.Security.GetEntries(_myApp.Name, c1.Name);
 
             Assert.That(l.Count(), Is.EqualTo(1));
             Assert.That(l.First().ContextName, Is.EqualTo("c1"));
@@ -1857,15 +1857,15 @@ namespace UnitTests.DataAccess
             Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
             Db.Security.AddEntry(_myApp.Name, c1, obj1, user2.Login, null);
 
-            var l = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj1.Name);
+            var l = Db.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj1.Name);
 
             Assert.That(l.Count(), Is.EqualTo(2));
 
-            var l1 = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj1.Name, user1.Login);
+            var l1 = Db.Security.GetEntriesForObjectAndUser(_myApp.Name, c1.Name, obj1.Name, user1.Login);
 
             Assert.That(l1.Count(), Is.EqualTo(1));
 
-            var l2 = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj1.Name, user2.Login);
+            var l2 = Db.Security.GetEntriesForObjectAndUser(_myApp.Name, c1.Name, obj1.Name, user2.Login);
 
             Assert.That(l2.Count(), Is.EqualTo(1));
         }
@@ -1898,7 +1898,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
             Db.Security.AddEntry(_myApp.Name, c1, obj2, user1.Login, null);
 
-            var l1 = Db.Security.Entries(_myApp.Name, c1.Name, user1.Login);
+            var l1 = Db.Security.GetEntriesForUser(_myApp.Name, c1.Name, user1.Login);
 
             Assert.That(l1.Count(), Is.EqualTo(2));
         }
@@ -1922,7 +1922,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
             Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group2.Name);
 
-            var l1 = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj1.Name);
+            var l1 = Db.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj1.Name);
 
             Assert.That(l1.Count(), Is.EqualTo(2));
         }
@@ -1951,17 +1951,17 @@ namespace UnitTests.DataAccess
             Db.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
             Db.Security.AddEntry(_myApp.Name, c1, obj2, null, group1.Name);
 
-            var l1 = Db.Security.Entries(_myApp.Name, c1.Name);
+            var l1 = Db.Security.GetEntries(_myApp.Name, c1.Name);
 
             Assert.That(l1.Count(), Is.EqualTo(2));
 
-            var l2 = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj1.Name);
+            var l2 = Db.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj1.Name);
 
             Assert.That(l2.Count(), Is.EqualTo(1));
 
             Assert.That(l2.First().GroupName, Is.EqualTo("my_group"));
 
-            var l3 = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj2.Name);
+            var l3 = Db.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj2.Name);
 
             Assert.That(l3.Count(), Is.EqualTo(1));
 
@@ -2079,7 +2079,7 @@ namespace UnitTests.DataAccess
             Db.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
             Db.Security.AddEntry(_myApp.Name, c1, obj2, user1.Login, null);
 
-            var l = Db.Security.Entries(_myApp.Name, c1.Name, user1.Login);
+            var l = Db.Security.GetEntriesForUser(_myApp.Name, c1.Name, user1.Login);
 
             Assert.That(l.Count(), Is.EqualTo(2));
         }
@@ -2119,10 +2119,10 @@ namespace UnitTests.DataAccess
             Db.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, user1.Login, null);
             Db.Security.RemoveEntry(_myApp.Name, c1.Name, obj2.Name, user1.Login, null);
 
-            var l = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj1.Name);
+            var l = Db.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj1.Name);
             Assert.That(l.Count(), Is.EqualTo(0));
 
-            var l1 = Db.Security.EntriesForObject(_myApp.Name, c1.Name, obj2.Name);
+            var l1 = Db.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj2.Name);
             Assert.That(l1.Count(), Is.EqualTo(0));
         }
 

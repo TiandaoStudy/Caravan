@@ -6,11 +6,11 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Oracle
 {
-    internal sealed class OracleDbManager : DbManagerBase
+    internal sealed class OracleDataSourceManager : AbstractDataSourceManager
     {
-        public override DataAccessKind Kind
+        public override DataSourceKind DataSourceKind
         {
-            get { return DataAccessKind.Oracle; }
+            get { return DataSourceKind.Oracle; }
         }
 
         public override void ElaborateConnectionString(ref string connectionString)

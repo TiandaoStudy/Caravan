@@ -3,13 +3,28 @@
 namespace Finsa.Caravan.DataAccess
 {
     /// <summary>
+    ///   The database vendor (Oracle, SQL Server, etc etc) or the driver type (REST).
+    /// </summary>
+    public enum DataSourceKind : byte
+    {
+        Oracle = 0,
+        PostgreSql = 1,
+        Rest = 2,
+        SqlServer = 3,
+        SqlServerCe = 4,
+        MongoDb = 5,
+        MySql = 6,
+        FakeSql = 7
+    }
+
+    /// <summary>
     ///   </summary>
-    public interface IDbManager
+    public interface IDataSourceManager
     {
         /// <summary>
         ///   The database vendor (Oracle, SQL Server, etc etc) or the driver type (REST).
         /// </summary>
-        DataAccessKind Kind { get; }
+        DataSourceKind DataSourceKind { get; }
 
         /// <summary>
         ///   </summary>
@@ -27,20 +42,5 @@ namespace Finsa.Caravan.DataAccess
         /// </summary>
         /// <returns>A _not_ open DB connection.</returns>
         DbConnection CreateConnection();
-    }
-
-    /// <summary>
-    ///   The database vendor (Oracle, SQL Server, etc etc) or the driver type (REST).
-    /// </summary>
-    public enum DataAccessKind : byte
-    {
-        Oracle = 0,
-        PostgreSql = 1,
-        Rest = 2,
-        SqlServer = 3,
-        SqlServerCe = 4,
-        MongoDb = 5,
-        MySql = 6,
-        FakeSql = 7
     }
 }

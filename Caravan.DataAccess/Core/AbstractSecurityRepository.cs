@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Models.Logging.Exceptions;
+﻿using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Models.Security.Exceptions;
 using Finsa.Caravan.Common.Security;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
+using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Common.Diagnostics;
+using System;
+using System.Linq;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
-    internal abstract class SecurityRepositoryBase<TSec> : ICaravanSecurityRepository where TSec : SecurityRepositoryBase<TSec>
+    internal abstract class AbstractSecurityRepository<TSec> : ICaravanSecurityRepository where TSec : AbstractSecurityRepository<TSec>
     {
         public SecApp CurrentApp { get; private set; }
 
@@ -19,15 +17,15 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Apps
 
-        public IList<SecApp> Apps()
+        public SecApp[] GetApps()
         {
-            return GetApps();
+            return GetAppsInternal();
         }
 
-        public SecApp App(string appName)
+        public SecApp GetApp(string appName)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
-            var app = GetApp(appName.ToLower());
+            var app = GetAppInternal(appName.ToLowerInvariant());
             if (app == null)
             {
                 throw new SecAppNotFoundException();
@@ -44,15 +42,15 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
-                app.Name = app.Name.ToLower(CultureInfo.InvariantCulture);
-                if (!DoAddApp(app))
+                app.Name = app.Name.ToLowerInvariant();
+                if (!AddAppInternal(app))
                 {
                     throw new SecAppExistingException();
                 }
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx);
+                Db.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx);
                 throw;
             }
         }
@@ -61,17 +59,17 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Groups
 
-        public IList<SecGroup> Groups(string appName)
+        public SecGroup[] GetGroups(string appName)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
-            return GetGroups(appName.ToLower(), null);
+            return GetGroupsInternal(appName.ToLowerInvariant(), null);
         }
 
-        public SecGroup Group(string appName, string groupName)
+        public SecGroup GetGroupByName(string appName, string groupName)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(groupName);
-            var group = GetGroups(appName.ToLower(), groupName.ToLower()).FirstOrDefault();
+            var group = GetGroupsInternal(appName.ToLowerInvariant(), groupName.ToLowerInvariant()).FirstOrDefault();
             if (group == null)
             {
                 throw new SecGroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
@@ -89,8 +87,8 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
-                newGroup.Name = newGroup.Name.ToLower();
-                if (!DoAddGroup(appName.ToLower(), newGroup))
+                newGroup.Name = newGroup.Name.ToLowerInvariant();
+                if (!AddGroupInternal(appName.ToLowerInvariant(), newGroup))
                 {
                     throw new SecGroupExistingException();
                 }
@@ -98,7 +96,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx, appName: appName);
+                Db.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -112,7 +110,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
-                if (!DoRemoveGroup(appName.ToLower(), groupName.ToLower()))
+                if (!RemoveGroupInternal(appName.ToLowerInvariant(), groupName.ToLowerInvariant()))
                 {
                     throw new SecGroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
                 }
@@ -120,32 +118,38 @@ namespace Finsa.Caravan.DataAccess.Core
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx, appName: appName);
+                Db.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
 
-        public void UpdateGroup(string appName, string groupName, SecGroup newGroup)
+        public void UpdateGroup(string appName, string groupName, SecGroupUpdates groupUpdates)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(groupName);
-            Raise<ArgumentNullException>.IfIsNull(newGroup);
-            Raise<ArgumentException>.IfIsEmpty(newGroup.Name);
+            Raise<ArgumentException>.If(groupUpdates.Name.HasValue && String.IsNullOrWhiteSpace(groupUpdates.Name.Value));
 
             const string logCtx = "Updating a group";
 
             try
             {
-                newGroup.Name = newGroup.Name.ToLower();
-                if (!DoUpdateGroup(appName.ToLower(), groupName.ToLower(), newGroup))
+                appName = appName.ToLowerInvariant();
+                groupName = groupName.ToLowerInvariant();
+                if (groupUpdates.Name.HasValue)
+                {
+                    groupUpdates.Name = Option.Some(groupUpdates.Name.Value.ToLowerInvariant());
+                }
+
+                if (!UpdateGroupInternal(appName, groupName, groupUpdates))
                 {
                     throw new SecGroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
                 }
+
                 Db.Logger.LogWarnAsync<TSec>("UPDATED GROUP", context: logCtx, appName: appName);
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx, appName: appName);
+                Db.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -154,17 +158,37 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Users
 
-        public IList<SecUser> Users(string appName)
+        public SecUser[] GetUsers(string appName)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
-            return GetUsers(appName.ToLower(), null);
+            return GetUsersInternal(appName.ToLowerInvariant(), null, null);
         }
 
-        public SecUser User(string appName, string userLogin)
+        public SecUser GetUserByLogin(string appName, string userLogin)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(userLogin);
-            var user = GetUsers(appName.ToLower(), userLogin.ToLower()).FirstOrDefault();
+
+            appName = appName.ToLowerInvariant();
+            userLogin = userLogin.ToLowerInvariant();
+
+            var user = GetUsersInternal(appName, userLogin, null).FirstOrDefault();
+            if (user == null)
+            {
+                throw new SecUserNotFoundException();
+            }
+            return user;
+        }
+
+        public SecUser GetUserByEmail(string appName, string userEmail)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.IfIsEmpty(userEmail);
+
+            appName = appName.ToLowerInvariant();
+            userEmail = userEmail.ToLowerInvariant();
+
+            var user = GetUsersInternal(appName, null, userEmail).FirstOrDefault();
             if (user == null)
             {
                 throw new SecUserNotFoundException();
@@ -182,8 +206,8 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
-                newUser.Login = newUser.Login.ToLower();
-                if (!DoAddUser(appName.ToLower(), newUser))
+                newUser.Login = newUser.Login.ToLowerInvariant();
+                if (!AddUserInternal(appName.ToLowerInvariant(), newUser))
                 {
                     throw new SecUserExistingException();
                 }
@@ -191,7 +215,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx, appName: appName);
+                Db.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -205,7 +229,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
-                if (!DoRemoveUser(appName.ToLower(), userLogin))
+                if (!RemoveUserInternal(appName.ToLowerInvariant(), userLogin))
                 {
                     throw new SecUserNotFoundException();
                 }
@@ -213,32 +237,38 @@ namespace Finsa.Caravan.DataAccess.Core
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx, appName: appName);
+                Db.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
 
-        public void UpdateUser(string appName, string userLogin, SecUser newUser)
+        public void UpdateUser(string appName, string userLogin, SecUserUpdates userUpdates)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(userLogin);
-            Raise<ArgumentNullException>.IfIsNull(newUser);
-            Raise<ArgumentException>.IfIsEmpty(newUser.Login);
+            Raise<ArgumentNullException>.If(userUpdates.Login.HasValue && String.IsNullOrWhiteSpace(userUpdates.Login.Value));
 
             const string logCtx = "Updating an user";
 
             try
             {
-                newUser.Login = newUser.Login.ToLower();
-                if (!DoUpdateUser(appName.ToLower(), userLogin.ToLower(), newUser))
+                appName = appName.ToLowerInvariant();
+                userLogin = userLogin.ToLowerInvariant();
+                if (userUpdates.Login.HasValue)
+                {
+                    userUpdates.Login = Option.Some(userUpdates.Login.Value.ToLowerInvariant());
+                }
+
+                if (!UpdateUserInternal(appName, userLogin, userUpdates))
                 {
                     throw new SecUserNotFoundException();
                 }
+
                 Db.Logger.LogWarnAsync<TSec>("UPDATED USER", context: logCtx, appName: appName);
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx, appName: appName);
+                Db.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -253,7 +283,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
-                if (!DoAddUserToGroup(appName.ToLower(), userLogin.ToLower(), groupName.ToLower()))
+                if (!AddUserToGroupInternal(appName.ToLowerInvariant(), userLogin.ToLowerInvariant(), groupName.ToLowerInvariant()))
                 {
                     throw new SecUserExistingException();
                 }
@@ -261,7 +291,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx, appName: appName);
+                Db.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -276,7 +306,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
-                if (!DoRemoveUserFromGroup(appName.ToLower(), userLogin.ToLower(), groupName.ToLower()))
+                if (!RemoveUserFromGroupInternal(appName.ToLowerInvariant(), userLogin.ToLowerInvariant(), groupName.ToLowerInvariant()))
                 {
                     throw new SecUserNotFoundException();
                 }
@@ -284,7 +314,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
             catch (Exception ex)
             {
-                Db.Logger.LogErrorAsync<SecurityRepositoryBase<TSec>>(ex, logCtx, appName: appName);
+                Db.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -293,69 +323,69 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Contexts
 
-        public IList<SecContext> Contexts(string appName)
+        public SecContext[] GetContexts(string appName)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
-            return GetContexts(appName.ToLower());
+            return GetContextsInternal(appName.ToLowerInvariant());
         }
 
         #endregion Contexts
 
         #region Objects
 
-        public IList<SecObject> Objects(string appName)
+        public SecObject[] GetObjects(string appName)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
-            return GetObjects(appName.ToLower(), null);
+            return GetObjectsInternal(appName.ToLowerInvariant(), null);
         }
 
-        public IList<SecObject> Objects(string appName, string contextName)
+        public SecObject[] GetObjects(string appName, string contextName)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(contextName);
-            return GetObjects(appName.ToLower(), contextName.ToLower());
+            return GetObjectsInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant());
         }
 
         #endregion Objects
 
         #region Entries
 
-        public IList<SecEntry> Entries(string appName)
+        public SecEntry[] GetEntries(string appName)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
-            return GetEntries(appName.ToLower(), null, null, null);
+            return GetEntriesInternal(appName.ToLowerInvariant(), null, null, null);
         }
 
-        public IList<SecEntry> Entries(string appName, string contextName)
+        public SecEntry[] GetEntries(string appName, string contextName)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(contextName);
-            return GetEntries(appName.ToLower(), contextName.ToLower(), null, null);
+            return GetEntriesInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant(), null, null);
         }
 
-        public IList<SecEntry> Entries(string appName, string contextName, string userLogin)
+        public SecEntry[] GetEntriesForUser(string appName, string contextName, string userLogin)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(contextName);
             Raise<ArgumentException>.IfIsEmpty(userLogin);
-            return GetEntries(appName.ToLower(), contextName.ToLower(), null, userLogin.ToLower());
+            return GetEntriesInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant(), null, userLogin.ToLowerInvariant());
         }
 
-        public IList<SecEntry> EntriesForObject(string appName, string contextName, string objectName)
+        public SecEntry[] GetEntriesForObject(string appName, string contextName, string objectName)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(contextName);
             Raise<ArgumentException>.IfIsEmpty(objectName);
-            return GetEntries(appName.ToLower(), contextName.ToLower(), objectName.ToLower(), null);
+            return GetEntriesInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant(), objectName.ToLowerInvariant(), null);
         }
 
-        public IList<SecEntry> EntriesForObject(string appName, string contextName, string objectName, string userLogin)
+        public SecEntry[] GetEntriesForObjectAndUser(string appName, string contextName, string objectName, string userLogin)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(contextName);
             Raise<ArgumentException>.IfIsEmpty(objectName);
             Raise<ArgumentException>.IfIsEmpty(userLogin);
-            return GetEntries(appName.ToLower(), contextName.ToLower(), objectName.ToLower(), userLogin.ToLower());
+            return GetEntriesInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant(), objectName.ToLowerInvariant(), userLogin.ToLowerInvariant());
         }
 
         public void AddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
@@ -374,17 +404,17 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
-                secContext.Name = secContext.Name.ToLower();
-                secObject.Name = secObject.Name.ToLower();
+                secContext.Name = secContext.Name.ToLowerInvariant();
+                secObject.Name = secObject.Name.ToLowerInvariant();
                 if (userLogin != null)
                 {
-                    userLogin = userLogin.ToLower();
+                    userLogin = userLogin.ToLowerInvariant();
                 }
                 if (groupName != null)
                 {
-                    groupName = groupName.ToLower();
+                    groupName = groupName.ToLowerInvariant();
                 }
-                if (!DoAddEntry(appName.ToLower(), secContext, secObject, userLogin, groupName))
+                if (!AddEntryInternal(appName.ToLowerInvariant(), secContext, secObject, userLogin, groupName))
                 {
                     throw new LogEntryExistingException();
                 }
@@ -413,14 +443,14 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 if (userLogin != null)
                 {
-                    userLogin = userLogin.ToLower();
+                    userLogin = userLogin.ToLowerInvariant();
                 }
                 if (groupName != null)
                 {
-                    groupName = groupName.ToLower();
+                    groupName = groupName.ToLowerInvariant();
                 }
-                DoRemoveEntry(appName.ToLower(), contextName.ToLower(), objectName.ToLower(), userLogin, groupName);
-                Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, objectName.ToLower(), contextName.ToLower(), userLogin ?? groupName), context: logCtx, appName: appName);
+                RemoveEntryInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant(), objectName.ToLowerInvariant(), userLogin, groupName);
+                Db.Logger.LogWarnAsync<TSec>(String.Format(logShort, objectName.ToLowerInvariant(), contextName.ToLowerInvariant(), userLogin ?? groupName), context: logCtx, appName: appName);
             }
             catch (Exception ex)
             {
@@ -433,41 +463,41 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Abstract Methods
 
-        protected abstract IList<SecApp> GetApps();
+        protected abstract SecApp[] GetAppsInternal();
 
-        protected abstract SecApp GetApp(string appName);
+        protected abstract SecApp GetAppInternal(string appName);
 
-        protected abstract bool DoAddApp(SecApp app);
+        protected abstract bool AddAppInternal(SecApp app);
 
-        protected abstract IList<SecGroup> GetGroups(string appName, string groupName);
+        protected abstract SecGroup[] GetGroupsInternal(string appName, string groupName);
 
-        protected abstract bool DoAddGroup(string appName, SecGroup newGroup);
+        protected abstract bool AddGroupInternal(string appName, SecGroup newGroup);
 
-        protected abstract bool DoRemoveGroup(string appName, string groupName);
+        protected abstract bool RemoveGroupInternal(string appName, string groupName);
 
-        protected abstract bool DoUpdateGroup(string appName, string groupName, SecGroup newGroup);
+        protected abstract bool UpdateGroupInternal(string appName, string groupName, SecGroupUpdates groupUpdates);
 
-        protected abstract IList<SecUser> GetUsers(string appName, string userLogin);
+        protected abstract SecUser[] GetUsersInternal(string appName, string userLogin, string userEmail);
 
-        protected abstract bool DoAddUser(string appName, SecUser newUser);
+        protected abstract bool AddUserInternal(string appName, SecUser newUser);
 
-        protected abstract bool DoRemoveUser(string appName, string userLogin);
+        protected abstract bool RemoveUserInternal(string appName, string userLogin);
 
-        protected abstract bool DoUpdateUser(string appName, string userLogin, SecUser newUser);
+        protected abstract bool UpdateUserInternal(string appName, string userLogin, SecUserUpdates userUpdates);
 
-        protected abstract bool DoAddUserToGroup(string appName, string userLogin, string groupName);
+        protected abstract bool AddUserToGroupInternal(string appName, string userLogin, string groupName);
 
-        protected abstract bool DoRemoveUserFromGroup(string appName, string userLogin, string groupName);
+        protected abstract bool RemoveUserFromGroupInternal(string appName, string userLogin, string groupName);
 
-        protected abstract IList<SecContext> GetContexts(string appName);
+        protected abstract SecContext[] GetContextsInternal(string appName);
 
-        protected abstract IList<SecObject> GetObjects(string appName, string contextName);
+        protected abstract SecObject[] GetObjectsInternal(string appName, string contextName);
 
-        protected abstract IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin);
+        protected abstract SecEntry[] GetEntriesInternal(string appName, string contextName, string objectName, string userLogin);
 
-        protected abstract bool DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName);
+        protected abstract bool AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName);
 
-        protected abstract bool DoRemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName);
+        protected abstract bool RemoveEntryInternal(string appName, string contextName, string objectName, string userLogin, string groupName);
 
         #endregion Abstract Methods
     }

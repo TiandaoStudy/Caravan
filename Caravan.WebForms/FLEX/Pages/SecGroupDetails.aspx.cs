@@ -61,7 +61,7 @@ namespace Finsa.Caravan.WebForms.Pages
 
       private void MostraMultiSelectForNew() 
       {
-         var allowedUsers = Db.Security.Users(Common.Properties.Settings.Default.ApplicationName);
+         var allowedUsers = Db.Security.GetUsers(Common.Properties.Settings.Default.ApplicationName);
 
           //Users
           DataTable tableLeft = new DataTable();
@@ -94,7 +94,7 @@ namespace Finsa.Caravan.WebForms.Pages
             return;
          }
       
-         var group = Db.Security.Group(Common.Properties.Settings.Default.ApplicationName, groupName);
+         var group = Db.Security.GetGroupByName(Common.Properties.Settings.Default.ApplicationName, groupName);
          Raise<ArgumentException>.IfIsNull(group, "Given group name does not exist");
 
          ViewState["group"] =group; 
@@ -110,7 +110,7 @@ namespace Finsa.Caravan.WebForms.Pages
           {
 
               var blockedUsersToGroup = ((SecGroup)ViewState["group"]).Users;
-              var allowedUsers = Db.Security.Users(Common.Properties.Settings.Default.ApplicationName).Except(blockedUsersToGroup);
+              var allowedUsers = Db.Security.GetUsers(Common.Properties.Settings.Default.ApplicationName).Except(blockedUsersToGroup);
 
               //Users
               DataTable _tableLeft = new DataTable();

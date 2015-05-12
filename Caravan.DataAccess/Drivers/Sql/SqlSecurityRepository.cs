@@ -10,23 +10,22 @@ using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
-    internal sealed class SqlSecurityRepository : SecurityRepositoryBase<SqlSecurityRepository>
+    internal sealed class SqlSecurityRepository : AbstractSecurityRepository<SqlSecurityRepository>
     {
         #region Apps
 
-        protected override IList<SecApp> GetApps()
+        protected override SecApp[] GetAppsInternal()
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var q = ctx.SecApps.Include(a => a.Users).Include(a => a.Groups).Include("Contexts.Objects").Include(a => a.LogSettings);
-                return q.OrderBy(a => a.Name)
-                    .AsEnumerable()
+                return q.AsEnumerable()
                     .Select(Mapper.Map<SecApp>)
-                    .ToList();
+                    .ToArray();
             }
         }
 
-        protected override SecApp GetApp(string appName)
+        protected override SecApp GetAppInternal(string appName)
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
@@ -39,7 +38,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        protected override bool DoAddApp(SecApp app)
+        protected override bool AddAppInternal(SecApp app)
         {
             using (var ctx = SqlDbContext.CreateWriteContext())
             {
@@ -62,7 +61,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         #region Groups
 
-        protected override IList<SecGroup> GetGroups(string appName, string groupName)
+        protected override SecGroup[] GetGroupsInternal(string appName, string groupName)
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
@@ -75,15 +74,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 {
                     q = q.Where(g => g.Name == groupName);
                 }
-                return q.OrderBy(g => g.App.Name)
-                    .ThenBy(g => g.Name)
-                    .AsEnumerable()
+                return q.AsEnumerable()
                     .Select(Mapper.Map<SecGroup>)
-                    .ToList();
+                    .ToArray();
             }
         }
 
-        protected override bool DoAddGroup(string appName, SecGroup newGroup)
+        protected override bool AddGroupInternal(string appName, SecGroup newGroup)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
@@ -107,7 +104,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        protected override bool DoRemoveGroup(string appName, string groupName)
+        protected override bool RemoveGroupInternal(string appName, string groupName)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
@@ -126,7 +123,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        protected override bool DoUpdateGroup(string appName, string groupName, SecGroup newGroup)
+        protected override bool UpdateGroupInternal(string appName, string groupName, SecGroupUpdates groupUpdates)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
@@ -136,13 +133,14 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 var grp = ctx.SecGroups.FirstOrDefault(g => g.App.Id == appId && g.Name == groupName);
                 if (grp != null)
                 {
-                    if (grp.Name != newGroup.Name && ctx.SecGroups.Any(g => g.AppId == grp.AppId && g.Name == newGroup.Name))
+                    if (groupUpdates.Name.HasValue && grp.Name != groupUpdates.Name.Value && ctx.SecGroups.Any(g => g.AppId == grp.AppId && g.Name == groupUpdates.Name.Value))
                     {
                         throw new SecGroupExistingException();
                     }
-                    grp.Name = newGroup.Name;
-                    grp.Description = newGroup.Description ?? String.Empty;
-                    grp.Notes = newGroup.Notes ?? String.Empty;
+                    if (groupUpdates.Name)
+                    grp.Name = groupUpdates.Name.HasValue ? groupUpdates.Name.Value : grp.Name;
+                    grp.Description = groupUpdates.Description.HasValue ? groupUpdates.Description.Value;
+                    grp.Notes = groupUpdates.Notes ?? String.Empty;
                     updated = true;
                 }
                 ctx.SaveChanges();
@@ -155,7 +153,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         #region Users
 
-        protected override IList<SecUser> GetUsers(string appName, string userLogin)
+        protected override SecUser[] GetUsersInternal(string appName, string userLogin, string userEmail)
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
@@ -165,15 +163,17 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 {
                     q = q.Where(u => u.Login == userLogin);
                 }
-                return q.OrderBy(u => u.App.Name)
-                    .ThenBy(u => u.Login)
-                    .AsEnumerable()
+                if (userEmail != null)
+                {
+                    q = q.Where(u => u.Email == userEmail);
+                }
+                return q.AsEnumerable()
                     .Select(Mapper.Map<SecUser>)
-                    .ToList();
+                    .ToArray();
             }
         }
 
-        protected override bool DoAddUser(string appName, SecUser newUser)
+        protected override bool AddUserInternal(string appName, SecUser newUser)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
@@ -188,7 +188,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                         Active = newUser.Active,
                         Email = newUser.Email,
                         FirstName = newUser.FirstName,
-                        HashedPassword = newUser.HashedPassword, // TODO Applicare HASH
+                        PasswordHash = newUser.PasswordHash,
                         LastName = newUser.LastName,
                         Login = newUser.Login
                     });
@@ -200,7 +200,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        protected override bool DoRemoveUser(string appName, string userLogin)
+        protected override bool RemoveUserInternal(string appName, string userLogin)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
@@ -219,7 +219,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        protected override bool DoUpdateUser(string appName, string userLogin, SecUser newUser)
+        protected override bool UpdateUserInternal(string appName, string userLogin, SecUserUpdates userUpdates)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
@@ -229,15 +229,15 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 var user = ctx.SecUsers.FirstOrDefault(u => u.App.Id == appId && u.Login == userLogin);
                 if (user != null)
                 {
-                    if (userLogin != newUser.Login && ctx.SecUsers.Any(u => u.AppId == user.AppId && u.Login == newUser.Login))
+                    if (userLogin != userUpdates.Login && ctx.SecUsers.Any(u => u.AppId == user.AppId && u.Login == userUpdates.Login))
                     {
                         throw new SecUserExistingException();
                     }
-                    user.FirstName = newUser.FirstName;
-                    user.LastName = newUser.LastName;
-                    user.Email = newUser.Email;
-                    user.Login = newUser.Login;
-                    user.Active = newUser.Active;
+                    user.FirstName = userUpdates.FirstName;
+                    user.LastName = userUpdates.LastName;
+                    user.Email = userUpdates.Email;
+                    user.Login = userUpdates.Login;
+                    user.Active = userUpdates.Active;
                     updated = true;
                 }
                 ctx.SaveChanges();
@@ -246,7 +246,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        protected override bool DoAddUserToGroup(string appName, string userLogin, string groupName)
+        protected override bool AddUserToGroupInternal(string appName, string userLogin, string groupName)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
@@ -266,7 +266,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        protected override bool DoRemoveUserFromGroup(string appName, string userLogin, string groupName)
+        protected override bool RemoveUserFromGroupInternal(string appName, string userLogin, string groupName)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
@@ -290,7 +290,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         #region Contexts
 
-        protected override IList<SecContext> GetContexts(string appName)
+        protected override SecContext[] GetContextsInternal(string appName)
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
@@ -299,11 +299,9 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
                 q = q.Where(c => c.App.Id == appId);
 
-                return q.OrderBy(c => c.App.Name)
-                    .ThenBy(c => c.Name)
-                    .AsEnumerable()
+                return q.AsEnumerable()
                     .Select(Mapper.Map<SecContext>)
-                    .ToList();
+                    .ToArray();
             }
         }
 
@@ -311,7 +309,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         #region Objects
 
-        protected override IList<SecObject> GetObjects(string appName, string contextName)
+        protected override SecObject[] GetObjectsInternal(string appName, string contextName)
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
@@ -324,12 +322,9 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 {
                     q = q.Where(o => o.Context.Name == contextName);
                 }
-                return q.OrderBy(o => o.Context.App.Name)
-                    .ThenBy(o => o.Context.Name)
-                    .ThenBy(o => o.Name)
-                    .AsEnumerable()
+                return q.AsEnumerable()
                     .Select(Mapper.Map<SecObject>)
-                    .ToList();
+                    .ToArray();
             }
         }
 
@@ -337,7 +332,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         #region Entries
 
-        protected override IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin)
+        protected override SecEntry[] GetEntriesInternal(string appName, string contextName, string objectName, string userLogin)
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
@@ -367,14 +362,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     q = q.Where(e => e.UserId == user.Id || groupIds.Contains(e.Group.Id));
                 }
 
-                return q.OrderBy(e => e.Object.Name)
-                    .AsEnumerable()
+                return q.AsEnumerable()
                     .Select(Mapper.Map<SecEntry>)
-                    .ToList();
+                    .ToArray();
             }
         }
 
-        protected override bool DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+        protected override bool AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())
@@ -445,7 +439,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        protected override bool DoRemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)
+        protected override bool RemoveEntryInternal(string appName, string contextName, string objectName, string userLogin, string groupName)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateWriteContext())

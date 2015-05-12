@@ -196,9 +196,9 @@
     <Compile Include="Logging\CaravanLoggerTarget.cs" />
     <Compile Include="Drivers\Sql\Models\Security\SqlSecRole.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Core\DbManagerBase.cs" />
-    <Compile Include="Core\LogRepositoryBase.cs" />
-    <Compile Include="Core\SecurityRepositoryBase.cs" />
+    <Compile Include="Core\AbstractDataSourceManager.cs" />
+    <Compile Include="Core\AbstractLogRepository.cs" />
+    <Compile Include="Core\AbstractSecurityRepository.cs" />
     <Compile Include="Core\ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -209,7 +209,7 @@
     <Compile Include="Drivers\Mongo\Models\MongoDocument.cs" />
     <Compile Include="Drivers\Mongo\Models\MongoSequence.cs" />
     <Compile Include="Drivers\Mongo\Models\Security\MongoSecApp.cs" />
-    <Compile Include="Drivers\Mongo\MongoDbManager.cs" />
+    <Compile Include="Drivers\Mongo\MongoDataSourceManager.cs" />
     <Compile Include="Drivers\Mongo\MongoLogRepository.cs" />
     <Compile Include="Drivers\Mongo\MongoSecurityRepository.cs" />
     <Compile Include="Drivers\Mongo\MongoUtilities.cs" />
@@ -218,7 +218,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Drivers\Sql\FakeSql\FakeSqlDbManager.cs" />
+    <Compile Include="Drivers\Sql\FakeSql\FakeSqlDataSourceManager.cs" />
     <Compile Include="Drivers\Sql\Models\Logging\SqlLogEntry.cs" />
     <Compile Include="Drivers\Sql\Models\Logging\SqlLogSetting.cs" />
     <Compile Include="Drivers\Sql\Models\Security\SqlSecApp.cs" />
@@ -227,20 +227,20 @@
     <Compile Include="Drivers\Sql\Models\Security\SqlSecGroup.cs" />
     <Compile Include="Drivers\Sql\Models\Security\SqlSecObject.cs" />
     <Compile Include="Drivers\Sql\Models\Security\SqlSecUser.cs" />
-    <Compile Include="Drivers\Sql\MySql\MySqlDbManager.cs" />
+    <Compile Include="Drivers\Sql\MySql\MySqlDataSourceManager.cs" />
     <Compile Include="Drivers\Sql\Oracle\OracleDynamicParameters.cs" />
     <Compile Include="Db.cs" />
-    <Compile Include="IDbManager.cs" />
-    <Compile Include="Drivers\Sql\PostgreSql\PostgreSqlDbManager.cs" />
+    <Compile Include="IDataSourceManager.cs" />
+    <Compile Include="Drivers\Sql\PostgreSql\PostgreSqlDataSourceManager.cs" />
     <Compile Include="Drivers\Sql\SqlSecurityRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Drivers\Sql\SqlLogRepository.cs" />
-    <Compile Include="Drivers\Sql\Oracle\OracleDbManager.cs" />
+    <Compile Include="Drivers\Sql\Oracle\OracleDataSourceManager.cs" />
     <Compile Include="Drivers\Rest\RestLogRepository.cs" />
     <Compile Include="Drivers\Rest\RestSecurityRepository.cs" />
-    <Compile Include="Drivers\Sql\SqlServerCe\SqlServerCeDbManager.cs" />
+    <Compile Include="Drivers\Sql\SqlServerCe\SqlServerCeDataSourceManager.cs" />
     <Compile Include="Drivers\Sql\SqlDbContext.cs" />
-    <Compile Include="Drivers\Sql\SqlServer\SqlServerDbManager.cs" />
+    <Compile Include="Drivers\Sql\SqlServer\SqlServerDataSourceManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

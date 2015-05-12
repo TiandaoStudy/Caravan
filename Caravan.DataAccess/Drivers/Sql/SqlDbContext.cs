@@ -71,7 +71,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         private static DbConnection GetConnection()
         {
-            if (Db.Manager.Kind == DataAccessKind.FakeSql)
+            if (Db.Manager.DataSourceKind == DataSourceKind.FakeSql)
             {
                 // Needed, otherwise Unit Tests fail.
                 return Db.Manager.OpenConnection();
@@ -115,27 +115,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             mb.Configurations.Add(new SqlSecUserTypeConfiguration());
             mb.Configurations.Add(new SqlLogSettingTypeConfiguration());
             mb.Configurations.Add(new SqlLogEntryTypeConfiguration());
-        }
-    }
-
-    public static class QueryableExtensions
-    {
-        public static List<T> ToLogAndList<T>(this IQueryable<T> queryable)
-        {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            var list = queryable.ToList();
-            stopwatch.Stop();
-
-            // Logging query and execution time.
-            var logEntry = queryable.ToString();
-            var milliseconds = stopwatch.ElapsedMilliseconds;
-            Db.Logger.LogTraceAsync<IDbManager>("EF generated query", logEntry, "Logging and timing the query", new[]
-            {
-                KeyValuePair.Create("milliseconds", milliseconds.ToString(CultureInfo.InvariantCulture))
-            });
-
-            return list;
         }
     }
 }

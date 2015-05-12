@@ -4,11 +4,11 @@ using Finsa.Caravan.DataAccess.Core;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 {
-    internal sealed class MongoDbManager : DbManagerBase
+    internal sealed class MongoDataSourceManager : AbstractDataSourceManager
     {
-        public override DataAccessKind Kind
+        public override DataSourceKind DataSourceKind
         {
-            get { return DataAccessKind.MongoDb; }
+            get { return DataSourceKind.MongoDb; }
         }
 
         public override void ElaborateConnectionString(ref string connectionString)

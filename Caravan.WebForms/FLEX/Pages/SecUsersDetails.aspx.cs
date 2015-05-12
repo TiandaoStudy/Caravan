@@ -64,7 +64,7 @@ namespace Finsa.Caravan.WebForms.Pages
             return;
          }
 
-         var user = Db.Security.User(Common.Properties.Settings.Default.ApplicationName, login);
+         var user = Db.Security.GetUserByLogin(Common.Properties.Settings.Default.ApplicationName, login);
          Raise<ArgumentException>.IfIsNull(user, "Given user name does not exist");
 
          txtFirstName.Text = user.FirstName;

@@ -83,13 +83,13 @@ namespace FLEX.Web.Pages
 
         protected void TreeView1_SelectedNodeChanged(object sender, EventArgs args)
         {
-            var entries = Db.Security.EntriesForObject(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, "menu", TreeView1.SelectedValue);
+            var entries = Db.Security.GetEntriesForObject(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, "menu", TreeView1.SelectedValue);
             
             var usersInEntries = entries.Where(e => e.UserLogin != null).Select(e => e.UserLogin).ToHashSet();
             var groupsInEntries = entries.Where(e => e.GroupName != null).Select(e => e.GroupName).ToHashSet();
 
-            var allUsers = Db.Security.Users(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName);
-            var allGroups = Db.Security.Groups(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName);
+            var allUsers = Db.Security.GetUsers(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName);
+            var allGroups = Db.Security.GetGroups(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName);
 
             var allowedUsers = allUsers.Where(u => !usersInEntries.Contains(u.Login));
             var allowedGroups = allGroups.Where(g => !groupsInEntries.Contains(g.Name));

@@ -10,7 +10,7 @@ using RestSharp;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Rest
 {
-    internal sealed class RestSecurityRepository : SecurityRepositoryBase<RestSecurityRepository>
+    internal sealed class RestSecurityRepository : AbstractSecurityRepository<RestSecurityRepository>
     {
         protected override IList<SecApp> GetApps()
         {
@@ -61,7 +61,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override bool DoAddApp(SecApp app)
+        protected override bool AddAppInternal(SecApp app)
         {
             try
             {
@@ -134,7 +134,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override bool DoAddGroup(string appName, SecGroup newGroup)
+        protected override bool AddGroupInternal(string appName, SecGroup newGroup)
         {
             try
             {
@@ -170,7 +170,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override bool DoRemoveGroup(string appName, string groupName)
+        protected override bool RemoveGroupInternal(string appName, string groupName)
         {
             try
             {
@@ -199,7 +199,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override bool DoUpdateGroup(string appName, string groupName, SecGroup newGroup)
+        protected override bool UpdateGroupInternal(string appName, string groupName, SecGroup groupUpdates)
         {
             try
             {
@@ -213,8 +213,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
                     Auth = "AA",
                     Body = new SecGroup
                        {
-                           Description = newGroup.Description,
-                           Name = newGroup.Name
+                           Description = groupUpdates.Description,
+                           Name = groupUpdates.Name
                        }
                 });
 
@@ -282,7 +282,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override bool DoAddUser(string appName, SecUser newUser)
+        protected override bool AddUserInternal(string appName, SecUser newUser)
         {
             try
             {
@@ -322,7 +322,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             return true;
         }
 
-        protected override bool DoRemoveUser(string appName, string userLogin)
+        protected override bool RemoveUserInternal(string appName, string userLogin)
         {
             try
             {
@@ -353,7 +353,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             return true;
         }
 
-        protected override bool DoUpdateUser(string appName, string userLogin, SecUser newUser)
+        protected override bool UpdateUserInternal(string appName, string userLogin, SecUser userUpdates)
         {
             try
             {
@@ -367,10 +367,10 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
                     Auth = "AA",
                     Body = new SecUser
                        {
-                           FirstName = newUser.FirstName,
-                           LastName = newUser.LastName,
-                           Login = newUser.Login,
-                           Email = newUser.Email
+                           FirstName = userUpdates.FirstName,
+                           LastName = userUpdates.LastName,
+                           Login = userUpdates.Login,
+                           Email = userUpdates.Email
                        }
                 });
                 var response = client.Execute<Common.Models.Rest.RestResponse<SecUser>>(request);
@@ -399,7 +399,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             return true;
         }
 
-        protected override bool DoAddUserToGroup(string appName, string userLogin, string groupName)
+        protected override bool AddUserToGroupInternal(string appName, string userLogin, string groupName)
         {
             try
             {
@@ -429,7 +429,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             return true;
         }
 
-        protected override bool DoRemoveUserFromGroup(string appName, string userLogin, string groupName)
+        protected override bool RemoveUserFromGroupInternal(string appName, string userLogin, string groupName)
         {
             try
             {
@@ -461,7 +461,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             return true;
         }
 
-        protected override IList<SecContext> GetContexts(string appName)
+        protected override IList<SecContext> GetContextsInternal(string appName)
         {
             var client = new RestClient("http://localhost/Caravan.RestService/security");
             var request = new RestRequest("{appName}/contexts", Method.POST);
@@ -483,7 +483,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             return contexts;
         }
 
-        protected override IList<SecObject> GetObjects(string appName, string contextName)
+        protected override IList<SecObject> GetObjectsInternal(string appName, string contextName)
         {
             var client = new RestClient("http://localhost/Caravan.RestService/security");
             var request = new RestRequest("{appName}/objects", Method.POST);
@@ -500,7 +500,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
 
         #region Entries
 
-        protected override IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin)
+        protected override IList<SecEntry> GetEntriesInternal(string appName, string contextName, string objectName, string userLogin)
         {
             try
             {
@@ -542,7 +542,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override bool DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+        protected override bool AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
         {
             try
             {
@@ -586,7 +586,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             return true;
         }
 
-        protected override bool DoRemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)
+        protected override bool RemoveEntryInternal(string appName, string contextName, string objectName, string userLogin, string groupName)
         {
             try
             {

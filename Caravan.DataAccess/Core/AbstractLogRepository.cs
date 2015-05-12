@@ -1,3 +1,7 @@
+using Common.Logging;
+using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Models.Logging;
+using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -5,16 +9,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Web;
-using Common.Logging;
-using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Logging;
-using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Models.Logging.Exceptions;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
+using Finsa.CodeServices.Common.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
-    internal abstract class LogRepositoryBase<TLog> : ICaravanLogRepository where TLog : LogRepositoryBase<TLog>
+    internal abstract class AbstractLogRepository<TLog> : ICaravanLogRepository where TLog : AbstractLogRepository<TLog>
     {
         #region ICaravanLogRepository Members
 
