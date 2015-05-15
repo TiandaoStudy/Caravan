@@ -2,6 +2,7 @@
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.DataAccess;
+using Finsa.CodeServices.Common;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 
@@ -90,7 +91,14 @@ namespace Finsa.Caravan.WebForms.Pages
               }
               else if (Mode == EditMode)
               {
-                  var newUser= new SecUser { FirstName = txtFirstName.Text, LastName = txtLastName.Text, Email = txtEmail.Text, Active = chkIsActive.Checked, Login = Login };
+                  var newUser= new SecUserUpdates
+                  {
+                      FirstName = Option.Some(txtFirstName.Text), 
+                      LastName = Option.Some(txtLastName.Text),
+                      Email = Option.Some(txtEmail.Text), 
+                      Active = Option.Some(chkIsActive.Checked), 
+                      Login = Option.Some(Login)
+                  };
                   Db.Security.UpdateUser(Common.Properties.Settings.Default.ApplicationName, Login, newUser);
               }
               Master.RegisterCloseScript(this);

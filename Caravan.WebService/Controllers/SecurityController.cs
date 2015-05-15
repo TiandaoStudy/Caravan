@@ -90,11 +90,11 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <param name="userLogin">The user login</param>
-        /// <param name="user">The user containing element to update</param>
+        /// <param name="userUpdates">The user containing element to update</param>
         [Route("{appName}/users/{userLogin}")]
-        public void PutUser(string appName, string userLogin, [FromBody] SecUser user)
+        public void PutUser(string appName, string userLogin, [FromBody] SecUserUpdates userUpdates)
         {
-            Db.Security.UpdateUser(appName, userLogin, user);
+            Db.Security.UpdateUser(appName, userLogin, userUpdates);
         }
 
         /// <summary>
@@ -187,11 +187,11 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <param name="groupName">The group name</param>
-        /// <param name="group">The group containing element/s to update</param>
+        /// <param name="groupUpdates">The group containing element/s to update</param>
         [Route("{appName}/groups/{groupName}")]
-        public void PutGroup(string appName, string groupName, [FromBody] SecGroup group)
+        public void PutGroup(string appName, string groupName, [FromBody] SecGroupUpdates groupUpdates)
         {
-            Db.Security.UpdateGroup(appName, groupName, group);
+            Db.Security.UpdateGroup(appName, groupName, groupUpdates);
         }
 
         #endregion Group

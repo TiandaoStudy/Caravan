@@ -2,6 +2,7 @@
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.DataAccess;
+using Finsa.CodeServices.Common;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 using System.Linq;
@@ -196,7 +197,12 @@ namespace Finsa.Caravan.WebForms.Pages
                     }
                 }
 
-               var newGroup = new SecGroup { Name = txtGrpName.Text, Description = txtGrpDescr.Text, Notes= txtNotes.Text };
+               var newGroup = new SecGroupUpdates
+               {
+                   Name = Option.Some(txtGrpName.Text), 
+                   Description = Option.Some(txtGrpDescr.Text), 
+                   Notes = Option.Some(txtNotes.Text)
+               };
                Db.Security.UpdateGroup(Common.Properties.Settings.Default.ApplicationName, GroupName, newGroup);
             }
             Master.RegisterCloseScript(this);

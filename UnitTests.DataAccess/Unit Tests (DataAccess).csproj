@@ -57,7 +57,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Finsa.CodeServices.Common">
-      <HintPath>..\packages\Finsa.CodeServices.Common.1.0.9\lib\net40-client\Finsa.CodeServices.Common.dll</HintPath>
+      <HintPath>..\packages\Finsa.CodeServices.Common.1.10\lib\net40-client\Finsa.CodeServices.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

@@ -167,13 +167,13 @@
             <param name="appName">Application name</param>
             <param name="user">The new user to add</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutUser(System.String,System.String,Finsa.Caravan.Common.Models.Security.SecUser)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutUser(System.String,System.String,Finsa.Caravan.Common.Models.Security.SecUserUpdates)">
             <summary>
               Update the user with the specified userLogin in the specified application
             </summary>
             <param name="appName">The application name</param>
             <param name="userLogin">The user login</param>
-            <param name="user">The user containing element to update</param>
+            <param name="userUpdates">The user containing element to update</param>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteUser(System.String,System.String)">
             <summary>
@@ -228,13 +228,13 @@
             <param name="appName">The application name</param>
             <param name="groupName">The group name</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutGroup(System.String,System.String,Finsa.Caravan.Common.Models.Security.SecGroup)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutGroup(System.String,System.String,Finsa.Caravan.Common.Models.Security.SecGroupUpdates)">
             <summary>
               Update the specified group
             </summary>
             <param name="appName">The application name</param>
             <param name="groupName">The group name</param>
-            <param name="group">The group containing element/s to update</param>
+            <param name="groupUpdates">The group containing element/s to update</param>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetContexts(System.String)">
             <summary>

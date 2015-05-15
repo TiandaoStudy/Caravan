@@ -7,6 +7,7 @@ using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Models.Security.Exceptions;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
+using Finsa.CodeServices.Common;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -133,14 +134,16 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 var grp = ctx.SecGroups.FirstOrDefault(g => g.App.Id == appId && g.Name == groupName);
                 if (grp != null)
                 {
-                    if (groupUpdates.Name.HasValue && grp.Name != groupUpdates.Name.Value && ctx.SecGroups.Any(g => g.AppId == grp.AppId && g.Name == groupUpdates.Name.Value))
+                    groupUpdates.Name.Do(x =>
                     {
-                        throw new SecGroupExistingException();
-                    }
-                    if (groupUpdates.Name)
-                    grp.Name = groupUpdates.Name.HasValue ? groupUpdates.Name.Value : grp.Name;
-                    grp.Description = groupUpdates.Description.HasValue ? groupUpdates.Description.Value;
-                    grp.Notes = groupUpdates.Notes ?? String.Empty;
+                        if (grp.Name != x && ctx.SecGroups.Any(g => g.AppId == grp.AppId && g.Name == x))
+                        {
+                            throw new SecGroupExistingException();
+                        }
+                        grp.Name = x;
+                    });
+                    groupUpdates.Description.Do(x => grp.Description = x);
+                    groupUpdates.Notes.Do(x => grp.Notes = x);
                     updated = true;
                 }
                 ctx.SaveChanges();
@@ -229,15 +232,18 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 var user = ctx.SecUsers.FirstOrDefault(u => u.App.Id == appId && u.Login == userLogin);
                 if (user != null)
                 {
-                    if (userLogin != userUpdates.Login && ctx.SecUsers.Any(u => u.AppId == user.AppId && u.Login == userUpdates.Login))
+                    userUpdates.Login.Do(x =>
                     {
-                        throw new SecUserExistingException();
-                    }
-                    user.FirstName = userUpdates.FirstName;
-                    user.LastName = userUpdates.LastName;
-                    user.Email = userUpdates.Email;
-                    user.Login = userUpdates.Login;
-                    user.Active = userUpdates.Active;
+                        if (userLogin != x && ctx.SecUsers.Any(u => u.AppId == user.AppId && u.Login == x))
+                        {
+                            throw new SecUserExistingException();
+                        }
+                        user.Login = x;
+                    });
+                    userUpdates.FirstName.Do(x => user.FirstName = x);
+                    userUpdates.LastName.Do(x => user.LastName = x);
+                    userUpdates.Email.Do(x => user.Email = x);
+                    userUpdates.Active.Do(x => user.Active = x);
                     updated = true;
                 }
                 ctx.SaveChanges();

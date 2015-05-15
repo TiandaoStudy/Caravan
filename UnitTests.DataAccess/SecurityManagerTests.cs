@@ -8,6 +8,7 @@ using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Models.Security.Exceptions;
 using Finsa.Caravan.DataAccess;
+using Finsa.CodeServices.Common;
 using NUnit.Framework;
 using Common.Logging;
 
@@ -390,7 +391,10 @@ namespace UnitTests.DataAccess
 
             user1.Login = "updatedLogin";
 
-            Db.Security.UpdateUser(_myApp.Name, "blabla", user1);
+            Db.Security.UpdateUser(_myApp.Name, "blabla", new SecUserUpdates
+            {
+                Login = "updatedLogin".ToOption()
+            });
 
             var q = (from u in Db.Security.GetUsers(_myApp.Name)
                      where u.Login == user1.Login
@@ -417,7 +421,10 @@ namespace UnitTests.DataAccess
 
                 user.Login = "updatedLogin" + i;
 
-                Db.Security.UpdateUser(_myApp.Name, "blabla" + i, user);
+                Db.Security.UpdateUser(_myApp.Name, "blabla" + i, new SecUserUpdates
+                {
+                    Login = user.Login.ToOption()
+                });
             });
 
             for (var i = 1; i <= userCount; ++i)
@@ -451,7 +458,10 @@ namespace UnitTests.DataAccess
 
             user1.Login = "updatedLogin";
 
-            Db.Security.UpdateUser(_myApp.Name, "blabla1", user1);
+            Db.Security.UpdateUser(_myApp.Name, "blabla1", new SecUserUpdates
+            {
+                Login = user1.Login.ToOption()
+            });
             WaitForLogger();
             var l1 = Db.Logger.Entries(_myApp.Name);
 
@@ -466,7 +476,10 @@ namespace UnitTests.DataAccess
 
             user1.Login = "updatedLogin";
 
-            Db.Security.UpdateUser(_myApp.Name, user1.Login, user1);
+            Db.Security.UpdateUser(_myApp.Name, user1.Login, new SecUserUpdates
+            {
+                Login = user1.Login.ToOption()
+            });
         }
 
         [TestCase(Small)]

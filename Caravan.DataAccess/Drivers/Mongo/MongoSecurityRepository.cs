@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using Finsa.Caravan.Common.Models.Security;
+﻿using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Security;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
+using System.Collections.Generic;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 {
     internal sealed class MongoSecurityRepository : AbstractSecurityRepository<MongoSecurityRepository>
     {
-        protected override IList<SecApp> GetApps()
+        protected override SecApp[] GetAppsInternal()
         {
             throw new System.NotImplementedException();
         }
 
-        protected override SecApp GetApp(string appName)
+        protected override SecApp GetAppInternal(string appName)
         {
             throw new System.NotImplementedException();
         }
@@ -43,7 +41,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
             }).Ok;
         }
 
-        protected override IList<SecGroup> GetGroups(string appName, string groupName)
+        protected override SecGroup[] GetGroupsInternal(string appName, string groupName)
         {
             throw new System.NotImplementedException();
         }
@@ -58,12 +56,12 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
             throw new System.NotImplementedException();
         }
 
-        protected override bool UpdateGroupInternal(string appName, string groupName, SecGroup groupUpdates)
+        protected override bool UpdateGroupInternal(string appName, string groupName, SecGroupUpdates groupUpdates)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override IList<SecUser> GetUsers(string appName, string userLogin)
+        protected override SecUser[] GetUsersInternal(string appName, string userLogin, string userEmail)
         {
             throw new System.NotImplementedException();
         }
@@ -78,7 +76,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
             throw new System.NotImplementedException();
         }
 
-        protected override bool UpdateUserInternal(string appName, string userLogin, SecUser userUpdates)
+        protected override bool UpdateUserInternal(string appName, string userLogin, SecUserUpdates userUpdates)
         {
             throw new System.NotImplementedException();
         }
@@ -93,17 +91,17 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
             throw new System.NotImplementedException();
         }
 
-        protected override IList<SecContext> GetContextsInternal(string appName)
+        protected override SecContext[] GetContextsInternal(string appName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override IList<SecObject> GetObjectsInternal(string appName, string contextName)
+        protected override SecObject[] GetObjectsInternal(string appName, string contextName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override IList<SecEntry> GetEntriesInternal(string appName, string contextName, string objectName, string userLogin)
+        protected override SecEntry[] GetEntriesInternal(string appName, string contextName, string objectName, string userLogin)
         {
             throw new System.NotImplementedException();
         }
