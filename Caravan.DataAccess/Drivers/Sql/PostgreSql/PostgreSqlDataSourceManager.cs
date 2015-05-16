@@ -19,7 +19,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.PostgreSql
         public override DbConnection CreateConnection()
         {
             var connection = NpgsqlFactory.Instance.CreateConnection();
-            connection.ConnectionString = Db.ConnectionString;
+            connection.ConnectionString = DataSource.ConnectionString;
             return connection;
         }
     }

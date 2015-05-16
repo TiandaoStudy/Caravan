@@ -11,6 +11,7 @@
 // the License.
 
 using System.Web.Http;
+using Finsa.Caravan.Common;
 using Finsa.WebApi.HelpPage.AnyHost;
 
 namespace Finsa.Caravan.WebService.Controllers
@@ -27,7 +28,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         public HelpController()
         {
-            Info.MyServiceName = Common.Properties.Settings.Default.ApplicationDescription;
+            Info.MyServiceName = CommonConfiguration.Instance.AppDescription;
             Info.MyCompanyName = "Finsa S.p.A";
             Info.MyCompanyUrl = "http://www.finsa.it/";
             Info.MyCustomerName = null;

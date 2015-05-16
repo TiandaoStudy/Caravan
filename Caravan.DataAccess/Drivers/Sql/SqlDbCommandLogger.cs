@@ -1,5 +1,4 @@
-﻿using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Logging;
+﻿using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Utilities;
 using Finsa.Caravan.Common.Utilities.Diagnostics;

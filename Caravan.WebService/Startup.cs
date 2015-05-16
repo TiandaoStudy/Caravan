@@ -13,6 +13,7 @@ using PommaLabs.KVLite.Web.Http;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Web;
 using System.Web.Http;
+using Common.Logging;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -24,6 +25,8 @@ namespace Finsa.Caravan.WebService
         {
             var config = new HttpConfiguration();
             var kernel = CreateKernel();
+
+            ServiceHelper.OnStart(LogManager.GetLogger<Startup>(), kernel.Get<ICache>());
 
             // Inizializzatore per Caravan.
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());

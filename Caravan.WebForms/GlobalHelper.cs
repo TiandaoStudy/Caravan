@@ -18,10 +18,10 @@ namespace Finsa.Caravan.WebForms
         public static void Application_Start(object sender, EventArgs args, string connectionString)
         {
             // Sets the default connection string.
-            Db.ConnectionString = connectionString;
+            DataSource.ConnectionString = connectionString;
 
             // After setting the connection string, we can use the logger.
-            Db.Logger.LogInfo<GlobalHelper>("Application started");
+            DataSource.Logger.LogInfo<GlobalHelper>("Application started");
 
             // Run vacuum on the persistent cache. It should be put AFTER the connection string is
             // set, since that string it stored on the cache itself and we do not want conflicts, right?
@@ -40,7 +40,7 @@ namespace Finsa.Caravan.WebForms
             }
 
             // Log application end.
-            Db.Logger.LogInfo<GlobalHelper>("Application ended");
+            DataSource.Logger.LogInfo<GlobalHelper>("Application ended");
         }
 
         public static void Application_PreSendRequestHeaders(object sender, EventArgs args)
@@ -70,7 +70,7 @@ namespace Finsa.Caravan.WebForms
             HttpContext.Current.Response.Filter = null;
 
             // Logs the error into the DB.
-            Db.Logger.LogFatal<GlobalHelper>(HttpContext.Current.Server.GetLastError());
+            DataSource.Logger.LogFatal<GlobalHelper>(HttpContext.Current.Server.GetLastError());
         }
 
         public static void Session_Start(object sender, EventArgs e, HttpApplicationState Application, string SessionID)

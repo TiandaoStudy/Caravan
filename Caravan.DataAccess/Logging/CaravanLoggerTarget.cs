@@ -69,7 +69,7 @@ namespace Finsa.Caravan.DataAccess.Logging
 
             // In order to be able to use thread local information, it must _not_ be async.
             // ReSharper disable once UnusedVariable
-            var result = Db.Logger.LogRaw(
+            var result = DataSource.Logger.LogRaw(
                 logLevel,
                 CommonConfiguration.Instance.AppName,
                 userLogin,

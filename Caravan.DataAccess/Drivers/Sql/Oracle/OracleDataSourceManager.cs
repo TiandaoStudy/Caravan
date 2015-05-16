@@ -1,7 +1,6 @@
 using System.Data.Common;
 using System.Globalization;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataAccess.Properties;
 using Oracle.ManagedDataAccess.Client;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Oracle
@@ -33,14 +32,14 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Oracle
             // Statement Cache
             if (!lowerConnString.Contains("statement cache size"))
             {
-                connectionString += string.Format("Statement Cache Size={0};", Settings.Default.OracleStatementCacheSize);
+                connectionString += string.Format("Statement Cache Size={0};", DataAccessConfiguration.Instance.OracleStatementCacheSize);
             }
         }
 
         public override DbConnection CreateConnection()
         {
             var connection = OracleClientFactory.Instance.CreateConnection();
-            connection.ConnectionString = Db.ConnectionString;
+            connection.ConnectionString = DataSource.ConnectionString;
             return connection;
         }
     }

@@ -18,7 +18,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.MySql
         public override DbConnection CreateConnection()
         {
             var connection = global::MySql.Data.MySqlClient.MySqlClientFactory.Instance.CreateConnection();
-            connection.ConnectionString = Db.ConnectionString;
+            connection.ConnectionString = DataSource.ConnectionString;
             return connection;
         }
     }

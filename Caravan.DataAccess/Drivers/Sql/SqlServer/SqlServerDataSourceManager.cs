@@ -19,7 +19,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.SqlServer
         public override DbConnection CreateConnection()
         {
             var connection = SqlClientFactory.Instance.CreateConnection();
-            connection.ConnectionString = Db.ConnectionString;
+            connection.ConnectionString = DataSource.ConnectionString;
             return connection;
         }
     }

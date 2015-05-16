@@ -66,7 +66,7 @@ namespace Finsa.Caravan.WebForms.Pages
                 userLogin = SearchCriteria["CUSR_LOGIN"][0];
                 active = crvnActive.SelectedValues[0] == "Y";
                 // This should not catch any exception, others will do.
-                users = (from us in DataAccess.Db.Security.GetUsers(CommonConfiguration.Instance.AppName)
+                users = (from us in DataAccess.DataSource.Security.GetUsers(CommonConfiguration.Instance.AppName)
                          select new SecUser { FirstName = us.FirstName, LastName = us.LastName, Login = us.Login, Email = us.Email, Active = us.Active }).Where(x => x.Login == userLogin.ToString() && x.Active == active)
                               .ToDataTable();
 
@@ -76,7 +76,7 @@ namespace Finsa.Caravan.WebForms.Pages
             else if (SearchCriteria["CUSR_LOGIN"].Count > 0)
             {
                 userLogin = SearchCriteria["CUSR_LOGIN"][0];
-                users = (from us in DataAccess.Db.Security.GetUsers(CommonConfiguration.Instance.AppName)
+                users = (from us in DataAccess.DataSource.Security.GetUsers(CommonConfiguration.Instance.AppName)
                          select new SecUser { FirstName = us.FirstName, LastName = us.LastName, Login = us.Login, Email = us.Email, Active = us.Active }).Where(x => x.Login == userLogin.ToString())
                 .ToDataTable();
 
@@ -86,7 +86,7 @@ namespace Finsa.Caravan.WebForms.Pages
             else if (SearchCriteria["Active"].Count == 1)
             {
                 active = crvnActive.SelectedValues[0] == "Y";
-                users = (from us in DataAccess.Db.Security.GetUsers(CommonConfiguration.Instance.AppName)
+                users = (from us in DataAccess.DataSource.Security.GetUsers(CommonConfiguration.Instance.AppName)
                          select new SecUser { FirstName = us.FirstName, LastName = us.LastName, Login = us.Login, Email = us.Email, Active = us.Active }).Where(x => x.Active == active)
                              .ToDataTable();
 
@@ -95,7 +95,7 @@ namespace Finsa.Caravan.WebForms.Pages
             }
             else
             {
-                users = (from us in DataAccess.Db.Security.GetUsers(CommonConfiguration.Instance.AppName)
+                users = (from us in DataAccess.DataSource.Security.GetUsers(CommonConfiguration.Instance.AppName)
                          select new SecUser { FirstName = us.FirstName, LastName = us.LastName, Login = us.Login, Email = us.Email, Active = us.Active })
                             .ToDataTable();
 
@@ -142,7 +142,7 @@ namespace Finsa.Caravan.WebForms.Pages
             {
                 var login = loginToBeDeleted.Value;
                 Raise<ArgumentException>.IfIsEmpty(login);
-                DataAccess.Db.Security.RemoveUser(CommonConfiguration.Instance.AppName, login);
+                DataAccess.DataSource.Security.RemoveUser(CommonConfiguration.Instance.AppName, login);
                 fdtgUsers.UpdateDataSource();
             }
             catch (Exception ex)

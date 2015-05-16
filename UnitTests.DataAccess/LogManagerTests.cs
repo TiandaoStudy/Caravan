@@ -20,19 +20,19 @@ namespace UnitTests.DataAccess
         [SetUp]
         public void Init()
         {
-            Db.ClearAllTablesUseOnlyInsideUnitTestsPlease();
+            DataSource.ClearAllTablesUseOnlyInsideUnitTestsPlease();
             _myApp = new SecApp { Name = "unittests.dataaccess", Description = "Test Application 1" };
-            Db.Security.AddApp(_myApp);
+            DataSource.Security.AddApp(_myApp);
             _myApp2 = new SecApp { Name = "mio_test2", Description = "Test Application 2" };
-            Db.Security.AddApp(_myApp2);
+            DataSource.Security.AddApp(_myApp2);
             _settingError = new LogSetting() { Days = 30, Enabled = true, MaxEntries = 100 };
 
-            Db.Logger.AddSetting(_myApp.Name, LogLevel.Error, _settingError);
-            Db.Logger.AddSetting(_myApp.Name, LogLevel.Fatal, _settingError);
-            Db.Logger.AddSetting(_myApp.Name, LogLevel.Info, _settingError);
-            Db.Logger.AddSetting(_myApp.Name, LogLevel.Debug, _settingError);
-            Db.Logger.AddSetting(_myApp.Name, LogLevel.Trace, _settingError);
-            Db.Logger.AddSetting(_myApp.Name, LogLevel.Warn, _settingError);
+            DataSource.Logger.AddSetting(_myApp.Name, LogLevel.Error, _settingError);
+            DataSource.Logger.AddSetting(_myApp.Name, LogLevel.Fatal, _settingError);
+            DataSource.Logger.AddSetting(_myApp.Name, LogLevel.Info, _settingError);
+            DataSource.Logger.AddSetting(_myApp.Name, LogLevel.Debug, _settingError);
+            DataSource.Logger.AddSetting(_myApp.Name, LogLevel.Trace, _settingError);
+            DataSource.Logger.AddSetting(_myApp.Name, LogLevel.Warn, _settingError);
         }
 
         [TearDown]
@@ -46,13 +46,13 @@ namespace UnitTests.DataAccess
         [ExpectedException(typeof(ArgumentException))]
         public void LogSettings_NullAppNameValidLogLevel_ThrowsArgumentException()
         {
-            Db.Logger.Settings(null, LogLevel.Error);
+            DataSource.Logger.Settings(null, LogLevel.Error);
         }
 
         [Test]
         public void LogSettings_NoArgs_ReturnListOfAllApps()
         {
-            var settings = Db.Logger.Settings();
+            var settings = DataSource.Logger.Settings();
 
             Assert.That(settings.Count, Is.EqualTo(6));
         }
@@ -60,7 +60,7 @@ namespace UnitTests.DataAccess
         [Test]
         public void LogSettings_ValidAppName_ReturnsListForAppName()
         {
-            var settings = Db.Logger.Settings(_myApp.Name);
+            var settings = DataSource.Logger.Settings(_myApp.Name);
 
             Assert.That(settings.Count, Is.EqualTo(6));
         }
@@ -68,13 +68,13 @@ namespace UnitTests.DataAccess
         [Test]
         public void LogSettings_ValidArgs_Returns()
         {
-            var result = Db.Logger.LogInfo<LogManagerTests>("pino", "pino pino", "test", new[]
+            var result = DataSource.Logger.LogInfo<LogManagerTests>("pino", "pino pino", "test", new[]
          {
             KeyValuePair.Create("arg1", "1"),
             KeyValuePair.Create("arg2", "2"),
          });
 
-            var q = Db.Logger.Entries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests" && l.ShortMessage == "pino").ToList();
+            var q = DataSource.Logger.Entries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests" && l.ShortMessage == "pino").ToList();
 
             Assert.That(q.Count(), Is.EqualTo(1));
             Assert.That(q.First().Arguments[0].Key, Is.EqualTo("arg1"));
@@ -90,7 +90,7 @@ namespace UnitTests.DataAccess
         {
             Parallel.ForEach(Enumerable.Range(1, logCount), i =>
             {
-                var result = Db.Logger.LogInfo<LogManagerTests>("pino" + i, "pino pino" + i, "test" + i, new[]
+                var result = DataSource.Logger.LogInfo<LogManagerTests>("pino" + i, "pino pino" + i, "test" + i, new[]
             {
                KeyValuePair.Create("arg1"+i, "1"+i),
                KeyValuePair.Create("arg2"+i, "2"+i),
@@ -99,7 +99,7 @@ namespace UnitTests.DataAccess
 
             for (var i = 1; i <= logCount; ++i)
             {
-                var q = Db.Logger.Entries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests" && l.ShortMessage == "pino" + i).ToList();
+                var q = DataSource.Logger.Entries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests" && l.ShortMessage == "pino" + i).ToList();
 
                 Assert.That(q.Count(), Is.EqualTo(1));
                 Assert.That(q.First().Arguments[0].Key, Is.EqualTo("arg1" + i));
@@ -113,9 +113,9 @@ namespace UnitTests.DataAccess
         public void UpdateSetting_ValidArgs_SettingUpdated()
         {
             var update = new LogSetting { Days = 40, Enabled = true, MaxEntries = 50 };
-            Db.Logger.UpdateSetting(_myApp.Name, LogLevel.Info, update);
+            DataSource.Logger.UpdateSetting(_myApp.Name, LogLevel.Info, update);
 
-            var q = Db.Logger.Settings(_myApp.Name).Where(s => s.AppName == _myApp.Name && s.LogLevel == LogLevel.Info).ToList();
+            var q = DataSource.Logger.Settings(_myApp.Name).Where(s => s.AppName == _myApp.Name && s.LogLevel == LogLevel.Info).ToList();
             Assert.That(q.Count, Is.EqualTo(1));
             Assert.That(q.First().MaxEntries, Is.EqualTo(50));
             Assert.That(q.First().Days, Is.EqualTo(40));
@@ -126,14 +126,14 @@ namespace UnitTests.DataAccess
         public void UpdateSetting_EmptyAppName_Throws()
         {
             var update = new LogSetting { Days = 40, Enabled = true, MaxEntries = 50 };
-            Db.Logger.UpdateSetting("", LogLevel.Info, update);
+            DataSource.Logger.UpdateSetting("", LogLevel.Info, update);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Updatesettings_NullSetting_throws()
         {
-            Db.Logger.UpdateSetting(_myApp.Name, LogLevel.Info, null);
+            DataSource.Logger.UpdateSetting(_myApp.Name, LogLevel.Info, null);
         }
 
         #endregion Log Settings
@@ -149,14 +149,14 @@ namespace UnitTests.DataAccess
                 KeyValuePair.Create("c", "d")
             };
 
-            var res = Db.Logger.LogRaw(LogLevel.Info, _myApp.Name, "", "UnitTests.DataAccess.LogManagerTests", "Log_validArgs_", "test", args: args);
+            var res = DataSource.Logger.LogRaw(LogLevel.Info, _myApp.Name, "", "UnitTests.DataAccess.LogManagerTests", "Log_validArgs_", "test", args: args);
 
             Assert.True(res.Succeeded);
 
-            var q = Db.Logger.Entries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests");
+            var q = DataSource.Logger.Entries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests");
             Assert.That(q.Count(), Is.EqualTo(1));
 
-            var q1 = Db.Logger.Entries(_myApp.Name).Where(l => l.Function == "log_validargs_");
+            var q1 = DataSource.Logger.Entries(_myApp.Name).Where(l => l.Function == "log_validargs_");
             Assert.That(q1.Count(), Is.EqualTo(1));
 
             Assert.True(args.SequenceEqual(q1.First().Arguments));
@@ -165,37 +165,37 @@ namespace UnitTests.DataAccess
         [Test]
         public void Log_validArgs_()
         {
-            var res = Db.Logger.LogRaw(LogLevel.Info, _myApp.Name, "", "UnitTests.DataAccess.LogManagerTests", "Log_validArgs_", new Exception());
+            var res = DataSource.Logger.LogRaw(LogLevel.Info, _myApp.Name, "", "UnitTests.DataAccess.LogManagerTests", "Log_validArgs_", new Exception());
             Assert.True(res.Succeeded);
 
-            var q = Db.Logger.Entries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests");
+            var q = DataSource.Logger.Entries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests");
             Assert.That(q.Count(), Is.EqualTo(1));
 
-            var q1 = Db.Logger.Entries(_myApp.Name).Where(l => l.Function == "log_validargs_");
+            var q1 = DataSource.Logger.Entries(_myApp.Name).Where(l => l.Function == "log_validargs_");
             Assert.That(q1.Count(), Is.EqualTo(1));
         }
 
         [Test]
         public void Log_NullException_ReturnsFalse()
         {
-            var res = Db.Logger.LogRaw(LogLevel.Info, "", "", "", "", exception: null);
+            var res = DataSource.Logger.LogRaw(LogLevel.Info, "", "", "", "", exception: null);
             Assert.That(res.Succeeded, Is.EqualTo(false));
         }
 
         [Test]
         public void Log_EmptyCodeUnit_ReturnsFalse()
         {
-            var res = Db.Logger.LogRaw(LogLevel.Info, "", "", "", "", new Exception());
+            var res = DataSource.Logger.LogRaw(LogLevel.Info, "", "", "", "", new Exception());
             Assert.False(res.Succeeded);
         }
 
         [Test]
         public void LogWithCodeUnit_validArgs()
         {
-            var res = Db.Logger.Log<LogManagerTests>(LogLevel.Error, new Exception());
+            var res = DataSource.Logger.Log<LogManagerTests>(LogLevel.Error, new Exception());
             Assert.True(res.Succeeded);
 
-            var q = Db.Logger.Entries(LogLevel.Error).Where(l => l.Function == "logwithcodeunit_validargs");
+            var q = DataSource.Logger.Entries(LogLevel.Error).Where(l => l.Function == "logwithcodeunit_validargs");
 
             Assert.That(q.Count(), Is.EqualTo(1));
         }
@@ -203,17 +203,17 @@ namespace UnitTests.DataAccess
         [Test]
         public void LogWithCodeUnit_EmptyShortMessage_ReturnsFalse()
         {
-            var res = Db.Logger.Log<LogManagerTests>(LogLevel.Error, "");
+            var res = DataSource.Logger.Log<LogManagerTests>(LogLevel.Error, "");
             Assert.False(res.Succeeded);
         }
 
         [Test]
         public void LogDebug_validArgs()
         {
-            var res = Db.Logger.LogDebug<LogManagerTests>(new Exception());
+            var res = DataSource.Logger.LogDebug<LogManagerTests>(new Exception());
             Assert.True(res.Succeeded);
 
-            var q = Db.Logger.Entries(LogLevel.Debug).Where(l => l.Function == "logdebug_validargs");
+            var q = DataSource.Logger.Entries(LogLevel.Debug).Where(l => l.Function == "logdebug_validargs");
 
             Assert.That(q.Count(), Is.EqualTo(1));
         }
@@ -221,10 +221,10 @@ namespace UnitTests.DataAccess
         [Test]
         public void LogTrace_validArgs()
         {
-            var res = Db.Logger.LogTrace<LogManagerTests>(new Exception());
+            var res = DataSource.Logger.LogTrace<LogManagerTests>(new Exception());
             Assert.True(res.Succeeded);
 
-            var q = Db.Logger.Entries(LogLevel.Trace).Where(l => l.Function == "logtrace_validargs");
+            var q = DataSource.Logger.Entries(LogLevel.Trace).Where(l => l.Function == "logtrace_validargs");
 
             Assert.That(q.Count(), Is.EqualTo(1));
         }
@@ -237,15 +237,15 @@ namespace UnitTests.DataAccess
             Parallel.ForEach(Enumerable.Range(1, logCount), i =>
             {
                 var c1 = new SecContext { Name = "c1" + i, Description = "context1" + i };
-                var res = Db.Logger.LogDebug<LogManagerTests>(new Exception(), c1.Name);
+                var res = DataSource.Logger.LogDebug<LogManagerTests>(new Exception(), c1.Name);
                 Assert.True(res.Succeeded);
 
-                var q = Db.Logger.Entries(LogLevel.Debug).Where(l => l.Function == "logdebug_validargs_async" && l.Context == c1.Name).ToList();
+                var q = DataSource.Logger.Entries(LogLevel.Debug).Where(l => l.Function == "logdebug_validargs_async" && l.Context == c1.Name).ToList();
 
                 Assert.That(q.Count(), Is.EqualTo(1));
             });
 
-            var q1 = Db.Logger.Entries(LogLevel.Debug).Where(l => l.Function == "logdebug_validargs_async").ToList();
+            var q1 = DataSource.Logger.Entries(LogLevel.Debug).Where(l => l.Function == "logdebug_validargs_async").ToList();
 
             Assert.That(q1.Count(), Is.EqualTo(logCount));
         }
@@ -253,10 +253,10 @@ namespace UnitTests.DataAccess
         [Test]
         public void LogError_validArgs()
         {
-            var res = Db.Logger.LogError<LogManagerTests>(new Exception());
+            var res = DataSource.Logger.LogError<LogManagerTests>(new Exception());
             Assert.True(res.Succeeded);
 
-            var q = Db.Logger.Entries(LogLevel.Error).Where(l => l.Function == "logerror_validargs");
+            var q = DataSource.Logger.Entries(LogLevel.Error).Where(l => l.Function == "logerror_validargs");
 
             Assert.That(q.Count(), Is.EqualTo(1));
         }
@@ -269,25 +269,25 @@ namespace UnitTests.DataAccess
             Parallel.ForEach(Enumerable.Range(1, logCount), i =>
             {
                 var c1 = new SecContext { Name = "c1" + i, Description = "context1" + i };
-                var res = Db.Logger.LogError<LogManagerTests>(new Exception(), c1.Name);
+                var res = DataSource.Logger.LogError<LogManagerTests>(new Exception(), c1.Name);
                 Assert.True(res.Succeeded);
 
-                var q = Db.Logger.Entries(LogLevel.Error).Where(l => l.Function == "logerror_validargs_async" && l.Context == c1.Name);
+                var q = DataSource.Logger.Entries(LogLevel.Error).Where(l => l.Function == "logerror_validargs_async" && l.Context == c1.Name);
 
                 Assert.That(q.Count(), Is.EqualTo(1));
             });
 
-            var q1 = Db.Logger.Entries(LogLevel.Error).Where(l => l.Function == "logerror_validargs_async");
+            var q1 = DataSource.Logger.Entries(LogLevel.Error).Where(l => l.Function == "logerror_validargs_async");
             Assert.That(q1.Count(), Is.EqualTo(logCount));
         }
 
         [Test]
         public void LogWarn_validArgs()
         {
-            var res = Db.Logger.LogWarn<LogManagerTests>(new Exception());
+            var res = DataSource.Logger.LogWarn<LogManagerTests>(new Exception());
             Assert.True(res.Succeeded);
 
-            var q = Db.Logger.Entries(LogLevel.Warn).Where(l => l.Function == "logwarn_validargs");
+            var q = DataSource.Logger.Entries(LogLevel.Warn).Where(l => l.Function == "logwarn_validargs");
 
             Assert.That(q.Count(), Is.EqualTo(1));
         }
@@ -300,15 +300,15 @@ namespace UnitTests.DataAccess
             Parallel.ForEach(Enumerable.Range(1, logCount), i =>
             {
                 var c1 = new SecContext { Name = "c1" + i, Description = "context1" + i };
-                var res = Db.Logger.LogWarn<LogManagerTests>(new Exception(), c1.Name);
+                var res = DataSource.Logger.LogWarn<LogManagerTests>(new Exception(), c1.Name);
                 Assert.True(res.Succeeded);
 
-                var q = Db.Logger.Entries(LogLevel.Warn).Where(l => l.Function == "logwarn_validargs_async" && l.Context == c1.Name);
+                var q = DataSource.Logger.Entries(LogLevel.Warn).Where(l => l.Function == "logwarn_validargs_async" && l.Context == c1.Name);
 
                 Assert.That(q.Count(), Is.EqualTo(1));
             });
 
-            var q1 = Db.Logger.Entries(LogLevel.Warn).Where(l => l.Function == "logwarn_validargs_async");
+            var q1 = DataSource.Logger.Entries(LogLevel.Warn).Where(l => l.Function == "logwarn_validargs_async");
 
             Assert.That(q1.Count(), Is.EqualTo(logCount));
         }
@@ -316,10 +316,10 @@ namespace UnitTests.DataAccess
         [Test]
         public void LogInfo_validArgs()
         {
-            var res = Db.Logger.LogInfo<LogManagerTests>(new Exception());
+            var res = DataSource.Logger.LogInfo<LogManagerTests>(new Exception());
             Assert.True(res.Succeeded);
 
-            var q = Db.Logger.Entries(LogLevel.Info).Where(l => l.Function == "loginfo_validargs");
+            var q = DataSource.Logger.Entries(LogLevel.Info).Where(l => l.Function == "loginfo_validargs");
 
             Assert.That(q.Count(), Is.EqualTo(1));
         }
@@ -332,25 +332,25 @@ namespace UnitTests.DataAccess
             Parallel.ForEach(Enumerable.Range(1, logCount), i =>
             {
                 var c1 = new SecContext { Name = "c1" + i, Description = "context1" + i };
-                var res = Db.Logger.LogInfo<LogManagerTests>(new Exception(), c1.Name);
+                var res = DataSource.Logger.LogInfo<LogManagerTests>(new Exception(), c1.Name);
                 Assert.True(res.Succeeded);
 
-                var q = Db.Logger.Entries(LogLevel.Info).Where(l => l.Function == "loginfo_validargs_async" && l.Context == c1.Name);
+                var q = DataSource.Logger.Entries(LogLevel.Info).Where(l => l.Function == "loginfo_validargs_async" && l.Context == c1.Name);
 
                 Assert.That(q.Count(), Is.EqualTo(1));
             });
 
-            var q1 = Db.Logger.Entries(LogLevel.Info).Where(l => l.Function == "loginfo_validargs_async");
+            var q1 = DataSource.Logger.Entries(LogLevel.Info).Where(l => l.Function == "loginfo_validargs_async");
             Assert.That(q1.Count(), Is.EqualTo(logCount));
         }
 
         [Test]
         public void LogFatal_validArgs()
         {
-            var res = Db.Logger.LogFatal<LogManagerTests>(new Exception());
+            var res = DataSource.Logger.LogFatal<LogManagerTests>(new Exception());
             Assert.True(res.Succeeded);
 
-            var q = Db.Logger.Entries(LogLevel.Fatal).Where(l => l.Function == "logfatal_validargs");
+            var q = DataSource.Logger.Entries(LogLevel.Fatal).Where(l => l.Function == "logfatal_validargs");
 
             Assert.That(q.Count(), Is.EqualTo(1));
         }
@@ -363,22 +363,22 @@ namespace UnitTests.DataAccess
             Parallel.ForEach(Enumerable.Range(1, logCount), i =>
             {
                 var c1 = new SecContext { Name = "c1" + i, Description = "context1" + i };
-                var res = Db.Logger.LogFatal<LogManagerTests>(new Exception(), c1.Name);
+                var res = DataSource.Logger.LogFatal<LogManagerTests>(new Exception(), c1.Name);
                 Assert.True(res.Succeeded);
 
-                var q = Db.Logger.Entries(LogLevel.Fatal).Where(l => l.Function == "logfatal_validargs_async" && l.Context == c1.Name);
+                var q = DataSource.Logger.Entries(LogLevel.Fatal).Where(l => l.Function == "logfatal_validargs_async" && l.Context == c1.Name);
 
                 Assert.That(q.Count(), Is.EqualTo(1));
             });
 
-            var q1 = Db.Logger.Entries(LogLevel.Fatal).Where(l => l.Function == "logfatal_validargs_async");
+            var q1 = DataSource.Logger.Entries(LogLevel.Fatal).Where(l => l.Function == "logfatal_validargs_async");
             Assert.That(q1.Count(), Is.EqualTo(logCount));
         }
 
         [Test]
         public void LogWarnAsync_validArgs()
         {
-            var res = Db.Logger.LogWarnAsync<LogManagerTests>(new Exception());
+            var res = DataSource.Logger.LogWarnAsync<LogManagerTests>(new Exception());
 
             Task.WaitAll(res);
 
@@ -389,8 +389,8 @@ namespace UnitTests.DataAccess
         public void LogErrorAsync_validArgs()
         {
             var tasks = new Task[2];
-            tasks[0] = Db.Logger.LogErrorAsync<LogManagerTests>(new Exception());
-            tasks[1] = Db.Logger.LogErrorAsync<LogManagerTests>(new Exception());
+            tasks[0] = DataSource.Logger.LogErrorAsync<LogManagerTests>(new Exception());
+            tasks[1] = DataSource.Logger.LogErrorAsync<LogManagerTests>(new Exception());
 
             var res1 = (Task<LogResult>) tasks[0];
             var res2 = (Task<LogResult>) tasks[1];

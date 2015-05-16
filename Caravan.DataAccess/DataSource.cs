@@ -15,7 +15,6 @@ using Finsa.Caravan.DataAccess.Drivers.Sql.Oracle;
 using Finsa.Caravan.DataAccess.Drivers.Sql.PostgreSql;
 using Finsa.Caravan.DataAccess.Drivers.Sql.SqlServer;
 using Finsa.Caravan.DataAccess.Drivers.Sql.SqlServerCe;
-using Finsa.Caravan.DataAccess.Properties;
 using RestSharp;
 
 namespace Finsa.Caravan.DataAccess
@@ -23,16 +22,16 @@ namespace Finsa.Caravan.DataAccess
     /// <summary>
     ///   Punto di accesso ai dati - logger, security, ecc ecc.
     /// </summary>
-    public static class Db
+    public static class DataSource
     {
         private static ICaravanLogRepository _loggerInstance;
         private static ICaravanSecurityRepository _securityRepositoryInstance;
         private static IDataSourceManager _dataSourceManagerInstance;
 
-        static Db()
+        static DataSource()
         {
-            DataSourceKind dataSourceKind;
-            if (Enum.TryParse(Settings.Default.DataAccessKind, true, out dataSourceKind))
+            var dataSourceKind = DataAccessConfiguration.Instance.DataSourceKind;
+            if (Enum.IsDefined(typeof(DataSourceKind), dataSourceKind))
             {
                 SetDataAccessKind(dataSourceKind);
             }
@@ -82,7 +81,7 @@ namespace Finsa.Caravan.DataAccess
             {
                 if (String.IsNullOrWhiteSpace(CachedConnectionString))
                 {
-                    CachedConnectionString = Settings.Default.ConnectionString;
+                    CachedConnectionString = DataAccessConfiguration.Instance.ConnectionString;
                 }
                 return CachedConnectionString;
             }
@@ -149,7 +148,7 @@ namespace Finsa.Caravan.DataAccess
                     break;
 
                 case DataSourceKind.Rest:
-                    var client = new RestClient(Settings.Default.RestServiceUrl);
+                    var client = new RestClient(DataAccessConfiguration.Instance.RestServiceUrl);
                     var request = new RestRequest("testing/clearAllTablesUseOnlyInsideUnitTestsPlease", Method.POST);
                     client.Execute(request);
                     break;
@@ -164,7 +163,7 @@ namespace Finsa.Caravan.DataAccess
 
         internal static void StartRemoteTestingUseOnlyInsideUnitTestsPlease()
         {
-            RestAuthObject = Settings.Default.RestTestAuthObject;
+            RestAuthObject = DataAccessConfiguration.Instance.RestTestAuthObject;
         }
 
         #endregion Methods that must be used _ONLY_ inside (or for) Unit Tests

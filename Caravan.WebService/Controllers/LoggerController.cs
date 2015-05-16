@@ -10,17 +10,18 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using Common.Logging;
-using Finsa.Caravan.Common.Logging;
-using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Models.Logging.Exceptions;
-using Finsa.Caravan.DataAccess;
-using LinqToQuerystring.WebApi;
 using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Common.Logging;
+using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Models.Logging;
+using Finsa.Caravan.Common.Models.Logging.Exceptions;
+using Finsa.Caravan.DataAccess;
+using LinqToQuerystring.WebApi;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -68,7 +69,7 @@ namespace Finsa.Caravan.WebService.Controllers
         public HttpResponseMessage GetPing(string appName)
         {
             appName = appName ?? CommonConfiguration.Instance.AppName;
-            var result = Db.Logger.LogInfo<LoggerController>(new LogEntry
+            var result = DataSource.Logger.LogInfo<LoggerController>(new LogEntry
             {
                 AppName = appName,
                 ShortMessage = "Ping pong :)"
@@ -88,7 +89,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries"), LinqToQueryable]
         public IQueryable<LogEntry> GetEntries(string appName)
         {
-            return Db.Logger.Entries(appName).AsQueryable();
+            return DataSource.Logger.Entries(appName).AsQueryable();
         }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries/{logLevel:alpha}"), LinqToQueryable]
         public IQueryable<LogEntry> GetEntries(string appName, LogLevel logLevel)
         {
-            return Db.Logger.Entries(appName, logLevel).AsQueryable();
+            return DataSource.Logger.Entries(appName, logLevel).AsQueryable();
         }
 
         /// <summary>
@@ -112,7 +113,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries/{logId:long}")]
         public LogEntry GetEntry(string appName, long logId)
         {
-            return Db.Logger.Entries(appName).FirstOrDefault(e => e.Id == logId);
+            return DataSource.Logger.Entries(appName).FirstOrDefault(e => e.Id == logId);
         }
 
         /// <summary>
@@ -123,7 +124,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries")]
         public void PostLog(string appName, [FromBody] LogEntry log)
         {
-            Db.Logger.LogRaw(log.LogLevel, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
+            DataSource.Logger.LogRaw(log.LogLevel, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
         }
 
         /// <summary>
@@ -135,7 +136,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries/{logLevel}"), LinqToQueryable]
         public void PostLog(string appName, LogLevel logLevel, [FromBody] LogEntry log)
         {
-            Db.Logger.LogRaw(logLevel, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
+            DataSource.Logger.LogRaw(logLevel, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
         }
 
         /// <summary>
@@ -148,7 +149,7 @@ namespace Finsa.Caravan.WebService.Controllers
         {
             try
             {
-                Db.Logger.RemoveEntry(appName, logId);
+                DataSource.Logger.RemoveEntry(appName, logId);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (LogEntryNotFoundException)
@@ -176,7 +177,7 @@ namespace Finsa.Caravan.WebService.Controllers
         public IQueryable<LogSetting> GetSettings(string appName)
         {
             appName = appName ?? CommonConfiguration.Instance.AppName;
-            return Db.Logger.Settings(appName).AsQueryable();
+            return DataSource.Logger.Settings(appName).AsQueryable();
         }
 
         /// <summary>
@@ -188,7 +189,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/settings/{logLevel}")]
         public LogSetting GetSettings(string appName, LogLevel logLevel)
         {
-            var settings = Db.Logger.Settings(appName, logLevel);
+            var settings = DataSource.Logger.Settings(appName, logLevel);
             if (settings == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -205,7 +206,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/settings/{logLevel}")]
         public void PostSetting(string appName, LogLevel logLevel, [FromBody] LogSetting settings)
         {
-            Db.Logger.AddSetting(appName, logLevel, settings);
+            DataSource.Logger.AddSetting(appName, logLevel, settings);
         }
 
         /// <summary>
@@ -217,7 +218,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/settings/{logLevel}")]
         public void PutSetting(string appName, LogLevel logLevel, [FromBody] LogSetting settings)
         {
-            Db.Logger.UpdateSetting(appName, logLevel, settings);
+            DataSource.Logger.UpdateSetting(appName, logLevel, settings);
         }
 
         /// <summary>
@@ -230,7 +231,7 @@ namespace Finsa.Caravan.WebService.Controllers
         {
             try
             {
-                Db.Logger.RemoveSetting(appName, logLevel);
+                DataSource.Logger.RemoveSetting(appName, logLevel);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (LogSettingNotFoundException)

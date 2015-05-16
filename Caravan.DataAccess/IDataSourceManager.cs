@@ -32,13 +32,13 @@ namespace Finsa.Caravan.DataAccess
         void ElaborateConnectionString(ref string connectionString);
 
         /// <summary>
-        ///   Returns an open DB connection using <see cref="Db.ConnectionString"/> as the connection string.
+        ///   Returns an open DB connection using <see cref="DataSource.ConnectionString"/> as the connection string.
         /// </summary>
         /// <returns>An open DB connection.</returns>
         DbConnection OpenConnection();
 
         /// <summary>
-        ///   Returns a _not_ open DB connection using <see cref="Db.ConnectionString"/> as the connection string.
+        ///   Returns a _not_ open DB connection using <see cref="DataSource.ConnectionString"/> as the connection string.
         /// </summary>
         /// <returns>A _not_ open DB connection.</returns>
         DbConnection CreateConnection();

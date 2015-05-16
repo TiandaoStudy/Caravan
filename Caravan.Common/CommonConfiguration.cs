@@ -7,7 +7,7 @@ using Westwind.Utilities.Configuration;
 namespace Finsa.Caravan.Common
 {
     /// <summary>
-    ///   Configuration class for the <see cref="CommonConfiguration"/>. Default values are set inside
+    ///   Configuration class for Caravan.Common. Default values are set inside
     ///   the configuration file itself.
     /// </summary>
     public sealed class CommonConfiguration : AppConfiguration

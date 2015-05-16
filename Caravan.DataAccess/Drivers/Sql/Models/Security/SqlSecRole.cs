@@ -45,7 +45,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
     {
         public SqlSecRoleTypeConfiguration()
         {
-            ToTable("CRVN_SEC_ROLES", Properties.Settings.Default.SqlSchema);
+            ToTable("CRVN_SEC_ROLES", DataAccessConfiguration.Instance.SqlSchema);
 
             // SqlSecRole(N) <-> SqlSecGroup(1)
             HasRequired(x => x.Group)
@@ -58,7 +58,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
                 .WithMany(x => x.Roles)
                 .Map(x => x.MapLeftKey("CROL_ID")
                            .MapRightKey("CUSR_ID")
-                           .ToTable("CRVN_SEC_USER_ROLES", Properties.Settings.Default.SqlSchema));
+                           .ToTable("CRVN_SEC_USER_ROLES", DataAccessConfiguration.Instance.SqlSchema));
         }
     }
 }

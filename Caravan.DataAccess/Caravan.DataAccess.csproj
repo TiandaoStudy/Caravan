@@ -199,11 +199,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\Logging\LogActivityBase.cs" />
+    <Compile Include="DataAccessConfiguration.cs" />
     <Compile Include="Drivers\Sql\Attributes\DateTimeKindAttribute.cs" />
     <Compile Include="Drivers\Sql\SqlDbCommandLogger.cs" />
     <Compile Include="Logging\CaravanLoggerTarget.cs" />
     <Compile Include="Drivers\Sql\Models\Security\SqlSecRole.cs" />
-    <Compile Include="Settings.cs" />
     <Compile Include="Core\AbstractDataSourceManager.cs" />
     <Compile Include="Core\AbstractLogRepository.cs" />
     <Compile Include="Core\AbstractSecurityRepository.cs" />
@@ -221,11 +221,6 @@
     <Compile Include="Drivers\Mongo\MongoLogRepository.cs" />
     <Compile Include="Drivers\Mongo\MongoSecurityRepository.cs" />
     <Compile Include="Drivers\Mongo\MongoUtilities.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
     <Compile Include="Drivers\Sql\FakeSql\FakeSqlDataSourceManager.cs" />
     <Compile Include="Drivers\Sql\Models\Logging\SqlLogEntry.cs" />
     <Compile Include="Drivers\Sql\Models\Logging\SqlLogSetting.cs" />
@@ -237,7 +232,7 @@
     <Compile Include="Drivers\Sql\Models\Security\SqlSecUser.cs" />
     <Compile Include="Drivers\Sql\MySql\MySqlDataSourceManager.cs" />
     <Compile Include="Drivers\Sql\Oracle\OracleDynamicParameters.cs" />
-    <Compile Include="Db.cs" />
+    <Compile Include="DataSource.cs" />
     <Compile Include="IDataSourceManager.cs" />
     <Compile Include="Drivers\Sql\PostgreSql\PostgreSqlDataSourceManager.cs" />
     <Compile Include="Drivers\Sql\SqlSecurityRepository.cs" />
@@ -264,10 +259,6 @@
     </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Properties\Settings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="README.md" />
     <Content Include="Drivers\Sql\MySql\Scripts\all.sql">

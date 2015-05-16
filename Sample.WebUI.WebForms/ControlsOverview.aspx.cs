@@ -64,7 +64,7 @@ namespace FLEX.Sample.WebUI
       {
          try
          {
-            Db.Logger.LogInfo<ControlsOverview>("Click!", "Clicked on the log button", "Page", new[]
+            DataSource.Logger.LogInfo<ControlsOverview>("Click!", "Clicked on the log button", "Page", new[]
             {
                KeyValuePair.Create("arg1", "1"),
                KeyValuePair.Create("arg2", "two")

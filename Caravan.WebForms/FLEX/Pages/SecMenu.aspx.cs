@@ -84,13 +84,13 @@ namespace FLEX.Web.Pages
 
         protected void TreeView1_SelectedNodeChanged(object sender, EventArgs args)
         {
-            var entries = Db.Security.GetEntriesForObject(CommonConfiguration.Instance.AppName, "menu", TreeView1.SelectedValue);
+            var entries = DataSource.Security.GetEntriesForObject(CommonConfiguration.Instance.AppName, "menu", TreeView1.SelectedValue);
             
             var usersInEntries = entries.Where(e => e.UserLogin != null).Select(e => e.UserLogin).ToHashSet();
             var groupsInEntries = entries.Where(e => e.GroupName != null).Select(e => e.GroupName).ToHashSet();
 
-            var allUsers = Db.Security.GetUsers(CommonConfiguration.Instance.AppName);
-            var allGroups = Db.Security.GetGroups(CommonConfiguration.Instance.AppName);
+            var allUsers = DataSource.Security.GetUsers(CommonConfiguration.Instance.AppName);
+            var allGroups = DataSource.Security.GetGroups(CommonConfiguration.Instance.AppName);
 
             var allowedUsers = allUsers.Where(u => !usersInEntries.Contains(u.Login));
             var allowedGroups = allGroups.Where(g => !groupsInEntries.Contains(g.Name));
@@ -171,7 +171,7 @@ namespace FLEX.Web.Pages
             {
                 if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
                 {
-                    Db.Security.AddEntry(CommonConfiguration.Instance.AppName, secContext, secObject, oDrR["Login"].ToString(), null);
+                    DataSource.Security.AddEntry(CommonConfiguration.Instance.AppName, secContext, secObject, oDrR["Login"].ToString(), null);
                 }
             }
 
@@ -179,7 +179,7 @@ namespace FLEX.Web.Pages
             {
                 if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
                 {
-                    Db.Security.RemoveEntry(CommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, oDrL["Login"].ToString(), null);
+                    DataSource.Security.RemoveEntry(CommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, oDrL["Login"].ToString(), null);
                 }
             }
 
@@ -188,7 +188,7 @@ namespace FLEX.Web.Pages
             {
                 if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
                 {
-                    Db.Security.AddEntry(CommonConfiguration.Instance.AppName, secContext, secObject, null, oDrR["Name"].ToString());
+                    DataSource.Security.AddEntry(CommonConfiguration.Instance.AppName, secContext, secObject, null, oDrR["Name"].ToString());
                 }
             }
 
@@ -196,7 +196,7 @@ namespace FLEX.Web.Pages
             {
                 if (oDrR[MultiSelect.FlagCrud].ToString() == "R")
                 {
-                    Db.Security.RemoveEntry(CommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, null, oDrR["Name"].ToString());
+                    DataSource.Security.RemoveEntry(CommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, null, oDrR["Name"].ToString());
                 }
             }
         }

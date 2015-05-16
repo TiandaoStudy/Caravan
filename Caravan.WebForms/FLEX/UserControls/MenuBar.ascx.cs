@@ -41,7 +41,7 @@ namespace FLEX.Web.UserControls
          }
          catch (Exception ex)
          {
-            Db.Logger.LogError<MenuBar>(ex);
+            DataSource.Logger.LogError<MenuBar>(ex);
             throw;
          }        
       }

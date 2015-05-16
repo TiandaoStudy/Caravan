@@ -54,14 +54,14 @@ namespace Finsa.Caravan.WebForms.Pages
           {
               var groupName = SearchCriteria["CGRP_NAME"][0];
               // This should not catch any exception, others will do.
-              groups = (from g in DataAccess.Db.Security.GetGroups(CommonConfiguration.Instance.AppName)
+              groups = (from g in DataAccess.DataSource.Security.GetGroups(CommonConfiguration.Instance.AppName)
                             select new SecGroup { Name = g.Name, Description = g.Description, Notes = g.Notes }).Where(x => x.Name == groupName.ToString())
                             .ToDataTable();
           }
 
           else
           {
-             groups = (from g in DataAccess.Db.Security.GetGroups(CommonConfiguration.Instance.AppName)
+             groups = (from g in DataAccess.DataSource.Security.GetGroups(CommonConfiguration.Instance.AppName)
                     select new SecGroup { Name = g.Name, Description = g.Description, Notes = g.Notes })
                            .ToDataTable();
           }
@@ -107,7 +107,7 @@ namespace Finsa.Caravan.WebForms.Pages
          {
             var groupName = groupNameToBeDeleted.Value;
             Raise<ArgumentException>.IfIsEmpty(groupName);
-            DataAccess.Db.Security.RemoveGroup(CommonConfiguration.Instance.AppName, groupName);
+            DataAccess.DataSource.Security.RemoveGroup(CommonConfiguration.Instance.AppName, groupName);
             fdtgGroups.UpdateDataSource();
          }
          catch (Exception ex)

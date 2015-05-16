@@ -4,7 +4,6 @@ using Finsa.Caravan.Common.Utilities.Extensions;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Security;
-using Finsa.Caravan.DataAccess.Properties;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -30,8 +29,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 
         public static MongoDatabase GetDatabase()
         {
-            var server = new MongoClient(Db.ConnectionString).GetServer();
-            return server.GetDatabase(Settings.Default.MongoDbName);
+            var server = new MongoClient(DataSource.ConnectionString).GetServer();
+            return server.GetDatabase(DataAccessConfiguration.Instance.MongoDbName);
         }
 
         public static MongoCollection<MongoLogEntry> GetLogEntryCollection()
