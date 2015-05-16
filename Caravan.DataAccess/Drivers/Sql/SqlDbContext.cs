@@ -67,12 +67,12 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         private static DbConnection GetConnection()
         {
-            if (DataSource.Manager.DataSourceKind == DataSourceKind.FakeSql)
+            if (CaravanDataSource.Manager.DataSourceKind == CaravanDataSourceKind.FakeSql)
             {
                 // Needed, otherwise Unit Tests fail.
-                return DataSource.Manager.OpenConnection();
+                return CaravanDataSource.Manager.OpenConnection();
             }
-            return DataSource.Manager.CreateConnection();
+            return CaravanDataSource.Manager.CreateConnection();
         }
 
         #region DB Sets

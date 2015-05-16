@@ -64,7 +64,7 @@ namespace FLEX.Sample.WebUI
       {
          try
          {
-            DataSource.Logger.LogInfo<ControlsOverview>("Click!", "Clicked on the log button", "Page", new[]
+            CaravanDataSource.Logger.LogInfo<ControlsOverview>("Click!", "Clicked on the log button", "Page", new[]
             {
                KeyValuePair.Create("arg1", "1"),
                KeyValuePair.Create("arg2", "two")

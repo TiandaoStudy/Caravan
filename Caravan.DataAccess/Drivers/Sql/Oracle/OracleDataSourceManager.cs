@@ -7,12 +7,12 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Oracle
 {
     internal sealed class OracleDataSourceManager : AbstractDataSourceManager
     {
-        public override DataSourceKind DataSourceKind
+        public override CaravanDataSourceKind DataSourceKind
         {
-            get { return DataSourceKind.Oracle; }
+            get { return CaravanDataSourceKind.Oracle; }
         }
 
-        public override void ElaborateConnectionString(ref string connectionString)
+        public override string ElaborateConnectionString(string connectionString)
         {
             var lowerConnString = connectionString.ToLower(CultureInfo.InvariantCulture);
 
@@ -34,12 +34,14 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Oracle
             {
                 connectionString += string.Format("Statement Cache Size={0};", DataAccessConfiguration.Instance.OracleStatementCacheSize);
             }
+
+            return connectionString;
         }
 
         public override DbConnection CreateConnection()
         {
             var connection = OracleClientFactory.Instance.CreateConnection();
-            connection.ConnectionString = DataSource.ConnectionString;
+            connection.ConnectionString = ConnectionString;
             return connection;
         }
     }

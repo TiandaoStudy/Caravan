@@ -172,7 +172,7 @@ namespace FLEX.Web.Pages
          {
             if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
             {
-               DataSource.Security.AddEntry(CommonConfiguration.Instance.AppName, secContext, secObject, oDrR["Login"].ToString(), null);
+               CaravanDataSource.Security.AddEntry(CommonConfiguration.Instance.AppName, secContext, secObject, oDrR["Login"].ToString(), null);
             }
          }
 
@@ -180,7 +180,7 @@ namespace FLEX.Web.Pages
          {
             if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
             {
-               DataSource.Security.RemoveEntry(CommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, oDrL["Login"].ToString(), null);
+               CaravanDataSource.Security.RemoveEntry(CommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, oDrL["Login"].ToString(), null);
             }
          }
         
@@ -189,7 +189,7 @@ namespace FLEX.Web.Pages
          {
             if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
             {
-               DataSource.Security.AddEntry(CommonConfiguration.Instance.AppName, secContext, secObject, null, oDrR["Name"].ToString());
+               CaravanDataSource.Security.AddEntry(CommonConfiguration.Instance.AppName, secContext, secObject, null, oDrR["Name"].ToString());
             }
          }
 
@@ -197,7 +197,7 @@ namespace FLEX.Web.Pages
          {
             if (oDrR[MultiSelect.FlagCrud].ToString() == "R")
             {
-               DataSource.Security.RemoveEntry(CommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, null, oDrR["Name"].ToString());
+               CaravanDataSource.Security.RemoveEntry(CommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, null, oDrR["Name"].ToString());
             }
          }
 

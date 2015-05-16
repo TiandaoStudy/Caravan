@@ -29,7 +29,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 
         public static MongoDatabase GetDatabase()
         {
-            var server = new MongoClient(DataSource.ConnectionString).GetServer();
+            var server = new MongoClient(CaravanDataSource.Manager.ConnectionString).GetServer();
             return server.GetDatabase(DataAccessConfiguration.Instance.MongoDbName);
         }
 

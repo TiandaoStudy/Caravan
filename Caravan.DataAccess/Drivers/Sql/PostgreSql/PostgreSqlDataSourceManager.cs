@@ -6,20 +6,21 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.PostgreSql
 {
     internal sealed class PostgreSqlDataSourceManager : AbstractDataSourceManager
     {
-        public override DataSourceKind DataSourceKind
+        public override CaravanDataSourceKind DataSourceKind
         {
-            get { return DataSourceKind.PostgreSql; }
+            get { return CaravanDataSourceKind.PostgreSql; }
         }
 
-        public override void ElaborateConnectionString(ref string connectionString)
+        public override string ElaborateConnectionString(string connectionString)
         {
             // Nothing to do with the connection string.
+            return connectionString;
         }
 
         public override DbConnection CreateConnection()
         {
             var connection = NpgsqlFactory.Instance.CreateConnection();
-            connection.ConnectionString = DataSource.ConnectionString;
+            connection.ConnectionString = ConnectionString;
             return connection;
         }
     }

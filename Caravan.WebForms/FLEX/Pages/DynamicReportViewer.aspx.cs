@@ -87,7 +87,7 @@ namespace FLEX.WebForms.Pages
          switch (_queryInfo.Second)
          {
             case CommandType.Text:
-               var dataTable = DataSource.Manager.OpenConnection().Query(_queryInfo.First, parameters).ToDataTable();
+               var dataTable = CaravanDataSource.Manager.OpenConnection().Query(_queryInfo.First, parameters).ToDataTable();
                fdtgReport.DataSource = dataTable;
                break;
             case CommandType.StoredProcedure:
@@ -217,7 +217,7 @@ namespace FLEX.WebForms.Pages
                checkBoxList.SetDataSource(list);
                break;
             case "SQL":
-               var dataTable = DataSource.Manager.OpenConnection().Query((string) paramSpec.DataSource).ToDataTable();
+               var dataTable = CaravanDataSource.Manager.OpenConnection().Query((string) paramSpec.DataSource).ToDataTable();
                checkBoxList.SetDataSource(dataTable, paramSpec.ValueColumn, paramSpec.LabelColumn);
                break;
          }

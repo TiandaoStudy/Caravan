@@ -49,7 +49,7 @@ namespace FLEX.Web.Services
             }
             catch (Exception exc)
             {
-                DataSource.Logger.LogError<AjaxLookup>(exc);
+                CaravanDataSource.Logger.LogError<AjaxLookup>(exc);
                 return new List<Result> { new Result("ERR", "Service Error", exc.Message) };
             }
         }
@@ -58,7 +58,7 @@ namespace FLEX.Web.Services
         {
             var lookupData = LoadAjaxLookupData(xmlLookup, lookupBy);
             var lookupQuery = ProcessQuery(lookupData, userQuery, queryFilter);
-            var resultData = DataSource.Manager.OpenConnection().Query(lookupQuery).ToList();
+            var resultData = CaravanDataSource.Manager.OpenConnection().Query(lookupQuery).ToList();
             if (resultData.Count == 0)
             {
                 return new List<Result>();

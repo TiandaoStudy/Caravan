@@ -36,7 +36,7 @@ namespace FLEX.Web.UserControls.Ajax
          }
          catch (Exception inner)
          {
-            DataSource.Logger.LogError<ErrorHandler>(inner);
+            CaravanDataSource.Logger.LogError<ErrorHandler>(inner);
             throw;
          }
       }

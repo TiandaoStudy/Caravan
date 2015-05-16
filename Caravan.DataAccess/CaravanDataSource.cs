@@ -22,16 +22,16 @@ namespace Finsa.Caravan.DataAccess
     /// <summary>
     ///   Punto di accesso ai dati - logger, security, ecc ecc.
     /// </summary>
-    public static class DataSource
+    public static class CaravanDataSource
     {
         private static ICaravanLogRepository _loggerInstance;
         private static ICaravanSecurityRepository _securityRepositoryInstance;
-        private static IDataSourceManager _dataSourceManagerInstance;
+        private static ICaravanDataSourceManager _dataSourceManagerInstance;
 
-        static DataSource()
+        static CaravanDataSource()
         {
             var dataSourceKind = DataAccessConfiguration.Instance.DataSourceKind;
-            if (Enum.IsDefined(typeof(DataSourceKind), dataSourceKind))
+            if (Enum.IsDefined(typeof(CaravanDataSourceKind), dataSourceKind))
             {
                 SetDataAccessKind(dataSourceKind);
             }
@@ -43,9 +43,9 @@ namespace Finsa.Caravan.DataAccess
 
         #region Public Properties - Instances
 
-        public static DataSourceKind DataSourceKind { get; set; }
+        public static CaravanDataSourceKind DataSourceKind { get; set; }
 
-        public static IDataSourceManager Manager
+        public static ICaravanDataSourceManager Manager
         {
             get { return _dataSourceManagerInstance; }
         }
@@ -71,34 +71,11 @@ namespace Finsa.Caravan.DataAccess
 
         #endregion Public Properties - REST Driver
 
-        #region Public Properties - Common
-
-        private static string CachedConnectionString;
-
-        public static string ConnectionString
-        {
-            get
-            {
-                if (String.IsNullOrWhiteSpace(CachedConnectionString))
-                {
-                    CachedConnectionString = DataAccessConfiguration.Instance.ConnectionString;
-                }
-                return CachedConnectionString;
-            }
-            set
-            {
-                Manager.ElaborateConnectionString(ref value);
-                CachedConnectionString = value;
-            }
-        }
-
-        #endregion Public Properties - Common
-
         #region Methods that must be used _ONLY_ inside (or for) Unit Tests
 
         internal static void ChangeDataAccessKindUseOnlyForUnitTestsPlease()
         {
-            SetDataAccessKind(DataSourceKind.FakeSql);
+            SetDataAccessKind(CaravanDataSourceKind.FakeSql);
         }
 
         internal static void ClearAllTablesUseOnlyInsideUnitTestsPlease()
@@ -106,7 +83,7 @@ namespace Finsa.Caravan.DataAccess
             switch (DataSourceKind)
             {
                 // Custom actions are required for Effort.
-                case DataSourceKind.FakeSql:
+                case CaravanDataSourceKind.FakeSql:
                     // A new connection is created and persisted for the whole test duration.
                     (Manager as FakeSqlDataSourceManager).ResetConnection();
                     // The database is recreated, since it is in-memory and probably it does not exist.
@@ -119,11 +96,11 @@ namespace Finsa.Caravan.DataAccess
                     }
                     break;
 
-                case DataSourceKind.MySql:
-                case DataSourceKind.Oracle:
-                case DataSourceKind.PostgreSql:
-                case DataSourceKind.SqlServer:
-                case DataSourceKind.SqlServerCe:
+                case CaravanDataSourceKind.MySql:
+                case CaravanDataSourceKind.Oracle:
+                case CaravanDataSourceKind.PostgreSql:
+                case CaravanDataSourceKind.SqlServer:
+                case CaravanDataSourceKind.SqlServerCe:
                     using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
                     using (var ctx = SqlDbContext.CreateWriteContext())
                     {
@@ -147,13 +124,13 @@ namespace Finsa.Caravan.DataAccess
                     }
                     break;
 
-                case DataSourceKind.Rest:
-                    var client = new RestClient(DataAccessConfiguration.Instance.RestServiceUrl);
+                case CaravanDataSourceKind.Rest:
+                    var client = new RestClient(Manager.ConnectionString);
                     var request = new RestRequest("testing/clearAllTablesUseOnlyInsideUnitTestsPlease", Method.POST);
                     client.Execute(request);
                     break;
 
-                case DataSourceKind.MongoDb:
+                case CaravanDataSourceKind.MongoDb:
                     MongoUtilities.GetLogEntryCollection().Drop();
                     MongoUtilities.GetSecAppCollection().Drop();
                     MongoUtilities.GetSequenceCollection().Drop();
@@ -170,45 +147,45 @@ namespace Finsa.Caravan.DataAccess
 
         #region Private Methods
 
-        private static void SetDataAccessKind(DataSourceKind kind)
+        private static void SetDataAccessKind(CaravanDataSourceKind kind)
         {
-            Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(DataSourceKind), kind));
+            Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(CaravanDataSourceKind), kind));
             DataSourceKind = kind;
 
             switch (kind)
             {
-                case DataSourceKind.FakeSql:
+                case CaravanDataSourceKind.FakeSql:
                     _dataSourceManagerInstance = new FakeSqlDataSourceManager();
                     break;
 
-                case DataSourceKind.MongoDb:
+                case CaravanDataSourceKind.MongoDb:
                     _dataSourceManagerInstance = new MongoDataSourceManager();
                     _loggerInstance = new MongoLogRepository();
                     _securityRepositoryInstance = new MongoSecurityRepository();
                     break;
 
-                case DataSourceKind.MySql:
+                case CaravanDataSourceKind.MySql:
                     _dataSourceManagerInstance = new MySqlDataSourceManager();
                     break;
 
-                case DataSourceKind.Oracle:
+                case CaravanDataSourceKind.Oracle:
                     _dataSourceManagerInstance = new OracleDataSourceManager();
                     break;
 
-                case DataSourceKind.PostgreSql:
+                case CaravanDataSourceKind.PostgreSql:
                     _dataSourceManagerInstance = new PostgreSqlDataSourceManager();
                     break;
 
-                case DataSourceKind.Rest:
+                case CaravanDataSourceKind.Rest:
                     _loggerInstance = new RestLogRepository();
                     _securityRepositoryInstance = new RestSecurityRepository();
                     break;
 
-                case DataSourceKind.SqlServer:
+                case CaravanDataSourceKind.SqlServer:
                     _dataSourceManagerInstance = new SqlServerDataSourceManager();
                     break;
 
-                case DataSourceKind.SqlServerCe:
+                case CaravanDataSourceKind.SqlServerCe:
                     _dataSourceManagerInstance = new SqlServerCeDataSourceManager();
                     break;
             }
@@ -216,12 +193,12 @@ namespace Finsa.Caravan.DataAccess
             // Sets the implementations which are shared between SQL drivers.
             switch (kind)
             {
-                case DataSourceKind.FakeSql:
-                case DataSourceKind.MySql:
-                case DataSourceKind.Oracle:
-                case DataSourceKind.PostgreSql:
-                case DataSourceKind.SqlServer:
-                case DataSourceKind.SqlServerCe:
+                case CaravanDataSourceKind.FakeSql:
+                case CaravanDataSourceKind.MySql:
+                case CaravanDataSourceKind.Oracle:
+                case CaravanDataSourceKind.PostgreSql:
+                case CaravanDataSourceKind.SqlServer:
+                case CaravanDataSourceKind.SqlServerCe:
                     _loggerInstance = new SqlLogRepository();
                     _securityRepositoryInstance = new SqlSecurityRepository();
                     break;

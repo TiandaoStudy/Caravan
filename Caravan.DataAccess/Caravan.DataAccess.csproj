@@ -200,6 +200,7 @@
   <ItemGroup>
     <Compile Include="Activities\Logging\LogActivityBase.cs" />
     <Compile Include="DataAccessConfiguration.cs" />
+    <Compile Include="CaravanDataSourceKind.cs" />
     <Compile Include="Drivers\Sql\Attributes\DateTimeKindAttribute.cs" />
     <Compile Include="Drivers\Sql\SqlDbCommandLogger.cs" />
     <Compile Include="Logging\CaravanLoggerTarget.cs" />
@@ -232,8 +233,8 @@
     <Compile Include="Drivers\Sql\Models\Security\SqlSecUser.cs" />
     <Compile Include="Drivers\Sql\MySql\MySqlDataSourceManager.cs" />
     <Compile Include="Drivers\Sql\Oracle\OracleDynamicParameters.cs" />
-    <Compile Include="DataSource.cs" />
-    <Compile Include="IDataSourceManager.cs" />
+    <Compile Include="CaravanDataSource.cs" />
+    <Compile Include="ICaravanDataSourceManager.cs" />
     <Compile Include="Drivers\Sql\PostgreSql\PostgreSqlDataSourceManager.cs" />
     <Compile Include="Drivers\Sql\SqlSecurityRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

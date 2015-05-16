@@ -21,7 +21,7 @@ namespace FLEX.Web.UserControls
          }
          catch (Exception ex)
          {
-            DataSource.Logger.LogError<FileUpload>(ex);
+            CaravanDataSource.Logger.LogError<FileUpload>(ex);
             throw;
          }
       }

@@ -50,7 +50,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
             catch (Exception ex)
             {
-                DataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx);
+                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx);
                 throw;
             }
         }
@@ -92,11 +92,11 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     throw new SecGroupExistingException();
                 }
-                DataSource.Logger.LogWarnAsync<TSec>("ADDED GROUP", context: logCtx, appName: appName);
+                CaravanDataSource.Logger.LogWarnAsync<TSec>("ADDED GROUP", context: logCtx, appName: appName);
             }
             catch (Exception ex)
             {
-                DataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
+                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -114,11 +114,11 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     throw new SecGroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
                 }
-                DataSource.Logger.LogWarnAsync<TSec>("REMOVED GROUP", context: logCtx, appName: appName);
+                CaravanDataSource.Logger.LogWarnAsync<TSec>("REMOVED GROUP", context: logCtx, appName: appName);
             }
             catch (Exception ex)
             {
-                DataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
+                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -145,11 +145,11 @@ namespace Finsa.Caravan.DataAccess.Core
                     throw new SecGroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
                 }
 
-                DataSource.Logger.LogWarnAsync<TSec>("UPDATED GROUP", context: logCtx, appName: appName);
+                CaravanDataSource.Logger.LogWarnAsync<TSec>("UPDATED GROUP", context: logCtx, appName: appName);
             }
             catch (Exception ex)
             {
-                DataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
+                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -211,11 +211,11 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     throw new SecUserExistingException();
                 }
-                DataSource.Logger.LogWarnAsync<TSec>("ADDED USER", context: logCtx, appName: appName);
+                CaravanDataSource.Logger.LogWarnAsync<TSec>("ADDED USER", context: logCtx, appName: appName);
             }
             catch (Exception ex)
             {
-                DataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
+                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -233,11 +233,11 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     throw new SecUserNotFoundException();
                 }
-                DataSource.Logger.LogWarnAsync<TSec>("REMOVED USER", context: logCtx, appName: appName);
+                CaravanDataSource.Logger.LogWarnAsync<TSec>("REMOVED USER", context: logCtx, appName: appName);
             }
             catch (Exception ex)
             {
-                DataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
+                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -264,11 +264,11 @@ namespace Finsa.Caravan.DataAccess.Core
                     throw new SecUserNotFoundException();
                 }
 
-                DataSource.Logger.LogWarnAsync<TSec>("UPDATED USER", context: logCtx, appName: appName);
+                CaravanDataSource.Logger.LogWarnAsync<TSec>("UPDATED USER", context: logCtx, appName: appName);
             }
             catch (Exception ex)
             {
-                DataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
+                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -287,11 +287,11 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     throw new SecUserExistingException();
                 }
-                DataSource.Logger.LogWarnAsync<TSec>("ADDED USER TO GROUP", context: logCtx, appName: appName);
+                CaravanDataSource.Logger.LogWarnAsync<TSec>("ADDED USER TO GROUP", context: logCtx, appName: appName);
             }
             catch (Exception ex)
             {
-                DataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
+                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -310,11 +310,11 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     throw new SecUserNotFoundException();
                 }
-                DataSource.Logger.LogWarnAsync<TSec>("REMOVED USER FROM GROUP", context: logCtx, appName: appName);
+                CaravanDataSource.Logger.LogWarnAsync<TSec>("REMOVED USER FROM GROUP", context: logCtx, appName: appName);
             }
             catch (Exception ex)
             {
-                DataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
+                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -418,11 +418,11 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     throw new LogEntryExistingException();
                 }
-                DataSource.Logger.LogWarnAsync<TSec>(String.Format(logShort, secObject.Name, secContext.Name, userLogin ?? groupName), context: logCtx, appName: appName);
+                CaravanDataSource.Logger.LogWarnAsync<TSec>(String.Format(logShort, secObject.Name, secContext.Name, userLogin ?? groupName), context: logCtx, appName: appName);
             }
             catch (Exception ex)
             {
-                DataSource.Logger.LogWarnAsync<TSec>(ex, logCtx, appName: appName);
+                CaravanDataSource.Logger.LogWarnAsync<TSec>(ex, logCtx, appName: appName);
                 throw;
             }
         }
@@ -450,11 +450,11 @@ namespace Finsa.Caravan.DataAccess.Core
                     groupName = groupName.ToLowerInvariant();
                 }
                 RemoveEntryInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant(), objectName.ToLowerInvariant(), userLogin, groupName);
-                DataSource.Logger.LogWarnAsync<TSec>(String.Format(logShort, objectName.ToLowerInvariant(), contextName.ToLowerInvariant(), userLogin ?? groupName), context: logCtx, appName: appName);
+                CaravanDataSource.Logger.LogWarnAsync<TSec>(String.Format(logShort, objectName.ToLowerInvariant(), contextName.ToLowerInvariant(), userLogin ?? groupName), context: logCtx, appName: appName);
             }
             catch (Exception ex)
             {
-                DataSource.Logger.LogWarnAsync<TSec>(ex, logCtx, appName: appName);
+                CaravanDataSource.Logger.LogWarnAsync<TSec>(ex, logCtx, appName: appName);
                 throw;
             }
         }

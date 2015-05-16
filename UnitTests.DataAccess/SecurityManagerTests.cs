@@ -23,18 +23,18 @@ namespace UnitTests.DataAccess
         [SetUp]
         public void Init()
         {
-            DataSource.ClearAllTablesUseOnlyInsideUnitTestsPlease();
+            CaravanDataSource.ClearAllTablesUseOnlyInsideUnitTestsPlease();
             _myApp = new SecApp { Name = "mio_test", Description = "Test Application 1" };
-            DataSource.Security.AddApp(_myApp);
+            CaravanDataSource.Security.AddApp(_myApp);
             _myApp2 = new SecApp { Name = "mio_test2", Description = "Test Application 2" };
-            DataSource.Security.AddApp(_myApp2);
+            CaravanDataSource.Security.AddApp(_myApp2);
             _settingError = new LogSetting() { Days = 30, Enabled = true, MaxEntries = 100 };
 
-            DataSource.Logger.AddSetting(_myApp.Name, LogLevel.Error, _settingError);
-            DataSource.Logger.AddSetting(_myApp.Name, LogLevel.Fatal, _settingError);
-            DataSource.Logger.AddSetting(_myApp.Name, LogLevel.Info, _settingError);
-            DataSource.Logger.AddSetting(_myApp.Name, LogLevel.Debug, _settingError);
-            DataSource.Logger.AddSetting(_myApp.Name, LogLevel.Warn, _settingError);
+            CaravanDataSource.Logger.AddSetting(_myApp.Name, LogLevel.Error, _settingError);
+            CaravanDataSource.Logger.AddSetting(_myApp.Name, LogLevel.Fatal, _settingError);
+            CaravanDataSource.Logger.AddSetting(_myApp.Name, LogLevel.Info, _settingError);
+            CaravanDataSource.Logger.AddSetting(_myApp.Name, LogLevel.Debug, _settingError);
+            CaravanDataSource.Logger.AddSetting(_myApp.Name, LogLevel.Warn, _settingError);
         }
 
         [TearDown]
@@ -50,13 +50,13 @@ namespace UnitTests.DataAccess
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla" };
             var user2 = new SecUser { FirstName = "pluto", Login = "blabla2" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddUser(_myApp.Name, user2);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user2);
 
-            IEnumerable<SecUser> retValue = DataSource.Security.GetUsers(_myApp.Name);
+            IEnumerable<SecUser> retValue = CaravanDataSource.Security.GetUsers(_myApp.Name);
             Assert.That(retValue.Count(), Is.EqualTo(2));
 
-            var q = (from user in DataSource.Security.GetUsers(_myApp2.Name)
+            var q = (from user in CaravanDataSource.Security.GetUsers(_myApp2.Name)
                      where (user.Login == user1.Login || user.Login == user2.Login)
                      select user).ToList();
 
@@ -66,7 +66,7 @@ namespace UnitTests.DataAccess
         [Test]
         public void Users_NoUsers_ReturnsNull()
         {
-            IEnumerable<SecUser> retValue = DataSource.Security.GetUsers(_myApp.Name);
+            IEnumerable<SecUser> retValue = CaravanDataSource.Security.GetUsers(_myApp.Name);
             Assert.That(retValue.Count(), Is.EqualTo(0));
         }
 
@@ -74,14 +74,14 @@ namespace UnitTests.DataAccess
         [ExpectedException(typeof(ArgumentException))]
         public void Users_NullAppName_ThrowsArgumentException()
         {
-            DataSource.Security.GetUsers(null);
+            CaravanDataSource.Security.GetUsers(null);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void Users_EmptyAppName_ThrowsArgumentException()
         {
-            DataSource.Security.GetUsers("");
+            CaravanDataSource.Security.GetUsers("");
         }
 
         #endregion Users_Tests
@@ -93,9 +93,9 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
 
-            var u = DataSource.Security.GetUserByLogin(_myApp.Name, user1.Login);
+            var u = CaravanDataSource.Security.GetUserByLogin(_myApp.Name, user1.Login);
             Assert.That(u, Is.Not.Null);
             Assert.That(u.FirstName, Is.EqualTo("pippo"));
             Assert.That(u.Login, Is.EqualTo("blabla"));
@@ -107,8 +107,8 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.GetUserByLogin(null, user1.Login);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.GetUserByLogin(null, user1.Login);
         }
 
         [Test]
@@ -117,22 +117,22 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.GetUserByLogin("", user1.Login);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.GetUserByLogin("", user1.Login);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void User_NullUserLogin_ThrowsArgumentException()
         {
-            DataSource.Security.GetUserByLogin(_myApp.Name, null);
+            CaravanDataSource.Security.GetUserByLogin(_myApp.Name, null);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void User_EmptyUserLogin_ThrowsArgumentException()
         {
-            DataSource.Security.GetUserByLogin(_myApp.Name, "");
+            CaravanDataSource.Security.GetUserByLogin(_myApp.Name, "");
         }
 
         #endregion User_Tests
@@ -145,11 +145,11 @@ namespace UnitTests.DataAccess
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
             var user2 = new SecUser { FirstName = "pluto", Login = "blabla2" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddUser(_myApp.Name, user2);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user2);
 
             //verifico che sia stato inserito user1
-            var q = (from c in DataSource.Security.GetUsers(_myApp.Name)
+            var q = (from c in CaravanDataSource.Security.GetUsers(_myApp.Name)
                      where ((c.FirstName == user1.FirstName) && (c.Login == user1.Login))
                      select c).ToList();
 
@@ -157,7 +157,7 @@ namespace UnitTests.DataAccess
             Assert.That(q.First().Login, Is.EqualTo("blabla1"));
 
             //verifico che sia stato inserito correttamente user2
-            var q2 = (from c in DataSource.Security.GetUsers(_myApp.Name)
+            var q2 = (from c in CaravanDataSource.Security.GetUsers(_myApp.Name)
                       where ((c.FirstName == user2.FirstName) && (c.Login == user2.Login))
                       select c).ToList();
 
@@ -173,13 +173,13 @@ namespace UnitTests.DataAccess
             Parallel.ForEach(Enumerable.Range(1, userCount), i =>
             {
                 var user = new SecUser { FirstName = "pippo" + i, Login = "blabla" + i };
-                DataSource.Security.AddUser(_myApp.Name, user);
+                CaravanDataSource.Security.AddUser(_myApp.Name, user);
             });
 
             for (var i = 1; i <= userCount; ++i)
             {
                 //verifico che sia stato inserito user
-                var q = (from c in DataSource.Security.GetUsers(_myApp.Name)
+                var q = (from c in CaravanDataSource.Security.GetUsers(_myApp.Name)
                          where ((c.FirstName == "pippo" + i) && (c.Login == "blabla" + i))
                          select c).FirstOrDefault();
 
@@ -192,10 +192,10 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddUser(_myApp2.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp2.Name, user1);
 
-            var q = (from c in DataSource.Security.GetUsers(_myApp.Name)
+            var q = (from c in CaravanDataSource.Security.GetUsers(_myApp.Name)
                      where ((c.FirstName == user1.FirstName) && (c.Login == user1.Login))
                      select c).ToList();
 
@@ -203,7 +203,7 @@ namespace UnitTests.DataAccess
             Assert.That(q.First().Login, Is.EqualTo("blabla1"));
 
             //verifico che sia stato inserito correttamente user2
-            var q2 = (from c in DataSource.Security.GetUsers(_myApp2.Name)
+            var q2 = (from c in CaravanDataSource.Security.GetUsers(_myApp2.Name)
                       where ((c.FirstName == user1.FirstName) && (c.Login == user1.Login))
                       select c).ToList();
 
@@ -216,12 +216,12 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
 
-            var l = DataSource.Logger.Entries(_myApp.Name);
+            var l = CaravanDataSource.Logger.Entries(_myApp.Name);
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
 
             WaitForLogger();
-            var l1 = DataSource.Logger.Entries(_myApp.Name);
+            var l1 = CaravanDataSource.Logger.Entries(_myApp.Name);
             Assert.That(l1.Count(), Is.EqualTo(l.Count() + 1));
         }
 
@@ -232,8 +232,8 @@ namespace UnitTests.DataAccess
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
             var user2 = new SecUser { FirstName = "pluto", Login = "blabla1" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddUser(_myApp.Name, user2);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user2);
         }
 
         [Test]
@@ -245,7 +245,7 @@ namespace UnitTests.DataAccess
                 var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
                 try
                 {
-                    DataSource.Security.AddUser(_myApp.Name, user1);
+                    CaravanDataSource.Security.AddUser(_myApp.Name, user1);
                 }
                 catch (SecUserExistingException)
                 {
@@ -260,7 +260,7 @@ namespace UnitTests.DataAccess
         public void AddUser_NullAppName_ThrowsArgumentException()
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
-            DataSource.Security.AddUser(null, user1);
+            CaravanDataSource.Security.AddUser(null, user1);
         }
 
         [Test]
@@ -268,14 +268,14 @@ namespace UnitTests.DataAccess
         public void AddUser_EmptyAppName_ThrowsArgumentException()
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
-            DataSource.Security.AddUser("", user1);
+            CaravanDataSource.Security.AddUser("", user1);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void AddUser_NullNewUser_ThrowsArgumentNullException()
         {
-            DataSource.Security.AddUser(_myApp.Name, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, null);
         }
 
         #endregion AddUser_Tests
@@ -287,11 +287,11 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
 
-            DataSource.Security.RemoveUser(_myApp.Name, user1.Login);
+            CaravanDataSource.Security.RemoveUser(_myApp.Name, user1.Login);
 
-            var q = (from u in DataSource.Security.GetUsers(_myApp.Name) where u.Login == user1.Login select u).ToList();
+            var q = (from u in CaravanDataSource.Security.GetUsers(_myApp.Name) where u.Login == user1.Login select u).ToList();
 
             Assert.That(q.Count(), Is.EqualTo(0));
         }
@@ -304,14 +304,14 @@ namespace UnitTests.DataAccess
             Parallel.ForEach(Enumerable.Range(1, userCount), i =>
                {
                    var user = new SecUser { FirstName = "pippo" + i, Login = "blabla" + i };
-                   DataSource.Security.AddUser(_myApp.Name, user);
-                   DataSource.Security.RemoveUser(_myApp.Name, user.Login);
+                   CaravanDataSource.Security.AddUser(_myApp.Name, user);
+                   CaravanDataSource.Security.RemoveUser(_myApp.Name, user.Login);
                });
 
             for (var i = 1; i <= userCount; ++i)
             {
                 //verifico che siano stati eliminati tutti gli user
-                var q = (from u in DataSource.Security.GetUsers(_myApp.Name) where u.Login == "blabla" + i select u).ToList();
+                var q = (from u in CaravanDataSource.Security.GetUsers(_myApp.Name) where u.Login == "blabla" + i select u).ToList();
 
                 Assert.IsEmpty(q);
             }
@@ -322,15 +322,15 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
 
             WaitForLogger();
-            var l = DataSource.Logger.Entries(_myApp.Name);
+            var l = CaravanDataSource.Logger.Entries(_myApp.Name);
 
-            DataSource.Security.RemoveUser(_myApp.Name, user1.Login);
+            CaravanDataSource.Security.RemoveUser(_myApp.Name, user1.Login);
 
             WaitForLogger();
-            var l1 = DataSource.Logger.Entries(_myApp.Name);
+            var l1 = CaravanDataSource.Logger.Entries(_myApp.Name);
 
             Assert.That(l1.Count(), Is.EqualTo(l.Count() + 1));
         }
@@ -341,7 +341,7 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla" };
 
-            DataSource.Security.RemoveUser(null, user1.Login);
+            CaravanDataSource.Security.RemoveUser(null, user1.Login);
         }
 
         [Test]
@@ -350,14 +350,14 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla" };
 
-            DataSource.Security.RemoveUser("", user1.Login);
+            CaravanDataSource.Security.RemoveUser("", user1.Login);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void RemoveUser_NullUserLogin_ThrowsArgumentException()
         {
-            DataSource.Security.RemoveUser(_myApp.Name, null);
+            CaravanDataSource.Security.RemoveUser(_myApp.Name, null);
         }
 
         [Test]
@@ -366,7 +366,7 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "" };
 
-            DataSource.Security.RemoveUser(_myApp.Name, user1.Login);
+            CaravanDataSource.Security.RemoveUser(_myApp.Name, user1.Login);
         }
 
         [Test]
@@ -375,7 +375,7 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "sarav" };
 
-            DataSource.Security.RemoveUser(_myApp.Name, user1.Login);
+            CaravanDataSource.Security.RemoveUser(_myApp.Name, user1.Login);
         }
 
         #endregion RemoveUser_Tests
@@ -387,23 +387,23 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
 
             user1.Login = "updatedLogin";
 
-            DataSource.Security.UpdateUser(_myApp.Name, "blabla", new SecUserUpdates
+            CaravanDataSource.Security.UpdateUser(_myApp.Name, "blabla", new SecUserUpdates
             {
                 Login = "updatedLogin".ToOption()
             });
 
-            var q = (from u in DataSource.Security.GetUsers(_myApp.Name)
+            var q = (from u in CaravanDataSource.Security.GetUsers(_myApp.Name)
                      where u.Login == user1.Login
                      select u).ToList();
 
             Assert.That(q.Count(), Is.EqualTo(1));
             Assert.That(q.First().Login, Is.EqualTo("updatedLogin".ToLower()));
 
-            var q2 = (from u in DataSource.Security.GetUsers(_myApp.Name)
+            var q2 = (from u in CaravanDataSource.Security.GetUsers(_myApp.Name)
                       where u.Login == "blabla"
                       select u).ToList();
             Assert.That(q2.Count, Is.EqualTo(0));
@@ -417,11 +417,11 @@ namespace UnitTests.DataAccess
             Parallel.ForEach(Enumerable.Range(1, userCount), i =>
             {
                 var user = new SecUser { FirstName = "pippo" + i, Login = "blabla" + i, Email = "test@email.it" + i };
-                DataSource.Security.AddUser(_myApp.Name, user);
+                CaravanDataSource.Security.AddUser(_myApp.Name, user);
 
                 user.Login = "updatedLogin" + i;
 
-                DataSource.Security.UpdateUser(_myApp.Name, "blabla" + i, new SecUserUpdates
+                CaravanDataSource.Security.UpdateUser(_myApp.Name, "blabla" + i, new SecUserUpdates
                 {
                     Login = user.Login.ToOption()
                 });
@@ -430,7 +430,7 @@ namespace UnitTests.DataAccess
             for (var i = 1; i <= userCount; ++i)
             {
                 //verifico che sia stato aggiornato user
-                var q = (from u in DataSource.Security.GetUsers(_myApp.Name)
+                var q = (from u in CaravanDataSource.Security.GetUsers(_myApp.Name)
                          where u.Login == ("updatedLogin" + i).ToLower()
                          select u).ToList();
 
@@ -438,7 +438,7 @@ namespace UnitTests.DataAccess
                 Assert.That(q.First().Login, Is.EqualTo(("updatedLogin" + i).ToLower()));
 
                 //verifico che non sia più presente l'utente con login "blabla" (vecchia login)
-                var q2 = (from u in DataSource.Security.GetUsers(_myApp.Name)
+                var q2 = (from u in CaravanDataSource.Security.GetUsers(_myApp.Name)
                           where u.Login == "blabla" + i
                           select u).ToList();
 
@@ -451,19 +451,19 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
 
             WaitForLogger();
-            var l = DataSource.Logger.Entries(_myApp.Name);
+            var l = CaravanDataSource.Logger.Entries(_myApp.Name);
 
             user1.Login = "updatedLogin";
 
-            DataSource.Security.UpdateUser(_myApp.Name, "blabla1", new SecUserUpdates
+            CaravanDataSource.Security.UpdateUser(_myApp.Name, "blabla1", new SecUserUpdates
             {
                 Login = user1.Login.ToOption()
             });
             WaitForLogger();
-            var l1 = DataSource.Logger.Entries(_myApp.Name);
+            var l1 = CaravanDataSource.Logger.Entries(_myApp.Name);
 
             Assert.That(l1.Count(), Is.EqualTo(l.Count() + 1));
         }
@@ -476,7 +476,7 @@ namespace UnitTests.DataAccess
 
             user1.Login = "updatedLogin";
 
-            DataSource.Security.UpdateUser(_myApp.Name, user1.Login, new SecUserUpdates
+            CaravanDataSource.Security.UpdateUser(_myApp.Name, user1.Login, new SecUserUpdates
             {
                 Login = user1.Login.ToOption()
             });
@@ -493,9 +493,9 @@ namespace UnitTests.DataAccess
                 var user1 = new SecUser { FirstName = "pippo" + i, Login = "blabla1" + i };
                 try
                 {
-                    DataSource.Security.AddUser(_myApp.Name, user1);
-                    DataSource.Security.RemoveUser(_myApp.Name, user1.Login);
-                    DataSource.Security.UpdateUser(_myApp.Name, user1.Login, user1);
+                    CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+                    CaravanDataSource.Security.RemoveUser(_myApp.Name, user1.Login);
+                    CaravanDataSource.Security.UpdateUser(_myApp.Name, user1.Login, user1);
                 }
                 catch (SecUserNotFoundException)
                 {
@@ -512,12 +512,12 @@ namespace UnitTests.DataAccess
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
             var user2 = new SecUser { FirstName = "pluto", Login = "bobobo", Email = "test2@email.it" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddUser(_myApp.Name, user2);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user2);
 
             user1.Login = "bobobo";
 
-            DataSource.Security.UpdateUser(_myApp.Name, "blabla", new SecUserUpdates
+            CaravanDataSource.Security.UpdateUser(_myApp.Name, "blabla", new SecUserUpdates
             {
                 Login = user1.Login.ToOption()
             });
@@ -529,15 +529,15 @@ namespace UnitTests.DataAccess
             var failCount = 0;
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
             var user2 = new SecUser { FirstName = "pluto", Login = "bobobo", Email = "test2@email.it" };
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddUser(_myApp.Name, user2);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user2);
 
             Parallel.ForEach(Enumerable.Range(1, 1), i =>
             {
                 try
                 {
                     user1.Login = "bobobo";
-                    DataSource.Security.UpdateUser(_myApp.Name, "blabla1", new SecUserUpdates
+                    CaravanDataSource.Security.UpdateUser(_myApp.Name, "blabla1", new SecUserUpdates
                     {
                         Login = user1.Login.ToOption()
                     });
@@ -558,7 +558,7 @@ namespace UnitTests.DataAccess
 
             user1.Login = "updatedLogin";
 
-            DataSource.Security.UpdateUser(null, user1.Login, new SecUserUpdates
+            CaravanDataSource.Security.UpdateUser(null, user1.Login, new SecUserUpdates
             {
                 Login = user1.Login.ToOption()
             });
@@ -572,7 +572,7 @@ namespace UnitTests.DataAccess
 
             user1.Login = "updatedLogin";
 
-            DataSource.Security.UpdateUser("", user1.Login, new SecUserUpdates
+            CaravanDataSource.Security.UpdateUser("", user1.Login, new SecUserUpdates
             {
                 Login = user1.Login.ToOption()
             });
@@ -586,7 +586,7 @@ namespace UnitTests.DataAccess
 
             user1.Login = null;
 
-            DataSource.Security.UpdateUser(_myApp.Name, user1.Login, new SecUserUpdates
+            CaravanDataSource.Security.UpdateUser(_myApp.Name, user1.Login, new SecUserUpdates
             {
                 Login = user1.Login.ToOption()
             });
@@ -600,7 +600,7 @@ namespace UnitTests.DataAccess
 
             user1.Login = "";
 
-            DataSource.Security.UpdateUser(_myApp.Name, user1.Login, new SecUserUpdates
+            CaravanDataSource.Security.UpdateUser(_myApp.Name, user1.Login, new SecUserUpdates
             {
                 Login = user1.Login.ToOption()
             });
@@ -614,7 +614,7 @@ namespace UnitTests.DataAccess
 
             user1.Login = "blobloblo";
 
-            DataSource.Security.UpdateUser(_myApp.Name, user1.Login, null);
+            CaravanDataSource.Security.UpdateUser(_myApp.Name, user1.Login, null);
         }
 
         #endregion UpdateUser_Tests
@@ -627,14 +627,14 @@ namespace UnitTests.DataAccess
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
             var group1 = new SecGroup { Name = "mygroup" };
             var group2 = new SecGroup { Name = "mygroup2" };
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddGroup(_myApp.Name, group2);
-            DataSource.Security.AddUserToGroup(_myApp.Name, user1.Login, group1.Name);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group2);
+            CaravanDataSource.Security.AddUserToGroup(_myApp.Name, user1.Login, group1.Name);
 
-            user1 = DataSource.Security.GetUserByLogin(_myApp.Name, user1.Login);
-            group1 = DataSource.Security.GetGroupByName(_myApp.Name, group1.Name);
-            group2 = DataSource.Security.GetGroupByName(_myApp.Name, group2.Name);
+            user1 = CaravanDataSource.Security.GetUserByLogin(_myApp.Name, user1.Login);
+            group1 = CaravanDataSource.Security.GetGroupByName(_myApp.Name, group1.Name);
+            group2 = CaravanDataSource.Security.GetGroupByName(_myApp.Name, group2.Name);
 
             Assert.True(user1.Groups.Any(g => g.Equals(group1)));
             Assert.False(user1.Groups.Any(g => g.Equals(group2)));
@@ -653,26 +653,26 @@ namespace UnitTests.DataAccess
         {
             var group1 = new SecGroup { Name = "mygroup" };
             var group2 = new SecGroup { Name = "mygroup2" };
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddGroup(_myApp.Name, group2);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group2);
 
             Parallel.ForEach(Enumerable.Range(1, userCount), i =>
             {
                 var user1 = new SecUser { FirstName = "pippo" + i, Login = "blabla" + i };
 
-                DataSource.Security.AddUser(_myApp.Name, user1);
+                CaravanDataSource.Security.AddUser(_myApp.Name, user1);
 
-                DataSource.Security.AddUserToGroup(_myApp.Name, user1.Login, group1.Name);
+                CaravanDataSource.Security.AddUserToGroup(_myApp.Name, user1.Login, group1.Name);
             });
-            group1 = DataSource.Security.GetGroupByName(_myApp.Name, group1.Name);
-            group2 = DataSource.Security.GetGroupByName(_myApp.Name, group2.Name);
+            group1 = CaravanDataSource.Security.GetGroupByName(_myApp.Name, group1.Name);
+            group2 = CaravanDataSource.Security.GetGroupByName(_myApp.Name, group2.Name);
             Assert.AreEqual(userCount, group1.Users.Length);
             Assert.AreEqual(0, group2.Users.Length);
 
             for (var i = 1; i <= userCount; ++i)
             {
                 var q =
-                   (from u in DataSource.Security.GetUsers(_myApp.Name) where u.Login == ("blabla" + i) select u.Groups).ToList();
+                   (from u in CaravanDataSource.Security.GetUsers(_myApp.Name) where u.Login == ("blabla" + i) select u.Groups).ToList();
                 Assert.That(q.Count, Is.EqualTo(1));
                 Assert.True(q.First().Contains(group1));
                 Assert.False(q.First().Contains(group2));
@@ -685,9 +685,9 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
             var group1 = new SecGroup { Name = "mygroup" };
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddUserToGroup(null, user1.Login, group1.Name);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddUserToGroup(null, user1.Login, group1.Name);
         }
 
         [Test]
@@ -696,9 +696,9 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
             var group1 = new SecGroup { Name = "mygroup" };
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddUserToGroup("", user1.Login, group1.Name);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddUserToGroup("", user1.Login, group1.Name);
         }
 
         [Test]
@@ -707,9 +707,9 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
             var group1 = new SecGroup { Name = "mygroup" };
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddUserToGroup(_myApp.Name, null, group1.Name);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddUserToGroup(_myApp.Name, null, group1.Name);
         }
 
         [Test]
@@ -718,9 +718,9 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
             var group1 = new SecGroup { Name = "mygroup" };
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddUserToGroup(_myApp.Name, "", group1.Name);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddUserToGroup(_myApp.Name, "", group1.Name);
         }
 
         [Test]
@@ -729,9 +729,9 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
             var group1 = new SecGroup { Name = "mygroup" };
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddUserToGroup(_myApp.Name, user1.Login, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddUserToGroup(_myApp.Name, user1.Login, null);
         }
 
         [Test]
@@ -740,9 +740,9 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla", Email = "test@email.it" };
             var group1 = new SecGroup { Name = "mygroup" };
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddUserToGroup(_myApp.Name, user1.Login, "");
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddUserToGroup(_myApp.Name, user1.Login, "");
         }
 
         #endregion AddUserToGroup_Tests
@@ -755,13 +755,13 @@ namespace UnitTests.DataAccess
             var group1 = new SecGroup { Name = "g1" };
             var group2 = new SecGroup { Name = "g2" };
 
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddGroup(_myApp.Name, group2);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group2);
 
-            var retValue = DataSource.Security.GetGroups(_myApp.Name);
+            var retValue = CaravanDataSource.Security.GetGroups(_myApp.Name);
             Assert.That(retValue.Count(), Is.EqualTo(2));
 
-            var retValue2 = DataSource.Security.GetGroups(_myApp2.Name);
+            var retValue2 = CaravanDataSource.Security.GetGroups(_myApp2.Name);
             Assert.That(retValue2.Count(), Is.EqualTo(0));
         }
 
@@ -773,26 +773,26 @@ namespace UnitTests.DataAccess
             Parallel.ForEach(Enumerable.Range(1, userCount), i =>
             {
                 var group = new SecGroup { Name = "g1" + i };
-                DataSource.Security.AddGroup(_myApp.Name, group);
+                CaravanDataSource.Security.AddGroup(_myApp.Name, group);
             });
 
             for (var i = 1; i <= userCount; ++i)
             {
-                var q = DataSource.Security.GetGroups(_myApp.Name).Where(g => g.Name == ("g1" + i));
+                var q = CaravanDataSource.Security.GetGroups(_myApp.Name).Where(g => g.Name == ("g1" + i));
                 Assert.IsNotNull(q.FirstOrDefault());
             }
 
-            var retValue = DataSource.Security.GetGroups(_myApp.Name);
+            var retValue = CaravanDataSource.Security.GetGroups(_myApp.Name);
             Assert.That(retValue.Count(), Is.EqualTo(userCount));
 
-            var retValue2 = DataSource.Security.GetGroups(_myApp2.Name);
+            var retValue2 = CaravanDataSource.Security.GetGroups(_myApp2.Name);
             Assert.That(retValue2.Count(), Is.EqualTo(0));
         }
 
         [Test]
         public void Groups_NoGroups_ReturnsNoGroups()
         {
-            var retvalue = DataSource.Security.GetGroups(_myApp.Name);
+            var retvalue = CaravanDataSource.Security.GetGroups(_myApp.Name);
             Assert.That(retvalue.Count(), Is.EqualTo(0));
         }
 
@@ -800,14 +800,14 @@ namespace UnitTests.DataAccess
         [ExpectedException(typeof(ArgumentException))]
         public void Groups_NullAppName_ThrowsArgumentException()
         {
-            DataSource.Security.GetGroups(null);
+            CaravanDataSource.Security.GetGroups(null);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void Groups_EmptyAppName_ThrowsArgumentException()
         {
-            DataSource.Security.GetGroups("");
+            CaravanDataSource.Security.GetGroups("");
         }
 
         #endregion Groups_Tests
@@ -819,9 +819,9 @@ namespace UnitTests.DataAccess
         {
             var group1 = new SecGroup { Name = "my_group" };
 
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            var ret = DataSource.Security.GetGroupByName(_myApp.Name, group1.Name);
+            var ret = CaravanDataSource.Security.GetGroupByName(_myApp.Name, group1.Name);
 
             Assert.That(ret.Name, Is.EqualTo("my_group"));
             Assert.That(ret, Is.Not.Null);
@@ -835,12 +835,12 @@ namespace UnitTests.DataAccess
             Parallel.ForEach(Enumerable.Range(1, userCount), i =>
             {
                 var group = new SecGroup { Name = "g1" + i };
-                DataSource.Security.AddGroup(_myApp.Name, group);
+                CaravanDataSource.Security.AddGroup(_myApp.Name, group);
             });
 
             for (var i = 1; i <= userCount; ++i)
             {
-                var ret = DataSource.Security.GetGroupByName(_myApp.Name, "g1" + i);
+                var ret = CaravanDataSource.Security.GetGroupByName(_myApp.Name, "g1" + i);
                 Assert.That(ret, Is.Not.Null);
             }
         }
@@ -851,9 +851,9 @@ namespace UnitTests.DataAccess
         {
             var group1 = new SecGroup { Name = "my_group" };
 
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            DataSource.Security.GetGroupByName(null, group1.Name);
+            CaravanDataSource.Security.GetGroupByName(null, group1.Name);
         }
 
         [Test]
@@ -862,9 +862,9 @@ namespace UnitTests.DataAccess
         {
             var group1 = new SecGroup { Name = "my_group" };
 
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            DataSource.Security.GetGroupByName("", group1.Name);
+            CaravanDataSource.Security.GetGroupByName("", group1.Name);
         }
 
         [Test]
@@ -873,9 +873,9 @@ namespace UnitTests.DataAccess
         {
             var group1 = new SecGroup { Name = "my_group" };
 
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            DataSource.Security.GetGroupByName(_myApp.Name, null);
+            CaravanDataSource.Security.GetGroupByName(_myApp.Name, null);
         }
 
         [Test]
@@ -884,9 +884,9 @@ namespace UnitTests.DataAccess
         {
             var group1 = new SecGroup { Name = "my_group" };
 
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            DataSource.Security.GetGroupByName(_myApp.Name, "");
+            CaravanDataSource.Security.GetGroupByName(_myApp.Name, "");
         }
 
         #endregion Group_Tests
@@ -899,22 +899,22 @@ namespace UnitTests.DataAccess
             var group1 = new SecGroup { Name = "my_group" };
             var group2 = new SecGroup { Name = "other_group" };
 
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddGroup(_myApp.Name, group2);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group2);
 
-            var q1 = (from g in DataSource.Security.GetGroups(_myApp.Name)
+            var q1 = (from g in CaravanDataSource.Security.GetGroups(_myApp.Name)
                       where g.Name == group1.Name
                       select g).ToList();
 
             Assert.That(q1.First().Name, Is.EqualTo("my_group"));
 
-            var q2 = (from g in DataSource.Security.GetGroups(_myApp.Name)
+            var q2 = (from g in CaravanDataSource.Security.GetGroups(_myApp.Name)
                       where g.Name == group2.Name
                       select g).ToList();
 
             Assert.That(q2.First().Name, Is.EqualTo("other_group"));
 
-            var q3 = (from g in DataSource.Security.GetGroups(_myApp2.Name)
+            var q3 = (from g in CaravanDataSource.Security.GetGroups(_myApp2.Name)
                       where g.Name == group1.Name || g.Name == group2.Name
                       select g).ToList();
 
@@ -929,12 +929,12 @@ namespace UnitTests.DataAccess
             Parallel.ForEach(Enumerable.Range(1, groupCount), i =>
             {
                 var group = new SecGroup { Name = "my_group" + i };
-                DataSource.Security.AddGroup(_myApp.Name, group);
+                CaravanDataSource.Security.AddGroup(_myApp.Name, group);
             });
 
             for (var i = 1; i <= groupCount; ++i)
             {
-                var q1 = (from g in DataSource.Security.GetGroups(_myApp.Name)
+                var q1 = (from g in CaravanDataSource.Security.GetGroups(_myApp.Name)
                           where g.Name == "my_group" + i
                           select g).ToList();
 
@@ -948,13 +948,13 @@ namespace UnitTests.DataAccess
         {
             var group1 = new SecGroup { Name = "my_group" };
 
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddGroup(_myApp2.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp2.Name, group1);
 
-            var q = (from g in DataSource.Security.GetGroups(_myApp.Name) where g.Name == group1.Name select g).ToList();
+            var q = (from g in CaravanDataSource.Security.GetGroups(_myApp.Name) where g.Name == group1.Name select g).ToList();
             Assert.That(q.First().Name, Is.EqualTo("my_group"));
 
-            var q2 = (from g in DataSource.Security.GetGroups(_myApp2.Name) where g.Name == group1.Name select g).ToList();
+            var q2 = (from g in CaravanDataSource.Security.GetGroups(_myApp2.Name) where g.Name == group1.Name select g).ToList();
             Assert.That(q2.First().Name, Is.EqualTo("my_group"));
         }
 
@@ -965,9 +965,9 @@ namespace UnitTests.DataAccess
             var group1 = new SecGroup { Name = "my_group" };
             var group2 = new SecGroup { Name = "my_group" };
 
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            DataSource.Security.AddGroup(_myApp.Name, group2);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group2);
         }
 
         [Test]
@@ -979,7 +979,7 @@ namespace UnitTests.DataAccess
                 Parallel.ForEach(Enumerable.Range(1, 2), i =>
                 {
                     var group = new SecGroup { Name = "my_group" };
-                    DataSource.Security.AddGroup(_myApp.Name, group);
+                    CaravanDataSource.Security.AddGroup(_myApp.Name, group);
                 });
             }
             catch (Exception exception)
@@ -995,7 +995,7 @@ namespace UnitTests.DataAccess
         public void AddGroup_NullAppName_ThrowsArgumentException()
         {
             var group1 = new SecGroup { Name = "my_group" };
-            DataSource.Security.AddGroup(null, group1);
+            CaravanDataSource.Security.AddGroup(null, group1);
         }
 
         [Test]
@@ -1003,14 +1003,14 @@ namespace UnitTests.DataAccess
         public void AddGroup_EmptyAppName_ThrowsArgumentException()
         {
             var group1 = new SecGroup { Name = "my_group" };
-            DataSource.Security.AddGroup("", group1);
+            CaravanDataSource.Security.AddGroup("", group1);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void AddGroup_NullNewGroup_ThrowsArgumentNullException()
         {
-            DataSource.Security.AddGroup(_myApp.Name, null);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, null);
         }
 
         #endregion AddGroup_Tests
@@ -1021,11 +1021,11 @@ namespace UnitTests.DataAccess
         public void RemoveGroup_validArgs_RemovedGroup()
         {
             var group1 = new SecGroup { Name = "my_group" };
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            DataSource.Security.RemoveGroup(_myApp.Name, group1.Name);
+            CaravanDataSource.Security.RemoveGroup(_myApp.Name, group1.Name);
 
-            var q = (from g in DataSource.Security.GetGroups(_myApp.Name) where g.Name == group1.Name select g).ToList();
+            var q = (from g in CaravanDataSource.Security.GetGroups(_myApp.Name) where g.Name == group1.Name select g).ToList();
 
             Assert.That(q.Count(), Is.EqualTo(0));
         }
@@ -1038,14 +1038,14 @@ namespace UnitTests.DataAccess
             Parallel.ForEach(Enumerable.Range(1, groupCount), i =>
             {
                 var group1 = new SecGroup { Name = "my_group" + i };
-                DataSource.Security.AddGroup(_myApp.Name, group1);
+                CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-                DataSource.Security.RemoveGroup(_myApp.Name, group1.Name);
+                CaravanDataSource.Security.RemoveGroup(_myApp.Name, group1.Name);
             });
 
             for (var i = 0; i <= groupCount; ++i)
             {
-                var q = (from g in DataSource.Security.GetGroups(_myApp.Name) where g.Name == "my_group" + i select g).ToList();
+                var q = (from g in CaravanDataSource.Security.GetGroups(_myApp.Name) where g.Name == "my_group" + i select g).ToList();
 
                 Assert.That(q.Count(), Is.EqualTo(0));
             }
@@ -1056,7 +1056,7 @@ namespace UnitTests.DataAccess
         public void RemoveGroup_GroupNotExisting_ThrowsGroupNotFoundException()
         {
             var group1 = new SecGroup { Name = "my_group" };
-            DataSource.Security.RemoveGroup(_myApp.Name, group1.Name);
+            CaravanDataSource.Security.RemoveGroup(_myApp.Name, group1.Name);
         }
 
         [Test]
@@ -1064,8 +1064,8 @@ namespace UnitTests.DataAccess
         public void RemoveGroup_NullAppName_ThrowsArgumentException()
         {
             var group1 = new SecGroup { Name = "my_group" };
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.RemoveGroup(null, group1.Name);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.RemoveGroup(null, group1.Name);
         }
 
         [Test]
@@ -1073,8 +1073,8 @@ namespace UnitTests.DataAccess
         public void RemoveGroup_EmptyAppName_ThrowsArgumentException()
         {
             var group1 = new SecGroup { Name = "my_group" };
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.RemoveGroup("", group1.Name);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.RemoveGroup("", group1.Name);
         }
 
         [Test]
@@ -1082,8 +1082,8 @@ namespace UnitTests.DataAccess
         public void RemoveGroup_EmptyGroupName_ThrowsArgumentException()
         {
             var group1 = new SecGroup { Name = "my_group" };
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.RemoveGroup(_myApp.Name, "");
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.RemoveGroup(_myApp.Name, "");
         }
 
         [Test]
@@ -1091,8 +1091,8 @@ namespace UnitTests.DataAccess
         public void RemoveGroup_NullGroupName_ThrowsArgumentException()
         {
             var group1 = new SecGroup { Name = "my_group" };
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.RemoveGroup(_myApp.Name, null);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.RemoveGroup(_myApp.Name, null);
         }
 
         #endregion RemoveGroup_Tests
@@ -1103,19 +1103,19 @@ namespace UnitTests.DataAccess
         public void UpdateGroup_ValidArgs_GroupUpdated()
         {
             var group1 = new SecGroup { Name = "my_group" };
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
             group1.Name = "updated_group";
-            DataSource.Security.UpdateGroup(_myApp.Name, "my_group", group1);
+            CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group", group1);
 
-            var q = (from g in DataSource.Security.GetGroups(_myApp.Name)
+            var q = (from g in CaravanDataSource.Security.GetGroups(_myApp.Name)
                      where g.Name == group1.Name
                      select g).ToList();
 
             Assert.That(q.Count(), Is.EqualTo(1));
             Assert.That(q.First().Name, Is.EqualTo("updated_group"));
 
-            var q2 = (from g in DataSource.Security.GetGroups(_myApp.Name)
+            var q2 = (from g in CaravanDataSource.Security.GetGroups(_myApp.Name)
                       where g.Name == "my_group"
                       select g).ToList();
 
@@ -1130,14 +1130,14 @@ namespace UnitTests.DataAccess
             Parallel.ForEach(Enumerable.Range(1, groupCount), i =>
             {
                 var group = new SecGroup { Name = "my_group" + i };
-                DataSource.Security.AddGroup(_myApp.Name, group);
+                CaravanDataSource.Security.AddGroup(_myApp.Name, group);
                 group.Name = "updated_group" + i;
-                DataSource.Security.UpdateGroup(_myApp.Name, "my_group" + i, group);
+                CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group" + i, group);
             });
 
             for (var i = 1; i <= groupCount; ++i)
             {
-                var q = (from g in DataSource.Security.GetGroups(_myApp.Name)
+                var q = (from g in CaravanDataSource.Security.GetGroups(_myApp.Name)
                          where g.Name == "updated_group" + i
                          select g).ToList();
 
@@ -1155,7 +1155,7 @@ namespace UnitTests.DataAccess
             var group1 = new SecGroup { Name = "my_group" };
 
             group1.Name = "updated_group";
-            DataSource.Security.UpdateGroup(_myApp.Name, "my_group", group1);
+            CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group", group1);
         }
 
         [Test]
@@ -1165,11 +1165,11 @@ namespace UnitTests.DataAccess
             var group1 = new SecGroup { Name = "my_group" };
             var group2 = new SecGroup { Name = "updated_group" };
 
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddGroup(_myApp.Name, group2);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group2);
 
             group1.Name = "updated_group";
-            DataSource.Security.UpdateGroup(_myApp.Name, "my_group", group1);
+            CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group", group1);
         }
 
         [Test]
@@ -1181,9 +1181,9 @@ namespace UnitTests.DataAccess
                 Parallel.ForEach(Enumerable.Range(1, 2), i =>
                 {
                     var group1 = new SecGroup { Name = "my_group" };
-                    DataSource.Security.AddGroup(_myApp.Name, group1);
+                    CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
                     group1.Name = "updated_group";
-                    DataSource.Security.UpdateGroup(_myApp.Name, "my_group", group1);
+                    CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group", group1);
                 });
             }
             catch (Exception)
@@ -1199,9 +1199,9 @@ namespace UnitTests.DataAccess
         public void UpdateGroup_NullAppName_ThrowsArgumentException()
         {
             var group1 = new SecGroup { Name = "my_group" };
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
             group1.Name = "updated_group";
-            DataSource.Security.UpdateGroup(null, "my_group", group1);
+            CaravanDataSource.Security.UpdateGroup(null, "my_group", group1);
         }
 
         [Test]
@@ -1209,9 +1209,9 @@ namespace UnitTests.DataAccess
         public void UpdateGroup_EmptyAppName_ThrowsArgumentException()
         {
             var group1 = new SecGroup { Name = "my_group" };
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
             group1.Name = "updated_group";
-            DataSource.Security.UpdateGroup("", "my_group", group1);
+            CaravanDataSource.Security.UpdateGroup("", "my_group", group1);
         }
 
         [Test]
@@ -1219,9 +1219,9 @@ namespace UnitTests.DataAccess
         public void UpdateGroup_NullGroupName_ThrowsArgumentException()
         {
             var group1 = new SecGroup { Name = "my_group" };
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
             group1.Name = "updated_group";
-            DataSource.Security.UpdateGroup(_myApp.Name, null, group1);
+            CaravanDataSource.Security.UpdateGroup(_myApp.Name, null, group1);
         }
 
         [Test]
@@ -1229,9 +1229,9 @@ namespace UnitTests.DataAccess
         public void UpdateGroup_EmptyGroupName_ThrowsArgumentException()
         {
             var group1 = new SecGroup { Name = "my_group" };
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
             group1.Name = "";
-            DataSource.Security.UpdateGroup(_myApp.Name, "my_group", group1);
+            CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group", group1);
         }
 
         #endregion UpdateGroup_Tests
@@ -1241,7 +1241,7 @@ namespace UnitTests.DataAccess
         [Test]
         public void Apps_ValidArgs_ReturnlistOfApps()
         {
-            var a = DataSource.Security.GetApps();
+            var a = CaravanDataSource.Security.GetApps();
 
             Assert.That(a.Count(), Is.EqualTo(2));
             Assert.That(a.Contains(_myApp));
@@ -1255,7 +1255,7 @@ namespace UnitTests.DataAccess
         [Test]
         public void App_ValidArgs_ReturnsApp()
         {
-            var a = DataSource.Security.GetApp(_myApp.Name);
+            var a = CaravanDataSource.Security.GetApp(_myApp.Name);
             Assert.That(a, Is.Not.Null);
             Assert.That(a.Name, Is.EqualTo("mio_test"));
         }
@@ -1264,14 +1264,14 @@ namespace UnitTests.DataAccess
         [ExpectedException(typeof(ArgumentException))]
         public void App_NullAppName_ThrowsArgumentException()
         {
-            DataSource.Security.GetApp(null);
+            CaravanDataSource.Security.GetApp(null);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void App_EmptyAppName_ThrowsArgumentException()
         {
-            DataSource.Security.GetApp("");
+            CaravanDataSource.Security.GetApp("");
         }
 
         #endregion App_Tests
@@ -1282,8 +1282,8 @@ namespace UnitTests.DataAccess
         public void AddApp_ValidArgs_AppAdded()
         {
             var newApp = new SecApp { Name = "AddedApp", Description = "my new application" };
-            DataSource.Security.AddApp(newApp);
-            var a = DataSource.Security.GetApps();
+            CaravanDataSource.Security.AddApp(newApp);
+            var a = CaravanDataSource.Security.GetApps();
             Assert.That(a.Contains(newApp));
         }
 
@@ -1295,14 +1295,14 @@ namespace UnitTests.DataAccess
             Parallel.ForEach(Enumerable.Range(1, appCount), i =>
             {
                 var newApp = new SecApp { Name = "AddedApp" + i, Description = "my new application" + i };
-                DataSource.Security.AddApp(newApp);
-                var a = DataSource.Security.GetApp("AddedApp" + i);
+                CaravanDataSource.Security.AddApp(newApp);
+                var a = CaravanDataSource.Security.GetApp("AddedApp" + i);
                 Assert.IsNotNull(a);
             });
 
             for (var i = 1; i <= appCount; ++i)
             {
-                var a = DataSource.Security.GetApps().ToList();
+                var a = CaravanDataSource.Security.GetApps().ToList();
                 Assert.AreEqual(appCount + 2, a.Count);
             }
         }
@@ -1312,7 +1312,7 @@ namespace UnitTests.DataAccess
         public void AddApp_AlreadyExistingAppName_ThrowsAppExistingException()
         {
             var newApp = new SecApp() { Name = "mio_test", Description = "my new application" };
-            DataSource.Security.AddApp(newApp);
+            CaravanDataSource.Security.AddApp(newApp);
         }
 
         [Test]
@@ -1324,7 +1324,7 @@ namespace UnitTests.DataAccess
                 Parallel.ForEach(Enumerable.Range(1, 2), i =>
                 {
                     var newApp = new SecApp { Name = "mio_test", Description = "my new application" };
-                    DataSource.Security.AddApp(newApp);
+                    CaravanDataSource.Security.AddApp(newApp);
                 });
             }
             catch (Exception)
@@ -1339,7 +1339,7 @@ namespace UnitTests.DataAccess
         [ExpectedException(typeof(ArgumentNullException))]
         public void AddApp_NullApp_ThrowsArgumentNullException()
         {
-            DataSource.Security.AddApp(null);
+            CaravanDataSource.Security.AddApp(null);
         }
 
         [Test]
@@ -1347,7 +1347,7 @@ namespace UnitTests.DataAccess
         public void AddApp_EmptyAppName_ThrowsArgumentException()
         {
             var newApp = new SecApp() { Name = "", Description = "my new application" };
-            DataSource.Security.AddApp(newApp);
+            CaravanDataSource.Security.AddApp(newApp);
         }
 
         #endregion AddApp_Tests
@@ -1370,10 +1370,10 @@ namespace UnitTests.DataAccess
             var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
             var group1 = new SecGroup { Name = "my_group" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
             //obj1 = new SecObject
             //{
@@ -1382,9 +1382,9 @@ namespace UnitTests.DataAccess
             //   Type = "button"
             //};
 
-            DataSource.Security.AddEntry(_myApp.Name, c2, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c2, obj1, user1.Login, null);
 
-            var l = DataSource.Security.GetContexts(_myApp.Name);
+            var l = CaravanDataSource.Security.GetContexts(_myApp.Name);
 
             Assert.That(l.Count(), Is.EqualTo(2));
             Assert.That(l.Contains(c1));
@@ -1407,13 +1407,13 @@ namespace UnitTests.DataAccess
             var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
             var group1 = new SecGroup { Name = "my_group" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
-            DataSource.Security.AddEntry(_myApp.Name, c2, obj1, group1.Name, null);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c2, obj1, group1.Name, null);
 
-            var l = DataSource.Security.GetContexts(_myApp.Name);
+            var l = CaravanDataSource.Security.GetContexts(_myApp.Name);
 
             Assert.That(l.Count(), Is.EqualTo(2));
             Assert.That(l.Contains(c1));
@@ -1436,13 +1436,13 @@ namespace UnitTests.DataAccess
             var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
             var group1 = new SecGroup { Name = "my_group" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
-            DataSource.Security.AddEntry(_myApp.Name, c2, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c2, obj1, null, group1.Name);
 
-            var l = DataSource.Security.GetContexts(_myApp.Name);
+            var l = CaravanDataSource.Security.GetContexts(_myApp.Name);
 
             Assert.That(l.Count(), Is.EqualTo(2));
             Assert.That(l.Contains(c1));
@@ -1465,13 +1465,13 @@ namespace UnitTests.DataAccess
             var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
             var group1 = new SecGroup { Name = "my_group" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
-            DataSource.Security.AddEntry(_myApp.Name, c2, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c2, obj1, null, group1.Name);
 
-            var l = DataSource.Security.GetContexts(_myApp.Name);
+            var l = CaravanDataSource.Security.GetContexts(_myApp.Name);
 
             Assert.That(l.Count(), Is.EqualTo(2));
             Assert.That(l.Contains(c1));
@@ -1481,7 +1481,7 @@ namespace UnitTests.DataAccess
         [Test]
         public void Contexts_NotExistingContext_ReturnsZero()
         {
-            var l = DataSource.Security.GetContexts(_myApp.Name);
+            var l = CaravanDataSource.Security.GetContexts(_myApp.Name);
 
             Assert.That(l.Count(), Is.EqualTo(0));
         }
@@ -1490,14 +1490,14 @@ namespace UnitTests.DataAccess
         [ExpectedException(typeof(ArgumentException))]
         public void Contexts_NullAppName_ThrowsArgumentException()
         {
-            DataSource.Security.GetContexts(null);
+            CaravanDataSource.Security.GetContexts(null);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void Contexts_EmptyAppName_ThrowsArgumentException()
         {
-            DataSource.Security.GetContexts("");
+            CaravanDataSource.Security.GetContexts("");
         }
 
         #endregion Contexts_Tests
@@ -1518,16 +1518,16 @@ namespace UnitTests.DataAccess
             var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
             var group1 = new SecGroup { Name = "my_group" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-            var l = DataSource.Security.GetObjects(_myApp.Name);
+            var l = CaravanDataSource.Security.GetObjects(_myApp.Name);
 
             Assert.That(l.Count(), Is.EqualTo(1));
 
-            var l1 = DataSource.Security.GetObjects(_myApp2.Name);
+            var l1 = CaravanDataSource.Security.GetObjects(_myApp2.Name);
 
             Assert.That(l1.Count(), Is.EqualTo(0));
         }
@@ -1547,11 +1547,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            DataSource.Security.GetObjects(null);
+            CaravanDataSource.Security.GetObjects(null);
         }
 
         [Test]
@@ -1569,11 +1569,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            DataSource.Security.GetObjects("");
+            CaravanDataSource.Security.GetObjects("");
         }
 
         #endregion Objects_Tests
@@ -1594,14 +1594,14 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-            var l = DataSource.Security.GetEntries(_myApp.Name, c1.Name);
-            var l1 = DataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj1.Name);
-            var l3 = DataSource.Security.GetEntriesForUser(_myApp.Name, c1.Name, user1.Login);
+            var l = CaravanDataSource.Security.GetEntries(_myApp.Name, c1.Name);
+            var l1 = CaravanDataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj1.Name);
+            var l3 = CaravanDataSource.Security.GetEntriesForUser(_myApp.Name, c1.Name, user1.Login);
 
             Assert.That(l.Count(), Is.EqualTo(2));
             Assert.That(l3.Count(), Is.EqualTo(1));
@@ -1615,10 +1615,10 @@ namespace UnitTests.DataAccess
             var group1 = new SecGroup { Name = "my_group" };
             var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            var l = DataSource.Security.GetEntries(_myApp.Name, c1.Name);
+            var l = CaravanDataSource.Security.GetEntries(_myApp.Name, c1.Name);
 
             Assert.That(l.Count(), Is.EqualTo(0));
         }
@@ -1631,10 +1631,10 @@ namespace UnitTests.DataAccess
             var group1 = new SecGroup { Name = "my_group" };
             var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            var l = DataSource.Security.GetEntries(null, c1.Name);
+            var l = CaravanDataSource.Security.GetEntries(null, c1.Name);
         }
 
         [Test]
@@ -1645,10 +1645,10 @@ namespace UnitTests.DataAccess
             var group1 = new SecGroup { Name = "my_group" };
             var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            var l = DataSource.Security.GetEntries("", c1.Name);
+            var l = CaravanDataSource.Security.GetEntries("", c1.Name);
         }
 
         [Test]
@@ -1659,10 +1659,10 @@ namespace UnitTests.DataAccess
             var group1 = new SecGroup { Name = "my_group" };
             var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            DataSource.Security.GetEntries(_myApp.Name, null);
+            CaravanDataSource.Security.GetEntries(_myApp.Name, null);
         }
 
         [Test]
@@ -1673,10 +1673,10 @@ namespace UnitTests.DataAccess
             var group1 = new SecGroup { Name = "my_group" };
             var user1 = new SecUser { FirstName = "user1", Login = "myLogin" };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
-            DataSource.Security.GetEntries(_myApp.Name, "");
+            CaravanDataSource.Security.GetEntries(_myApp.Name, "");
         }
 
         [Test]
@@ -1694,11 +1694,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            DataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, "");
+            CaravanDataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, "");
         }
 
         [Test]
@@ -1716,11 +1716,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            DataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, null);
+            CaravanDataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, null);
         }
 
         [Test]
@@ -1738,11 +1738,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            DataSource.Security.GetEntriesForUser(_myApp.Name, c1.Name, "");
+            CaravanDataSource.Security.GetEntriesForUser(_myApp.Name, c1.Name, "");
         }
 
         [Test]
@@ -1760,11 +1760,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            DataSource.Security.GetEntriesForUser(_myApp.Name, c1.Name, null);
+            CaravanDataSource.Security.GetEntriesForUser(_myApp.Name, c1.Name, null);
         }
 
         [Test]
@@ -1782,11 +1782,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            DataSource.Security.GetEntriesForObjectAndUser(_myApp.Name, c1.Name, obj1.Name, "");
+            CaravanDataSource.Security.GetEntriesForObjectAndUser(_myApp.Name, c1.Name, obj1.Name, "");
         }
 
         [Test]
@@ -1804,11 +1804,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            DataSource.Security.GetEntriesForObjectAndUser(_myApp.Name, c1.Name, obj1.Name, null);
+            CaravanDataSource.Security.GetEntriesForObjectAndUser(_myApp.Name, c1.Name, obj1.Name, null);
         }
 
         #endregion Entries_tests
@@ -1829,11 +1829,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
 
-            var l = DataSource.Security.GetEntries(_myApp.Name, c1.Name);
+            var l = CaravanDataSource.Security.GetEntries(_myApp.Name, c1.Name);
 
             Assert.That(l.Count(), Is.EqualTo(1));
             Assert.That(l.First().ContextName, Is.EqualTo("c1"));
@@ -1855,11 +1855,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-            var l = DataSource.Security.GetEntries(_myApp.Name, c1.Name);
+            var l = CaravanDataSource.Security.GetEntries(_myApp.Name, c1.Name);
 
             Assert.That(l.Count(), Is.EqualTo(1));
             Assert.That(l.First().ContextName, Is.EqualTo("c1"));
@@ -1882,21 +1882,21 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddUser(_myApp.Name, user2);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user2.Login, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user2);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user2.Login, null);
 
-            var l = DataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj1.Name);
+            var l = CaravanDataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj1.Name);
 
             Assert.That(l.Count(), Is.EqualTo(2));
 
-            var l1 = DataSource.Security.GetEntriesForObjectAndUser(_myApp.Name, c1.Name, obj1.Name, user1.Login);
+            var l1 = CaravanDataSource.Security.GetEntriesForObjectAndUser(_myApp.Name, c1.Name, obj1.Name, user1.Login);
 
             Assert.That(l1.Count(), Is.EqualTo(1));
 
-            var l2 = DataSource.Security.GetEntriesForObjectAndUser(_myApp.Name, c1.Name, obj1.Name, user2.Login);
+            var l2 = CaravanDataSource.Security.GetEntriesForObjectAndUser(_myApp.Name, c1.Name, obj1.Name, user2.Login);
 
             Assert.That(l2.Count(), Is.EqualTo(1));
         }
@@ -1923,13 +1923,13 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
             // DataSource.Security.AddUser(_myApp.Name, user2);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj2, user1.Login, null);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj2, user1.Login, null);
 
-            var l1 = DataSource.Security.GetEntriesForUser(_myApp.Name, c1.Name, user1.Login);
+            var l1 = CaravanDataSource.Security.GetEntriesForUser(_myApp.Name, c1.Name, user1.Login);
 
             Assert.That(l1.Count(), Is.EqualTo(2));
         }
@@ -1948,12 +1948,12 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddGroup(_myApp.Name, group2);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group2.Name);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group2);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group2.Name);
 
-            var l1 = DataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj1.Name);
+            var l1 = CaravanDataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj1.Name);
 
             Assert.That(l1.Count(), Is.EqualTo(2));
         }
@@ -1978,21 +1978,21 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj2, null, group1.Name);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj2, null, group1.Name);
 
-            var l1 = DataSource.Security.GetEntries(_myApp.Name, c1.Name);
+            var l1 = CaravanDataSource.Security.GetEntries(_myApp.Name, c1.Name);
 
             Assert.That(l1.Count(), Is.EqualTo(2));
 
-            var l2 = DataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj1.Name);
+            var l2 = CaravanDataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj1.Name);
 
             Assert.That(l2.Count(), Is.EqualTo(1));
 
             Assert.That(l2.First().GroupName, Is.EqualTo("my_group"));
 
-            var l3 = DataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj2.Name);
+            var l3 = CaravanDataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj2.Name);
 
             Assert.That(l3.Count(), Is.EqualTo(1));
 
@@ -2014,9 +2014,9 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, "", group1.Name);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, "", group1.Name);
         }
 
         [Test]
@@ -2034,9 +2034,9 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, "");
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, "");
         }
 
         [Test]
@@ -2054,10 +2054,10 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, null, group1.Name);
         }
 
         [Test]
@@ -2075,11 +2075,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
 
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
         }
 
         [Test]
@@ -2104,13 +2104,13 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddUser(_myApp.Name, user2);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj2, user1.Login, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user2);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj2, user1.Login, null);
 
-            var l = DataSource.Security.GetEntriesForUser(_myApp.Name, c1.Name, user1.Login);
+            var l = CaravanDataSource.Security.GetEntriesForUser(_myApp.Name, c1.Name, user1.Login);
 
             Assert.That(l.Count(), Is.EqualTo(2));
         }
@@ -2141,19 +2141,19 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddUser(_myApp.Name, user2);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj2, user1.Login, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user2);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj2, user1.Login, null);
 
-            DataSource.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, user1.Login, null);
-            DataSource.Security.RemoveEntry(_myApp.Name, c1.Name, obj2.Name, user1.Login, null);
+            CaravanDataSource.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, user1.Login, null);
+            CaravanDataSource.Security.RemoveEntry(_myApp.Name, c1.Name, obj2.Name, user1.Login, null);
 
-            var l = DataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj1.Name);
+            var l = CaravanDataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj1.Name);
             Assert.That(l.Count(), Is.EqualTo(0));
 
-            var l1 = DataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj2.Name);
+            var l1 = CaravanDataSource.Security.GetEntriesForObject(_myApp.Name, c1.Name, obj2.Name);
             Assert.That(l1.Count(), Is.EqualTo(0));
         }
 
@@ -2172,11 +2172,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-            DataSource.Security.RemoveEntry(null, c1.Name, obj1.Name, user1.Login, group1.Name);
+            CaravanDataSource.Security.RemoveEntry(null, c1.Name, obj1.Name, user1.Login, group1.Name);
         }
 
         [Test]
@@ -2194,11 +2194,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-            DataSource.Security.RemoveEntry("", c1.Name, obj1.Name, user1.Login, group1.Name);
+            CaravanDataSource.Security.RemoveEntry("", c1.Name, obj1.Name, user1.Login, group1.Name);
         }
 
         [Test]
@@ -2216,11 +2216,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-            DataSource.Security.RemoveEntry(_myApp.Name, null, obj1.Name, user1.Login, group1.Name);
+            CaravanDataSource.Security.RemoveEntry(_myApp.Name, null, obj1.Name, user1.Login, group1.Name);
         }
 
         [Test]
@@ -2238,11 +2238,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-            DataSource.Security.RemoveEntry(_myApp.Name, "", obj1.Name, user1.Login, group1.Name);
+            CaravanDataSource.Security.RemoveEntry(_myApp.Name, "", obj1.Name, user1.Login, group1.Name);
         }
 
         [Test]
@@ -2260,11 +2260,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-            DataSource.Security.RemoveEntry(_myApp.Name, c1.Name, "", user1.Login, null);
+            CaravanDataSource.Security.RemoveEntry(_myApp.Name, c1.Name, "", user1.Login, null);
         }
 
         [Test]
@@ -2282,11 +2282,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-            DataSource.Security.RemoveEntry(_myApp.Name, c1.Name, null, user1.Login, null);
+            CaravanDataSource.Security.RemoveEntry(_myApp.Name, c1.Name, null, user1.Login, null);
         }
 
         [Test]
@@ -2303,11 +2303,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-            DataSource.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, null, group1.Name);
+            CaravanDataSource.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, null, group1.Name);
         }
 
         [Test]
@@ -2325,11 +2325,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-            DataSource.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, "", group1.Name);
+            CaravanDataSource.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, "", group1.Name);
         }
 
         [Test]
@@ -2346,11 +2346,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-            DataSource.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, user1.Login, null);
+            CaravanDataSource.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, user1.Login, null);
         }
 
         [Test]
@@ -2368,11 +2368,11 @@ namespace UnitTests.DataAccess
                 Type = "button"
             };
 
-            DataSource.Security.AddUser(_myApp.Name, user1);
-            DataSource.Security.AddGroup(_myApp.Name, group1);
-            DataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
+            CaravanDataSource.Security.AddUser(_myApp.Name, user1);
+            CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
+            CaravanDataSource.Security.AddEntry(_myApp.Name, c1, obj1, user1.Login, null);
 
-            DataSource.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, user1.Login, "");
+            CaravanDataSource.Security.RemoveEntry(_myApp.Name, c1.Name, obj1.Name, user1.Login, "");
         }
 
         #endregion RemoveEntry_Tests

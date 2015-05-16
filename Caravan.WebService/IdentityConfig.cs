@@ -59,11 +59,11 @@ namespace Finsa.Caravan.WebService
 
         public static IdentityServerServiceFactory Configure(string connString)
         {
-            var t = new AspNetIdentityUserService<SecUser, string>(new UserManager<SecUser, string>(new CaravanUserStore(DataSource.Security)));
+            var t = new AspNetIdentityUserService<SecUser, string>(new UserManager<SecUser, string>(new CaravanUserStore(CaravanDataSource.Security)));
 
             var factory = new IdentityServerServiceFactory
             {
-                UserService = new Registration<IUserService>(resolver => new AspNetIdentityUserService<SecUser, string>(new CaravanUserManager(DataSource.Security, new NoOpPasswordHasher())))
+                UserService = new Registration<IUserService>(resolver => new AspNetIdentityUserService<SecUser, string>(new CaravanUserManager(CaravanDataSource.Security, new NoOpPasswordHasher())))
             };
 
             var scopeStore = new InMemoryScopeStore(Scopes());

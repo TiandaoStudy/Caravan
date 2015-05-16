@@ -6,20 +6,21 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.SqlServerCe
 {
     internal sealed class SqlServerCeDataSourceManager : AbstractDataSourceManager
     {
-        public override DataSourceKind DataSourceKind
+        public override CaravanDataSourceKind DataSourceKind
         {
-            get { return DataSourceKind.SqlServerCe; }
+            get { return CaravanDataSourceKind.SqlServerCe; }
         }
 
-        public override void ElaborateConnectionString(ref string connectionString)
+        public override string ElaborateConnectionString(string connectionString)
         {
             // Nothing to do with the connection string.
+            return connectionString;
         }
 
         public override DbConnection CreateConnection()
         {
             var connection = SqlCeProviderFactory.Instance.CreateConnection();
-            connection.ConnectionString = DataSource.ConnectionString;
+            connection.ConnectionString = ConnectionString;
             return connection;
         }
     }

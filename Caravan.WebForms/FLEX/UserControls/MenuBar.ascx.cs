@@ -41,7 +41,7 @@ namespace FLEX.Web.UserControls
          }
          catch (Exception ex)
          {
-            DataSource.Logger.LogError<MenuBar>(ex);
+            CaravanDataSource.Logger.LogError<MenuBar>(ex);
             throw;
          }        
       }

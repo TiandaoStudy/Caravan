@@ -59,7 +59,7 @@ namespace Finsa.Caravan.DataAccess
         public DataAccessConfiguration()
         {
             ConnectionString = String.Empty;
-            DataSourceKind = DataSourceKind.FakeSql;
+            DataSourceKind = CaravanDataSourceKind.FakeSql;
 
             // SQL
             SqlSchema = "mydb";
@@ -69,13 +69,12 @@ namespace Finsa.Caravan.DataAccess
             OracleStatementCacheSize = 10;
 
             // REST
-            RestServiceUrl = "finsa.caravan.it/";
             RestTestAuthObject = "_TEST_TOKEN_";
         }
 
         public string ConnectionString { get; set; }
 
-        public DataSourceKind DataSourceKind { get; set; }
+        public CaravanDataSourceKind DataSourceKind { get; set; }
 
         #region SQL
 
@@ -92,8 +91,6 @@ namespace Finsa.Caravan.DataAccess
         #endregion
 
         #region REST
-
-        public string RestServiceUrl { get; set; }
 
         public string RestTestAuthObject { get; set; }
 

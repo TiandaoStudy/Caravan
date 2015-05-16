@@ -29,7 +29,7 @@ namespace FLEX.Web.UserControls.Ajax
          }
          catch (Exception ex)
          {
-            DataSource.Logger.LogError<AjaxControlBase>(ex);
+            CaravanDataSource.Logger.LogError<AjaxControlBase>(ex);
             throw;
          }
       }

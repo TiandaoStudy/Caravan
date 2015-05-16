@@ -36,7 +36,7 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
             var exception = Exception.Get(ctx);
             if (exception == null)
             {
-                result = DataSource.Logger.LogRaw(
+                result = CaravanDataSource.Logger.LogRaw(
                     LogLevel.Get(ctx),
                     CommonConfiguration.Instance.AppName,
                     UserLogin.Get(ctx),
@@ -50,7 +50,7 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
             }
             else
             {
-                result = DataSource.Logger.LogRaw(
+                result = CaravanDataSource.Logger.LogRaw(
                     LogLevel.Get(ctx),
                     CommonConfiguration.Instance.AppName,
                     UserLogin.Get(ctx),

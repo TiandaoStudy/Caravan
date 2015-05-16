@@ -6,13 +6,14 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 {
     internal sealed class MongoDataSourceManager : AbstractDataSourceManager
     {
-        public override DataSourceKind DataSourceKind
+        public override CaravanDataSourceKind DataSourceKind
         {
-            get { return DataSourceKind.MongoDb; }
+            get { return CaravanDataSourceKind.MongoDb; }
         }
 
-        public override void ElaborateConnectionString(ref string connectionString)
+        public override string ElaborateConnectionString(string connectionString)
         {
+            return connectionString;
         }
 
         public override DbConnection CreateConnection()
