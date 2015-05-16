@@ -16,6 +16,7 @@ using Finsa.Caravan.Common.Utilities.Text;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebForms.Properties;
 using FLEX.Web.XmlSettings.AjaxLookup;
+using PommaLabs.KVLite;
 
 // ReSharper disable CheckNamespace This is the correct namespace, despite the file physical position.
 
@@ -79,7 +80,7 @@ namespace FLEX.Web.Services
             xmlPath = HttpContext.Current.Server.MapPath(xmlPath);
 
             // If cache contains an instance of the lookup data, we return it.
-            var cachedLookupData = Finsa.Caravan.Common.Cache.Instance.Get<AjaxLookupDataLookupBy>(CachePartition, xmlPath);
+            var cachedLookupData = PersistentCache.DefaultInstance.Get<AjaxLookupDataLookupBy>(CachePartition, xmlPath);
             if (cachedLookupData.HasValue)
             {
                 return cachedLookupData.Value;
@@ -101,7 +102,7 @@ namespace FLEX.Web.Services
 
             // We store the lookup data instance inside the cache, and then we return it. We must
             // pay attention to put the type of the lookup inside the key.
-            Finsa.Caravan.Common.Cache.Instance.AddSliding(CachePartition, xmlPath, lookupData, Settings.Default.DefaultIntervalForVolatile);
+            PersistentCache.DefaultInstance.AddSliding(CachePartition, xmlPath, lookupData, Settings.Default.DefaultIntervalForVolatile);
             return lookupData;
         }
 

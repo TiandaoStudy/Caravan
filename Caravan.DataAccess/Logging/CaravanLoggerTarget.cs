@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Finsa.Caravan.Common;
 using LogLevel = Common.Logging.LogLevel;
 
 namespace Finsa.Caravan.DataAccess.Logging
@@ -70,7 +71,7 @@ namespace Finsa.Caravan.DataAccess.Logging
             // ReSharper disable once UnusedVariable
             var result = Db.Logger.LogRaw(
                 logLevel,
-                Common.Properties.Settings.Default.ApplicationName,
+                CommonConfiguration.Instance.AppName,
                 userLogin,
                 codeUnit,
                 function,

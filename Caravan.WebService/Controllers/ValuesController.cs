@@ -16,7 +16,9 @@ using System.Linq;
 using System.Web.Http;
 using LinqToQuerystring.WebApi;
 using Finsa.Caravan.Common.Utilities.Extensions;
+using Finsa.CodeServices.Common.Diagnostics;
 using WebApi.OutputCache.V2;
+using PommaLabs.KVLite;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -32,6 +34,14 @@ namespace Finsa.Caravan.WebService.Controllers
 
         private static readonly string CachePartition = typeof(ValuesController).FullName;
 
+        private readonly ICache _cache;
+
+        public ValuesController(ICache cache)
+        {
+            Raise<ArgumentNullException>.IfIsNull(cache);
+            _cache = cache;
+        }
+
         /// <summary>
         ///   Returns all values.
         /// </summary>
@@ -39,7 +49,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route(""), LinqToQueryable, CacheOutput(ServerTimeSpan = OutputCacheSeconds, ClientTimeSpan = OutputCacheSeconds)]
         public IQueryable<string> Get()
         {
-            return Common.Cache.Instance.GetItems<object>(CachePartition).Select(i => i.Value).Cast<string>().AsQueryable();
+            return _cache.GetItems<object>(CachePartition).Select(i => i.Value).Cast<string>().AsQueryable();
         }
 
         /// <summary>
@@ -50,7 +60,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{id}"), CacheOutput(ServerTimeSpan = OutputCacheSeconds, ClientTimeSpan = OutputCacheSeconds)]
         public string Get(int id)
         {
-            return Common.Cache.Instance.Get<string>(CachePartition, id.ToString(CultureInfo.InvariantCulture)).Value;
+            return _cache.Get<string>(CachePartition, id.ToString(CultureInfo.InvariantCulture)).Value;
         }
 
         /// <summary>
@@ -62,7 +72,7 @@ namespace Finsa.Caravan.WebService.Controllers
         public void Post([FromBody] string value)
         {
             var random = new Random().Next();
-            Common.Cache.Instance.AddTimed(CachePartition, random.ToString(CultureInfo.InvariantCulture), value.Truncate(MaxStringLength), DateTime.UtcNow.AddSeconds(CacheSeconds));
+            _cache.AddTimed(CachePartition, random.ToString(CultureInfo.InvariantCulture), value.Truncate(MaxStringLength), DateTime.UtcNow.AddSeconds(CacheSeconds));
         }
 
         /// <summary>
@@ -73,7 +83,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{id}")]
         public void Put(int id, [FromBody] string value)
         {
-            Common.Cache.Instance.AddTimed(CachePartition, id.ToString(CultureInfo.InvariantCulture), value.Truncate(MaxStringLength), DateTime.UtcNow.AddSeconds(CacheSeconds));
+            _cache.AddTimed(CachePartition, id.ToString(CultureInfo.InvariantCulture), value.Truncate(MaxStringLength), DateTime.UtcNow.AddSeconds(CacheSeconds));
         }
 
         /// <summary>
@@ -83,7 +93,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{id}")]
         public void Delete(int id)
         {
-            Common.Cache.Instance.Remove(CachePartition, id.ToString(CultureInfo.InvariantCulture));
+            _cache.Remove(CachePartition, id.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

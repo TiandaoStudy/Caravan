@@ -31,14 +31,14 @@ namespace Finsa.Caravan.Common.Security
 
         public Task CreateAsync(SecUser user)
         {
-            var appName = Properties.Settings.Default.ApplicationName;
+            var appName = CommonConfiguration.Instance.AppName;
             _securityRepository.AddUser(appName, user);
             return Task.FromResult(0);
         }
 
         public Task UpdateAsync(SecUser user)
         {
-            var appName = Properties.Settings.Default.ApplicationName;
+            var appName = CommonConfiguration.Instance.AppName;
             _securityRepository.UpdateUser(appName, user.Login, new SecUserUpdates
             {
                 PasswordHash = Option.Some(user.PasswordHash),
@@ -55,20 +55,20 @@ namespace Finsa.Caravan.Common.Security
 
         public Task DeleteAsync(SecUser user)
         {
-            var appName = Properties.Settings.Default.ApplicationName;
+            var appName = CommonConfiguration.Instance.AppName;
             _securityRepository.RemoveUser(appName, user.Login);
             return Task.FromResult(0);
         }
 
         public Task<SecUser> FindByIdAsync(string userId)
         {
-            var appName = Properties.Settings.Default.ApplicationName;
+            var appName = CommonConfiguration.Instance.AppName;
             return Task.FromResult(_securityRepository.GetUserByLogin(appName, userId));
         }
 
         public Task<SecUser> FindByNameAsync(string userName)
         {
-            var appName = Properties.Settings.Default.ApplicationName;
+            var appName = CommonConfiguration.Instance.AppName;
             return Task.FromResult(_securityRepository.GetUserByLogin(appName, userName));
         }
 
@@ -78,7 +78,7 @@ namespace Finsa.Caravan.Common.Security
 
         public Task SetEmailAsync(SecUser user, string email)
         {
-            var appName = Properties.Settings.Default.ApplicationName;
+            var appName = CommonConfiguration.Instance.AppName;
             _securityRepository.UpdateUser(appName, user.Login, new SecUserUpdates
             {
                 Email = Option.Some(email)
@@ -98,7 +98,7 @@ namespace Finsa.Caravan.Common.Security
 
         public Task SetEmailConfirmedAsync(SecUser user, bool confirmed)
         {
-            var appName = Properties.Settings.Default.ApplicationName;
+            var appName = CommonConfiguration.Instance.AppName;
             _securityRepository.UpdateUser(appName, user.Login, new SecUserUpdates
             {
                 EmailConfirmed = Option.Some(confirmed)
@@ -108,7 +108,7 @@ namespace Finsa.Caravan.Common.Security
 
         public Task<SecUser> FindByEmailAsync(string email)
         {
-            var appName = Properties.Settings.Default.ApplicationName;
+            var appName = CommonConfiguration.Instance.AppName;
             return Task.FromResult(_securityRepository.GetUserByEmail(appName, email));
         }
 
@@ -118,7 +118,7 @@ namespace Finsa.Caravan.Common.Security
 
         public Task SetPhoneNumberAsync(SecUser user, string phoneNumber)
         {
-            var appName = Properties.Settings.Default.ApplicationName;
+            var appName = CommonConfiguration.Instance.AppName;
             _securityRepository.UpdateUser(appName, user.Login, new SecUserUpdates
             {
                 PhoneNumber = Option.Some(phoneNumber)
@@ -138,7 +138,7 @@ namespace Finsa.Caravan.Common.Security
 
         public Task SetPhoneNumberConfirmedAsync(SecUser user, bool confirmed)
         {
-            var appName = Properties.Settings.Default.ApplicationName;
+            var appName = CommonConfiguration.Instance.AppName;
             _securityRepository.UpdateUser(appName, user.Login, new SecUserUpdates
             {
                 PhoneNumberConfirmed = Option.Some(confirmed)
@@ -176,7 +176,7 @@ namespace Finsa.Caravan.Common.Security
 
         public Task SetPasswordHashAsync(SecUser user, string passwordHash)
         {
-            var appName = Properties.Settings.Default.ApplicationName;
+            var appName = CommonConfiguration.Instance.AppName;
             _securityRepository.UpdateUser(appName, user.Login, new SecUserUpdates
             {
                 PasswordHash = Option.Some(passwordHash)

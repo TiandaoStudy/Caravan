@@ -3,7 +3,6 @@ using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
-using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.Common.Utilities.Diagnostics;
@@ -17,7 +16,6 @@ using Finsa.Caravan.DataAccess.Drivers.Sql.PostgreSql;
 using Finsa.Caravan.DataAccess.Drivers.Sql.SqlServer;
 using Finsa.Caravan.DataAccess.Drivers.Sql.SqlServerCe;
 using Finsa.Caravan.DataAccess.Properties;
-using PommaLabs.KVLite;
 using RestSharp;
 
 namespace Finsa.Caravan.DataAccess
@@ -27,9 +25,6 @@ namespace Finsa.Caravan.DataAccess
     /// </summary>
     public static class Db
     {
-        private const string CachePartitionName = "Caravan.DataAccess";
-        private const string ConnectionStringKey = "ConnectionString";
-
         private static ICaravanLogRepository _loggerInstance;
         private static ICaravanSecurityRepository _securityRepositoryInstance;
         private static IDataSourceManager _dataSourceManagerInstance;
@@ -79,34 +74,18 @@ namespace Finsa.Caravan.DataAccess
 
         #region Public Properties - Common
 
+        private static string CachedConnectionString;
+
         public static string ConnectionString
         {
             get
             {
-                var cachedConnectionString = Cache.Instance.Get<string>(CachePartitionName, ConnectionStringKey);
-                var configConnectionString = Settings.Default.ConnectionString;
-
-                if (String.IsNullOrWhiteSpace(configConnectionString))
-                {
-                    // If connection string is not in the configuration file, then return the cached
-                    // one, even if empty.
-                    return cachedConnectionString.HasValue ? cachedConnectionString.Value : string.Empty;
-                }
-                Manager.ElaborateConnectionString(ref configConnectionString);
-                if (cachedConnectionString == configConnectionString)
-                {
-                    // Connection string has _not_ changed, return the cached one.
-                    return cachedConnectionString.Value;
-                }
-
-                // Connection string _has_ changed, update the cached one.
-                Cache.Instance.AddStatic(CachePartitionName, ConnectionStringKey, configConnectionString);
-                return configConnectionString;
+                return CachedConnectionString;
             }
             set
             {
                 Manager.ElaborateConnectionString(ref value);
-                Cache.Instance.AddStatic(CachePartitionName, ConnectionStringKey, value);
+                CachedConnectionString = value;
             }
         }
 

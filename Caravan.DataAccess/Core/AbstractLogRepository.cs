@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Web;
+using Finsa.Caravan.Common;
 using Finsa.CodeServices.Common.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
@@ -473,7 +474,7 @@ namespace Finsa.Caravan.DataAccess.Core
         {
             if (String.IsNullOrWhiteSpace(appName) || appName == LogEntry.AutoFilled)
             {
-                return Common.Properties.Settings.Default.ApplicationName;
+                return CommonConfiguration.Instance.AppName;
             }
             return appName;
         }
