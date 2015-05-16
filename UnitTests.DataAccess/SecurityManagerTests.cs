@@ -18,7 +18,7 @@ namespace UnitTests.DataAccess
     {
         private SecApp _myApp;
         private SecApp _myApp2;
-        private LogSetting _settingError = null;
+        private LogSetting _settingError;
 
         [SetUp]
         public void Init()
@@ -495,7 +495,11 @@ namespace UnitTests.DataAccess
                 {
                     CaravanDataSource.Security.AddUser(_myApp.Name, user1);
                     CaravanDataSource.Security.RemoveUser(_myApp.Name, user1.Login);
-                    CaravanDataSource.Security.UpdateUser(_myApp.Name, user1.Login, user1);
+                    CaravanDataSource.Security.UpdateUser(_myApp.Name, user1.Login, new SecUserUpdates
+                    {
+                        Login = user1.Login.ToOption(),
+                        FirstName = user1.FirstName.ToOption(),
+                    });
                 }
                 catch (SecUserNotFoundException)
                 {
@@ -1106,7 +1110,10 @@ namespace UnitTests.DataAccess
             CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
 
             group1.Name = "updated_group";
-            CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group", group1);
+            CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group", new SecGroupUpdates
+            {
+                Name = group1.Name.ToOption()
+            });
 
             var q = (from g in CaravanDataSource.Security.GetGroups(_myApp.Name)
                      where g.Name == group1.Name
@@ -1132,7 +1139,10 @@ namespace UnitTests.DataAccess
                 var group = new SecGroup { Name = "my_group" + i };
                 CaravanDataSource.Security.AddGroup(_myApp.Name, group);
                 group.Name = "updated_group" + i;
-                CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group" + i, group);
+                CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group" + i, new SecGroupUpdates
+                {
+                    Name = group.Name.ToOption()
+                });
             });
 
             for (var i = 1; i <= groupCount; ++i)
@@ -1155,7 +1165,10 @@ namespace UnitTests.DataAccess
             var group1 = new SecGroup { Name = "my_group" };
 
             group1.Name = "updated_group";
-            CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group", group1);
+            CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group", new SecGroupUpdates
+            {
+                Name = group1.Name.ToOption()
+            });
         }
 
         [Test]
@@ -1169,7 +1182,10 @@ namespace UnitTests.DataAccess
             CaravanDataSource.Security.AddGroup(_myApp.Name, group2);
 
             group1.Name = "updated_group";
-            CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group", group1);
+            CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group", new SecGroupUpdates
+            {
+                Name = group1.Name.ToOption()
+            });
         }
 
         [Test]
@@ -1183,7 +1199,10 @@ namespace UnitTests.DataAccess
                     var group1 = new SecGroup { Name = "my_group" };
                     CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
                     group1.Name = "updated_group";
-                    CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group", group1);
+                    CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group", new SecGroupUpdates
+                    {
+                        Name = group1.Name.ToOption()
+                    });
                 });
             }
             catch (Exception)
@@ -1201,7 +1220,10 @@ namespace UnitTests.DataAccess
             var group1 = new SecGroup { Name = "my_group" };
             CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
             group1.Name = "updated_group";
-            CaravanDataSource.Security.UpdateGroup(null, "my_group", group1);
+            CaravanDataSource.Security.UpdateGroup(null, "my_group", new SecGroupUpdates
+            {
+                Name = group1.Name.ToOption()
+            });
         }
 
         [Test]
@@ -1211,7 +1233,10 @@ namespace UnitTests.DataAccess
             var group1 = new SecGroup { Name = "my_group" };
             CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
             group1.Name = "updated_group";
-            CaravanDataSource.Security.UpdateGroup("", "my_group", group1);
+            CaravanDataSource.Security.UpdateGroup("", "my_group", new SecGroupUpdates
+            {
+                Name = group1.Name.ToOption()
+            });
         }
 
         [Test]
@@ -1221,7 +1246,10 @@ namespace UnitTests.DataAccess
             var group1 = new SecGroup { Name = "my_group" };
             CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
             group1.Name = "updated_group";
-            CaravanDataSource.Security.UpdateGroup(_myApp.Name, null, group1);
+            CaravanDataSource.Security.UpdateGroup(_myApp.Name, null, new SecGroupUpdates
+            {
+                Name = group1.Name.ToOption()
+            });
         }
 
         [Test]
@@ -1231,7 +1259,10 @@ namespace UnitTests.DataAccess
             var group1 = new SecGroup { Name = "my_group" };
             CaravanDataSource.Security.AddGroup(_myApp.Name, group1);
             group1.Name = "";
-            CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group", group1);
+            CaravanDataSource.Security.UpdateGroup(_myApp.Name, "my_group", new SecGroupUpdates
+            {
+                Name = group1.Name.ToOption()
+            });
         }
 
         #endregion UpdateGroup_Tests
