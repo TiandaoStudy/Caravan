@@ -220,7 +220,6 @@
     <Compile Include="Utilities\Extensions\ObjectExtensions.cs" />
     <Compile Include="Utilities\Extensions\StringExtensions.cs" />
     <Compile Include="Utilities\FormattableObject.cs" />
-    <Compile Include="Utilities\Option.cs" />
     <Compile Include="Utilities\PairAndTriple.cs" />
     <Compile Include="Utilities\Portability\SerializableAttribute.cs" />
     <Compile Include="Utilities\Portability\TypeInfo.cs" />

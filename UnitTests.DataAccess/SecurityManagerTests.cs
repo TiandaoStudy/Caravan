@@ -393,11 +393,11 @@ namespace UnitTests.DataAccess
 
             CaravanDataSource.Security.UpdateUser(_myApp.Name, "blabla", new SecUserUpdates
             {
-                Login = "updatedLogin".ToOption()
+                Login = user1.Login.ToOption()
             });
 
             var q = (from u in CaravanDataSource.Security.GetUsers(_myApp.Name)
-                     where u.Login == user1.Login
+                     where u.Login == user1.Login.ToLower()
                      select u).ToList();
 
             Assert.That(q.Count(), Is.EqualTo(1));

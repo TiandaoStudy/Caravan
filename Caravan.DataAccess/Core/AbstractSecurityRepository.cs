@@ -127,6 +127,7 @@ namespace Finsa.Caravan.DataAccess.Core
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(groupName);
+            Raise<ArgumentNullException>.IfIsNull(groupUpdates);
             Raise<ArgumentException>.If(groupUpdates.Name.HasValue && String.IsNullOrWhiteSpace(groupUpdates.Name.Value));
 
             const string logCtx = "Updating a group";
@@ -246,7 +247,8 @@ namespace Finsa.Caravan.DataAccess.Core
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(userLogin);
-            Raise<ArgumentNullException>.If(userUpdates.Login.HasValue && String.IsNullOrWhiteSpace(userUpdates.Login.Value));
+            Raise<ArgumentNullException>.IfIsNull(userUpdates);
+            Raise<ArgumentException>.If(userUpdates.Login.HasValue && String.IsNullOrWhiteSpace(userUpdates.Login.Value));
 
             const string logCtx = "Updating an user";
 
