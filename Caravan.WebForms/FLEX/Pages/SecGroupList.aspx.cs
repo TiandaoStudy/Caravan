@@ -7,6 +7,7 @@ using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.Common.WebForms;
 using FLEX.Web.Pages;
 using System.Data;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Utilities.Extensions;
 
 // ReSharper disable CheckNamespace
@@ -53,14 +54,14 @@ namespace Finsa.Caravan.WebForms.Pages
           {
               var groupName = SearchCriteria["CGRP_NAME"][0];
               // This should not catch any exception, others will do.
-              groups = (from g in DataAccess.Db.Security.GetGroups(Common.Properties.Settings.Default.ApplicationName)
+              groups = (from g in DataAccess.Db.Security.GetGroups(CommonConfiguration.Instance.AppName)
                             select new SecGroup { Name = g.Name, Description = g.Description, Notes = g.Notes }).Where(x => x.Name == groupName.ToString())
                             .ToDataTable();
           }
 
           else
           {
-             groups = (from g in DataAccess.Db.Security.GetGroups(Common.Properties.Settings.Default.ApplicationName)
+             groups = (from g in DataAccess.Db.Security.GetGroups(CommonConfiguration.Instance.AppName)
                     select new SecGroup { Name = g.Name, Description = g.Description, Notes = g.Notes })
                            .ToDataTable();
           }
@@ -106,7 +107,7 @@ namespace Finsa.Caravan.WebForms.Pages
          {
             var groupName = groupNameToBeDeleted.Value;
             Raise<ArgumentException>.IfIsEmpty(groupName);
-            DataAccess.Db.Security.RemoveGroup(Common.Properties.Settings.Default.ApplicationName, groupName);
+            DataAccess.Db.Security.RemoveGroup(CommonConfiguration.Instance.AppName, groupName);
             fdtgGroups.UpdateDataSource();
          }
          catch (Exception ex)

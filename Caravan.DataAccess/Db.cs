@@ -80,6 +80,10 @@ namespace Finsa.Caravan.DataAccess
         {
             get
             {
+                if (String.IsNullOrWhiteSpace(CachedConnectionString))
+                {
+                    CachedConnectionString = Settings.Default.ConnectionString;
+                }
                 return CachedConnectionString;
             }
             set

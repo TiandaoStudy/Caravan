@@ -67,7 +67,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/ping")]
         public HttpResponseMessage GetPing(string appName)
         {
-            appName = appName ?? Common.Properties.Settings.Default.ApplicationName;
+            appName = appName ?? CommonConfiguration.Instance.AppName;
             var result = Db.Logger.LogInfo<LoggerController>(new LogEntry
             {
                 AppName = appName,
@@ -175,7 +175,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/settings"), LinqToQueryable]
         public IQueryable<LogSetting> GetSettings(string appName)
         {
-            appName = appName ?? Common.Properties.Settings.Default.ApplicationName;
+            appName = appName ?? CommonConfiguration.Instance.AppName;
             return Db.Logger.Settings(appName).AsQueryable();
         }
 

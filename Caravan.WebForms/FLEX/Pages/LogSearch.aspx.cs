@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
@@ -32,7 +33,7 @@ namespace FLEX.WebForms.Pages
       {
          // This should not catch any exception, others will do.
          fdtgLogs.DataSource = (
-            from l in Db.Logger.Entries(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName)
+            from l in Db.Logger.Entries(CommonConfiguration.Instance.AppName)
             select new
             {
                l.Id,

@@ -1,4 +1,5 @@
 ﻿using System;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.DataAccess;
@@ -65,7 +66,7 @@ namespace Finsa.Caravan.WebForms.Pages
             return;
          }
 
-         var user = Db.Security.GetUserByLogin(Common.Properties.Settings.Default.ApplicationName, login);
+         var user = Db.Security.GetUserByLogin(CommonConfiguration.Instance.AppName, login);
          Raise<ArgumentException>.IfIsNull(user, "Given user name does not exist");
 
          txtFirstName.Text = user.FirstName;
@@ -86,7 +87,7 @@ namespace Finsa.Caravan.WebForms.Pages
               if (Mode == NewMode)
               {
                   var newUser = new SecUser { FirstName = txtFirstName.Text, LastName = txtLastName.Text, Email = txtEmail.Text, Active = chkIsActive.Checked };
-                  Db.Security.AddUser(Common.Properties.Settings.Default.ApplicationName, newUser);
+                  Db.Security.AddUser(CommonConfiguration.Instance.AppName, newUser);
 
               }
               else if (Mode == EditMode)
@@ -99,7 +100,7 @@ namespace Finsa.Caravan.WebForms.Pages
                       Active = Option.Some(chkIsActive.Checked), 
                       Login = Option.Some(Login)
                   };
-                  Db.Security.UpdateUser(Common.Properties.Settings.Default.ApplicationName, Login, newUser);
+                  Db.Security.UpdateUser(CommonConfiguration.Instance.AppName, Login, newUser);
               }
               Master.RegisterCloseScript(this);
           }

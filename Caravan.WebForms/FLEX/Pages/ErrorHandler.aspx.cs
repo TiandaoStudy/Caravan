@@ -1,4 +1,5 @@
 ﻿using System;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.WebForms.Properties;
 
 // ReSharper disable CheckNamespace
@@ -16,7 +17,7 @@ namespace FLEX.Web.Pages
            string[] ErrorArray= new string[3];
            btnPrint.Attributes["onclick"]= "return openReportViewer('REPORT=StampaErrorHandler');";
 
-           txtTitle.Text = Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName;
+           txtTitle.Text = CommonConfiguration.Instance.AppName;
 
            //Per errore potrei chiamare la pagina e la sessione è vuota
            if (Session[Settings.Default.ExceptionSessionKey] == null) 
