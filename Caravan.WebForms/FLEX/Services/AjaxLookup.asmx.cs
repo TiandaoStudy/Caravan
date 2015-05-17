@@ -11,6 +11,9 @@ using System.Xml;
 using Dapper;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebForms.Properties;
+using Finsa.CodeServices.Common.Diagnostics;
+using Finsa.CodeServices.Common.Extensions;
+using Finsa.CodeServices.Common.Text;
 using FLEX.Web.XmlSettings.AjaxLookup;
 using PommaLabs.KVLite;
 
@@ -70,7 +73,7 @@ namespace FLEX.Web.Services
         private static AjaxLookupDataLookupBy LoadAjaxLookupData(string xmlLookup, string lookupBy)
         {
             // At first, we create the relative path for our XML.
-            var xmlPath = Path.Combine(Settings.Default.AjaxLookupsXmlPath, xmlLookup + Constants.FileExtensions.Xml);
+            var xmlPath = Path.Combine(Settings.Default.AjaxLookupsXmlPath, xmlLookup + ".xml");
 
             // And then we make it absolute to our server.
             xmlPath = HttpContext.Current.Server.MapPath(xmlPath);

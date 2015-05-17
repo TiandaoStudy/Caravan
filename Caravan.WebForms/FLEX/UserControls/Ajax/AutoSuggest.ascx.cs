@@ -6,6 +6,7 @@ using Finsa.Caravan.Common.WebForms;
 using Finsa.Caravan.WebForms.Core;
 using Finsa.CodeServices.Common.Collections.ReadOnly;
 using Finsa.CodeServices.Common.Diagnostics;
+using Finsa.CodeServices.Common.Extensions;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

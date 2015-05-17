@@ -8,6 +8,7 @@ using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Common.Logging;
 using Finsa.CodeServices.Common.Diagnostics;
+using Finsa.CodeServices.Common.Extensions;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {

@@ -3,12 +3,13 @@ using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.Common.WebForms;
 using FLEX.Web.Pages;
 using System.Data;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Utilities.Extensions;
+using Finsa.CodeServices.Common.Diagnostics;
+using Finsa.CodeServices.Common.Extensions;
+using FLEX.Web.UserControls;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -76,7 +77,7 @@ namespace Finsa.Caravan.WebForms.Pages
             return;
          }
 
-         var groupName = DataBinder.Eval(e.Row.DataItem, "Name").ToJavaScriptString();
+         var groupName = ControlBase.ToJavaScriptString(DataBinder.Eval(e.Row.DataItem, "Name").ToString());
 
          var btnEdit = e.Row.FindControl("btnEdit") as LinkButton;
          btnEdit.OnClientClick = String.Format("return editGroup({0});", groupName);

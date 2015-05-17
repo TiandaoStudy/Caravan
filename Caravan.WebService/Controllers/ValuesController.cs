@@ -16,6 +16,7 @@ using System.Linq;
 using System.Web.Http;
 using LinqToQuerystring.WebApi;
 using Finsa.CodeServices.Common.Diagnostics;
+using Finsa.CodeServices.Common.Extensions;
 using WebApi.OutputCache.V2;
 using PommaLabs.KVLite;
 

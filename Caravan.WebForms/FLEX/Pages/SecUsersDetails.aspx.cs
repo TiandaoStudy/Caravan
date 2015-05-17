@@ -1,9 +1,9 @@
 ﻿using System;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Common.Diagnostics;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 

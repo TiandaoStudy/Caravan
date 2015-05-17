@@ -9,6 +9,9 @@ using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.WebForms;
 using FLEX.Web.Pages;
 using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Common.Diagnostics;
+using Finsa.CodeServices.Common.Extensions;
+using FLEX.Web.UserControls;
 
 // ReSharper disable CheckNamespace This is the correct namespace, despite the file physical position.
 
@@ -109,7 +112,7 @@ namespace Finsa.Caravan.WebForms.Pages
                 return;
             }
 
-            var login = DataBinder.Eval(e.Row.DataItem, "Login").ToJavaScriptString();
+            var login = ControlBase.ToJavaScriptString(DataBinder.Eval(e.Row.DataItem, "Login").ToString());
 
             var btnEdit = e.Row.FindControl("btnEdit") as LinkButton;
             btnEdit.OnClientClick = String.Format("return editUser({0});", login);
