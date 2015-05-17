@@ -1,6 +1,6 @@
 ﻿using System;
 using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
+using Finsa.CodeServices.Common.Diagnostics;
 using Microsoft.AspNet.Identity;
 
 namespace Finsa.Caravan.Common.Security

@@ -1,6 +1,5 @@
-﻿using Finsa.Caravan.Common.Utilities;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
-using System;
+﻿using System;
+using Finsa.CodeServices.Common.Diagnostics;
 
 // ReSharper disable CheckNamespace This is the correct namespace, despite the file physical position.
 
@@ -21,18 +20,18 @@ namespace FLEX.Web.UserControls
 
         public string Text
         {
-            get { return (string) (ViewState[TextViewStateKey] ?? Constants.EmptyString); }
+            get { return (string) (ViewState[TextViewStateKey] ?? String.Empty); }
             set
             {
                 Raise<ArgumentNullException>.IfIsNull(value, "Text property cannot be null");
                 if (value.Length <= MaxTextLength)
                 {
                     // Nothing to do, text fits the container.
-                    ShortenedText = value.Replace(Environment.NewLine, Constants.EmptyString);
+                    ShortenedText = value.Replace(Environment.NewLine, String.Empty);
                 }
                 else
                 {
-                    ShortenedText = value.Substring(0, MaxTextLength).Replace(Environment.NewLine, Constants.EmptyString) + "...";
+                    ShortenedText = value.Substring(0, MaxTextLength).Replace(Environment.NewLine, String.Empty) + "...";
                 }
                 ViewState[TextViewStateKey] = value;
             }

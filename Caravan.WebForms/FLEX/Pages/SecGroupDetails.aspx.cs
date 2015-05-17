@@ -1,6 +1,5 @@
 ﻿using System;
 using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common;
 using FLEX.Web.Pages;
@@ -8,6 +7,7 @@ using FLEX.Web.UserControls.Ajax;
 using System.Linq;
 using System.Data;
 using Finsa.Caravan.Common;
+using Finsa.CodeServices.Common.Diagnostics;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

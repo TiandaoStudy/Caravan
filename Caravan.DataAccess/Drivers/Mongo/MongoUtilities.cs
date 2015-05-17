@@ -1,9 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Linq;
-using Finsa.Caravan.Common.Utilities.Extensions;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Security;
+using Finsa.CodeServices.Serialization;
+using Finsa.CodeServices.Serialization.Extensions;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -19,9 +20,11 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 
         #endregion Constants
 
+        private static readonly JsonSerializer JsonSerializer = new JsonSerializer();
+
         public static ObjectId CreateObjectId<T>(T obj)
         {
-            var md5 = obj.ToMD5Bytes();
+            var md5 = obj.ToMD5Bytes(JsonSerializer);
             var hash12 = md5.Take(12).ToArray();
             Debug.Assert(hash12.Length == 12);
             return new ObjectId(hash12);

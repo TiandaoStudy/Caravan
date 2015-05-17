@@ -1,7 +1,5 @@
 ﻿using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Utilities;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.CodeServices.Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -12,6 +10,8 @@ using System.Data.Common;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Globalization;
 using System.Linq;
+using Finsa.CodeServices.Common.Diagnostics;
+using Microsoft.AspNet.Identity;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -75,7 +75,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 _log.TraceArgs(() => new LogMessage
                 {
                     ShortMessage = String.Format("Non query command \"{0}\" ended with result {1}", commandId, interceptionContext.Result),
-                    LongMessage = Constants.EmptyString,
+                    LongMessage = String.Empty,
                     Context = "Executed a non query command"
                 });
             }
@@ -129,7 +129,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 _log.TraceArgs(() => new LogMessage
                 {
                     ShortMessage = String.Format("Reader command \"{0}\" ended", commandId),
-                    LongMessage = Constants.EmptyString,
+                    LongMessage = String.Empty,
                     Context = "Executed a reader command"
                 });
             }
@@ -183,7 +183,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 _log.TraceArgs(() => new LogMessage
                 {
                     ShortMessage = String.Format("Scalar command \"{0}\" ended", commandId),
-                    LongMessage = Constants.EmptyString,
+                    LongMessage = String.Empty,
                     Context = "Executed a scalar command",
                     Arguments = new[]
                     {

@@ -1,12 +1,12 @@
 ﻿using Common.Logging;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PommaLabs.KVLite;
 using PommaLabs.KVLite.Web.Http;
 using System;
 using System.Web.Http;
+using Finsa.CodeServices.Common.Diagnostics;
 
 namespace Finsa.Caravan.WebApi
 {

@@ -1,14 +1,13 @@
-﻿using Finsa.Caravan.Common.Utilities;
-using Finsa.Caravan.Common.Utilities.Collections.ReadOnly;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
+﻿
 using Finsa.Caravan.Common.WebForms;
 using Finsa.Caravan.WebForms.Properties;
-using Finsa.Caravan.Common.Utilities.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Finsa.CodeServices.Common.Collections.ReadOnly;
+using Finsa.CodeServices.Common.Diagnostics;
 
 // ReSharper disable CheckNamespace This is the correct namespace, despite the file physical position.
 
@@ -56,7 +55,7 @@ namespace FLEX.Web.UserControls.Ajax
                 Raise<InvalidOperationException>.IfNot(DateIsValid(txtDate.Text));
                 return DateTime.Parse(txtDate.Text, Settings.Default.CurrentUserCulture, DateTimeStyles.AllowWhiteSpaces);
             }
-            set { txtDate.Text = (value == null) ? Constants.EmptyString : value.Value.ToString("d", Settings.Default.CurrentUserCulture); }
+            set { txtDate.Text = (value == null) ? String.Empty : value.Value.ToString("d", Settings.Default.CurrentUserCulture); }
         }
 
         public string StartDate

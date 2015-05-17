@@ -2,7 +2,6 @@
 using System;
 using System.Globalization;
 using System.Web.UI;
-using Finsa.Caravan.Common.Utilities.Extensions;
 
 // ReSharper disable CheckNamespace This is the correct namespace, despite the file physical position.
 

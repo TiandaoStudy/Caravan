@@ -1,18 +1,15 @@
-﻿using System.Web.Http;
-using System.Web.Http.Dispatcher;
-using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Logging;
-using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
-using Finsa.Caravan.Common.Utilities.Extensions;
-using Finsa.CodeServices.Common;
-using Microsoft.Owin;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.ServiceModel.Channels;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Models.Logging;
+using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Common.Diagnostics;
+using Finsa.CodeServices.Common.Extensions;
+using Microsoft.Owin;
 
 namespace Finsa.Caravan.WebApi.DelegatingHandlers
 {

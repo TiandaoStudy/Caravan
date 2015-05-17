@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace Finsa.Caravan.Common.Models.Security
 {
-    [Serializable, DataContract]
+    [Serializable, JsonObject(MemberSerialization.OptIn), DataContract]
     public class SecSession
     {
         public string UserLogin { get; set; }

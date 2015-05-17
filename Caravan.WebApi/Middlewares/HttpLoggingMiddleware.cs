@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Utilities.Extensions;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Diagnostics;
 using Microsoft.Owin;
 using System;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
+using Finsa.CodeServices.Common.Extensions;
 using AppFunc = System.Func<System.Collections.Generic.IDictionary<string, object>, System.Threading.Tasks.Task>; 
 
 namespace Finsa.Caravan.WebApi.Middlewares

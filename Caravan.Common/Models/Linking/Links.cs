@@ -1,8 +1,8 @@
-﻿using Finsa.Caravan.Common.Utilities.Collections;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Finsa.CodeServices.Common.Collections;
+using Finsa.CodeServices.Common.Diagnostics;
 
 namespace Finsa.Caravan.Common.Models.Linking
 {
