@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Objects;
 using System.Globalization;
 using System.Linq;
 using AutoMapper;
@@ -171,17 +172,20 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var q = ctx.LogEntries.Include(s => s.App);
+                
                 if (logQuery.AppNames != null && logQuery.AppNames.Count > 0)
                 {
                     q = q.Where(e => logQuery.AppNames.Contains(e.App.Name));
                 }
+                
                 if (logQuery.LogLevels != null && logQuery.LogLevels.Count > 0)
                 {
                     var logLevelStrings = logQuery.LogLevels.Select(ll => ll.ToString().ToLowerInvariant()).ToArray();
                     q = q.Where(e => logLevelStrings.Contains(e.LogLevel));
                 }
-                logQuery.FromDate.Do(x => q = q.Where(e => e.Date >= x));
-                logQuery.ToDate.Do(x => q = q.Where(e => e.Date <= x));
+                
+                logQuery.FromDate.Do(x => q = q.Where(e => DbFunctions.DiffDays(e.Date, x) <= 0));
+                logQuery.ToDate.Do(x => q = q.Where(e => DbFunctions.DiffDays(e.Date, x) >= 0));
                 logQuery.UserLoginLike.Do(x => q = q.Where(e => e.UserLogin.Contains(x)));
                 logQuery.CodeUnitLike.Do(x => q = q.Where(e => e.CodeUnit.Contains(x)));
                 logQuery.FunctionLike.Do(x => q = q.Where(e => e.Function.Contains(x)));
@@ -192,7 +196,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 // Execute the query.
                 var r = q.OrderByDescending(s => s.Id).ThenByDescending(s => s.Date).AsEnumerable();
                 
-                if (!logQuery.TruncateLongMessage)
+                if (logQuery.TruncateLongMessage)
                 {
                     r = r.Select(e =>
                     {
@@ -200,6 +204,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                         return e;
                     });
                 }
+
                 return r.Select(Mapper.Map<LogEntry>).ToArray();
             }
         }
