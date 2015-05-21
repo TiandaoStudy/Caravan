@@ -296,18 +296,18 @@ namespace Finsa.Caravan.DataAccess.Core
             return GetEntriesInternal(appName.ToLowerInvariant(), logLevel);
         }
 
-        public IList<LogEntry> QueryEntries(LogQuery logQuery)
+        public IList<LogEntry> QueryEntries(LogEntryQuery logEntryQuery)
         {
-            Raise<ArgumentNullException>.If(logQuery == null);
+            Raise<ArgumentNullException>.If(logEntryQuery == null);
             
             // Metto in lower i nomi delle applicazioni, se ce ne sono.
-            var appNames = logQuery.AppNames;
+            var appNames = logEntryQuery.AppNames;
             if (appNames != null && appNames.Count > 0)
             {
-                logQuery.AppNames = appNames.Where(n => !String.IsNullOrWhiteSpace(n)).Select(n => n.ToLowerInvariant()).ToArray();
+                logEntryQuery.AppNames = appNames.Where(n => !String.IsNullOrWhiteSpace(n)).Select(n => n.ToLowerInvariant()).ToArray();
             }
             
-            return QueryEntriesInternal(logQuery);
+            return QueryEntriesInternal(logEntryQuery);
         }
 
         public Option<LogEntry> GetEntry(string appName, long logId)
@@ -392,7 +392,7 @@ namespace Finsa.Caravan.DataAccess.Core
         
         protected abstract IList<LogEntry> GetEntriesInternal(string appName, LogLevel? logLevel);
 
-        protected abstract IList<LogEntry> QueryEntriesInternal(LogQuery logQuery);
+        protected abstract IList<LogEntry> QueryEntriesInternal(LogEntryQuery logEntryQuery);
 
         protected abstract Option<LogEntry> GetEntryInternal(string appName, long logId);
 

@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace Finsa.Caravan.Common.Models.Logging
 {
     [Serializable, JsonObject(MemberSerialization.OptIn), DataContract]
-    public sealed class LogQuery
+    public sealed class LogEntryQuery
     {
         [JsonProperty(Order = 0), DataMember(Order = 0)]
         public IList<string> AppNames { get; set; }

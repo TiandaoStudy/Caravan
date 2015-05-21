@@ -167,40 +167,40 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        protected override IList<LogEntry> QueryEntriesInternal(LogQuery logQuery)
+        protected override IList<LogEntry> QueryEntriesInternal(LogEntryQuery logEntryQuery)
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var q = ctx.LogEntries.Include(s => s.App);
                 
-                if (logQuery.AppNames != null && logQuery.AppNames.Count > 0)
+                if (logEntryQuery.AppNames != null && logEntryQuery.AppNames.Count > 0)
                 {
-                    q = q.Where(e => logQuery.AppNames.Contains(e.App.Name));
+                    q = q.Where(e => logEntryQuery.AppNames.Contains(e.App.Name));
                 }
                 
-                if (logQuery.LogLevels != null && logQuery.LogLevels.Count > 0)
+                if (logEntryQuery.LogLevels != null && logEntryQuery.LogLevels.Count > 0)
                 {
-                    var logLevelStrings = logQuery.LogLevels.Select(ll => ll.ToString().ToLowerInvariant()).ToArray();
+                    var logLevelStrings = logEntryQuery.LogLevels.Select(ll => ll.ToString().ToLowerInvariant()).ToArray();
                     q = q.Where(e => logLevelStrings.Contains(e.LogLevel));
                 }
                 
-                logQuery.FromDate.Do(x => q = q.Where(e => DbFunctions.DiffDays(e.Date, x) <= 0));
-                logQuery.ToDate.Do(x => q = q.Where(e => DbFunctions.DiffDays(e.Date, x) >= 0));
-                logQuery.UserLoginLike.Do(x => q = q.Where(e => e.UserLogin.Contains(x)));
-                logQuery.CodeUnitLike.Do(x => q = q.Where(e => e.CodeUnit.Contains(x)));
-                logQuery.FunctionLike.Do(x => q = q.Where(e => e.Function.Contains(x)));
-                logQuery.ShortMessageLike.Do(x => q = q.Where(e => e.ShortMessage.Contains(x)));
-                logQuery.LongMessageLike.Do(x => q = q.Where(e => e.LongMessage.Contains(x)));
-                logQuery.ContextLike.Do(x => q = q.Where(e => e.Context.Contains(x)));
+                logEntryQuery.FromDate.Do(x => q = q.Where(e => DbFunctions.DiffDays(e.Date, x) <= 0));
+                logEntryQuery.ToDate.Do(x => q = q.Where(e => DbFunctions.DiffDays(e.Date, x) >= 0));
+                logEntryQuery.UserLoginLike.Do(x => q = q.Where(e => e.UserLogin.Contains(x)));
+                logEntryQuery.CodeUnitLike.Do(x => q = q.Where(e => e.CodeUnit.Contains(x)));
+                logEntryQuery.FunctionLike.Do(x => q = q.Where(e => e.Function.Contains(x)));
+                logEntryQuery.ShortMessageLike.Do(x => q = q.Where(e => e.ShortMessage.Contains(x)));
+                logEntryQuery.LongMessageLike.Do(x => q = q.Where(e => e.LongMessage.Contains(x)));
+                logEntryQuery.ContextLike.Do(x => q = q.Where(e => e.Context.Contains(x)));
                 
                 // Execute the query.
                 var r = q.OrderByDescending(s => s.Id).ThenByDescending(s => s.Date).AsEnumerable();
                 
-                if (logQuery.TruncateLongMessage)
+                if (logEntryQuery.TruncateLongMessage)
                 {
                     r = r.Select(e =>
                     {
-                        e.LongMessage = e.LongMessage.Truncate(logQuery.MaxTruncatedLongMessageLength);
+                        e.LongMessage = e.LongMessage.Truncate(logEntryQuery.MaxTruncatedLongMessageLength);
                         return e;
                     });
                 }

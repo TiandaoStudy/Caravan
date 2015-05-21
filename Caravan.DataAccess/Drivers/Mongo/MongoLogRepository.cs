@@ -81,7 +81,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
             }).ToList();
         }
 
-        protected override IList<LogEntry> QueryEntriesInternal(LogQuery logQuery)
+        protected override IList<LogEntry> QueryEntriesInternal(LogEntryQuery logEntryQuery)
         {
             throw new NotImplementedException();
         }

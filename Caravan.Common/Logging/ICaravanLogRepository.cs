@@ -892,9 +892,9 @@ namespace Finsa.Caravan.Common.Logging
         /// <summary>
         ///   Interroga direttamente la sorgente dati, tramite i dati opzionali passati in input.
         /// </summary>
-        /// <param name="logQuery">I parametri con cui eseguire la query.</param>
+        /// <param name="logEntryQuery">I parametri con cui eseguire la query.</param>
         /// <returns>Tutte le righe che rispettano i parametri passati come argomento.</returns>
-        IList<LogEntry> QueryEntries(LogQuery logQuery);
+        IList<LogEntry> QueryEntries(LogEntryQuery logEntryQuery);
 
         /// <summary>
         ///   TODO

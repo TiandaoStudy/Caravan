@@ -94,7 +94,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries")]
         public IEnumerable<LogEntry> GetEntries(string appName, string logLevels = null, DateTime? fromDate = null, DateTime? toDate = null)
         {
-            return CaravanDataSource.Logger.QueryEntries(new LogQuery
+            return CaravanDataSource.Logger.QueryEntries(new LogEntryQuery
             {
                 AppNames = new[] { appName },
                 LogLevels = (logLevels == null) ? NoLogLevels : logLevels.Split(',').Select(ll => (LogLevel) Enum.Parse(typeof(LogLevel), ll, true)).ToArray(),
@@ -114,7 +114,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries/{logLevel:alpha}")]
         public IEnumerable<LogEntry> GetEntries(string appName, LogLevel logLevel, DateTime? fromDate = null, DateTime? toDate = null)
         {
-            return CaravanDataSource.Logger.QueryEntries(new LogQuery
+            return CaravanDataSource.Logger.QueryEntries(new LogEntryQuery
             {
                 AppNames = new[] { appName },
                 LogLevels = new[] { logLevel },

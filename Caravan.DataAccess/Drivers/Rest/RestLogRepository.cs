@@ -30,7 +30,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             throw new NotImplementedException();
         }
 
-        protected override IList<LogEntry> QueryEntriesInternal(LogQuery logQuery)
+        protected override IList<LogEntry> QueryEntriesInternal(LogEntryQuery logEntryQuery)
         {
             throw new NotImplementedException();
         }

@@ -131,7 +131,7 @@
     <Compile Include="Logging\NoOpCaravanLoggerFactoryAdapter.cs" />
     <Compile Include="Logging\ICaravanLogRepository.cs" />
     <Compile Include="Logging\LogExtensions.cs" />
-    <Compile Include="Models\Logging\LogQuery.cs" />
+    <Compile Include="Models\Logging\LogEntryQuery.cs" />
     <Compile Include="Models\Security\SecGroupUpdates.cs" />
     <Compile Include="Models\Security\SecUserUpdates.cs" />
     <Compile Include="Security\CaravanRoleStore.cs" />
