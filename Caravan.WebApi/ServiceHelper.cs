@@ -15,7 +15,7 @@ namespace Finsa.Caravan.WebApi
     /// </summary>
     public sealed class ServiceHelper
     {
-        public static void OnStart(ILog log, ICache cache)
+        public static void OnStart(HttpConfiguration config, ILog log, ICache cache)
         {
             // Controlli di integrità.
             Raise<ArgumentNullException>.IfIsNull(log);
@@ -30,36 +30,9 @@ namespace Finsa.Caravan.WebApi
             {
                 persistentCache.VacuumAsync();
             }
-        }
-
-        public static void ConfigureFormatters(HttpConfiguration configuration)
-        {
-            // Controlli di integrità.
-            Raise<ArgumentNullException>.IfIsNull(configuration);
-
-            // Personalizzo le impostazioni del serializzatore JSON.
-            configuration.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                Formatting = Formatting.None,
-                NullValueHandling = NullValueHandling.Ignore,
-                PreserveReferencesHandling = PreserveReferencesHandling.None,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            };
-
-            // Personalizzo le impostazioni del serializzatore XML.
-            var xml = configuration.Formatters.XmlFormatter;
-            xml.Indent = false;
-        }
-
-        public static void ConfigureOutputCache(HttpConfiguration configuration, ICache cache)
-        {
-            // Controlli di integrità.
-            Raise<ArgumentNullException>.IfIsNull(configuration);
-            Raise<ArgumentNullException>.IfIsNull(cache);
 
             // Imposta KVLite come gestore della cache di output.
-            ApiOutputCache.RegisterAsCacheOutputProvider(configuration, cache);
+            ApiOutputCache.RegisterAsCacheOutputProvider(config, cache);
         }
     }
 }

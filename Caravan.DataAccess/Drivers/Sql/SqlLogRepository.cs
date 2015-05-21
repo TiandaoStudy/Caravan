@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Objects;
-using System.Globalization;
 using System.Linq;
 using AutoMapper;
 using Finsa.Caravan.Common.Models.Logging;
