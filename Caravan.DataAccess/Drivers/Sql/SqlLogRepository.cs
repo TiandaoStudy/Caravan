@@ -9,6 +9,7 @@ using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Common.Logging;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Diagnostics;
 using Finsa.CodeServices.Common.Extensions;
@@ -193,19 +194,58 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 logEntryQuery.LongMessageLike.Do(x => q = q.Where(e => e.LongMessage.Contains(x)));
                 logEntryQuery.ContextLike.Do(x => q = q.Where(e => e.Context.Contains(x)));
                 
-                // Execute the query.
-                var r = q.OrderByDescending(s => s.Id).ThenByDescending(s => s.Date).AsEnumerable();
-                
+                // Ordinamento delle voci del log.
+                q = q.OrderByDescending(e => e.Date).ThenByDescending(e => e.Id);
+
+                // Reale esecuzione della query.
+                IEnumerable<SqlLogEntry> result;
                 if (logEntryQuery.TruncateLongMessage)
                 {
-                    r = r.Select(e =>
+                    result = q.Select(e => new
                     {
-                        e.LongMessage = e.LongMessage.Truncate(logEntryQuery.MaxTruncatedLongMessageLength);
-                        return e;
+                        AppName = e.App.Name,
+                        e.Id, e.LogLevel,
+                        e.Date, e.UserLogin,
+                        e.CodeUnit, e.Function,
+                        e.ShortMessage,
+                        LongMessage = e.LongMessage.Substring(0, logEntryQuery.MaxTruncatedLongMessageLength),
+                        e.Context,
+                        e.Key0, e.Value0,
+                        e.Key1, e.Value1,
+                        e.Key2, e.Value2,
+                        e.Key3, e.Value3,
+                        e.Key4, e.Value4,
+                        e.Key5, e.Value5,
+                        e.Key6, e.Value6,
+                        e.Key7, e.Value7,
+                        e.Key8, e.Value8,
+                        e.Key9, e.Value9,
+                    }).AsEnumerable().Select(e => new SqlLogEntry
+                    {
+                        App = new SqlSecApp { Name = e.AppName },
+                        Id = e.Id, LogLevel = e.LogLevel,
+                        Date = e.Date, UserLogin = e.UserLogin,
+                        CodeUnit = e.CodeUnit, Function = e.Function,
+                        ShortMessage = e.ShortMessage, LongMessage = e.LongMessage,
+                        Context = e.Context,
+                        Key0 = e.Key0, Value0 = e.Value0,
+                        Key1 = e.Key1, Value1 = e.Value1,
+                        Key2 = e.Key2, Value2 = e.Value2,
+                        Key3 = e.Key3, Value3 = e.Value3,
+                        Key4 = e.Key4, Value4 = e.Value4,
+                        Key5 = e.Key5, Value5 = e.Value5,
+                        Key6 = e.Key6, Value6 = e.Value6,
+                        Key7 = e.Key7, Value7 = e.Value7,
+                        Key8 = e.Key8, Value8 = e.Value8,
+                        Key9 = e.Key9, Value9 = e.Value9,
                     });
                 }
+                else
+                {
+                    result = q.AsEnumerable();
+                }
 
-                return r.Select(Mapper.Map<LogEntry>).ToArray();
+                return result.Select(Mapper.Map<LogEntry>).ToArray();
             }
         }
 
