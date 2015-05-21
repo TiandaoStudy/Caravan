@@ -9,6 +9,12 @@
               Controller che si occupa della gestione della cache locale al server.
             </summary>
         </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.CacheController.#ctor(PommaLabs.KVLite.ICache)">
+            <summary>
+              Gestisce la dipedenza da <see cref="T:PommaLabs.KVLite.ICache"/>.
+            </summary>
+            <param name="cache">La cache gestita dal controller.</param>
+        </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.HelpController">
             <summary>
               The HELP controller.
@@ -40,14 +46,14 @@
               Writes a silly message into the log.
             </summary>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetEntries(System.String)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetEntries(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
             <summary>
               Returns all log entries.
             </summary>
             <param name="appName">Application name</param>
             <returns>All log entries.</returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetEntries(System.String,Common.Logging.LogLevel)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetEntries(System.String,Common.Logging.LogLevel,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
             <summary>
               returns all logs of a specified logLevel
             </summary>

@@ -216,12 +216,12 @@ namespace UnitTests.DataAccess
         {
             var user1 = new SecUser { FirstName = "pippo", Login = "blabla1" };
 
-            var l = CaravanDataSource.Logger.Entries(_myApp.Name);
+            var l = CaravanDataSource.Logger.GetEntries(_myApp.Name);
 
             CaravanDataSource.Security.AddUser(_myApp.Name, user1);
 
             WaitForLogger();
-            var l1 = CaravanDataSource.Logger.Entries(_myApp.Name);
+            var l1 = CaravanDataSource.Logger.GetEntries(_myApp.Name);
             Assert.That(l1.Count(), Is.EqualTo(l.Count() + 1));
         }
 
@@ -325,12 +325,12 @@ namespace UnitTests.DataAccess
             CaravanDataSource.Security.AddUser(_myApp.Name, user1);
 
             WaitForLogger();
-            var l = CaravanDataSource.Logger.Entries(_myApp.Name);
+            var l = CaravanDataSource.Logger.GetEntries(_myApp.Name);
 
             CaravanDataSource.Security.RemoveUser(_myApp.Name, user1.Login);
 
             WaitForLogger();
-            var l1 = CaravanDataSource.Logger.Entries(_myApp.Name);
+            var l1 = CaravanDataSource.Logger.GetEntries(_myApp.Name);
 
             Assert.That(l1.Count(), Is.EqualTo(l.Count() + 1));
         }
@@ -454,7 +454,7 @@ namespace UnitTests.DataAccess
             CaravanDataSource.Security.AddUser(_myApp.Name, user1);
 
             WaitForLogger();
-            var l = CaravanDataSource.Logger.Entries(_myApp.Name);
+            var l = CaravanDataSource.Logger.GetEntries(_myApp.Name);
 
             user1.Login = "updatedLogin";
 
@@ -463,7 +463,7 @@ namespace UnitTests.DataAccess
                 Login = user1.Login.ToOption()
             });
             WaitForLogger();
-            var l1 = CaravanDataSource.Logger.Entries(_myApp.Name);
+            var l1 = CaravanDataSource.Logger.GetEntries(_myApp.Name);
 
             Assert.That(l1.Count(), Is.EqualTo(l.Count() + 1));
         }

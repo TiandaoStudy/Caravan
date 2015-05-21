@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using AutoMapper;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Common.Logging;
+using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Diagnostics;
 using Finsa.CodeServices.Common.Extensions;
 
@@ -142,7 +144,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        protected override IList<LogEntry> GetEntries(string appName, LogLevel? logLevel)
+        protected override IList<LogEntry> GetEntriesInternal(string appName, LogLevel? logLevel)
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
@@ -160,7 +162,58 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     .ThenByDescending(s => s.Date)
                     .AsEnumerable()
                     .Select(Mapper.Map<LogEntry>)
-                    .ToList();
+                    .ToArray();
+            }
+        }
+
+        protected override IList<LogEntry> QueryEntriesInternal(LogQuery logQuery)
+        {
+            using (var ctx = SqlDbContext.CreateReadContext())
+            {
+                var q = ctx.LogEntries.Include(s => s.App);
+                if (logQuery.AppNames != null && logQuery.AppNames.Count > 0)
+                {
+                    q = q.Where(e => logQuery.AppNames.Contains(e.App.Name));
+                }
+                if (logQuery.LogLevels != null && logQuery.LogLevels.Count > 0)
+                {
+                    var logLevelStrings = logQuery.LogLevels.Select(ll => ll.ToString().ToLowerInvariant()).ToArray();
+                    q = q.Where(e => logLevelStrings.Contains(e.LogLevel));
+                }
+                logQuery.FromDate.Do(x => q = q.Where(e => e.Date >= x));
+                logQuery.ToDate.Do(x => q = q.Where(e => e.Date <= x));
+                logQuery.UserLoginLike.Do(x => q = q.Where(e => e.UserLogin.Contains(x)));
+                logQuery.CodeUnitLike.Do(x => q = q.Where(e => e.CodeUnit.Contains(x)));
+                logQuery.FunctionLike.Do(x => q = q.Where(e => e.Function.Contains(x)));
+                logQuery.ShortMessageLike.Do(x => q = q.Where(e => e.ShortMessage.Contains(x)));
+                logQuery.LongMessageLike.Do(x => q = q.Where(e => e.LongMessage.Contains(x)));
+                logQuery.ContextLike.Do(x => q = q.Where(e => e.Context.Contains(x)));
+                
+                // Execute the query.
+                var r = q.OrderByDescending(s => s.Id).ThenByDescending(s => s.Date).AsEnumerable();
+                
+                if (!logQuery.TruncateLongMessage)
+                {
+                    r = r.Select(e =>
+                    {
+                        e.LongMessage = e.LongMessage.Truncate(logQuery.MaxTruncatedLongMessageLength);
+                        return e;
+                    });
+                }
+                return r.Select(Mapper.Map<LogEntry>).ToArray();
+            }
+        }
+
+        protected override Option<LogEntry> GetEntryInternal(string appName, long logId)
+        {
+            using (var ctx = SqlDbContext.CreateReadContext())
+            {
+                return ctx.LogEntries
+                    .Include(s => s.App)
+                    .Where(e => e.App.Name == appName)
+                    .Where(e => e.Id == logId)
+                    .Select(Mapper.Map<LogEntry>)
+                    .FirstAsOption();
             }
         }
 
@@ -182,7 +235,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        protected override IList<LogSetting> GetSettings(string appName, LogLevel? logLevel)
+        protected override IList<LogSetting> GetSettingsInternal(string appName, LogLevel? logLevel)
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
@@ -200,7 +253,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     .ThenBy(s => s.LogLevel)
                     .AsEnumerable()
                     .Select(Mapper.Map<LogSetting>)
-                    .ToList();
+                    .ToArray();
             }
         }
 

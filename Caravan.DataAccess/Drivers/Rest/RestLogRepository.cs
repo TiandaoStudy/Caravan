@@ -5,6 +5,7 @@ using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.Common.Models.Rest;
 using Finsa.Caravan.Common.Models.Security.Exceptions;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.CodeServices.Common;
 using RestSharp;
 using Common.Logging;
 
@@ -22,14 +23,24 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             throw new NotImplementedException();
         }
 
-        protected override IList<LogEntry> GetEntries(string appName, LogLevel? logLevel)
+        protected override IList<LogEntry> GetEntriesInternal(string appName, LogLevel? logLevel)
         {
             var client = new RestClient("http://localhost/Caravan.RestService/security");
             var request = new RestRequest("{appName}/entries/{logLevel}", Method.POST);
             throw new NotImplementedException();
         }
 
-        protected override IList<LogSetting> GetSettings(string appName, LogLevel? logLevel)
+        protected override IList<LogEntry> QueryEntriesInternal(LogQuery logQuery)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Option<LogEntry> GetEntryInternal(string appName, long logId)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override IList<LogSetting> GetSettingsInternal(string appName, LogLevel? logLevel)
         {
             try
             {

@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Web;
 using Finsa.Caravan.Common;
+using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Diagnostics;
 
 namespace Finsa.Caravan.DataAccess.Core
@@ -271,28 +272,49 @@ namespace Finsa.Caravan.DataAccess.Core
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Fatal, appName, userLogin, function, exception, context, args));
         }
 
-        public IList<LogEntry> Entries()
+        public IList<LogEntry> GetEntries()
         {
-            return GetEntries(null, null);
+            return GetEntriesInternal(null, null);
         }
 
-        public IList<LogEntry> Entries(string appName)
+        public IList<LogEntry> GetEntries(string appName)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
-            return GetEntries(appName.ToLower(), null);
+            return GetEntriesInternal(appName.ToLower(), null);
         }
 
-        public IList<LogEntry> Entries(LogLevel logLevel)
+        public IList<LogEntry> GetEntries(LogLevel logLevel)
         {
             Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogLevel), logLevel));
-            return GetEntries(null, logLevel);
+            return GetEntriesInternal(null, logLevel);
         }
 
-        public IList<LogEntry> Entries(string appName, LogLevel logLevel)
+        public IList<LogEntry> GetEntries(string appName, LogLevel logLevel)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogLevel), logLevel));
-            return GetEntries(appName.ToLower(), logLevel);
+            return GetEntriesInternal(appName.ToLowerInvariant(), logLevel);
+        }
+
+        public IList<LogEntry> QueryEntries(LogQuery logQuery)
+        {
+            Raise<ArgumentNullException>.If(logQuery == null);
+            
+            // Metto in lower i nomi delle applicazioni, se ce ne sono.
+            var appNames = logQuery.AppNames;
+            if (appNames != null && appNames.Count > 0)
+            {
+                logQuery.AppNames = appNames.Where(n => !String.IsNullOrWhiteSpace(n)).Select(n => n.ToLowerInvariant()).ToArray();
+            }
+            
+            return QueryEntriesInternal(logQuery);
+        }
+
+        public Option<LogEntry> GetEntry(string appName, long logId)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            Raise<ArgumentException>.If(logId < 0);
+            return GetEntryInternal(appName.ToLowerInvariant(), logId);
         }
 
         public void RemoveEntry(string appName, int id)
@@ -305,28 +327,28 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public IList<LogSetting> Settings()
+        public IList<LogSetting> GetSettings()
         {
-            return GetSettings(null, null);
+            return GetSettingsInternal(null, null);
         }
 
-        public IList<LogSetting> Settings(string appName)
+        public IList<LogSetting> GetSettings(string appName)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
-            return GetSettings(appName.ToLower(), null);
+            return GetSettingsInternal(appName.ToLower(), null);
         }
 
-        public IList<LogSetting> Settings(LogLevel logLevel)
+        public IList<LogSetting> GetSettings(LogLevel logLevel)
         {
             Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogLevel), logLevel));
-            return GetSettings(null, logLevel);
+            return GetSettingsInternal(null, logLevel);
         }
 
-        public LogSetting Settings(string appName, LogLevel logLevel)
+        public LogSetting GetSettings(string appName, LogLevel logLevel)
         {
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(LogLevel), logLevel));
-            return GetSettings(appName.ToLower(), logLevel).FirstOrDefault();
+            return GetSettingsInternal(appName.ToLower(), logLevel).FirstOrDefault();
         }
 
         public void AddSetting(string appName, LogLevel logLevel, LogSetting setting)
@@ -367,10 +389,14 @@ namespace Finsa.Caravan.DataAccess.Core
 
         protected abstract LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context,
             IEnumerable<KeyValuePair<string, string>> args);
+        
+        protected abstract IList<LogEntry> GetEntriesInternal(string appName, LogLevel? logLevel);
 
-        protected abstract IList<LogEntry> GetEntries(string appName, LogLevel? logLevel);
+        protected abstract IList<LogEntry> QueryEntriesInternal(LogQuery logQuery);
 
-        protected abstract IList<LogSetting> GetSettings(string appName, LogLevel? logLevel);
+        protected abstract Option<LogEntry> GetEntryInternal(string appName, long logId);
+
+        protected abstract IList<LogSetting> GetSettingsInternal(string appName, LogLevel? logLevel);
 
         protected abstract bool DoRemoveEntry(string appName, int logId);
 

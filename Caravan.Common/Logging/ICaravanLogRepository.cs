@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
+using Finsa.CodeServices.Common;
 
 namespace Finsa.Caravan.Common.Logging
 {
@@ -856,7 +858,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   TODO
         /// </summary>
         /// <returns></returns>
-        IList<LogEntry> Entries();
+        IList<LogEntry> GetEntries();
 
         /// <summary>
         ///   TODO
@@ -864,7 +866,7 @@ namespace Finsa.Caravan.Common.Logging
         /// <param name="appName">The application name.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
-        IList<LogEntry> Entries(string appName);
+        IList<LogEntry> GetEntries(string appName);
 
         /// <summary>
         ///   TODO
@@ -874,7 +876,7 @@ namespace Finsa.Caravan.Common.Logging
         /// <exception cref="ArgumentException">
         ///   <paramref name="logLevel"/> is not a valid <see cref="logLevel"/>.
         /// </exception>
-        IList<LogEntry> Entries(LogLevel logLevel);
+        IList<LogEntry> GetEntries(LogLevel logLevel);
 
         /// <summary>
         ///   TODO
@@ -885,7 +887,21 @@ namespace Finsa.Caravan.Common.Logging
         /// <exception cref="ArgumentException">
         ///   <paramref name="appName"/> is null or empty. <paramref name="logLevel"/> is not a valid <see cref="logLevel"/>.
         /// </exception>
-        IList<LogEntry> Entries(string appName, LogLevel logLevel);
+        IList<LogEntry> GetEntries(string appName, LogLevel logLevel);
+
+        /// <summary>
+        ///   Interroga direttamente la sorgente dati, tramite i dati opzionali passati in input.
+        /// </summary>
+        /// <param name="logQuery">I parametri con cui eseguire la query.</param>
+        /// <returns>Tutte le righe che rispettano i parametri passati come argomento.</returns>
+        IList<LogEntry> QueryEntries(LogQuery logQuery);
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <returns></returns>
+        [Pure]
+        Option<LogEntry> GetEntry(string appName, long logId);
 
         /// <summary>
         ///   Removes a log entry. Use it to delete logs that contain sensitive information!
@@ -903,7 +919,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   TODO
         /// </summary>
         /// <returns></returns>
-        IList<LogSetting> Settings();
+        IList<LogSetting> GetSettings();
 
         /// <summary>
         ///   TODO
@@ -911,7 +927,7 @@ namespace Finsa.Caravan.Common.Logging
         /// <param name="appName">The application name.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
-        IList<LogSetting> Settings(string appName);
+        IList<LogSetting> GetSettings(string appName);
 
         /// <summary>
         ///   TODO
@@ -921,7 +937,7 @@ namespace Finsa.Caravan.Common.Logging
         /// <exception cref="ArgumentException">
         ///   <paramref name="logLevel"/> is not a valid <see cref="logLevel"/>.
         /// </exception>
-        IList<LogSetting> Settings(LogLevel logLevel);
+        IList<LogSetting> GetSettings(LogLevel logLevel);
 
         /// <summary>
         ///   TODO
@@ -932,7 +948,7 @@ namespace Finsa.Caravan.Common.Logging
         /// <exception cref="ArgumentException">
         ///   <paramref name="appName"/> is null or empty. <paramref name="logLevel"/> is not a valid <see cref="logLevel"/>.
         /// </exception>
-        LogSetting Settings(string appName, LogLevel logLevel);
+        LogSetting GetSettings(string appName, LogLevel logLevel);
 
         /// <summary>
         ///   TODO

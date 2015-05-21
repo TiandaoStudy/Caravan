@@ -33,7 +33,7 @@ namespace FLEX.WebForms.Pages
       {
          // This should not catch any exception, others will do.
          fdtgLogs.DataSource = (
-            from l in CaravanDataSource.Logger.Entries(CommonConfiguration.Instance.AppName)
+            from l in CaravanDataSource.Logger.GetEntries(CommonConfiguration.Instance.AppName)
             select new
             {
                l.Id,

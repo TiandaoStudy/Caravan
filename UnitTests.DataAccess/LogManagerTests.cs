@@ -46,13 +46,13 @@ namespace UnitTests.DataAccess
         [ExpectedException(typeof(ArgumentException))]
         public void LogSettings_NullAppNameValidLogLevel_ThrowsArgumentException()
         {
-            CaravanDataSource.Logger.Settings(null, LogLevel.Error);
+            CaravanDataSource.Logger.GetSettings(null, LogLevel.Error);
         }
 
         [Test]
         public void LogSettings_NoArgs_ReturnListOfAllApps()
         {
-            var settings = CaravanDataSource.Logger.Settings();
+            var settings = CaravanDataSource.Logger.GetSettings();
 
             Assert.That(settings.Count, Is.EqualTo(6));
         }
@@ -60,7 +60,7 @@ namespace UnitTests.DataAccess
         [Test]
         public void LogSettings_ValidAppName_ReturnsListForAppName()
         {
-            var settings = CaravanDataSource.Logger.Settings(_myApp.Name);
+            var settings = CaravanDataSource.Logger.GetSettings(_myApp.Name);
 
             Assert.That(settings.Count, Is.EqualTo(6));
         }
@@ -74,7 +74,7 @@ namespace UnitTests.DataAccess
             KeyValuePair.Create("arg2", "2"),
          });
 
-            var q = CaravanDataSource.Logger.Entries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests" && l.ShortMessage == "pino").ToList();
+            var q = CaravanDataSource.Logger.GetEntries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests" && l.ShortMessage == "pino").ToList();
 
             Assert.That(q.Count(), Is.EqualTo(1));
             Assert.That(q.First().Arguments[0].Key, Is.EqualTo("arg1"));
@@ -99,7 +99,7 @@ namespace UnitTests.DataAccess
 
             for (var i = 1; i <= logCount; ++i)
             {
-                var q = CaravanDataSource.Logger.Entries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests" && l.ShortMessage == "pino" + i).ToList();
+                var q = CaravanDataSource.Logger.GetEntries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests" && l.ShortMessage == "pino" + i).ToList();
 
                 Assert.That(q.Count(), Is.EqualTo(1));
                 Assert.That(q.First().Arguments[0].Key, Is.EqualTo("arg1" + i));
@@ -115,7 +115,7 @@ namespace UnitTests.DataAccess
             var update = new LogSetting { Days = 40, Enabled = true, MaxEntries = 50 };
             CaravanDataSource.Logger.UpdateSetting(_myApp.Name, LogLevel.Info, update);
 
-            var q = CaravanDataSource.Logger.Settings(_myApp.Name).Where(s => s.AppName == _myApp.Name && s.LogLevel == LogLevel.Info).ToList();
+            var q = CaravanDataSource.Logger.GetSettings(_myApp.Name).Where(s => s.AppName == _myApp.Name && s.LogLevel == LogLevel.Info).ToList();
             Assert.That(q.Count, Is.EqualTo(1));
             Assert.That(q.First().MaxEntries, Is.EqualTo(50));
             Assert.That(q.First().Days, Is.EqualTo(40));
@@ -153,10 +153,10 @@ namespace UnitTests.DataAccess
 
             Assert.True(res.Succeeded);
 
-            var q = CaravanDataSource.Logger.Entries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests");
+            var q = CaravanDataSource.Logger.GetEntries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests");
             Assert.That(q.Count(), Is.EqualTo(1));
 
-            var q1 = CaravanDataSource.Logger.Entries(_myApp.Name).Where(l => l.Function == "log_validargs_");
+            var q1 = CaravanDataSource.Logger.GetEntries(_myApp.Name).Where(l => l.Function == "log_validargs_");
             Assert.That(q1.Count(), Is.EqualTo(1));
 
             Assert.True(args.SequenceEqual(q1.First().Arguments));
@@ -168,10 +168,10 @@ namespace UnitTests.DataAccess
             var res = CaravanDataSource.Logger.LogRaw(LogLevel.Info, _myApp.Name, "", "UnitTests.DataAccess.LogManagerTests", "Log_validArgs_", new Exception());
             Assert.True(res.Succeeded);
 
-            var q = CaravanDataSource.Logger.Entries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests");
+            var q = CaravanDataSource.Logger.GetEntries(_myApp.Name).Where(l => l.CodeUnit == "unittests.dataaccess.logmanagertests");
             Assert.That(q.Count(), Is.EqualTo(1));
 
-            var q1 = CaravanDataSource.Logger.Entries(_myApp.Name).Where(l => l.Function == "log_validargs_");
+            var q1 = CaravanDataSource.Logger.GetEntries(_myApp.Name).Where(l => l.Function == "log_validargs_");
             Assert.That(q1.Count(), Is.EqualTo(1));
         }
 
@@ -195,7 +195,7 @@ namespace UnitTests.DataAccess
             var res = CaravanDataSource.Logger.Log<LogManagerTests>(LogLevel.Error, new Exception());
             Assert.True(res.Succeeded);
 
-            var q = CaravanDataSource.Logger.Entries(LogLevel.Error).Where(l => l.Function == "logwithcodeunit_validargs");
+            var q = CaravanDataSource.Logger.GetEntries(LogLevel.Error).Where(l => l.Function == "logwithcodeunit_validargs");
 
             Assert.That(q.Count(), Is.EqualTo(1));
         }
@@ -213,7 +213,7 @@ namespace UnitTests.DataAccess
             var res = CaravanDataSource.Logger.LogDebug<LogManagerTests>(new Exception());
             Assert.True(res.Succeeded);
 
-            var q = CaravanDataSource.Logger.Entries(LogLevel.Debug).Where(l => l.Function == "logdebug_validargs");
+            var q = CaravanDataSource.Logger.GetEntries(LogLevel.Debug).Where(l => l.Function == "logdebug_validargs");
 
             Assert.That(q.Count(), Is.EqualTo(1));
         }
@@ -224,7 +224,7 @@ namespace UnitTests.DataAccess
             var res = CaravanDataSource.Logger.LogTrace<LogManagerTests>(new Exception());
             Assert.True(res.Succeeded);
 
-            var q = CaravanDataSource.Logger.Entries(LogLevel.Trace).Where(l => l.Function == "logtrace_validargs");
+            var q = CaravanDataSource.Logger.GetEntries(LogLevel.Trace).Where(l => l.Function == "logtrace_validargs");
 
             Assert.That(q.Count(), Is.EqualTo(1));
         }
@@ -240,12 +240,12 @@ namespace UnitTests.DataAccess
                 var res = CaravanDataSource.Logger.LogDebug<LogManagerTests>(new Exception(), c1.Name);
                 Assert.True(res.Succeeded);
 
-                var q = CaravanDataSource.Logger.Entries(LogLevel.Debug).Where(l => l.Function == "logdebug_validargs_async" && l.Context == c1.Name).ToList();
+                var q = CaravanDataSource.Logger.GetEntries(LogLevel.Debug).Where(l => l.Function == "logdebug_validargs_async" && l.Context == c1.Name).ToList();
 
                 Assert.That(q.Count(), Is.EqualTo(1));
             });
 
-            var q1 = CaravanDataSource.Logger.Entries(LogLevel.Debug).Where(l => l.Function == "logdebug_validargs_async").ToList();
+            var q1 = CaravanDataSource.Logger.GetEntries(LogLevel.Debug).Where(l => l.Function == "logdebug_validargs_async").ToList();
 
             Assert.That(q1.Count(), Is.EqualTo(logCount));
         }
@@ -256,7 +256,7 @@ namespace UnitTests.DataAccess
             var res = CaravanDataSource.Logger.LogError<LogManagerTests>(new Exception());
             Assert.True(res.Succeeded);
 
-            var q = CaravanDataSource.Logger.Entries(LogLevel.Error).Where(l => l.Function == "logerror_validargs");
+            var q = CaravanDataSource.Logger.GetEntries(LogLevel.Error).Where(l => l.Function == "logerror_validargs");
 
             Assert.That(q.Count(), Is.EqualTo(1));
         }
@@ -272,12 +272,12 @@ namespace UnitTests.DataAccess
                 var res = CaravanDataSource.Logger.LogError<LogManagerTests>(new Exception(), c1.Name);
                 Assert.True(res.Succeeded);
 
-                var q = CaravanDataSource.Logger.Entries(LogLevel.Error).Where(l => l.Function == "logerror_validargs_async" && l.Context == c1.Name);
+                var q = CaravanDataSource.Logger.GetEntries(LogLevel.Error).Where(l => l.Function == "logerror_validargs_async" && l.Context == c1.Name);
 
                 Assert.That(q.Count(), Is.EqualTo(1));
             });
 
-            var q1 = CaravanDataSource.Logger.Entries(LogLevel.Error).Where(l => l.Function == "logerror_validargs_async");
+            var q1 = CaravanDataSource.Logger.GetEntries(LogLevel.Error).Where(l => l.Function == "logerror_validargs_async");
             Assert.That(q1.Count(), Is.EqualTo(logCount));
         }
 
@@ -287,7 +287,7 @@ namespace UnitTests.DataAccess
             var res = CaravanDataSource.Logger.LogWarn<LogManagerTests>(new Exception());
             Assert.True(res.Succeeded);
 
-            var q = CaravanDataSource.Logger.Entries(LogLevel.Warn).Where(l => l.Function == "logwarn_validargs");
+            var q = CaravanDataSource.Logger.GetEntries(LogLevel.Warn).Where(l => l.Function == "logwarn_validargs");
 
             Assert.That(q.Count(), Is.EqualTo(1));
         }
@@ -303,12 +303,12 @@ namespace UnitTests.DataAccess
                 var res = CaravanDataSource.Logger.LogWarn<LogManagerTests>(new Exception(), c1.Name);
                 Assert.True(res.Succeeded);
 
-                var q = CaravanDataSource.Logger.Entries(LogLevel.Warn).Where(l => l.Function == "logwarn_validargs_async" && l.Context == c1.Name);
+                var q = CaravanDataSource.Logger.GetEntries(LogLevel.Warn).Where(l => l.Function == "logwarn_validargs_async" && l.Context == c1.Name);
 
                 Assert.That(q.Count(), Is.EqualTo(1));
             });
 
-            var q1 = CaravanDataSource.Logger.Entries(LogLevel.Warn).Where(l => l.Function == "logwarn_validargs_async");
+            var q1 = CaravanDataSource.Logger.GetEntries(LogLevel.Warn).Where(l => l.Function == "logwarn_validargs_async");
 
             Assert.That(q1.Count(), Is.EqualTo(logCount));
         }
@@ -319,7 +319,7 @@ namespace UnitTests.DataAccess
             var res = CaravanDataSource.Logger.LogInfo<LogManagerTests>(new Exception());
             Assert.True(res.Succeeded);
 
-            var q = CaravanDataSource.Logger.Entries(LogLevel.Info).Where(l => l.Function == "loginfo_validargs");
+            var q = CaravanDataSource.Logger.GetEntries(LogLevel.Info).Where(l => l.Function == "loginfo_validargs");
 
             Assert.That(q.Count(), Is.EqualTo(1));
         }
@@ -335,12 +335,12 @@ namespace UnitTests.DataAccess
                 var res = CaravanDataSource.Logger.LogInfo<LogManagerTests>(new Exception(), c1.Name);
                 Assert.True(res.Succeeded);
 
-                var q = CaravanDataSource.Logger.Entries(LogLevel.Info).Where(l => l.Function == "loginfo_validargs_async" && l.Context == c1.Name);
+                var q = CaravanDataSource.Logger.GetEntries(LogLevel.Info).Where(l => l.Function == "loginfo_validargs_async" && l.Context == c1.Name);
 
                 Assert.That(q.Count(), Is.EqualTo(1));
             });
 
-            var q1 = CaravanDataSource.Logger.Entries(LogLevel.Info).Where(l => l.Function == "loginfo_validargs_async");
+            var q1 = CaravanDataSource.Logger.GetEntries(LogLevel.Info).Where(l => l.Function == "loginfo_validargs_async");
             Assert.That(q1.Count(), Is.EqualTo(logCount));
         }
 
@@ -350,7 +350,7 @@ namespace UnitTests.DataAccess
             var res = CaravanDataSource.Logger.LogFatal<LogManagerTests>(new Exception());
             Assert.True(res.Succeeded);
 
-            var q = CaravanDataSource.Logger.Entries(LogLevel.Fatal).Where(l => l.Function == "logfatal_validargs");
+            var q = CaravanDataSource.Logger.GetEntries(LogLevel.Fatal).Where(l => l.Function == "logfatal_validargs");
 
             Assert.That(q.Count(), Is.EqualTo(1));
         }
@@ -366,12 +366,12 @@ namespace UnitTests.DataAccess
                 var res = CaravanDataSource.Logger.LogFatal<LogManagerTests>(new Exception(), c1.Name);
                 Assert.True(res.Succeeded);
 
-                var q = CaravanDataSource.Logger.Entries(LogLevel.Fatal).Where(l => l.Function == "logfatal_validargs_async" && l.Context == c1.Name);
+                var q = CaravanDataSource.Logger.GetEntries(LogLevel.Fatal).Where(l => l.Function == "logfatal_validargs_async" && l.Context == c1.Name);
 
                 Assert.That(q.Count(), Is.EqualTo(1));
             });
 
-            var q1 = CaravanDataSource.Logger.Entries(LogLevel.Fatal).Where(l => l.Function == "logfatal_validargs_async");
+            var q1 = CaravanDataSource.Logger.GetEntries(LogLevel.Fatal).Where(l => l.Function == "logfatal_validargs_async");
             Assert.That(q1.Count(), Is.EqualTo(logCount));
         }
 

@@ -7,6 +7,7 @@ using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Security;
+using Finsa.CodeServices.Common;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
@@ -43,7 +44,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
             return LogResult.Success;
         }
 
-        protected override IList<LogEntry> GetEntries(string appName, LogLevel? logLevel)
+        protected override IList<LogEntry> GetEntriesInternal(string appName, LogLevel? logLevel)
         {
             var apps = MongoUtilities.GetSecAppCollection().AsQueryable();
             Dictionary<ObjectId, MongoSecApp> appMap;
@@ -80,12 +81,22 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
             }).ToList();
         }
 
+        protected override IList<LogEntry> QueryEntriesInternal(LogQuery logQuery)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Option<LogEntry> GetEntryInternal(string appName, long logId)
+        {
+            throw new NotImplementedException();
+        }
+
         protected override bool DoRemoveEntry(string appName, int logId)
         {
             throw new NotImplementedException();
         }
 
-        protected override IList<LogSetting> GetSettings(string appName, LogLevel? logLevel)
+        protected override IList<LogSetting> GetSettingsInternal(string appName, LogLevel? logLevel)
         {
             var apps = MongoUtilities.GetSecAppCollection();
             var query = apps.AsQueryable();

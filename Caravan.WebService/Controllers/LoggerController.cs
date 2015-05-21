@@ -10,18 +10,21 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using System;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using System.Web.Http.Results;
 using Common.Logging;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.DataAccess;
+using Finsa.CodeServices.Common;
 using LinqToQuerystring.WebApi;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -31,6 +34,8 @@ namespace Finsa.Caravan.WebService.Controllers
     [RoutePrefix("logger")]
     public sealed class LoggerController : ApiController
     {
+        private static readonly IList<LogLevel> NoLogLevels = new LogLevel[0];
+
         private readonly ICaravanLog _log;
 
         /// <summary>
@@ -86,10 +91,18 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <param name="appName">Application name</param>
         /// <returns>All log entries.</returns>
-        [Route("{appName}/entries"), LinqToQueryable]
-        public IQueryable<LogEntry> GetEntries(string appName)
+        [Route("{appName}/entries")]
+        public IEnumerable<LogEntry> GetEntries(string appName, string logLevels = null, DateTime? fromDate = null, DateTime? toDate = null)
         {
-            return CaravanDataSource.Logger.Entries(appName).AsQueryable();
+            return CaravanDataSource.Logger.QueryEntries(new LogQuery
+            {
+                AppNames = new[] { appName },
+                LogLevels = (logLevels == null) ? NoLogLevels : logLevels.Split(',').Select(ll => (LogLevel) Enum.Parse(typeof(LogLevel), ll, true)).ToArray(),
+                TruncateLongMessage = true,
+                MaxTruncatedLongMessageLength = 30,
+                FromDate = fromDate.HasValue ? fromDate.Value.ToOption() : Option.None<DateTime>(),
+                ToDate = toDate.HasValue ? toDate.Value.ToOption() : Option.None<DateTime>()
+            });
         }
 
         /// <summary>
@@ -98,10 +111,18 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">Application name</param>
         /// <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
         /// <returns></returns>
-        [Route("{appName}/entries/{logLevel:alpha}"), LinqToQueryable]
-        public IQueryable<LogEntry> GetEntries(string appName, LogLevel logLevel)
+        [Route("{appName}/entries/{logLevel:alpha}")]
+        public IEnumerable<LogEntry> GetEntries(string appName, LogLevel logLevel, DateTime? fromDate = null, DateTime? toDate = null)
         {
-            return CaravanDataSource.Logger.Entries(appName, logLevel).AsQueryable();
+            return CaravanDataSource.Logger.QueryEntries(new LogQuery
+            {
+                AppNames = new[] { appName },
+                LogLevels = new[] { logLevel },
+                TruncateLongMessage = true,
+                MaxTruncatedLongMessageLength = 30,
+                FromDate = fromDate.HasValue ? fromDate.Value.ToOption() : Option.None<DateTime>(),
+                ToDate = toDate.HasValue ? toDate.Value.ToOption() : Option.None<DateTime>()
+            });
         }
 
         /// <summary>
@@ -111,9 +132,10 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="logId">ID of the entry</param>
         /// <returns></returns>
         [Route("{appName}/entries/{logId:long}")]
-        public LogEntry GetEntry(string appName, long logId)
+        public NegotiatedContentResult<LogEntry> GetEntry(string appName, long logId)
         {
-            return CaravanDataSource.Logger.Entries(appName).FirstOrDefault(e => e.Id == logId);
+            var result = CaravanDataSource.Logger.GetEntry(appName, logId);
+            return result.HasValue ? Content(HttpStatusCode.OK, result.Value) : Content<LogEntry>(HttpStatusCode.NotFound, null);
         }
 
         /// <summary>
@@ -177,7 +199,7 @@ namespace Finsa.Caravan.WebService.Controllers
         public IQueryable<LogSetting> GetSettings(string appName)
         {
             appName = appName ?? CommonConfiguration.Instance.AppName;
-            return CaravanDataSource.Logger.Settings(appName).AsQueryable();
+            return CaravanDataSource.Logger.GetSettings(appName).AsQueryable();
         }
 
         /// <summary>
@@ -189,7 +211,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/settings/{logLevel}")]
         public LogSetting GetSettings(string appName, LogLevel logLevel)
         {
-            var settings = CaravanDataSource.Logger.Settings(appName, logLevel);
+            var settings = CaravanDataSource.Logger.GetSettings(appName, logLevel);
             if (settings == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
