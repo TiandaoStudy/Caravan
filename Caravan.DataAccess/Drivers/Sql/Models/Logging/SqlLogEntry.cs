@@ -41,7 +41,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
         public string Function { get; set; }
 
         [Required, Column("CLOG_SHORT_MSG", Order = 7)]
-        [MaxLength(SqlDbContext.MediumLength)]
+        [MaxLength(SqlDbContext.LargeLength)]
         public string ShortMessage { get; set; }
 
         [Column("CLOG_LONG_MSG", Order = 8)] /* Should be a CLOB/TEXT */

@@ -1,16 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using AutoMapper;
+using Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
-using Common.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Diagnostics;
 using Finsa.CodeServices.Common.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -19,7 +19,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         #region Constants
 
         private const int MaxArgumentCount = 10;
-        private const int MaxStringLength = 2000;
 
         #endregion Constants
 
@@ -65,12 +64,12 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                             Date = DateTime.Now,
                             AppId = appId,
                             LogLevel = typeId,
-                            UserLogin = userLogin.Truncate(MaxStringLength).ToLower(),
-                            CodeUnit = codeUnit.Truncate(MaxStringLength).ToLower(),
-                            Function = function.Truncate(MaxStringLength).ToLower(),
-                            ShortMessage = shortMessage.Truncate(MaxStringLength),
+                            UserLogin = userLogin.Truncate(SqlDbContext.SmallLength).ToLowerInvariant(),
+                            CodeUnit = codeUnit.Truncate(SqlDbContext.MediumLength).ToLowerInvariant(),
+                            Function = function.Truncate(SqlDbContext.MediumLength).ToLowerInvariant(),
+                            ShortMessage = shortMessage.Truncate(SqlDbContext.LargeLength),
                             LongMessage = longMessage, // Not truncated, because it should be a CLOB/TEXT/whatever...
-                            Context = context.Truncate(MaxStringLength)
+                            Context = context.Truncate(SqlDbContext.MediumLength)
                         };
 
                         for (var i = 0; i < argsList.Length; ++i)
@@ -171,18 +170,18 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var q = ctx.LogEntries.Include(s => s.App);
-                
+
                 if (logEntryQuery.AppNames != null && logEntryQuery.AppNames.Count > 0)
                 {
                     q = q.Where(e => logEntryQuery.AppNames.Contains(e.App.Name));
                 }
-                
+
                 if (logEntryQuery.LogLevels != null && logEntryQuery.LogLevels.Count > 0)
                 {
                     var logLevelStrings = logEntryQuery.LogLevels.Select(ll => ll.ToString().ToLowerInvariant()).ToArray();
                     q = q.Where(e => logLevelStrings.Contains(e.LogLevel));
                 }
-                
+
                 logEntryQuery.FromDate.Do(x => q = q.Where(e => DbFunctions.DiffDays(e.Date, x) <= 0));
                 logEntryQuery.ToDate.Do(x => q = q.Where(e => DbFunctions.DiffDays(e.Date, x) >= 0));
                 logEntryQuery.UserLoginLike.Do(x => q = q.Where(e => e.UserLogin.Contains(x)));
@@ -191,7 +190,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 logEntryQuery.ShortMessageLike.Do(x => q = q.Where(e => e.ShortMessage.Contains(x)));
                 logEntryQuery.LongMessageLike.Do(x => q = q.Where(e => e.LongMessage.Contains(x)));
                 logEntryQuery.ContextLike.Do(x => q = q.Where(e => e.Context.Contains(x)));
-                
+
                 // Ordinamento delle voci del log.
                 q = q.OrderByDescending(e => e.Date).ThenByDescending(e => e.Id);
 
@@ -202,40 +201,67 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     result = q.Select(e => new
                     {
                         AppName = e.App.Name,
-                        e.Id, e.LogLevel,
-                        e.Date, e.UserLogin,
-                        e.CodeUnit, e.Function,
+                        e.Id,
+                        e.LogLevel,
+                        e.Date,
+                        e.UserLogin,
+                        e.CodeUnit,
+                        e.Function,
                         e.ShortMessage,
                         LongMessage = e.LongMessage.Substring(0, logEntryQuery.MaxTruncatedLongMessageLength),
                         e.Context,
-                        e.Key0, e.Value0,
-                        e.Key1, e.Value1,
-                        e.Key2, e.Value2,
-                        e.Key3, e.Value3,
-                        e.Key4, e.Value4,
-                        e.Key5, e.Value5,
-                        e.Key6, e.Value6,
-                        e.Key7, e.Value7,
-                        e.Key8, e.Value8,
-                        e.Key9, e.Value9,
+                        e.Key0,
+                        e.Value0,
+                        e.Key1,
+                        e.Value1,
+                        e.Key2,
+                        e.Value2,
+                        e.Key3,
+                        e.Value3,
+                        e.Key4,
+                        e.Value4,
+                        e.Key5,
+                        e.Value5,
+                        e.Key6,
+                        e.Value6,
+                        e.Key7,
+                        e.Value7,
+                        e.Key8,
+                        e.Value8,
+                        e.Key9,
+                        e.Value9,
                     }).AsEnumerable().Select(e => new SqlLogEntry
                     {
                         App = new SqlSecApp { Name = e.AppName },
-                        Id = e.Id, LogLevel = e.LogLevel,
-                        Date = e.Date, UserLogin = e.UserLogin,
-                        CodeUnit = e.CodeUnit, Function = e.Function,
-                        ShortMessage = e.ShortMessage, LongMessage = e.LongMessage,
+                        Id = e.Id,
+                        LogLevel = e.LogLevel,
+                        Date = e.Date,
+                        UserLogin = e.UserLogin,
+                        CodeUnit = e.CodeUnit,
+                        Function = e.Function,
+                        ShortMessage = e.ShortMessage,
+                        LongMessage = e.LongMessage,
                         Context = e.Context,
-                        Key0 = e.Key0, Value0 = e.Value0,
-                        Key1 = e.Key1, Value1 = e.Value1,
-                        Key2 = e.Key2, Value2 = e.Value2,
-                        Key3 = e.Key3, Value3 = e.Value3,
-                        Key4 = e.Key4, Value4 = e.Value4,
-                        Key5 = e.Key5, Value5 = e.Value5,
-                        Key6 = e.Key6, Value6 = e.Value6,
-                        Key7 = e.Key7, Value7 = e.Value7,
-                        Key8 = e.Key8, Value8 = e.Value8,
-                        Key9 = e.Key9, Value9 = e.Value9,
+                        Key0 = e.Key0,
+                        Value0 = e.Value0,
+                        Key1 = e.Key1,
+                        Value1 = e.Value1,
+                        Key2 = e.Key2,
+                        Value2 = e.Value2,
+                        Key3 = e.Key3,
+                        Value3 = e.Value3,
+                        Key4 = e.Key4,
+                        Value4 = e.Value4,
+                        Key5 = e.Key5,
+                        Value5 = e.Value5,
+                        Key6 = e.Key6,
+                        Value6 = e.Value6,
+                        Key7 = e.Key7,
+                        Value7 = e.Value7,
+                        Key8 = e.Key8,
+                        Value8 = e.Value8,
+                        Key9 = e.Key9,
+                        Value9 = e.Value9,
                     });
                 }
                 else
