@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{11904ED0-33D2-4005-8766-B1E393A32EA7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Finsa.Caravan.Common</RootNamespace>
+    <AssemblyName>Finsa.Caravan.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>591508b8</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;USETHROWER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Finsa.Caravan.Common.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;USETHROWER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Finsa.Caravan.Common.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="BrockAllen.IdentityReboot, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BrockAllen.IdentityReboot.2.0.0\lib\net45\BrockAllen.IdentityReboot.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.1.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Common.Logging.3.1.0\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Common.Logging.Core.3.1.0\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.NLog32">
+      <HintPath>..\packages\Common.Logging.NLog32.3.1.0\lib\net40\Common.Logging.NLog32.dll</HintPath>
+    </Reference>
+    <Reference Include="Crc32C.NET">
+      <HintPath>..\packages\Crc32C.NET.1.0.5.0\lib\net20\Crc32C.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Finsa.CodeServices.Clock, Version=1.14.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Clock.1.14\lib\net40\Finsa.CodeServices.Clock.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Finsa.CodeServices.Common, Version=1.14.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Common.1.14\lib\net40-client\Finsa.CodeServices.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Finsa.CodeServices.Compression, Version=1.14.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Compression.1.14\lib\net40\Finsa.CodeServices.Compression.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Finsa.CodeServices.Serialization, Version=1.14.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Serialization.1.14\lib\net40\Finsa.CodeServices.Serialization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Finsa.CodeServices.Testing">
+      <HintPath>..\packages\Finsa.CodeServices.Testing.1.14\lib\net40\Finsa.CodeServices.Testing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="LZ4, Version=1.0.5.93, Culture=neutral, PublicKeyToken=fd2bda0a70c5a705, processorArchitecture=MSIL">
+      <HintPath>..\packages\lz4net.1.0.5.93\lib\net40-client\LZ4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=3.2.1.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.3.2.1\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="PommaLabs.KVLite, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PommaLabs.KVLite.Core.3.1.1\lib\net45\PommaLabs.KVLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Snappy.NET">
+      <HintPath>..\packages\Snappy.NET.1.1.1.8\lib\net45\Snappy.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Westwind.Utilities.Configuration, Version=2.25.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Westwind.Utilities.Configuration.2.25\lib\net40\Westwind.Utilities.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommonConfiguration.cs" />
+    <Compile Include="Core\ErrorMessages.cs" />
+    <Compile Include="Logging\CaravanLogger.cs" />
+    <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />
+    <Compile Include="Logging\NoOpCaravanLogger.cs" />
+    <Compile Include="Logging\NoOpCaravanLoggerFactoryAdapter.cs" />
+    <Compile Include="Logging\ICaravanLogRepository.cs" />
+    <Compile Include="Logging\LogExtensions.cs" />
+    <Compile Include="Models\Logging\LogEntryQuery.cs" />
+    <Compile Include="Models\Security\SecGroupUpdates.cs" />
+    <Compile Include="Models\Security\SecUserUpdates.cs" />
+    <Compile Include="Security\CaravanRoleStore.cs" />
+    <Compile Include="Security\CaravanUserManager.cs" />
+    <Compile Include="Security\CaravanUserStore.cs" />
+    <Compile Include="Security\ICaravanSecurityRepository.cs" />
+    <Compile Include="Logging\ICaravanLog.cs" />
+    <Compile Include="Models\Logging\LogMessage.cs" />
+    <Compile Include="Models\Security\Exceptions\SecAppExistingException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecAppNotFoundException.cs" />
+    <Compile Include="Models\Logging\Exceptions\LogEntryExistingException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecGroupExistingException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecGroupNotFoundException.cs" />
+    <Compile Include="Models\Logging\Exceptions\LogEntryNotFoundException.cs" />
+    <Compile Include="Models\Logging\Exceptions\LogSettingExistingException.cs" />
+    <Compile Include="Models\Logging\Exceptions\LogSettingNotFoundException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecUserExistingException.cs" />
+    <Compile Include="Models\Security\Exceptions\SecUserNotFoundException.cs" />
+    <Compile Include="Models\Formatting\TextAlignment.cs" />
+    <Compile Include="Models\Linking\AlternateLink.cs" />
+    <Compile Include="Models\Linking\CollectionLink.cs" />
+    <Compile Include="Models\Linking\EditLink.cs" />
+    <Compile Include="Models\Linking\EditMediaLink.cs" />
+    <Compile Include="Models\Linking\FirstLink.cs" />
+    <Compile Include="Models\Linking\LastLink.cs" />
+    <Compile Include="Models\Linking\Link.cs" />
+    <Compile Include="Models\Linking\LinkedObject.cs" />
+    <Compile Include="Models\Linking\Links.cs" />
+    <Compile Include="Models\Linking\NextLink.cs" />
+    <Compile Include="Models\Linking\PreviousLink.cs" />
+    <Compile Include="Models\Linking\RelatedLink.cs" />
+    <Compile Include="Models\Linking\SelfLink.cs" />
+    <Compile Include="Models\Logging\LogEntry.cs" />
+    <Compile Include="Models\Logging\LogResult.cs" />
+    <Compile Include="Models\Logging\LogSetting.cs" />
+    <Compile Include="Models\Rest\RestRequest.cs" />
+    <Compile Include="Models\Rest\RestResponse.cs" />
+    <Compile Include="Models\Security\SecApp.cs" />
+    <Compile Include="Models\Security\SecContext.cs" />
+    <Compile Include="Models\Security\SecEntry.cs" />
+    <Compile Include="Models\Security\SecRole.cs" />
+    <Compile Include="Models\Security\SecGroup.cs" />
+    <Compile Include="Models\Security\SecObject.cs" />
+    <Compile Include="Models\Security\SecUser.cs" />
+    <Compile Include="Models\Security\SecSession.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebService\IAuthManager.cs" />
+    <Compile Include="WebForms\ISearchControl.cs" />
+    <Compile Include="WebForms\SearchCriteria.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
