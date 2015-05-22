@@ -1,13 +1,13 @@
-﻿using Finsa.Caravan.Common.Utilities;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
+using Finsa.CodeServices.Common;
 
 namespace Finsa.Caravan.Common.Models.Security
 {
-    [Serializable, DataContract]
+    [Serializable, JsonObject(MemberSerialization.OptIn), DataContract]
     public class SecEntry : EquatableObject<SecEntry>
     {
         [JsonProperty(Order = 0), DataMember(Order = 0)]
@@ -31,10 +31,10 @@ namespace Finsa.Caravan.Common.Models.Security
         [JsonProperty(Order = 6), DataMember(Order = 6)]
         public string RoleName { get; set; }
 
-        protected override IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+        protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("AppName", AppName);
-            yield return GKeyValuePair.Create("Id", Id.ToString(CultureInfo.InvariantCulture));
+            yield return KeyValuePair.Create("AppName", AppName);
+            yield return KeyValuePair.Create("Id", Id.ToString(CultureInfo.InvariantCulture));
         }
 
         protected override IEnumerable<object> GetIdentifyingMembers()

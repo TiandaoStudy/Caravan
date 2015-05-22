@@ -6,10 +6,12 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.Common.WebForms;
 using FLEX.Web.Pages;
-using Finsa.Caravan.Common.Utilities.Extensions;
+using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Common.Diagnostics;
+using Finsa.CodeServices.Common.Extensions;
+using FLEX.Web.UserControls;
 
 // ReSharper disable CheckNamespace This is the correct namespace, despite the file physical position.
 
@@ -65,7 +67,7 @@ namespace Finsa.Caravan.WebForms.Pages
                 userLogin = SearchCriteria["CUSR_LOGIN"][0];
                 active = crvnActive.SelectedValues[0] == "Y";
                 // This should not catch any exception, others will do.
-                users = (from us in DataAccess.Db.Security.Users(Common.Properties.Settings.Default.ApplicationName)
+                users = (from us in DataAccess.CaravanDataSource.Security.GetUsers(CommonConfiguration.Instance.AppName)
                          select new SecUser { FirstName = us.FirstName, LastName = us.LastName, Login = us.Login, Email = us.Email, Active = us.Active }).Where(x => x.Login == userLogin.ToString() && x.Active == active)
                               .ToDataTable();
 
@@ -75,7 +77,7 @@ namespace Finsa.Caravan.WebForms.Pages
             else if (SearchCriteria["CUSR_LOGIN"].Count > 0)
             {
                 userLogin = SearchCriteria["CUSR_LOGIN"][0];
-                users = (from us in DataAccess.Db.Security.Users(Common.Properties.Settings.Default.ApplicationName)
+                users = (from us in DataAccess.CaravanDataSource.Security.GetUsers(CommonConfiguration.Instance.AppName)
                          select new SecUser { FirstName = us.FirstName, LastName = us.LastName, Login = us.Login, Email = us.Email, Active = us.Active }).Where(x => x.Login == userLogin.ToString())
                 .ToDataTable();
 
@@ -85,7 +87,7 @@ namespace Finsa.Caravan.WebForms.Pages
             else if (SearchCriteria["Active"].Count == 1)
             {
                 active = crvnActive.SelectedValues[0] == "Y";
-                users = (from us in DataAccess.Db.Security.Users(Common.Properties.Settings.Default.ApplicationName)
+                users = (from us in DataAccess.CaravanDataSource.Security.GetUsers(CommonConfiguration.Instance.AppName)
                          select new SecUser { FirstName = us.FirstName, LastName = us.LastName, Login = us.Login, Email = us.Email, Active = us.Active }).Where(x => x.Active == active)
                              .ToDataTable();
 
@@ -94,7 +96,7 @@ namespace Finsa.Caravan.WebForms.Pages
             }
             else
             {
-                users = (from us in DataAccess.Db.Security.Users(Common.Properties.Settings.Default.ApplicationName)
+                users = (from us in DataAccess.CaravanDataSource.Security.GetUsers(CommonConfiguration.Instance.AppName)
                          select new SecUser { FirstName = us.FirstName, LastName = us.LastName, Login = us.Login, Email = us.Email, Active = us.Active })
                             .ToDataTable();
 
@@ -110,7 +112,7 @@ namespace Finsa.Caravan.WebForms.Pages
                 return;
             }
 
-            var login = DataBinder.Eval(e.Row.DataItem, "Login").ToJavaScriptString();
+            var login = ControlBase.ToJavaScriptString(DataBinder.Eval(e.Row.DataItem, "Login").ToString());
 
             var btnEdit = e.Row.FindControl("btnEdit") as LinkButton;
             btnEdit.OnClientClick = String.Format("return editUser({0});", login);
@@ -141,7 +143,7 @@ namespace Finsa.Caravan.WebForms.Pages
             {
                 var login = loginToBeDeleted.Value;
                 Raise<ArgumentException>.IfIsEmpty(login);
-                DataAccess.Db.Security.RemoveUser(Common.Properties.Settings.Default.ApplicationName, login);
+                DataAccess.CaravanDataSource.Security.RemoveUser(CommonConfiguration.Instance.AppName, login);
                 fdtgUsers.UpdateDataSource();
             }
             catch (Exception ex)

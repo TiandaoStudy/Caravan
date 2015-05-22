@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess;
+using Finsa.CodeServices.Common.Extensions;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
-using Finsa.Caravan.Common.Utilities.Extensions;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -32,7 +33,7 @@ namespace FLEX.WebForms.Pages
       {
          // This should not catch any exception, others will do.
          fdtgLogs.DataSource = (
-            from l in Db.Logger.Entries(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName)
+            from l in CaravanDataSource.Logger.GetEntries(CommonConfiguration.Instance.AppName)
             select new
             {
                l.Id,

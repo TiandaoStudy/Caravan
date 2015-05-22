@@ -1,11 +1,13 @@
 ﻿using System;
 using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.DataAccess;
+using Finsa.CodeServices.Common;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 using System.Linq;
 using System.Data;
+using Finsa.Caravan.Common;
+using Finsa.CodeServices.Common.Diagnostics;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -61,7 +63,7 @@ namespace Finsa.Caravan.WebForms.Pages
 
       private void MostraMultiSelectForNew() 
       {
-         var allowedUsers = Db.Security.Users(Common.Properties.Settings.Default.ApplicationName);
+         var allowedUsers = CaravanDataSource.Security.GetUsers(CommonConfiguration.Instance.AppName);
 
           //Users
           DataTable tableLeft = new DataTable();
@@ -94,7 +96,7 @@ namespace Finsa.Caravan.WebForms.Pages
             return;
          }
       
-         var group = Db.Security.Group(Common.Properties.Settings.Default.ApplicationName, groupName);
+         var group = CaravanDataSource.Security.GetGroupByName(CommonConfiguration.Instance.AppName, groupName);
          Raise<ArgumentException>.IfIsNull(group, "Given group name does not exist");
 
          ViewState["group"] =group; 
@@ -110,7 +112,7 @@ namespace Finsa.Caravan.WebForms.Pages
           {
 
               var blockedUsersToGroup = ((SecGroup)ViewState["group"]).Users;
-              var allowedUsers = Db.Security.Users(Common.Properties.Settings.Default.ApplicationName).Except(blockedUsersToGroup);
+              var allowedUsers = CaravanDataSource.Security.GetUsers(CommonConfiguration.Instance.AppName).Except(blockedUsersToGroup);
 
               //Users
               DataTable _tableLeft = new DataTable();
@@ -152,7 +154,7 @@ namespace Finsa.Caravan.WebForms.Pages
             if (Mode == NewMode)
             {
                var newGroup = new SecGroup { Name = txtGrpName.Text, Description = txtGrpDescr.Text, Notes = txtNotes.Text };
-               Db.Security.AddGroup(Common.Properties.Settings.Default.ApplicationName, newGroup);
+               CaravanDataSource.Security.AddGroup(CommonConfiguration.Instance.AppName, newGroup);
 
                if (crvnMultiSelectUsersGroups.RightDataTable != null) 
                {
@@ -160,7 +162,7 @@ namespace Finsa.Caravan.WebForms.Pages
                    {
                        if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
                        {
-                           Db.Security.AddUserToGroup(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, oDrR["Login"].ToString(), newGroup.Name);
+                           CaravanDataSource.Security.AddUserToGroup(CommonConfiguration.Instance.AppName, oDrR["Login"].ToString(), newGroup.Name);
                        }
                    }
 
@@ -168,7 +170,7 @@ namespace Finsa.Caravan.WebForms.Pages
                    {
                        if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
                        {
-                           Db.Security.RemoveUserFromGroup(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, oDrL["Login"].ToString(), newGroup.Name);
+                           CaravanDataSource.Security.RemoveUserFromGroup(CommonConfiguration.Instance.AppName, oDrL["Login"].ToString(), newGroup.Name);
                        }
                    }
                }
@@ -183,7 +185,7 @@ namespace Finsa.Caravan.WebForms.Pages
                     {
                         if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
                         {
-                            Db.Security.AddUserToGroup(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, oDrR["Login"].ToString(), GroupName);
+                            CaravanDataSource.Security.AddUserToGroup(CommonConfiguration.Instance.AppName, oDrR["Login"].ToString(), GroupName);
                         }
                     }
 
@@ -191,13 +193,18 @@ namespace Finsa.Caravan.WebForms.Pages
                     {
                         if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
                         {
-                            Db.Security.RemoveUserFromGroup(Finsa.Caravan.Common.Properties.Settings.Default.ApplicationName, oDrL["Login"].ToString(), GroupName);
+                            CaravanDataSource.Security.RemoveUserFromGroup(CommonConfiguration.Instance.AppName, oDrL["Login"].ToString(), GroupName);
                         }
                     }
                 }
 
-               var newGroup = new SecGroup { Name = txtGrpName.Text, Description = txtGrpDescr.Text, Notes= txtNotes.Text };
-               Db.Security.UpdateGroup(Common.Properties.Settings.Default.ApplicationName, GroupName, newGroup);
+               var newGroup = new SecGroupUpdates
+               {
+                   Name = Option.Some(txtGrpName.Text), 
+                   Description = Option.Some(txtGrpDescr.Text), 
+                   Notes = Option.Some(txtNotes.Text)
+               };
+               CaravanDataSource.Security.UpdateGroup(CommonConfiguration.Instance.AppName, GroupName, newGroup);
             }
             Master.RegisterCloseScript(this);
          }

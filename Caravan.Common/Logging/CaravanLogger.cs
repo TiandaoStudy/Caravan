@@ -1,12 +1,17 @@
-﻿using Common.Logging;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters;
+using Common.Logging;
 using Common.Logging.Factory;
 using Common.Logging.NLog;
 using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Serialization;
-using Finsa.Caravan.Common.Utilities;
+using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Common.Collections.ReadOnly;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using NLog;
-using System;
-using System.Collections.Generic;
+using JsonSerializer = Finsa.CodeServices.Serialization.JsonSerializer;
+using JsonSerializerSettings = Finsa.CodeServices.Serialization.JsonSerializerSettings;
 using LogLevel = Common.Logging.LogLevel;
 
 namespace Finsa.Caravan.Common.Logging
@@ -24,7 +29,16 @@ namespace Finsa.Caravan.Common.Logging
         /// </summary>
         public const string JsonMessagePrefix = "#JSON#";
 
-        private static readonly IJsonSerializer CachedJsonSerializer = new JsonNetSerializer();
+        private static readonly JsonSerializer CachedJsonSerializer = new JsonSerializer(new JsonSerializerSettings
+        {
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            Formatting = Formatting.None,
+            NullValueHandling = NullValueHandling.Ignore,
+            PreserveReferencesHandling = PreserveReferencesHandling.None,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
+            TypeNameHandling = TypeNameHandling.Objects,
+        });
 
         private readonly Logger _logger;
 
@@ -48,7 +62,7 @@ namespace Finsa.Caravan.Common.Logging
         /// <summary>
         ///   The JSON serializer used to pack messages.
         /// </summary>
-        public static IJsonSerializer JsonSerializer
+        public static JsonSerializer JsonSerializer
         {
             get { return CachedJsonSerializer; }
         }
@@ -1238,7 +1252,7 @@ namespace Finsa.Caravan.Common.Logging
         private static string LogMessageHandler(Func<LogMessage> logMessageCallback)
         {
             var safeCallback = logMessageCallback;
-            return safeCallback == null ? Constants.EmptyString : SerializeJsonlogMessageCallback(safeCallback());
+            return safeCallback == null ? String.Empty : SerializeJsonlogMessageCallback(safeCallback());
         }
 
         private static string LogMessageHandler(string shortMsg, string longMsg, string context)
@@ -1264,13 +1278,13 @@ namespace Finsa.Caravan.Common.Logging
                 logMessage.ShortMessage = exception.Message;
                 logMessage.LongMessage = exception.StackTrace;
                 // Keep aligned with Finsa.DataAccess.CaravanLoggerTarget.ParseMessage
-                logMessage.Arguments = new List<KeyValuePair<string, string>>(logMessage.Arguments)
+                logMessage.Arguments = new List<KeyValuePair<string, string>>(logMessage.Arguments ?? ReadOnlyList.Empty<KeyValuePair<string, string>>())
                 {
                     KeyValuePair.Create("exception_data", exception.Data.LogAsJson()),
-                    KeyValuePair.Create("exception_source", exception.Source ?? Constants.EmptyString)
+                    KeyValuePair.Create("exception_source", exception.Source ?? String.Empty)
                 };
             }
-            return JsonMessagePrefix + CachedJsonSerializer.SerializeObject(logMessage);
+            return JsonMessagePrefix + CachedJsonSerializer.SerializeToString(logMessage);
         }
 
         #endregion ICaravanLog Members

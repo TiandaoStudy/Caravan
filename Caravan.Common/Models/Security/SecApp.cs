@@ -1,13 +1,13 @@
 ﻿using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Finsa.CodeServices.Common;
 
 namespace Finsa.Caravan.Common.Models.Security
 {
-    [Serializable, DataContract]
+    [Serializable, JsonObject(MemberSerialization.OptIn), DataContract]
     public class SecApp : EquatableObject<SecApp>
     {
         [JsonProperty(Order = 0), DataMember(Order = 0)]
@@ -28,10 +28,10 @@ namespace Finsa.Caravan.Common.Models.Security
         [JsonProperty(Order = 5), DataMember(Order = 5)]
         public LogSetting[] LogSettings { get; set; }
 
-        protected override IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+        protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Name", Name);
-            yield return GKeyValuePair.Create("Description", Description);
+            yield return KeyValuePair.Create("Name", Name);
+            yield return KeyValuePair.Create("Description", Description);
         }
 
         protected override IEnumerable<object> GetIdentifyingMembers()

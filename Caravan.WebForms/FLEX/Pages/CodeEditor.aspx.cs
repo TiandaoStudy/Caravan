@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.UI.WebControls;
-using Finsa.Caravan.Common.Utilities.Text;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebForms.Properties;
+using Finsa.CodeServices.Common.Text;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -106,9 +106,9 @@ namespace FLEX.Web.Pages
 
             // Indico nel log che qualcuno ha modificato il file
             var logMsg = String.Format("File {0} has been changed by {1}", Path.GetFileName(filesPath[nameFiles]), HttpContext.Current.User.Identity.Name);
-            var diff = new diff_match_patch();
+            var diff = new DiffMatchPatch();
             var diffList = diff.diff_main(oldFile, newFile);
-            Db.Logger.LogWarn<CodeEditor>(logMsg, diff.diff_prettyHtml(diffList));
+            CaravanDataSource.Logger.LogWarn<CodeEditor>(logMsg, diff.diff_prettyHtml(diffList));
 
             var extension = Path.GetExtension(filesPath[nameFiles]);
             if (extension == ".cs")

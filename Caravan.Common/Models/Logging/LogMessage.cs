@@ -7,7 +7,7 @@ namespace Finsa.Caravan.Common.Models.Logging
     /// <summary>
     ///   Internal format used for complex log message passing.
     /// </summary>
-    [JsonObject(MemberSerialization.OptIn)]
+    [Serializable, JsonObject(MemberSerialization.OptIn)]
     public struct LogMessage
     {
         /// <summary>

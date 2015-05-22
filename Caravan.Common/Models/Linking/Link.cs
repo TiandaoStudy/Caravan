@@ -1,9 +1,9 @@
-﻿using Finsa.Caravan.Common.Utilities;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Common.Diagnostics;
 
 namespace Finsa.Caravan.Common.Models.Linking
 {
@@ -46,15 +46,15 @@ namespace Finsa.Caravan.Common.Models.Linking
         [JsonProperty("method", Order = 3), DataMember(Name = "method", Order = 3)]
         public string Method { get; private set; }
 
-        protected override IEnumerable<GKeyValuePair<string, string>> GetFormattingMembers()
+        protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return GKeyValuePair.Create("Rel", Rel);
+            yield return KeyValuePair.Create("Rel", Rel);
             if (!String.IsNullOrWhiteSpace(Title))
             {
-                yield return GKeyValuePair.Create("Title", Title);
+                yield return KeyValuePair.Create("Title", Title);
             }
-            yield return GKeyValuePair.Create("Href", Href);
-            yield return GKeyValuePair.Create("Method", Method);
+            yield return KeyValuePair.Create("Href", Href);
+            yield return KeyValuePair.Create("Method", Method);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 
         [Column("CUSR_HASHED_PWD", Order = 3)]
         [MaxLength(SqlDbContext.MediumLength)]
-        public string HashedPassword { get; set; }
+        public string PasswordHash { get; set; }
 
         [Required, Column("CUSR_ACTIVE", Order = 4)]
         public bool Active { get; set; }
@@ -58,7 +58,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
     {
         public SqlSecUserTypeConfiguration()
         {
-            ToTable("CRVN_SEC_USERS", Properties.Settings.Default.SqlSchema);
+            ToTable("CRVN_SEC_USERS", DataAccessConfiguration.Instance.SqlSchema);
 
             // SqlSecUser(N) <-> SqlSecApp(1)
             HasRequired(x => x.App)

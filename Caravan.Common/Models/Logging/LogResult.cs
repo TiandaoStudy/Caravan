@@ -4,8 +4,8 @@ using System.Runtime.Serialization;
 
 namespace Finsa.Caravan.Common.Models.Logging
 {
-    [Serializable, DataContract]
-    public class LogResult
+    [Serializable, JsonObject(MemberSerialization.OptIn), DataContract]
+    public struct LogResult
     {
         public static readonly LogResult Success = new LogResult { Succeeded = true };
 

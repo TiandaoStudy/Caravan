@@ -2,9 +2,9 @@
 using System.Globalization;
 using System.Threading;
 using System.Web.UI;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebForms.Properties;
+using Finsa.CodeServices.Common.Diagnostics;
 using FLEX.WebForms;
 
 // ReSharper disable CheckNamespace
@@ -36,7 +36,7 @@ namespace FLEX.Web.UserControls.Ajax
          }
          catch (Exception inner)
          {
-            Db.Logger.LogError<ErrorHandler>(inner);
+            CaravanDataSource.Logger.LogError<ErrorHandler>(inner);
             throw;
          }
       }

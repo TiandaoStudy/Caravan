@@ -6,6 +6,7 @@ using Finsa.Caravan.Common.WebForms;
 using Finsa.Caravan.DataAccess;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
+using Finsa.CodeServices.Common;
 
 namespace FLEX.Sample.WebUI
 {
@@ -63,7 +64,7 @@ namespace FLEX.Sample.WebUI
       {
          try
          {
-            Db.Logger.LogInfo<ControlsOverview>("Click!", "Clicked on the log button", "Page", new[]
+            CaravanDataSource.Logger.LogInfo<ControlsOverview>("Click!", "Clicked on the log button", "Page", new[]
             {
                KeyValuePair.Create("arg1", "1"),
                KeyValuePair.Create("arg2", "two")

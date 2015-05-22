@@ -3,6 +3,7 @@ using Finsa.Caravan.Common.Models.Logging;
 using System;
 using System.Activities;
 using System.Collections.Generic;
+using Finsa.Caravan.Common;
 
 namespace Finsa.Caravan.DataAccess.Activities.Logging
 {
@@ -35,9 +36,9 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
             var exception = Exception.Get(ctx);
             if (exception == null)
             {
-                result = Db.Logger.LogRaw(
+                result = CaravanDataSource.Logger.LogRaw(
                     LogLevel.Get(ctx),
-                    Common.Properties.Settings.Default.ApplicationName,
+                    CommonConfiguration.Instance.AppName,
                     UserLogin.Get(ctx),
                     WorkflowName.Get(ctx),
                     "LogActivity.Execute",
@@ -49,9 +50,9 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
             }
             else
             {
-                result = Db.Logger.LogRaw(
+                result = CaravanDataSource.Logger.LogRaw(
                     LogLevel.Get(ctx),
-                    Common.Properties.Settings.Default.ApplicationName,
+                    CommonConfiguration.Instance.AppName,
                     UserLogin.Get(ctx),
                     WorkflowName.Get(ctx),
                     "LogActivity.Execute",

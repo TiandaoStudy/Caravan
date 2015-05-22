@@ -1,15 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Data.Common;
+﻿using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
 using System.Transactions;
-using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
-using Finsa.Caravan.DataAccess.Properties;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -26,17 +20,20 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         static SqlDbContext()
         {
-            switch (Settings.Default.SqlInitializer)
+            switch (DataAccessConfiguration.Instance.SqlInitializer)
             {
                 case "CreateDatabaseIfNotExists":
                     Database.SetInitializer(new CreateDatabaseIfNotExists<SqlDbContext>());
                     break;
+
                 case "DropCreateDatabaseAlways":
                     Database.SetInitializer(new DropCreateDatabaseAlways<SqlDbContext>());
                     break;
+
                 case "DropCreateDatabaseIfModelChanges":
                     Database.SetInitializer(new DropCreateDatabaseIfModelChanges<SqlDbContext>());
                     break;
+
                 default:
                     Database.SetInitializer<SqlDbContext>(null);
                     break;
@@ -65,17 +62,17 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         public static TransactionScope BeginTrasaction()
         {
-            return new TransactionScope(TransactionScopeOption.Required, new TransactionOptions {IsolationLevel = IsolationLevel.Snapshot});
+            return new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Snapshot });
         }
 
         private static DbConnection GetConnection()
         {
-            if (Db.Manager.Kind == DataAccessKind.FakeSql)
+            if (CaravanDataSource.Manager.DataSourceKind == CaravanDataSourceKind.FakeSql)
             {
                 // Needed, otherwise Unit Tests fail.
-                return Db.Manager.OpenConnection();
+                return CaravanDataSource.Manager.OpenConnection();
             }
-            return Db.Manager.CreateConnection();
+            return CaravanDataSource.Manager.CreateConnection();
         }
 
         #region DB Sets
@@ -101,7 +98,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         protected override void OnModelCreating(DbModelBuilder mb)
         {
             mb.Conventions.Remove(new PluralizingTableNameConvention());
-            mb.HasDefaultSchema(Settings.Default.SqlSchema);
+            mb.HasDefaultSchema(DataAccessConfiguration.Instance.SqlSchema);
 
             base.OnModelCreating(mb);
 
@@ -114,27 +111,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             mb.Configurations.Add(new SqlSecUserTypeConfiguration());
             mb.Configurations.Add(new SqlLogSettingTypeConfiguration());
             mb.Configurations.Add(new SqlLogEntryTypeConfiguration());
-        }
-    }
-
-    public static class QueryableExtensions
-    {
-        public static List<T> ToLogAndList<T>(this IQueryable<T> queryable)
-        {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            var list = queryable.ToList();
-            stopwatch.Stop();
-
-            // Logging query and execution time.
-            var logEntry = queryable.ToString();
-            var milliseconds = stopwatch.ElapsedMilliseconds;
-            Db.Logger.LogTraceAsync<IDbManager>("EF generated query", logEntry, "Logging and timing the query", new[]
-            {
-                KeyValuePair.Create("milliseconds", milliseconds.ToString(CultureInfo.InvariantCulture))
-            });
-
-            return list;
         }
     }
 }

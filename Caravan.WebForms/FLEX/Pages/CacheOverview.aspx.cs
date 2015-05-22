@@ -1,9 +1,9 @@
 ﻿using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
-using Finsa.Caravan.Common.Utilities.Extensions;
 using PommaLabs.KVLite;
 using System;
 using System.Linq;
+using Finsa.CodeServices.Common.Extensions;
 
 // ReSharper disable CheckNamespace This is the correct namespace, despite the file physical position.
 
@@ -59,16 +59,16 @@ namespace FLEX.WebForms.Pages
         protected void fdtgCache_DataSourceUpdating(object sender, EventArgs args)
         {
             // This should not catch any exception, others will do.
-            fdtgCache.DataSource = VolatileCache.DefaultInstance.PeekManyItems()
-                .Union(PersistentCache.DefaultInstance.PeekManyItems())
+            fdtgCache.DataSource = VolatileCache.DefaultInstance.PeekItems<object>()
+                .Union(PersistentCache.DefaultInstance.PeekItems<object>())
                 .Where(x => x.Key != "ConnectionString") // Do not show connection strings...
-                .Select(x => new CacheItem
+                .Select(x => new CacheItem<string>
                 {
                     Partition = x.Partition,
                     Key = x.Key,
                     Value = x.Value.ToString(),
                     UtcCreation = x.UtcCreation.ToLocalTime(),
-                    UtcExpiry = x.UtcExpiry.HasValue ? x.UtcExpiry.Value.ToLocalTime() : x.UtcExpiry,
+                    UtcExpiry = x.UtcExpiry.ToLocalTime(),
                     Interval = x.Interval
                 })
                 .ToDataTable();

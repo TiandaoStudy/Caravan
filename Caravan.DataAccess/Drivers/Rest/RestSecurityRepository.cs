@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using Finsa.Caravan.Common.Models.Logging.Exceptions;
+﻿using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.Common.Models.Rest;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Models.Security.Exceptions;
 using Finsa.Caravan.DataAccess.Core;
 using RestSharp;
+using System;
+using System.Net;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Rest
 {
-    internal sealed class RestSecurityRepository : SecurityRepositoryBase<RestSecurityRepository>
+    internal sealed class RestSecurityRepository : AbstractSecurityRepository<RestSecurityRepository>
     {
-        protected override IList<SecApp> GetApps()
+        protected override SecApp[] GetAppsInternal()
         {
             try
             {
@@ -24,7 +23,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
 
                 var response = client.Execute<Common.Models.Rest.RestResponse<SecApp>>(request);
 
-                var apps = new List<SecApp> { response.Data.Body };
+                var apps = new[] { response.Data.Body };
 
                 return apps;
             }
@@ -34,7 +33,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override SecApp GetApp(string appName)
+        protected override SecApp GetAppInternal(string appName)
         {
             try
             {
@@ -61,7 +60,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override bool DoAddApp(SecApp app)
+        protected override bool AddAppInternal(SecApp app)
         {
             try
             {
@@ -94,7 +93,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override IList<SecGroup> GetGroups(string appName, string groupName)
+        protected override SecGroup[] GetGroupsInternal(string appName, string groupName)
         {
             try
             {
@@ -124,7 +123,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
                     throw new Exception(response.ErrorMessage);
                 }
 
-                var groups = new List<SecGroup> { response.Data.Body };
+                var groups = new[] { response.Data.Body };
 
                 return groups;
             }
@@ -134,7 +133,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override bool DoAddGroup(string appName, SecGroup newGroup)
+        protected override bool AddGroupInternal(string appName, SecGroup newGroup)
         {
             try
             {
@@ -170,7 +169,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override bool DoRemoveGroup(string appName, string groupName)
+        protected override bool RemoveGroupInternal(string appName, string groupName)
         {
             try
             {
@@ -199,7 +198,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override bool DoUpdateGroup(string appName, string groupName, SecGroup newGroup)
+        protected override bool UpdateGroupInternal(string appName, string groupName, SecGroupUpdates groupUpdates)
         {
             try
             {
@@ -208,14 +207,10 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
 
                 request.AddUrlSegment("appName", appName);
                 request.AddUrlSegment("groupName", groupName);
-                request.AddJsonBody(new RestRequest<SecGroup>
+                request.AddJsonBody(new RestRequest<SecGroupUpdates>
                 {
                     Auth = "AA",
-                    Body = new SecGroup
-                       {
-                           Description = newGroup.Description,
-                           Name = newGroup.Name
-                       }
+                    Body = groupUpdates
                 });
 
                 var response = client.Execute<Common.Models.Rest.RestResponse<SecGroup>>(request);
@@ -237,7 +232,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override IList<SecUser> GetUsers(string appName, string userLogin)
+        protected override SecUser[] GetUsersInternal(string appName, string userLogin, string userEmail)
         {
             try
             {
@@ -273,7 +268,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
                     }
                     throw new Exception(response.ErrorMessage);
                 }
-                var users = new List<SecUser> { response.Data.Body };
+                var users = new[] { response.Data.Body };
                 return users;
             }
             catch (Exception exception)
@@ -282,7 +277,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override bool DoAddUser(string appName, SecUser newUser)
+        protected override bool AddUserInternal(string appName, SecUser newUser)
         {
             try
             {
@@ -322,7 +317,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             return true;
         }
 
-        protected override bool DoRemoveUser(string appName, string userLogin)
+        protected override bool RemoveUserInternal(string appName, string userLogin)
         {
             try
             {
@@ -353,7 +348,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             return true;
         }
 
-        protected override bool DoUpdateUser(string appName, string userLogin, SecUser newUser)
+        protected override bool UpdateUserInternal(string appName, string userLogin, SecUserUpdates userUpdates)
         {
             try
             {
@@ -362,16 +357,10 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
 
                 request.AddUrlSegment("appName", appName);
                 request.AddUrlSegment("userLogin", userLogin);
-                request.AddJsonBody(new RestRequest<SecUser>
+                request.AddJsonBody(new RestRequest<SecUserUpdates>
                 {
                     Auth = "AA",
-                    Body = new SecUser
-                       {
-                           FirstName = newUser.FirstName,
-                           LastName = newUser.LastName,
-                           Login = newUser.Login,
-                           Email = newUser.Email
-                       }
+                    Body = userUpdates
                 });
                 var response = client.Execute<Common.Models.Rest.RestResponse<SecUser>>(request);
 
@@ -399,7 +388,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             return true;
         }
 
-        protected override bool DoAddUserToGroup(string appName, string userLogin, string groupName)
+        protected override bool AddUserToGroupInternal(string appName, string userLogin, string groupName)
         {
             try
             {
@@ -429,7 +418,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             return true;
         }
 
-        protected override bool DoRemoveUserFromGroup(string appName, string userLogin, string groupName)
+        protected override bool RemoveUserFromGroupInternal(string appName, string userLogin, string groupName)
         {
             try
             {
@@ -461,7 +450,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             return true;
         }
 
-        protected override IList<SecContext> GetContexts(string appName)
+        protected override SecContext[] GetContextsInternal(string appName)
         {
             var client = new RestClient("http://localhost/Caravan.RestService/security");
             var request = new RestRequest("{appName}/contexts", Method.POST);
@@ -478,12 +467,12 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
                 throw new Exception(response.ErrorMessage);
             }
 
-            var contexts = new List<SecContext> { response.Data.Body };
+            var contexts = new[] { response.Data.Body };
 
             return contexts;
         }
 
-        protected override IList<SecObject> GetObjects(string appName, string contextName)
+        protected override SecObject[] GetObjectsInternal(string appName, string contextName)
         {
             var client = new RestClient("http://localhost/Caravan.RestService/security");
             var request = new RestRequest("{appName}/objects", Method.POST);
@@ -493,14 +482,14 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
 
             var response = client.Execute<Common.Models.Rest.RestResponse<SecObject>>(request);
 
-            var objs = new List<SecObject> { response.Data.Body };
+            var objs = new[] { response.Data.Body };
 
             return objs;
         }
 
         #region Entries
 
-        protected override IList<SecEntry> GetEntries(string appName, string contextName, string objectName, string userLogin)
+        protected override SecEntry[] GetEntriesInternal(string appName, string contextName, string objectName, string userLogin)
         {
             try
             {
@@ -532,7 +521,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
                     throw new Exception(response.ErrorMessage);
                 }
 
-                var entries = new List<SecEntry> { response.Data.Body };
+                var entries = new[] { response.Data.Body };
 
                 return entries;
             }
@@ -542,7 +531,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             }
         }
 
-        protected override bool DoAddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+        protected override bool AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
         {
             try
             {
@@ -586,7 +575,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             return true;
         }
 
-        protected override bool DoRemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)
+        protected override bool RemoveEntryInternal(string appName, string contextName, string objectName, string userLogin, string groupName)
         {
             try
             {

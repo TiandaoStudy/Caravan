@@ -4,6 +4,7 @@ using System.Web;
 using Finsa.Caravan.Common;
 using FLEX.Sample.WebUI.Reports;
 using FLEX.WebForms;
+using Finsa.CodeServices.Common;
 
 namespace FLEX.Sample.WebUI.MyFLEX.Managers
 {

@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Attributes;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
 {
@@ -24,6 +25,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
 
         [Required, Column("CLOG_DATE", Order = 3)]
         [Index("IX_CRVN_LOG_DATE", 1)]
+        [DateTimeKind(DateTimeKind.Local)]
         public DateTime Date { get; set; }
 
         [Column("CUSR_LOGIN", Order = 4)]
@@ -39,7 +41,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
         public string Function { get; set; }
 
         [Required, Column("CLOG_SHORT_MSG", Order = 7)]
-        [MaxLength(SqlDbContext.MediumLength)]
+        [MaxLength(SqlDbContext.LargeLength)]
         public string ShortMessage { get; set; }
 
         [Column("CLOG_LONG_MSG", Order = 8)] /* Should be a CLOB/TEXT */
@@ -142,7 +144,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
     {
         public SqlLogEntryTypeConfiguration()
         {
-            ToTable("CRVN_LOG_ENTRIES", Properties.Settings.Default.SqlSchema);
+            ToTable("CRVN_LOG_ENTRIES", DataAccessConfiguration.Instance.SqlSchema);
 
             // SqlLogEntry(N) <-> SqlSecApp(1)
             HasRequired(x => x.App)

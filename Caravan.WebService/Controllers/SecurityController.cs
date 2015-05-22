@@ -35,7 +35,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("", Name = "GetApps"), LinqToQueryable]
         public IQueryable<LinkedSecApp> GetApps()
         {
-            return Db.Security.Apps().AsQueryable().Select(a => new LinkedSecApp(a, Url));
+            return CaravanDataSource.Security.GetApps().AsQueryable().Select(a => new LinkedSecApp(a, Url));
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}")]
         public SecApp GetApp(string appName)
         {
-            return Db.Security.App(appName);
+            return CaravanDataSource.Security.GetApp(appName);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("")]
         public void PostApp([FromBody] SecApp app)
         {
-            Db.Security.AddApp(app);
+            CaravanDataSource.Security.AddApp(app);
         }
 
         #endregion App
@@ -71,7 +71,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/users"), LinqToQueryable]
         public IQueryable<SecUser> GetUsers(string appName)
         {
-            return Db.Security.Users(appName).AsQueryable();
+            return CaravanDataSource.Security.GetUsers(appName).AsQueryable();
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/users")]
         public void PostUser(string appName, [FromBody] SecUser user)
         {
-            Db.Security.AddUser(appName, user);
+            CaravanDataSource.Security.AddUser(appName, user);
         }
 
         /// <summary>
@@ -90,11 +90,11 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <param name="userLogin">The user login</param>
-        /// <param name="user">The user containing element to update</param>
+        /// <param name="userUpdates">The user containing element to update</param>
         [Route("{appName}/users/{userLogin}")]
-        public void PutUser(string appName, string userLogin, [FromBody] SecUser user)
+        public void PutUser(string appName, string userLogin, [FromBody] SecUserUpdates userUpdates)
         {
-            Db.Security.UpdateUser(appName, userLogin, user);
+            CaravanDataSource.Security.UpdateUser(appName, userLogin, userUpdates);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/users/{userLogin}")]
         public void DeleteUser(string appName, string userLogin)
         {
-            Db.Security.RemoveUser(appName, userLogin);
+            CaravanDataSource.Security.RemoveUser(appName, userLogin);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/users/{userLogin}/{groupName}")]
         public void PostUserToGroup(string appName, string userLogin, string groupName)
         {
-            Db.Security.AddUserToGroup(appName, userLogin, groupName);
+            CaravanDataSource.Security.AddUserToGroup(appName, userLogin, groupName);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/users/{userLogin}/{groupName}")]
         public void DeleteUserToGroup(string appName, string userLogin, string groupName)
         {
-            Db.Security.RemoveUserFromGroup(appName, userLogin, groupName);
+            CaravanDataSource.Security.RemoveUserFromGroup(appName, userLogin, groupName);
         }
 
         #endregion User
@@ -145,7 +145,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/groups"), LinqToQueryable]
         public IQueryable<SecGroup> GetGroups(string appName)
         {
-            return Db.Security.Groups(appName).AsQueryable();
+            return CaravanDataSource.Security.GetGroups(appName).AsQueryable();
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/groups/{groupName}"), LinqToQueryable]
         public SecGroup GetGroup(string appName, string groupName)
         {
-            return Db.Security.Group(appName, groupName);
+            return CaravanDataSource.Security.GetGroupByName(appName, groupName);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/groups")]
         public void PostGroup(string appName, [FromBody] SecGroup group)
         {
-            Db.Security.AddGroup(appName, group);
+            CaravanDataSource.Security.AddGroup(appName, group);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/groups/{groupName}")]
         public void DeleteGroup(string appName, string groupName)
         {
-            Db.Security.RemoveGroup(appName, groupName);
+            CaravanDataSource.Security.RemoveGroup(appName, groupName);
         }
 
         /// <summary>
@@ -187,11 +187,11 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <param name="groupName">The group name</param>
-        /// <param name="group">The group containing element/s to update</param>
+        /// <param name="groupUpdates">The group containing element/s to update</param>
         [Route("{appName}/groups/{groupName}")]
-        public void PutGroup(string appName, string groupName, [FromBody] SecGroup group)
+        public void PutGroup(string appName, string groupName, [FromBody] SecGroupUpdates groupUpdates)
         {
-            Db.Security.UpdateGroup(appName, groupName, group);
+            CaravanDataSource.Security.UpdateGroup(appName, groupName, groupUpdates);
         }
 
         #endregion Group
@@ -206,7 +206,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/contexts")]
         public IQueryable<SecContext> GetContexts(string appName)
         {
-            return Db.Security.Contexts(appName).AsQueryable();
+            return CaravanDataSource.Security.GetContexts(appName).AsQueryable();
         }
 
         #endregion Context
@@ -221,7 +221,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appaName}/objects"), LinqToQueryable]
         public IQueryable<SecObject> GetObjects(string appName)
         {
-            return Db.Security.Objects(appName).AsQueryable();
+            return CaravanDataSource.Security.GetObjects(appName).AsQueryable();
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appaName}/objects"), LinqToQueryable]
         public IQueryable<SecObject> GetObjects(string appName, string contextName)
         {
-            return Db.Security.Objects(appName, contextName).AsQueryable();
+            return CaravanDataSource.Security.GetObjects(appName, contextName).AsQueryable();
         }
 
         #endregion Objects
@@ -248,7 +248,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries"), LinqToQueryable]
         public IQueryable<SecEntry> GetEntries(string appName)
         {
-            return Db.Security.Entries(appName).AsQueryable();
+            return CaravanDataSource.Security.GetEntries(appName).AsQueryable();
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries/{contextName}"), LinqToQueryable]
         public IQueryable<SecEntry> GetEntries(string appName, string contextName)
         {
-            return Db.Security.Entries(appName, contextName).AsQueryable();
+            return CaravanDataSource.Security.GetEntries(appName, contextName).AsQueryable();
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries/{contextName}/{userLogin}"), LinqToQueryable]
         public IQueryable<SecEntry> GetEntries(string appName, string contextName, string userLogin)
         {
-            return Db.Security.Entries(appName, contextName, userLogin).AsQueryable();
+            return CaravanDataSource.Security.GetEntriesForUser(appName, contextName, userLogin).AsQueryable();
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries/{contextName}/{objectName}"), LinqToQueryable]
         public IQueryable<SecEntry> GetEntriesForObject(string appName, string contextName, string objectName)
         {
-            return Db.Security.EntriesForObject(appName, contextName, objectName).AsQueryable();
+            return CaravanDataSource.Security.GetEntriesForObject(appName, contextName, objectName).AsQueryable();
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries/{contextName}/{objectName}/{userLogin}"), LinqToQueryable]
         public IQueryable<SecEntry> GetEntriesForObject(string appName, string contextName, string objectName, string userLogin)
         {
-            return Db.Security.EntriesForObject(appName, contextName, objectName, userLogin).AsQueryable();
+            return CaravanDataSource.Security.GetEntriesForObjectAndUser(appName, contextName, objectName, userLogin).AsQueryable();
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries/")]
         public void PostEntry(string appName, [FromBody] SecEntryForAdd entry)
         {
-            Db.Security.AddEntry(appName, entry.Context, entry.Object, entry.UserLogin, entry.GroupName);
+            CaravanDataSource.Security.AddEntry(appName, entry.Context, entry.Object, entry.UserLogin, entry.GroupName);
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Finsa.Caravan.WebService.Controllers
         public void DeleteEntry(string appName, string contextname, string objectName, string userLogin,
             string groupName)
         {
-            Db.Security.RemoveEntry(appName, contextname, objectName, userLogin, groupName);
+            CaravanDataSource.Security.RemoveEntry(appName, contextname, objectName, userLogin, groupName);
         }
 
         public sealed class SecEntryForAdd

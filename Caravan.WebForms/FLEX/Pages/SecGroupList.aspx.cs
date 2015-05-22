@@ -3,11 +3,13 @@ using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.Common.WebForms;
 using FLEX.Web.Pages;
 using System.Data;
-using Finsa.Caravan.Common.Utilities.Extensions;
+using Finsa.Caravan.Common;
+using Finsa.CodeServices.Common.Diagnostics;
+using Finsa.CodeServices.Common.Extensions;
+using FLEX.Web.UserControls;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.
@@ -53,14 +55,14 @@ namespace Finsa.Caravan.WebForms.Pages
           {
               var groupName = SearchCriteria["CGRP_NAME"][0];
               // This should not catch any exception, others will do.
-              groups = (from g in DataAccess.Db.Security.Groups(Common.Properties.Settings.Default.ApplicationName)
+              groups = (from g in DataAccess.CaravanDataSource.Security.GetGroups(CommonConfiguration.Instance.AppName)
                             select new SecGroup { Name = g.Name, Description = g.Description, Notes = g.Notes }).Where(x => x.Name == groupName.ToString())
                             .ToDataTable();
           }
 
           else
           {
-             groups = (from g in DataAccess.Db.Security.Groups(Common.Properties.Settings.Default.ApplicationName)
+             groups = (from g in DataAccess.CaravanDataSource.Security.GetGroups(CommonConfiguration.Instance.AppName)
                     select new SecGroup { Name = g.Name, Description = g.Description, Notes = g.Notes })
                            .ToDataTable();
           }
@@ -75,7 +77,7 @@ namespace Finsa.Caravan.WebForms.Pages
             return;
          }
 
-         var groupName = DataBinder.Eval(e.Row.DataItem, "Name").ToJavaScriptString();
+         var groupName = ControlBase.ToJavaScriptString(DataBinder.Eval(e.Row.DataItem, "Name").ToString());
 
          var btnEdit = e.Row.FindControl("btnEdit") as LinkButton;
          btnEdit.OnClientClick = String.Format("return editGroup({0});", groupName);
@@ -106,7 +108,7 @@ namespace Finsa.Caravan.WebForms.Pages
          {
             var groupName = groupNameToBeDeleted.Value;
             Raise<ArgumentException>.IfIsEmpty(groupName);
-            DataAccess.Db.Security.RemoveGroup(Common.Properties.Settings.Default.ApplicationName, groupName);
+            DataAccess.CaravanDataSource.Security.RemoveGroup(CommonConfiguration.Instance.AppName, groupName);
             fdtgGroups.UpdateDataSource();
          }
          catch (Exception ex)

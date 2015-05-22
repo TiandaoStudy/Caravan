@@ -1,9 +1,7 @@
 ﻿using Fasterflect;
-using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Utilities;
-using Finsa.Caravan.Common.Utilities.Collections.ReadOnly;
+using Finsa.CodeServices.Common;
 using NLog;
 using NLog.Config;
 using NLog.Layouts;
@@ -13,6 +11,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Finsa.Caravan.Common;
+using Finsa.CodeServices.Common.Collections.ReadOnly;
 using LogLevel = Common.Logging.LogLevel;
 
 namespace Finsa.Caravan.DataAccess.Logging
@@ -68,9 +68,9 @@ namespace Finsa.Caravan.DataAccess.Logging
 
             // In order to be able to use thread local information, it must _not_ be async.
             // ReSharper disable once UnusedVariable
-            var result = Db.Logger.LogRaw(
+            var result = CaravanDataSource.Logger.LogRaw(
                 logLevel,
-                Common.Properties.Settings.Default.ApplicationName,
+                CommonConfiguration.Instance.AppName,
                 userLogin,
                 codeUnit,
                 function,
@@ -94,31 +94,31 @@ namespace Finsa.Caravan.DataAccess.Logging
                 }
                 return new LogMessage
                 {
-                    ShortMessage = ((msg != null) ? msg + " - " : Constants.EmptyString),
+                    ShortMessage = ((msg != null) ? msg + " - " : String.Empty),
                     LongMessage = ex.StackTrace,
-                    Context = Constants.EmptyString,
+                    Context = String.Empty,
                     Arguments = new[]
                     {
                         // Keep aligned with Finsa.Common.Logging.CaravanLogger.SerializeJsonlogMessageCallback
                         KeyValuePair.Create("exception_data", ex.Data.LogAsJson()),
-                        KeyValuePair.Create("exception_source", ex.Source ?? Constants.EmptyString)
+                        KeyValuePair.Create("exception_source", ex.Source ?? String.Empty)
                     }
                 };
             }
             if (!String.IsNullOrWhiteSpace(msg) && msg.StartsWith(CaravanLogger.JsonMessagePrefix))
             {
                 var json = msg.Substring(CaravanLogger.JsonMessagePrefix.Length);
-                var entry = CaravanLogger.JsonSerializer.DeserializeObject<LogMessage>(json);
-                entry.LongMessage = entry.LongMessage ?? Constants.EmptyString;
-                entry.Context = entry.Context ?? Constants.EmptyString;
+                var entry = CaravanLogger.JsonSerializer.DeserializeFromString<LogMessage>(json);
+                entry.LongMessage = entry.LongMessage ?? String.Empty;
+                entry.Context = entry.Context ?? String.Empty;
                 entry.Arguments = entry.Arguments ?? ReadOnlyList.Empty<KeyValuePair<string, string>>();
                 return entry;
             }
             return new LogMessage
             {
                 ShortMessage = msg,
-                LongMessage = Constants.EmptyString,
-                Context = Constants.EmptyString,
+                LongMessage = String.Empty,
+                Context = String.Empty,
                 Arguments = ReadOnlyList.Empty<KeyValuePair<string, string>>()
             };
         }

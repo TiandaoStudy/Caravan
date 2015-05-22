@@ -39,7 +39,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
     {
         public SqlSecContextTypeConfiguration()
         {
-            ToTable("CRVN_SEC_CONTEXTS", Properties.Settings.Default.SqlSchema);
+            ToTable("CRVN_SEC_CONTEXTS", DataAccessConfiguration.Instance.SqlSchema);
 
             // SqlSecContext(N) <-> SqlSecApp(1)
             HasRequired(x => x.App)

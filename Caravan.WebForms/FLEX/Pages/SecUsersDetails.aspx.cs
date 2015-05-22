@@ -1,7 +1,9 @@
 ﻿using System;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.Common.Utilities.Diagnostics;
 using Finsa.Caravan.DataAccess;
+using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Common.Diagnostics;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 
@@ -64,7 +66,7 @@ namespace Finsa.Caravan.WebForms.Pages
             return;
          }
 
-         var user = Db.Security.User(Common.Properties.Settings.Default.ApplicationName, login);
+         var user = CaravanDataSource.Security.GetUserByLogin(CommonConfiguration.Instance.AppName, login);
          Raise<ArgumentException>.IfIsNull(user, "Given user name does not exist");
 
          txtFirstName.Text = user.FirstName;
@@ -85,13 +87,20 @@ namespace Finsa.Caravan.WebForms.Pages
               if (Mode == NewMode)
               {
                   var newUser = new SecUser { FirstName = txtFirstName.Text, LastName = txtLastName.Text, Email = txtEmail.Text, Active = chkIsActive.Checked };
-                  Db.Security.AddUser(Common.Properties.Settings.Default.ApplicationName, newUser);
+                  CaravanDataSource.Security.AddUser(CommonConfiguration.Instance.AppName, newUser);
 
               }
               else if (Mode == EditMode)
               {
-                  var newUser= new SecUser { FirstName = txtFirstName.Text, LastName = txtLastName.Text, Email = txtEmail.Text, Active = chkIsActive.Checked, Login = Login };
-                  Db.Security.UpdateUser(Common.Properties.Settings.Default.ApplicationName, Login, newUser);
+                  var newUser= new SecUserUpdates
+                  {
+                      FirstName = Option.Some(txtFirstName.Text), 
+                      LastName = Option.Some(txtLastName.Text),
+                      Email = Option.Some(txtEmail.Text), 
+                      Active = Option.Some(chkIsActive.Checked), 
+                      Login = Option.Some(Login)
+                  };
+                  CaravanDataSource.Security.UpdateUser(CommonConfiguration.Instance.AppName, Login, newUser);
               }
               Master.RegisterCloseScript(this);
           }
