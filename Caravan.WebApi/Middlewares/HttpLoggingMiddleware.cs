@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using Finsa.Caravan.Common.Logging;
+﻿using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Diagnostics;
+using Finsa.CodeServices.Common.Extensions;
 using Microsoft.Owin;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Finsa.CodeServices.Common.Extensions;
-using AppFunc = System.Func<System.Collections.Generic.IDictionary<string, object>, System.Threading.Tasks.Task>; 
+using AppFunc = System.Func<System.Collections.Generic.IDictionary<string, object>, System.Threading.Tasks.Task>;
 
 namespace Finsa.Caravan.WebApi.Middlewares
 {
@@ -52,13 +52,20 @@ namespace Finsa.Caravan.WebApi.Middlewares
 
         public async Task Invoke(IDictionary<string, object> environment)
         {
-            // Utilizzato per associare request e response nel log.
-            var requestId = Guid.NewGuid();
-            _log.GlobalVariablesContext.Set("request_id", requestId);
-
             var owinContext = new OwinContext(environment);
             var request = owinContext.Request;
             var response = owinContext.Response;
+
+            // Indica se è una richiesta per il logger: non vogliamo loggare le chiamate al log.
+            if (owinContext.Request.Uri.SafeToString().Contains("logger"))
+            {
+                await _next.Invoke(environment);
+                return;
+            }
+
+            // Utilizzato per associare request e response nel log.
+            var requestId = Guid.NewGuid();
+            _log.GlobalVariablesContext.Set("request_id", requestId);
 
             // Log request
             if (!_disposed)
@@ -128,8 +135,8 @@ namespace Finsa.Caravan.WebApi.Middlewares
                     {
                         body = await FormatBodyStreamAsync(response.Body);
 
-                        // You need to do this so that the response we buffered
-                        // is flushed out to the client application.
+                        // You need to do this so that the response we buffered is flushed out to
+                        // the client application.
                         await responseBuffer.CopyToAsync(responseStream);
                         response.Body = responseStream;
                     }
