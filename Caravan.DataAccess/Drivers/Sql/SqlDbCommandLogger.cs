@@ -1,6 +1,10 @@
-﻿using Finsa.Caravan.Common.Logging;
+﻿using System.Threading.Tasks;
+using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
+using Finsa.CodeServices.Clock;
 using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Common.Collections.Concurrent;
+using Finsa.CodeServices.Common.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -10,8 +14,6 @@ using System.Data.Common;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Globalization;
 using System.Linq;
-using Finsa.CodeServices.Common.Diagnostics;
-using Microsoft.AspNet.Identity;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -23,21 +25,27 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
     {
         private const string CommandIdVariable = "command_id";
 
+        private readonly ConcurrentDictionary<DbCommand, Task<QueryInfo>> _tmpQueryMap = new ConcurrentDictionary<DbCommand, Task<QueryInfo>>();
+
+        private readonly IClock _clock;
         private readonly ICaravanLog _log;
 
         /// <summary>
         ///   Builds an SQL command logger, using given log.
         /// </summary>
+        /// <param name="clock">The clock used to measure query execution time.</param>
         /// <param name="log">The log on which we should write.</param>
-        public SqlDbCommandLogger(ICaravanLog log)
+        public SqlDbCommandLogger(IClock clock, ICaravanLog log)
         {
+            Raise<ArgumentNullException>.IfIsNull(clock);
             Raise<ArgumentNullException>.IfIsNull(log);
+            _clock = clock;
             _log = log;
         }
 
         public void NonQueryExecuting(DbCommand command, DbCommandInterceptionContext<int> interceptionContext)
         {
-            if (IsCaravanContext(interceptionContext))
+            if (IsCaravanContext(interceptionContext) || !_log.IsTraceEnabled)
             {
                 return;
             }
@@ -45,6 +53,12 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             {
                 var commandId = Guid.NewGuid();
                 _log.ThreadVariablesContext.Set(CommandIdVariable, commandId);
+
+                _tmpQueryMap.Add(command, Task.Run(() => new QueryInfo
+                {
+                    StartedAt = _clock.Now
+                }));
+
                 _log.TraceArgs(() => new LogMessage
                 {
                     ShortMessage = String.Format("Non query command \"{0}\" started", commandId),
@@ -65,7 +79,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         public void NonQueryExecuted(DbCommand command, DbCommandInterceptionContext<int> interceptionContext)
         {
-            if (IsCaravanContext(interceptionContext))
+            if (IsCaravanContext(interceptionContext) || !_log.IsTraceEnabled)
             {
                 return;
             }
@@ -91,7 +105,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         public void ReaderExecuting(DbCommand command, DbCommandInterceptionContext<DbDataReader> interceptionContext)
         {
-            if (IsCaravanContext(interceptionContext))
+            if (IsCaravanContext(interceptionContext) || !_log.IsTraceEnabled)
             {
                 return;
             }
@@ -119,7 +133,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         public void ReaderExecuted(DbCommand command, DbCommandInterceptionContext<DbDataReader> interceptionContext)
         {
-            if (IsCaravanContext(interceptionContext))
+            if (IsCaravanContext(interceptionContext) || !_log.IsTraceEnabled)
             {
                 return;
             }
@@ -145,7 +159,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         public void ScalarExecuting(DbCommand command, DbCommandInterceptionContext<object> interceptionContext)
         {
-            if (IsCaravanContext(interceptionContext))
+            if (IsCaravanContext(interceptionContext) || !_log.IsTraceEnabled)
             {
                 return;
             }
@@ -173,7 +187,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         public void ScalarExecuted(DbCommand command, DbCommandInterceptionContext<object> interceptionContext)
         {
-            if (IsCaravanContext(interceptionContext))
+            if (IsCaravanContext(interceptionContext) || !_log.IsTraceEnabled)
             {
                 return;
             }
@@ -220,16 +234,21 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         private static List<ParameterInfo> ReadParameters(DbParameterCollection parameterCollection)
         {
-            return new List<ParameterInfo>(from DbParameter p in parameterCollection
-                                           select new ParameterInfo
-                                               {
-                                                   Name = p.ParameterName,
-                                                   Value = p.Value,
-                                                   DbType = p.DbType,
-                                                   Size = p.Size,
-                                                   IsNullable = p.IsNullable,
-                                                   Direction = p.Direction
-                                               });
+            return (from DbParameter p in parameterCollection
+                select new ParameterInfo
+                {
+                    Name = p.ParameterName,
+                    Value = p.Value,
+                    DbType = p.DbType,
+                    Size = p.Size,
+                    IsNullable = p.IsNullable,
+                    Direction = p.Direction
+                }).ToList();
+        }
+
+        private sealed class QueryInfo
+        {
+            public DateTime StartedAt { get; set; }
         }
 
         private sealed class ParameterInfo
