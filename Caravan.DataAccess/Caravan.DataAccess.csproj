@@ -199,7 +199,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activities\Logging\LogActivityBase.cs" />
+    <Compile Include="Activities\Logging\AbstractLogActivity.cs" />
     <Compile Include="DataAccessConfiguration.cs" />
     <Compile Include="CaravanDataSourceKind.cs" />
     <Compile Include="Drivers\Sql\Attributes\DateTimeKindAttribute.cs" />
