@@ -1,17 +1,17 @@
-﻿using Common.Logging;
-using Finsa.Caravan.Common.Logging;
-using Finsa.Caravan.Common.Models.Logging;
-using System;
+﻿using System;
 using System.Activities;
 using System.Collections.Generic;
-using Finsa.Caravan.Common;
+using Common.Logging;
+using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Models.Logging;
 using LL = Common.Logging.LogLevel;
 
 namespace Finsa.Caravan.DataAccess.Activities.Logging
 {
-    public abstract class AbstractLogActivity : CodeActivity
+    public abstract class AbstractLogActivity<TLogActivity> : CodeActivity
+        where TLogActivity : AbstractLogActivity<TLogActivity>
     {
-        protected abstract ICaravanLog GetCaravanLog();
+        #region Arguments
 
         public InArgument<IEnumerable<KeyValuePair<string, string>>> Arguments { get; set; }
 
@@ -29,10 +29,7 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
 
         public InArgument<string> ShortMessage { get; set; }
 
-        public InArgument<string> UserLogin { get; set; }
-
-        [RequiredArgument]
-        public InArgument<string> WorkflowName { get; set; }
+        #endregion
 
         protected override void Execute(CodeActivityContext ctx)
         {
@@ -45,18 +42,23 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
                 case LL.Trace:
                     isEnabled = log.IsTraceEnabled;
                     break;
+
                 case LL.Debug:
                     isEnabled = log.IsDebugEnabled;
                     break;
+
                 case LL.Info:
                     isEnabled = log.IsInfoEnabled;
                     break;
+
                 case LL.Warn:
                     isEnabled = log.IsWarnEnabled;
                     break;
+
                 case LL.Error:
                     isEnabled = log.IsErrorEnabled;
                     break;
+
                 case LL.Fatal:
                     isEnabled = log.IsFatalEnabled;
                     break;
@@ -66,8 +68,9 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
                 return;
             }
 
-            var exception = Exception.Get(ctx);
+            // Preparazione del messaggio di log, condizionato dalla presenza di un'eccezione.
             LogMessage logMessage;
+            var exception = Exception.Get(ctx);
             if (exception == null)
             {
                 logMessage = new LogMessage
@@ -82,32 +85,43 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
             {
                 logMessage = new LogMessage
                 {
-                    ShortMessage = ShortMessage.Get(ctx),
-                    LongMessage = LongMessage.Get(ctx),
+                    Exception = exception,
                     Context = Context.Get(ctx),
                     Arguments = Arguments.Get(ctx)
                 };
-
-                CaravanDataSource.Logger.LogRaw(
-                    ,
-                    CommonConfiguration.Instance.AppName,
-                    UserLogin.Get(ctx),
-                    WorkflowName.Get(ctx),
-                    "LogActivity.Execute",
-                    exception,
-                    Context.Get(ctx),
-                    Arguments.Get(ctx)
-                );
             }
+
             switch (logLevel)
             {
                 case LL.Trace:
                     log.TraceArgs(() => logMessage);
                     break;
+
                 case LL.Debug:
                     log.DebugArgs(() => logMessage);
                     break;
+
+                case LL.Info:
+                    log.InfoArgs(() => logMessage);
+                    break;
+
+                case LL.Warn:
+                    log.WarnArgs(() => logMessage);
+                    break;
+
+                case LL.Error:
+                    log.ErrorArgs(() => logMessage);
+                    break;
+
+                case LL.Fatal:
+                    log.FatalArgs(() => logMessage);
+                    break;
             }
+        }
+
+        protected virtual ICaravanLog GetCaravanLog()
+        {
+            return LogManager.GetLogger<TLogActivity>() as ICaravanLog;
         }
     }
 }
