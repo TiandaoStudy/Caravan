@@ -50,7 +50,7 @@ CREATE TABLE mydb.crvn_log_entries
    , cusr_login        NVARCHAR2(32)
    , clog_code_unit    NVARCHAR2(256)
    , clog_function     NVARCHAR2(256)
-   , clog_short_msg    NVARCHAR2(256)       NOT NULL
+   , clog_short_msg    NVARCHAR2(1024)      NOT NULL
    , clog_long_msg     CLOB
    , clog_context      NVARCHAR2(256)
    , clog_key_0        NVARCHAR2(32)
