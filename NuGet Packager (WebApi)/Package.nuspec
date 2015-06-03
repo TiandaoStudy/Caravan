@@ -23,7 +23,7 @@ A short description of the package. If specified, this shows up in the middle pa
         <copyright>Copyright © Finsa S.p.A. 2014-2024</copyright>
         <dependencies>
             <dependency id="Finsa.Caravan.Common.Runtime" version="1.8" />
-            <dependency id="Finsa.Caravan.DataAccess" version="1.8" />
+            <dependency id="Finsa.Caravan.DataAccess.Runtime" version="1.8" />
             <dependency id="LinqToQuerystring.WebApi2" version="1.4.1.14" />
             <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
             <dependency id="Microsoft.Owin" version="3.0.1" />
