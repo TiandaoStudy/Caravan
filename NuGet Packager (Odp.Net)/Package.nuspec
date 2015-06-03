@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<package>
+   <metadata>
+      <id>Finsa.Odp.Net.Unofficial</id>
+      <version>5.0.0</version>
+      <title>ODP.NET 12.1.0.2.1 (Unofficial package by Finsa S.p.A.)</title>
+      <authors>Oracle Corporation</authors>
+      <owners>Finsa S.p.A. &lt;finsa@finsa.it&gt;</owners>
+      <description>
+Latest version (12.1.0.2.1) of ODP.NET, the managed Oracle driver for the .NET Framework.
+
+This unofficial package includes the library necessary to use ODP.NET with Entity Framework 6 Code First, which is currently available on .NET 4.5 and above.
+
+THIS PACKAGE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE PACKAGE OR THE USE OR OTHER DEALINGS IN THE PACKAGE.
+      </description>
+      <releaseNotes>
+* Added missing native libraries.
+* Added proper README and LICENSE.
+      </releaseNotes>
+      <summary>
+Latest version (12.1.0.2.1) of ODP.NET, the Oracle driver for the .NET Framework. This is an unofficial package.
+      </summary>
+      <language>en-US</language>
+      <projectUrl>http://www.oracle.com/technetwork/topics/dotnet/index-085163.html</projectUrl>
+      <iconUrl>http://www.finsa.it/public/projects/odp.net/logo-128.png</iconUrl>
+      <requireLicenseAcceptance>false</requireLicenseAcceptance>
+      <licenseUrl>http://www.oracle.com/technetwork/licenses/distribution-license-152002.html</licenseUrl>
+      <copyright>Copyright Oracle Corporation</copyright>
+      <dependencies>
+         <dependency id="Finsa.Odp.Net.Core.Unofficial" version="5.0.0" />
+      </dependencies>
+      <references></references>
+      <tags>oracle data provider odp net entity framework managed odac</tags>
+   </metadata>
+   <files>
+      <file src="content\" target="content" />
+      <file src="tools\" target="tools" />
+      <file src="license.txt" target="license.txt" />
+      <file src="readme.txt" target="readme.txt" />
+   </files>
+</package>
