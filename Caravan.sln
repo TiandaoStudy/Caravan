@@ -100,8 +100,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet Packager (Odp.Net.Core)", "NuGet Packager (Odp.Net.Core)\NuGet Packager (Odp.Net.Core).csproj", "{14EDA0EF-4F01-4351-8956-2DBAE592F0BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet Packager (WebApi)", "NuGet Packager (WebApi)\NuGet Packager (WebApi).csproj", "{EE783385-E6CC-4F01-BCCC-DAB9C6DBDE55}"
+	ProjectSection(ProjectDependencies) = postProject
+		{27D82597-28B1-4441-8C42-0A220C38C4D8} = {27D82597-28B1-4441-8C42-0A220C38C4D8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet Packager (WebForms)", "NuGet Packager (WebForms)\NuGet Packager (WebForms).csproj", "{EFCDFAD1-AD81-4663-83E3-D6C4A4F1CC0E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{407B5921-9039-4D0D-A40A-36A19C251CDC} = {407B5921-9039-4D0D-A40A-36A19C251CDC}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
