@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using WebMarkupMin.WebForms.MasterPages;
 
 namespace Finsa.Caravan.ReportingService
 {
-    public partial class SiteMaster : MasterPage
+    public partial class SiteMaster : MinifiedAndCompressedHtmlMasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

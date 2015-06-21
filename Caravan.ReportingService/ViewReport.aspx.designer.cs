@@ -11,5 +11,14 @@ namespace Finsa.Caravan.ReportingService {
     
     
     public partial class ReportViewer {
+        
+        /// <summary>
+        /// theReport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Microsoft.Reporting.WebForms.ReportViewer theReport;
     }
 }

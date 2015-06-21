@@ -22,6 +22,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>bc53ad9d</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,6 +42,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxMin, Version=5.14.5506.26196, Culture=neutral, PublicKeyToken=21ef50ce11b5d80f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AjaxMin.5.14.5506.26202\lib\net40\AjaxMin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
@@ -53,20 +58,79 @@
       <HintPath>..\packages\AspNet.ScriptManager.jQuery.2.1.4\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CodeProject.ObjectPool, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CodeProject.ObjectPool.1.6.0\lib\net40-client\CodeProject.ObjectPool.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.1.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.1.0\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.1.0\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Crc32C.NET, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Crc32C.NET.1.0.5.0\lib\net20\Crc32C.NET.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EcmaScript.NET, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EcmaScript.Net.1.0.1.0\lib\net20\EcmaScript.NET.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Finsa.CodeServices.Clock, Version=1.14.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Clock.1.14\lib\net40\Finsa.CodeServices.Clock.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Finsa.CodeServices.Common, Version=1.14.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Common.1.14\lib\net40-client\Finsa.CodeServices.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Finsa.CodeServices.Compression, Version=1.14.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Compression.1.14\lib\net40\Finsa.CodeServices.Compression.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Finsa.CodeServices.Serialization, Version=1.14.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Serialization.1.14\lib\net40\Finsa.CodeServices.Serialization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Finsa.CodeServices.Testing, Version=1.14.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Testing.1.14\lib\net40\Finsa.CodeServices.Testing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="LZ4, Version=1.0.5.93, Culture=neutral, PublicKeyToken=fd2bda0a70c5a705, processorArchitecture=MSIL">
+      <HintPath>..\packages\lz4net.1.0.5.93\lib\net40-client\LZ4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>ReportViewer\Microsoft.ReportViewer.WebForms.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>Content\ReportViewer\Microsoft.ReportViewer.WebForms.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PommaLabs.KVLite, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PommaLabs.KVLite.Core.3.1.1\lib\net45\PommaLabs.KVLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Snappy.NET, Version=1.1.1.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Snappy.NET.1.1.1.8\lib\net45\Snappy.NET.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.SQLite, Version=1.0.96.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.96.0\lib\net45\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -102,9 +166,37 @@
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="WebMarkupMin.Core, Version=0.9.12.0, Culture=neutral, PublicKeyToken=99472178d266584b, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebMarkupMin.Core.0.9.12\lib\net40\WebMarkupMin.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebMarkupMin.MsAjax, Version=0.9.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebMarkupMin.MsAjax.0.9.11\lib\net40\WebMarkupMin.MsAjax.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebMarkupMin.Web, Version=0.9.2.0, Culture=neutral, PublicKeyToken=99472178d266584b, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebMarkupMin.Web.0.9.2\lib\net40\WebMarkupMin.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebMarkupMin.WebForms, Version=0.9.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebMarkupMin.WebForms.0.9.2\lib\net40\WebMarkupMin.WebForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebMarkupMin.Yui, Version=0.9.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebMarkupMin.Yui.0.9.5\lib\net40\WebMarkupMin.Yui.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Westwind.Utilities.Configuration, Version=2.25.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Westwind.Utilities.Configuration.2.25\lib\net40\Westwind.Utilities.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Yahoo.Yui.Compressor, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YUICompressor.NET.2.7.0.0\lib\NET20\Yahoo.Yui.Compressor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\PersistentCache\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
@@ -113,44 +205,46 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\normalize.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Icon.png" />
     <Content Include="packages.config" />
-    <Content Include="ReportViewer\README.md" />
+    <Content Include="Content\ReportViewer\README.md" />
     <Content Include="ViewReport.aspx" />
-    <Content Include="ReportViewer\de\Microsoft.ReportViewer.WebForms.resources.dll" />
-    <Content Include="ReportViewer\de\Microsoft.ReportViewer.WinForms.resources.dll" />
-    <Content Include="ReportViewer\en\Microsoft.ReportViewer.WebForms.xml" />
-    <Content Include="ReportViewer\en\Microsoft.ReportViewer.WinForms.xml" />
-    <Content Include="ReportViewer\es\Microsoft.ReportViewer.WebForms.resources.dll" />
-    <Content Include="ReportViewer\es\Microsoft.ReportViewer.WinForms.resources.dll" />
-    <Content Include="ReportViewer\fr\Microsoft.ReportViewer.WebForms.resources.dll" />
-    <Content Include="ReportViewer\fr\Microsoft.ReportViewer.WinForms.resources.dll" />
-    <Content Include="ReportViewer\it\Microsoft.ReportViewer.WebForms.resources.dll" />
-    <Content Include="ReportViewer\it\Microsoft.ReportViewer.WinForms.resources.dll" />
-    <Content Include="ReportViewer\ja\Microsoft.ReportViewer.WebForms.resources.dll" />
-    <Content Include="ReportViewer\ja\Microsoft.ReportViewer.WinForms.resources.dll" />
-    <Content Include="ReportViewer\ko\Microsoft.ReportViewer.WebForms.resources.dll" />
-    <Content Include="ReportViewer\ko\Microsoft.ReportViewer.WinForms.resources.dll" />
-    <Content Include="ReportViewer\Microsoft.ReportViewer.WebForms.dll" />
-    <Content Include="ReportViewer\Microsoft.ReportViewer.WinForms.dll" />
-    <Content Include="ReportViewer\pt\Microsoft.ReportViewer.WebForms.resources.dll" />
-    <Content Include="ReportViewer\pt\Microsoft.ReportViewer.WinForms.resources.dll" />
-    <Content Include="ReportViewer\RSClientPrint-x64.cab" />
-    <Content Include="ReportViewer\RSClientPrint-x86.cab" />
-    <Content Include="ReportViewer\ru\Microsoft.ReportViewer.WebForms.resources.dll" />
-    <Content Include="ReportViewer\ru\Microsoft.ReportViewer.WinForms.resources.dll" />
-    <Content Include="ReportViewer\zh-CHS\Microsoft.ReportViewer.WebForms.resources.dll" />
-    <Content Include="ReportViewer\zh-CHS\Microsoft.ReportViewer.WinForms.resources.dll" />
-    <Content Include="ReportViewer\zh-CHT\Microsoft.ReportViewer.WebForms.resources.dll" />
-    <Content Include="ReportViewer\zh-CHT\Microsoft.ReportViewer.WinForms.resources.dll" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\ReportViewer\de\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\de\Microsoft.ReportViewer.WinForms.resources.dll" />
+    <Content Include="Content\ReportViewer\en\Microsoft.ReportViewer.WebForms.xml" />
+    <Content Include="Content\ReportViewer\en\Microsoft.ReportViewer.WinForms.xml" />
+    <Content Include="Content\ReportViewer\es\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\es\Microsoft.ReportViewer.WinForms.resources.dll" />
+    <Content Include="Content\ReportViewer\fr\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\fr\Microsoft.ReportViewer.WinForms.resources.dll" />
+    <Content Include="Content\ReportViewer\it\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\it\Microsoft.ReportViewer.WinForms.resources.dll" />
+    <Content Include="Content\ReportViewer\ja\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\ja\Microsoft.ReportViewer.WinForms.resources.dll" />
+    <Content Include="Content\ReportViewer\ko\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\ko\Microsoft.ReportViewer.WinForms.resources.dll" />
+    <Content Include="Content\ReportViewer\Microsoft.ReportViewer.WebForms.dll" />
+    <Content Include="Content\ReportViewer\Microsoft.ReportViewer.WinForms.dll" />
+    <Content Include="Content\ReportViewer\pt\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\pt\Microsoft.ReportViewer.WinForms.resources.dll" />
+    <Content Include="Content\ReportViewer\RSClientPrint-x64.cab" />
+    <Content Include="Content\ReportViewer\RSClientPrint-x86.cab" />
+    <Content Include="Content\ReportViewer\ru\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\ru\Microsoft.ReportViewer.WinForms.resources.dll" />
+    <Content Include="Content\ReportViewer\zh-CHS\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\zh-CHS\Microsoft.ReportViewer.WinForms.resources.dll" />
+    <Content Include="Content\ReportViewer\zh-CHT\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\zh-CHT\Microsoft.ReportViewer.WinForms.resources.dll" />
+    <Content Include="Fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="KVLite.config" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -201,6 +295,9 @@
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="WebMarkupMin.Configuration.xsd">
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -260,7 +357,15 @@
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Caravan.Common\Caravan.Common.csproj">
+      <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>
+      <Name>Caravan.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reports\Report1.rdlc" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -292,7 +397,11 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.96.0\build\net45\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.96.0\build\net45\System.Data.SQLite.Core.targets'))" />
   </Target>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.96.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.96.0\build\net45\System.Data.SQLite.Core.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
