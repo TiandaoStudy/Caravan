@@ -4,7 +4,7 @@ using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Security;
 using Finsa.CodeServices.Serialization;
-using Finsa.CodeServices.Serialization.Extensions;
+using Finsa.CodeServices.Security.Hashing;
 using MongoDB.Bson;
 using MongoDB.Driver;
 

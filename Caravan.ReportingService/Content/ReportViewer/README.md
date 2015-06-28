@@ -1,1 +1,0 @@
-﻿This version has been taken from the Microsoft Visual Studio 2013 installation folder. 
