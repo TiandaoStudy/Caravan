@@ -4,7 +4,7 @@
 
 CREATE TABLE mydb.crvn_sec_apps
 (
-     capp_id          NUMBER          NOT NULL 
+     capp_id          NUMBER(19)      NOT NULL 
    , capp_name        NVARCHAR2(32)   NOT NULL
    , capp_descr       NVARCHAR2(256)  NOT NULL
    , CHECK (capp_name = lower(capp_name)) ENABLE
@@ -19,7 +19,7 @@ CREATE SEQUENCE mydb.crvn_sec_apps_id;
 
 CREATE TABLE mydb.crvn_log_settings
 (
-     capp_id          NUMBER          NOT NULL
+     capp_id          NUMBER(19)      NOT NULL
    , clos_type        NVARCHAR2(8)    NOT NULL
    , clos_enabled     NUMBER(1)       NOT NULL
    , clos_days        NUMBER(3)       NOT NULL
@@ -43,15 +43,15 @@ COMMENT ON COLUMN mydb.crvn_log_settings.clos_max_entries IS 'Massimo numero di 
 
 CREATE TABLE mydb.crvn_log_entries 
 (  
-     clog_id           NUMBER               NOT NULL
-   , capp_id           NUMBER               NOT NULL
+     clog_id           NUMBER(19)           NOT NULL
+   , capp_id           NUMBER(19)           NOT NULL
    , clos_type         NVARCHAR2(8)         NOT NULL
    , clog_date         DATE DEFAULT SYSDATE NOT NULL 
    , cusr_login        NVARCHAR2(32)
    , clog_code_unit    NVARCHAR2(256)
    , clog_function     NVARCHAR2(256)
    , clog_short_msg    NVARCHAR2(1024)      NOT NULL
-   , clog_long_msg     CLOB
+   , clog_long_msg     NCLOB
    , clog_context      NVARCHAR2(256)
    , clog_key_0        NVARCHAR2(32)
    , clog_value_0      NVARCHAR2(1024)

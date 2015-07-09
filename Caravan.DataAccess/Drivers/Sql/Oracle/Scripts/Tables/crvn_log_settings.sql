@@ -2,7 +2,7 @@
 
 CREATE TABLE mydb.crvn_log_settings
 (
-     capp_id          NUMBER          NOT NULL
+     capp_id          NUMBER(19)      NOT NULL
    , clos_type        NVARCHAR2(8)    NOT NULL
    , clos_enabled     NUMBER(1)       NOT NULL
    , clos_days        NUMBER(3)       NOT NULL

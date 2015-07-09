@@ -2,7 +2,7 @@
 
 CREATE TABLE mydb.crvn_sec_apps
 (
-     capp_id          NUMBER          NOT NULL 
+     capp_id          NUMBER(19)      NOT NULL 
    , capp_name        NVARCHAR2(32)   NOT NULL
    , capp_descr       NVARCHAR2(256)  NOT NULL
    , CHECK (capp_name = lower(capp_name)) ENABLE
