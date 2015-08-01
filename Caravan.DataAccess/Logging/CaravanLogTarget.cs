@@ -20,15 +20,15 @@ namespace Finsa.Caravan.DataAccess.Logging
     /// <summary>
     ///   Target per il log di Caravan su database.
     /// </summary>
-    [Target("CaravanLogger")]
-    public class CaravanLoggerTarget : Target
+    [Target("CaravanLog")]
+    public class CaravanLogTarget : Target
     {
         private static readonly SimpleLayout DefaultLogLevel = new SimpleLayout("${level}");
 
         /// <summary>
         ///   Builds the target with default layout formats.
         /// </summary>
-        public CaravanLoggerTarget()
+        public CaravanLogTarget()
         {
             LogLevel = DefaultLogLevel;
             UserLogin = new SimpleLayout("${identity:name=true:lowercase=true}");
