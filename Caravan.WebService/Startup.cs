@@ -3,7 +3,7 @@ using System.Data.Entity.Infrastructure.Interception;
 using System.Web;
 using System.Web.Http;
 using Common.Logging;
-using Finsa.Caravan.DataAccess.Drivers.Sql;
+using Finsa.Caravan.DataAccess.Logging.Sql;
 using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebApi.Middlewares;
 using Finsa.Caravan.WebService;

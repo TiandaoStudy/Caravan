@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
+using Finsa.Caravan.DataAccess.Drivers.Sql;
 using Finsa.CodeServices.Clock;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Collections.Concurrent;
@@ -16,7 +17,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using JsonSettings = Finsa.CodeServices.Serialization.JsonSerializerSettings;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql
+namespace Finsa.Caravan.DataAccess.Logging.Sql
 {
     /// <summary>
     ///   Logs useful information about each SQL command. It does not log queries performed by
