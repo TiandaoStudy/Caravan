@@ -1,18 +1,18 @@
-﻿using Fasterflect;
-using Finsa.Caravan.Common.Logging;
-using Finsa.Caravan.Common.Models.Logging;
-using Finsa.CodeServices.Common;
-using NLog;
-using NLog.Config;
-using NLog.Layouts;
-using NLog.Targets;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Fasterflect;
 using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Models.Logging;
+using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Collections.ReadOnly;
+using NLog;
+using NLog.Config;
+using NLog.Layouts;
+using NLog.Targets;
 using LogLevel = Common.Logging.LogLevel;
 
 namespace Finsa.Caravan.DataAccess.Logging
@@ -21,14 +21,14 @@ namespace Finsa.Caravan.DataAccess.Logging
     ///   Target per il log di Caravan su database.
     /// </summary>
     [Target("CaravanDbLogger")]
-    public class CaravanLoggerTarget : Target
+    public class CaravanDbLoggerTarget : Target
     {
         private static readonly SimpleLayout DefaultLogLevel = new SimpleLayout("${level}");
 
         /// <summary>
         ///   Builds the target with default layout formats.
         /// </summary>
-        public CaravanLoggerTarget()
+        public CaravanDbLoggerTarget()
         {
             LogLevel = DefaultLogLevel;
             UserLogin = new SimpleLayout("${identity:name=true:lowercase=true}");
@@ -133,7 +133,7 @@ namespace Finsa.Caravan.DataAccess.Logging
         private static IEnumerable<KeyValuePair<string, string>> GetGlobalVariables()
         {
             var globalDict = GlobalDict.Invoke(null) as Dictionary<string, string>;
-            Debug.Assert(globalDict != null, "This should always be true for NLog 3.2.0, check before using other versions.");
+            Debug.Assert(globalDict != null, "This should always be true for NLog 4.0.1, check before using other versions.");
             // We make a snapshot of the dictionary, since it may easily change.
             return globalDict.Select(kv => KeyValuePair.Create(kv.Key, kv.Value)).ToList();
         }
@@ -142,7 +142,7 @@ namespace Finsa.Caravan.DataAccess.Logging
         private static IEnumerable<KeyValuePair<string, string>> GetThreadVariables()
         {
             var threadDict = ThreadDict.Invoke(null) as Dictionary<string, string>;
-            Debug.Assert(threadDict != null, "This should always be true for NLog 3.2.0, check before using other versions.");
+            Debug.Assert(threadDict != null, "This should always be true for NLog 4.0.1, check before using other versions.");
             // We make a snapshot of the dictionary, since it may easily change.
             return threadDict.Select(kv => KeyValuePair.Create(kv.Key, kv.Value)).ToList();
         }

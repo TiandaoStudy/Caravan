@@ -218,7 +218,7 @@
     <Compile Include="CaravanDataSourceKind.cs" />
     <Compile Include="Drivers\Sql\Attributes\DateTimeKindAttribute.cs" />
     <Compile Include="Drivers\Sql\SqlDbCommandLogger.cs" />
-    <Compile Include="Logging\CaravanLoggerTarget.cs" />
+    <Compile Include="Logging\CaravanDbLoggerTarget.cs" />
     <Compile Include="Drivers\Sql\Models\Security\SqlSecRole.cs" />
     <Compile Include="Core\AbstractDataSourceManager.cs" />
     <Compile Include="Core\AbstractLogRepository.cs" />

@@ -32,10 +32,11 @@ namespace Finsa.Caravan.Common.Models.Logging
         ///   Arguments.
         /// </summary>
         [JsonProperty("a")]
-        public IEnumerable<KeyValuePair<string, string>> Arguments { get; set; } 
+        public IEnumerable<KeyValuePair<string, string>> Arguments { get; set; }
 
         /// <summary>
-        ///   Exception (optional), must _not_ be serialized.
+        ///   Exception (optional), must _not_ be serialized. In fact, its content is assigned to
+        ///   above properties.
         /// </summary>
         public Exception Exception { get; set; }
     }
