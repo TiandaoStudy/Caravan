@@ -8,10 +8,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Finsa.Caravan.Common")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Finsa S.p.A")]
+[assembly: AssemblyCompany("Finsa S.p.A.")]
 [assembly: AssemblyProduct("Finsa.Caravan.Common")]
-[assembly: AssemblyCopyright("Copyright © Finsa S.p.A 2014-2024")]
-[assembly: AssemblyTrademark("Finsa S.p.A")]
+[assembly: AssemblyCopyright("Copyright © Finsa S.p.A. 2014-2024")]
+[assembly: AssemblyTrademark("Finsa S.p.A.")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible to COM components. If

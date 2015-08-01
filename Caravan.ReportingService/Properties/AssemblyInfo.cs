@@ -1,14 +1,13 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following set of attributes.
 // Change these attribute values to modify the information associated with an assembly.
-[assembly: AssemblyTitle("Finsa.Caravan.WebService")]
+[assembly: AssemblyTitle("Finsa.Caravan.ReportingService")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Finsa S.p.A.")]
-[assembly: AssemblyProduct("Finsa.Caravan.WebService")]
+[assembly: AssemblyProduct("Finsa.Caravan.ReportingService")]
 [assembly: AssemblyCopyright("Copyright © Finsa S.p.A. 2014-2024")]
 [assembly: AssemblyTrademark("Finsa S.p.A.")]
 [assembly: AssemblyCulture("")]
@@ -18,7 +17,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c9eb51a4-d503-40bc-b7b6-3f835afef332")]
+[assembly: Guid("972058e8-6b1a-4a86-823e-397e9a7ef01b")]
 
 // Version information for an assembly consists of the following four values:
 // 
@@ -26,6 +25,5 @@ using System.Runtime.InteropServices;
 // 
 // You can specify all the values or you can default the Revision and Build Numbers by using the '*'
 // as shown below:
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: InternalsVisibleTo("UnitTests.WebService")]
+[assembly: AssemblyVersion("1.8")]
+[assembly: AssemblyFileVersion("1.8")]

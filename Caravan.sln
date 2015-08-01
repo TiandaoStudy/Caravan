@@ -113,6 +113,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet Packagers", "NuGet Pa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet Packager (DataAccess.Runtime)", "NuGet Packager (DataAccess.Runtime)\NuGet Packager (DataAccess.Runtime).csproj", "{90139BED-46DA-455A-8C62-D59EFA4BFCCF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.ReportingService", "Caravan.ReportingService\Caravan.ReportingService.csproj", "{2154E6F0-6E36-4055-ADAB-034AA9A45906}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -221,6 +223,12 @@ Global
 		{90139BED-46DA-455A-8C62-D59EFA4BFCCF}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
 		{90139BED-46DA-455A-8C62-D59EFA4BFCCF}.Publish|Any CPU.Build.0 = Debug|Any CPU
 		{90139BED-46DA-455A-8C62-D59EFA4BFCCF}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{2154E6F0-6E36-4055-ADAB-034AA9A45906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2154E6F0-6E36-4055-ADAB-034AA9A45906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2154E6F0-6E36-4055-ADAB-034AA9A45906}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{2154E6F0-6E36-4055-ADAB-034AA9A45906}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{2154E6F0-6E36-4055-ADAB-034AA9A45906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2154E6F0-6E36-4055-ADAB-034AA9A45906}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

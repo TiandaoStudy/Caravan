@@ -10,10 +10,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Finsa.Caravan.DataAccess")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Finsa S.p.A")]
+[assembly: AssemblyCompany("Finsa S.p.A.")]
 [assembly: AssemblyProduct("Finsa.Caravan.DataAccess")]
-[assembly: AssemblyCopyright("Copyright © Finsa S.p.A 2014-2024")]
-[assembly: AssemblyTrademark("Finsa S.p.A")]
+[assembly: AssemblyCopyright("Copyright © Finsa S.p.A. 2014-2024")]
+[assembly: AssemblyTrademark("Finsa S.p.A.")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
