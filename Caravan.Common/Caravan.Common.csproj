@@ -133,8 +133,6 @@
     <Compile Include="Core\ErrorMessages.cs" />
     <Compile Include="Logging\CaravanLogger.cs" />
     <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />
-    <Compile Include="Logging\NoOpCaravanLogger.cs" />
-    <Compile Include="Logging\NoOpCaravanLoggerFactoryAdapter.cs" />
     <Compile Include="Logging\ICaravanLogRepository.cs" />
     <Compile Include="Logging\LogExtensions.cs" />
     <Compile Include="Models\Logging\LogEntryQuery.cs" />

@@ -1,12 +1,9 @@
 ﻿using Common.Logging;
 using Finsa.Caravan.Common;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using Finsa.CodeServices.Common.Diagnostics;
 using PommaLabs.KVLite;
 using PommaLabs.KVLite.Web.Http;
-using System;
 using System.Web.Http;
-using Finsa.CodeServices.Common.Diagnostics;
 
 namespace Finsa.Caravan.WebApi
 {
@@ -15,10 +12,18 @@ namespace Finsa.Caravan.WebApi
     /// </summary>
     public sealed class ServiceHelper
     {
-        public static void OnStart(HttpConfiguration config, ILog log, ICache cache)
+        /// <summary>
+        ///   Esegue alcune operazioni preliminari all'avvio dell'applicazione.
+        /// </summary>
+        /// <param name="configuration">La configurazione HTTP.</param>
+        /// <param name="log">Un'istanza valida del log.</param>
+        /// <param name="cache">Un'istanza valida della cache.</param>
+        public static void OnStart(HttpConfiguration configuration, ILog log, ICache cache)
         {
             // Controlli di integrità.
-            Raise<ArgumentNullException>.IfIsNull(log);
+            RaiseArgumentNullException.IfIsNull(configuration, nameof(configuration));
+            RaiseArgumentNullException.IfIsNull(log, nameof(log));
+            RaiseArgumentNullException.IfIsNull(cache, nameof(cache));
 
             // Loggo l'avvio dell'applicazione.
             log.InfoFormat("Application {0} started", CommonConfiguration.Instance.AppName);
@@ -32,7 +37,7 @@ namespace Finsa.Caravan.WebApi
             }
 
             // Imposta KVLite come gestore della cache di output.
-            ApiOutputCache.RegisterAsCacheOutputProvider(config, cache);
+            ApiOutputCache.RegisterAsCacheOutputProvider(configuration, cache);
         }
     }
 }

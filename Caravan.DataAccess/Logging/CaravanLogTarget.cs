@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using Fasterflect;
+﻿using Fasterflect;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
@@ -13,6 +8,11 @@ using NLog;
 using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using LogLevel = Common.Logging.LogLevel;
 
 namespace Finsa.Caravan.DataAccess.Logging
@@ -23,7 +23,7 @@ namespace Finsa.Caravan.DataAccess.Logging
     [Target("CaravanLog")]
     public class CaravanLogTarget : Target
     {
-        private static readonly SimpleLayout DefaultLogLevel = new SimpleLayout("${level}");
+        static readonly SimpleLayout DefaultLogLevel = new SimpleLayout("${level}");
 
         /// <summary>
         ///   Builds the target with default layout formats.
@@ -81,7 +81,7 @@ namespace Finsa.Caravan.DataAccess.Logging
             );
         }
 
-        private static LogMessage ParseMessage(LogEventInfo logEvent)
+        static LogMessage ParseMessage(LogEventInfo logEvent)
         {
             var msg = logEvent.FormattedMessage;
             var ex = logEvent.Exception;
@@ -94,18 +94,18 @@ namespace Finsa.Caravan.DataAccess.Logging
                 }
                 return new LogMessage
                 {
-                    ShortMessage = ((msg != null) ? msg + " - " : String.Empty),
+                    ShortMessage = ((msg != null) ? msg + " - " : string.Empty),
                     LongMessage = ex.StackTrace,
                     Context = String.Empty,
                     Arguments = new[]
                     {
                         // Keep aligned with Finsa.Common.Logging.CaravanLogger.SerializeJsonlogMessageCallback
                         KeyValuePair.Create("exception_data", ex.Data.LogAsJson()),
-                        KeyValuePair.Create("exception_source", ex.Source ?? String.Empty)
+                        KeyValuePair.Create("exception_source", ex.Source ?? string.Empty)
                     }
                 };
             }
-            if (!String.IsNullOrWhiteSpace(msg) && msg.StartsWith(CaravanLogger.JsonMessagePrefix))
+            if (!string.IsNullOrWhiteSpace(msg) && msg.StartsWith(CaravanLogger.JsonMessagePrefix, StringComparison.Ordinal))
             {
                 var json = msg.Substring(CaravanLogger.JsonMessagePrefix.Length);
                 var entry = CaravanLogger.JsonSerializer.DeserializeFromString<LogMessage>(json);
@@ -125,12 +125,12 @@ namespace Finsa.Caravan.DataAccess.Logging
 
         #region Raw reflection for NLog
 
-        private static readonly Flags DictFlags = Flags.Static | Flags.NonPublic;
-        private static readonly MemberGetter GlobalDict = typeof(GlobalDiagnosticsContext).DelegateForGetFieldValue("dict", DictFlags);
-        private static readonly MemberGetter ThreadDict = typeof(MappedDiagnosticsContext).DelegateForGetPropertyValue("ThreadDictionary", DictFlags);
+        static readonly Flags DictFlags = Flags.Static | Flags.NonPublic;
+        static readonly MemberGetter GlobalDict = typeof(GlobalDiagnosticsContext).DelegateForGetFieldValue("dict", DictFlags);
+        static readonly MemberGetter ThreadDict = typeof(MappedDiagnosticsContext).DelegateForGetPropertyValue("ThreadDictionary", DictFlags);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static IEnumerable<KeyValuePair<string, string>> GetGlobalVariables()
+        static IEnumerable<KeyValuePair<string, string>> GetGlobalVariables()
         {
             var globalDict = GlobalDict.Invoke(null) as Dictionary<string, string>;
             Debug.Assert(globalDict != null, "This should always be true for NLog 4.0.1, check before using other versions.");
@@ -139,7 +139,7 @@ namespace Finsa.Caravan.DataAccess.Logging
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static IEnumerable<KeyValuePair<string, string>> GetThreadVariables()
+        static IEnumerable<KeyValuePair<string, string>> GetThreadVariables()
         {
             var threadDict = ThreadDict.Invoke(null) as Dictionary<string, string>;
             Debug.Assert(threadDict != null, "This should always be true for NLog 4.0.1, check before using other versions.");

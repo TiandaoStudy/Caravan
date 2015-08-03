@@ -1,15 +1,15 @@
-﻿using System;
-using System.Net.Http;
-using System.ServiceModel.Channels;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
-using Finsa.Caravan.Common.Logging;
+﻿using Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Diagnostics;
 using Finsa.CodeServices.Common.Extensions;
 using Microsoft.Owin;
+using System;
+using System.Net.Http;
+using System.ServiceModel.Channels;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace Finsa.Caravan.WebApi.DelegatingHandlers
 {
@@ -18,46 +18,46 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
     /// </summary>
     public class LoggingDelegatingHandler : DelegatingHandler
     {
-        private readonly ICaravanLog _log;
+        readonly ILog _log;
 
         /// <summary>
         ///   Builds the handler using given log.
         /// </summary>
         /// <param name="log">The log used by the handler.</param>
-        public LoggingDelegatingHandler(ICaravanLog log)
+        public LoggingDelegatingHandler(ILog log)
         {
-            Raise<ArgumentNullException>.IfIsNull(log);
+            RaiseArgumentNullException.IfIsNull(log, nameof(log));
             _log = log;
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             // Utilizzato per associare request e response nel log.
-            var requestId = Guid.NewGuid();
+            var requestId = UniqueIdGenerator.NewBase32("-");
             _log.GlobalVariablesContext.Set("request_id", requestId);
 
             try
             {
                 var requestBody = (request.Content == null) ? String.Empty : request.Content.ReadAsStringAsync().Result;
 
-                _log.TraceArgs(() => new LogMessage
+                _log.Trace(new LogMessage
                 {
                     ShortMessage = String.Format("Request \"{0}\" at \"{1}\"", requestId, request.RequestUri.SafeToString()),
                     LongMessage = requestBody,
                     Context = "Logging request",
                     Arguments = new[]
                     {
-                        KeyValuePair.Create("from", GetClientIP(request)),
-                        KeyValuePair.Create("user_agent", request.Headers.UserAgent.SafeToString()),
-                        KeyValuePair.Create("uri", request.RequestUri.SafeToString()),
-                        KeyValuePair.Create("method", request.Method.SafeToString()),
-                        KeyValuePair.Create("headers", request.Headers.SafeToString())
+                        KeyValuePair.Create("request_remote_ip_address", GetClientIP(request)),
+                        KeyValuePair.Create("request_user_agent", request.Headers.UserAgent.SafeToString()),
+                        KeyValuePair.Create("request_uri", request.RequestUri.SafeToString()),
+                        KeyValuePair.Create("request_method", request.Method.SafeToString()),
+                        KeyValuePair.Create("request_headers", request.Headers.SafeToString())
                     }
                 });
             }
             catch (Exception ex)
             {
-                _log.ErrorArgs(() => new LogMessage
+                _log.Error(new LogMessage
                 {
                     Exception = ex,
                     Context = "Logging request"
@@ -75,20 +75,21 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
                     {
                         var responseBody = (response.Content == null) ? String.Empty : response.Content.ReadAsStringAsync().Result;
 
-                        _log.TraceArgs(() => new LogMessage
+                        _log.Trace(new LogMessage
                         {
-                            ShortMessage = String.Format("Response \"{0}\" for \"{1}\"", requestId, request.RequestUri.SafeToString()),
+                            ShortMessage = string.Format("Response \"{0}\" for \"{1}\"", requestId, request.RequestUri.SafeToString()),
                             LongMessage = responseBody,
                             Context = "Logging response",
                             Arguments = new[]
                             {
-                                KeyValuePair.Create("status_code", response.StatusCode.SafeToString())
+                                KeyValuePair.Create("response_status_code", response.StatusCode.SafeToString()),
+                                KeyValuePair.Create("response_headers", response.Headers.SafeToString())
                             }
                         });
                     }
                     catch (Exception ex)
                     {
-                        _log.ErrorArgs(() => new LogMessage
+                        _log.Error(new LogMessage
                         {
                             Exception = ex,
                             Context = "Logging response"
@@ -100,7 +101,7 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
             }
             catch (Exception ex)
             {
-                _log.FatalArgs(() => new LogMessage
+                _log.Fatal(new LogMessage
                 {
                     Exception = ex,
                     Context = "Processing response"
@@ -122,7 +123,7 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
             // Web-hosting
             if (request.Properties.ContainsKey(HttpContext))
             {
-                var ctx = (HttpContextWrapper) request.Properties[HttpContext];
+                var ctx = (HttpContextWrapper)request.Properties[HttpContext];
                 if (ctx != null)
                 {
                     return ctx.Request.UserHostAddress;
@@ -132,7 +133,7 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
             // Self-hosting
             if (request.Properties.ContainsKey(RemoteEndpointMessage))
             {
-                var remoteEndpoint = (RemoteEndpointMessageProperty) request.Properties[RemoteEndpointMessage];
+                var remoteEndpoint = (RemoteEndpointMessageProperty)request.Properties[RemoteEndpointMessage];
                 if (remoteEndpoint != null)
                 {
                     return remoteEndpoint.Address;
@@ -142,7 +143,7 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
             // Self-hosting using Owin
             if (request.Properties.ContainsKey(OwinContext))
             {
-                var owinContext = (OwinContext) request.Properties[OwinContext];
+                var owinContext = (OwinContext)request.Properties[OwinContext];
                 if (owinContext != null)
                 {
                     return owinContext.Request.RemoteIpAddress;

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Data;
-using System.Data.Common;
-using System.Data.Entity.Infrastructure.Interception;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using Common.Logging;
+﻿using Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql;
 using Finsa.CodeServices.Clock;
@@ -15,6 +8,13 @@ using Finsa.CodeServices.Common.Diagnostics;
 using Finsa.CodeServices.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
+using System.Data;
+using System.Data.Common;
+using System.Data.Entity.Infrastructure.Interception;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
 using JsonSettings = Finsa.CodeServices.Serialization.JsonSerializerSettings;
 
 namespace Finsa.Caravan.DataAccess.Logging.Sql
@@ -25,29 +25,29 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
     /// </summary>
     public sealed class SqlDbCommandLogger : IDbCommandInterceptor
     {
-        private const string CommandIdVariable = "command_id";
-        private const string CommandResultVariable = "command_result";
-        private const string CommandElapsedMillisecondsVariable = "command_elapsed_msec";
-        private const string CommandParametersVariable = "command_parameters";
-        private const string CommandTimeoutVariable = "command_timeout";
+        const string CommandIdVariable = "command_id";
+        const string CommandResultVariable = "command_result";
+        const string CommandElapsedMillisecondsVariable = "command_elapsed_msec";
+        const string CommandParametersVariable = "command_parameters";
+        const string CommandTimeoutVariable = "command_timeout";
 
         /// <summary>
         ///   A temporary map used to link queries before and after they are executed.
         /// </summary>
-        private static readonly ConcurrentDictionary<DbCommand, QueryInfo> _tmpQueryMap = new ConcurrentDictionary<DbCommand, QueryInfo>();
+        static readonly ConcurrentDictionary<DbCommand, QueryInfo> _tmpQueryMap = new ConcurrentDictionary<DbCommand, QueryInfo>();
 
         /// <summary>
         ///   JSON serializer settings for a readable log.
         /// </summary>
-        private static readonly JsonSettings ReadableJsonSettings = new JsonSettings
+        static readonly JsonSettings ReadableJsonSettings = new JsonSettings
         {
             Formatting = Formatting.Indented,
             NullValueHandling = NullValueHandling.Ignore,
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
         };
 
-        private readonly IClock _clock;
-        private readonly ILog _log;
+        readonly IClock _clock;
+        readonly ILog _log;
 
         /// <summary>
         ///   Builds an SQL command logger, using given log.
@@ -56,8 +56,8 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
         /// <param name="log">The log on which we should write.</param>
         public SqlDbCommandLogger(IClock clock, ILog log)
         {
-            RaiseArgumentNullException.IfIsNull(clock, "clock");
-            RaiseArgumentNullException.IfIsNull(log, "log");
+            RaiseArgumentNullException.IfIsNull(clock, nameof(clock));
+            RaiseArgumentNullException.IfIsNull(log, nameof(log));
             _clock = clock;
             _log = log;
         }
@@ -247,7 +247,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
 
         #region Private members
 
-        private bool IsCaravanContext(DbInterceptionContext interceptionContext)
+        bool IsCaravanContext(DbInterceptionContext interceptionContext)
         {
             // Required to avoid an infinite loop... We use a try-catch to avoid any kind of problems.
             try
@@ -262,7 +262,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             }
         }
 
-        private static QueryInfo ExtractQueryInfo(DbCommand command)
+        static QueryInfo ExtractQueryInfo(DbCommand command)
         {
             return new QueryInfo
             {
@@ -273,7 +273,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             };
         }
 
-        private static ParameterInfo[] ExtractParameters(DbParameterCollection parameterCollection)
+        static ParameterInfo[] ExtractParameters(DbParameterCollection parameterCollection)
         {
             return (from DbParameter p in parameterCollection
                     select new ParameterInfo
@@ -287,7 +287,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
                     }).ToArray();
         }
 
-        private sealed class QueryInfo
+        sealed class QueryInfo
         {
             public QueryInfo()
             {
@@ -310,7 +310,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             public Stopwatch Stopwatch { get; private set; }
         }
 
-        private sealed class ParameterInfo
+        sealed class ParameterInfo
         {
             public string Name { get; set; }
 

@@ -1,4 +1,4 @@
-﻿using Finsa.Caravan.Common.Logging;
+﻿using Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Diagnostics;
@@ -24,14 +24,13 @@ namespace Finsa.Caravan.WebApi.Middlewares
     /// </summary>
     public sealed class HttpLoggingMiddleware : IDisposable
     {
-        private const int MinBufferSize = 512;
+        const int MinBufferSize = 512;
 
-        private readonly ICaravanLog _log;
+        readonly ILog _log;
+        AppFunc _next;
+        bool _disposed;
 
-        private AppFunc _next;
-        private bool _disposed;
-
-        public HttpLoggingMiddleware(ICaravanLog log)
+        public HttpLoggingMiddleware(ILog log)
         {
             Raise<ArgumentNullException>.IfIsNull(log);
             _log = log;
@@ -64,7 +63,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
             }
 
             // Utilizzato per associare request e response nel log.
-            var requestId = Guid.NewGuid();
+            var requestId = UniqueIdGenerator.NewBase32("-");
             _log.GlobalVariablesContext.Set("request_id", requestId);
 
             // Log request
@@ -72,30 +71,30 @@ namespace Finsa.Caravan.WebApi.Middlewares
             {
                 try
                 {
-                    var body = String.Empty;
+                    var body = string.Empty;
                     if (Filter.HasFlag(HttpLoggingFilter.LogRequestBody))
                     {
                         body = await FormatBodyStreamAsync(request.Body);
                     }
 
-                    _log.TraceArgs(() => new LogMessage
+                    _log.Trace(new LogMessage
                     {
-                        ShortMessage = String.Format("Request \"{0}\" at \"{1}\"", requestId, request.Uri.SafeToString()),
+                        ShortMessage = string.Format("Request \"{0}\" at \"{1}\"", requestId, request.Uri.SafeToString()),
                         LongMessage = body,
                         Context = "Logging request",
                         Arguments = new[]
                         {
-                            KeyValuePair.Create("from", request.RemoteIpAddress.SafeToString()),
-                            KeyValuePair.Create("user_agent", request.Headers.Get("User-Agent").SafeToString()),
-                            KeyValuePair.Create("uri", request.Uri.SafeToString()),
-                            KeyValuePair.Create("method", request.Method.SafeToString()),
-                            KeyValuePair.Create("headers", request.Headers.SafeToString())
+                            KeyValuePair.Create("request_remote_ip_address", request.RemoteIpAddress.SafeToString()),
+                            KeyValuePair.Create("request_user_agent", request.Headers.Get("User-Agent").SafeToString()),
+                            KeyValuePair.Create("request_uri", request.Uri.SafeToString()),
+                            KeyValuePair.Create("request_method", request.Method.SafeToString()),
+                            KeyValuePair.Create("request_headers", request.Headers.SafeToString())
                         }
                     });
                 }
                 catch (Exception ex)
                 {
-                    _log.ErrorArgs(() => new LogMessage
+                    _log.Error(new LogMessage
                     {
                         Exception = ex,
                         Context = "Logging request"
@@ -115,7 +114,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
             }
             catch (Exception ex)
             {
-                _log.FatalArgs(() => new LogMessage
+                _log.Fatal(new LogMessage
                 {
                     Exception = ex,
                     Context = "Processing response"
@@ -141,20 +140,21 @@ namespace Finsa.Caravan.WebApi.Middlewares
                         response.Body = responseStream;
                     }
 
-                    _log.TraceArgs(() => new LogMessage
+                    _log.Trace(new LogMessage
                     {
-                        ShortMessage = String.Format("Response \"{0}\" for \"{1}\"", requestId, request.Uri.SafeToString()),
+                        ShortMessage = string.Format("Response \"{0}\" for \"{1}\"", requestId, request.Uri.SafeToString()),
                         LongMessage = body,
                         Context = "Logging response",
                         Arguments = new[]
                         {
-                            KeyValuePair.Create("status_code", response.StatusCode.SafeToString())
+                            KeyValuePair.Create("response_status_code", response.StatusCode.SafeToString()),
+                            KeyValuePair.Create("response_headers", response.Headers.SafeToString())
                         }
                     });
                 }
                 catch (Exception ex)
                 {
-                    _log.ErrorArgs(() => new LogMessage
+                    _log.Error(new LogMessage
                     {
                         Exception = ex,
                         Context = "Logging response"
@@ -170,7 +170,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
         /// <returns>
         ///   The request or response body stream to use (must replace the current stream).
         /// </returns>
-        private static async Task<string> FormatBodyStreamAsync(Stream bodyStream)
+        static async Task<string> FormatBodyStreamAsync(Stream bodyStream)
         {
             if ((bodyStream == null) || !bodyStream.CanRead || !bodyStream.CanSeek)
             {
