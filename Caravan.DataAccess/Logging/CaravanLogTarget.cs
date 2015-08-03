@@ -100,7 +100,7 @@ namespace Finsa.Caravan.DataAccess.Logging
                     Arguments = new[]
                     {
                         // Keep aligned with Finsa.Common.Logging.CaravanLogger.SerializeJsonlogMessageCallback
-                        KeyValuePair.Create("exception_data", ex.Data.LogAsJson()),
+                        KeyValuePair.Create("exception_data", ex.Data.ToJsonS()),
                         KeyValuePair.Create("exception_source", ex.Source ?? string.Empty)
                     }
                 };

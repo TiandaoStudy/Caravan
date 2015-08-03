@@ -32,7 +32,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
 
         public HttpLoggingMiddleware(ILog log)
         {
-            Raise<ArgumentNullException>.IfIsNull(log);
+            RaiseArgumentNullException.IfIsNull(log, nameof(log));
             _log = log;
             Filter = HttpLoggingFilter.LogRequestBody | HttpLoggingFilter.LogResponseBody;
         }

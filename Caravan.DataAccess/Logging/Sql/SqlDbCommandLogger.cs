@@ -8,6 +8,7 @@ using Finsa.CodeServices.Common.Diagnostics;
 using Finsa.CodeServices.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Data;
 using System.Data.Common;
@@ -35,16 +36,6 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
         ///   A temporary map used to link queries before and after they are executed.
         /// </summary>
         static readonly ConcurrentDictionary<DbCommand, QueryInfo> _tmpQueryMap = new ConcurrentDictionary<DbCommand, QueryInfo>();
-
-        /// <summary>
-        ///   JSON serializer settings for a readable log.
-        /// </summary>
-        static readonly JsonSettings ReadableJsonSettings = new JsonSettings
-        {
-            Formatting = Formatting.Indented,
-            NullValueHandling = NullValueHandling.Ignore,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        };
 
         readonly IClock _clock;
         readonly ILog _log;
@@ -228,7 +219,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
                     Arguments = new[]
                     {
                         KeyValuePair.Create(CommandIdVariable, queryInfo.CommandId),
-                        KeyValuePair.Create(CommandResultVariable, interceptionContext.Result.ToJsonString(ReadableJsonSettings)),
+                        KeyValuePair.Create(CommandResultVariable, interceptionContext.Result.ToJsonString(LogMessage.ReadableJsonSettings)),
                         KeyValuePair.Create(CommandElapsedMillisecondsVariable, queryInfo.CommandElapsedMilliseconds),
                         KeyValuePair.Create(CommandParametersVariable, queryInfo.CommandParameters)
                     }
@@ -268,7 +259,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             {
                 CommandId = UniqueIdGenerator.NewBase32("-"),
                 CommandText = command.CommandText,
-                CommandParameters = ExtractParameters(command.Parameters).ToJsonString(ReadableJsonSettings),
+                CommandParameters = ExtractParameters(command.Parameters).ToJsonString(LogMessage.ReadableJsonSettings),
                 CommandTimeout = command.CommandTimeout.ToString(CultureInfo.InvariantCulture)
             };
         }
