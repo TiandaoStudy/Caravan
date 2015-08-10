@@ -1,0 +1,27 @@
+﻿// Copyright 2015 Finsa S.p.A <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
+using NUnit.Framework;
+
+namespace UnitTests.Common
+{
+    [TestFixture]
+    public abstract class AbstractTests
+    {
+        protected const string EmptyString = "";
+        protected const string ShortString = "BOOM BABY";
+        protected const string MediumString = "Reality continues to ruin my life.";
+        protected const string LongString = @"If a man does not keep pace with his companions, perhaps it is because 
+                                              he hears a different drummer. Let him step to the music which he hears, 
+                                              however measured or far away.";
+    }
+}
