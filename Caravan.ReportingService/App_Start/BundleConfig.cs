@@ -1,0 +1,49 @@
+﻿using System.Web.Optimization;
+using System.Web.UI;
+
+namespace Finsa.Caravan.ReportingService
+{
+    public class BundleConfig
+    {
+        // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkID=303951
+        public static void RegisterBundles(BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle("~/bundles/WebFormsJs").Include(
+                            "~/Scripts/WebForms/WebForms.js",
+                            "~/Scripts/WebForms/WebUIValidation.js",
+                            "~/Scripts/WebForms/MenuStandards.js",
+                            "~/Scripts/WebForms/Focus.js",
+                            "~/Scripts/WebForms/GridView.js",
+                            "~/Scripts/WebForms/DetailsView.js",
+                            "~/Scripts/WebForms/TreeView.js",
+                            "~/Scripts/WebForms/WebParts.js"));
+
+            // Order is very important for these files to work, they have explicit dependencies
+            bundles.Add(new ScriptBundle("~/bundles/MsAjaxJs").Include(
+                    "~/Scripts/WebForms/MsAjax/MicrosoftAjax.js",
+                    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxApplicationServices.js",
+                    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxTimer.js",
+                    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxWebForms.js"));
+
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                    "~/Content/bootstrap.css",
+                    "~/Content/font-awesome.css"));
+
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+                "respond",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/respond.min.js",
+                    DebugPath = "~/Scripts/respond.js",
+                });
+
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+                "html5shiv",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/html5shiv.min.js",
+                    DebugPath = "~/Scripts/html5shiv.js",
+                });
+        }
+    }
+}
