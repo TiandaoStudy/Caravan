@@ -52,6 +52,34 @@ namespace Finsa.Caravan.ReportingService
                 report.SetParameters(reportParameters);
 
                 report.Refresh();
+
+                var export = parameters.Get("export");
+
+                if(export == "pdf")
+                {
+                    CreatePDF("sample");
+                }
+
+                if (export == "xls")
+                {
+                    CreateExcel_xls("sample");
+                }
+
+                if(export == "xlsx")
+                {
+                    CreateExcel_xlsx("sample");
+                }
+
+                if (export == "doc")
+                {
+                    CreateDoc_doc("sample");
+                }
+
+                if (export == "docx")
+                {
+                    CreateDoc_docx("sample");
+                }
+
             }
             catch (Exception ex)
             {
@@ -72,12 +100,126 @@ namespace Finsa.Caravan.ReportingService
                     var master = Master as Report;
                     if (master == null)
                     {
-                        throw new InvalidOperationException("Please set the MasterType clause to <%@ MasterType VirtualPath=\"~/Caravan/Report.Master\" %>");
+                        throw new InvalidOperationException("Please set the MasterType clause to <%@ MasterType VirtualPath=\"~/Reports/Report.Master\" %>");
                     }
                     _cachedReportViewer = master.ReportViewer;
                 }
                 return _cachedReportViewer;
             }
         }
+
+        public void CreatePDF(string fileName)
+        {
+            // Variables
+            Warning[] warnings;
+            string[] streamIds;
+            string mimeType = string.Empty;
+            string encoding = string.Empty;
+            string extension = string.Empty;
+
+
+                       byte[] bytes = ReportViewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out extension, out streamIds, out warnings);
+
+
+            // Now that you have all the bytes representing the PDF report, buffer it and send it to the client.
+            Response.Buffer = true;
+            Response.Clear();
+            Response.ContentType = mimeType;
+            Response.AddHeader("content-disposition", "attachment; filename=" + fileName + "." + extension);
+            Response.BinaryWrite(bytes); // create the file
+            Response.Flush(); // send it to the client to download
+        }
+
+        public void CreateExcel_xls(string fileName)
+        {
+            // Variables
+            Warning[] warnings;
+            string[] streamIds;
+            string mimeType = string.Empty;
+            string encoding = string.Empty;
+            string extension = string.Empty;
+
+
+            byte[] bytes = ReportViewer.LocalReport.Render("Excel", null, out mimeType, out encoding, out extension, out streamIds, out warnings);
+
+
+            // Now that you have all the bytes representing the PDF report, buffer it and send it to the client.
+            Response.Buffer = true;
+            Response.Clear();
+            Response.ContentType = mimeType;
+            Response.AddHeader("content-disposition", "attachment; filename=" + fileName + "." + extension);
+            Response.BinaryWrite(bytes); // create the file
+            Response.Flush(); // send it to the client to download
+        }
+
+        public void CreateExcel_xlsx(string fileName)
+        {
+            // Variables
+            Warning[] warnings;
+            string[] streamIds;
+            string mimeType = string.Empty;
+            string encoding = string.Empty;
+            string extension = string.Empty;
+
+
+            byte[] bytes = ReportViewer.LocalReport.Render("EXCELOPENXML", null, out mimeType, out encoding, out extension, out streamIds, out warnings);
+
+
+            // Now that you have all the bytes representing the PDF report, buffer it and send it to the client.
+            Response.Buffer = true;
+            Response.Clear();
+            Response.ContentType = mimeType;
+            //Response.Charset = "";
+            Response.AddHeader("content-disposition", "attachment; filename=" + fileName + "." + extension);
+            Response.BinaryWrite(bytes); // create the file
+            Response.Flush(); // send it to the client to download
+        }
+
+        public void CreateDoc_doc(string fileName)
+        {
+            // Variables
+            Warning[] warnings;
+            string[] streamIds;
+            string mimeType = string.Empty;
+            string encoding = string.Empty;
+            string extension = string.Empty;
+
+
+            byte[] bytes = ReportViewer.LocalReport.Render("WORD", null, out mimeType, out encoding, out extension, out streamIds, out warnings);
+
+
+            // Now that you have all the bytes representing the PDF report, buffer it and send it to the client.
+            Response.Buffer = true;
+            Response.Clear();
+            Response.ContentType = mimeType;
+            Response.AddHeader("content-disposition", "attachment; filename=" + fileName + "." + extension);
+            Response.BinaryWrite(bytes); // create the file
+            Response.Flush(); // send it to the client to download
+        }
+
+        public void CreateDoc_docx(string fileName)
+        {
+            // Variables
+            Warning[] warnings;
+            string[] streamIds;
+            string mimeType = string.Empty;
+            string encoding = string.Empty;
+            string extension = string.Empty;
+
+
+            byte[] bytes = ReportViewer.LocalReport.Render("WORDOPENXML", null, out mimeType, out encoding, out extension, out streamIds, out warnings);
+
+
+            // Now that you have all the bytes representing the PDF report, buffer it and send it to the client.
+            Response.Buffer = true;
+            Response.Clear();
+            Response.ContentType = mimeType;
+            //Response.Charset = "";
+            Response.AddHeader("content-disposition", "attachment; filename=" + fileName + "." + extension);
+            Response.BinaryWrite(bytes); // create the file
+            Response.Flush(); // send it to the client to download
+        }
+
+
     }
 }
