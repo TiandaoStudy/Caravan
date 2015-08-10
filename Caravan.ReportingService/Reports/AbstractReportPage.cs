@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Specialized;
-using System.Web.UI;
-using Microsoft.Reporting.WebForms;
+﻿using Microsoft.Reporting.WebForms;
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Web;
+using System.Web.UI;
 
 namespace Finsa.Caravan.ReportingService
 {
@@ -53,31 +53,50 @@ namespace Finsa.Caravan.ReportingService
 
                 report.Refresh();
 
-                var export = parameters.Get("export");
+                var export = parameters.Get("export");               
+                var fileName = "sample";
 
-                if(export == "pdf")
+                switch (export)
                 {
-                    CreatePDF("sample");
-                }
+                    case "pdf":
+                        {
+                            CreateFile(fileName,"PDF");
+                            break;
+                        }
 
-                if (export == "xls")
-                {
-                    CreateExcel_xls("sample");
-                }
+                    case "xls":
+                        {
+                            CreateFile(fileName, "EXCEL");
+                            break;
+                        }
 
-                if(export == "xlsx")
-                {
-                    CreateExcel_xlsx("sample");
-                }
+                    case "xlsx":
+                        {
+                            CreateFile(fileName, "EXCELOPENXML");
+                            break;
+                        }
 
-                if (export == "doc")
-                {
-                    CreateDoc_doc("sample");
-                }
+                    case "doc":
+                        {
+                            CreateFile(fileName, "WORD");
+                            break;
+                        }
 
-                if (export == "docx")
-                {
-                    CreateDoc_docx("sample");
+                    case "docx":
+                        {
+                            CreateFile(fileName, "WORDOPENXML");
+                            break;
+                        }
+                    case "tif":
+                        {
+                            CreateFile(fileName, "IMAGE");
+                            break;
+                        }
+                    case "png":
+                        {
+                            CreateFile(fileName, "IMAGE", export);
+                            break;
+                        }
                 }
 
             }
@@ -108,7 +127,7 @@ namespace Finsa.Caravan.ReportingService
             }
         }
 
-        public void CreatePDF(string fileName)
+        public void CreateFile(string fileName, string format, string deviceInfo = null)
         {
             // Variables
             Warning[] warnings;
@@ -116,110 +135,27 @@ namespace Finsa.Caravan.ReportingService
             string mimeType = string.Empty;
             string encoding = string.Empty;
             string extension = string.Empty;
+            
 
+            if (deviceInfo != null)
+            {
+                deviceInfo = "<DeviceInfo>" +
+               "<OutputFormat>" + deviceInfo + "</OutputFormat>" + "</DeviceInfo>";               
+            }
 
-                       byte[] bytes = ReportViewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out extension, out streamIds, out warnings);
-
+            byte[] bytes = ReportViewer.LocalReport.Render(format, deviceInfo, out mimeType, out encoding, out extension, out streamIds, out warnings);
 
             // Now that you have all the bytes representing the PDF report, buffer it and send it to the client.
-            Response.Buffer = true;
+            //Response.Buffer = true;
+            Response.ClearHeaders();
             Response.Clear();
             Response.ContentType = mimeType;
             Response.AddHeader("content-disposition", "attachment; filename=" + fileName + "." + extension);
             Response.BinaryWrite(bytes); // create the file
             Response.Flush(); // send it to the client to download
+            Response.End();
         }
 
-        public void CreateExcel_xls(string fileName)
-        {
-            // Variables
-            Warning[] warnings;
-            string[] streamIds;
-            string mimeType = string.Empty;
-            string encoding = string.Empty;
-            string extension = string.Empty;
-
-
-            byte[] bytes = ReportViewer.LocalReport.Render("Excel", null, out mimeType, out encoding, out extension, out streamIds, out warnings);
-
-
-            // Now that you have all the bytes representing the PDF report, buffer it and send it to the client.
-            Response.Buffer = true;
-            Response.Clear();
-            Response.ContentType = mimeType;
-            Response.AddHeader("content-disposition", "attachment; filename=" + fileName + "." + extension);
-            Response.BinaryWrite(bytes); // create the file
-            Response.Flush(); // send it to the client to download
-        }
-
-        public void CreateExcel_xlsx(string fileName)
-        {
-            // Variables
-            Warning[] warnings;
-            string[] streamIds;
-            string mimeType = string.Empty;
-            string encoding = string.Empty;
-            string extension = string.Empty;
-
-
-            byte[] bytes = ReportViewer.LocalReport.Render("EXCELOPENXML", null, out mimeType, out encoding, out extension, out streamIds, out warnings);
-
-
-            // Now that you have all the bytes representing the PDF report, buffer it and send it to the client.
-            Response.Buffer = true;
-            Response.Clear();
-            Response.ContentType = mimeType;
-            //Response.Charset = "";
-            Response.AddHeader("content-disposition", "attachment; filename=" + fileName + "." + extension);
-            Response.BinaryWrite(bytes); // create the file
-            Response.Flush(); // send it to the client to download
-        }
-
-        public void CreateDoc_doc(string fileName)
-        {
-            // Variables
-            Warning[] warnings;
-            string[] streamIds;
-            string mimeType = string.Empty;
-            string encoding = string.Empty;
-            string extension = string.Empty;
-
-
-            byte[] bytes = ReportViewer.LocalReport.Render("WORD", null, out mimeType, out encoding, out extension, out streamIds, out warnings);
-
-
-            // Now that you have all the bytes representing the PDF report, buffer it and send it to the client.
-            Response.Buffer = true;
-            Response.Clear();
-            Response.ContentType = mimeType;
-            Response.AddHeader("content-disposition", "attachment; filename=" + fileName + "." + extension);
-            Response.BinaryWrite(bytes); // create the file
-            Response.Flush(); // send it to the client to download
-        }
-
-        public void CreateDoc_docx(string fileName)
-        {
-            // Variables
-            Warning[] warnings;
-            string[] streamIds;
-            string mimeType = string.Empty;
-            string encoding = string.Empty;
-            string extension = string.Empty;
-
-
-            byte[] bytes = ReportViewer.LocalReport.Render("WORDOPENXML", null, out mimeType, out encoding, out extension, out streamIds, out warnings);
-
-
-            // Now that you have all the bytes representing the PDF report, buffer it and send it to the client.
-            Response.Buffer = true;
-            Response.Clear();
-            Response.ContentType = mimeType;
-            //Response.Charset = "";
-            Response.AddHeader("content-disposition", "attachment; filename=" + fileName + "." + extension);
-            Response.BinaryWrite(bytes); // create the file
-            Response.Flush(); // send it to the client to download
-        }
-
-
+       
     }
 }
