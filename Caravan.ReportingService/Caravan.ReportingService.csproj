@@ -47,7 +47,19 @@
       <HintPath>..\packages\AspNet.ScriptManager.jQuery.2.1.4\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.FriendlyUrls, Version=1.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.2\lib\net45\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Content\ReportViewer\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Content\ReportViewer\Microsoft.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ScriptManager.MSAjax, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.ScriptManager.MSAjax.5.0.0\lib\net45\Microsoft.ScriptManager.MSAjax.dll</HintPath>
       <Private>True</Private>
@@ -80,6 +92,26 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\ReportViewer\de\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\en\Microsoft.ReportViewer.WebForms.xml" />
+    <Content Include="Content\ReportViewer\es\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\fr\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\it\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\ja\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\ko\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\Microsoft.ReportViewer.Common.dll" />
+    <Content Include="Content\ReportViewer\Microsoft.ReportViewer.DataVisualization.dll" />
+    <Content Include="Content\ReportViewer\Microsoft.ReportViewer.Design.dll" />
+    <Content Include="Content\ReportViewer\Microsoft.ReportViewer.ProcessingObjectModel.dll" />
+    <Content Include="Content\ReportViewer\Microsoft.ReportViewer.WebDesign.dll" />
+    <Content Include="Content\ReportViewer\Microsoft.ReportViewer.WebForms.dll" />
+    <Content Include="Content\ReportViewer\Microsoft.SqlServer.Types.dll" />
+    <Content Include="Content\ReportViewer\pt\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\RSClientPrint-x64.cab" />
+    <Content Include="Content\ReportViewer\RSClientPrint-x86.cab" />
+    <Content Include="Content\ReportViewer\ru\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\zh-CHS\Microsoft.ReportViewer.WebForms.resources.dll" />
+    <Content Include="Content\ReportViewer\zh-CHT\Microsoft.ReportViewer.WebForms.resources.dll" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="packages.config" />
@@ -140,6 +172,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -148,6 +181,10 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reports\MasterReportH.rdlc" />
+    <EmbeddedResource Include="Reports\MasterReportV.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
