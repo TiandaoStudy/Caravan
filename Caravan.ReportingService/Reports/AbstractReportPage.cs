@@ -1,4 +1,5 @@
-﻿using Microsoft.Reporting.WebForms;
+﻿using Finsa.Caravan.Common.Models.Formatting;
+using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -10,16 +11,23 @@ namespace Finsa.Caravan.ReportingService
 {
     public abstract class AbstractReportPage : Page
     {
-        private static readonly string MasterReportPath = HttpContext.Current.Server.MapPath("~/Reports/ReportMasterV.rdlc");
+        private static readonly string MasterReportPathV = HttpContext.Current.Server.MapPath("~/Reports/ReportMasterV.rdlc");
+        private static readonly string MasterReportPathH = HttpContext.Current.Server.MapPath("~/Reports/ReportMasterH.rdlc");
 
         private ReportViewer _cachedReportViewer;
         private readonly string _mappedReportPath;
+        private readonly PageOrientation _pageOrientation;
 
-        protected AbstractReportPage(string reportTitle, string reportPath)
+        protected AbstractReportPage(string reportTitle, string reportPath, PageOrientation page = PageOrientation.Vertical, string exportName = "Report")
         {
             ReportTitle = reportTitle;
             _mappedReportPath = Server.MapPath(reportPath);
+            _pageOrientation = page;
+            ExportName = exportName;
         }
+
+        //nome del file di export
+        protected string ExportName { get; set; }
 
         protected string ReportTitle { get; set; }
 
@@ -31,16 +39,26 @@ namespace Finsa.Caravan.ReportingService
             }
         }
 
-        protected virtual void OnLoad(NameValueCollection parameters)
+        protected virtual void OnLoad(NameValueCollection requestParameters)
         {
             try
             {
                 ReportViewer.Reset();
 
                 var report = ReportViewer.LocalReport;
-                report.LoadReportDefinition(File.OpenRead(MasterReportPath));
 
-                report.SubreportProcessing += (s, a) => OnReportProcessing(s as ReportViewer, a);
+                if (_pageOrientation == PageOrientation.Vertical)
+                {
+                    report.LoadReportDefinition(File.OpenRead(MasterReportPathV));
+                }
+                else
+                {
+                    report.LoadReportDefinition(File.OpenRead(MasterReportPathH));
+                }
+
+                GetRequestParameters(requestParameters);
+
+                report.SubreportProcessing += (s, a) => SetReportDataSources(a.DataSources);
 
                 report.LoadSubreportDefinition("subreport", File.OpenRead(_mappedReportPath));
 
@@ -48,67 +66,70 @@ namespace Finsa.Caravan.ReportingService
                 {
                     new ReportParameter("pTitle", ReportTitle)
                 };
+                
                 SetReportParameters(reportParameters);
                 report.SetParameters(reportParameters);
 
                 report.Refresh();
 
-                var export = parameters.Get("export");               
-                var fileName = "sample";
+                var export = requestParameters.Get("export");
+
+               
 
                 switch (export)
                 {
                     case "pdf":
                         {
-                            CreateFile(fileName,"PDF");
+                            CreateFile(ExportName, "PDF");
                             break;
                         }
 
                     case "xls":
                         {
-                            CreateFile(fileName, "EXCEL");
+                            CreateFile(ExportName, "EXCEL");
                             break;
                         }
 
                     case "xlsx":
                         {
-                            CreateFile(fileName, "EXCELOPENXML");
+                            CreateFile(ExportName, "EXCELOPENXML");
                             break;
                         }
 
                     case "doc":
                         {
-                            CreateFile(fileName, "WORD");
+                            CreateFile(ExportName, "WORD");
                             break;
                         }
 
                     case "docx":
                         {
-                            CreateFile(fileName, "WORDOPENXML");
+                            CreateFile(ExportName, "WORDOPENXML");
                             break;
                         }
                     case "tif":
                         {
-                            CreateFile(fileName, "IMAGE");
+                            CreateFile(ExportName, "IMAGE");
                             break;
                         }
                     case "png":
                         {
-                            CreateFile(fileName, "IMAGE", export);
+                            CreateFile(ExportName, "IMAGE", export);
                             break;
                         }
                 }
-
             }
             catch (Exception ex)
             {
-                (Master as Finsa.Caravan.ReportingService.Report).OnError(ex);
+                (Master as Report).OnError(ex);
             }
         }
 
+        protected abstract void GetRequestParameters(NameValueCollection requestParameters);
+
         protected abstract void SetReportParameters(IList<ReportParameter> parameters);
 
-        protected abstract void OnReportProcessing(ReportViewer reportViewer, SubreportProcessingEventArgs args);
+        protected abstract void SetReportDataSources(ReportDataSourceCollection dataSources);
 
         public ReportViewer ReportViewer
         {
@@ -135,12 +156,11 @@ namespace Finsa.Caravan.ReportingService
             string mimeType = string.Empty;
             string encoding = string.Empty;
             string extension = string.Empty;
-            
 
             if (deviceInfo != null)
             {
                 deviceInfo = "<DeviceInfo>" +
-               "<OutputFormat>" + deviceInfo + "</OutputFormat>" + "</DeviceInfo>";               
+               "<OutputFormat>" + deviceInfo + "</OutputFormat>" + "</DeviceInfo>";
             }
 
             byte[] bytes = ReportViewer.LocalReport.Render(format, deviceInfo, out mimeType, out encoding, out extension, out streamIds, out warnings);
@@ -155,7 +175,5 @@ namespace Finsa.Caravan.ReportingService
             Response.Flush(); // send it to the client to download
             Response.End();
         }
-
-       
     }
 }
