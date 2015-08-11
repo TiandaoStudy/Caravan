@@ -39,7 +39,7 @@ namespace Finsa.Caravan.ReportingService
             }
         }
 
-        protected virtual void OnLoad(NameValueCollection parameters)
+        protected virtual void OnLoad(NameValueCollection requestParameters)
         {
             try
             {
@@ -56,7 +56,9 @@ namespace Finsa.Caravan.ReportingService
                     report.LoadReportDefinition(File.OpenRead(MasterReportPathH));
                 }
 
-                report.SubreportProcessing += (s, a) => OnReportProcessing(s as ReportViewer, a);
+                GetRequestParameters(requestParameters);
+
+                report.SubreportProcessing += (s, a) => SetReportDataSources(a.DataSources);
 
                 report.LoadSubreportDefinition("subreport", File.OpenRead(_mappedReportPath));
 
@@ -70,7 +72,7 @@ namespace Finsa.Caravan.ReportingService
 
                 report.Refresh();
 
-                var export = parameters.Get("export");
+                var export = requestParameters.Get("export");
 
                
 
@@ -123,9 +125,11 @@ namespace Finsa.Caravan.ReportingService
             }
         }
 
+        protected abstract void GetRequestParameters(NameValueCollection requestParameters);
+
         protected abstract void SetReportParameters(IList<ReportParameter> parameters);
 
-        protected abstract void OnReportProcessing(ReportViewer reportViewer, SubreportProcessingEventArgs args);
+        protected abstract void SetReportDataSources(ReportDataSourceCollection dataSources);
 
         public ReportViewer ReportViewer
         {
