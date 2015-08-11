@@ -132,6 +132,7 @@
     <Compile Include="CommonConfiguration.cs" />
     <Compile Include="Core\ErrorMessages.cs" />
     <Compile Include="Logging\ICaravanLogRepository.cs" />
+    <Compile Include="Models\Formatting\PageOrientation.cs" />
     <Compile Include="Models\Logging\LogEntryQuery.cs" />
     <Compile Include="Models\Security\SecGroupUpdates.cs" />
     <Compile Include="Models\Security\SecUserUpdates.cs" />

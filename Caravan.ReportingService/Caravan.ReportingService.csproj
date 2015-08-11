@@ -229,6 +229,12 @@
     <EmbeddedResource Include="Reports\ReportMasterV.rdlc" />
     <EmbeddedResource Include="Reports\Sample\Sample.rdlc" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Caravan.Common\Caravan.Common.csproj">
+      <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>
+      <Name>Caravan.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
