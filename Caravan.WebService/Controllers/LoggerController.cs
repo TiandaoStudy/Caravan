@@ -36,12 +36,12 @@ namespace Finsa.Caravan.WebService.Controllers
     {
         private static readonly IList<LogLevel> NoLogLevels = new LogLevel[0];
 
-        private readonly ICaravanLog _log;
+        private readonly ILog _log;
 
         /// <summary>
         ///   Inizializza il controller con l'istanza del log di Caravan.
         /// </summary>
-        public LoggerController(ICaravanLog log)
+        public LoggerController(ILog log)
         {
             if (log == null)
             {
