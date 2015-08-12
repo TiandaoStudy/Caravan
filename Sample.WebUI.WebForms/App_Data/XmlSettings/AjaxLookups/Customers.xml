@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<AjaxLookupData xmlns="FLEX.Web.XmlSettings.AjaxLookup">
+  <LookupBy>
+    <SuggestionField>Country</SuggestionField>
+    <KeyField>Country</KeyField>
+    <DescriptionField>Dummy</DescriptionField>
+    <SortField>Country</SortField>
+    <LookupQuery>
+       SELECT DISTINCT [Country] AS [Country], NULL AS [Dummy]
+       FROM Customers
+    </LookupQuery>
+  </LookupBy>
+</AjaxLookupData>

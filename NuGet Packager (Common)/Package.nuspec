@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<package>
+    <metadata>
+        <id>Finsa.Caravan.Common</id>
+        <version>1.9</version>
+        <title>Finsa.Caravan.Common</title>
+        <authors>Finsa S.p.A</authors>
+        <owners>Finsa S.p.A</owners>
+        <description>
+A long description of the package. This shows up in the right pane of the Add Package Dialog as well as in the Package Manager Console when listing packages using the Get-Package command.
+        </description>
+        <releaseNotes>
+        </releaseNotes>
+        <summary>
+A short description of the package. If specified, this shows up in the middle pane of the Add Package Dialog. If not specified, a truncated version of the description is used instead.
+        </summary>
+        <language>en-US</language>
+        <projectUrl>https://bitbucket.org/finsaspa/caravan/overview</projectUrl>
+        <iconUrl>http://www.finsa.it/public/projects/caravan/logo-128.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
+        <copyright>Copyright © Finsa S.p.A. 2014-2024</copyright>
+        <dependencies>
+            <dependency id="BrockAllen.IdentityReboot" version="2.0.0" />
+            <dependency id="Common.Logging" version="3.1.0" />
+            <dependency id="Finsa.CodeServices.Common" version="1.14" />
+            <dependency id="Microsoft.AspNet.Identity.Core" version="2.2.1" />
+            <dependency id="Microsoft.Bcl" version="1.1.10" />
+            <dependency id="Newtonsoft.Json" version="6.0.8" />
+            <dependency id="PommaLabs.KVLite.Core" version="3.1.1" />
+            <dependency id="Westwind.Utilities.Configuration" version="2.25" />
+        </dependencies>
+        <references></references>
+        <frameworkAssemblies></frameworkAssemblies>
+        <tags>finsa caravan</tags>
+    </metadata>
+    <files>
+        <file src="lib\" target="lib" />
+    </files>
+</package>
