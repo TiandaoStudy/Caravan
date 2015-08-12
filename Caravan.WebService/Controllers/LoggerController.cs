@@ -13,12 +13,10 @@
 using System.Web.Http.Results;
 using Common.Logging;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common;
-using LinqToQuerystring.WebApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -155,7 +153,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">Application name</param>
         /// <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
         /// <param name="log">The log to add</param>
-        [Route("{appName}/entries/{logLevel}"), LinqToQueryable]
+        [Route("{appName}/entries/{logLevel}")]
         public void PostLog(string appName, LogLevel logLevel, [FromBody] LogEntry log)
         {
             CaravanDataSource.Logger.LogRaw(logLevel, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
@@ -184,7 +182,7 @@ namespace Finsa.Caravan.WebService.Controllers
         ///   Returns all settings of the current application
         /// </summary>
         /// <returns></returns>
-        [Route("settings"), LinqToQueryable]
+        [Route("settings")]
         public IQueryable<LogSetting> GetSettings()
         {
             return GetSettings(null);
@@ -195,7 +193,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <param name="appName">Application name</param>
         /// <returns></returns>
-        [Route("{appName}/settings"), LinqToQueryable]
+        [Route("{appName}/settings")]
         public IQueryable<LogSetting> GetSettings(string appName)
         {
             appName = appName ?? CommonConfiguration.Instance.AppName;

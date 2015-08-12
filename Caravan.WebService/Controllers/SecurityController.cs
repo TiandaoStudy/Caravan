@@ -16,7 +16,6 @@ using System.Web.Http;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebApi.Models.Security;
-using LinqToQuerystring.WebApi;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -32,7 +31,7 @@ namespace Finsa.Caravan.WebService.Controllers
         ///   Returns all the applications
         /// </summary>
         /// <returns>All the applications</returns>
-        [Route("", Name = "GetApps"), LinqToQueryable]
+        [Route("", Name = "GetApps")]
         public IQueryable<LinkedSecApp> GetApps()
         {
             return CaravanDataSource.Security.GetApps().AsQueryable().Select(a => new LinkedSecApp(a, Url));
@@ -68,7 +67,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <param name="appName">Application name</param>
         /// <returns>All the users of the specified application</returns>
-        [Route("{appName}/users"), LinqToQueryable]
+        [Route("{appName}/users")]
         public IQueryable<SecUser> GetUsers(string appName)
         {
             return CaravanDataSource.Security.GetUsers(appName).AsQueryable();
@@ -142,7 +141,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <returns></returns>
-        [Route("{appName}/groups"), LinqToQueryable]
+        [Route("{appName}/groups")]
         public IQueryable<SecGroup> GetGroups(string appName)
         {
             return CaravanDataSource.Security.GetGroups(appName).AsQueryable();
@@ -154,7 +153,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <param name="groupName">The group name</param>
         /// <returns></returns>
-        [Route("{appName}/groups/{groupName}"), LinqToQueryable]
+        [Route("{appName}/groups/{groupName}")]
         public SecGroup GetGroup(string appName, string groupName)
         {
             return CaravanDataSource.Security.GetGroupByName(appName, groupName);
@@ -218,7 +217,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <returns>All objects belong to the specified application</returns>
-        [Route("{appaName}/objects"), LinqToQueryable]
+        [Route("{appaName}/objects")]
         public IQueryable<SecObject> GetObjects(string appName)
         {
             return CaravanDataSource.Security.GetObjects(appName).AsQueryable();
@@ -230,7 +229,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <param name="contextName">the context name</param>
         /// <returns>All objects in the specified context</returns>
-        [Route("{appaName}/objects"), LinqToQueryable]
+        [Route("{appaName}/objects")]
         public IQueryable<SecObject> GetObjects(string appName, string contextName)
         {
             return CaravanDataSource.Security.GetObjects(appName, contextName).AsQueryable();
@@ -245,7 +244,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <param name="appName">The application name</param>
         /// <returns>All entries of the specified application</returns>
-        [Route("{appName}/entries"), LinqToQueryable]
+        [Route("{appName}/entries")]
         public IQueryable<SecEntry> GetEntries(string appName)
         {
             return CaravanDataSource.Security.GetEntries(appName).AsQueryable();
@@ -257,7 +256,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">the application name</param>
         /// <param name="contextName">The context name</param>
         /// <returns></returns>
-        [Route("{appName}/entries/{contextName}"), LinqToQueryable]
+        [Route("{appName}/entries/{contextName}")]
         public IQueryable<SecEntry> GetEntries(string appName, string contextName)
         {
             return CaravanDataSource.Security.GetEntries(appName, contextName).AsQueryable();
@@ -270,7 +269,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="contextName">The context name</param>
         /// <param name="userLogin">The user login name</param>
         /// <returns></returns>
-        [Route("{appName}/entries/{contextName}/{userLogin}"), LinqToQueryable]
+        [Route("{appName}/entries/{contextName}/{userLogin}")]
         public IQueryable<SecEntry> GetEntries(string appName, string contextName, string userLogin)
         {
             return CaravanDataSource.Security.GetEntriesForUser(appName, contextName, userLogin).AsQueryable();
@@ -283,7 +282,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="contextName">The context name</param>
         /// <param name="objectName">The object name</param>
         /// <returns></returns>
-        [Route("{appName}/entries/{contextName}/{objectName}"), LinqToQueryable]
+        [Route("{appName}/entries/{contextName}/{objectName}")]
         public IQueryable<SecEntry> GetEntriesForObject(string appName, string contextName, string objectName)
         {
             return CaravanDataSource.Security.GetEntriesForObject(appName, contextName, objectName).AsQueryable();
@@ -297,7 +296,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="objectName">The object name</param>
         /// <param name="userLogin">The user login</param>
         /// <returns></returns>
-        [Route("{appName}/entries/{contextName}/{objectName}/{userLogin}"), LinqToQueryable]
+        [Route("{appName}/entries/{contextName}/{objectName}/{userLogin}")]
         public IQueryable<SecEntry> GetEntriesForObject(string appName, string contextName, string objectName, string userLogin)
         {
             return CaravanDataSource.Security.GetEntriesForObjectAndUser(appName, contextName, objectName, userLogin).AsQueryable();
