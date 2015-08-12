@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Finsa.Caravan.Common.Logging.Models;
+using Finsa.CodeServices.Serialization;
 using AppFunc = System.Func<System.Collections.Generic.IDictionary<string, object>, System.Threading.Tasks.Task>;
 
 namespace Finsa.Caravan.WebApi.Middlewares
@@ -79,7 +81,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
 
                     _log.Trace(new LogMessage
                     {
-                        ShortMessage = string.Format("Request \"{0}\" at \"{1}\"", requestId, request.Uri.SafeToString()),
+                        ShortMessage = string.Format("Request '{0}' at '{1}'", requestId, request.Uri.SafeToString()),
                         LongMessage = body,
                         Context = "Logging request",
                         Arguments = new[]
@@ -88,7 +90,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
                             KeyValuePair.Create("request_user_agent", request.Headers.Get("User-Agent").SafeToString()),
                             KeyValuePair.Create("request_uri", request.Uri.SafeToString()),
                             KeyValuePair.Create("request_method", request.Method.SafeToString()),
-                            KeyValuePair.Create("request_headers", request.Headers.SafeToString())
+                            KeyValuePair.Create("request_headers", request.Headers.ToJsonString(LogMessage.ReadableJsonSettings))
                         }
                     });
                 }

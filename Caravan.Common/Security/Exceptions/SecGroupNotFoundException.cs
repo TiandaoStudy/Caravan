@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Finsa.Caravan.Common.Models.Security.Exceptions
+namespace Finsa.Caravan.Common.Security.Exceptions
 {
     [Serializable]
     public class SecGroupNotFoundException : Exception
@@ -26,9 +26,6 @@ namespace Finsa.Caravan.Common.Models.Security.Exceptions
         {
         }
 
-        public static string TheMessage
-        {
-            get { return "Group not found"; }
-        }
+        public static string TheMessage { get; } = "Group not found";
     }
 }

@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Finsa.Caravan.Common.Logging.Models;
 using LogLevel = Common.Logging.LogLevel;
 
 namespace Finsa.Caravan.DataAccess.Logging

@@ -16,6 +16,7 @@ using System.Data.Entity.Infrastructure.Interception;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using Finsa.Caravan.Common.Logging.Models;
 using JsonSettings = Finsa.CodeServices.Serialization.JsonSerializerSettings;
 
 namespace Finsa.Caravan.DataAccess.Logging.Sql

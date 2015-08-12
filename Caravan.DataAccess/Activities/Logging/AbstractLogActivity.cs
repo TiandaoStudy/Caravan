@@ -3,6 +3,7 @@ using System.Activities;
 using System.Collections.Generic;
 using Common.Logging;
 using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.Common.Models.Logging;
 using LL = Common.Logging.LogLevel;
 

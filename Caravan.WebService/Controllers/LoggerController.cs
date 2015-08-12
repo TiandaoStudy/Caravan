@@ -14,7 +14,6 @@ using System.Web.Http.Results;
 using Common.Logging;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common;
 using System;
@@ -23,6 +22,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Finsa.Caravan.Common.Logging.Exceptions;
 
 namespace Finsa.Caravan.WebService.Controllers
 {

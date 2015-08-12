@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using AutoMapper;
 using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.Common.Models.Security.Exceptions;
+using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using Finsa.CodeServices.Common;

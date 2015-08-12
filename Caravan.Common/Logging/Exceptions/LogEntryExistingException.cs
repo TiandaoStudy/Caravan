@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Finsa.Caravan.Common.Models.Logging.Exceptions
+namespace Finsa.Caravan.Common.Logging.Exceptions
 {
     [Serializable]
     public class LogEntryExistingException : Exception
@@ -26,9 +26,6 @@ namespace Finsa.Caravan.Common.Models.Logging.Exceptions
         {
         }
 
-        public static string TheMessage
-        {
-            get { return "Entry already existing"; }
-        }
+        public static string TheMessage { get; } = "Entry already existing";
     }
 }

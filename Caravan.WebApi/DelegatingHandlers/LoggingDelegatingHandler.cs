@@ -10,6 +10,7 @@ using System.ServiceModel.Channels;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using Finsa.Caravan.Common.Logging.Models;
 
 namespace Finsa.Caravan.WebApi.DelegatingHandlers
 {
