@@ -262,6 +262,9 @@
     <Compile Include="Drivers\Sql\SqlServer\SqlServerDataSourceManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Drivers\Sql\SqlServer\Scripts\crvn_log_entries.sql" />
+    <Content Include="Drivers\Sql\SqlServer\Scripts\crvn_log_settings.sql" />
+    <Content Include="Drivers\Sql\SqlServer\Scripts\crvn_sec_apps.sql" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
