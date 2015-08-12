@@ -5,8 +5,8 @@
         <id>Finsa.Caravan.WebApi</id>
         <version>1.10</version>
         <title>Finsa.Caravan.WebApi</title>
-        <authors>Finsa S.p.A</authors>
-        <owners>Finsa S.p.A</owners>
+        <authors>Finsa S.p.A.</authors>
+        <owners>Finsa S.p.A.</owners>
         <description>
 A long description of the package. This shows up in the right pane of the Add Package Dialog as well as in the Package Manager Console when listing packages using the Get-Package command.
         </description>
@@ -27,7 +27,7 @@ A short description of the package. If specified, this shows up in the middle pa
             <dependency id="LinqToQuerystring.WebApi2" version="1.4.1.14" />
             <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
             <dependency id="Microsoft.Owin" version="3.0.1" />
-            <dependency id="PommaLabs.KVLite.WebApi" version="3.1.1" />
+            <dependency id="PommaLabs.KVLite.WebApi" version="4.0.1" />
         </dependencies>
         <references></references>
         <tags>finsa caravan</tags>
