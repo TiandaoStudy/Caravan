@@ -1,14 +1,10 @@
 ﻿using Common.Logging;
-using Finsa.Caravan.Common.Models.Logging;
+using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.DataAccess.Drivers.Sql;
-using Finsa.CodeServices.Clock;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Collections.Concurrent;
-using PommaLabs.Thrower;
 using Finsa.CodeServices.Serialization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
+using PommaLabs.Thrower;
 using System;
 using System.Data;
 using System.Data.Common;
@@ -16,8 +12,6 @@ using System.Data.Entity.Infrastructure.Interception;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using Finsa.Caravan.Common.Logging.Models;
-using JsonSettings = Finsa.CodeServices.Serialization.JsonSerializerSettings;
 
 namespace Finsa.Caravan.DataAccess.Logging.Sql
 {
@@ -36,21 +30,17 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
         /// <summary>
         ///   A temporary map used to link queries before and after they are executed.
         /// </summary>
-        static readonly ConcurrentDictionary<DbCommand, QueryInfo> _tmpQueryMap = new ConcurrentDictionary<DbCommand, QueryInfo>();
+        static readonly ConcurrentDictionary<DbCommand, QueryInfo> TmpQueryMap = new ConcurrentDictionary<DbCommand, QueryInfo>();
 
-        readonly IClock _clock;
         readonly ILog _log;
 
         /// <summary>
         ///   Builds an SQL command logger, using given log.
         /// </summary>
-        /// <param name="clock">The clock used to measure query execution time.</param>
         /// <param name="log">The log on which we should write.</param>
-        public SqlDbCommandLogger(IClock clock, ILog log)
+        public SqlDbCommandLogger(ILog log)
         {
-            RaiseArgumentNullException.IfIsNull(clock, nameof(clock));
             RaiseArgumentNullException.IfIsNull(log, nameof(log));
-            _clock = clock;
             _log = log;
         }
 
@@ -64,7 +54,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             {
                 // Register the query in the temporary map.
                 var queryInfo = ExtractQueryInfo(command);
-                _tmpQueryMap.Add(command, queryInfo);
+                TmpQueryMap.Add(command, queryInfo);
 
                 // Start the stopwatch.
                 queryInfo.Stopwatch.Restart();
@@ -74,7 +64,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
                 _log.Warn("Error while logging a non query command!", ex);
 
                 // In case of error, remove the entry from the query map.
-                _tmpQueryMap.Remove(command);
+                TmpQueryMap.Remove(command);
             }
         }
 
@@ -87,12 +77,12 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             try
             {
                 // Retrieve the query info and immediately stop the timer.
-                var queryInfo = _tmpQueryMap[command];
+                var queryInfo = TmpQueryMap[command];
                 queryInfo.Stopwatch.Stop();
 
                 _log.Trace(new LogMessage
                 {
-                    ShortMessage = string.Format("Non query command \"{0}\" executed with result \"{1}\"", queryInfo.CommandId, interceptionContext.Result),
+                    ShortMessage = $"Non query command '{queryInfo.CommandId}' executed with result '{interceptionContext.Result}'",
                     LongMessage = queryInfo.CommandText,
                     Context = "Executing a non query command",
                     Arguments = new[]
@@ -100,7 +90,8 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
                         KeyValuePair.Create(CommandIdVariable, queryInfo.CommandId),
                         KeyValuePair.Create(CommandResultVariable, interceptionContext.Result.ToString(CultureInfo.InvariantCulture)),
                         KeyValuePair.Create(CommandElapsedMillisecondsVariable, queryInfo.CommandElapsedMilliseconds),
-                        KeyValuePair.Create(CommandParametersVariable, queryInfo.CommandParameters)
+                        KeyValuePair.Create(CommandParametersVariable, queryInfo.CommandParameters),
+                        KeyValuePair.Create(CommandTimeoutVariable, queryInfo.CommandTimeout)
                     }
                 });
             }
@@ -111,7 +102,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             finally
             {
                 // In any case, remove the entry from the query map.
-                _tmpQueryMap.Remove(command);
+                TmpQueryMap.Remove(command);
             }
         }
 
@@ -125,7 +116,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             {
                 // Register the query in the temporary map.
                 var queryInfo = ExtractQueryInfo(command);
-                _tmpQueryMap.Add(command, queryInfo);
+                TmpQueryMap.Add(command, queryInfo);
 
                 // Start the stopwatch.
                 queryInfo.Stopwatch.Restart();
@@ -135,7 +126,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
                 _log.Warn("Error while logging a reader command!", ex);
 
                 // In case of error, remove the entry from the query map.
-                _tmpQueryMap.Remove(command);
+                TmpQueryMap.Remove(command);
             }
         }
 
@@ -148,12 +139,12 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             try
             {
                 // Retrieve the query info and immediately stop the timer.
-                var queryInfo = _tmpQueryMap[command];
+                var queryInfo = TmpQueryMap[command];
                 queryInfo.Stopwatch.Stop();
 
                 _log.Trace(new LogMessage
                 {
-                    ShortMessage = string.Format("Reader command \"{0}\" executed", queryInfo.CommandId),
+                    ShortMessage = $"Reader command '{queryInfo.CommandId}' executed",
                     LongMessage = queryInfo.CommandText,
                     Context = "Executing a reader command",
                     Arguments = new[]
@@ -161,7 +152,8 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
                         KeyValuePair.Create(CommandIdVariable, queryInfo.CommandId),
                         KeyValuePair.Create(CommandResultVariable, interceptionContext.Result.ToString()),
                         KeyValuePair.Create(CommandElapsedMillisecondsVariable, queryInfo.CommandElapsedMilliseconds),
-                        KeyValuePair.Create(CommandParametersVariable, queryInfo.CommandParameters)
+                        KeyValuePair.Create(CommandParametersVariable, queryInfo.CommandParameters),
+                        KeyValuePair.Create(CommandTimeoutVariable, queryInfo.CommandTimeout)
                     }
                 });
             }
@@ -172,7 +164,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             finally
             {
                 // In any case, remove the entry from the query map.
-                _tmpQueryMap.Remove(command);
+                TmpQueryMap.Remove(command);
             }
         }
 
@@ -186,7 +178,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             {
                 // Register the query in the temporary map.
                 var queryInfo = ExtractQueryInfo(command);
-                _tmpQueryMap.Add(command, queryInfo);
+                TmpQueryMap.Add(command, queryInfo);
 
                 // Start the stopwatch.
                 queryInfo.Stopwatch.Restart();
@@ -196,7 +188,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
                 _log.Warn("Error while logging a scalar command!", ex);
 
                 // In case of error, remove the entry from the query map.
-                _tmpQueryMap.Remove(command);
+                TmpQueryMap.Remove(command);
             }
         }
 
@@ -209,20 +201,21 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             try
             {
                 // Retrieve the query info and immediately stop the timer.
-                var queryInfo = _tmpQueryMap[command];
+                var queryInfo = TmpQueryMap[command];
                 queryInfo.Stopwatch.Stop();
 
                 _log.Trace(new LogMessage
                 {
-                    ShortMessage = string.Format("Scalar command \"{0}\" executed", queryInfo.CommandId),
+                    ShortMessage = $"Scalar command '{queryInfo.CommandId}' executed",
                     LongMessage = queryInfo.CommandText,
                     Context = "Executing a scalar command",
                     Arguments = new[]
                     {
                         KeyValuePair.Create(CommandIdVariable, queryInfo.CommandId),
-                        KeyValuePair.Create(CommandResultVariable, interceptionContext.Result.ToJsonString(LogMessage.ReadableJsonSettings)),
+                        KeyValuePair.Create(CommandResultVariable, interceptionContext.Result.ToYamlString(LogMessage.ReadableYamlSettings)),
                         KeyValuePair.Create(CommandElapsedMillisecondsVariable, queryInfo.CommandElapsedMilliseconds),
-                        KeyValuePair.Create(CommandParametersVariable, queryInfo.CommandParameters)
+                        KeyValuePair.Create(CommandParametersVariable, queryInfo.CommandParameters),
+                        KeyValuePair.Create(CommandTimeoutVariable, queryInfo.CommandTimeout)
                     }
                 });
             }
@@ -233,7 +226,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             finally
             {
                 // In any case, remove the entry from the query map.
-                _tmpQueryMap.Remove(command);
+                TmpQueryMap.Remove(command);
             }
         }
 
@@ -260,7 +253,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             {
                 CommandId = UniqueIdGenerator.NewBase32("-"),
                 CommandText = command.CommandText,
-                CommandParameters = ExtractParameters(command.Parameters).ToJsonString(LogMessage.ReadableJsonSettings),
+                CommandParameters = ExtractParameters(command.Parameters).ToYamlString(LogMessage.ReadableYamlSettings),
                 CommandTimeout = command.CommandTimeout.ToString(CultureInfo.InvariantCulture)
             };
         }
@@ -308,14 +301,12 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
 
             public object Value { get; set; }
 
-            [JsonConverter(typeof(StringEnumConverter))]
             public DbType DbType { get; set; }
 
             public bool IsNullable { get; set; }
 
             public int Size { get; set; }
 
-            [JsonConverter(typeof(StringEnumConverter))]
             public ParameterDirection Direction { get; set; }
         }
 

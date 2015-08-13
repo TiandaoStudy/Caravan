@@ -1,15 +1,14 @@
 ﻿using Common.Logging;
-using Finsa.Caravan.Common.Models.Logging;
+using Finsa.Caravan.Common.Logging.Models;
 using Finsa.CodeServices.Common;
-using PommaLabs.Thrower;
 using Finsa.CodeServices.Common.Extensions;
+using Finsa.CodeServices.Serialization;
 using Microsoft.Owin;
+using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Finsa.Caravan.Common.Logging.Models;
-using Finsa.CodeServices.Serialization;
 using AppFunc = System.Func<System.Collections.Generic.IDictionary<string, object>, System.Threading.Tasks.Task>;
 
 namespace Finsa.Caravan.WebApi.Middlewares
@@ -81,7 +80,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
 
                     _log.Trace(new LogMessage
                     {
-                        ShortMessage = string.Format("Request '{0}' at '{1}'", requestId, request.Uri.SafeToString()),
+                        ShortMessage = $"Request '{requestId}' at '{request.Uri.SafeToString()}'",
                         LongMessage = body,
                         Context = "Logging request",
                         Arguments = new[]
@@ -90,7 +89,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
                             KeyValuePair.Create("request_user_agent", request.Headers.Get("User-Agent").SafeToString()),
                             KeyValuePair.Create("request_uri", request.Uri.SafeToString()),
                             KeyValuePair.Create("request_method", request.Method.SafeToString()),
-                            KeyValuePair.Create("request_headers", request.Headers.ToJsonString(LogMessage.ReadableJsonSettings))
+                            KeyValuePair.Create("request_headers", request.Headers.ToYamlString(LogMessage.ReadableYamlSettings))
                         }
                     });
                 }
@@ -144,7 +143,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
 
                     _log.Trace(new LogMessage
                     {
-                        ShortMessage = string.Format("Response \"{0}\" for \"{1}\"", requestId, request.Uri.SafeToString()),
+                        ShortMessage = $"Response '{requestId}' for '{request.Uri.SafeToString()}'",
                         LongMessage = body,
                         Context = "Logging response",
                         Arguments = new[]

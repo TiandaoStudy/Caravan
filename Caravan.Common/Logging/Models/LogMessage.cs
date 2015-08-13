@@ -2,97 +2,92 @@ using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Collections.ReadOnly;
 using Finsa.CodeServices.Serialization;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
-using JsonSettings = Finsa.CodeServices.Serialization.JsonSerializerSettings;
+using PommaLabs.Thrower;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 namespace Finsa.Caravan.Common.Logging.Models
 {
     /// <summary>
     ///   Internal format used for complex log message passing.
     /// </summary>
-    [Serializable, JsonObject(MemberSerialization.OptIn)]
-    public struct LogMessage
+    [Serializable]
+    public sealed class LogMessage
     {
         /// <summary>
-        ///   The prefix used to identify complex messages.
+        ///   YAML serializer settings for a readable log.
         /// </summary>
-        public static readonly string JsonMessagePrefix = "#LOG_MESSAGE#";
-
-        /// <summary>
-        ///   JSON serializer settings for a readable log.
-        /// </summary>
-        public static JsonSettings ReadableJsonSettings { get; } = new JsonSettings
+        public static YamlSerializerSettings ReadableYamlSettings { get; } = new YamlSerializerSettings
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            Formatting = Formatting.Indented,
-            NullValueHandling = NullValueHandling.Ignore,
-            PreserveReferencesHandling = PreserveReferencesHandling.None,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            NamingConvention = new CamelCaseNamingConvention(),
+            SerializationOptions = SerializationOptions.EmitDefaults
         };
 
         /// <summary>
         ///   Short message.
         /// </summary>
-        [JsonProperty("shortMessage")]
+        [JsonProperty(Order = 0), YamlMember(Order = 0)]
         public string ShortMessage { get; set; }
 
         /// <summary>
         ///   Long message.
         /// </summary>
-        [JsonProperty("longMessage")]
+        [JsonProperty(Order = 1), YamlMember(Order = 1)]
         public string LongMessage { get; set; }
 
         /// <summary>
         ///   Context.
         /// </summary>
-        [JsonProperty("context")]
+        [JsonProperty(Order = 2), YamlMember(Order = 2)]
         public string Context { get; set; }
 
         /// <summary>
         ///   Arguments.
         /// </summary>
-        [JsonProperty("arguments")]
+        [JsonProperty(Order = 3), YamlMember(Order = 3)]
         public IEnumerable<KeyValuePair<string, string>> Arguments { get; set; }
 
         /// <summary>
         ///   Exception (optional), must _not_ be serialized. In fact, its content is assigned to
         ///   above properties.
         /// </summary>
-        public Exception Exception { get; set; }
+        [JsonIgnore, YamlIgnore]
+        public Exception Exception
+        {
+            set
+            {
+                // Preconditions
+                RaiseArgumentNullException.IfIsNull(value, nameof(value));
+
+                var exception = value.GetBaseException();
+
+                var shortMsgPrefix = ((ShortMessage != null) ? ShortMessage + " - " : string.Empty);
+                ShortMessage = shortMsgPrefix + exception.Message;
+
+                var longMsgPrefix = ((LongMessage != null) ? LongMessage + Environment.NewLine + Environment.NewLine : string.Empty);
+                LongMessage = longMsgPrefix + exception.ToYamlString(ReadableYamlSettings);
+
+                // Prendo anche eventuali argomenti già inseriti.
+                Arguments = new List<KeyValuePair<string, string>>(Arguments ?? ReadOnlyList.Empty<KeyValuePair<string, string>>())
+                {
+                    KeyValuePair.Create("exception_stacktrace", exception.StackTrace ?? string.Empty),
+                    KeyValuePair.Create("exception_data", exception.Data.ToYamlString(ReadableYamlSettings)),
+                    KeyValuePair.Create("exception_source", exception.Source ?? string.Empty),
+                    KeyValuePair.Create("exception_hresult", exception.HResult.ToString()),
+                };
+            }
+        }
 
         /// <summary>
         ///   Returns a complex JSON containing all log message information.
         /// </summary>
         public override string ToString()
         {
-            var clone = new LogMessage();
-            if (Exception != null)
-            {
-                var exception = Exception.GetBaseException();
-                clone.ShortMessage = exception.Message;
-                clone.LongMessage = exception.ToJsonString(ReadableJsonSettings);
-                clone.Context = Context;
-                // Keep aligned with Finsa.DataAccess.CaravanLoggerTarget.ParseMessage
-                clone.Arguments = new List<KeyValuePair<string, string>>(Arguments ?? ReadOnlyList.Empty<KeyValuePair<string, string>>())
-                {
-                    KeyValuePair.Create("exception_stacktrace", exception.StackTrace ?? string.Empty),
-                    KeyValuePair.Create("exception_data", exception.Data.ToJsonString(ReadableJsonSettings)),
-                    KeyValuePair.Create("exception_source", exception.Source ?? string.Empty),
-                    KeyValuePair.Create("exception_hresult", exception.HResult.ToString()),
-                };
-            }
-            else
-            {
-                clone.ShortMessage = ShortMessage;
-                clone.LongMessage = LongMessage;
-                clone.Context = Context;
-                clone.Arguments = Arguments;
-            }
             // Aggiungo NewLine così che nei file di testo parta da una riga sotto, dato che il
-            // messaggio JSON è sicuramente molto lungo.
-            return Environment.NewLine + clone.ToJsonString(ReadableJsonSettings);
+            // messaggio YAML è sicuramente molto lungo.
+            return Environment.NewLine + this.ToYamlString(ReadableYamlSettings);
         }
     }
 }

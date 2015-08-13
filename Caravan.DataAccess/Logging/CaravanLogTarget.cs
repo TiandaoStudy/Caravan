@@ -1,10 +1,8 @@
 ﻿using Fasterflect;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Logging;
-using Finsa.Caravan.Common.Models.Logging;
+using Finsa.Caravan.Common.Logging.Models;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Collections.ReadOnly;
-using Finsa.CodeServices.Serialization;
 using NLog;
 using NLog.Config;
 using NLog.Layouts;
@@ -14,7 +12,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Finsa.Caravan.Common.Logging.Models;
 using LogLevel = Common.Logging.LogLevel;
 
 namespace Finsa.Caravan.DataAccess.Logging
@@ -26,7 +23,6 @@ namespace Finsa.Caravan.DataAccess.Logging
     public class CaravanLogTarget : Target
     {
         static readonly SimpleLayout DefaultLogLevel = new SimpleLayout("${level}");
-        static readonly JsonSerializer JsonSerializer = new JsonSerializer();
 
         /// <summary>
         ///   Builds the target with default layout formats.
@@ -59,7 +55,7 @@ namespace Finsa.Caravan.DataAccess.Logging
 
         protected override void Write(LogEventInfo logEvent)
         {
-            var logLevel = (LogLevel) Enum.Parse(typeof(LogLevel), LogLevel.Render(logEvent));
+            var logLevel = (LogLevel)Enum.Parse(typeof(LogLevel), LogLevel.Render(logEvent));
             var userLogin = UserLogin.Render(logEvent);
             var codeUnit = CodeUnit.Render(logEvent);
             var function = Function.Render(logEvent);
@@ -86,44 +82,40 @@ namespace Finsa.Caravan.DataAccess.Logging
 
         static LogMessage ParseMessage(LogEventInfo logEvent)
         {
-            var msg = logEvent.FormattedMessage;
-            var ex = logEvent.Exception;
-            if (ex != null)
+            // Il messaggio che è giunto nel log: può essere una stringa semplice, oppure uno YAML
+            // di LogMessage.
+            var formattedMessage = logEvent.FormattedMessage;
+
+            // Può essere valorizzato in fase di chiamata, passando un LogMessage come messaggio,
+            // oppure può essere costruito in automatico deserializzando dal messaggio formattato in YAML.
+            var logMessage = new LogMessage
             {
-                // Get the innermost exception.
-                while (ex.InnerException != null)
-                {
-                    ex = ex.InnerException;
-                }
-                return new LogMessage
-                {
-                    ShortMessage = ((msg != null) ? msg + " - " : string.Empty),
-                    LongMessage = ex.StackTrace,
-                    Context = string.Empty,
-                    Arguments = new[]
-                    {
-                        // Keep aligned with Finsa.Common.Logging.CaravanLogger.SerializeJsonlogMessageCallback
-                        KeyValuePair.Create("exception_data", ex.Data.ToJsonString(LogMessage.ReadableJsonSettings)),
-                        KeyValuePair.Create("exception_source", ex.Source ?? string.Empty)
-                    }
-                };
-            }
-            if (!string.IsNullOrWhiteSpace(msg) && msg.StartsWith(LogMessage.JsonMessagePrefix, StringComparison.Ordinal))
-            {
-                var json = msg.Substring(LogMessage.JsonMessagePrefix.Length);
-                var entry = JsonSerializer.DeserializeFromString<LogMessage>(json);
-                entry.LongMessage = entry.LongMessage ?? string.Empty;
-                entry.Context = entry.Context ?? string.Empty;
-                entry.Arguments = entry.Arguments ?? ReadOnlyList.Empty<KeyValuePair<string, string>>();
-                return entry;
-            }
-            return new LogMessage
-            {
-                ShortMessage = msg,
+                ShortMessage = formattedMessage,
                 LongMessage = string.Empty,
                 Context = string.Empty,
                 Arguments = ReadOnlyList.Empty<KeyValuePair<string, string>>()
             };
+
+            // Verifico se è stato passato un LogMessage come parametro.
+            if (logEvent.Parameters.Length > 0 && logEvent.Parameters[0] is LogMessage)
+            {
+                logMessage = logEvent.Parameters[0] as LogMessage;
+            }
+
+            // Valuto se si tratta di un messaggio a cui è stata allegata una eccezione.
+            var exception = logEvent.Exception;
+            if (exception != null)
+            {
+                // Recupero l'eccezione più interna e poi creo un LogMessage ad hoc, di modo che me
+                // lo trovi valorizzato con tutti i campi estratti dall'eccezione.
+                exception = exception.GetBaseException();
+
+                // Arricchisco il messaggio di log con le info presenti nell'eccezione.
+                logMessage.Exception = exception;
+            }
+
+            // Restituisco il messaggio appena elaborato.
+            return logMessage;
         }
 
         #region Raw reflection for NLog
