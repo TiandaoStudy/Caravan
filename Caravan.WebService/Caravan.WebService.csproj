@@ -379,11 +379,14 @@
     <Content Include="CaravanDevCert.pvk" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Caravan.config" />
+    <Content Include="Caravan.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
