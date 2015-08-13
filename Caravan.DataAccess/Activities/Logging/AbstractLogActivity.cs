@@ -14,7 +14,7 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
     {
         #region Arguments
 
-        public InArgument<IEnumerable<KeyValuePair<string, string>>> Arguments { get; set; }
+        public InArgument<IList<KeyValuePair<string, string>>> Arguments { get; set; }
 
         public InArgument<string> Context { get; set; }
 

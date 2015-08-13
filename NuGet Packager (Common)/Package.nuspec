@@ -26,7 +26,7 @@ A short description of the package. If specified, this shows up in the middle pa
             <dependency id="Common.Logging" version="3.2.0" />
             <dependency id="Finsa.CodeServices.Common" version="2.1" />
             <dependency id="Microsoft.AspNet.Identity.Core" version="2.2.1" />
-            <dependency id="Microsoft.Bcl" version="1.1.11" />
+            <dependency id="Microsoft.Bcl" version="1.1.10" />
             <dependency id="Newtonsoft.Json" version="7.0.1" />
             <dependency id="PommaLabs.KVLite.Core" version="4.0.1" />
             <dependency id="Westwind.Utilities.Configuration" version="2.25" />

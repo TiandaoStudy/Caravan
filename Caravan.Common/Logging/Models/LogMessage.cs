@@ -2,9 +2,10 @@ using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Collections.ReadOnly;
 using Finsa.CodeServices.Serialization;
 using Newtonsoft.Json;
+using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
-using PommaLabs.Thrower;
+using System.Text.RegularExpressions;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -16,6 +17,9 @@ namespace Finsa.Caravan.Common.Logging.Models
     [Serializable]
     public sealed class LogMessage
     {
+        static readonly Regex RemoveBlankRows = new Regex(@"^[ \t]*((\r|\n)\n?)", RegexOptions.Compiled | RegexOptions.Multiline);
+        static readonly Regex RemoveLastBlanks = new Regex(@"[ \t]+((\r|\n)\n?)", RegexOptions.Compiled | RegexOptions.Singleline);
+
         /// <summary>
         ///   YAML serializer settings for a readable log.
         /// </summary>
@@ -47,7 +51,7 @@ namespace Finsa.Caravan.Common.Logging.Models
         ///   Arguments.
         /// </summary>
         [JsonProperty(Order = 3), YamlMember(Order = 3)]
-        public IEnumerable<KeyValuePair<string, string>> Arguments { get; set; }
+        public IList<KeyValuePair<string, string>> Arguments { get; set; }
 
         /// <summary>
         ///   Exception (optional), must _not_ be serialized. In fact, its content is assigned to
@@ -85,9 +89,38 @@ namespace Finsa.Caravan.Common.Logging.Models
         /// </summary>
         public override string ToString()
         {
+            // Pulizia dell'oggetto .NET, in modo da avere un file YAML molto pulito. Per
+            // ShortMessage e Context mi limito a una TRIM (è difficile che siano su più righe),
+            // mentre per LongMessage e per gli Arguments devo applicare pulizie più efficaci.
+            ShortMessage = ShortMessage?.Trim();
+            Context = Context?.Trim();
+            if (LongMessage != null)
+            {
+                LongMessage = RemoveBlankRows.Replace(LongMessage, string.Empty);
+                LongMessage = RemoveLastBlanks.Replace(LongMessage, Environment.NewLine);
+            }
+            if (Arguments != null)
+            {
+                for (var i = 0; i < Arguments.Count; ++i)
+                {
+                    var kv = Arguments[i];
+                    if (kv.Value == null)
+                    {
+                        continue;
+                    }
+                    var tmp = RemoveBlankRows.Replace(kv.Value, string.Empty);
+                    tmp = RemoveLastBlanks.Replace(tmp, Environment.NewLine);
+                    Arguments[i] = KeyValuePair.Create(kv.Key.Trim(), tmp);
+                }
+            }
+
+            // Generazione della serializzazione YAML.
+            var yaml = this.ToYamlString(ReadableYamlSettings);
+            yaml = RemoveBlankRows.Replace(yaml, string.Empty);
+
             // Aggiungo NewLine così che nei file di testo parta da una riga sotto, dato che il
             // messaggio YAML è sicuramente molto lungo.
-            return Environment.NewLine + this.ToYamlString(ReadableYamlSettings);
+            return Environment.NewLine + yaml;
         }
     }
 }
