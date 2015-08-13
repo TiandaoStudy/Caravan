@@ -86,21 +86,14 @@ namespace Finsa.Caravan.DataAccess.Logging
             // di LogMessage.
             var formattedMessage = logEvent.FormattedMessage;
 
-            // Può essere valorizzato in fase di chiamata, passando un LogMessage come messaggio,
-            // oppure può essere costruito in automatico deserializzando dal messaggio formattato in YAML.
-            var logMessage = new LogMessage
+            // Verifico se è stato passato un LogMessage come parametro. Se si, lo uso, altrimenti ne creo uno vuoto.
+            var logMessage = (logEvent?.Parameters?.GetValue(0) as LogMessage) ?? new LogMessage
             {
                 ShortMessage = formattedMessage,
                 LongMessage = string.Empty,
                 Context = string.Empty,
                 Arguments = ReadOnlyList.Empty<KeyValuePair<string, string>>()
             };
-
-            // Verifico se è stato passato un LogMessage come parametro.
-            if (logEvent.Parameters.Length > 0 && logEvent.Parameters[0] is LogMessage)
-            {
-                logMessage = logEvent.Parameters[0] as LogMessage;
-            }
 
             // Valuto se si tratta di un messaggio a cui è stata allegata una eccezione.
             var exception = logEvent.Exception;

@@ -149,7 +149,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
                         Arguments = new[]
                         {
                             KeyValuePair.Create("response_status_code", response.StatusCode.SafeToString()),
-                            KeyValuePair.Create("response_headers", response.Headers.SafeToString())
+                            KeyValuePair.Create("response_headers", response.Headers.ToYamlString(LogMessage.ReadableYamlSettings))
                         }
                     });
                 }
