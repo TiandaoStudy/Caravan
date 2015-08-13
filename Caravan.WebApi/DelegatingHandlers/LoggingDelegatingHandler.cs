@@ -35,7 +35,7 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
         {
             // Utilizzato per associare request e response nel log.
             var requestId = UniqueIdGenerator.NewBase32("-");
-            _log.GlobalVariablesContext.Set("request_id", requestId);
+            _log.ThreadVariablesContext.Set("request_id", requestId);
 
             try
             {
