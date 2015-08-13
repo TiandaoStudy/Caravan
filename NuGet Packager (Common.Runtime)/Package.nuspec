@@ -3,7 +3,7 @@
 <package>
     <metadata>
         <id>Finsa.Caravan.Common.Runtime</id>
-        <version>1.10</version>
+        <version>1.11</version>
         <title>Finsa.Caravan.Common.Runtime</title>
         <authors>Finsa S.p.A.</authors>
         <owners>Finsa S.p.A.</owners>
@@ -24,10 +24,10 @@ A short description of the package. If specified, this shows up in the middle pa
         <dependencies>
             <dependency id="AutoMapper" version="4.0.4" />
             <dependency id="Common.Logging.NLog40" version="3.2.0" />
-            <dependency id="Finsa.Caravan.Common" version="1.10" />
             <dependency id="NLog" version="4.0.1" />
             <dependency id="NLog.Config" version="4.0.1" />
             <dependency id="PommaLabs.KVLite" version="4.0.0" />
+            <dependency id="Thrower" version="1.1" />
         </dependencies>
         <references></references>
         <frameworkAssemblies></frameworkAssemblies>
