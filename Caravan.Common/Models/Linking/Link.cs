@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 
 namespace Finsa.Caravan.Common.Models.Linking
 {

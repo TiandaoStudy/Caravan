@@ -9,7 +9,7 @@ using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.WebForms;
 using FLEX.Web.Pages;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 using Finsa.CodeServices.Common.Extensions;
 using FLEX.Web.UserControls;
 

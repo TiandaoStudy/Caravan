@@ -5,7 +5,7 @@ using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 using Finsa.CodeServices.Common.Extensions;
 using System;
 using System.Collections.Generic;

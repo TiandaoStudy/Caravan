@@ -1,7 +1,7 @@
 ﻿using Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 using Finsa.CodeServices.Common.Extensions;
 using Microsoft.Owin;
 using System;

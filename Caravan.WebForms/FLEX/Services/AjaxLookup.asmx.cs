@@ -11,7 +11,7 @@ using System.Xml;
 using Dapper;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebForms.Properties;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 using Finsa.CodeServices.Common.Extensions;
 using Finsa.CodeServices.Common.Text;
 using FLEX.Web.XmlSettings.AjaxLookup;

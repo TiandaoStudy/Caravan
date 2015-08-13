@@ -7,7 +7,7 @@ using Finsa.Caravan.Common.WebForms;
 using FLEX.Web.Pages;
 using System.Data;
 using Finsa.Caravan.Common;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 using Finsa.CodeServices.Common.Extensions;
 using FLEX.Web.UserControls;
 

@@ -7,7 +7,7 @@ using FLEX.Web.UserControls.Ajax;
 using System.Linq;
 using System.Data;
 using Finsa.Caravan.Common;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 
 // ReSharper disable CheckNamespace
 // This is the correct namespace, despite the file physical position.

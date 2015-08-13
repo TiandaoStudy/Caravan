@@ -1,6 +1,6 @@
 ﻿using Common.Logging;
 using Finsa.Caravan.Common;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 using PommaLabs.KVLite;
 using PommaLabs.KVLite.Web.Http;
 using System.Web.Http;

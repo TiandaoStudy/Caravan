@@ -4,7 +4,7 @@ using System.Threading;
 using System.Web.UI;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebForms.Properties;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 using FLEX.WebForms;
 
 // ReSharper disable CheckNamespace

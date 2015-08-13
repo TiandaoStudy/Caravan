@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Finsa.CodeServices.Common.Collections.ReadOnly;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 
 namespace Finsa.Caravan.Common.WebForms
 {

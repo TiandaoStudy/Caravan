@@ -11,7 +11,7 @@ using System.Web;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging.Exceptions;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 
 namespace Finsa.Caravan.DataAccess.Core
 {

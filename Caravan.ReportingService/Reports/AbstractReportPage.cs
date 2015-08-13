@@ -62,19 +62,14 @@ namespace Finsa.Caravan.ReportingService
 
                 report.LoadSubreportDefinition("subreport", File.OpenRead(_mappedReportPath));
 
-                var reportParameters = new List<ReportParameter>(4)
-                {
-                    new ReportParameter("pTitle", ReportTitle)
-                };
-                
+                var reportParameters = new List<ReportParameter>(4);
                 SetReportParameters(reportParameters);
+                reportParameters.Add(new ReportParameter("pTitle", ReportTitle));
                 report.SetParameters(reportParameters);
 
                 report.Refresh();
 
                 var export = requestParameters.Get("export");
-
-               
 
                 switch (export)
                 {

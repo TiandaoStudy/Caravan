@@ -4,7 +4,7 @@ using Finsa.Caravan.DataAccess.Drivers.Sql;
 using Finsa.CodeServices.Clock;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Collections.Concurrent;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 using Finsa.CodeServices.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;

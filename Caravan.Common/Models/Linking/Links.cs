@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Finsa.CodeServices.Common.Collections;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 
 namespace Finsa.Caravan.Common.Models.Linking
 {

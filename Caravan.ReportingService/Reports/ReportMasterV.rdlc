@@ -4,7 +4,41 @@
   <ReportSections>
     <ReportSection>
       <Body>
-        <Height>2in</Height>
+        <ReportItems>
+          <Subreport Name="subreport">
+            <ReportName>subreport</ReportName>
+            <Parameters>
+              <Parameter Name="pTitle">
+                <Value>=Parameters!pTitle.Value</Value>
+              </Parameter>
+              <Parameter Name="p0">
+                <Value>=Parameters!p0.Value</Value>
+              </Parameter>
+              <Parameter Name="p1">
+                <Value>=Parameters!p1.Value</Value>
+              </Parameter>
+              <Parameter Name="p2">
+                <Value>=Parameters!p2.Value</Value>
+              </Parameter>
+              <Parameter Name="p3">
+                <Value>=Parameters!p3.Value</Value>
+              </Parameter>
+              <Parameter Name="p4">
+                <Value>=Parameters!p4.Value</Value>
+              </Parameter>
+            </Parameters>
+            <Top>1.3575cm</Top>
+            <Left>6.00287cm</Left>
+            <Height>7.6cm</Height>
+            <Width>7.5cm</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+        </ReportItems>
+        <Height>3.81824in</Height>
         <Style />
       </Body>
       <Width>6.5in</Width>
@@ -81,6 +115,36 @@
   </ReportSections>
   <ReportParameters>
     <ReportParameter Name="pTitle">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="p0">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="p1">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="p2">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="p3">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="p4">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>

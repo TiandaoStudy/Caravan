@@ -3,7 +3,7 @@ using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 
