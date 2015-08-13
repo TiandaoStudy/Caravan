@@ -3,6 +3,7 @@ using System.Activities;
 using System.Collections.Generic;
 using Common.Logging;
 using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.Common.Models.Logging;
 using LL = Common.Logging.LogLevel;
 
@@ -13,7 +14,7 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
     {
         #region Arguments
 
-        public InArgument<IEnumerable<KeyValuePair<string, string>>> Arguments { get; set; }
+        public InArgument<IList<KeyValuePair<string, string>>> Arguments { get; set; }
 
         public InArgument<string> Context { get; set; }
 

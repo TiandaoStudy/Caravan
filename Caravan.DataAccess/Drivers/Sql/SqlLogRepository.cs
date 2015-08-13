@@ -5,7 +5,7 @@ using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 using Finsa.CodeServices.Common.Extensions;
 using System;
 using System.Collections.Generic;
@@ -14,11 +14,11 @@ using System.Linq;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
-    internal sealed class SqlLogRepository : AbstractLogRepository<SqlLogRepository>
+    sealed class SqlLogRepository : AbstractLogRepository<SqlLogRepository>
     {
         #region Constants
 
-        private const int MaxArgumentCount = 10;
+        const int MaxArgumentCount = 10;
 
         #endregion Constants
 
@@ -29,7 +29,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             {
                 Raise<ArgumentException>.IfIsEmpty(codeUnit);
                 var argsList = (args == null) ? new KeyValuePair<string, string>[0] : args.ToArray();
-                Raise<ArgumentOutOfRangeException>.If(argsList.Length > MaxArgumentCount);
 
                 using (var ctx = SqlDbContext.CreateWriteContext())
                 {
@@ -72,60 +71,59 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                             Context = context.Truncate(SqlDbContext.MediumLength)
                         };
 
-                        for (var i = 0; i < argsList.Length; ++i)
+                        for (var i = 0; i < argsList.Length && i < MaxArgumentCount; ++i)
                         {
-                            var key = argsList[i].Key;
-                            var val = argsList[i].Value;
+                            var tmp = argsList[i];
                             switch (i)
                             {
                                 case 0:
-                                    entry.Key0 = key;
-                                    entry.Value0 = val;
+                                    entry.Key0 = tmp.Key;
+                                    entry.Value0 = tmp.Value;
                                     break;
 
                                 case 1:
-                                    entry.Key1 = key;
-                                    entry.Value1 = val;
+                                    entry.Key1 = tmp.Key;
+                                    entry.Value1 = tmp.Value;
                                     break;
 
                                 case 2:
-                                    entry.Key2 = key;
-                                    entry.Value2 = val;
+                                    entry.Key2 = tmp.Key;
+                                    entry.Value2 = tmp.Value;
                                     break;
 
                                 case 3:
-                                    entry.Key3 = key;
-                                    entry.Value3 = val;
+                                    entry.Key3 = tmp.Key;
+                                    entry.Value3 = tmp.Value;
                                     break;
 
                                 case 4:
-                                    entry.Key4 = key;
-                                    entry.Value4 = val;
+                                    entry.Key4 = tmp.Key;
+                                    entry.Value4 = tmp.Value;
                                     break;
 
                                 case 5:
-                                    entry.Key5 = key;
-                                    entry.Value5 = val;
+                                    entry.Key5 = tmp.Key;
+                                    entry.Value5 = tmp.Value;
                                     break;
 
                                 case 6:
-                                    entry.Key6 = key;
-                                    entry.Value6 = val;
+                                    entry.Key6 = tmp.Key;
+                                    entry.Value6 = tmp.Value;
                                     break;
 
                                 case 7:
-                                    entry.Key7 = key;
-                                    entry.Value7 = val;
+                                    entry.Key7 = tmp.Key;
+                                    entry.Value7 = tmp.Value;
                                     break;
 
                                 case 8:
-                                    entry.Key8 = key;
-                                    entry.Value8 = val;
+                                    entry.Key8 = tmp.Key;
+                                    entry.Value8 = tmp.Value;
                                     break;
 
                                 case 9:
-                                    entry.Key9 = key;
-                                    entry.Value9 = val;
+                                    entry.Key9 = tmp.Key;
+                                    entry.Value9 = tmp.Value;
                                     break;
                             }
                         }
@@ -283,6 +281,22 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     .Where(e => e.Id == logId)
                     .Select(Mapper.Map<LogEntry>)
                     .FirstAsOption();
+            }
+        }
+
+        protected bool CleanUpEntriesInternal(string appName)
+        {
+            using (var ctx = SqlDbContext.CreateWriteContext())
+            {
+                var apps = ctx.SecApps.Where(a => appName == null || a.Name == appName.ToLower());
+                var settings = apps.SelectMany(a => a.LogSettings).Where(s => s.Enabled);
+
+                //ctx.LogEntries.RemoveRange(from s in settings
+                //    from e in s.LogEntries
+                //    where e.Date.)
+                //var entries = settings.SelectMany(s => s.LogEntries)
+
+                return false;
             }
         }
 

@@ -7,7 +7,7 @@ using Finsa.Caravan.DataAccess.Logging.Sql;
 using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebApi.Middlewares;
 using Finsa.Caravan.WebService;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 using Finsa.WebApi.HelpPage.AnyHost;
 using Microsoft.Owin;
 using Newtonsoft.Json;

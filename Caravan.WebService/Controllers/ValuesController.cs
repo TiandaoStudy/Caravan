@@ -14,8 +14,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Web.Http;
-using LinqToQuerystring.WebApi;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 using Finsa.CodeServices.Common.Extensions;
 using WebApi.OutputCache.V2;
 using PommaLabs.KVLite;
@@ -46,7 +45,7 @@ namespace Finsa.Caravan.WebService.Controllers
         ///   Returns all values.
         /// </summary>
         /// <returns>All values.</returns>
-        [Route(""), LinqToQueryable, CacheOutput(ServerTimeSpan = OutputCacheSeconds, ClientTimeSpan = OutputCacheSeconds)]
+        [Route(""), CacheOutput(ServerTimeSpan = OutputCacheSeconds, ClientTimeSpan = OutputCacheSeconds)]
         public IQueryable<string> Get()
         {
             return _cache.GetItems<object>(CachePartition).Select(i => i.Value).Cast<string>().AsQueryable();

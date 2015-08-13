@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Logging;
+using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.Common.Models.Logging;
 
 namespace Finsa.Caravan.Common.Logging

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Finsa.Caravan.Common.Models.Security.Exceptions
+namespace Finsa.Caravan.Common.Security.Exceptions
 {
     [Serializable]
     public class SecAppNotFoundException : Exception
@@ -26,9 +26,6 @@ namespace Finsa.Caravan.Common.Models.Security.Exceptions
         {
         }
 
-        public static string TheMessage
-        {
-            get { return "Application not found"; }
-        }
+        public static string TheMessage { get; } = "Application not found";
     }
 }

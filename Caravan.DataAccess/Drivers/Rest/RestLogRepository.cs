@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using Finsa.Caravan.Common.Models.Rest;
-using Finsa.Caravan.Common.Models.Security.Exceptions;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.CodeServices.Common;
 using RestSharp;
 using Common.Logging;
+using Finsa.Caravan.Common.Logging.Exceptions;
+using Finsa.Caravan.Common.Security.Exceptions;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Rest
 {

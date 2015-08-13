@@ -1,11 +1,11 @@
-﻿using Finsa.Caravan.Common.Models.Logging.Exceptions;
-using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.Common.Models.Security.Exceptions;
+﻿using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Security;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 using System;
 using System.Linq;
+using Finsa.Caravan.Common.Logging.Exceptions;
+using Finsa.Caravan.Common.Security.Exceptions;
 
 namespace Finsa.Caravan.DataAccess.Core
 {

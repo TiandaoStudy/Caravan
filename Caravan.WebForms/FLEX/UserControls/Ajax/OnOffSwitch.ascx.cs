@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Web.UI;
 using Finsa.Caravan.Common.WebForms;
 using Finsa.CodeServices.Common.Collections.ReadOnly;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 using Finsa.CodeServices.Common.Extensions;
 
 // ReSharper disable CheckNamespace

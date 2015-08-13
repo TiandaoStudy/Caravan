@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Finsa.Caravan.Common.Models.Logging.Exceptions
+namespace Finsa.Caravan.Common.Logging.Exceptions
 {
     [Serializable]
     public class LogEntryNotFoundException : Exception
@@ -26,9 +26,6 @@ namespace Finsa.Caravan.Common.Models.Logging.Exceptions
         {
         }
 
-        public static string TheMessage
-        {
-            get { return "Log not found"; }
-        }
+        public static string TheMessage { get; } = "Log not found";
     }
 }

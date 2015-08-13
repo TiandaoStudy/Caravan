@@ -1,7 +1,6 @@
 using Common.Logging;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Models.Logging.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,8 +9,9 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Web;
 using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging.Exceptions;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 
 namespace Finsa.Caravan.DataAccess.Core
 {

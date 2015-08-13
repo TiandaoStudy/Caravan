@@ -1,7 +1,7 @@
 ﻿using Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 using Finsa.CodeServices.Common.Extensions;
 using Microsoft.Owin;
 using System;
@@ -10,6 +10,7 @@ using System.ServiceModel.Channels;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using Finsa.Caravan.Common.Logging.Models;
 
 namespace Finsa.Caravan.WebApi.DelegatingHandlers
 {
@@ -34,7 +35,7 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
         {
             // Utilizzato per associare request e response nel log.
             var requestId = UniqueIdGenerator.NewBase32("-");
-            _log.GlobalVariablesContext.Set("request_id", requestId);
+            _log.ThreadVariablesContext.Set("request_id", requestId);
 
             try
             {

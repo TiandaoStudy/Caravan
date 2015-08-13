@@ -1,6 +1,6 @@
 ﻿using System;
 using Finsa.Caravan.Common.Models.Security;
-using Finsa.CodeServices.Common.Diagnostics;
+using PommaLabs.Thrower;
 using Microsoft.AspNet.Identity;
 
 namespace Finsa.Caravan.Common.Security
