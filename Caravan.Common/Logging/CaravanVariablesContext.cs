@@ -85,7 +85,7 @@ namespace Finsa.Caravan.Common.Logging
 
                     // Otherwise, it must be added to the cache and then returned.
                     var newGlobalMap = new ConcurrentDictionary<string, object>();
-                    var globalInterval = CommonConfiguration.Instance.Logging_CaravanVariablesContext_Interval;
+                    var globalInterval = CommonConfiguration.Instance.Logging_CaravanVariablesContext_Interval();
                     Cache.AddSliding(CachePartition, CacheKeyForGlobal, new ConcurrentDictionary<string, object>(), globalInterval);
                     return newGlobalMap;
 
@@ -101,7 +101,7 @@ namespace Finsa.Caravan.Common.Logging
 
                     // Otherwise, it must be added to the cache and then returned.
                     var newThreadMap = new ConcurrentDictionary<string, object>();
-                    var threadInterval = CommonConfiguration.Instance.Logging_CaravanVariablesContext_Interval;
+                    var threadInterval = CommonConfiguration.Instance.Logging_CaravanVariablesContext_Interval();
                     Cache.AddSliding(CachePartition, cacheKeyForThread, new ConcurrentDictionary<string, object>(), threadInterval);
                     return newThreadMap;
 

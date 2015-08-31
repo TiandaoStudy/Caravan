@@ -77,7 +77,7 @@ namespace Finsa.Caravan.Common
         /// <remarks>
         ///   Viene calcolato in automatico in base al valore specificato in <see cref="Logging_CaravanVariablesContext_IntervalInMinutes"/>.
         /// </remarks>
-        public TimeSpan Logging_CaravanVariablesContext_Interval => TimeSpan.FromMinutes(Logging_CaravanVariablesContext_IntervalInMinutes);
+        public TimeSpan Logging_CaravanVariablesContext_Interval() => TimeSpan.FromMinutes(Logging_CaravanVariablesContext_IntervalInMinutes);
 
         #region OnStart
 
