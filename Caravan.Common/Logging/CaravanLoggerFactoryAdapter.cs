@@ -1,4 +1,5 @@
-﻿using Common.Logging.Configuration;
+﻿using Common.Logging;
+using Common.Logging.Configuration;
 using Common.Logging.NLog;
 
 namespace Finsa.Caravan.Common.Logging
@@ -7,6 +8,11 @@ namespace Finsa.Caravan.Common.Logging
     {
         public CaravanLoggerFactoryAdapter(NameValueCollection properties) : base(properties)
         {
+        }
+
+        protected override ILog CreateLogger(string name)
+        {
+            return new CaravanLogger(NLog.LogManager.GetLogger(name));
         }
     }
 }
