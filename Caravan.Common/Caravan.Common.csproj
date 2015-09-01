@@ -54,6 +54,10 @@
       <HintPath>..\packages\Common.Logging.Core.3.2.0\lib\net40\Common.Logging.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Common.Logging.NLog40, Version=3.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.NLog40.3.2.0\lib\net40\Common.Logging.NLog40.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Crc32C.NET">
       <HintPath>..\packages\Crc32C.NET.1.0.5.0\lib\net20\Crc32C.NET.dll</HintPath>
     </Reference>
@@ -61,20 +65,20 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Clock, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Finsa.CodeServices.Clock.2.1\lib\net40\Finsa.CodeServices.Clock.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Clock, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Clock.2.2\lib\net40\Finsa.CodeServices.Clock.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Common, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Finsa.CodeServices.Common.2.1\lib\net40-client\Finsa.CodeServices.Common.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Common, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Common.2.2\lib\net40-client\Finsa.CodeServices.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Compression, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Finsa.CodeServices.Compression.2.1\lib\net40\Finsa.CodeServices.Compression.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Compression, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Compression.2.2\lib\net40\Finsa.CodeServices.Compression.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Serialization, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Finsa.CodeServices.Serialization.2.1\lib\net40\Finsa.CodeServices.Serialization.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Serialization, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Serialization.2.2\lib\net40\Finsa.CodeServices.Serialization.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="LZ4, Version=1.0.5.93, Culture=neutral, PublicKeyToken=fd2bda0a70c5a705, processorArchitecture=MSIL">
@@ -97,8 +101,8 @@
       <HintPath>..\packages\SharpSerializer.2.20\lib\net20\Polenter.SharpSerializer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PommaLabs.KVLite, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PommaLabs.KVLite.Core.4.0.1\lib\net45\PommaLabs.KVLite.dll</HintPath>
+    <Reference Include="PommaLabs.KVLite, Version=4.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PommaLabs.KVLite.Core.4.1.1\lib\net45\PommaLabs.KVLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PommaLabs.Thrower, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -117,6 +121,10 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Troschuetz.Random, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Troschuetz.Random.4.0\lib\net45\Troschuetz.Random.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Westwind.Utilities.Configuration, Version=2.25.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Westwind.Utilities.Configuration.2.25\lib\net40\Westwind.Utilities.Configuration.dll</HintPath>
       <Private>True</Private>
@@ -129,6 +137,9 @@
   <ItemGroup>
     <Compile Include="CommonConfiguration.cs" />
     <Compile Include="Core\ErrorMessages.cs" />
+    <Compile Include="Logging\CaravanLogger.cs" />
+    <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />
+    <Compile Include="Logging\CaravanVariablesContext.cs" />
     <Compile Include="Logging\ICaravanLogRepository.cs" />
     <Compile Include="Models\Formatting\PageOrientation.cs" />
     <Compile Include="Models\Logging\LogEntryQuery.cs" />

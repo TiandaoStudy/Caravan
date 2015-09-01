@@ -54,11 +54,20 @@ namespace Finsa.Caravan.Common
         {
             AppName = "my_caravan_app";
             AppDescription = "My Wow Caravan App";
+
+            // Logging
+            Logging_CaravanVariablesContext_Interval = TimeSpan.FromMinutes(30);
         }
 
         public string AppName { get; set; }
 
         public string AppDescription { get; set; }
+        
+        /// <summary>
+        ///   L'intervallo dopo il quale le variabili memorizzate nel contesto in memoria
+        ///   del log di Caravan vengono automaticamente cancellate.
+        /// </summary>
+        public TimeSpan Logging_CaravanVariablesContext_Interval { get; set; }
 
         #region OnStart
 

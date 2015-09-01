@@ -6,8 +6,10 @@ using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json.Serialization;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
+using JsonSerializerSettings = Finsa.CodeServices.Serialization.JsonSerializerSettings;
 
 namespace Finsa.Caravan.Common.Logging.Models
 {
@@ -19,6 +21,16 @@ namespace Finsa.Caravan.Common.Logging.Models
     {
         static readonly Regex RemoveBlankRows = new Regex(@"^[ \t]*((\r|\n)\n?)", RegexOptions.Compiled | RegexOptions.Multiline);
         static readonly Regex RemoveLastBlanks = new Regex(@"[ \t]+((\r|\n)\n?)", RegexOptions.Compiled | RegexOptions.Singleline);
+
+        /// <summary>
+        ///   JSON serializer settings for a readable log.
+        /// </summary>
+        public static JsonSerializerSettings ReadableJsonSettings { get; } = new JsonSerializerSettings
+        {
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            Formatting = Formatting.Indented,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        };
 
         /// <summary>
         ///   YAML serializer settings for a readable log.
@@ -71,7 +83,7 @@ namespace Finsa.Caravan.Common.Logging.Models
                 ShortMessage = shortMsgPrefix + exception.Message;
 
                 var longMsgPrefix = ((LongMessage != null) ? LongMessage + Environment.NewLine + Environment.NewLine : string.Empty);
-                LongMessage = longMsgPrefix + exception.ToYamlString(ReadableYamlSettings);
+                LongMessage = longMsgPrefix + exception.ToJsonString(ReadableJsonSettings);
 
                 // Prendo anche eventuali argomenti già inseriti.
                 Arguments = new List<KeyValuePair<string, string>>(Arguments ?? ReadOnlyList.Empty<KeyValuePair<string, string>>())
