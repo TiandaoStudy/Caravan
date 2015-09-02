@@ -7,17 +7,12 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Attributes
     [AttributeUsage(AttributeTargets.Property)]
     public class DateTimeKindAttribute : Attribute
     {
-        private readonly DateTimeKind _kind;
-
         public DateTimeKindAttribute(DateTimeKind kind)
         {
-            _kind = kind;
+            Kind = kind;
         }
 
-        public DateTimeKind Kind
-        {
-            get { return _kind; }
-        }
+        public DateTimeKind Kind { get; }
 
         public static void Apply(object entity)
         {

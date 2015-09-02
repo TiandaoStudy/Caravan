@@ -1,6 +1,5 @@
 ﻿using Common.Logging;
 using Common.Logging.NLog;
-using PommaLabs.KVLite;
 
 namespace Finsa.Caravan.Common.Logging
 {
@@ -10,8 +9,8 @@ namespace Finsa.Caravan.Common.Logging
         {
         }
 
-        public override IVariablesContext GlobalVariablesContext { get; } = new CaravanVariablesContext(MemoryCache.DefaultInstance, CaravanVariablesContextMode.Global);
+        public override IVariablesContext GlobalVariablesContext => CaravanVariablesContext.GlobalVariables;
 
-        public override IVariablesContext ThreadVariablesContext { get; } = new CaravanVariablesContext(MemoryCache.DefaultInstance, CaravanVariablesContextMode.Thread);
+        public override IVariablesContext ThreadVariablesContext => CaravanVariablesContext.ThreadVariables;
     }
 }

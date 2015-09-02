@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Finsa.Caravan.Common.Logging;
+using PommaLabs.KVLite;
 using LogLevel = Common.Logging.LogLevel;
 
 namespace Finsa.Caravan.DataAccess.Logging
@@ -59,11 +61,15 @@ namespace Finsa.Caravan.DataAccess.Logging
             var userLogin = UserLogin.Render(logEvent);
             var codeUnit = CodeUnit.Render(logEvent);
             var function = Function.Render(logEvent);
+
             var logMessage = ParseMessage(logEvent);
             logMessage.ShortMessage = (ShortMessage != null) ? ShortMessage.Render(logEvent) : logMessage.ShortMessage;
             logMessage.LongMessage = (LongMessage != null) ? LongMessage.Render(logEvent) : logMessage.LongMessage;
             logMessage.Context = (Context != null) ? Context.Render(logEvent) : logMessage.Context;
-            var arguments = GetGlobalVariables().Union(GetThreadVariables()).Union(logMessage.Arguments);
+
+            var globalVariables = CaravanVariablesContext.GlobalVariables.Variables;
+            var threadVariables = CaravanVariablesContext.ThreadVariables.Variables;
+            var arguments = globalVariables.Union(threadVariables).Union(logMessage.Arguments);
 
             // In order to be able to use thread local information, it must _not_ be async.
             // ReSharper disable once UnusedVariable
@@ -110,31 +116,5 @@ namespace Finsa.Caravan.DataAccess.Logging
             // Restituisco il messaggio appena elaborato.
             return logMessage;
         }
-
-        #region Raw reflection for NLog
-
-        static readonly Flags DictFlags = Flags.Static | Flags.NonPublic;
-        static readonly MemberGetter GlobalDict = typeof(GlobalDiagnosticsContext).DelegateForGetFieldValue("dict", DictFlags);
-        static readonly MemberGetter ThreadDict = typeof(MappedDiagnosticsContext).DelegateForGetPropertyValue("ThreadDictionary", DictFlags);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static IEnumerable<KeyValuePair<string, string>> GetGlobalVariables()
-        {
-            var globalDict = GlobalDict.Invoke(null) as Dictionary<string, string>;
-            Debug.Assert(globalDict != null, "This should always be true for NLog 4.0.1, check before using other versions.");
-            // We make a snapshot of the dictionary, since it may easily change.
-            return globalDict.Select(kv => KeyValuePair.Create(kv.Key, kv.Value)).ToList();
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static IEnumerable<KeyValuePair<string, string>> GetThreadVariables()
-        {
-            var threadDict = ThreadDict.Invoke(null) as Dictionary<string, string>;
-            Debug.Assert(threadDict != null, "This should always be true for NLog 4.0.1, check before using other versions.");
-            // We make a snapshot of the dictionary, since it may easily change.
-            return threadDict.Select(kv => KeyValuePair.Create(kv.Key, kv.Value)).ToList();
-        }
-
-        #endregion Raw reflection for NLog
     }
 }
