@@ -1,9 +1,12 @@
 ﻿using Common.Logging;
+using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Common.Extensions;
 using PommaLabs.KVLite;
 using PommaLabs.Thrower;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 
 namespace Finsa.Caravan.Common.Logging
@@ -36,7 +39,7 @@ namespace Finsa.Caravan.Common.Logging
 
         public CaravanVariablesContextMode Mode { get; }
 
-        public KeyValuePair<string, object>[] Variables => GetAndSetVariablesMap().ToArray();
+        public IList<KeyValuePair<string, string>> Variables => GetAndSetVariablesMap().Select(x => KeyValuePair.Create(x.Key, x.Value.SafeToString())).ToArray();
 
         #region IVariablesContext members
 

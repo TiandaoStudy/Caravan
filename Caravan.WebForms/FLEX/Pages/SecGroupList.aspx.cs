@@ -8,7 +8,7 @@ using FLEX.Web.Pages;
 using System.Data;
 using Finsa.Caravan.Common;
 using PommaLabs.Thrower;
-using Finsa.CodeServices.Common.Extensions;
+using Finsa.CodeServices.Common.Collections;
 using FLEX.Web.UserControls;
 
 // ReSharper disable CheckNamespace

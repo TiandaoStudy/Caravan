@@ -2,7 +2,7 @@
 using System.Linq;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess;
-using Finsa.CodeServices.Common.Extensions;
+using Finsa.CodeServices.Common.Collections;
 using FLEX.Web.Pages;
 using FLEX.Web.UserControls.Ajax;
 

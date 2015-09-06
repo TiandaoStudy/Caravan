@@ -3,6 +3,7 @@ using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Collections.ReadOnly;
+using Finsa.CodeServices.Common.Extensions;
 using NLog;
 using NLog.Config;
 using NLog.Layouts;

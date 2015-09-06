@@ -38,7 +38,7 @@ namespace FLEX.Web.MasterPages
 
       public void RegisterAlert(Page child, string message)
       {
-         var script = string.Format("bootbox.alert('PROVA');", message);
+         var script = string.Format("bootbox.alert('{0}');", message);
          ScriptManager.RegisterStartupScript(child, child.GetType(), "_Alert_", script, true);
       }
 

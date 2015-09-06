@@ -28,8 +28,8 @@ A short description of the package. If specified, this shows up in the middle pa
             <dependency id="Finsa.Caravan.DataAccess" version="1.13" />
             <dependency id="NLog" version="4.0.1" />
             <dependency id="NLog.Config" version="4.0.1" />
-            <dependency id="PommaLabs.KVLite" version="4.1.0" />
-            <dependency id="Thrower" version="1.1" />
+            <dependency id="PommaLabs.KVLite" version="4.2.0" />
+            <dependency id="Thrower" version="1.2" />
         </dependencies>
         <references></references>
         <frameworkAssemblies></frameworkAssemblies>
