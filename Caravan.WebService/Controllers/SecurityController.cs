@@ -213,26 +213,17 @@ namespace Finsa.Caravan.WebService.Controllers
         #region Objects
 
         /// <summary>
-        ///   Returns all objects belong to the specified application
-        /// </summary>
-        /// <param name="appName">The application name</param>
-        /// <returns>All objects belong to the specified application</returns>
-        [Route("{appaName}/objects")]
-        public IQueryable<SecObject> GetObjects(string appName)
-        {
-            return CaravanDataSource.Security.GetObjects(appName).AsQueryable();
-        }
-
-        /// <summary>
         ///   Returns all objects in the specified context
         /// </summary>
-        /// <param name="appName">The application name</param>
-        /// <param name="contextName">the context name</param>
+        /// <param name="appName">The application name.</param>
+        /// <param name="contextName">The optional context name</param>
         /// <returns>All objects in the specified context</returns>
-        [Route("{appaName}/objects")]
-        public IQueryable<SecObject> GetObjects(string appName, string contextName)
+        [Route("{appaName}/objects/{contextName?}")]
+        public SecObject[] GetObjects(string appName, string contextName)
         {
-            return CaravanDataSource.Security.GetObjects(appName, contextName).AsQueryable();
+            return (contextName == null)
+                ? CaravanDataSource.Security.GetObjects(appName)
+                : CaravanDataSource.Security.GetObjects(appName, contextName);
         }
 
         #endregion Objects
