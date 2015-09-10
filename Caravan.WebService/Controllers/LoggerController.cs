@@ -23,6 +23,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Finsa.Caravan.Common.Logging.Exceptions;
+using PommaLabs.Thrower;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -41,10 +42,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         public LoggerController(ILog log)
         {
-            if (log == null)
-            {
-                throw new ArgumentNullException("log");
-            }
+            RaiseArgumentNullException.IfIsNull(log, nameof(log));
             _log = log;
         }
 
@@ -95,11 +93,11 @@ namespace Finsa.Caravan.WebService.Controllers
             return CaravanDataSource.Logger.QueryEntries(new LogEntryQuery
             {
                 AppNames = new[] { appName },
-                LogLevels = (logLevels == null) ? NoLogLevels : logLevels.Split(',').Select(ll => (LogLevel) Enum.Parse(typeof(LogLevel), ll, true)).ToArray(),
+                LogLevels = logLevels?.Split(',').Select(ll => (LogLevel) Enum.Parse(typeof(LogLevel), ll, true)).ToArray() ?? NoLogLevels,
                 TruncateLongMessage = true,
                 MaxTruncatedLongMessageLength = 30,
-                FromDate = fromDate.HasValue ? fromDate.Value.ToOption() : Option.None<DateTime>(),
-                ToDate = toDate.HasValue ? toDate.Value.ToOption() : Option.None<DateTime>()
+                FromDate = fromDate?.ToOption() ?? Option.None<DateTime>(),
+                ToDate = toDate?.ToOption() ?? Option.None<DateTime>()
             });
         }
 
@@ -118,8 +116,8 @@ namespace Finsa.Caravan.WebService.Controllers
                 LogLevels = new[] { logLevel },
                 TruncateLongMessage = true,
                 MaxTruncatedLongMessageLength = 30,
-                FromDate = fromDate.HasValue ? fromDate.Value.ToOption() : Option.None<DateTime>(),
-                ToDate = toDate.HasValue ? toDate.Value.ToOption() : Option.None<DateTime>()
+                FromDate = fromDate?.ToOption() ?? Option.None<DateTime>(),
+                ToDate = toDate?.ToOption() ?? Option.None<DateTime>()
             });
         }
 
