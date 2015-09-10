@@ -285,10 +285,11 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         protected override bool CleanUpEntriesInternal(string appName)
         {
-            using (var ctx = SqlDbContext.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var utcNow = DateTime.UtcNow;
-                var appIds = ctx.SecApps.Where(a => appName == null || a.Name == appName.ToLower()).Select(a => a.Id);
+
+                var appIds = ((appName == null) ? ctx.SecApps : ctx.SecApps.Where(a => a.Name == appName.ToLower())).Select(a => a.Id);
 
                 // We delete logs older than "settings.Days".
 
@@ -296,7 +297,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                               where appIds.Contains(e.AppId)
                               from s in ctx.LogSettings
                               where s.AppId == e.AppId && s.LogLevel == e.LogLevel
-                              where DbFunctions.AddDays(e.Date, s.Days) > utcNow
+                              where DbFunctions.DiffDays(utcNow, e.Date) > s.Days
                               select e;
 
                 ctx.LogEntries.RemoveRange(oldLogs);
@@ -311,7 +312,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
                 var logCounts = from es in logSettings
                                 group es by new { es.Setting.AppId, es.Setting.LogLevel } into g
-                                select new { Count = g.Count(), MaxCount = g.First().Setting.MaxEntries, Entries = g.Select(x => x.Entry) };
+                                select new { Count = g.Count(), MaxCount = g.FirstOrDefault().Setting.MaxEntries, Entries = g.Select(x => x.Entry) };
 
                 var olderLogs = from c in logCounts
                                 where c.Count > c.MaxCount
@@ -319,7 +320,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
                 ctx.LogEntries.RemoveRange(olderLogs.SelectMany(e => e));
 
-                return false;
+                return true;
             }
         }
 

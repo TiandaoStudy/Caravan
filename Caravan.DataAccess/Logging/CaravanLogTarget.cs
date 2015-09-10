@@ -1,20 +1,14 @@
-﻿using Fasterflect;
-using Finsa.Caravan.Common;
+﻿using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Models;
-using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Collections.ReadOnly;
-using Finsa.CodeServices.Common.Extensions;
 using NLog;
 using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using Finsa.Caravan.Common.Logging;
-using PommaLabs.KVLite;
 using LogLevel = Common.Logging.LogLevel;
 
 namespace Finsa.Caravan.DataAccess.Logging
@@ -56,6 +50,10 @@ namespace Finsa.Caravan.DataAccess.Logging
 
         public Layout Context { get; set; }
 
+        /// <summary>
+        ///   Writes logging event to the log target. classes.
+        /// </summary>
+        /// <param name="logEvent">Logging event to be written out.</param>
         protected override void Write(LogEventInfo logEvent)
         {
             var logLevel = (LogLevel)Enum.Parse(typeof(LogLevel), LogLevel.Render(logEvent));
@@ -93,14 +91,19 @@ namespace Finsa.Caravan.DataAccess.Logging
             // di LogMessage.
             var formattedMessage = logEvent.FormattedMessage;
 
-            // Verifico se è stato passato un LogMessage come parametro. Se si, lo uso, altrimenti ne creo uno vuoto.
-            var logMessage = (logEvent?.Parameters?.GetValue(0) as LogMessage) ?? new LogMessage
+            // Verifico se è stato passato un LogMessage come parametro. Se si, lo uso, altrimenti
+            // ne creo uno vuoto e inserisco valori di default.
+            var logMessage = (logEvent.Parameters?.GetValue(0) as LogMessage) ?? new LogMessage
             {
                 ShortMessage = formattedMessage,
                 LongMessage = string.Empty,
-                Context = string.Empty,
-                Arguments = ReadOnlyList.Empty<KeyValuePair<string, string>>()
+                Context = string.Empty
             };
+
+            if (logMessage.Arguments == null)
+            {
+                logMessage.Arguments = ReadOnlyList.Empty<KeyValuePair<string, string>>();
+            }
 
             // Valuto se si tratta di un messaggio a cui è stata allegata una eccezione.
             var exception = logEvent.Exception;
