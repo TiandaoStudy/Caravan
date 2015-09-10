@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Common.Logging;
+using Finsa.Caravan.Common.Models.Logging;
+using Finsa.CodeServices.Common;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Common.Logging;
-using Finsa.Caravan.Common.Models.Logging;
-using Finsa.CodeServices.Common;
 
 namespace Finsa.Caravan.Common.Logging
 {
@@ -885,7 +885,8 @@ namespace Finsa.Caravan.Common.Logging
         /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">
-        ///   <paramref name="appName"/> is null or empty. <paramref name="logLevel"/> is not a valid <see cref="logLevel"/>.
+        ///   <paramref name="appName"/> is null or empty. <paramref name="logLevel"/> is not a
+        ///   valid <see cref="logLevel"/>.
         /// </exception>
         IList<LogEntry> GetEntries(string appName, LogLevel logLevel);
 
@@ -910,6 +911,18 @@ namespace Finsa.Caravan.Common.Logging
         /// <param name="logId"></param>
         /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
         void RemoveEntry(string appName, int logId);
+
+        /// <summary>
+        ///   Applica le impostazioni di log e pulisce i log più vecchi, quelli che superano il
+        ///   limite di cardinalità, ecc ecc.
+        /// </summary>
+        void CleanUpEntries();
+
+        /// <summary>
+        ///   Applica le impostazioni di log e pulisce i log più vecchi, quelli che superano il
+        ///   limite di cardinalità, ecc ecc, ma solo per l'applicazione data.
+        /// </summary>
+        void CleanUpEntries(string appName);
 
         #endregion Entries
 
@@ -946,7 +959,8 @@ namespace Finsa.Caravan.Common.Logging
         /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">
-        ///   <paramref name="appName"/> is null or empty. <paramref name="logLevel"/> is not a valid <see cref="logLevel"/>.
+        ///   <paramref name="appName"/> is null or empty. <paramref name="logLevel"/> is not a
+        ///   valid <see cref="logLevel"/>.
         /// </exception>
         LogSetting GetSettings(string appName, LogLevel logLevel);
 

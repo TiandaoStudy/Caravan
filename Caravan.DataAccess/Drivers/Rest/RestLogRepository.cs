@@ -165,5 +165,10 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
         {
             throw new NotImplementedException();
         }
+
+        protected override bool CleanUpEntriesInternal(string appName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

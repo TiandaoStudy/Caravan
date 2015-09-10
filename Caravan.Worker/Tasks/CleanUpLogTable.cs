@@ -2,5 +2,6 @@
 {
     sealed class CleanUpLogTable
     {
+
     }
 }
