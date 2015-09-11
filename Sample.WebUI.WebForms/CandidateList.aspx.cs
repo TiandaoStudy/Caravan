@@ -1,4 +1,5 @@
 ﻿using System;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.WebForms;
 using Finsa.Caravan.DataAccess;
 using FLEX.Web.Pages;
@@ -34,7 +35,7 @@ namespace FLEX.Sample.WebUI
       {
          try
          {
-            CaravanDataSource.Logger.LogError<CandidateList>("Short msg", DateTime.Now.ToLongDateString(), "A test");
+            CaravanDataSource.Logger.LogError<CandidateList>("Short msg", ServiceProvider.CurrentDateTime().ToLongDateString(), "A test");
          }
          catch (Exception ex)
          {

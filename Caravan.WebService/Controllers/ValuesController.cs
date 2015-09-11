@@ -14,6 +14,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Web.Http;
+using Finsa.CodeServices.Clock;
 using PommaLabs.Thrower;
 using Finsa.CodeServices.Common.Extensions;
 using WebApi.OutputCache.V2;
@@ -34,11 +35,14 @@ namespace Finsa.Caravan.WebService.Controllers
         private static readonly string CachePartition = typeof(ValuesController).FullName;
 
         private readonly ICache _cache;
+        private readonly IClock _clock;
 
-        public ValuesController(ICache cache)
+        public ValuesController(ICache cache, IClock clock)
         {
-            Raise<ArgumentNullException>.IfIsNull(cache);
+            RaiseArgumentNullException.IfIsNull(cache, nameof(cache));
+            RaiseArgumentNullException.IfIsNull(clock, nameof(clock));
             _cache = cache;
+            _clock = clock;
         }
 
         /// <summary>
@@ -71,7 +75,7 @@ namespace Finsa.Caravan.WebService.Controllers
         public void Post([FromBody] string value)
         {
             var random = new Random().Next();
-            _cache.AddTimed(CachePartition, random.ToString(CultureInfo.InvariantCulture), value.Truncate(MaxStringLength), DateTime.UtcNow.AddSeconds(CacheSeconds));
+            _cache.AddTimed(CachePartition, random.ToString(CultureInfo.InvariantCulture), value.Truncate(MaxStringLength), _clock.UtcNow.AddSeconds(CacheSeconds));
         }
 
         /// <summary>
@@ -82,7 +86,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{id}")]
         public void Put(int id, [FromBody] string value)
         {
-            _cache.AddTimed(CachePartition, id.ToString(CultureInfo.InvariantCulture), value.Truncate(MaxStringLength), DateTime.UtcNow.AddSeconds(CacheSeconds));
+            _cache.AddTimed(CachePartition, id.ToString(CultureInfo.InvariantCulture), value.Truncate(MaxStringLength), _clock.UtcNow.AddSeconds(CacheSeconds));
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.Web;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
 using PommaLabs.KVLite;
@@ -147,7 +148,7 @@ namespace Finsa.Caravan.WebForms
                     if (_userList.ContainsKey(Cookies.Value))
                     {
                         SecSession _st = (SecSession) _userList[Cookies.Value];
-                        _st.LastVisit = DateTime.Now;
+                        _st.LastVisit = ServiceProvider.CurrentDateTime();
                         _st.UserLogin = userName;
                         _userList[Cookies.Value] = _st;
                         //Salvo i dati

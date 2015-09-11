@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Finsa.Caravan.Common;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -41,7 +42,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     {
                         var entry = new SqlLogEntry
                         {
-                            Date = DateTime.UtcNow,
+                            Date = ServiceProvider.CurrentDateTime(),
                             AppId = appId,
                             LogLevel = typeId,
                             UserLogin = userLogin.Truncate(SqlDbContext.SmallLength).ToLowerInvariant(),
@@ -287,7 +288,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
-                var utcNow = DateTime.UtcNow;
+                var utcNow = ServiceProvider.CurrentDateTime();
 
                 var appIds = ((appName == null) ? ctx.SecApps : ctx.SecApps.Where(a => a.Name == appName.ToLower())).Select(a => a.Id);
 

@@ -26,7 +26,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
         [Required, Column("CLOG_DATE", Order = 3)]
         [Index("IX_CRVN_LOG_DATE", 1)]
         [DateTimeKind(DateTimeKind.Utc)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime Date { get; set; }
 
         [Column("CUSR_LOGIN", Order = 4)]
