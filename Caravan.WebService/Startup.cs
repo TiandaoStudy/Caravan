@@ -17,6 +17,7 @@ using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
 using PommaLabs.KVLite;
+using Swashbuckle.Application;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -55,8 +56,15 @@ namespace Finsa.Caravan.WebService
         {
             // REQUIRED TO ENABLE HELP PAGES :)
             config.MapHttpAttributeRoutes(new HelpDirectRouteProvider());
-            var xmlDocPath = HttpContext.Current.Server.MapPath(@"~/App_Data/HelpPages/WebServiceHelp.xml");
-            config.SetDocumentationProvider(new XmlDocumentationProvider(xmlDocPath));
+            //var xmlDocPath = HttpContext.Current.Server.MapPath(@"~/App_Data/HelpPages/WebServiceHelp.xml");
+            //config.SetDocumentationProvider(new XmlDocumentationProvider(xmlDocPath));
+
+            config.EnableSwagger(c =>
+            {
+                c.SingleApiVersion("v1", "wsCaravan");
+                c.IncludeXmlComments(HttpContext.Current.Server.MapPath(@"~/App_Data/HelpPages/WebServiceHelp.xml"));
+
+            }).EnableSwaggerUi();
         }
 
         private static void ConfigureFormatters(HttpConfiguration configuration)

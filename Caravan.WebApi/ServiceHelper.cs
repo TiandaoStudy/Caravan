@@ -4,6 +4,7 @@ using PommaLabs.Thrower;
 using PommaLabs.KVLite;
 using PommaLabs.KVLite.Web.Http;
 using System.Web.Http;
+using Finsa.Caravan.DataAccess;
 
 namespace Finsa.Caravan.WebApi
 {
@@ -35,6 +36,9 @@ namespace Finsa.Caravan.WebApi
 
             // Imposta KVLite come gestore della cache di output.
             ApiOutputCache.RegisterAsCacheOutputProvider(configuration, cache);
+
+            // Pulizia dei log più vecchi o che superano una certa soglia di quantità.
+            CaravanDataSource.Logger.CleanUpEntries(CommonConfiguration.Instance.AppName);
         }
     }
 }

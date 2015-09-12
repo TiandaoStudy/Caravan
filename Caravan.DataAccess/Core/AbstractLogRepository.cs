@@ -327,6 +327,23 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
+        public void CleanUpEntries()
+        {
+            if (!CleanUpEntriesInternal(null))
+            {
+                throw new Exception();
+            }
+        }
+
+        public void CleanUpEntries(string appName)
+        {
+            Raise<ArgumentException>.IfIsEmpty(appName);
+            if (!CleanUpEntriesInternal(appName))
+            {
+                throw new Exception();
+            }
+        }
+
         public IList<LogSetting> GetSettings()
         {
             return GetSettingsInternal(null, null);
@@ -405,6 +422,8 @@ namespace Finsa.Caravan.DataAccess.Core
         protected abstract bool DoUpdateSetting(string appName, LogLevel logLevel, LogSetting setting);
 
         protected abstract bool DoRemoveSetting(string appName, LogLevel logLevel);
+
+        protected abstract bool CleanUpEntriesInternal(string appName);
 
         #region Shortcuts
 

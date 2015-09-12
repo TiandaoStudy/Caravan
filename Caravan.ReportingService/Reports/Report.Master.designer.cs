@@ -22,13 +22,13 @@ namespace Finsa.Caravan.ReportingService {
         protected global::System.Web.UI.WebControls.Panel reportPanel;
         
         /// <summary>
-        /// _reportViewer control.
+        /// reportViewer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Microsoft.Reporting.WebForms.ReportViewer _reportViewer;
+        protected global::Microsoft.Reporting.WebForms.ReportViewer reportViewer;
         
         /// <summary>
         /// errorPanel control.

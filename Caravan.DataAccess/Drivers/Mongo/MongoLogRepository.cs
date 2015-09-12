@@ -156,5 +156,10 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
         {
             throw new NotImplementedException();
         }
+
+        protected override bool CleanUpEntriesInternal(string appName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -249,19 +249,12 @@
             <param name="appName">The application name</param>
             <returns>All contexts of the specified application</returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetObjects(System.String)">
-            <summary>
-              Returns all objects belong to the specified application
-            </summary>
-            <param name="appName">The application name</param>
-            <returns>All objects belong to the specified application</returns>
-        </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetObjects(System.String,System.String)">
             <summary>
               Returns all objects in the specified context
             </summary>
-            <param name="appName">The application name</param>
-            <param name="contextName">the context name</param>
+            <param name="appName">The application name.</param>
+            <param name="contextName">The optional context name</param>
             <returns>All objects in the specified context</returns>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetEntries(System.String)">
