@@ -1,0 +1,36 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ output extension=".sql" #>
+
+-- Apps
+<#@ include file="Tables/crvn_sec_apps.sql" #>
+
+-- Log Settings
+<#@ include file="Tables/crvn_log_settings.sql" #>
+
+-- Log Entries
+<#@ include file="Tables/crvn_log_entries.sql" #>
+
+-- Users
+<#@ include file="Tables/crvn_sec_users.sql" #>
+
+-- Groups
+<#@ include file="Tables/crvn_sec_groups.sql" #>
+
+-- Roles
+<#@ include file="Tables/crvn_sec_roles.sql" #>
+
+-- User Groups
+<#@ include file="Tables/crvn_sec_user_groups.sql" #>
+
+-- User Roles
+<#@ include file="Tables/crvn_sec_user_roles.sql" #>
+
+-- Contexts
+<#@ include file="Tables/crvn_sec_contexts.sql" #>
+
+-- Objects
+<#@ include file="Tables/crvn_sec_objects.sql" #>
+
+-- Sec Entries
+<#@ include file="Tables/crvn_sec_entries.sql" #>
