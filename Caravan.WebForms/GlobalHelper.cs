@@ -26,7 +26,7 @@ namespace Finsa.Caravan.WebForms
 
             // Run vacuum on the persistent cache. It should be put AFTER the connection string is
             // set, since that string it stored on the cache itself and we do not want conflicts, right?
-            PersistentCache.DefaultInstance.VacuumAsync();
+            PersistentCache.DefaultInstance.Vacuum();
 
             // Starts user tracking.
             HttpContext.Current.Application.Add("TRACK_USER_LIST", new Dictionary<string, SecSession>());

@@ -4,6 +4,7 @@ using PommaLabs.KVLite;
 using System;
 using System.Linq;
 using Finsa.CodeServices.Common.Collections;
+using PommaLabs.KVLite.Web;
 
 // ReSharper disable CheckNamespace This is the correct namespace, despite the file physical position.
 
@@ -59,8 +60,9 @@ namespace FLEX.WebForms.Pages
         protected void fdtgCache_DataSourceUpdating(object sender, EventArgs args)
         {
             // This should not catch any exception, others will do.
-            fdtgCache.DataSource = VolatileCache.DefaultInstance.PeekItems<object>()
-                .Union(PersistentCache.DefaultInstance.PeekItems<object>())
+            fdtgCache.DataSource = WebCaches.Volatile.PeekItems<object>()
+                .Union(WebCaches.Persistent.PeekItems<object>())
+                .Union(WebCaches.Memory.GetItems<object>()) // Memory cache does not allow peeking :(
                 .Where(x => x.Key != "ConnectionString") // Do not show connection strings...
                 .Select(x => new CacheItem<string>
                 {
