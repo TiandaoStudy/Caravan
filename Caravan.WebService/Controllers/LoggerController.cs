@@ -10,20 +10,20 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using System.Web.Http.Results;
 using Common.Logging;
 using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging.Exceptions;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common;
+using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Finsa.Caravan.Common.Logging.Exceptions;
-using PommaLabs.Thrower;
+using System.Web.Http.Results;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -31,11 +31,11 @@ namespace Finsa.Caravan.WebService.Controllers
     ///   Controller che si occupa della parte di logging.
     /// </summary>
     [RoutePrefix("logger")]
-    public sealed class LoggerController : ApiController
+    public sealed partial class LoggerController : ApiController
     {
-        private static readonly IList<LogLevel> NoLogLevels = new LogLevel[0];
+        static readonly IList<LogLevel> NoLogLevels = new LogLevel[0];
 
-        private readonly ILog _log;
+        readonly ILog _log;
 
         /// <summary>
         ///   Inizializza il controller con l'istanza del log di Caravan.

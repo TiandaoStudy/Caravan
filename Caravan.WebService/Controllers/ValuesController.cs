@@ -10,15 +10,15 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.CodeServices.Clock;
+using Finsa.CodeServices.Common.Extensions;
+using PommaLabs.KVLite;
+using PommaLabs.Thrower;
 using System;
 using System.Globalization;
 using System.Linq;
 using System.Web.Http;
-using Finsa.CodeServices.Clock;
-using PommaLabs.Thrower;
-using Finsa.CodeServices.Common.Extensions;
 using WebApi.OutputCache.V2;
-using PommaLabs.KVLite;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -28,14 +28,14 @@ namespace Finsa.Caravan.WebService.Controllers
     [RoutePrefix("values")]
     public sealed class ValuesController : ApiController
     {
-        private const int CacheSeconds = 120;
-        private const int MaxStringLength = 30;
-        private const int OutputCacheSeconds = 30;
+        const int CacheSeconds = 120;
+        const int MaxStringLength = 30;
+        const int OutputCacheSeconds = 30;
 
-        private static readonly string CachePartition = typeof(ValuesController).FullName;
+        static readonly string CachePartition = typeof(ValuesController).FullName;
 
-        private readonly ICache _cache;
-        private readonly IClock _clock;
+        readonly ICache _cache;
+        readonly IClock _clock;
 
         public ValuesController(ICache cache, IClock clock)
         {
