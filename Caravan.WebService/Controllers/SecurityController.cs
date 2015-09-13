@@ -127,7 +127,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="groupName">The group name</param>
         /// <exception cref="NotImplementedException"></exception>
         [Route("{appName}/users/{userLogin}/{groupName}")]
-        public void DeleteUserToGroup(string appName, string userLogin, string groupName)
+        public void DeleteUserFromGroup(string appName, string userLogin, string groupName)
         {
             CaravanDataSource.Security.RemoveUserFromGroup(appName, userLogin, groupName);
         }
@@ -260,8 +260,8 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="contextName">The context name</param>
         /// <param name="userLogin">The user login name</param>
         /// <returns></returns>
-        [Route("{appName}/entries/{contextName}/{userLogin}")]
-        public IQueryable<SecEntry> GetEntries(string appName, string contextName, string userLogin)
+        [Route("{appName}/entries/{contextName}/forUser/{userLogin}")]
+        public IQueryable<SecEntry> GetEntriesForUser(string appName, string contextName, string userLogin)
         {
             return CaravanDataSource.Security.GetEntriesForUser(appName, contextName, userLogin).AsQueryable();
         }
@@ -273,7 +273,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="contextName">The context name</param>
         /// <param name="objectName">The object name</param>
         /// <returns></returns>
-        [Route("{appName}/entries/{contextName}/{objectName}")]
+        [Route("{appName}/entries/{contextName}/forObject/{objectName}")]
         public IQueryable<SecEntry> GetEntriesForObject(string appName, string contextName, string objectName)
         {
             return CaravanDataSource.Security.GetEntriesForObject(appName, contextName, objectName).AsQueryable();
@@ -287,7 +287,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="objectName">The object name</param>
         /// <param name="userLogin">The user login</param>
         /// <returns></returns>
-        [Route("{appName}/entries/{contextName}/{objectName}/{userLogin}")]
+        [Route("{appName}/entries/{contextName}/forObject/{objectName}/forUser/{userLogin}")]
         public IQueryable<SecEntry> GetEntriesForObject(string appName, string contextName, string objectName, string userLogin)
         {
             return CaravanDataSource.Security.GetEntriesForObjectAndUser(appName, contextName, objectName, userLogin).AsQueryable();

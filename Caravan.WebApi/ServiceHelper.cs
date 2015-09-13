@@ -32,7 +32,7 @@ namespace Finsa.Caravan.WebApi
             // Run vacuum on the persistent cache. It should be put AFTER the connection string is
             // set, since that string it stored on the cache itself and we do not want conflicts, right?
             var persistentCache = cache as PersistentCache;
-            persistentCache?.VacuumAsync();
+            persistentCache?.Vacuum();
 
             // Imposta KVLite come gestore della cache di output.
             ApiOutputCache.RegisterAsCacheOutputProvider(configuration, cache);

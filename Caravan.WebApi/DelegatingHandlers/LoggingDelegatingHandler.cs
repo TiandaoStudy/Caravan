@@ -37,6 +37,14 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
             var requestId = UniqueIdGenerator.NewBase32("-");
             _log.ThreadVariablesContext.Set("request_id", requestId);
 
+            // Indica se è una richiesta per il logger: non vogliamo loggare le chiamate al log.
+            // Inoltre, non devono finire nel log neanche le chiamate alle pagine di help di Swagger.
+            var owinRequestUri = request.RequestUri.SafeToString().ToLowerInvariant();
+            if (owinRequestUri.Contains("logger") || owinRequestUri.Contains("swagger"))
+            {
+                return await base.SendAsync(request, cancellationToken);
+            }
+
             try
             {
                 var requestBody = (request.Content == null) ? string.Empty : request.Content.ReadAsStringAsync().Result;
@@ -115,16 +123,16 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
 
         #region Lettura IP della sorgente della richiesta
 
-        private const string HttpContext = "MS_HttpContext";
-        private const string RemoteEndpointMessage = "System.ServiceModel.Channels.RemoteEndpointMessageProperty";
-        private const string OwinContext = "MS_OwinContext";
+        const string HttpContext = "MS_HttpContext";
+        const string RemoteEndpointMessage = "System.ServiceModel.Channels.RemoteEndpointMessageProperty";
+        const string OwinContext = "MS_OwinContext";
 
-        private static string GetClientIP(HttpRequestMessage request)
+        static string GetClientIP(HttpRequestMessage request)
         {
             // Web-hosting
             if (request.Properties.ContainsKey(HttpContext))
             {
-                var ctx = (HttpContextWrapper)request.Properties[HttpContext];
+                var ctx = (HttpContextWrapper) request.Properties[HttpContext];
                 if (ctx != null)
                 {
                     return ctx.Request.UserHostAddress;
@@ -134,7 +142,7 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
             // Self-hosting
             if (request.Properties.ContainsKey(RemoteEndpointMessage))
             {
-                var remoteEndpoint = (RemoteEndpointMessageProperty)request.Properties[RemoteEndpointMessage];
+                var remoteEndpoint = (RemoteEndpointMessageProperty) request.Properties[RemoteEndpointMessage];
                 if (remoteEndpoint != null)
                 {
                     return remoteEndpoint.Address;
@@ -144,7 +152,7 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
             // Self-hosting using Owin
             if (request.Properties.ContainsKey(OwinContext))
             {
-                var owinContext = (OwinContext)request.Properties[OwinContext];
+                var owinContext = (OwinContext) request.Properties[OwinContext];
                 if (owinContext != null)
                 {
                     return owinContext.Request.RemoteIpAddress;

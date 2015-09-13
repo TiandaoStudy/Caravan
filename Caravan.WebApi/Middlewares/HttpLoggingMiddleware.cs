@@ -57,7 +57,9 @@ namespace Finsa.Caravan.WebApi.Middlewares
             var response = owinContext.Response;
 
             // Indica se è una richiesta per il logger: non vogliamo loggare le chiamate al log.
-            if (owinContext.Request.Uri.SafeToString().Contains("logger"))
+            // Inoltre, non devono finire nel log neanche le chiamate alle pagine di help di Swagger.
+            var owinRequestUri = owinContext.Request.Uri.SafeToString().ToLowerInvariant();
+            if (owinRequestUri.Contains("logger") || owinRequestUri.Contains("swagger"))
             {
                 await _next.Invoke(environment);
                 return;

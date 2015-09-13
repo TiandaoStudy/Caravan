@@ -117,9 +117,9 @@
             </summary>
             <remarks>Adjust routing prefix according to your own needs.</remarks>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.#ctor">
+        <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.Get">
             <summary>
-              Override here default info.
+              Redirects to Swagger help pages.
             </summary>
         </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.LoggerController">
@@ -292,7 +292,7 @@
             <param name="userLogin">The user login of the user to add</param>
             <param name="groupName">The group name</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteUserToGroup(System.String,System.String,System.String)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteUserFromGroup(System.String,System.String,System.String)">
             <summary>
               Delete the user with the specified login from the specified group
             </summary>
@@ -368,7 +368,7 @@
             <param name="contextName">The context name</param>
             <returns></returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetEntries(System.String,System.String,System.String)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetEntriesForUser(System.String,System.String,System.String)">
             <summary>
               Returns all the entries of the specified user
             </summary>

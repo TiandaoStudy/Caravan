@@ -1,14 +1,9 @@
-﻿using System;
-using System.Data.Entity.Infrastructure.Interception;
-using System.Web;
-using System.Web.Http;
-using Common.Logging;
+﻿using Common.Logging;
 using Finsa.Caravan.DataAccess.Logging.Sql;
 using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebApi.Middlewares;
 using Finsa.Caravan.WebService;
-using PommaLabs.Thrower;
-using Finsa.WebApi.HelpPage.AnyHost;
+using Finsa.CodeServices.Common.Portability;
 using Microsoft.Owin;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -17,10 +12,13 @@ using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
 using PommaLabs.KVLite;
+using PommaLabs.Thrower;
 using Swashbuckle.Application;
+using System;
+using System.Data.Entity.Infrastructure.Interception;
+using System.Web.Http;
 
 [assembly: OwinStartup(typeof(Startup))]
-
 namespace Finsa.Caravan.WebService
 {
     public sealed class Startup
@@ -47,24 +45,20 @@ namespace Finsa.Caravan.WebService
             IdentityConfig.Build(app);
         }
 
-        static IKernel CreateKernel()
-        {
-            return new StandardKernel(new NinjectConfig());
-        }
+        static IKernel CreateKernel() => new StandardKernel(new NinjectConfig());
 
         static void ConfigureHelpPages(HttpConfiguration config)
         {
             // REQUIRED TO ENABLE HELP PAGES :)
-            config.MapHttpAttributeRoutes(new HelpDirectRouteProvider());
-            //var xmlDocPath = HttpContext.Current.Server.MapPath(@"~/App_Data/HelpPages/WebServiceHelp.xml");
-            //config.SetDocumentationProvider(new XmlDocumentationProvider(xmlDocPath));
-
+            config.MapHttpAttributeRoutes();
             config.EnableSwagger(c =>
             {
                 c.SingleApiVersion("v1", "wsCaravan");
-                c.IncludeXmlComments(HttpContext.Current.Server.MapPath(@"~/App_Data/HelpPages/WebServiceHelp.xml"));
-
-            }).EnableSwaggerUi();
+                c.IncludeXmlComments(PortableEnvironment.MapPath(@"~/App_Data/HelpPages/WebServiceHelp.xml"));
+            }).EnableSwaggerUi(c =>
+            {
+                c.DocExpansion(DocExpansion.None);
+            });
         }
 
         static void ConfigureFormatters(HttpConfiguration configuration)
