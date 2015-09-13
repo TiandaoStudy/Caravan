@@ -5,12 +5,13 @@ using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using Finsa.CodeServices.Common;
-using PommaLabs.Thrower;
 using Finsa.CodeServices.Common.Extensions;
+using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Finsa.Caravan.Common;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -28,7 +29,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             try
             {
                 Raise<ArgumentException>.IfIsEmpty(codeUnit);
-                var argsList = (args == null) ? new KeyValuePair<string, string>[0] : args.ToArray();
+                var argsList = args?.ToArray() ?? new KeyValuePair<string, string>[0];
 
                 using (var ctx = SqlDbContext.CreateWriteContext())
                 {
@@ -36,31 +37,12 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     var typeId = logLevel.ToString().ToLower();
                     var settings = ctx.LogSettings.First(s => s.AppId == appId && s.LogLevel == typeId);
 
-                    // We delete logs older than "settings.Days"
-                    var minDate = DateTime.Now.Subtract(TimeSpan.FromDays(settings.Days));
-                    var oldLogs = from l in ctx.LogEntries
-                                  where l.AppId == appId && l.LogLevel == typeId
-                                  where l.Date < minDate
-                                  select l;
-                    ctx.LogEntries.RemoveRange(oldLogs);
-
-                    // We delete enough entries to preserve the upper limit
-                    var logCount = ctx.LogEntries.Count(e => e.AppId == appId && e.LogLevel == typeId);
-                    if (logCount >= settings.MaxEntries)
-                    {
-                        var olderLogs = (from l in ctx.LogEntries
-                                         where l.AppId == appId && l.LogLevel == typeId
-                                         orderby l.Date ascending
-                                         select l).Take(logCount - settings.MaxEntries + 1);
-                        ctx.LogEntries.RemoveRange(olderLogs);
-                    }
-
                     // If log is enabled, then we can insert a new entry
                     if (settings.Enabled)
                     {
                         var entry = new SqlLogEntry
                         {
-                            Date = DateTime.Now,
+                            Date = ServiceProvider.CurrentDateTime(),
                             AppId = appId,
                             LogLevel = typeId,
                             UserLogin = userLogin.Truncate(SqlDbContext.SmallLength).ToLowerInvariant(),
@@ -284,22 +266,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
         }
 
-        protected bool CleanUpEntriesInternal(string appName)
-        {
-            using (var ctx = SqlDbContext.CreateWriteContext())
-            {
-                var apps = ctx.SecApps.Where(a => appName == null || a.Name == appName.ToLower());
-                var settings = apps.SelectMany(a => a.LogSettings).Where(s => s.Enabled);
-
-                //ctx.LogEntries.RemoveRange(from s in settings
-                //    from e in s.LogEntries
-                //    where e.Date.)
-                //var entries = settings.SelectMany(s => s.LogEntries)
-
-                return false;
-            }
-        }
-
         protected override bool DoRemoveEntry(string appName, int logId)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
@@ -315,6 +281,47 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     trx.Complete();
                 }
                 return deleted;
+            }
+        }
+
+        protected override bool CleanUpEntriesInternal(string appName)
+        {
+            using (var ctx = SqlDbContext.CreateReadContext())
+            {
+                var utcNow = ServiceProvider.CurrentDateTime();
+
+                var appIds = ((appName == null) ? ctx.SecApps : ctx.SecApps.Where(a => a.Name == appName.ToLower())).Select(a => a.Id);
+
+                // We delete logs older than "settings.Days".
+
+                var oldLogs = from e in ctx.LogEntries
+                              where appIds.Contains(e.AppId)
+                              from s in ctx.LogSettings
+                              where s.AppId == e.AppId && s.LogLevel == e.LogLevel
+                              where DbFunctions.DiffDays(utcNow, e.Date) > s.Days
+                              select e;
+
+                ctx.LogEntries.RemoveRange(oldLogs);
+
+                // We delete enough entries to preserve the upper limit.
+
+                var logSettings = from e in ctx.LogEntries
+                                  where appIds.Contains(e.AppId)
+                                  from s in ctx.LogSettings
+                                  where s.AppId == e.AppId && s.LogLevel == e.LogLevel
+                                  select new { Entry = e, Setting = s };
+
+                var logCounts = from es in logSettings
+                                group es by new { es.Setting.AppId, es.Setting.LogLevel } into g
+                                select new { Count = g.Count(), MaxCount = g.FirstOrDefault().Setting.MaxEntries, Entries = g.Select(x => x.Entry) };
+
+                var olderLogs = from c in logCounts
+                                where c.Count > c.MaxCount
+                                select c.Entries;
+
+                ctx.LogEntries.RemoveRange(olderLogs.SelectMany(e => e));
+
+                return true;
             }
         }
 

@@ -34,7 +34,7 @@ namespace FLEX.Web.Pages
 
         protected override sealed PageStatePersister PageStatePersister
         {
-            get { return new ViewStatePersister(this); }
+            get { return new PersistentViewStatePersister(this); }
         }
 
         #region Public Properties

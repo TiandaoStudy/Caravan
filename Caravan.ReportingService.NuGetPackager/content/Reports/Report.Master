@@ -1,5 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Report.master.cs" Inherits="Finsa.Caravan.ReportingService.Report" %>
-
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Report.master.cs" Inherits="Finsa.Caravan.ReportingService.Report" ClientIDMode="Predictable" %>
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" Namespace="Microsoft.Reporting.WebForms" TagPrefix="rvweb" %>
 
 <!DOCTYPE html>
@@ -41,7 +40,7 @@
         </asp:ScriptManager>
 
         <asp:Panel runat="server" ID="reportPanel">
-            <rvweb:ReportViewer ID="_reportViewer" runat="server" Width="100%" Height="1000px" AsyncRendering="False" ProcessingMode="Local" />
+            <rvweb:ReportViewer ID="reportViewer" runat="server" Width="100%" Height="1000px" AsyncRendering="False" ProcessingMode="Local" ShowRefreshButton="False" />
         </asp:Panel>
 
         <asp:Panel runat="server" ID="errorPanel" Visible="false">
@@ -85,8 +84,5 @@
             </div>
         </asp:Panel>
     </form>
-
-    <script type="text/javascript" src="<%= ResolveUrl("~/Scripts/jquery-2.1.4.min.js") %>"></script>
-    <script type="text/javascript" src="<%= ResolveUrl("~/Scripts/bootstrap.min.js") %>"></script>
 </body>
 </html>

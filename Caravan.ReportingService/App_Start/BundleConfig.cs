@@ -1,9 +1,21 @@
-﻿using System.Web.Optimization;
+﻿// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
+using System.Web.Optimization;
 using System.Web.UI;
 
 namespace Finsa.Caravan.ReportingService
 {
-    public class BundleConfig
+    public static class BundleConfig
     {
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkID=303951
         public static void RegisterBundles(BundleCollection bundles)
@@ -26,8 +38,17 @@ namespace Finsa.Caravan.ReportingService
                     "~/Scripts/WebForms/MsAjax/MicrosoftAjaxWebForms.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                    "~/Content/bootstrap.css",
-                    "~/Content/font-awesome.css"));
+                    "~/Content/bootstrap.min.css",
+                    "~/Content/font-awesome.min.css",
+                    "~/Content/modern-reportviewer.css"));
+
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+                "bootstrap",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/bootstrap.min.js",
+                    DebugPath = "~/Scripts/bootstrap.js",
+                });
 
             ScriptManager.ScriptResourceMapping.AddDefinition(
                 "respond",

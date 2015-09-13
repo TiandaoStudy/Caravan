@@ -4,6 +4,7 @@ using PommaLabs.Thrower;
 using PommaLabs.KVLite;
 using PommaLabs.KVLite.Web.Http;
 using System.Web.Http;
+using Finsa.Caravan.DataAccess;
 
 namespace Finsa.Caravan.WebApi
 {
@@ -31,10 +32,13 @@ namespace Finsa.Caravan.WebApi
             // Run vacuum on the persistent cache. It should be put AFTER the connection string is
             // set, since that string it stored on the cache itself and we do not want conflicts, right?
             var persistentCache = cache as PersistentCache;
-            persistentCache?.VacuumAsync();
+            persistentCache?.Vacuum();
 
             // Imposta KVLite come gestore della cache di output.
             ApiOutputCache.RegisterAsCacheOutputProvider(configuration, cache);
+
+            // Pulizia dei log più vecchi o che superano una certa soglia di quantità.
+            CaravanDataSource.Logger.CleanUpEntries(CommonConfiguration.Instance.AppName);
         }
     }
 }

@@ -86,6 +86,7 @@
 copy "$(SolutionDir)Caravan.WebApi\bin\Release\Finsa.Caravan.WebApi.dll" "$(SolutionDir)NuGet Packager (WebApi)/lib/net45"
 copy "$(SolutionDir)Caravan.WebApi\bin\Release\Finsa.Caravan.WebApi.xml" "$(SolutionDir)NuGet Packager (WebApi)/lib/net45"
 copy "$(SolutionDir)Caravan.WebService\Controllers\CacheController.cs" "$(SolutionDir)NuGet Packager (WebApi)/content/Controllers/Caravan/CacheController.cs"
+copy "$(SolutionDir)Caravan.WebService\Controllers\HelpController.cs" "$(SolutionDir)NuGet Packager (WebApi)/content/Controllers/Caravan/HelpController.cs"
 copy "$(SolutionDir)Caravan.WebService\Controllers\LoggerController.cs" "$(SolutionDir)NuGet Packager (WebApi)/content/Controllers/Caravan/LoggerController.cs"
 copy "$(SolutionDir)Caravan.WebService\Controllers\SecurityController.cs" "$(SolutionDir)NuGet Packager (WebApi)/content/Controllers/Caravan/SecurityController.cs"</PreBuildEvent>
   </PropertyGroup>

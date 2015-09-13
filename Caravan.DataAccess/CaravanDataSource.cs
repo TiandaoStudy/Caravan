@@ -14,6 +14,7 @@ using Finsa.Caravan.DataAccess.Drivers.Sql.Oracle;
 using Finsa.Caravan.DataAccess.Drivers.Sql.PostgreSql;
 using Finsa.Caravan.DataAccess.Drivers.Sql.SqlServer;
 using Finsa.Caravan.DataAccess.Drivers.Sql.SqlServerCe;
+using Finsa.CodeServices.Clock;
 using PommaLabs.Thrower;
 using RestSharp;
 
@@ -24,10 +25,6 @@ namespace Finsa.Caravan.DataAccess
     /// </summary>
     public static class CaravanDataSource
     {
-        private static ICaravanLogRepository _loggerInstance;
-        private static ICaravanSecurityRepository _securityRepositoryInstance;
-        private static ICaravanDataSourceManager _dataSourceManagerInstance;
-
         static CaravanDataSource()
         {
             var dataSourceKind = DataAccessConfiguration.Instance.DataSourceKind;
@@ -45,20 +42,11 @@ namespace Finsa.Caravan.DataAccess
 
         public static CaravanDataSourceKind DataSourceKind { get; set; }
 
-        public static ICaravanDataSourceManager Manager
-        {
-            get { return _dataSourceManagerInstance; }
-        }
+        public static ICaravanDataSourceManager Manager { get; private set; }
 
-        public static ICaravanLogRepository Logger
-        {
-            get { return _loggerInstance; }
-        }
+        public static ICaravanLogRepository Logger { get; private set; }
 
-        public static ICaravanSecurityRepository Security
-        {
-            get { return _securityRepositoryInstance; }
-        }
+        public static ICaravanSecurityRepository Security { get; private set; }
 
         #endregion Public Properties - Instances
 
@@ -155,38 +143,38 @@ namespace Finsa.Caravan.DataAccess
             switch (kind)
             {
                 case CaravanDataSourceKind.FakeSql:
-                    _dataSourceManagerInstance = new FakeSqlDataSourceManager();
+                    Manager = new FakeSqlDataSourceManager();
                     break;
 
                 case CaravanDataSourceKind.MongoDb:
-                    _dataSourceManagerInstance = new MongoDataSourceManager();
-                    _loggerInstance = new MongoLogRepository();
-                    _securityRepositoryInstance = new MongoSecurityRepository();
+                    Manager = new MongoDataSourceManager();
+                    Logger = new MongoLogRepository();
+                    Security = new MongoSecurityRepository();
                     break;
 
                 case CaravanDataSourceKind.MySql:
-                    _dataSourceManagerInstance = new MySqlDataSourceManager();
+                    Manager = new MySqlDataSourceManager();
                     break;
 
                 case CaravanDataSourceKind.Oracle:
-                    _dataSourceManagerInstance = new OracleDataSourceManager();
+                    Manager = new OracleDataSourceManager();
                     break;
 
                 case CaravanDataSourceKind.PostgreSql:
-                    _dataSourceManagerInstance = new PostgreSqlDataSourceManager();
+                    Manager = new PostgreSqlDataSourceManager();
                     break;
 
                 case CaravanDataSourceKind.Rest:
-                    _loggerInstance = new RestLogRepository();
-                    _securityRepositoryInstance = new RestSecurityRepository();
+                    Logger = new RestLogRepository();
+                    Security = new RestSecurityRepository();
                     break;
 
                 case CaravanDataSourceKind.SqlServer:
-                    _dataSourceManagerInstance = new SqlServerDataSourceManager();
+                    Manager = new SqlServerDataSourceManager();
                     break;
 
                 case CaravanDataSourceKind.SqlServerCe:
-                    _dataSourceManagerInstance = new SqlServerCeDataSourceManager();
+                    Manager = new SqlServerCeDataSourceManager();
                     break;
             }
 
@@ -199,8 +187,8 @@ namespace Finsa.Caravan.DataAccess
                 case CaravanDataSourceKind.PostgreSql:
                 case CaravanDataSourceKind.SqlServer:
                 case CaravanDataSourceKind.SqlServerCe:
-                    _loggerInstance = new SqlLogRepository();
-                    _securityRepositoryInstance = new SqlSecurityRepository();
+                    Logger = new SqlLogRepository();
+                    Security = new SqlSecurityRepository();
                     break;
             }
         }

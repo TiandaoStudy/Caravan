@@ -10,19 +10,20 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using System.Web.Http.Results;
 using Common.Logging;
 using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging.Exceptions;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common;
+using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Finsa.Caravan.Common.Logging.Exceptions;
+using System.Web.Http.Results;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -30,21 +31,18 @@ namespace Finsa.Caravan.WebService.Controllers
     ///   Controller che si occupa della parte di logging.
     /// </summary>
     [RoutePrefix("logger")]
-    public sealed class LoggerController : ApiController
+    public sealed partial class LoggerController : ApiController
     {
-        private static readonly IList<LogLevel> NoLogLevels = new LogLevel[0];
+        static readonly IList<LogLevel> NoLogLevels = new LogLevel[0];
 
-        private readonly ILog _log;
+        readonly ILog _log;
 
         /// <summary>
         ///   Inizializza il controller con l'istanza del log di Caravan.
         /// </summary>
         public LoggerController(ILog log)
         {
-            if (log == null)
-            {
-                throw new ArgumentNullException("log");
-            }
+            RaiseArgumentNullException.IfIsNull(log, nameof(log));
             _log = log;
         }
 
@@ -95,11 +93,11 @@ namespace Finsa.Caravan.WebService.Controllers
             return CaravanDataSource.Logger.QueryEntries(new LogEntryQuery
             {
                 AppNames = new[] { appName },
-                LogLevels = (logLevels == null) ? NoLogLevels : logLevels.Split(',').Select(ll => (LogLevel) Enum.Parse(typeof(LogLevel), ll, true)).ToArray(),
+                LogLevels = logLevels?.Split(',').Select(ll => (LogLevel) Enum.Parse(typeof(LogLevel), ll, true)).ToArray() ?? NoLogLevels,
                 TruncateLongMessage = true,
                 MaxTruncatedLongMessageLength = 30,
-                FromDate = fromDate.HasValue ? fromDate.Value.ToOption() : Option.None<DateTime>(),
-                ToDate = toDate.HasValue ? toDate.Value.ToOption() : Option.None<DateTime>()
+                FromDate = fromDate?.ToOption() ?? Option.None<DateTime>(),
+                ToDate = toDate?.ToOption() ?? Option.None<DateTime>()
             });
         }
 
@@ -118,8 +116,8 @@ namespace Finsa.Caravan.WebService.Controllers
                 LogLevels = new[] { logLevel },
                 TruncateLongMessage = true,
                 MaxTruncatedLongMessageLength = 30,
-                FromDate = fromDate.HasValue ? fromDate.Value.ToOption() : Option.None<DateTime>(),
-                ToDate = toDate.HasValue ? toDate.Value.ToOption() : Option.None<DateTime>()
+                FromDate = fromDate?.ToOption() ?? Option.None<DateTime>(),
+                ToDate = toDate?.ToOption() ?? Option.None<DateTime>()
             });
         }
 

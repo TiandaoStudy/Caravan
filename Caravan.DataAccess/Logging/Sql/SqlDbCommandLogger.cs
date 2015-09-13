@@ -2,7 +2,6 @@
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.DataAccess.Drivers.Sql;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Collections.Concurrent;
 using Finsa.CodeServices.Serialization;
 using PommaLabs.Thrower;
 using System;
@@ -21,16 +20,12 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
     /// </summary>
     public sealed class SqlDbCommandLogger : IDbCommandInterceptor
     {
-        const string CommandIdVariable = "command_id";
-        const string CommandResultVariable = "command_result";
-        const string CommandElapsedMillisecondsVariable = "command_elapsed_msec";
-        const string CommandParametersVariable = "command_parameters";
-        const string CommandTimeoutVariable = "command_timeout";
-
-        /// <summary>
-        ///   A temporary map used to link queries before and after they are executed.
-        /// </summary>
-        static readonly ConcurrentDictionary<DbCommand, QueryInfo> TmpQueryMap = new ConcurrentDictionary<DbCommand, QueryInfo>();
+        private const string CommandIdVariable = "command_id";
+        private const string CommandResultVariable = "command_result";
+        private const string CommandElapsedMillisecondsVariable = "command_elapsed_msec";
+        private const string CommandParametersVariable = "command_parameters";
+        private const string CommandTimeoutVariable = "command_timeout";
+        private const string TmpCommandInfo = "tmp_command_info";
 
         readonly ILog _log;
 
@@ -54,7 +49,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             {
                 // Register the query in the temporary map.
                 var queryInfo = ExtractQueryInfo(command);
-                TmpQueryMap.Add(command, queryInfo);
+                _log.ThreadVariablesContext.Set(TmpCommandInfo, queryInfo);
 
                 // Start the stopwatch.
                 queryInfo.Stopwatch.Restart();
@@ -64,7 +59,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
                 _log.Warn("Error while logging a non query command!", ex);
 
                 // In case of error, remove the entry from the query map.
-                TmpQueryMap.Remove(command);
+                _log.ThreadVariablesContext.Remove(TmpCommandInfo);
             }
         }
 
@@ -77,8 +72,11 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             try
             {
                 // Retrieve the query info and immediately stop the timer.
-                var queryInfo = TmpQueryMap[command];
+                var queryInfo = _log.ThreadVariablesContext.Get(TmpCommandInfo) as QueryInfo;
                 queryInfo.Stopwatch.Stop();
+
+                // Remove the variable, otherwise it will be logged.
+                _log.ThreadVariablesContext.Remove(TmpCommandInfo);
 
                 _log.Trace(new LogMessage
                 {
@@ -98,11 +96,9 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             catch (Exception ex)
             {
                 _log.Warn("Error while logging a non query command!", ex);
-            }
-            finally
-            {
+
                 // In any case, remove the entry from the query map.
-                TmpQueryMap.Remove(command);
+                _log.ThreadVariablesContext.Remove(TmpCommandInfo);
             }
         }
 
@@ -116,7 +112,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             {
                 // Register the query in the temporary map.
                 var queryInfo = ExtractQueryInfo(command);
-                TmpQueryMap.Add(command, queryInfo);
+                _log.ThreadVariablesContext.Set(TmpCommandInfo, queryInfo);
 
                 // Start the stopwatch.
                 queryInfo.Stopwatch.Restart();
@@ -126,7 +122,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
                 _log.Warn("Error while logging a reader command!", ex);
 
                 // In case of error, remove the entry from the query map.
-                TmpQueryMap.Remove(command);
+                _log.ThreadVariablesContext.Remove(TmpCommandInfo);
             }
         }
 
@@ -139,8 +135,11 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             try
             {
                 // Retrieve the query info and immediately stop the timer.
-                var queryInfo = TmpQueryMap[command];
+                var queryInfo = _log.ThreadVariablesContext.Get(TmpCommandInfo) as QueryInfo;
                 queryInfo.Stopwatch.Stop();
+
+                // Remove the variable, otherwise it will be logged.
+                _log.ThreadVariablesContext.Remove(TmpCommandInfo);
 
                 _log.Trace(new LogMessage
                 {
@@ -160,11 +159,9 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             catch (Exception ex)
             {
                 _log.Warn("Error while logging a reader command!", ex);
-            }
-            finally
-            {
+
                 // In any case, remove the entry from the query map.
-                TmpQueryMap.Remove(command);
+                _log.ThreadVariablesContext.Remove(TmpCommandInfo);
             }
         }
 
@@ -178,7 +175,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             {
                 // Register the query in the temporary map.
                 var queryInfo = ExtractQueryInfo(command);
-                TmpQueryMap.Add(command, queryInfo);
+                _log.ThreadVariablesContext.Set(TmpCommandInfo, queryInfo);
 
                 // Start the stopwatch.
                 queryInfo.Stopwatch.Restart();
@@ -188,7 +185,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
                 _log.Warn("Error while logging a scalar command!", ex);
 
                 // In case of error, remove the entry from the query map.
-                TmpQueryMap.Remove(command);
+                _log.ThreadVariablesContext.Remove(TmpCommandInfo);
             }
         }
 
@@ -201,8 +198,11 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             try
             {
                 // Retrieve the query info and immediately stop the timer.
-                var queryInfo = TmpQueryMap[command];
+                var queryInfo = _log.ThreadVariablesContext.Get(TmpCommandInfo) as QueryInfo;
                 queryInfo.Stopwatch.Stop();
+
+                // Remove the variable, otherwise it will be logged.
+                _log.ThreadVariablesContext.Remove(TmpCommandInfo);
 
                 _log.Trace(new LogMessage
                 {
@@ -222,11 +222,9 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             catch (Exception ex)
             {
                 _log.Warn("Error while logging a scalar command!", ex);
-            }
-            finally
-            {
+
                 // In any case, remove the entry from the query map.
-                TmpQueryMap.Remove(command);
+                _log.ThreadVariablesContext.Remove(TmpCommandInfo);
             }
         }
 
@@ -287,12 +285,9 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
 
             public string CommandTimeout { get; set; }
 
-            public string CommandElapsedMilliseconds
-            {
-                get { return Stopwatch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture); }
-            }
+            public string CommandElapsedMilliseconds => Stopwatch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture);
 
-            public Stopwatch Stopwatch { get; private set; }
+            public Stopwatch Stopwatch { get; }
         }
 
         sealed class ParameterInfo

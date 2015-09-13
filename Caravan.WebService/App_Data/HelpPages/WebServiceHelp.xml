@@ -6,14 +6,110 @@
     <members>
         <member name="T:Finsa.Caravan.WebService.Controllers.CacheController">
             <summary>
-              Controller che si occupa della gestione della cache locale al server.
+              Exposes the KVLite cache controller and allows further customizations.
             </summary>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.CacheController.#ctor(PommaLabs.KVLite.ICache)">
             <summary>
-              Gestisce la dipedenza da <see cref="T:PommaLabs.KVLite.ICache"/>.
+              Injects the <see cref="T:PommaLabs.KVLite.ICache"/> dependency into the base controller.
             </summary>
-            <param name="cache">La cache gestita dal controller.</param>
+            <param name="cache">The cache.</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.CacheController.DeleteItem(System.String,System.String)">
+            <summary>
+              Deletes an item stored in the cache with given partition and key.
+            </summary>
+            <param name="partition">The partition.</param>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.CacheController.DeleteItems">
+            <summary>
+              Deletes all items stored in the cache.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.CacheController.DeletePartitionItems(System.String)">
+            <summary>
+              Deletes all items stored in the cache with given partition.
+            </summary>
+            <param name="partition">The partition.</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.CacheController.GetItem(System.String,System.String)">
+            <summary>
+              Returns a _valid_ item stored in the cache for given partition and key.
+            </summary>
+            <param name="partition">The partition.</param>
+            <param name="key">The key.</param>
+            <returns>A _valid_ item stored in the cache for given partition and key.</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.CacheController.GetItems(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+              Returns all _valid_ items stored in the cache which follow given search criteria.
+              Values are omitted, in order to keep the response small.
+            </summary>
+            <param name="partitionLike">
+              Optional, a substring that should be contained in the partition of the items.
+            </param>
+            <param name="keyLike">
+              Optional, a substring that should be contained in the key of the items.
+            </param>
+            <param name="fromExpiry">Optional, the minimum expiry date items should have.</param>
+            <param name="toExpiry">Optional, the maximum expiry date items should have.</param>
+            <param name="fromCreation">Optional, the minimum creation date items should have.</param>
+            <param name="toCreation">Optional, the maximum creation date items should have.</param>
+            <returns>All _valid_ items stored in the cache which follow given search criteria.</returns>
+            <remarks>Value is not serialized in the response, since it might be truly heavy.</remarks>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.CacheController.GetItemsWithValues(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+              Returns all _valid_ items stored in the cache which follow given search criteria.
+              Values are included in the response.
+            </summary>
+            <param name="partitionLike">
+              Optional, a substring that should be contained in the partition of the items.
+            </param>
+            <param name="keyLike">
+              Optional, a substring that should be contained in the key of the items.
+            </param>
+            <param name="fromExpiry">Optional, the minimum expiry date items should have.</param>
+            <param name="toExpiry">Optional, the maximum expiry date items should have.</param>
+            <param name="fromCreation">Optional, the minimum creation date items should have.</param>
+            <param name="toCreation">Optional, the maximum creation date items should have.</param>
+            <returns>All _valid_ items stored in the cache which follow given search criteria.</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.CacheController.GetPartitionItems(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+              Returns all _valid_ items stored in the cache for given partition which follow given
+              search criteria. Values are omitted, in order to keep the response small.
+            </summary>
+            <param name="partition">The partition.</param>
+            <param name="keyLike">
+              Optional, a substring that should be contained in the key of the items.
+            </param>
+            <param name="fromExpiry">Optional, the minimum expiry date items should have.</param>
+            <param name="toExpiry">Optional, the maximum expiry date items should have.</param>
+            <param name="fromCreation">Optional, the minimum creation date items should have.</param>
+            <param name="toCreation">Optional, the maximum creation date items should have.</param>
+            <returns>
+              All _valid_ items stored in the cache for given partition which follow given search criteria.
+            </returns>
+            <remarks>Value is not serialized in the response, since it might be truly heavy.</remarks>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.CacheController.GetPartitionItemsWithValues(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+              Returns all _valid_ items stored in the cache for given partition which follow given
+              search criteria. Values are included in the response.
+            </summary>
+            <param name="partition">The partition.</param>
+            <param name="keyLike">
+              Optional, a substring that should be contained in the key of the items.
+            </param>
+            <param name="fromExpiry">Optional, the minimum expiry date items should have.</param>
+            <param name="toExpiry">Optional, the maximum expiry date items should have.</param>
+            <param name="fromCreation">Optional, the minimum creation date items should have.</param>
+            <param name="toCreation">Optional, the maximum creation date items should have.</param>
+            <returns>
+              All _valid_ items stored in the cache for given partition which follow given search criteria.
+            </returns>
         </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.HelpController">
             <summary>
@@ -21,9 +117,9 @@
             </summary>
             <remarks>Adjust routing prefix according to your own needs.</remarks>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.#ctor">
+        <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.Get">
             <summary>
-              Override here default info.
+              Redirects to Swagger help pages.
             </summary>
         </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.LoggerController">
@@ -196,7 +292,7 @@
             <param name="userLogin">The user login of the user to add</param>
             <param name="groupName">The group name</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteUserToGroup(System.String,System.String,System.String)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteUserFromGroup(System.String,System.String,System.String)">
             <summary>
               Delete the user with the specified login from the specified group
             </summary>
@@ -249,19 +345,12 @@
             <param name="appName">The application name</param>
             <returns>All contexts of the specified application</returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetObjects(System.String)">
-            <summary>
-              Returns all objects belong to the specified application
-            </summary>
-            <param name="appName">The application name</param>
-            <returns>All objects belong to the specified application</returns>
-        </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetObjects(System.String,System.String)">
             <summary>
               Returns all objects in the specified context
             </summary>
-            <param name="appName">The application name</param>
-            <param name="contextName">the context name</param>
+            <param name="appName">The application name.</param>
+            <param name="contextName">The optional context name</param>
             <returns>All objects in the specified context</returns>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetEntries(System.String)">
@@ -279,7 +368,7 @@
             <param name="contextName">The context name</param>
             <returns></returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetEntries(System.String,System.String,System.String)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetEntriesForUser(System.String,System.String,System.String)">
             <summary>
               Returns all the entries of the specified user
             </summary>

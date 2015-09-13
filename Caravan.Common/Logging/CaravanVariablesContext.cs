@@ -1,15 +1,31 @@
 ﻿using Common.Logging;
+using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Common.Extensions;
 using PommaLabs.KVLite;
 using PommaLabs.Thrower;
 using System;
 using System.Collections.Concurrent;
-using System.Threading;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 
 namespace Finsa.Caravan.Common.Logging
 {
     sealed class CaravanVariablesContext : IVariablesContext
     {
+        #region Static members
+
+        private static CaravanVariablesContext _cachedGlobal;
+
+        [ThreadStatic]
+        private static CaravanVariablesContext _cachedThread;
+
+        public static CaravanVariablesContext GlobalVariables => _cachedGlobal ?? (_cachedGlobal = new CaravanVariablesContext(MemoryCache.DefaultInstance, CaravanVariablesContextMode.Global));
+
+        public static CaravanVariablesContext ThreadVariables => _cachedThread ?? (_cachedThread = new CaravanVariablesContext(MemoryCache.DefaultInstance, CaravanVariablesContextMode.Thread));
+
+        #endregion Static members
+
         public CaravanVariablesContext(ICache cache, CaravanVariablesContextMode mode)
         {
             RaiseArgumentNullException.IfIsNull(cache, nameof(cache));
@@ -22,6 +38,10 @@ namespace Finsa.Caravan.Common.Logging
         public ICache Cache { get; }
 
         public CaravanVariablesContextMode Mode { get; }
+
+        public IList<KeyValuePair<string, string>> Variables => GetAndSetVariablesMap().Select(x => KeyValuePair.Create(x.Key, x.Value.SafeToString())).ToArray();
+
+        #region IVariablesContext members
 
         public void Clear()
         {
@@ -62,6 +82,8 @@ namespace Finsa.Caravan.Common.Logging
                 map.TryAdd(key, newValue);
             }
         }
+
+        #endregion
 
         #region Private members
 
@@ -112,26 +134,21 @@ namespace Finsa.Caravan.Common.Logging
 
         private string GetThreadCacheKey()
         {
-            // Prima cerco di capire se mi trovo in una request IIS. Se si, non importa più in quale thread io sia,
-            // perché IIS può spostare il flusso di esecuzione da un thread all'altro. Perciò, se mi trovo in una request,
-            // cerco di usare quella come riferimento per il flusso corrente.
-            if (HttpContext.Current != null && HttpContext.Current.Request != null)
+            // Prima cerco di capire se mi trovo in una request IIS. Se si, non importa più in quale
+            // thread io sia, perché IIS può spostare il flusso di esecuzione da un thread
+            // all'altro. Perciò, se mi trovo in una request, cerco di usare quella come riferimento
+            // per il flusso corrente.
+            if (HttpContext.Current != null)
             {
                 return CacheKeyPrefixForRequest + HttpContext.Current.Request.GetHashCode();
             }
 
-            // Se non mi trovo in una request, allora uso il thread come riferimento per il flusso di lavoro.
-            if (Thread.CurrentThread != null)
-            {
-                return CacheKeyPrefixForThread + Thread.CurrentThread.Name;
-            }
-            else
-            {
-                return CacheKeyPrefixForThread + "0";
-            }
+            // Se non mi trovo in una request, allora uso il thread come riferimento per il flusso
+            // di lavoro.
+            return CacheKeyPrefixForThread + System.Threading.Thread.CurrentThread.Name;
         }
 
-        #endregion
+        #endregion Private members
     }
 
     enum CaravanVariablesContextMode

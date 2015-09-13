@@ -12,7 +12,7 @@ using Dapper;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebForms.Properties;
 using PommaLabs.Thrower;
-using Finsa.CodeServices.Common.Extensions;
+using Finsa.CodeServices.Common.Collections;
 using Finsa.CodeServices.Common.Text;
 using FLEX.Web.XmlSettings.AjaxLookup;
 using PommaLabs.KVLite;

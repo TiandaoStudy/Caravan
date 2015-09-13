@@ -10,7 +10,7 @@ using Finsa.Caravan.Common.WebForms;
 using FLEX.Web.Pages;
 using Finsa.CodeServices.Common;
 using PommaLabs.Thrower;
-using Finsa.CodeServices.Common.Extensions;
+using Finsa.CodeServices.Common.Collections;
 using FLEX.Web.UserControls;
 
 // ReSharper disable CheckNamespace This is the correct namespace, despite the file physical position.

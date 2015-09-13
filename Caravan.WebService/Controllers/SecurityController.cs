@@ -10,12 +10,12 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using System;
-using System.Linq;
-using System.Web.Http;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebApi.Models.Security;
+using System;
+using System.Linq;
+using System.Web.Http;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -23,7 +23,7 @@ namespace Finsa.Caravan.WebService.Controllers
     ///   Controller che si occupa della gestione della sicurezza.
     /// </summary>
     [RoutePrefix("security")]
-    public sealed class SecurityController : ApiController
+    public sealed partial class SecurityController : ApiController
     {
         #region App
 
@@ -127,7 +127,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="groupName">The group name</param>
         /// <exception cref="NotImplementedException"></exception>
         [Route("{appName}/users/{userLogin}/{groupName}")]
-        public void DeleteUserToGroup(string appName, string userLogin, string groupName)
+        public void DeleteUserFromGroup(string appName, string userLogin, string groupName)
         {
             CaravanDataSource.Security.RemoveUserFromGroup(appName, userLogin, groupName);
         }
@@ -213,26 +213,17 @@ namespace Finsa.Caravan.WebService.Controllers
         #region Objects
 
         /// <summary>
-        ///   Returns all objects belong to the specified application
-        /// </summary>
-        /// <param name="appName">The application name</param>
-        /// <returns>All objects belong to the specified application</returns>
-        [Route("{appaName}/objects")]
-        public IQueryable<SecObject> GetObjects(string appName)
-        {
-            return CaravanDataSource.Security.GetObjects(appName).AsQueryable();
-        }
-
-        /// <summary>
         ///   Returns all objects in the specified context
         /// </summary>
-        /// <param name="appName">The application name</param>
-        /// <param name="contextName">the context name</param>
+        /// <param name="appName">The application name.</param>
+        /// <param name="contextName">The optional context name</param>
         /// <returns>All objects in the specified context</returns>
-        [Route("{appaName}/objects")]
-        public IQueryable<SecObject> GetObjects(string appName, string contextName)
+        [Route("{appaName}/objects/{contextName?}")]
+        public SecObject[] GetObjects(string appName, string contextName)
         {
-            return CaravanDataSource.Security.GetObjects(appName, contextName).AsQueryable();
+            return (contextName == null)
+                ? CaravanDataSource.Security.GetObjects(appName)
+                : CaravanDataSource.Security.GetObjects(appName, contextName);
         }
 
         #endregion Objects
@@ -269,8 +260,8 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="contextName">The context name</param>
         /// <param name="userLogin">The user login name</param>
         /// <returns></returns>
-        [Route("{appName}/entries/{contextName}/{userLogin}")]
-        public IQueryable<SecEntry> GetEntries(string appName, string contextName, string userLogin)
+        [Route("{appName}/entries/{contextName}/forUser/{userLogin}")]
+        public IQueryable<SecEntry> GetEntriesForUser(string appName, string contextName, string userLogin)
         {
             return CaravanDataSource.Security.GetEntriesForUser(appName, contextName, userLogin).AsQueryable();
         }
@@ -282,7 +273,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="contextName">The context name</param>
         /// <param name="objectName">The object name</param>
         /// <returns></returns>
-        [Route("{appName}/entries/{contextName}/{objectName}")]
+        [Route("{appName}/entries/{contextName}/forObject/{objectName}")]
         public IQueryable<SecEntry> GetEntriesForObject(string appName, string contextName, string objectName)
         {
             return CaravanDataSource.Security.GetEntriesForObject(appName, contextName, objectName).AsQueryable();
@@ -296,7 +287,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="objectName">The object name</param>
         /// <param name="userLogin">The user login</param>
         /// <returns></returns>
-        [Route("{appName}/entries/{contextName}/{objectName}/{userLogin}")]
+        [Route("{appName}/entries/{contextName}/forObject/{objectName}/forUser/{userLogin}")]
         public IQueryable<SecEntry> GetEntriesForObject(string appName, string contextName, string objectName, string userLogin)
         {
             return CaravanDataSource.Security.GetEntriesForObjectAndUser(appName, contextName, objectName, userLogin).AsQueryable();

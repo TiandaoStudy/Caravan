@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.Web;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
 using PommaLabs.KVLite;
@@ -25,7 +26,7 @@ namespace Finsa.Caravan.WebForms
 
             // Run vacuum on the persistent cache. It should be put AFTER the connection string is
             // set, since that string it stored on the cache itself and we do not want conflicts, right?
-            PersistentCache.DefaultInstance.VacuumAsync();
+            PersistentCache.DefaultInstance.Vacuum();
 
             // Starts user tracking.
             HttpContext.Current.Application.Add("TRACK_USER_LIST", new Dictionary<string, SecSession>());
@@ -147,7 +148,7 @@ namespace Finsa.Caravan.WebForms
                     if (_userList.ContainsKey(Cookies.Value))
                     {
                         SecSession _st = (SecSession) _userList[Cookies.Value];
-                        _st.LastVisit = DateTime.Now;
+                        _st.LastVisit = ServiceProvider.CurrentDateTime();
                         _st.UserLogin = userName;
                         _userList[Cookies.Value] = _st;
                         //Salvo i dati

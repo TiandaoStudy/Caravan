@@ -90,13 +90,13 @@ namespace Finsa.Caravan.WebService
             }));
         }
 
-        private static X509Certificate2 LoadCertificate()
+        static X509Certificate2 LoadCertificate()
         {
             var certificatePath = PortableEnvironment.MapPath("~/CaravanDevCert.pfx");
             return new X509Certificate2(certificatePath, "FinsaPassword");
         }
 
-        private class CaravanUserService : IUserService
+        class CaravanUserService : IUserService
         {
             public Task<AuthenticateResult> PreAuthenticateAsync(SignInMessage message)
             {
