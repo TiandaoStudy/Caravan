@@ -2,11 +2,11 @@ using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Collections.ReadOnly;
 using Finsa.CodeServices.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json.Serialization;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using JsonSerializerSettings = Finsa.CodeServices.Serialization.JsonSerializerSettings;
@@ -28,6 +28,7 @@ namespace Finsa.Caravan.Common.Logging.Models
         public static JsonSerializerSettings ReadableJsonSettings { get; } = new JsonSerializerSettings
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            Error = IgnoreJsonSerializationError,
             Formatting = Formatting.Indented,
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
         };
@@ -133,6 +134,11 @@ namespace Finsa.Caravan.Common.Logging.Models
             // Aggiungo NewLine così che nei file di testo parta da una riga sotto, dato che il
             // messaggio YAML è sicuramente molto lungo.
             return Environment.NewLine + yaml;
+        }
+
+        static void IgnoreJsonSerializationError(object sender, ErrorEventArgs errorArgs)
+        {
+            errorArgs.ErrorContext.Handled = true;
         }
     }
 }
