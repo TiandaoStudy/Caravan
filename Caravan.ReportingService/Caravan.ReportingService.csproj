@@ -288,9 +288,13 @@
   <PropertyGroup>
     <PostBuildEvent>if not exist "$(SolutionDir)Caravan.ReportingService.NuGetPackager/lib/net45" mkdir "$(SolutionDir)Caravan.ReportingService.NuGetPackager/lib/net45"
 if not exist "$(SolutionDir)Caravan.ReportingService.NuGetPackager/content/App_Start" mkdir "$(SolutionDir)Caravan.ReportingService.NuGetPackager/content/App_Start"
+if not exist "$(SolutionDir)Caravan.ReportingService.NuGetPackager/content/Content" mkdir "$(SolutionDir)Caravan.ReportingService.NuGetPackager/content/Content"
+
 XCOPY $(ProjectDir)Content\ReportViewer\* "$(SolutionDir)Caravan.ReportingService.NuGetPackager/lib/net45" /s /i /y
 XCOPY $(ProjectDir)Reports\* "$(SolutionDir)Caravan.ReportingService.NuGetPackager/content/Reports" /s /i /y
-COPY $(ProjectDir)App_Start\BundleConfig.cs "$(SolutionDir)Caravan.ReportingService.NuGetPackager/content/App_Start/BundleConfig.cs"</PostBuildEvent>
+
+COPY "$(ProjectDir)App_Start\BundleConfig.cs" "$(SolutionDir)Caravan.ReportingService.NuGetPackager/content/App_Start/BundleConfig.cs"
+COPY "$(ProjectDir)Content\modern-reportviewer.css" "$(SolutionDir)Caravan.ReportingService.NuGetPackager/content/Content/modern-reportviewer.css"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
