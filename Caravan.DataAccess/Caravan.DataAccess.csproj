@@ -310,9 +310,9 @@
     <None Include="Drivers\Sql\SqlServer\Scripts\Tables.sqlce" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Caravan.Common\Caravan.Common.csproj">
+    <ProjectReference Include="..\Caravan.Common\Caravan.Common.NET45.csproj">
       <Project>{11904ED0-33D2-4005-8766-B1E393A32EA7}</Project>
-      <Name>Caravan.Common</Name>
+      <Name>Caravan.Common.NET45</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
