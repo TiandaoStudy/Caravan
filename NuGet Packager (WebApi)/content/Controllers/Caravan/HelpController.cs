@@ -29,7 +29,7 @@ namespace Finsa.Caravan.WebService.Controllers
         {
             var uri = Request.RequestUri.ToString();
             var uriWithoutQuery = uri.Substring(0, uri.Length - Request.RequestUri.Query.Length);
-            return Redirect(uriWithoutQuery + "swagger");
+            return Redirect(uriWithoutQuery + "swagger/ui/index");
         }
     }
 }
