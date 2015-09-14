@@ -58,6 +58,7 @@ namespace Finsa.Caravan.WebService
             }).EnableSwaggerUi(c =>
             {
                 c.DocExpansion(DocExpansion.None);
+                c.DisableValidator();
             });
         }
 
