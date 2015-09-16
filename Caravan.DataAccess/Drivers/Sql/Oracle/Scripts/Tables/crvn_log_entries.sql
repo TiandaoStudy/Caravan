@@ -5,7 +5,7 @@ CREATE TABLE mydb.crvn_log_entries
      clog_id           NUMBER(19)           NOT NULL
    , capp_id           NUMBER(19)           NOT NULL
    , clos_type         NVARCHAR2(8)         NOT NULL
-   , clog_date         DATE DEFAULT SYSDATE NOT NULL 
+   , clog_date         DATE                 NOT NULL 
    , cusr_login        NVARCHAR2(32)
    , clog_code_unit    NVARCHAR2(256)
    , clog_function     NVARCHAR2(256)
