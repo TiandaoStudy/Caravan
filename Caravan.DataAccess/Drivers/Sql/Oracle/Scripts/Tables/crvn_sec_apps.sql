@@ -11,3 +11,6 @@ CREATE TABLE mydb.crvn_sec_apps
 );
 
 CREATE SEQUENCE mydb.crvn_sec_apps_id; 
+
+COMMENT ON COLUMN mydb.crvn_sec_apps.capp_id 
+    IS 'Identificativo riga, è una sequenza autoincrementale';

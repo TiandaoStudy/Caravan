@@ -14,6 +14,9 @@ CREATE TABLE mydb.crvn_sec_apps
 
 CREATE SEQUENCE mydb.crvn_sec_apps_id; 
 
+COMMENT ON COLUMN mydb.crvn_sec_apps.capp_id 
+    IS 'Identificativo riga, è una sequenza autoincrementale';
+
 -- Log Settings
 -- REPLACE 'mydb' WITH DB NAME
 
@@ -46,7 +49,7 @@ CREATE TABLE mydb.crvn_log_entries
      clog_id           NUMBER(19)           NOT NULL
    , capp_id           NUMBER(19)           NOT NULL
    , clos_type         NVARCHAR2(8)         NOT NULL
-   , clog_date         DATE                 NOT NULL 
+   , clog_date         DATE DEFAULT SYS_EXTRACT_UTC(SYSTIMESTAMP) NOT NULL 
    , cusr_login        NVARCHAR2(32)
    , clog_code_unit    NVARCHAR2(256)
    , clog_function     NVARCHAR2(256)
@@ -90,19 +93,40 @@ CREATE TABLE mydb.crvn_log_entries
    , CONSTRAINT fk_crvnlog_crvnlogsettings FOREIGN KEY (capp_id, clos_type) REFERENCES mydb.crvn_log_settings (capp_id, clos_type) ON DELETE CASCADE ENABLE
 );
 
-COMMENT ON TABLE mydb.crvn_log_entries IS 'Tabella di log per le applicazioni FINSA';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_id IS 'Identificativo riga, è una sequenza';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_date IS 'Data di inserimento della riga';
-COMMENT ON COLUMN mydb.crvn_log_entries.clos_type IS 'Tipo di messaggio log, può assumere i valori debug, info, warn, error, fatal';
-COMMENT ON COLUMN mydb.crvn_log_entries.capp_id IS 'Applicazione FINSA a cui si riferisce il log';
-COMMENT ON COLUMN mydb.crvn_log_entries.cusr_login IS 'Utente loggato che ha attivato il logger';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_code_unit IS 'Package or fully qualified .NET type';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_function IS 'Metodo o procedura';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_short_msg IS 'Messaggio breve';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_long_msg IS 'Messaggio verboso';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_context IS 'Infomazione dettagliata del contesto in cui viene inserito il messaggio';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_0 IS 'Nome del parametro opzionale, ad esempio AZI_ID';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_0 IS 'Valore del parametro opzionale, ad esempio RS'; 
+COMMENT ON TABLE mydb.crvn_log_entries 
+     IS 'Tabella di log per le applicazioni FINSA';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_id 
+     IS 'Identificativo riga, è una sequenza autoincrementale';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_date 
+     IS 'Data di inserimento della riga, di default è la ora corrente in UTC';
+COMMENT ON COLUMN mydb.crvn_log_entries.clos_type 
+     IS 'Livello del messaggio di log, può assumere i valori debug, trace, info, warn, error, fatal';
+COMMENT ON COLUMN mydb.crvn_log_entries.capp_id 
+     IS 'Applicazione FINSA a cui si riferisce il log';
+COMMENT ON COLUMN mydb.crvn_log_entries.cusr_login 
+     IS 'Utente loggato, oppure entità, che ha attivato il logger';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_code_unit 
+     IS 'Blocco di codice (package, classe, modulo) che contiene la funzione da cui è partito il messaggio di log';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_function 
+     IS 'Funzione, metodo o procedura, da cui è partito il messaggio di log';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_short_msg 
+     IS 'Messaggio breve, contiene informazioni sintetiche o semplici comunicazioni';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_long_msg 
+     IS 'Messaggio verboso, contiene informazioni più elaborate (ad esempio, stacktrace o oggetti deserializzati)';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_context 
+     IS 'Infomazione dettagliata del contesto in cui viene inserito il messaggio';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_0 
+     IS 'Nome del parametro opzionale 0, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_0 
+     IS 'Valore del parametro opzionale 0, ad esempio my_param_value'; 
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_1 
+     IS 'Nome del parametro opzionale 1, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_1 
+     IS 'Valore del parametro opzionale 1, ad esempio my_param_value'; 
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_2 
+     IS 'Nome del parametro opzionale 2, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_2 
+     IS 'Valore del parametro opzionale 2, ad esempio my_param_value';
 
 CREATE INDEX mydb.ix_crvn_log_date ON mydb.crvn_log_entries (capp_id, clog_date DESC);
 CREATE INDEX mydb.ix_crvn_log_type ON mydb.crvn_log_entries (capp_id, clos_type);
@@ -358,6 +382,9 @@ END;
 /
 
 -- Views: V_CARAVAN_LOG
+-- REPLACE 'mydb' WITH DB NAME
+
+CREATE OR REPLACE FORCE VIEW mydb."V_CARAVAN_LOG" ("CLOG_ID", "CAPP_NAME", "CLOS_TYPE", "CLOG_DATE", "CUSR_LOGIN", "CLOG_CODE_UNIT", "CLOG_FUNCTION", "CLOG_SHORT_MSG", "CLOG_LONG_MSG", "CLOG_CONTEXT", "CLOG_KEY_0", "CLOG_VALUE_0", "CLOG_KEY_1", "CLOG_VALUE_1", "CLOG_KEY_2", "CLOG_VALUE_2", "CLOG_KEY_3", "CLOG_VALUE_3", "CLOG_KEY_4", "CLOG_VALUE_4", "CLOG_KEY_5", "CLOG_VALUE_5", "CLOG_KEY_6", "CLOG_VALUE_6", "CLOG_KEY_7", "CLOG_VALUE_7", "CLOG_KEY_8", "CLOG_VALUE_8", "CLOG_KEY_9", "CLOG_VALUE_9") AS 
 SELECT "CLOG_ID",
        "CAPP_NAME",
        "CLOS_TYPE",
@@ -381,3 +408,21 @@ SELECT "CLOG_ID",
     FROM caravan.crvn_log_entries e
     JOIN caravan.crvn_sec_apps a ON e."CAPP_ID" = a."CAPP_ID"
    ORDER BY "CLOG_DATE" DESC, "CLOG_ID" DESC
+
+-- Views: V_CARAVAN_LOG_SUMMARY
+-- REPLACE 'mydb' WITH DB NAME
+
+CREATE OR REPLACE FORCE VIEW mydb."V_CARAVAN_LOG_SUMMARY" ("CAPP_ID", "CAPP_NAME", "CLOS_TYPE", "CLOG_MIN_DATE", "CLOG_MAX_DATE", "CLOG_ENTRIES", "CLOS_MAX_ENTRIES", "CLOS_ENABLED") AS
+SELECT a."CAPP_ID",
+       a."CAPP_NAME",
+       s."CLOS_TYPE",
+       MIN(e."CLOG_DATE") CLOG_MIN_DATE,
+       MAX(e."CLOG_DATE") CLOG_MAX_DATE,
+       COUNT(*) CLOG_ENTRIES,
+       MAX(s."CLOS_MAX_ENTRIES") CLOS_MAX_ENTRIES,
+       MAX(s."CLOS_ENABLED") CLOS_ENABLED
+    FROM mydb.crvn_sec_apps a
+    LEFT JOIN mydb.crvn_log_settings s ON s."CAPP_ID" = a."CAPP_ID"
+    LEFT JOIN mydb.crvn_log_entries e ON e."CAPP_ID" = a."CAPP_ID" AND e."CLOS_TYPE" = s."CLOS_TYPE"
+   GROUP BY a."CAPP_ID", a."CAPP_NAME", s."CLOS_TYPE"
+   ORDER BY a."CAPP_NAME", s."CLOS_TYPE"

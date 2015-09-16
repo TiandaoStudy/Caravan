@@ -61,3 +61,6 @@
 
 -- Views: V_CARAVAN_LOG
 <#@ include file="Views/v_caravan_log.sql" #>
+
+-- Views: V_CARAVAN_LOG_SUMMARY
+<#@ include file="Views/v_caravan_log_summary.sql" #>
