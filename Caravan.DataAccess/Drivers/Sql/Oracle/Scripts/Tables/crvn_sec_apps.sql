@@ -12,5 +12,11 @@ CREATE TABLE mydb.crvn_sec_apps
 
 CREATE SEQUENCE mydb.crvn_sec_apps_id; 
 
+COMMENT ON TABLE mydb.crvn_sec_apps 
+     IS 'Tabella che censisce le applicazioni FINSA';
 COMMENT ON COLUMN mydb.crvn_sec_apps.capp_id 
-    IS 'Identificativo riga, è una sequenza autoincrementale';
+     IS 'Identificativo riga, è una sequenza autoincrementale';
+COMMENT ON COLUMN mydb.crvn_sec_apps.capp_name 
+     IS 'Il nome sintetico della applicazione';
+COMMENT ON COLUMN mydb.crvn_sec_apps.capp_descr 
+     IS 'Il nome esteso della applicazione';

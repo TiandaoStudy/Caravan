@@ -14,8 +14,14 @@ CREATE TABLE mydb.crvn_sec_apps
 
 CREATE SEQUENCE mydb.crvn_sec_apps_id; 
 
+COMMENT ON TABLE mydb.crvn_sec_apps 
+     IS 'Tabella che censisce le applicazioni FINSA';
 COMMENT ON COLUMN mydb.crvn_sec_apps.capp_id 
-    IS 'Identificativo riga, è una sequenza autoincrementale';
+     IS 'Identificativo riga, è una sequenza autoincrementale';
+COMMENT ON COLUMN mydb.crvn_sec_apps.capp_name 
+     IS 'Il nome sintetico della applicazione';
+COMMENT ON COLUMN mydb.crvn_sec_apps.capp_descr 
+     IS 'Il nome esteso della applicazione';
 
 -- Log Settings
 -- REPLACE 'mydb' WITH DB NAME
@@ -34,12 +40,18 @@ CREATE TABLE mydb.crvn_log_settings
    , CONSTRAINT fk_crvnlogsettings_crvnsecapps FOREIGN KEY (capp_id) REFERENCES mydb.crvn_sec_apps (capp_id) ON DELETE CASCADE ENABLE
 );
 
-COMMENT ON TABLE mydb.crvn_log_settings IS 'Tabelle delle impostazioni del sistema di logging delle applicazioni FINSA';
-COMMENT ON COLUMN mydb.crvn_log_settings.clos_type IS 'Tipo di logging, può assumere i valori debug, info, warn, error, fatal';
-COMMENT ON COLUMN mydb.crvn_log_settings.capp_id IS 'Applicazione relativa alla riga di impostazioni';
-COMMENT ON COLUMN mydb.crvn_log_settings.clos_enabled IS 'Attivazione del logging, 0 spento, 1 acceso';
-COMMENT ON COLUMN mydb.crvn_log_settings.clos_days IS 'Numeri di giorni di persistenza della riga di log';
-COMMENT ON COLUMN mydb.crvn_log_settings.clos_max_entries IS 'Massimo numero di righe presenti nel log per il tipo e la applicazione';
+COMMENT ON TABLE mydb.crvn_log_settings 
+     IS 'Tabella delle impostazioni del sistema di log delle applicazioni FINSA';
+COMMENT ON COLUMN mydb.crvn_log_entries.clos_type 
+     IS 'Livello del messaggio di log, può assumere i valori debug, trace, info, warn, error, fatal';
+COMMENT ON COLUMN mydb.crvn_log_settings.capp_id 
+     IS 'Applicazione relativa alla riga di impostazioni';
+COMMENT ON COLUMN mydb.crvn_log_settings.clos_enabled 
+     IS 'Attivazione del log - 0 spento, 1 acceso';
+COMMENT ON COLUMN mydb.crvn_log_settings.clos_days 
+     IS 'Numeri di giorni di persistenza della riga di log';
+COMMENT ON COLUMN mydb.crvn_log_settings.clos_max_entries 
+     IS 'Massimo numero di righe presenti nel log per il tipo e la applicazione';
 
 -- Log Entries
 -- REPLACE 'mydb' WITH DB NAME
@@ -127,6 +139,34 @@ COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_2
      IS 'Nome del parametro opzionale 2, ad esempio my_param_name';
 COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_2 
      IS 'Valore del parametro opzionale 2, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_3 
+     IS 'Nome del parametro opzionale 3, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_3 
+     IS 'Valore del parametro opzionale 3, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_4 
+     IS 'Nome del parametro opzionale 4, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_4 
+     IS 'Valore del parametro opzionale 4, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_5 
+     IS 'Nome del parametro opzionale 5, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_5 
+     IS 'Valore del parametro opzionale 5, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_6 
+     IS 'Nome del parametro opzionale 6, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_6 
+     IS 'Valore del parametro opzionale 6, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_7 
+     IS 'Nome del parametro opzionale 7, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_7 
+     IS 'Valore del parametro opzionale 7, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_8 
+     IS 'Nome del parametro opzionale 8, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_8 
+     IS 'Valore del parametro opzionale 8, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_9 
+     IS 'Nome del parametro opzionale 9, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_9 
+     IS 'Valore del parametro opzionale 9, ad esempio my_param_value';
 
 CREATE INDEX mydb.ix_crvn_log_date ON mydb.crvn_log_entries (capp_id, clog_date DESC);
 CREATE INDEX mydb.ix_crvn_log_type ON mydb.crvn_log_entries (capp_id, clos_type);

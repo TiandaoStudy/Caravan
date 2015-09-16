@@ -83,6 +83,34 @@ COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_2
      IS 'Nome del parametro opzionale 2, ad esempio my_param_name';
 COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_2 
      IS 'Valore del parametro opzionale 2, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_3 
+     IS 'Nome del parametro opzionale 3, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_3 
+     IS 'Valore del parametro opzionale 3, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_4 
+     IS 'Nome del parametro opzionale 4, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_4 
+     IS 'Valore del parametro opzionale 4, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_5 
+     IS 'Nome del parametro opzionale 5, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_5 
+     IS 'Valore del parametro opzionale 5, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_6 
+     IS 'Nome del parametro opzionale 6, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_6 
+     IS 'Valore del parametro opzionale 6, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_7 
+     IS 'Nome del parametro opzionale 7, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_7 
+     IS 'Valore del parametro opzionale 7, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_8 
+     IS 'Nome del parametro opzionale 8, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_8 
+     IS 'Valore del parametro opzionale 8, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_9 
+     IS 'Nome del parametro opzionale 9, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_9 
+     IS 'Valore del parametro opzionale 9, ad esempio my_param_value';
 
 CREATE INDEX mydb.ix_crvn_log_date ON mydb.crvn_log_entries (capp_id, clog_date DESC);
 CREATE INDEX mydb.ix_crvn_log_type ON mydb.crvn_log_entries (capp_id, clos_type);

@@ -14,9 +14,15 @@ CREATE TABLE mydb.crvn_log_settings
    , CONSTRAINT fk_crvnlogsettings_crvnsecapps FOREIGN KEY (capp_id) REFERENCES mydb.crvn_sec_apps (capp_id) ON DELETE CASCADE ENABLE
 );
 
-COMMENT ON TABLE mydb.crvn_log_settings IS 'Tabelle delle impostazioni del sistema di logging delle applicazioni FINSA';
-COMMENT ON COLUMN mydb.crvn_log_settings.clos_type IS 'Tipo di logging, può assumere i valori debug, info, warn, error, fatal';
-COMMENT ON COLUMN mydb.crvn_log_settings.capp_id IS 'Applicazione relativa alla riga di impostazioni';
-COMMENT ON COLUMN mydb.crvn_log_settings.clos_enabled IS 'Attivazione del logging, 0 spento, 1 acceso';
-COMMENT ON COLUMN mydb.crvn_log_settings.clos_days IS 'Numeri di giorni di persistenza della riga di log';
-COMMENT ON COLUMN mydb.crvn_log_settings.clos_max_entries IS 'Massimo numero di righe presenti nel log per il tipo e la applicazione';
+COMMENT ON TABLE mydb.crvn_log_settings 
+     IS 'Tabella delle impostazioni del sistema di log delle applicazioni FINSA';
+COMMENT ON COLUMN mydb.crvn_log_entries.clos_type 
+     IS 'Livello del messaggio di log, può assumere i valori debug, trace, info, warn, error, fatal';
+COMMENT ON COLUMN mydb.crvn_log_settings.capp_id 
+     IS 'Applicazione relativa alla riga di impostazioni';
+COMMENT ON COLUMN mydb.crvn_log_settings.clos_enabled 
+     IS 'Attivazione del log - 0 spento, 1 acceso';
+COMMENT ON COLUMN mydb.crvn_log_settings.clos_days 
+     IS 'Numeri di giorni di persistenza della riga di log';
+COMMENT ON COLUMN mydb.crvn_log_settings.clos_max_entries 
+     IS 'Massimo numero di righe presenti nel log per il tipo e la applicazione';
