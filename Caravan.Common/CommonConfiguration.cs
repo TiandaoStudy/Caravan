@@ -57,6 +57,7 @@ namespace Finsa.Caravan.Common
 
             // Logging
             Logging_CaravanVariablesContext_Interval = TimeSpan.FromMinutes(30);
+            Logging_EmergencyLog_MaxArchiveFiles = 10;
         }
 
         public string AppName { get; set; }
@@ -68,6 +69,8 @@ namespace Finsa.Caravan.Common
         ///   del log di Caravan vengono automaticamente cancellate.
         /// </summary>
         public TimeSpan Logging_CaravanVariablesContext_Interval { get; set; }
+
+        public int Logging_EmergencyLog_MaxArchiveFiles { get; set; }
 
         #region OnStart
 
