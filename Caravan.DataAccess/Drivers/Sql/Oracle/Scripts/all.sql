@@ -53,6 +53,15 @@ COMMENT ON COLUMN mydb.crvn_log_settings.clos_days
 COMMENT ON COLUMN mydb.crvn_log_settings.clos_max_entries 
      IS 'Massimo numero di righe presenti nel log per il tipo e la applicazione';
 
+-- REPLACE '<CAPP_ID>' WITH CAPP_ID
+Insert into mydb.CRVN_LOG_SETTINGS (CAPP_ID,CLOS_TYPE,CLOS_ENABLED,CLOS_DAYS,CLOS_MAX_ENTRIES) values (<CAPP_ID>,'debug',1,30,1000);
+Insert into mydb.CRVN_LOG_SETTINGS (CAPP_ID,CLOS_TYPE,CLOS_ENABLED,CLOS_DAYS,CLOS_MAX_ENTRIES) values (<CAPP_ID>,'info',1,30,1000);
+Insert into mydb.CRVN_LOG_SETTINGS (CAPP_ID,CLOS_TYPE,CLOS_ENABLED,CLOS_DAYS,CLOS_MAX_ENTRIES) values (<CAPP_ID>,'warn',1,30,1000);
+Insert into mydb.CRVN_LOG_SETTINGS (CAPP_ID,CLOS_TYPE,CLOS_ENABLED,CLOS_DAYS,CLOS_MAX_ENTRIES) values (<CAPP_ID>,'error',1,30,1000);
+Insert into mydb.CRVN_LOG_SETTINGS (CAPP_ID,CLOS_TYPE,CLOS_ENABLED,CLOS_DAYS,CLOS_MAX_ENTRIES) values (<CAPP_ID>,'fatal',1,30,1000);
+Insert into mydb.CRVN_LOG_SETTINGS (CAPP_ID,CLOS_TYPE,CLOS_ENABLED,CLOS_DAYS,CLOS_MAX_ENTRIES) values (<CAPP_ID>,'trace',1,30,10000);
+
+
 -- Log Entries
 -- REPLACE 'mydb' WITH DB NAME
 
@@ -445,8 +454,8 @@ SELECT "CLOG_ID",
        "CLOG_KEY_7", "CLOG_VALUE_7",
        "CLOG_KEY_8", "CLOG_VALUE_8",
        "CLOG_KEY_9", "CLOG_VALUE_9"    
-    FROM caravan.crvn_log_entries e
-    JOIN caravan.crvn_sec_apps a ON e."CAPP_ID" = a."CAPP_ID"
+    FROM mydb.crvn_log_entries e
+    JOIN mydb.crvn_sec_apps a ON e."CAPP_ID" = a."CAPP_ID"
    ORDER BY "CLOG_DATE" DESC, "CLOG_ID" DESC
 
 -- Views: V_CARAVAN_LOG_SUMMARY

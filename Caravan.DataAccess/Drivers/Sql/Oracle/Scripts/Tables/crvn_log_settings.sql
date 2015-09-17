@@ -26,3 +26,11 @@ COMMENT ON COLUMN mydb.crvn_log_settings.clos_days
      IS 'Numeri di giorni di persistenza della riga di log';
 COMMENT ON COLUMN mydb.crvn_log_settings.clos_max_entries 
      IS 'Massimo numero di righe presenti nel log per il tipo e la applicazione';
+
+-- REPLACE '<CAPP_ID>' WITH CAPP_ID
+Insert into mydb.CRVN_LOG_SETTINGS (CAPP_ID,CLOS_TYPE,CLOS_ENABLED,CLOS_DAYS,CLOS_MAX_ENTRIES) values (<CAPP_ID>,'debug',1,30,1000);
+Insert into mydb.CRVN_LOG_SETTINGS (CAPP_ID,CLOS_TYPE,CLOS_ENABLED,CLOS_DAYS,CLOS_MAX_ENTRIES) values (<CAPP_ID>,'info',1,30,1000);
+Insert into mydb.CRVN_LOG_SETTINGS (CAPP_ID,CLOS_TYPE,CLOS_ENABLED,CLOS_DAYS,CLOS_MAX_ENTRIES) values (<CAPP_ID>,'warn',1,30,1000);
+Insert into mydb.CRVN_LOG_SETTINGS (CAPP_ID,CLOS_TYPE,CLOS_ENABLED,CLOS_DAYS,CLOS_MAX_ENTRIES) values (<CAPP_ID>,'error',1,30,1000);
+Insert into mydb.CRVN_LOG_SETTINGS (CAPP_ID,CLOS_TYPE,CLOS_ENABLED,CLOS_DAYS,CLOS_MAX_ENTRIES) values (<CAPP_ID>,'fatal',1,30,1000);
+Insert into mydb.CRVN_LOG_SETTINGS (CAPP_ID,CLOS_TYPE,CLOS_ENABLED,CLOS_DAYS,CLOS_MAX_ENTRIES) values (<CAPP_ID>,'trace',1,30,10000);
