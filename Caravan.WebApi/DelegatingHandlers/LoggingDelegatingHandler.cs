@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Finsa.Caravan.Common.Logging.Models;
+using Finsa.Caravan.WebApi.Core;
 
 namespace Finsa.Caravan.WebApi.DelegatingHandlers
 {
@@ -35,7 +36,7 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
         {
             // Utilizzato per associare request e response nel log.
             var requestId = UniqueIdGenerator.NewBase32("-");
-            _log.ThreadVariablesContext.Set("request_id", requestId);
+            _log.ThreadVariablesContext.Set(Constants.RequestId, requestId);
 
             // Indica se è una richiesta per il logger: non vogliamo loggare le chiamate al log.
             // Inoltre, non devono finire nel log neanche le chiamate alle pagine di help di Swagger.
@@ -95,6 +96,10 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
                                 KeyValuePair.Create("response_headers", response.Headers.SafeToString())
                             }
                         });
+
+                        // Aggiungo l'ID della request agli header della response, in modo che sia più
+                        // facile il rintracciamento dei log su Caravan.
+                        response.Headers.Add(Constants.RequestIdHeader, requestId);
                     }
                     catch (Exception ex)
                     {

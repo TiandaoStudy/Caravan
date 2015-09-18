@@ -146,6 +146,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Constants.cs" />
     <Compile Include="DelegatingHandlers\LoggingDelegatingHandler.cs" />
     <Compile Include="Middlewares\HttpLoggingMiddleware.cs" />
     <Compile Include="ServiceHelper.cs" />
