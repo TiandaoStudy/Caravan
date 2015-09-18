@@ -265,9 +265,9 @@
   <ItemGroup>
     <Content Include="Drivers\Sql\Oracle\Scripts\Views\v_caravan_log_summary.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Views\v_caravan_log.sql" />
-    <Content Include="Drivers\Sql\SqlServer\Scripts\crvn_log_entries.sql" />
-    <Content Include="Drivers\Sql\SqlServer\Scripts\crvn_log_settings.sql" />
-    <Content Include="Drivers\Sql\SqlServer\Scripts\crvn_sec_apps.sql" />
+    <Content Include="Drivers\Sql\SqlServer\Scripts\Tables\crvn_log_entries.sql" />
+    <Content Include="Drivers\Sql\SqlServer\Scripts\Tables\crvn_log_settings.sql" />
+    <Content Include="Drivers\Sql\SqlServer\Scripts\Tables\crvn_sec_apps.sql" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
