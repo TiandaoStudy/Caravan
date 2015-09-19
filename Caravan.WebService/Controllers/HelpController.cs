@@ -11,6 +11,7 @@
 // the License.
 
 using System.Diagnostics;
+using System.Reflection;
 using System.Web.Http;
 
 namespace Finsa.Caravan.WebService.Controllers
@@ -34,11 +35,12 @@ namespace Finsa.Caravan.WebService.Controllers
         }
 
         /// <summary>
-        ///   Returns the web service version written on the main assembly.
+        ///   Returns the web service version written in the main assembly.
         /// </summary>
+        [Route("version")]
         public string GetVersion()
         {
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            var assembly = Assembly.GetExecutingAssembly();
             var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             return fvi.FileVersion;
         }

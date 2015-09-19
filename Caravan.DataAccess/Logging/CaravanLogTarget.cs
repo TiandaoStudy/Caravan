@@ -3,11 +3,13 @@ using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.CodeServices.Common.Collections.ReadOnly;
 using NLog;
+using NLog.Common;
 using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using LogLevel = Common.Logging.LogLevel;
 
@@ -20,34 +22,47 @@ namespace Finsa.Caravan.DataAccess.Logging
     public class CaravanLogTarget : Target
     {
         static readonly SimpleLayout DefaultLogLevel = new SimpleLayout("${level}");
+        static readonly SimpleLayout DefaultUserLogin = new SimpleLayout("${identity:name=true:lowercase=true}");
+        static readonly SimpleLayout DefaultCodeUnit = new SimpleLayout("${callsite:className=true:methodName=false:lowercase=true}");
+        static readonly SimpleLayout DefaultFunction = new SimpleLayout("${callsite:className=false:methodName=true:lowercase=true}");
 
         /// <summary>
-        ///   Builds the target with default layout formats.
+        ///   Il layout da applicare per mostrare il livello di log.
         /// </summary>
-        public CaravanLogTarget()
-        {
-            LogLevel = DefaultLogLevel;
-            UserLogin = new SimpleLayout("${identity:name=true:lowercase=true}");
-            CodeUnit = new SimpleLayout("${callsite:className=true:methodName=false:lowercase=true}");
-            Function = new SimpleLayout("${callsite:className=false:methodName=true:lowercase=true}");
-        }
-
         [RequiredParameter]
-        public Layout LogLevel { get; set; }
+        public Layout LogLevel { get; set; } = DefaultLogLevel;
 
+        /// <summary>
+        ///   Il layout da applicare per mostrare l'utente loggato che ha prodotto il messaggio.
+        /// </summary>
         [RequiredParameter]
-        public Layout UserLogin { get; set; }
+        public Layout UserLogin { get; set; } = DefaultUserLogin;
 
+        /// <summary>
+        ///   Il layout da applicare per ottenere la classe, o il modulo, da cui è partito il messaggio.
+        /// </summary>
         [RequiredParameter]
-        public Layout CodeUnit { get; set; }
+        public Layout CodeUnit { get; set; } = DefaultCodeUnit;
 
+        /// <summary>
+        ///   Il layout da applicare per ottenere la funzione, o la procedura, da cui è partito il messaggio.
+        /// </summary>
         [RequiredParameter]
-        public Layout Function { get; set; }
+        public Layout Function { get; set; } = DefaultFunction;
 
+        /// <summary>
+        ///   Il layout da applicare per ottenere il messaggio breve.
+        /// </summary>
         public Layout ShortMessage { get; set; }
 
+        /// <summary>
+        ///   Il layout da applicare per ottenere il messaggio esteso.
+        /// </summary>
         public Layout LongMessage { get; set; }
 
+        /// <summary>
+        ///   Il layout da applicare per ottenere il contesto da dove è partito il messaggio.
+        /// </summary>
         public Layout Context { get; set; }
 
         /// <summary>
@@ -56,33 +71,58 @@ namespace Finsa.Caravan.DataAccess.Logging
         /// <param name="logEvent">Logging event to be written out.</param>
         protected override void Write(LogEventInfo logEvent)
         {
-            var logLevel = (LogLevel)Enum.Parse(typeof(LogLevel), LogLevel.Render(logEvent));
-            var userLogin = UserLogin.Render(logEvent);
-            var codeUnit = CodeUnit.Render(logEvent);
-            var function = Function.Render(logEvent);
+            try
+            {
+                var logLevel = (LogLevel) Enum.Parse(typeof(LogLevel), LogLevel.Render(logEvent));
+                var userLogin = UserLogin.Render(logEvent);
+                var codeUnit = CodeUnit.Render(logEvent);
+                var function = Function.Render(logEvent);
 
-            var logMessage = ParseMessage(logEvent);
-            logMessage.ShortMessage = (ShortMessage != null) ? ShortMessage.Render(logEvent) : logMessage.ShortMessage;
-            logMessage.LongMessage = (LongMessage != null) ? LongMessage.Render(logEvent) : logMessage.LongMessage;
-            logMessage.Context = (Context != null) ? Context.Render(logEvent) : logMessage.Context;
+                var logMessage = ParseMessage(logEvent);
+                logMessage.ShortMessage = (ShortMessage != null) ? ShortMessage.Render(logEvent) : logMessage.ShortMessage;
+                logMessage.LongMessage = (LongMessage != null) ? LongMessage.Render(logEvent) : logMessage.LongMessage;
+                logMessage.Context = (Context != null) ? Context.Render(logEvent) : logMessage.Context;
 
-            var globalVariables = CaravanVariablesContext.GlobalVariables.Variables;
-            var threadVariables = CaravanVariablesContext.ThreadVariables.Variables;
-            var arguments = globalVariables.Union(threadVariables).Union(logMessage.Arguments);
+                var globalVariables = CaravanVariablesContext.GlobalVariables.Variables;
+                var threadVariables = CaravanVariablesContext.ThreadVariables.Variables;
+                var arguments = globalVariables.Union(threadVariables).Union(logMessage.Arguments);
 
-            // In order to be able to use thread local information, it must _not_ be async.
-            // ReSharper disable once UnusedVariable
-            var result = CaravanDataSource.Logger.LogRaw(
-                logLevel,
-                CommonConfiguration.Instance.AppName,
-                userLogin,
-                codeUnit,
-                function,
-                logMessage.ShortMessage,
-                logMessage.LongMessage,
-                logMessage.Context,
-                arguments
-            );
+                // In order to be able to use thread local information, it must _not_ be async.
+                var result = CaravanDataSource.Logger.LogRaw(
+                    logLevel,
+                    CommonConfiguration.Instance.AppName,
+                    userLogin,
+                    codeUnit,
+                    function,
+                    logMessage.ShortMessage,
+                    logMessage.LongMessage,
+                    logMessage.Context,
+                    arguments
+                );
+
+                if (!result.Succeeded)
+                {
+                    throw result.Exception;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Uso il log di emergenza, nel caso ci siano stati errori.
+                try
+                {
+                    // Devo loggare immediatamente l'eccezione che è stata ricevuta.
+                    var inner = ex.GetBaseException();
+                    var emergencyLogEvent = new LogEventInfo(NLog.LogLevel.Error, "caravan-emergency", CultureInfo.InvariantCulture, inner.Message, null, inner);
+                    ServiceProvider.EmergencyLog.WriteAsyncLogEvent(new AsyncLogEventInfo(emergencyLogEvent, null));
+
+                    // Cerco, infine, di salvare comunque il messaggio di log appena emesso.
+                    ServiceProvider.EmergencyLog.WriteAsyncLogEvent(new AsyncLogEventInfo(logEvent, null));
+                }
+                catch
+                {
+                    // Se anche qui da errore, mi arrendo :(
+                }
+            }
         }
 
         static LogMessage ParseMessage(LogEventInfo logEvent)

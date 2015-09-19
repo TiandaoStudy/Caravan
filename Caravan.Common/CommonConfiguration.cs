@@ -1,4 +1,16 @@
-﻿using System;
+﻿// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
+using System;
 using AutoMapper;
 using Common.Logging;
 using Finsa.CodeServices.Common.Portability;
@@ -47,30 +59,46 @@ namespace Finsa.Caravan.Common
         #endregion
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="CommonConfiguration"/> class and sets the
-        ///   default values for each configuration entry.
+        ///   Il nome identificativo dell'applicazione Caravan, rigorosamente minuscolo.
         /// </summary>
-        public CommonConfiguration()
-        {
-            AppName = "my_caravan_app";
-            AppDescription = "My Wow Caravan App";
+        public string AppName { get; set; } = "my_caravan_app";
 
-            // Logging
-            Logging_CaravanVariablesContext_Interval = TimeSpan.FromMinutes(30);
-            Logging_EmergencyLog_MaxArchiveFiles = 10;
-        }
+        /// <summary>
+        ///   La descrizione estesa dell'applicazione, viene usata per mostrare il nome dell'applicativo.
+        /// </summary>
+        public string AppDescription { get; set; } = "My Wow Caravan App";
 
-        public string AppName { get; set; }
-
-        public string AppDescription { get; set; }
-        
         /// <summary>
         ///   L'intervallo dopo il quale le variabili memorizzate nel contesto in memoria
         ///   del log di Caravan vengono automaticamente cancellate.
+        /// 
+        ///   L'intervallo di default è di 30 minuti.
         /// </summary>
-        public TimeSpan Logging_CaravanVariablesContext_Interval { get; set; }
+        public TimeSpan Logging_CaravanVariablesContext_Interval { get; set; } = TimeSpan.FromMinutes(30);
 
-        public int Logging_EmergencyLog_MaxArchiveFiles { get; set; }
+        /// <summary>
+        ///   La massima dimensione in KB che raggiungere il log di emergenza; raggiunta tale soglia,
+        ///   il file viene archiviato secondo le politiche di NLog.
+        /// 
+        ///   Il valore di default 1024KB, cioè, un 1MB.
+        /// </summary>
+        public int Logging_EmergencyLog_ArchiveAboveSizeInKB { get; set; } = 1024;
+
+        /// <summary>
+        ///   Il nome del file del log di emergenza. Si tratta di un layout NLog,
+        ///   perciò può anche contenere riferimenti a date e variabili di sistema.
+        /// 
+        ///   Il valore di default è "caravan-emergency.log".
+        /// </summary>
+        public string Logging_EmergencyLog_FileName { get; set; } = "caravan-emergency.log";
+
+        /// <summary>
+        ///   Il numero massimo di file di archivio prodotti quando il log di emergenza 
+        ///   raggiunge la dimensione indicata in <see cref="Logging_EmergencyLog_ArchiveAboveSizeInKB"/>.
+        /// 
+        ///   Il valore di default è 9.
+        /// </summary>
+        public int Logging_EmergencyLog_MaxArchiveFiles { get; set; } = 9;
 
         #region OnStart
 
