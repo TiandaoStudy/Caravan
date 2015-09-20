@@ -313,14 +313,22 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
                 var logCounts = from es in logSettings
                                 group es by new { es.Setting.AppId, es.Setting.LogLevel } into g
-                                select new { Count = g.Count(), MaxCount = g.FirstOrDefault().Setting.MaxEntries, Entries = g.Select(x => x.Entry) };
+                                where (g.Count() - g.FirstOrDefault().Setting.MaxEntries) > 0
+                                select new { g.Key.AppId, g.Key.LogLevel, Keep = g.FirstOrDefault().Setting.MaxEntries };
 
-                var olderLogs = from c in logCounts
-                                where c.Count > c.MaxCount
-                                select c.Entries;
+                var logCountsArray = logCounts.ToArray();
+                foreach (var lc in logCountsArray)
+                {
+                    var tooManyLogEntries = from e in ctx.LogEntries
+                                            where e.AppId == lc.AppId && e.LogLevel == lc.LogLevel
+                                            orderby e.Date descending
+                                            select e;
 
-                ctx.LogEntries.RemoveRange(olderLogs.SelectMany(e => e));
+                    ctx.LogEntries.RemoveRange(tooManyLogEntries.Skip(lc.Keep));
+                }
 
+                // Applico definitivamente i cambiamenti ed esco dalla procedura.
+                ctx.SaveChanges();
                 return true;
             }
         }
