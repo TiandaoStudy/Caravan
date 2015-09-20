@@ -117,6 +117,21 @@ namespace Finsa.Caravan.DataAccess.Logging
             }
         }
 
+        protected override void Write(AsyncLogEventInfo logEvent)
+        {
+            base.Write(logEvent);
+        }
+
+        protected override void Write(AsyncLogEventInfo[] logEvents)
+        {
+            base.Write(logEvents);
+        }
+
+        protected override void FlushAsync(AsyncContinuation asyncContinuation)
+        {
+            asyncContinuation?.Invoke(null);
+        }
+
         static void EmptyAsyncContinuation(Exception ex)
         {
             // Nulla di che, per ora...
