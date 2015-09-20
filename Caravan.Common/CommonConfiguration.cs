@@ -75,47 +75,6 @@ namespace Finsa.Caravan.Common
         /// </summary>
         public TimeSpan Logging_CaravanVariablesContext_Interval { get; set; } = TimeSpan.FromMinutes(30);
 
-        /// <summary>
-        ///   La massima dimensione in KB che raggiungere il log di emergenza; raggiunta tale soglia,
-        ///   il file viene archiviato secondo le politiche di NLog.
-        /// 
-        ///   Il valore di default 1024KB, cioè, un 1MB.
-        /// </summary>
-        public int Logging_EmergencyLog_ArchiveAboveSizeInKB { get; set; } = 1024;
-
-        /// <summary>
-        ///   Il nome del file del log di emergenza. Si tratta di un layout NLog,
-        ///   perciò può anche contenere riferimenti a date e variabili di sistema.
-        /// 
-        ///   Il valore di default è "caravan-emergency.log".
-        /// </summary>
-        public string Logging_EmergencyLog_FileName { get; set; } = "${basedir}/App_Data/logs/caravan-emergency.log";
-
-        /// <summary>
-        ///   Il numero massimo di file di archivio prodotti quando il log di emergenza 
-        ///   raggiunge la dimensione indicata in <see cref="Logging_EmergencyLog_ArchiveAboveSizeInKB"/>.
-        /// 
-        ///   Il valore di default è 9.
-        /// </summary>
-        public int Logging_EmergencyLog_MaxArchiveFiles { get; set; } = 9;
-
-        /// <summary>
-        ///   Backing field for <see cref="Logging_EmergencyLog_RootPath"/>.
-        /// </summary>
-        string _mappedEmergencyLogRootPath = PortableEnvironment.MapPath("~\\App_Data\\Logs");
-
-        /// <summary>
-        ///   La cartella radice dove andare a memorizzare il log di emergenza più i relativi file di archivio compressi.
-        ///   Il file di log verrà memorizzato nel percorso dato dalla concatenazione di <see cref="Logging_EmergencyLog_RootPath"/> e <see cref="Logging_EmergencyLog_FileName"/>.
-        /// 
-        ///   Il percorso di default è "~/App_Data/Logs".
-        /// </summary>
-        public string Logging_EmergencyLog_RootPath
-        {
-            get { return _mappedEmergencyLogRootPath; }
-            set { _mappedEmergencyLogRootPath = PortableEnvironment.MapPath(value); }
-        }
-
         #region OnStart
 
         private static void OnStart()

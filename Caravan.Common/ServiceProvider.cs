@@ -36,35 +36,10 @@ namespace Finsa.Caravan.Common
         /// </summary>
         public static Func<DateTime> CurrentDateTime { get; set; } = () => Clock.UtcNow;
 
-        public static ILog EmLog { get; } = LogManager.GetLogger(typeof(ServiceProvider));
-
         /// <summary>
-        ///   Il log di emergenza, basato rigorosamente su file system, che viene usato da Caravan quando il log normale, per qualche ragione, non sta funzionando. 
-        /// 
-        ///   Nel log di emergenza vengono solo registrati gli errori che stanno indicando il mal funzionamento del log, non i normali messaggi.
+        ///   Il log di emergenza, usato quando il normale log di Caravan va in errore.
+        ///   Scrive rigorosamente, e semplicemente, su file, per evitare ulteriori errori. 
         /// </summary>
-        public static FileTarget EmergencyLog { get; set; } = new FileTarget
-        {
-            // Basic
-            AutoFlush = false,
-            CreateDirs = true,
-            Encoding = System.Text.Encoding.UTF8,
-            FileName = CommonConfiguration.Instance.Logging_EmergencyLog_FileName,
-            ForceManaged = false,
-            Header = "### CARAVAN EMERGENCY LOG ###" + Environment.NewLine,
-            Name = "caravan-emergency",
-
-            // Archiving
-            ArchiveAboveSize = CommonConfiguration.Instance.Logging_EmergencyLog_ArchiveAboveSizeInKB * 1024,
-            ArchiveNumbering = ArchiveNumberingMode.DateAndSequence,
-            ArchiveOldFileOnStartup = false,
-            EnableArchiveFileCompression = true,
-            MaxArchiveFiles = CommonConfiguration.Instance.Logging_EmergencyLog_MaxArchiveFiles,
-            
-            // Concurrency handling
-            ConcurrentWrites = true,
-            ConcurrentWriteAttempts = 10,
-            ConcurrentWriteAttemptDelay = 3 // Milliseconds
-        };
+        public static ILog EmergencyLog { get; } = LogManager.GetLogger("CaravanEmergencyLog");
     }
 }

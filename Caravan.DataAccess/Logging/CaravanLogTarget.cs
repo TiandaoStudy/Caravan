@@ -112,10 +112,9 @@ namespace Finsa.Caravan.DataAccess.Logging
                 {
                     // Devo loggare immediatamente l'eccezione che è stata ricevuta.
                     // Cerco di salvare comunque il messaggio di log appena emesso.
-                    var inner = ex.GetBaseException();
-                    ServiceProvider.EmLog.Error($"Error while logging '{logEvent.FormattedMessage}'", ex);
+                    ServiceProvider.EmergencyLog.Error($"Internal error while logging [{logEvent.FormattedMessage}]", ex);
                 }
-                catch (Exception uffa)
+                catch
                 {
                     // Se anche qui da errore, mi arrendo :(
                 }
