@@ -31,7 +31,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.16.0")]
 
 // Attributes added to allow stronger development.
-[assembly: CLSCompliant(true)]
 [assembly: InternalsVisibleTo("Finsa.Caravan.DataAccess")]
 [assembly: InternalsVisibleTo("Finsa.Caravan.WebApi")]
 [assembly: InternalsVisibleTo("Finsa.Caravan.WebForms")]

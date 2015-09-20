@@ -20,9 +20,13 @@ namespace Finsa.Caravan.DataAccess
     {
         #region Static instance
 
-        private static readonly DataAccessConfiguration CachedInstance;
+        /// <summary>
+        ///   Gets the static configuration instance.
+        /// </summary>
+        /// <value>The static configuration instance.</value>
+        public static DataAccessConfiguration Instance { get; } = InitializeInstance();
 
-        static DataAccessConfiguration()
+        static DataAccessConfiguration InitializeInstance()
         {
             var configurationFile = "Caravan.config";
             if (PortableEnvironment.AppIsRunningOnAspNet)
@@ -32,22 +36,17 @@ namespace Finsa.Caravan.DataAccess
                 // the "bin" directory, because every change would make the application restart.
                 configurationFile = "~/" + configurationFile;
             }
-            CachedInstance = new DataAccessConfiguration();
-            CachedInstance.Initialize(new ConfigurationFileConfigurationProvider<DataAccessConfiguration>
+
+            var instance = new DataAccessConfiguration();
+            instance.Initialize(new ConfigurationFileConfigurationProvider<DataAccessConfiguration>
             {
                 ConfigurationFile = PortableEnvironment.MapPath(configurationFile),
                 ConfigurationSection = "caravan.dataAccess"
             });
-            OnStart();
-        }
 
-        /// <summary>
-        ///   Gets the static configuration instance.
-        /// </summary>
-        /// <value>The static configuration instance.</value>
-        public static DataAccessConfiguration Instance
-        {
-            get { return CachedInstance; }
+            OnStart();
+
+            return instance;
         }
 
         #endregion

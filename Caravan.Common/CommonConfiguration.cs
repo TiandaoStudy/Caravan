@@ -26,9 +26,13 @@ namespace Finsa.Caravan.Common
     {
         #region Static instance
 
-        private static readonly CommonConfiguration CachedInstance;
+        /// <summary>
+        ///   Gets the static configuration instance.
+        /// </summary>
+        /// <value>The static configuration instance.</value>
+        public static CommonConfiguration Instance { get; } = InitializeInstance();
 
-        static CommonConfiguration()
+        static CommonConfiguration InitializeInstance()
         {
             var configurationFile = "Caravan.config";
             if (PortableEnvironment.AppIsRunningOnAspNet)
@@ -38,22 +42,17 @@ namespace Finsa.Caravan.Common
                 // the "bin" directory, because every change would make the application restart.
                 configurationFile = "~/" + configurationFile;
             }
-            CachedInstance = new CommonConfiguration();
-            CachedInstance.Initialize(new ConfigurationFileConfigurationProvider<CommonConfiguration>
+
+            var instance = new CommonConfiguration();
+            instance.Initialize(new ConfigurationFileConfigurationProvider<CommonConfiguration>
             {
                 ConfigurationFile = PortableEnvironment.MapPath(configurationFile),
                 ConfigurationSection = "caravan.common"
             });
-            OnStart();
-        }
 
-        /// <summary>
-        ///   Gets the static configuration instance.
-        /// </summary>
-        /// <value>The static configuration instance.</value>
-        public static CommonConfiguration Instance
-        {
-            get { return CachedInstance; }
+            OnStart();
+
+            return instance;
         }
 
         #endregion
@@ -90,7 +89,7 @@ namespace Finsa.Caravan.Common
         /// 
         ///   Il valore di default è "caravan-emergency.log".
         /// </summary>
-        public string Logging_EmergencyLog_FileName { get; set; } = "caravan-emergency.log";
+        public string Logging_EmergencyLog_FileName { get; set; } = "${basedir}/App_Data/logs/caravan-emergency.log";
 
         /// <summary>
         ///   Il numero massimo di file di archivio prodotti quando il log di emergenza 
@@ -99,6 +98,23 @@ namespace Finsa.Caravan.Common
         ///   Il valore di default è 9.
         /// </summary>
         public int Logging_EmergencyLog_MaxArchiveFiles { get; set; } = 9;
+
+        /// <summary>
+        ///   Backing field for <see cref="Logging_EmergencyLog_RootPath"/>.
+        /// </summary>
+        string _mappedEmergencyLogRootPath = PortableEnvironment.MapPath("~\\App_Data\\Logs");
+
+        /// <summary>
+        ///   La cartella radice dove andare a memorizzare il log di emergenza più i relativi file di archivio compressi.
+        ///   Il file di log verrà memorizzato nel percorso dato dalla concatenazione di <see cref="Logging_EmergencyLog_RootPath"/> e <see cref="Logging_EmergencyLog_FileName"/>.
+        /// 
+        ///   Il percorso di default è "~/App_Data/Logs".
+        /// </summary>
+        public string Logging_EmergencyLog_RootPath
+        {
+            get { return _mappedEmergencyLogRootPath; }
+            set { _mappedEmergencyLogRootPath = PortableEnvironment.MapPath(value); }
+        }
 
         #region OnStart
 

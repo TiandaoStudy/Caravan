@@ -111,18 +111,20 @@ namespace Finsa.Caravan.DataAccess.Logging
                 try
                 {
                     // Devo loggare immediatamente l'eccezione che è stata ricevuta.
+                    // Cerco di salvare comunque il messaggio di log appena emesso.
                     var inner = ex.GetBaseException();
-                    var emergencyLogEvent = new LogEventInfo(NLog.LogLevel.Error, "caravan-emergency", CultureInfo.InvariantCulture, inner.Message, null, inner);
-                    ServiceProvider.EmergencyLog.WriteAsyncLogEvent(new AsyncLogEventInfo(emergencyLogEvent, null));
-
-                    // Cerco, infine, di salvare comunque il messaggio di log appena emesso.
-                    ServiceProvider.EmergencyLog.WriteAsyncLogEvent(new AsyncLogEventInfo(logEvent, null));
+                    ServiceProvider.EmLog.Error($"Error while logging '{logEvent.FormattedMessage}'", ex);
                 }
-                catch
+                catch (Exception uffa)
                 {
                     // Se anche qui da errore, mi arrendo :(
                 }
             }
+        }
+
+        static void EmptyAsyncContinuation(Exception ex)
+        {
+            // Nulla di che, per ora...
         }
 
         static LogMessage ParseMessage(LogEventInfo logEvent)

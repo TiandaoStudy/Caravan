@@ -13,6 +13,8 @@
 using System;
 using Finsa.CodeServices.Clock;
 using NLog.Targets;
+using System.IO;
+using Common.Logging;
 
 namespace Finsa.Caravan.Common
 {
@@ -34,6 +36,8 @@ namespace Finsa.Caravan.Common
         /// </summary>
         public static Func<DateTime> CurrentDateTime { get; set; } = () => Clock.UtcNow;
 
+        public static ILog EmLog { get; } = LogManager.GetLogger(typeof(ServiceProvider));
+
         /// <summary>
         ///   Il log di emergenza, basato rigorosamente su file system, che viene usato da Caravan quando il log normale, per qualche ragione, non sta funzionando. 
         /// 
@@ -42,12 +46,16 @@ namespace Finsa.Caravan.Common
         public static FileTarget EmergencyLog { get; set; } = new FileTarget
         {
             // Basic
+            AutoFlush = false,
+            CreateDirs = true,
             Encoding = System.Text.Encoding.UTF8,
             FileName = CommonConfiguration.Instance.Logging_EmergencyLog_FileName,
+            ForceManaged = false,
             Header = "### CARAVAN EMERGENCY LOG ###" + Environment.NewLine,
+            Name = "caravan-emergency",
 
             // Archiving
-            ArchiveAboveSize = CommonConfiguration.Instance.Logging_EmergencyLog_ArchiveAboveSizeInKB,
+            ArchiveAboveSize = CommonConfiguration.Instance.Logging_EmergencyLog_ArchiveAboveSizeInKB * 1024,
             ArchiveNumbering = ArchiveNumberingMode.DateAndSequence,
             ArchiveOldFileOnStartup = false,
             EnableArchiveFileCompression = true,
