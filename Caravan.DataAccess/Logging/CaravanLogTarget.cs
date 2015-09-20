@@ -81,11 +81,7 @@ namespace Finsa.Caravan.DataAccess.Logging
                 var logMessage = ParseMessage(logEvent);
                 logMessage.ShortMessage = (ShortMessage != null) ? ShortMessage.Render(logEvent) : logMessage.ShortMessage;
                 logMessage.LongMessage = (LongMessage != null) ? LongMessage.Render(logEvent) : logMessage.LongMessage;
-                logMessage.Context = (Context != null) ? Context.Render(logEvent) : logMessage.Context;
-
-                var globalVariables = CaravanVariablesContext.GlobalVariables.Variables;
-                var threadVariables = CaravanVariablesContext.ThreadVariables.Variables;
-                var arguments = globalVariables.Union(threadVariables).Union(logMessage.Arguments);
+                logMessage.Context = (Context != null) ? Context.Render(logEvent) : logMessage.Context;          
 
                 // In order to be able to use thread local information, it must _not_ be async.
                 var result = CaravanDataSource.Logger.LogRaw(
@@ -97,7 +93,7 @@ namespace Finsa.Caravan.DataAccess.Logging
                     logMessage.ShortMessage,
                     logMessage.LongMessage,
                     logMessage.Context,
-                    arguments
+                    logMessage.Arguments
                 );
 
                 if (!result.Succeeded)

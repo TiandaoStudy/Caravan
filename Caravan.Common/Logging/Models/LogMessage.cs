@@ -6,6 +6,7 @@ using Newtonsoft.Json.Serialization;
 using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -114,6 +115,10 @@ namespace Finsa.Caravan.Common.Logging.Models
             }
             if (Arguments != null)
             {
+                var globalVariables = CaravanVariablesContext.GlobalVariables.Variables;
+                var threadVariables = CaravanVariablesContext.ThreadVariables.Variables;
+                Arguments = globalVariables.Union(threadVariables).Union(Arguments).ToArray();
+
                 for (var i = 0; i < Arguments.Count; ++i)
                 {
                     var kv = Arguments[i];

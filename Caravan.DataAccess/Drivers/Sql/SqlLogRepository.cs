@@ -56,56 +56,57 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                         for (var i = 0; i < argsList.Length && i < MaxArgumentCount; ++i)
                         {
                             var tmp = argsList[i];
+                            var tmpValue = tmp.Value.Truncate(SqlDbContext.LargeLength);
                             switch (i)
                             {
                                 case 0:
                                     entry.Key0 = tmp.Key;
-                                    entry.Value0 = tmp.Value;
+                                    entry.Value0 = tmpValue;
                                     break;
 
                                 case 1:
                                     entry.Key1 = tmp.Key;
-                                    entry.Value1 = tmp.Value;
+                                    entry.Value1 = tmpValue;
                                     break;
 
                                 case 2:
                                     entry.Key2 = tmp.Key;
-                                    entry.Value2 = tmp.Value;
+                                    entry.Value2 = tmpValue;
                                     break;
 
                                 case 3:
                                     entry.Key3 = tmp.Key;
-                                    entry.Value3 = tmp.Value;
+                                    entry.Value3 = tmpValue;
                                     break;
 
                                 case 4:
                                     entry.Key4 = tmp.Key;
-                                    entry.Value4 = tmp.Value;
+                                    entry.Value4 = tmpValue;
                                     break;
 
                                 case 5:
                                     entry.Key5 = tmp.Key;
-                                    entry.Value5 = tmp.Value;
+                                    entry.Value5 = tmpValue;
                                     break;
 
                                 case 6:
                                     entry.Key6 = tmp.Key;
-                                    entry.Value6 = tmp.Value;
+                                    entry.Value6 = tmpValue;
                                     break;
 
                                 case 7:
                                     entry.Key7 = tmp.Key;
-                                    entry.Value7 = tmp.Value;
+                                    entry.Value7 = tmpValue;
                                     break;
 
                                 case 8:
                                     entry.Key8 = tmp.Key;
-                                    entry.Value8 = tmp.Value;
+                                    entry.Value8 = tmpValue;
                                     break;
 
                                 case 9:
                                     entry.Key9 = tmp.Key;
-                                    entry.Value9 = tmp.Value;
+                                    entry.Value9 = tmpValue;
                                     break;
                             }
                         }
