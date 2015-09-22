@@ -85,7 +85,6 @@ namespace Finsa.Caravan.DataAccess.Logging
         protected override void Write(AsyncLogEventInfo logEvent)
         {
             Write(logEvent.LogEvent);
-            logEvent.Continuation?.Invoke(null);
         }
 
         protected override void Write(AsyncLogEventInfo[] logEvents)
@@ -106,18 +105,10 @@ namespace Finsa.Caravan.DataAccess.Logging
                 // Uso il log di emergenza nel caso ci siano stati errori.
                 UseEmergencyLog(ex, ex.Message);
             }
-            finally
-            {
-                foreach (var logEvent in logEvents)
-                {
-                    logEvent.Continuation?.Invoke(null);
-                }
-            }
         }
 
         protected override void FlushAsync(AsyncContinuation asyncContinuation)
         {
-            asyncContinuation?.Invoke(null);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
