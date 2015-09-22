@@ -8,6 +8,7 @@ using RestSharp;
 using Common.Logging;
 using Finsa.Caravan.Common.Logging.Exceptions;
 using Finsa.Caravan.Common.Security.Exceptions;
+using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Rest
 {
@@ -167,6 +168,11 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
         }
 
         protected override bool CleanUpEntriesInternal(string appName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task<LogResult> AddEntriesAsync(string appName, IEnumerable<LogEntry> logEntries)
         {
             throw new NotImplementedException();
         }

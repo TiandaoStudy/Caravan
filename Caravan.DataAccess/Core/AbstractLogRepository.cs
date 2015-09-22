@@ -3,7 +3,6 @@ using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -404,6 +403,8 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #endregion ICaravanLogRepository Members
 
+        public abstract Task<LogResult> AddEntriesAsync(string appName, IEnumerable<LogEntry> logEntries);
+
         protected abstract LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IList<KeyValuePair<string, string>> args);
         
         protected abstract IList<LogEntry> GetEntriesInternal(string appName, LogLevel? logLevel);
@@ -430,87 +431,54 @@ namespace Finsa.Caravan.DataAccess.Core
         {
             try
             {
-                Raise<ArgumentNullException>.IfIsNull(shortMessage);
+                RaiseArgumentNullException.IfIsNull(shortMessage, nameof(shortMessage));
+                return DoLogRaw(logLevel, GetCurrentAppName(appName), GetCurrentUserLogin(userLogin), codeUnit, function, shortMessage, longMessage, context, args);
             }
             catch (Exception ex)
             {
-                try
-                {
-                    Trace.TraceWarning(ex.Message);
-                }
-                // ReSharper disable once EmptyGeneralCatchClause
-                catch { }
                 return LogResult.Failure(ex);
             }
-            return DoLogRaw(logLevel, GetCurrentAppName(appName), GetCurrentuserLogin(userLogin), codeUnit, function, shortMessage, longMessage, context, args);
         }
 
         private LogResult Log<TCodeUnit>(LogLevel logLevel, string appName, string userLogin, string function, string shortMessage, string longMessage, string context, IList<KeyValuePair<string, string>> args)
         {
             try
             {
-                Raise<ArgumentException>.IfIsEmpty(shortMessage);
+                RaiseArgumentNullException.IfIsNull(shortMessage, nameof(shortMessage));
+                return DoLogRaw(logLevel, GetCurrentAppName(appName), GetCurrentUserLogin(userLogin), typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
             }
             catch (Exception ex)
             {
-                try
-                {
-                    Trace.TraceWarning(ex.Message);
-                }
-                // ReSharper disable once EmptyGeneralCatchClause
-                catch { }
                 return LogResult.Failure(ex);
             }
-            return DoLogRaw(logLevel, GetCurrentAppName(appName), GetCurrentuserLogin(userLogin), typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
         }
 
         public LogResult LogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, Exception exception, string context, IList<KeyValuePair<string, string>> args)
         {
             try
             {
-                Raise<ArgumentNullException>.IfIsNull(exception);
-                exception = FindInnermostException(exception);
+                RaiseArgumentNullException.IfIsNull(exception, nameof(exception));
+                exception = exception.GetBaseException();
+                return DoLogRaw(logLevel, GetCurrentAppName(appName), GetCurrentUserLogin(userLogin), codeUnit, function, exception.Message, exception.StackTrace, context, args);
             }
             catch (Exception ex)
             {
-                try
-                {
-                    Trace.TraceWarning(ex.Message);
-                }
-                // ReSharper disable once EmptyGeneralCatchClause
-                catch { }
                 return LogResult.Failure(ex);
             }
-            return DoLogRaw(logLevel, GetCurrentAppName(appName), GetCurrentuserLogin(userLogin), codeUnit, function, exception.Message, exception.StackTrace, context, args);
         }
 
         private LogResult Log<TCodeUnit>(LogLevel logLevel, string appName, string userLogin, string function, Exception exception, string context, IList<KeyValuePair<string, string>> args)
         {
             try
             {
-                Raise<ArgumentNullException>.IfIsNull(exception);
-                exception = FindInnermostException(exception);
+                RaiseArgumentNullException.IfIsNull(exception, nameof(exception));
+                exception = exception.GetBaseException();
+                return DoLogRaw(logLevel, GetCurrentAppName(appName), GetCurrentUserLogin(userLogin), typeof(TCodeUnit).FullName, function, exception.Message, exception.StackTrace, context, args);
             }
             catch (Exception ex)
             {
-                try
-                {
-                    Trace.TraceWarning(ex.Message);
-                }
-                // ReSharper disable once EmptyGeneralCatchClause
-                catch { }
                 return LogResult.Failure(ex);
             }
-            return DoLogRaw(logLevel, GetCurrentAppName(appName), GetCurrentuserLogin(userLogin), typeof(TCodeUnit).FullName, function, exception.Message, exception.StackTrace, context, args);
-        }
-
-        private static Exception FindInnermostException(Exception exception)
-        {
-            while (exception.InnerException != null)
-            {
-                exception = exception.InnerException;
-            }
-            return exception;
         }
 
         private static string GetCurrentAppName(string appName)
@@ -522,7 +490,7 @@ namespace Finsa.Caravan.DataAccess.Core
             return appName;
         }
 
-        private static string GetCurrentuserLogin(string userLogin)
+        private static string GetCurrentUserLogin(string userLogin)
         {
             if (!string.IsNullOrWhiteSpace(userLogin) && userLogin != LogEntry.AutoFilled)
             {
@@ -537,7 +505,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         private static void CheckAndFillEntry(LogEntry entry, string function)
         {
-            Raise<ArgumentNullException>.IfIsNull(entry);
+            RaiseArgumentNullException.IfIsNull(entry, nameof(entry));
             entry.Function = string.IsNullOrWhiteSpace(entry.Function) ? function : entry.Function;
         }
 

@@ -16,6 +16,8 @@ namespace Finsa.Caravan.Common.Logging
     {
         #region Logging
 
+        Task<LogResult> AddEntriesAsync(string appName, IEnumerable<LogEntry> logEntries);
+
         /// <summary>
         ///   TODO
         /// </summary>

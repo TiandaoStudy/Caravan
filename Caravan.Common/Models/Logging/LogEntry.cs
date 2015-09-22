@@ -46,7 +46,7 @@ namespace Finsa.Caravan.Common.Models.Logging
         public string Context { get; set; }
 
         [JsonProperty(Order = 10), DataMember(Order = 10)]
-        public KeyValuePair<string, string>[] Arguments { get; set; }
+        public IList<KeyValuePair<string, string>> Arguments { get; set; }
 
         protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()
         {

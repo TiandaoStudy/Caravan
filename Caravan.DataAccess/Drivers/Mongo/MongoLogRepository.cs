@@ -13,6 +13,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Driver.Linq;
 using Common.Logging;
+using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 {
@@ -158,6 +159,11 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
         }
 
         protected override bool CleanUpEntriesInternal(string appName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task<LogResult> AddEntriesAsync(string appName, IEnumerable<LogEntry> logEntries)
         {
             throw new NotImplementedException();
         }

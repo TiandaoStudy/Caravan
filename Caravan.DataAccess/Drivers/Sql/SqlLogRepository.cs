@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -22,6 +23,114 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         const int MaxArgumentCount = 10;
 
         #endregion Constants
+
+        public override async Task<LogResult> AddEntriesAsync(string appName, IEnumerable<LogEntry> logEntries)
+        {
+            try
+            {
+                RaiseArgumentNullException.IfIsNull(logEntries, nameof(logEntries));
+
+                using (var ctx = SqlDbContext.CreateWriteContext())
+                {
+                    var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
+                    var settings = ctx.LogSettings.Where(s => s.AppId == appId).ToDictionary(s => s.LogLevel);
+
+                    foreach (var logEntry in logEntries)
+                    {
+                        var logLevelId = logEntry.LogLevel.ToString().ToLowerInvariant();
+                        var setting = settings[logLevelId];
+
+                        if (!setting.Enabled)
+                        {
+                            continue;
+                        }
+
+                        // If log is enabled, then we can insert a new entry.
+                        var entry = new SqlLogEntry
+                        {
+                            Date = ServiceProvider.CurrentDateTime(),
+                            AppId = appId,
+                            LogLevel = logLevelId,
+                            UserLogin = logEntry.UserLogin.Truncate(SqlDbContext.SmallLength).ToLowerInvariant(),
+                            CodeUnit = logEntry.CodeUnit.Truncate(SqlDbContext.MediumLength).ToLowerInvariant(),
+                            Function = logEntry.Function.Truncate(SqlDbContext.MediumLength).ToLowerInvariant(),
+                            ShortMessage = logEntry.ShortMessage.Truncate(SqlDbContext.LargeLength),
+                            LongMessage = logEntry.LongMessage, // Not truncated, because it should be a CLOB/TEXT/whatever...
+                            Context = logEntry.Context.Truncate(SqlDbContext.MediumLength)
+                        };
+
+                        var args = logEntry.Arguments;
+                        for (var i = 0; args != null && i < args.Count && i < MaxArgumentCount; ++i)
+                        {
+                            var tmp = args[i];
+                            var tmpKey = tmp.Key.Truncate(SqlDbContext.SmallLength);
+                            var tmpValue = tmp.Value.Truncate(SqlDbContext.LargeLength);
+                            switch (i)
+                            {
+                                case 0:
+                                    entry.Key0 = tmpKey;
+                                    entry.Value0 = tmpValue;
+                                    break;
+
+                                case 1:
+                                    entry.Key1 = tmpKey;
+                                    entry.Value1 = tmpValue;
+                                    break;
+
+                                case 2:
+                                    entry.Key2 = tmpKey;
+                                    entry.Value2 = tmpValue;
+                                    break;
+
+                                case 3:
+                                    entry.Key3 = tmpKey;
+                                    entry.Value3 = tmpValue;
+                                    break;
+
+                                case 4:
+                                    entry.Key4 = tmpKey;
+                                    entry.Value4 = tmpValue;
+                                    break;
+
+                                case 5:
+                                    entry.Key5 = tmpKey;
+                                    entry.Value5 = tmpValue;
+                                    break;
+
+                                case 6:
+                                    entry.Key6 = tmpKey;
+                                    entry.Value6 = tmpValue;
+                                    break;
+
+                                case 7:
+                                    entry.Key7 = tmpKey;
+                                    entry.Value7 = tmpValue;
+                                    break;
+
+                                case 8:
+                                    entry.Key8 = tmpKey;
+                                    entry.Value8 = tmpValue;
+                                    break;
+
+                                case 9:
+                                    entry.Key9 = tmpKey;
+                                    entry.Value9 = tmpValue;
+                                    break;
+                            }
+                        }
+
+                        ctx.LogEntries.Add(entry);
+                    }
+
+                    await ctx.SaveChangesAsync();
+                    return LogResult.Success;
+                }
+            }
+            catch (Exception ex)
+            {
+                return LogResult.Failure(ex);
+            }
+        }
 
         protected override LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function,
            string shortMessage, string longMessage, string context, IList<KeyValuePair<string, string>> args)
@@ -34,10 +143,10 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 {
                     var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
                     var logLevelId = logLevel.ToString().ToLowerInvariant();
-                    var settings = ctx.LogSettings.First(s => s.AppId == appId && s.LogLevel == logLevelId);
+                    var setting = ctx.LogSettings.First(s => s.AppId == appId && s.LogLevel == logLevelId);
 
-                    // If log is enabled, then we can insert a new entry
-                    if (settings.Enabled)
+                    // If log is enabled, then we can insert a new entry.
+                    if (setting.Enabled)
                     {
                         var entry = new SqlLogEntry
                         {
