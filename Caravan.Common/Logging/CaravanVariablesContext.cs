@@ -4,6 +4,7 @@ using Finsa.CodeServices.Common.Extensions;
 using PommaLabs.KVLite;
 using PommaLabs.Thrower;
 using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Web;
 
 namespace Finsa.Caravan.Common.Logging
 {
-    sealed class CaravanVariablesContext : IVariablesContext
+    internal sealed class CaravanVariablesContext : IVariablesContext, IEnumerable<KeyValuePair<string, string>>
     {
         #region Static members
 
@@ -38,7 +39,19 @@ namespace Finsa.Caravan.Common.Logging
 
         public CaravanVariablesContextMode Mode { get; }
 
-        public IList<KeyValuePair<string, string>> Variables => GetAndSetVariablesMap().Select(x => KeyValuePair.Create(x.Key, x.Value.SafeToString())).ToArray();
+        #region IEnumerable members
+
+        public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
+        {
+            return GetAndSetVariablesMap().Select(x => KeyValuePair.Create(x.Key, x.Value.SafeToString())).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        #endregion IEnumerable members
 
         #region IVariablesContext members
 
@@ -82,16 +95,16 @@ namespace Finsa.Caravan.Common.Logging
             }
         }
 
-        #endregion
+        #endregion IVariablesContext members
 
         #region Private members
 
-        const string CachePartition = "Caravan.VariablesContexts";
-        const string CacheKeyForGlobal = "global";
-        const string CacheKeyPrefixForRequest = "request_";
-        const string CacheKeyPrefixForThread = "thread_";
+        private const string CachePartition = "Caravan.VariablesContexts";
+        private const string CacheKeyForGlobal = "global";
+        private const string CacheKeyPrefixForRequest = "request_";
+        private const string CacheKeyPrefixForThread = "thread_";
 
-        ConcurrentDictionary<string, object> GetAndSetVariablesMap()
+        private ConcurrentDictionary<string, object> GetAndSetVariablesMap()
         {
             switch (Mode)
             {
@@ -150,7 +163,7 @@ namespace Finsa.Caravan.Common.Logging
         #endregion Private members
     }
 
-    enum CaravanVariablesContextMode
+    internal enum CaravanVariablesContextMode
     {
         Global = 1,
         Thread = 2

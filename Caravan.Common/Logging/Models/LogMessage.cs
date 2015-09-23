@@ -20,8 +20,8 @@ namespace Finsa.Caravan.Common.Logging.Models
     [Serializable]
     public sealed class LogMessage
     {
-        static readonly Regex RemoveBlankRows = new Regex(@"^[ \t]*((\r|\n)\n?)", RegexOptions.Compiled | RegexOptions.Multiline);
-        static readonly Regex RemoveLastBlanks = new Regex(@"[ \t]+((\r|\n)\n?)", RegexOptions.Compiled | RegexOptions.Singleline);
+        private static readonly Regex RemoveBlankRows = new Regex(@"^[ \t]*((\r|\n)\n?)", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static readonly Regex RemoveLastBlanks = new Regex(@"[ \t]+((\r|\n)\n?)", RegexOptions.Compiled | RegexOptions.Singleline);
 
         /// <summary>
         ///   JSON serializer settings for a readable log.
@@ -108,16 +108,19 @@ namespace Finsa.Caravan.Common.Logging.Models
             // mentre per LongMessage e per gli Arguments devo applicare pulizie più efficaci.
             ShortMessage = ShortMessage?.Trim();
             Context = Context?.Trim();
+
             if (LongMessage != null)
             {
                 LongMessage = RemoveBlankRows.Replace(LongMessage, string.Empty);
                 LongMessage = RemoveLastBlanks.Replace(LongMessage, Environment.NewLine);
             }
+
             if (Arguments != null)
             {
-                var globalVariables = CaravanVariablesContext.GlobalVariables.Variables;
-                var threadVariables = CaravanVariablesContext.ThreadVariables.Variables;
-                Arguments = globalVariables.Union(threadVariables).Union(Arguments).ToArray();
+                Arguments = CaravanVariablesContext.GlobalVariables
+                    .Union(CaravanVariablesContext.ThreadVariables)
+                    .Union(Arguments)
+                    .ToArray();
 
                 for (var i = 0; i < Arguments.Count; ++i)
                 {
@@ -126,9 +129,9 @@ namespace Finsa.Caravan.Common.Logging.Models
                     {
                         continue;
                     }
-                    var tmp = RemoveBlankRows.Replace(kv.Value, string.Empty);
-                    tmp = RemoveLastBlanks.Replace(tmp, Environment.NewLine);
-                    Arguments[i] = KeyValuePair.Create(kv.Key.Trim(), tmp);
+                    var tmpValue = RemoveBlankRows.Replace(kv.Value, string.Empty);
+                    tmpValue = RemoveLastBlanks.Replace(tmpValue, Environment.NewLine);
+                    Arguments[i] = KeyValuePair.Create(kv.Key, tmpValue);
                 }
             }
 
@@ -141,7 +144,7 @@ namespace Finsa.Caravan.Common.Logging.Models
             return Environment.NewLine + yaml;
         }
 
-        static void IgnoreJsonSerializationError(object sender, ErrorEventArgs errorArgs)
+        private static void IgnoreJsonSerializationError(object sender, ErrorEventArgs errorArgs)
         {
             errorArgs.ErrorContext.Handled = true;
         }
