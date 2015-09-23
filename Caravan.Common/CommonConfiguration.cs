@@ -68,8 +68,8 @@ namespace Finsa.Caravan.Common
         public string AppDescription { get; set; } = "My Wow Caravan App";
 
         /// <summary>
-        ///   L'intervallo dopo il quale le variabili memorizzate nel contesto in memoria
-        ///   del log di Caravan vengono automaticamente cancellate.
+        ///   L'intervallo dopo il quale le variabili di log memorizzate nel contesto in memoria
+        ///   di Caravan vengono automaticamente cancellate.
         /// 
         ///   L'intervallo di default è di 30 minuti.
         /// </summary>

@@ -10,11 +10,10 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using System;
-using Finsa.CodeServices.Clock;
-using NLog.Targets;
-using System.IO;
 using Common.Logging;
+using Finsa.CodeServices.Clock;
+using PommaLabs.KVLite;
+using System;
 
 namespace Finsa.Caravan.Common
 {
@@ -26,19 +25,24 @@ namespace Finsa.Caravan.Common
     public static class ServiceProvider
     {
         /// <summary>
+        ///   La cache in memoria usata da alcuni punti critici di Caravan.
+        /// </summary>
+        public static MemoryCache MemoryCache { get; set; } = MemoryCache.DefaultInstance;
+
+        /// <summary>
         ///   L'orologio usato di default per il calcolo dell'ora corrente.
         /// </summary>
         public static IClock Clock { get; set; } = new SystemClock();
 
         /// <summary>
-        ///   La funzione usata per gestire l'ora corrente all'interno della sorgente dati.
-        ///   Di default, usa <see cref="Clock"/> e la proprietà <see cref="IClock.UtcNow"/>.
+        ///   La funzione usata per gestire l'ora corrente all'interno della sorgente dati. Di
+        ///   default, usa <see cref="Clock"/> e la proprietà <see cref="IClock.UtcNow"/>.
         /// </summary>
         public static Func<DateTime> CurrentDateTime { get; set; } = () => Clock.UtcNow;
 
         /// <summary>
-        ///   Il log di emergenza, usato quando il normale log di Caravan va in errore.
-        ///   Scrive rigorosamente, e semplicemente, su file, per evitare ulteriori errori. 
+        ///   Il log di emergenza, usato quando il normale log di Caravan va in errore. Scrive
+        ///   rigorosamente, e semplicemente, su file, per evitare ulteriori errori.
         /// </summary>
         public static ILog EmergencyLog { get; } = LogManager.GetLogger("CaravanEmergencyLog");
     }

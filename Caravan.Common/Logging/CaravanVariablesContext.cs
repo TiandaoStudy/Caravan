@@ -20,17 +20,16 @@ namespace Finsa.Caravan.Common.Logging
         [ThreadStatic]
         private static CaravanVariablesContext _cachedThread;
 
-        public static CaravanVariablesContext GlobalVariables => _cachedGlobal ?? (_cachedGlobal = new CaravanVariablesContext(MemoryCache.DefaultInstance, CaravanVariablesContextMode.Global));
+        public static CaravanVariablesContext GlobalVariables => _cachedGlobal ?? (_cachedGlobal = new CaravanVariablesContext(ServiceProvider.MemoryCache, CaravanVariablesContextMode.Global));
 
-        public static CaravanVariablesContext ThreadVariables => _cachedThread ?? (_cachedThread = new CaravanVariablesContext(MemoryCache.DefaultInstance, CaravanVariablesContextMode.Thread));
+        public static CaravanVariablesContext ThreadVariables => _cachedThread ?? (_cachedThread = new CaravanVariablesContext(ServiceProvider.MemoryCache, CaravanVariablesContextMode.Thread));
 
         #endregion Static members
 
         public CaravanVariablesContext(ICache cache, CaravanVariablesContextMode mode)
         {
             RaiseArgumentNullException.IfIsNull(cache, nameof(cache));
-            Raise<ArgumentException>.IfNot(Enum.IsDefined(typeof(CaravanVariablesContextMode), mode));
-
+            RaiseArgumentException.IfNot(Enum.IsDefined(typeof(CaravanVariablesContextMode), mode), nameof(mode));
             Cache = cache;
             Mode = mode;
         }
@@ -132,7 +131,7 @@ namespace Finsa.Caravan.Common.Logging
             }
         }
 
-        private string GetThreadCacheKey()
+        private static string GetThreadCacheKey()
         {
             // Prima cerco di capire se mi trovo in una request IIS. Se si, non importa più in quale
             // thread io sia, perché IIS può spostare il flusso di esecuzione da un thread
