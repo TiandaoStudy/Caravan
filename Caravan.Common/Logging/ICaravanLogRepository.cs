@@ -16,24 +16,7 @@ namespace Finsa.Caravan.Common.Logging
     {
         #region Logging
 
-        /// <summary>
-        ///   TODO
-        /// </summary>
-        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
-        /// <param name="appName">The application name.</param>
-        /// <param name="userLogin">The user logged in at the moment in which this log was produced.</param>
-        /// <param name="codeUnit">The class, module or package in which this log was produced.</param>
-        /// <param name="function">
-        ///   The method, procedure or function from which the log was called.
-        /// </param>
-        /// <param name="shortMessage"></param>
-        /// <param name="longMessage"></param>
-        /// <param name="context">
-        ///   Contextual information which may add more meaning to the log message.
-        /// </param>
-        /// <param name="args">Further information that should be logged.</param>
-        /// <returns></returns>
-        LogResult LogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
+        Task<LogResult> AddEntriesAsync(string appName, IEnumerable<LogEntry> logEntries);
 
         /// <summary>
         ///   TODO
@@ -52,7 +35,26 @@ namespace Finsa.Caravan.Common.Logging
         /// </param>
         /// <param name="args">Further information that should be logged.</param>
         /// <returns></returns>
-        Task<LogResult> LogRawAsync(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
+        LogResult LogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null);
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <param name="logLevel">The log type: INFO, DEBUG, etc etc.</param>
+        /// <param name="appName">The application name.</param>
+        /// <param name="userLogin">The user logged in at the moment in which this log was produced.</param>
+        /// <param name="codeUnit">The class, module or package in which this log was produced.</param>
+        /// <param name="function">
+        ///   The method, procedure or function from which the log was called.
+        /// </param>
+        /// <param name="shortMessage"></param>
+        /// <param name="longMessage"></param>
+        /// <param name="context">
+        ///   Contextual information which may add more meaning to the log message.
+        /// </param>
+        /// <param name="args">Further information that should be logged.</param>
+        /// <returns></returns>
+        Task<LogResult> LogRawAsync(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null);
 
         /// <summary>
         ///   TODO
@@ -73,7 +75,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        LogResult Log<TCodeUnit>(LogLevel logLevel, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        LogResult Log<TCodeUnit>(LogLevel logLevel, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -95,7 +97,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        Task<LogResult> LogAsync<TCodeUnit>(LogLevel logLevel, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        Task<LogResult> LogAsync<TCodeUnit>(LogLevel logLevel, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -142,7 +144,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        LogResult LogDebug<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        LogResult LogDebug<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -163,7 +165,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        Task<LogResult> LogDebugAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        Task<LogResult> LogDebugAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -210,7 +212,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        LogResult LogTrace<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        LogResult LogTrace<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -231,7 +233,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        Task<LogResult> LogTraceAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        Task<LogResult> LogTraceAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -278,7 +280,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        LogResult LogInfo<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        LogResult LogInfo<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -299,7 +301,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        Task<LogResult> LogInfoAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        Task<LogResult> LogInfoAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -346,7 +348,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        LogResult LogWarn<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        LogResult LogWarn<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -367,7 +369,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        Task<LogResult> LogWarnAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        Task<LogResult> LogWarnAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -414,7 +416,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        LogResult LogError<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        LogResult LogError<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -435,7 +437,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        Task<LogResult> LogErrorAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        Task<LogResult> LogErrorAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -482,7 +484,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        LogResult LogFatal<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        LogResult LogFatal<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -503,7 +505,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        Task<LogResult> LogFatalAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        Task<LogResult> LogFatalAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -548,7 +550,7 @@ namespace Finsa.Caravan.Common.Logging
         /// </param>
         /// <param name="args">Further information that should be logged.</param>
         /// <returns></returns>
-        LogResult LogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
+        LogResult LogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null);
 
         /// <summary>
         ///   TODO
@@ -566,7 +568,7 @@ namespace Finsa.Caravan.Common.Logging
         /// </param>
         /// <param name="args">Further information that should be logged.</param>
         /// <returns></returns>
-        Task<LogResult> LogRawAsync(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null);
+        Task<LogResult> LogRawAsync(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null);
 
         /// <summary>
         ///   TODO
@@ -586,7 +588,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        LogResult Log<TCodeUnit>(LogLevel logLevel, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        LogResult Log<TCodeUnit>(LogLevel logLevel, Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -607,7 +609,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        Task<LogResult> LogAsync<TCodeUnit>(LogLevel logLevel, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        Task<LogResult> LogAsync<TCodeUnit>(LogLevel logLevel, Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -627,7 +629,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        LogResult LogDebug<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        LogResult LogDebug<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -647,7 +649,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        Task<LogResult> LogDebugAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        Task<LogResult> LogDebugAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -667,7 +669,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        LogResult LogTrace<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        LogResult LogTrace<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -687,7 +689,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        Task<LogResult> LogTraceAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        Task<LogResult> LogTraceAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -707,7 +709,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        LogResult LogInfo<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        LogResult LogInfo<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -727,7 +729,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        Task<LogResult> LogInfoAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        Task<LogResult> LogInfoAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -747,7 +749,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        LogResult LogWarn<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        LogResult LogWarn<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -767,7 +769,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        Task<LogResult> LogWarnAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        Task<LogResult> LogWarnAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -787,7 +789,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        LogResult LogError<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        LogResult LogError<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -807,7 +809,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        Task<LogResult> LogErrorAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        Task<LogResult> LogErrorAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -827,7 +829,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        LogResult LogFatal<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        LogResult LogFatal<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         /// <summary>
@@ -847,7 +849,7 @@ namespace Finsa.Caravan.Common.Logging
         ///   The method, procedure or function from which the log was called.
         /// </param>
         /// <returns></returns>
-        Task<LogResult> LogFatalAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        Task<LogResult> LogFatalAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled);
 
         #endregion Logging

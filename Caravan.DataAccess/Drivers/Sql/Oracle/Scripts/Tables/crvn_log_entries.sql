@@ -5,7 +5,7 @@ CREATE TABLE mydb.crvn_log_entries
      clog_id           NUMBER(19)           NOT NULL
    , capp_id           NUMBER(19)           NOT NULL
    , clos_type         NVARCHAR2(8)         NOT NULL
-   , clog_date         DATE DEFAULT SYSDATE NOT NULL 
+   , clog_date         DATE DEFAULT SYS_EXTRACT_UTC(SYSTIMESTAMP) NOT NULL 
    , cusr_login        NVARCHAR2(32)
    , clog_code_unit    NVARCHAR2(256)
    , clog_function     NVARCHAR2(256)
@@ -49,19 +49,68 @@ CREATE TABLE mydb.crvn_log_entries
    , CONSTRAINT fk_crvnlog_crvnlogsettings FOREIGN KEY (capp_id, clos_type) REFERENCES mydb.crvn_log_settings (capp_id, clos_type) ON DELETE CASCADE ENABLE
 );
 
-COMMENT ON TABLE mydb.crvn_log_entries IS 'Tabella di log per le applicazioni FINSA';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_id IS 'Identificativo riga, è una sequenza';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_date IS 'Data di inserimento della riga';
-COMMENT ON COLUMN mydb.crvn_log_entries.clos_type IS 'Tipo di messaggio log, può assumere i valori debug, info, warn, error, fatal';
-COMMENT ON COLUMN mydb.crvn_log_entries.capp_id IS 'Applicazione FINSA a cui si riferisce il log';
-COMMENT ON COLUMN mydb.crvn_log_entries.cusr_login IS 'Utente loggato che ha attivato il logger';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_code_unit IS 'Package or fully qualified .NET type';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_function IS 'Metodo o procedura';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_short_msg IS 'Messaggio breve';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_long_msg IS 'Messaggio verboso';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_context IS 'Infomazione dettagliata del contesto in cui viene inserito il messaggio';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_0 IS 'Nome del parametro opzionale, ad esempio AZI_ID';
-COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_0 IS 'Valore del parametro opzionale, ad esempio RS'; 
+COMMENT ON TABLE mydb.crvn_log_entries 
+     IS 'Tabella di log per le applicazioni FINSA';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_id 
+     IS 'Identificativo riga, è una sequenza autoincrementale';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_date 
+     IS 'Data di inserimento della riga, di default è la ora corrente in UTC';
+COMMENT ON COLUMN mydb.crvn_log_entries.clos_type 
+     IS 'Livello del messaggio di log, può assumere i valori debug, trace, info, warn, error, fatal';
+COMMENT ON COLUMN mydb.crvn_log_entries.capp_id 
+     IS 'Applicazione FINSA a cui si riferisce il log';
+COMMENT ON COLUMN mydb.crvn_log_entries.cusr_login 
+     IS 'Utente loggato, oppure entità, che ha attivato il logger';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_code_unit 
+     IS 'Blocco di codice (package, classe, modulo) che contiene la funzione da cui è partito il messaggio di log';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_function 
+     IS 'Funzione, metodo o procedura, da cui è partito il messaggio di log';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_short_msg 
+     IS 'Messaggio breve, contiene informazioni sintetiche o semplici comunicazioni';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_long_msg 
+     IS 'Messaggio verboso, contiene informazioni più elaborate (ad esempio, stacktrace o oggetti deserializzati)';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_context 
+     IS 'Infomazione dettagliata del contesto in cui viene inserito il messaggio';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_0 
+     IS 'Nome del parametro opzionale 0, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_0 
+     IS 'Valore del parametro opzionale 0, ad esempio my_param_value'; 
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_1 
+     IS 'Nome del parametro opzionale 1, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_1 
+     IS 'Valore del parametro opzionale 1, ad esempio my_param_value'; 
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_2 
+     IS 'Nome del parametro opzionale 2, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_2 
+     IS 'Valore del parametro opzionale 2, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_3 
+     IS 'Nome del parametro opzionale 3, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_3 
+     IS 'Valore del parametro opzionale 3, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_4 
+     IS 'Nome del parametro opzionale 4, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_4 
+     IS 'Valore del parametro opzionale 4, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_5 
+     IS 'Nome del parametro opzionale 5, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_5 
+     IS 'Valore del parametro opzionale 5, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_6 
+     IS 'Nome del parametro opzionale 6, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_6 
+     IS 'Valore del parametro opzionale 6, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_7 
+     IS 'Nome del parametro opzionale 7, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_7 
+     IS 'Valore del parametro opzionale 7, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_8 
+     IS 'Nome del parametro opzionale 8, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_8 
+     IS 'Valore del parametro opzionale 8, ad esempio my_param_value';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_9 
+     IS 'Nome del parametro opzionale 9, ad esempio my_param_name';
+COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_9 
+     IS 'Valore del parametro opzionale 9, ad esempio my_param_value';
 
 CREATE INDEX mydb.ix_crvn_log_date ON mydb.crvn_log_entries (capp_id, clog_date DESC);
 CREATE INDEX mydb.ix_crvn_log_type ON mydb.crvn_log_entries (capp_id, clos_type);

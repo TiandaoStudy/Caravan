@@ -33,8 +33,8 @@
 GO
 ALTER TABLE [crvn_log_entries] ADD CONSTRAINT [pk_crvn_log_entries] PRIMARY KEY ([clog_id]);
 GO
-CREATE INDEX [idx_crvn_log_date] ON [crvn_log_entries] ([clog_date] DESC);
+CREATE INDEX [ix_crvn_log_date] ON [crvn_log_entries] ([clog_date] DESC);
 GO
-CREATE INDEX [idx_crvn_log_settings] ON [crvn_log_entries] ([capp_id] ASC, [clos_type] ASC);
+CREATE INDEX [ix_crvn_log_settings] ON [crvn_log_entries] ([capp_id] ASC, [clos_type] ASC);
 GO
 ALTER TABLE [crvn_log_entries] ADD CONSTRAINT [fk_crvnlog_crvnlogsettings] FOREIGN KEY ( [capp_id],[clos_type]) REFERENCES [crvn_log_settings]([capp_id],[clos_type]) ON DELETE CASCADE ON UPDATE NO ACTION;

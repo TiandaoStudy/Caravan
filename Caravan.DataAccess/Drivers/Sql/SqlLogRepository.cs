@@ -1,5 +1,6 @@
 using AutoMapper;
 using Common.Logging;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
@@ -11,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Finsa.Caravan.Common;
+using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -23,28 +24,59 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         #endregion Constants
 
+        public override async Task<LogResult> AddEntriesAsync(string appName, IEnumerable<LogEntry> logEntries)
+        {
+            try
+            {
+                RaiseArgumentNullException.IfIsNull(logEntries, nameof(logEntries));
+
+                // Creo un contesto di lettura perché non eseguo alcuna UPDATE.
+                using (var ctx = SqlDbContext.CreateReadContext())
+                {
+                    var settings = await GetAndSetCachedSettingsAsync(appName, ctx);
+
+                    foreach (var logEntry in logEntries)
+                    {
+                        var sqlLogSettingId = ToSqlLogSettingId(logEntry.LogLevel);
+                        var sqlLogSetting = settings[sqlLogSettingId];
+
+                        if (sqlLogSetting.Enabled)
+                        {
+                            ctx.LogEntries.Add(ToSqlLogEntry(logEntry, sqlLogSetting));
+                        }
+                    }
+
+                    await ctx.SaveChangesAsync();
+                    return LogResult.Success;
+                }
+            }
+            catch (Exception ex)
+            {
+                return LogResult.Failure(ex);
+            }
+        }
+
         protected override LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function,
-           string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
+           string shortMessage, string longMessage, string context, IList<KeyValuePair<string, string>> args)
         {
             try
             {
                 Raise<ArgumentException>.IfIsEmpty(codeUnit);
-                var argsList = args?.ToArray() ?? new KeyValuePair<string, string>[0];
 
                 using (var ctx = SqlDbContext.CreateWriteContext())
                 {
                     var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
-                    var typeId = logLevel.ToString().ToLower();
-                    var settings = ctx.LogSettings.First(s => s.AppId == appId && s.LogLevel == typeId);
+                    var logLevelId = ToSqlLogSettingId(logLevel);
+                    var setting = ctx.LogSettings.First(s => s.AppId == appId && s.LogLevel == logLevelId);
 
-                    // If log is enabled, then we can insert a new entry
-                    if (settings.Enabled)
+                    // If log is enabled, then we can insert a new entry.
+                    if (setting.Enabled)
                     {
                         var entry = new SqlLogEntry
                         {
                             Date = ServiceProvider.CurrentDateTime(),
                             AppId = appId,
-                            LogLevel = typeId,
+                            LogLevel = logLevelId,
                             UserLogin = userLogin.Truncate(SqlDbContext.SmallLength).ToLowerInvariant(),
                             CodeUnit = codeUnit.Truncate(SqlDbContext.MediumLength).ToLowerInvariant(),
                             Function = function.Truncate(SqlDbContext.MediumLength).ToLowerInvariant(),
@@ -53,59 +85,61 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                             Context = context.Truncate(SqlDbContext.MediumLength)
                         };
 
-                        for (var i = 0; i < argsList.Length && i < MaxArgumentCount; ++i)
+                        for (var i = 0; args != null && i < args.Count && i < MaxArgumentCount; ++i)
                         {
-                            var tmp = argsList[i];
+                            var tmp = args[i];
+                            var tmpKey = tmp.Key.Truncate(SqlDbContext.SmallLength);
+                            var tmpValue = tmp.Value.Truncate(SqlDbContext.LargeLength);
                             switch (i)
                             {
                                 case 0:
-                                    entry.Key0 = tmp.Key;
-                                    entry.Value0 = tmp.Value;
+                                    entry.Key0 = tmpKey;
+                                    entry.Value0 = tmpValue;
                                     break;
 
                                 case 1:
-                                    entry.Key1 = tmp.Key;
-                                    entry.Value1 = tmp.Value;
+                                    entry.Key1 = tmpKey;
+                                    entry.Value1 = tmpValue;
                                     break;
 
                                 case 2:
-                                    entry.Key2 = tmp.Key;
-                                    entry.Value2 = tmp.Value;
+                                    entry.Key2 = tmpKey;
+                                    entry.Value2 = tmpValue;
                                     break;
 
                                 case 3:
-                                    entry.Key3 = tmp.Key;
-                                    entry.Value3 = tmp.Value;
+                                    entry.Key3 = tmpKey;
+                                    entry.Value3 = tmpValue;
                                     break;
 
                                 case 4:
-                                    entry.Key4 = tmp.Key;
-                                    entry.Value4 = tmp.Value;
+                                    entry.Key4 = tmpKey;
+                                    entry.Value4 = tmpValue;
                                     break;
 
                                 case 5:
-                                    entry.Key5 = tmp.Key;
-                                    entry.Value5 = tmp.Value;
+                                    entry.Key5 = tmpKey;
+                                    entry.Value5 = tmpValue;
                                     break;
 
                                 case 6:
-                                    entry.Key6 = tmp.Key;
-                                    entry.Value6 = tmp.Value;
+                                    entry.Key6 = tmpKey;
+                                    entry.Value6 = tmpValue;
                                     break;
 
                                 case 7:
-                                    entry.Key7 = tmp.Key;
-                                    entry.Value7 = tmp.Value;
+                                    entry.Key7 = tmpKey;
+                                    entry.Value7 = tmpValue;
                                     break;
 
                                 case 8:
-                                    entry.Key8 = tmp.Key;
-                                    entry.Value8 = tmp.Value;
+                                    entry.Key8 = tmpKey;
+                                    entry.Value8 = tmpValue;
                                     break;
 
                                 case 9:
-                                    entry.Key9 = tmp.Key;
-                                    entry.Value9 = tmp.Value;
+                                    entry.Key9 = tmpKey;
+                                    entry.Value9 = tmpValue;
                                     break;
                             }
                         }
@@ -158,7 +192,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
                 if (logEntryQuery.LogLevels != null && logEntryQuery.LogLevels.Count > 0)
                 {
-                    var logLevelStrings = logEntryQuery.LogLevels.Select(ll => ll.ToString().ToLowerInvariant()).ToArray();
+                    var logLevelStrings = logEntryQuery.LogLevels.Select(ll => ll.ToString().ToLower()).ToArray();
                     q = q.Where(e => logLevelStrings.Contains(e.LogLevel));
                 }
 
@@ -313,14 +347,22 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
                 var logCounts = from es in logSettings
                                 group es by new { es.Setting.AppId, es.Setting.LogLevel } into g
-                                select new { Count = g.Count(), MaxCount = g.FirstOrDefault().Setting.MaxEntries, Entries = g.Select(x => x.Entry) };
+                                where (g.Count() - g.FirstOrDefault().Setting.MaxEntries) > 0
+                                select new { g.Key.AppId, g.Key.LogLevel, Keep = g.FirstOrDefault().Setting.MaxEntries };
 
-                var olderLogs = from c in logCounts
-                                where c.Count > c.MaxCount
-                                select c.Entries;
+                var logCountsArray = logCounts.ToArray();
+                foreach (var lc in logCountsArray)
+                {
+                    var tooManyLogEntries = from e in ctx.LogEntries
+                                            where e.AppId == lc.AppId && e.LogLevel == lc.LogLevel
+                                            orderby e.Date descending
+                                            select e;
 
-                ctx.LogEntries.RemoveRange(olderLogs.SelectMany(e => e));
+                    ctx.LogEntries.RemoveRange(tooManyLogEntries.Skip(lc.Keep));
+                }
 
+                // Applico definitivamente i cambiamenti ed esco dalla procedura.
+                ctx.SaveChanges();
                 return true;
             }
         }
@@ -422,5 +464,140 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 return update;
             }
         }
+
+        #region Private members
+
+        const string CachePartition = "Caravan.SqlLogSettings";
+
+        private static async Task<Dictionary<string, SqlLogSetting>> GetAndSetCachedSettingsAsync(string appName, SqlDbContext ctx)
+        {
+            // Provo a recuperare le impostazioni di log dalla cache in memoria.
+            var maybe = ServiceProvider.MemoryCache.Get<Dictionary<string, SqlLogSetting>>(CachePartition, appName);
+
+            // Se le impostazioni in cache sono ancora valide, le restituisco.
+            if (maybe.HasValue)
+            {
+                return maybe.Value;
+            }
+
+            // Altrimenti, le devo leggere da DB.
+            var appId = await ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).FirstAsync();
+            var settings = await ctx.LogSettings.Where(s => s.AppId == appId).ToDictionaryAsync(s => s.LogLevel);
+
+            // Prima di restituirle, le metto in cache.
+            var interval = DataAccessConfiguration.Instance.Logging_SettingsCache_Interval;
+            var utcExpiry = ServiceProvider.CurrentDateTime().Add(interval);
+            ServiceProvider.MemoryCache.AddTimed(CachePartition, appName, settings, utcExpiry);
+
+            // Restituisco le impostazioni appena lette da DB.
+            return settings;
+        }
+
+        private static SqlLogEntry ToSqlLogEntry(LogEntry logEntry, SqlLogSetting sqlLogSetting)
+        {
+            var sqlLogEntry = new SqlLogEntry
+            {
+                Date = ServiceProvider.CurrentDateTime(),
+                AppId = sqlLogSetting.AppId,
+                LogLevel = sqlLogSetting.LogLevel,
+                UserLogin = logEntry.UserLogin.Truncate(SqlDbContext.SmallLength).ToLowerInvariant(),
+                CodeUnit = logEntry.CodeUnit.Truncate(SqlDbContext.MediumLength).ToLowerInvariant(),
+                Function = logEntry.Function.Truncate(SqlDbContext.MediumLength).ToLowerInvariant(),
+                ShortMessage = logEntry.ShortMessage.Truncate(SqlDbContext.LargeLength),
+                LongMessage = logEntry.LongMessage, // Not truncated, because it should be a CLOB/TEXT/whatever...
+                Context = logEntry.Context.Truncate(SqlDbContext.MediumLength)
+            };
+
+            var args = logEntry.Arguments;
+            for (var i = 0; args != null && i < args.Count && i < MaxArgumentCount; ++i)
+            {
+                var tmp = args[i];
+                var tmpKey = tmp.Key.Truncate(SqlDbContext.SmallLength);
+                var tmpValue = tmp.Value.Truncate(SqlDbContext.LargeLength);
+                switch (i)
+                {
+                    case 0:
+                        sqlLogEntry.Key0 = tmpKey;
+                        sqlLogEntry.Value0 = tmpValue;
+                        break;
+
+                    case 1:
+                        sqlLogEntry.Key1 = tmpKey;
+                        sqlLogEntry.Value1 = tmpValue;
+                        break;
+
+                    case 2:
+                        sqlLogEntry.Key2 = tmpKey;
+                        sqlLogEntry.Value2 = tmpValue;
+                        break;
+
+                    case 3:
+                        sqlLogEntry.Key3 = tmpKey;
+                        sqlLogEntry.Value3 = tmpValue;
+                        break;
+
+                    case 4:
+                        sqlLogEntry.Key4 = tmpKey;
+                        sqlLogEntry.Value4 = tmpValue;
+                        break;
+
+                    case 5:
+                        sqlLogEntry.Key5 = tmpKey;
+                        sqlLogEntry.Value5 = tmpValue;
+                        break;
+
+                    case 6:
+                        sqlLogEntry.Key6 = tmpKey;
+                        sqlLogEntry.Value6 = tmpValue;
+                        break;
+
+                    case 7:
+                        sqlLogEntry.Key7 = tmpKey;
+                        sqlLogEntry.Value7 = tmpValue;
+                        break;
+
+                    case 8:
+                        sqlLogEntry.Key8 = tmpKey;
+                        sqlLogEntry.Value8 = tmpValue;
+                        break;
+
+                    case 9:
+                        sqlLogEntry.Key9 = tmpKey;
+                        sqlLogEntry.Value9 = tmpValue;
+                        break;
+                }
+            }
+
+            return sqlLogEntry;
+        }
+
+        private static string ToSqlLogSettingId(LogLevel logLevel)
+        {
+            switch (logLevel)
+            {
+                case LogLevel.Debug:
+                    return "debug";
+
+                case LogLevel.Trace:
+                    return "trace";
+
+                case LogLevel.Info:
+                    return "info";
+
+                case LogLevel.Warn:
+                    return "warn";
+
+                case LogLevel.Error:
+                    return "error";
+
+                case LogLevel.Fatal:
+                    return "fatal";
+
+                default:
+                    return "debug";
+            }
+        }
+
+        #endregion Private members
     }
 }

@@ -1,4 +1,16 @@
-﻿using System;
+﻿// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
+using System;
 using AutoMapper;
 using Common.Logging;
 using Finsa.CodeServices.Common.Portability;
@@ -14,9 +26,13 @@ namespace Finsa.Caravan.Common
     {
         #region Static instance
 
-        private static readonly CommonConfiguration CachedInstance;
+        /// <summary>
+        ///   Gets the static configuration instance.
+        /// </summary>
+        /// <value>The static configuration instance.</value>
+        public static CommonConfiguration Instance { get; } = InitializeInstance();
 
-        static CommonConfiguration()
+        static CommonConfiguration InitializeInstance()
         {
             var configurationFile = "Caravan.config";
             if (PortableEnvironment.AppIsRunningOnAspNet)
@@ -26,48 +42,38 @@ namespace Finsa.Caravan.Common
                 // the "bin" directory, because every change would make the application restart.
                 configurationFile = "~/" + configurationFile;
             }
-            CachedInstance = new CommonConfiguration();
-            CachedInstance.Initialize(new ConfigurationFileConfigurationProvider<CommonConfiguration>
+
+            var instance = new CommonConfiguration();
+            instance.Initialize(new ConfigurationFileConfigurationProvider<CommonConfiguration>
             {
                 ConfigurationFile = PortableEnvironment.MapPath(configurationFile),
                 ConfigurationSection = "caravan.common"
             });
-            OnStart();
-        }
 
-        /// <summary>
-        ///   Gets the static configuration instance.
-        /// </summary>
-        /// <value>The static configuration instance.</value>
-        public static CommonConfiguration Instance
-        {
-            get { return CachedInstance; }
+            OnStart();
+
+            return instance;
         }
 
         #endregion
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="CommonConfiguration"/> class and sets the
-        ///   default values for each configuration entry.
+        ///   Il nome identificativo dell'applicazione Caravan, rigorosamente minuscolo.
         /// </summary>
-        public CommonConfiguration()
-        {
-            AppName = "my_caravan_app";
-            AppDescription = "My Wow Caravan App";
+        public string AppName { get; set; } = "my_caravan_app";
 
-            // Logging
-            Logging_CaravanVariablesContext_Interval = TimeSpan.FromMinutes(30);
-        }
-
-        public string AppName { get; set; }
-
-        public string AppDescription { get; set; }
-        
         /// <summary>
-        ///   L'intervallo dopo il quale le variabili memorizzate nel contesto in memoria
-        ///   del log di Caravan vengono automaticamente cancellate.
+        ///   La descrizione estesa dell'applicazione, viene usata per mostrare il nome dell'applicativo.
         /// </summary>
-        public TimeSpan Logging_CaravanVariablesContext_Interval { get; set; }
+        public string AppDescription { get; set; } = "My Wow Caravan App";
+
+        /// <summary>
+        ///   L'intervallo dopo il quale le variabili di log memorizzate nel contesto in memoria
+        ///   di Caravan vengono automaticamente cancellate.
+        /// 
+        ///   L'intervallo di default è di 30 minuti.
+        /// </summary>
+        public TimeSpan Logging_CaravanVariablesContext_Interval { get; set; } = TimeSpan.FromMinutes(30);
 
         #region OnStart
 

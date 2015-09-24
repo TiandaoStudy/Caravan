@@ -10,6 +10,8 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using System.Diagnostics;
+using System.Reflection;
 using System.Web.Http;
 
 namespace Finsa.Caravan.WebService.Controllers
@@ -30,6 +32,17 @@ namespace Finsa.Caravan.WebService.Controllers
             var uri = Request.RequestUri.ToString();
             var uriWithoutQuery = uri.Substring(0, uri.Length - Request.RequestUri.Query.Length);
             return Redirect(uriWithoutQuery + "swagger/ui/index");
+        }
+
+        /// <summary>
+        ///   Returns the web service version written in the main assembly.
+        /// </summary>
+        [Route("version")]
+        public string GetVersion()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            return fvi.FileVersion;
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Security;
@@ -8,6 +6,8 @@ using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Portability;
+using System;
+using System.Collections.Generic;
 using Westwind.Utilities.Configuration;
 
 namespace Finsa.Caravan.DataAccess
@@ -20,9 +20,13 @@ namespace Finsa.Caravan.DataAccess
     {
         #region Static instance
 
-        private static readonly DataAccessConfiguration CachedInstance;
+        /// <summary>
+        ///   Gets the static configuration instance.
+        /// </summary>
+        /// <value>The static configuration instance.</value>
+        public static DataAccessConfiguration Instance { get; } = InitializeInstance();
 
-        static DataAccessConfiguration()
+        static DataAccessConfiguration InitializeInstance()
         {
             var configurationFile = "Caravan.config";
             if (PortableEnvironment.AppIsRunningOnAspNet)
@@ -32,26 +36,21 @@ namespace Finsa.Caravan.DataAccess
                 // the "bin" directory, because every change would make the application restart.
                 configurationFile = "~/" + configurationFile;
             }
-            CachedInstance = new DataAccessConfiguration();
-            CachedInstance.Initialize(new ConfigurationFileConfigurationProvider<DataAccessConfiguration>
+
+            var instance = new DataAccessConfiguration();
+            instance.Initialize(new ConfigurationFileConfigurationProvider<DataAccessConfiguration>
             {
                 ConfigurationFile = PortableEnvironment.MapPath(configurationFile),
                 ConfigurationSection = "caravan.dataAccess"
             });
+
             OnStart();
+
+            return instance;
         }
 
-        /// <summary>
-        ///   Gets the static configuration instance.
-        /// </summary>
-        /// <value>The static configuration instance.</value>
-        public static DataAccessConfiguration Instance
-        {
-            get { return CachedInstance; }
-        }
+        #endregion Static instance
 
-        #endregion
-        
         /// <summary>
         ///   Initializes a new instance of the <see cref="CommonConfiguration"/> class and sets the
         ///   default values for each configuration entry.
@@ -76,6 +75,13 @@ namespace Finsa.Caravan.DataAccess
 
         public CaravanDataSourceKind DataSourceKind { get; set; }
 
+        /// <summary>
+        ///   L'intervallo dopo il quale le impostazioni di log messe in cache devono essere aggiornate.
+        /// 
+        ///   L'intervallo di default è di 30 minuti.
+        /// </summary>
+        public TimeSpan Logging_SettingsCache_Interval { get; set; } = TimeSpan.FromMinutes(30);
+
         #region SQL
 
         public string SqlSchema { get; set; }
@@ -86,27 +92,27 @@ namespace Finsa.Caravan.DataAccess
 
         public int OracleStatementCacheSize { get; set; }
 
-        #endregion
+        #endregion Oracle
 
-        #endregion
+        #endregion SQL
 
         #region REST
 
         public string RestTestAuthObject { get; set; }
 
-        #endregion
+        #endregion REST
 
         #region MongoDB
 
         public string MongoDbName { get; set; }
 
-        #endregion
+        #endregion MongoDB
 
         #region OnStart
 
         private static void OnStart()
         {
-            // Mappings
+            // Mappings (SQL --> Models)
             Mapper.CreateMap<SqlLogSetting, LogSetting>();
             Mapper.CreateMap<SqlSecApp, SecApp>();
             Mapper.CreateMap<SqlSecContext, SecContext>();
@@ -166,6 +172,6 @@ namespace Finsa.Caravan.DataAccess
             });
         }
 
-        #endregion
+        #endregion OnStart
     }
 }

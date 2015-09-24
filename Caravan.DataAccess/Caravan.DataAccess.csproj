@@ -84,12 +84,12 @@
     <Reference Include="Fasterflect">
       <HintPath>..\packages\fasterflect.2.1.3\lib\net40\Fasterflect.dll</HintPath>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Clock, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Finsa.CodeServices.Clock.2.5.0\lib\net40\Finsa.CodeServices.Clock.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Clock, Version=2.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Clock.2.6.0\lib\net40\Finsa.CodeServices.Clock.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Common, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Finsa.CodeServices.Common.2.5.0\lib\net45\Finsa.CodeServices.Common.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Common, Version=2.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Common.2.6.0\lib\net45\Finsa.CodeServices.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Finsa.CodeServices.Compression, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -263,9 +263,11 @@
     <Compile Include="Drivers\Sql\SqlServer\SqlServerDataSourceManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Drivers\Sql\SqlServer\Scripts\crvn_log_entries.sql" />
-    <Content Include="Drivers\Sql\SqlServer\Scripts\crvn_log_settings.sql" />
-    <Content Include="Drivers\Sql\SqlServer\Scripts\crvn_sec_apps.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Views\v_caravan_log_summary.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Views\v_caravan_log.sql" />
+    <Content Include="Drivers\Sql\SqlServer\Scripts\Tables\crvn_log_entries.sql" />
+    <Content Include="Drivers\Sql\SqlServer\Scripts\Tables\crvn_log_settings.sql" />
+    <Content Include="Drivers\Sql\SqlServer\Scripts\Tables\crvn_sec_apps.sql" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
@@ -276,6 +278,12 @@
     <None Include="Drivers\Sql\Oracle\Scripts\all.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>all.sql</LastGenOutput>
+    </None>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>

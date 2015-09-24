@@ -8,12 +8,13 @@ using RestSharp;
 using Common.Logging;
 using Finsa.Caravan.Common.Logging.Exceptions;
 using Finsa.Caravan.Common.Security.Exceptions;
+using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Rest
 {
     internal sealed class RestLogRepository : AbstractLogRepository<RestLogRepository>
     {
-        protected override LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
+        protected override LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IList<KeyValuePair<string, string>> args)
         {
             var client = new RestClient("http://localhost/Caravan.RestService/security");
             var request = new RestRequest("{appName}/entries", Method.POST);
@@ -167,6 +168,11 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
         }
 
         protected override bool CleanUpEntriesInternal(string appName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task<LogResult> AddEntriesAsync(string appName, IEnumerable<LogEntry> logEntries)
         {
             throw new NotImplementedException();
         }

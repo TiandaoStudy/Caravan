@@ -122,6 +122,11 @@
               Redirects to Swagger help pages.
             </summary>
         </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.GetVersion">
+            <summary>
+              Returns the web service version written in the main assembly.
+            </summary>
+        </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.LoggerController">
             <summary>
               Controller che si occupa della parte di logging.

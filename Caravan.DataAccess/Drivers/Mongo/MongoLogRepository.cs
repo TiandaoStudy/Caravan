@@ -13,12 +13,13 @@ using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Driver.Linq;
 using Common.Logging;
+using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 {
     internal sealed class MongoLogRepository : AbstractLogRepository<MongoLogRepository>
     {
-        protected override LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
+        protected override LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IList<KeyValuePair<string, string>> args)
         {
             var app = MongoUtilities.GetSecAppCollection().AsQueryable().First(a => a.Name == appName);
 
@@ -158,6 +159,11 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
         }
 
         protected override bool CleanUpEntriesInternal(string appName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task<LogResult> AddEntriesAsync(string appName, IEnumerable<LogEntry> logEntries)
         {
             throw new NotImplementedException();
         }

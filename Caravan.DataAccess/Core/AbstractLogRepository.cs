@@ -3,7 +3,6 @@ using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Models.Logging;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -20,18 +19,18 @@ namespace Finsa.Caravan.DataAccess.Core
         #region ICaravanLogRepository Members
 
         public Task<LogResult> LogRawAsync(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function,
-            string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null)
+            string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null)
         {
             return Task.Run(() => LogRaw(logLevel, appName, userLogin, codeUnit, function, shortMessage, longMessage, context, args));
         }
 
-        public LogResult Log<TCodeUnit>(LogLevel logLevel, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
+        public LogResult Log<TCodeUnit>(LogLevel logLevel, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
             string function = LogEntry.AutoFilled)
         {
             return Log<TCodeUnit>(logLevel, appName, userLogin, function, shortMessage, longMessage, context, args);
         }
 
-        public Task<LogResult> LogAsync<TCodeUnit>(LogLevel logLevel, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
+        public Task<LogResult> LogAsync<TCodeUnit>(LogLevel logLevel, string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
             string function = LogEntry.AutoFilled)
         {
             return Task.Run(() => Log<TCodeUnit>(logLevel, appName, userLogin, function, shortMessage, longMessage, context, args));
@@ -49,13 +48,13 @@ namespace Finsa.Caravan.DataAccess.Core
             return Task.Run(() => Log<TCodeUnit>(e.LogLevel, e.AppName, e.UserLogin, e.Function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments));
         }
 
-        public LogResult LogDebug<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        public LogResult LogDebug<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled)
         {
             return Log<TCodeUnit>(LogLevel.Debug, appName, userLogin, function, shortMessage, longMessage, context, args);
         }
 
-        public Task<LogResult> LogDebugAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
+        public Task<LogResult> LogDebugAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
             string function = LogEntry.AutoFilled)
         {
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Debug, appName, userLogin, function, shortMessage, longMessage, context, args));
@@ -73,12 +72,12 @@ namespace Finsa.Caravan.DataAccess.Core
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Debug, e.AppName, e.UserLogin, function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments));
         }
 
-        public LogResult LogTrace<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
+        public LogResult LogTrace<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
         {
             return Log<TCodeUnit>(LogLevel.Trace, appName, userLogin, function, shortMessage, longMessage, context, args);
         }
 
-        public Task<LogResult> LogTraceAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
+        public Task<LogResult> LogTraceAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
         {
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Trace, appName, userLogin, function, shortMessage, longMessage, context, args));
         }
@@ -95,13 +94,13 @@ namespace Finsa.Caravan.DataAccess.Core
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Trace, e.AppName, e.UserLogin, function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments));
         }
 
-        public LogResult LogInfo<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        public LogResult LogInfo<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled)
         {
             return Log<TCodeUnit>(LogLevel.Info, appName, userLogin, function, shortMessage, longMessage, context, args);
         }
 
-        public Task<LogResult> LogInfoAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
+        public Task<LogResult> LogInfoAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
             string function = LogEntry.AutoFilled)
         {
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Info, appName, userLogin, function, shortMessage, longMessage, context, args));
@@ -119,13 +118,13 @@ namespace Finsa.Caravan.DataAccess.Core
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Info, e.AppName, e.UserLogin, function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments));
         }
 
-        public LogResult LogWarn<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        public LogResult LogWarn<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled)
         {
             return Log<TCodeUnit>(LogLevel.Warn, appName, userLogin, function, shortMessage, longMessage, context, args);
         }
 
-        public Task<LogResult> LogWarnAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
+        public Task<LogResult> LogWarnAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
             string function = LogEntry.AutoFilled)
         {
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Warn, appName, userLogin, function, shortMessage, longMessage, context, args));
@@ -143,13 +142,13 @@ namespace Finsa.Caravan.DataAccess.Core
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Warn, e.AppName, e.UserLogin, function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments));
         }
 
-        public LogResult LogError<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        public LogResult LogError<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled)
         {
             return Log<TCodeUnit>(LogLevel.Error, appName, userLogin, function, shortMessage, longMessage, context, args);
         }
 
-        public Task<LogResult> LogErrorAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
+        public Task<LogResult> LogErrorAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
            string function = LogEntry.AutoFilled)
         {
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Error, appName, userLogin, function, shortMessage, longMessage, context, args));
@@ -167,13 +166,13 @@ namespace Finsa.Caravan.DataAccess.Core
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Error, e.AppName, e.UserLogin, function, e.ShortMessage, e.LongMessage, e.Context, e.Arguments));
         }
 
-        public LogResult LogFatal<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null,
+        public LogResult LogFatal<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null,
             string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled)
         {
             return Log<TCodeUnit>(LogLevel.Fatal, appName, userLogin, function, shortMessage, longMessage, context, args);
         }
 
-        public Task<LogResult> LogFatalAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
+        public Task<LogResult> LogFatalAsync<TCodeUnit>(string shortMessage, string longMessage = LogEntry.NotSpecified, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled,
             string function = LogEntry.AutoFilled)
         {
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Fatal, appName, userLogin, function, shortMessage, longMessage, context, args));
@@ -192,82 +191,82 @@ namespace Finsa.Caravan.DataAccess.Core
         }
 
         public Task<LogResult> LogRawAsync(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function,
-            Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null)
+            Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null)
         {
             return Task.Run(() => LogRaw(logLevel, appName, userLogin, codeUnit, function, exception, context, args));
         }
 
-        public LogResult Log<TCodeUnit>(LogLevel logLevel, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
+        public LogResult Log<TCodeUnit>(LogLevel logLevel, Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
         {
             return Log<TCodeUnit>(logLevel, appName, userLogin, function, exception, context, args);
         }
 
-        public Task<LogResult> LogAsync<TCodeUnit>(LogLevel logLevel, Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
+        public Task<LogResult> LogAsync<TCodeUnit>(LogLevel logLevel, Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
         {
             return Task.Run(() => Log<TCodeUnit>(logLevel, appName, userLogin, function, exception, context, args));
         }
 
-        public LogResult LogDebug<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled,
+        public LogResult LogDebug<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled,
             string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled)
         {
             return Log<TCodeUnit>(LogLevel.Debug, appName, userLogin, function, exception, context, args);
         }
 
-        public Task<LogResult> LogDebugAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
+        public Task<LogResult> LogDebugAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
         {
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Debug, appName, userLogin, function, exception, context, args));
         }
 
-        public LogResult LogTrace<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
+        public LogResult LogTrace<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
         {
             return Log<TCodeUnit>(LogLevel.Trace, appName, userLogin, function, exception, context, args);
         }
 
-        public Task<LogResult> LogTraceAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
+        public Task<LogResult> LogTraceAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
         {
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Trace, appName, userLogin, function, exception, context, args));
         }
 
-        public LogResult LogInfo<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled,
+        public LogResult LogInfo<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled,
             string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled)
         {
             return Log<TCodeUnit>(LogLevel.Info, appName, userLogin, function, exception, context, args);
         }
 
-        public Task<LogResult> LogInfoAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
+        public Task<LogResult> LogInfoAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
         {
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Info, appName, userLogin, function, exception, context, args));
         }
 
-        public LogResult LogWarn<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled,
+        public LogResult LogWarn<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled,
             string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled)
         {
             return Log<TCodeUnit>(LogLevel.Warn, appName, userLogin, function, exception, context, args);
         }
 
-        public Task<LogResult> LogWarnAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
+        public Task<LogResult> LogWarnAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
         {
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Warn, appName, userLogin, function, exception, context, args));
         }
 
-        public LogResult LogError<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled,
+        public LogResult LogError<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled,
             string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled)
         {
             return Log<TCodeUnit>(LogLevel.Error, appName, userLogin, function, exception, context, args);
         }
 
-        public Task<LogResult> LogErrorAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
+        public Task<LogResult> LogErrorAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
         {
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Error, appName, userLogin, function, exception, context, args));
         }
 
-        public LogResult LogFatal<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled,
+        public LogResult LogFatal<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled,
             string userLogin = LogEntry.AutoFilled, [CallerMemberName] string function = LogEntry.AutoFilled)
         {
             return Log<TCodeUnit>(LogLevel.Fatal, appName, userLogin, function, exception, context, args);
         }
 
-        public Task<LogResult> LogFatalAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IEnumerable<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
+        public Task<LogResult> LogFatalAsync<TCodeUnit>(Exception exception, string context = LogEntry.NotSpecified, IList<KeyValuePair<string, string>> args = null, string appName = LogEntry.AutoFilled, string userLogin = LogEntry.AutoFilled, string function = LogEntry.AutoFilled)
         {
             return Task.Run(() => Log<TCodeUnit>(LogLevel.Fatal, appName, userLogin, function, exception, context, args));
         }
@@ -404,8 +403,9 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #endregion ICaravanLogRepository Members
 
-        protected abstract LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context,
-            IEnumerable<KeyValuePair<string, string>> args);
+        public abstract Task<LogResult> AddEntriesAsync(string appName, IEnumerable<LogEntry> logEntries);
+
+        protected abstract LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IList<KeyValuePair<string, string>> args);
         
         protected abstract IList<LogEntry> GetEntriesInternal(string appName, LogLevel? logLevel);
 
@@ -427,92 +427,58 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Shortcuts
 
-        public LogResult LogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage,
-            string context, IEnumerable<KeyValuePair<string, string>> args)
+        public LogResult LogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IList<KeyValuePair<string, string>> args)
         {
             try
             {
-                Raise<ArgumentNullException>.IfIsNull(shortMessage);
+                RaiseArgumentNullException.IfIsNull(shortMessage, nameof(shortMessage));
+                return DoLogRaw(logLevel, GetCurrentAppName(appName), GetCurrentUserLogin(userLogin), codeUnit, function, shortMessage, longMessage, context, args);
             }
             catch (Exception ex)
             {
-                try
-                {
-                    Trace.TraceWarning(ex.Message);
-                }
-                // ReSharper disable once EmptyGeneralCatchClause
-                catch { }
                 return LogResult.Failure(ex);
             }
-            return DoLogRaw(logLevel, GetCurrentAppName(appName), GetCurrentuserLogin(userLogin), codeUnit, function, shortMessage, longMessage, context, args);
         }
 
-        private LogResult Log<TCodeUnit>(LogLevel logLevel, string appName, string userLogin, string function, string shortMessage, string longMessage, string context, IEnumerable<KeyValuePair<string, string>> args)
+        private LogResult Log<TCodeUnit>(LogLevel logLevel, string appName, string userLogin, string function, string shortMessage, string longMessage, string context, IList<KeyValuePair<string, string>> args)
         {
             try
             {
-                Raise<ArgumentException>.IfIsEmpty(shortMessage);
+                RaiseArgumentNullException.IfIsNull(shortMessage, nameof(shortMessage));
+                return DoLogRaw(logLevel, GetCurrentAppName(appName), GetCurrentUserLogin(userLogin), typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
             }
             catch (Exception ex)
             {
-                try
-                {
-                    Trace.TraceWarning(ex.Message);
-                }
-                // ReSharper disable once EmptyGeneralCatchClause
-                catch { }
                 return LogResult.Failure(ex);
             }
-            return DoLogRaw(logLevel, GetCurrentAppName(appName), GetCurrentuserLogin(userLogin), typeof(TCodeUnit).FullName, function, shortMessage, longMessage, context, args);
         }
 
-        public LogResult LogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, Exception exception, string context, IEnumerable<KeyValuePair<string, string>> args)
+        public LogResult LogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, Exception exception, string context, IList<KeyValuePair<string, string>> args)
         {
             try
             {
-                Raise<ArgumentNullException>.IfIsNull(exception);
-                exception = FindInnermostException(exception);
+                RaiseArgumentNullException.IfIsNull(exception, nameof(exception));
+                exception = exception.GetBaseException();
+                return DoLogRaw(logLevel, GetCurrentAppName(appName), GetCurrentUserLogin(userLogin), codeUnit, function, exception.Message, exception.StackTrace, context, args);
             }
             catch (Exception ex)
             {
-                try
-                {
-                    Trace.TraceWarning(ex.Message);
-                }
-                // ReSharper disable once EmptyGeneralCatchClause
-                catch { }
                 return LogResult.Failure(ex);
             }
-            return DoLogRaw(logLevel, GetCurrentAppName(appName), GetCurrentuserLogin(userLogin), codeUnit, function, exception.Message, exception.StackTrace, context, args);
         }
 
-        private LogResult Log<TCodeUnit>(LogLevel logLevel, string appName, string userLogin, string function, Exception exception, string context, IEnumerable<KeyValuePair<string, string>> args)
+        private LogResult Log<TCodeUnit>(LogLevel logLevel, string appName, string userLogin, string function, Exception exception, string context, IList<KeyValuePair<string, string>> args)
         {
             try
             {
-                Raise<ArgumentNullException>.IfIsNull(exception);
-                exception = FindInnermostException(exception);
+                RaiseArgumentNullException.IfIsNull(exception, nameof(exception));
+                exception = exception.GetBaseException();
+                return DoLogRaw(logLevel, GetCurrentAppName(appName), GetCurrentUserLogin(userLogin), typeof(TCodeUnit).FullName, function, exception.Message, exception.StackTrace, context, args);
             }
             catch (Exception ex)
             {
-                try
-                {
-                    Trace.TraceWarning(ex.Message);
-                }
-                // ReSharper disable once EmptyGeneralCatchClause
-                catch { }
                 return LogResult.Failure(ex);
             }
-            return DoLogRaw(logLevel, GetCurrentAppName(appName), GetCurrentuserLogin(userLogin), typeof(TCodeUnit).FullName, function, exception.Message, exception.StackTrace, context, args);
-        }
-
-        private static Exception FindInnermostException(Exception exception)
-        {
-            while (exception.InnerException != null)
-            {
-                exception = exception.InnerException;
-            }
-            return exception;
         }
 
         private static string GetCurrentAppName(string appName)
@@ -524,7 +490,7 @@ namespace Finsa.Caravan.DataAccess.Core
             return appName;
         }
 
-        private static string GetCurrentuserLogin(string userLogin)
+        private static string GetCurrentUserLogin(string userLogin)
         {
             if (!string.IsNullOrWhiteSpace(userLogin) && userLogin != LogEntry.AutoFilled)
             {
@@ -539,7 +505,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         private static void CheckAndFillEntry(LogEntry entry, string function)
         {
-            Raise<ArgumentNullException>.IfIsNull(entry);
+            RaiseArgumentNullException.IfIsNull(entry, nameof(entry));
             entry.Function = string.IsNullOrWhiteSpace(entry.Function) ? function : entry.Function;
         }
 
