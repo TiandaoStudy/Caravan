@@ -70,6 +70,18 @@ namespace Finsa.Caravan.WebApi.Middlewares
             var requestId = UniqueIdGenerator.NewBase32("-");
             _log.ThreadVariablesContext.Set(Constants.RequestId, requestId);
 
+            try
+            {
+                // Aggiungo l'ID della request agli header della response, in modo che sia più
+                // facile il rintracciamento dei log su Caravan.
+                response.Headers.Append(Constants.RequestIdHeader, requestId);
+            }
+            catch (Exception ex)
+            {
+                // Non è un problema se questa operazione fallisce, ma devo comunque registrare lo strano evento.
+                _log.Error("Could not add the Caravan request ID header...", ex);
+            }
+
             // Log request
             if (!_disposed)
             {
@@ -155,10 +167,6 @@ namespace Finsa.Caravan.WebApi.Middlewares
                             KeyValuePair.Create("response_headers", response.Headers.ToYamlString(LogMessage.ReadableYamlSettings))
                         }
                     });
-
-                    // Aggiungo l'ID della request agli header della response, in modo che sia più
-                    // facile il rintracciamento dei log su Caravan.
-                    response.Headers.Append(Constants.RequestIdHeader, requestId);
                 }
                 catch (Exception ex)
                 {
