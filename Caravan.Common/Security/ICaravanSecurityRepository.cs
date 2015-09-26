@@ -1,7 +1,6 @@
-﻿using Finsa.Caravan.Common.Models.Security;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using Finsa.Caravan.Common.Security.Exceptions;
+using Finsa.Caravan.Common.Security.Models;
 
 namespace Finsa.Caravan.Common.Security
 {

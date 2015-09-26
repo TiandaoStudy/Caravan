@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Common.Logging;
+﻿using Common.Logging;
 using Finsa.Caravan.Common.Logging.Models;
-using Finsa.Caravan.Common.Models.Logging;
+using System;
 
 namespace Finsa.Caravan.Common.Logging
 {
@@ -16,113 +14,155 @@ namespace Finsa.Caravan.Common.Logging
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="shortMessage"></param>
-        /// <param name="longMessage"></param>
-        /// <param name="context"></param>
-        /// <param name="args"></param>
-        void TraceArgs(string shortMessage, string longMessage = null, string context = null, IEnumerable<KeyValuePair<string, string>> args = null);
+        /// <param name="logMessage"></param>
+        bool Trace(LogMessage logMessage);
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <param name="logMessageCallback"></param>
-        void TraceArgs(Func<LogMessage> logMessageCallback);
+        bool Trace(Func<LogMessage> logMessageCallback);
 
-        #endregion
+        #endregion Trace
 
         #region Debug
 
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="shortMessage"></param>
-        /// <param name="longMessage"></param>
-        /// <param name="context"></param>
-        /// <param name="args"></param>
-        void DebugArgs(string shortMessage, string longMessage = null, string context = null, IEnumerable<KeyValuePair<string, string>> args = null);
+        /// <param name="logMessage"></param>
+        bool Debug(LogMessage logMessage);
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <param name="logMessageCallback"></param>
-        void DebugArgs(Func<LogMessage> logMessageCallback);
+        bool Debug(Func<LogMessage> logMessageCallback);
 
-        #endregion
+        #endregion Debug
 
         #region Info
 
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="shortMessage"></param>
-        /// <param name="longMessage"></param>
-        /// <param name="context"></param>
-        /// <param name="args"></param>
-        void InfoArgs(string shortMessage, string longMessage = null, string context = null, IEnumerable<KeyValuePair<string, string>> args = null);
+        /// <param name="logMessage"></param>
+        bool Info(LogMessage logMessage);
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <param name="logMessageCallback"></param>
-        void InfoArgs(Func<LogMessage> logMessageCallback);
+        bool Info(Func<LogMessage> logMessageCallback);
 
-        #endregion
+        #endregion Info
 
         #region Warn
 
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="shortMessage"></param>
-        /// <param name="longMessage"></param>
-        /// <param name="context"></param>
-        /// <param name="args"></param>
-        void WarnArgs(string shortMessage, string longMessage = null, string context = null, IEnumerable<KeyValuePair<string, string>> args = null);
+        /// <param name="logMessage"></param>
+        bool Warn(LogMessage logMessage);
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <param name="logMessageCallback"></param>
-        void WarnArgs(Func<LogMessage> logMessageCallback);
+        bool Warn(Func<LogMessage> logMessageCallback);
 
-        #endregion
+        #endregion Warn
 
         #region Error
 
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="shortMessage"></param>
-        /// <param name="longMessage"></param>
-        /// <param name="context"></param>
-        /// <param name="args"></param>
-        void ErrorArgs(string shortMessage, string longMessage = null, string context = null, IEnumerable<KeyValuePair<string, string>> args = null);
+        /// <param name="logMessage"></param>
+        bool Error(LogMessage logMessage);
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <param name="logMessageCallback"></param>
-        void ErrorArgs(Func<LogMessage> logMessageCallback);
+        bool Error(Func<LogMessage> logMessageCallback);
 
-        #endregion
+        #endregion Error
 
         #region Fatal
 
         /// <summary>
         ///   TODO
         /// </summary>
-        /// <param name="shortMessage"></param>
-        /// <param name="longMessage"></param>
-        /// <param name="context"></param>
-        /// <param name="args"></param>
-        void FatalArgs(string shortMessage, string longMessage = null, string context = null, IEnumerable<KeyValuePair<string, string>> args = null);
+        /// <param name="logMessage"></param>
+        bool Fatal(LogMessage logMessage);
 
         /// <summary>
         ///   TODO
         /// </summary>
         /// <param name="logMessageCallback"></param>
-        void FatalArgs(Func<LogMessage> logMessageCallback);
+        bool Fatal(Func<LogMessage> logMessageCallback);
 
-        #endregion
+        #endregion Fatal
+
+        #region Exception
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <param name="logMessage"></param>
+        bool Exception(LogMessage logMessage);
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <param name="logMessageCallback"></param>
+        bool Exception(Func<LogMessage> logMessageCallback);
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <param name="formatMessageCallback"></param>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        bool Exception(Action<FormatMessageHandler> formatMessageCallback, Exception exception);
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        bool Exception(object message, Exception exception);
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <param name="formatProvider"></param>
+        /// <param name="formatMessageCallback"></param>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        bool Exception(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback, Exception exception);
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <param name="format"></param>
+        /// <param name="exception"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        bool ExceptionFormat(string format, Exception exception, params object[] args);
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        /// <param name="formatProvider"></param>
+        /// <param name="format"></param>
+        /// <param name="exception"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        bool ExceptionFormat(IFormatProvider formatProvider, string format, Exception exception, params object[] args);
+
+        #endregion Exception
     }
 }

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Models.Security;
+using Finsa.Caravan.Common.Logging.Models;
+using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using Finsa.CodeServices.Common;

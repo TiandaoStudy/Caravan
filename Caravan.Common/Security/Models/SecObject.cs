@@ -1,42 +1,42 @@
-﻿using Finsa.Caravan.Common.Models.Logging;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Finsa.CodeServices.Common;
 
-namespace Finsa.Caravan.Common.Models.Security
+namespace Finsa.Caravan.Common.Security.Models
 {
     [Serializable, JsonObject(MemberSerialization.OptIn), DataContract]
-    public class SecApp : EquatableObject<SecApp>
+    public class SecObject : EquatableObject<SecObject>
     {
         [JsonProperty(Order = 0), DataMember(Order = 0)]
-        public string Name { get; set; }
+        public string AppName { get; set; }
 
         [JsonProperty(Order = 1), DataMember(Order = 1)]
-        public string Description { get; set; }
+        public string ContextName { get; set; }
 
         [JsonProperty(Order = 2), DataMember(Order = 2)]
-        public SecUser[] Users { get; set; }
+        public string Name { get; set; }
 
         [JsonProperty(Order = 3), DataMember(Order = 3)]
-        public SecGroup[] Groups { get; set; }
+        public string Description { get; set; }
 
         [JsonProperty(Order = 4), DataMember(Order = 4)]
-        public SecContext[] Contexts { get; set; }
-
-        [JsonProperty(Order = 5), DataMember(Order = 5)]
-        public LogSetting[] LogSettings { get; set; }
+        public string Type { get; set; }
 
         protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return KeyValuePair.Create("Name", Name);
-            yield return KeyValuePair.Create("Description", Description);
+            yield return KeyValuePair.Create(nameof(AppName), AppName);
+            yield return KeyValuePair.Create(nameof(ContextName), ContextName);
+            yield return KeyValuePair.Create(nameof(Name), Name);
+            yield return KeyValuePair.Create(nameof(Type), Type);
         }
 
         protected override IEnumerable<object> GetIdentifyingMembers()
         {
             yield return Name;
+            yield return ContextName;
+            yield return AppName;
         }
     }
 }

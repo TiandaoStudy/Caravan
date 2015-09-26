@@ -11,7 +11,9 @@
 // the License.
 
 using Common.Logging;
+using Finsa.Caravan.Common.Logging;
 using Finsa.CodeServices.Clock;
+using Ninject;
 using PommaLabs.KVLite;
 using System;
 
@@ -25,25 +27,40 @@ namespace Finsa.Caravan.Common
     public static class ServiceProvider
     {
         /// <summary>
+        ///   Il kernel Ninject usato per la gestione automatica delle dipendenze.
+        /// </summary>
+        public static IKernel Kernel { get; } = SetupKernel();
+
+        /// <summary>
         ///   La cache in memoria usata da alcuni punti critici di Caravan.
         /// </summary>
-        public static MemoryCache MemoryCache { get; set; } = MemoryCache.DefaultInstance;
+        public static MemoryCache MemoryCache { get; } = MemoryCache.DefaultInstance;
 
         /// <summary>
         ///   L'orologio usato di default per il calcolo dell'ora corrente.
         /// </summary>
-        public static IClock Clock { get; set; } = new SystemClock();
-
-        /// <summary>
-        ///   La funzione usata per gestire l'ora corrente all'interno della sorgente dati. Di
-        ///   default, usa <see cref="Clock"/> e la proprietà <see cref="IClock.UtcNow"/>.
-        /// </summary>
-        public static Func<DateTime> CurrentDateTime { get; set; } = () => Clock.UtcNow;
+        public static IClock Clock { get; } = Kernel.Get<IClock>();
 
         /// <summary>
         ///   Il log di emergenza, usato quando il normale log di Caravan va in errore. Scrive
         ///   rigorosamente, e semplicemente, su file, per evitare ulteriori errori.
         /// </summary>
         public static ILog EmergencyLog { get; } = LogManager.GetLogger("CaravanEmergencyLog");
+
+        /// <summary>
+        ///   Il log standard di Caravan, che usualmente viene usato per portare i messaggi di log a database.
+        /// </summary>
+        public static ICaravanLog FetchLog<T>() => LogManager.GetLogger<T>() as ICaravanLog;
+
+        /// <summary>
+        ///   Va a cercare i moduli Ninject presenti nelle DLL caricate nell'AppDomain corrente.
+        /// </summary>
+        /// <returns>Un kernel Ninject propriamente configurato.</returns>
+        private static IKernel SetupKernel()
+        {
+            var kernel = new StandardKernel();
+            kernel.Load(AppDomain.CurrentDomain.GetAssemblies());
+            return kernel;
+        }
     }
 }

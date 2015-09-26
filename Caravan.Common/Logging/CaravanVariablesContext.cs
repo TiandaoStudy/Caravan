@@ -1,6 +1,5 @@
 ﻿using Common.Logging;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Extensions;
 using PommaLabs.KVLite;
 using PommaLabs.Thrower;
 using System;
@@ -12,7 +11,7 @@ using System.Web;
 
 namespace Finsa.Caravan.Common.Logging
 {
-    internal sealed class CaravanVariablesContext : IVariablesContext, IEnumerable<KeyValuePair<string, string>>
+    internal sealed class CaravanVariablesContext : IVariablesContext, IEnumerable<KeyValuePair<string, object>>
     {
         #region Static members
 
@@ -41,12 +40,11 @@ namespace Finsa.Caravan.Common.Logging
 
         #region IEnumerable members
 
-        public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
-        {
-            var tmpArray = GetAndSetVariablesMap().ToList();
-            tmpArray.Sort((x, y) => x.Value.Key.CompareTo(y.Value.Key));
-            return tmpArray.Select(x => KeyValuePair.Create(x.Key, x.Value.Value.SafeToString())).GetEnumerator();
-        }
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => GetAndSetVariablesMap()
+            .ToGTuple()
+            .OrderBy(x => x.Value.Item1)
+            .Select(x => KeyValuePair.Create(x.Key, x.Value.Item2))
+            .GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -60,28 +58,28 @@ namespace Finsa.Caravan.Common.Logging
 
         public object Get(string key)
         {
-            KeyValuePair<long, object> pair;
-            return GetAndSetVariablesMap().TryGetValue(key, out pair) ? pair.Value : null;
+            GTuple2<long, object> tuple;
+            return GetAndSetVariablesMap().TryGetValue(key, out tuple) ? tuple.Item2 : null;
         }
 
         public void Remove(string key)
         {
-            KeyValuePair<long, object> pair;
-            GetAndSetVariablesMap().TryRemove(key, out pair);
+            GTuple2<long, object> tuple;
+            GetAndSetVariablesMap().TryRemove(key, out tuple);
         }
 
         public void Set(string key, object newValue)
         {
             var map = GetAndSetVariablesMap();
-            var newPair = KeyValuePair.Create(ServiceProvider.CurrentDateTime().Ticks, newValue);
-            KeyValuePair<long, object> oldPair;
-            if (map.TryGetValue(key, out oldPair))
+            var newTuple = GTuple.Create(ServiceProvider.Clock.UtcNow.Ticks, newValue);
+            GTuple2<long, object> oldTuple;
+            if (map.TryGetValue(key, out oldTuple))
             {
-                map.TryUpdate(key, newPair, oldPair);
+                map.TryUpdate(key, newTuple, oldTuple);
             }
             else
             {
-                map.TryAdd(key, newPair);
+                map.TryAdd(key, newTuple);
             }
         }
 
@@ -94,12 +92,12 @@ namespace Finsa.Caravan.Common.Logging
         private const string CacheKeyPrefixForRequest = "request_";
         private const string CacheKeyPrefixForThread = "thread_";
 
-        private ConcurrentDictionary<string, KeyValuePair<long, object>> GetAndSetVariablesMap()
+        private ConcurrentDictionary<string, GTuple2<long, object>> GetAndSetVariablesMap()
         {
             switch (Mode)
             {
                 case CaravanVariablesContextMode.Global:
-                    var maybeGlobalMap = Cache.Get<ConcurrentDictionary<string, KeyValuePair<long, object>>>(CachePartition, CacheKeyForGlobal);
+                    var maybeGlobalMap = Cache.Get<ConcurrentDictionary<string, GTuple2<long, object>>>(CachePartition, CacheKeyForGlobal);
 
                     // If requested map exists, then return it.
                     if (maybeGlobalMap.HasValue)
@@ -108,14 +106,14 @@ namespace Finsa.Caravan.Common.Logging
                     }
 
                     // Otherwise, it must be added to the cache and then returned.
-                    var newGlobalMap = new ConcurrentDictionary<string, KeyValuePair<long, object>>();
+                    var newGlobalMap = new ConcurrentDictionary<string, GTuple2<long, object>>();
                     var globalInterval = CommonConfiguration.Instance.Logging_CaravanVariablesContext_Interval;
                     Cache.AddSliding(CachePartition, CacheKeyForGlobal, newGlobalMap, globalInterval);
                     return newGlobalMap;
 
                 case CaravanVariablesContextMode.Thread:
                     var cacheKeyForThread = GetThreadCacheKey();
-                    var maybeThreadMap = Cache.Get<ConcurrentDictionary<string, KeyValuePair<long, object>>>(CachePartition, cacheKeyForThread);
+                    var maybeThreadMap = Cache.Get<ConcurrentDictionary<string, GTuple2<long, object>>>(CachePartition, cacheKeyForThread);
 
                     // If requested map exists, then return it.
                     if (maybeThreadMap.HasValue)
@@ -124,7 +122,7 @@ namespace Finsa.Caravan.Common.Logging
                     }
 
                     // Otherwise, it must be added to the cache and then returned.
-                    var newThreadMap = new ConcurrentDictionary<string, KeyValuePair<long, object>>();
+                    var newThreadMap = new ConcurrentDictionary<string, GTuple2<long, object>>();
                     var threadInterval = CommonConfiguration.Instance.Logging_CaravanVariablesContext_Interval;
                     Cache.AddSliding(CachePartition, cacheKeyForThread, newThreadMap, threadInterval);
                     return newThreadMap;

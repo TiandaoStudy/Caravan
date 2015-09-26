@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using AutoMapper;
-using Finsa.Caravan.Common.Models.Security;
+﻿using AutoMapper;
 using Finsa.Caravan.Common.Security.Exceptions;
+using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using Finsa.CodeServices.Common;
+using System.Data.Entity;
+using System.Linq;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -348,7 +346,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     .Include(e => e.Object.Context)
                     .Include(e => e.User)
                     .Include(e => e.Group);
-                
+
                 if (appName != null)
                 {
                     q = q.Where(e => e.Object.Context.AppId == appId);

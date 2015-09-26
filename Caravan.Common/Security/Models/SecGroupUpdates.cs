@@ -3,7 +3,7 @@ using System;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
-namespace Finsa.Caravan.Common.Models.Security
+namespace Finsa.Caravan.Common.Security.Models
 {
     [Serializable, JsonObject(MemberSerialization.OptIn), DataContract]
     public class SecGroupUpdates

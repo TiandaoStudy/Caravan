@@ -1,7 +1,9 @@
-﻿namespace Finsa.Caravan.Worker.Tasks
+﻿using System.Threading.Tasks;
+
+namespace Finsa.Caravan.Worker.Tasks
 {
-    interface ITask
+    interface IAsyncTask
     {
-        void Run();
+        Task RunAsync();
     }
 }

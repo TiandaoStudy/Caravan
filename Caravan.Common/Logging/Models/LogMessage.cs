@@ -1,4 +1,5 @@
 using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Common.Extensions;
 using Finsa.CodeServices.Common.Collections.ReadOnly;
 using Finsa.CodeServices.Serialization;
 using Newtonsoft.Json;
@@ -65,7 +66,7 @@ namespace Finsa.Caravan.Common.Logging.Models
         ///   Arguments.
         /// </summary>
         [JsonProperty(Order = 3), YamlMember(Order = 3)]
-        public IList<KeyValuePair<string, string>> Arguments { get; set; }
+        public IList<KeyValuePair<string, object>> Arguments { get; set; }
 
         /// <summary>
         ///   Exception (optional), must _not_ be serialized. In fact, its content is assigned to
@@ -88,12 +89,12 @@ namespace Finsa.Caravan.Common.Logging.Models
                 LongMessage = longMsgPrefix + exception.ToJsonString(ReadableJsonSettings);
 
                 // Prendo anche eventuali argomenti già inseriti.
-                Arguments = new List<KeyValuePair<string, string>>(Arguments ?? ReadOnlyList.Empty<KeyValuePair<string, string>>())
+                Arguments = new List<KeyValuePair<string, object>>(Arguments ?? ReadOnlyList.Empty<KeyValuePair<string, object>>())
                 {
-                    KeyValuePair.Create("exception_stacktrace", exception.StackTrace ?? string.Empty),
-                    KeyValuePair.Create("exception_data", exception.Data.ToYamlString(ReadableYamlSettings)),
-                    KeyValuePair.Create("exception_source", exception.Source ?? string.Empty),
-                    KeyValuePair.Create("exception_hresult", exception.HResult.ToString()),
+                    KeyValuePair.Create<string, object>("exception_stacktrace", exception.StackTrace),
+                    KeyValuePair.Create<string, object>("exception_data", exception.Data.ToYamlString(ReadableYamlSettings)),
+                    KeyValuePair.Create<string, object>("exception_source", exception.Source),
+                    KeyValuePair.Create<string, object>("exception_hresult", exception.HResult),
                 };
             }
         }
@@ -120,7 +121,7 @@ namespace Finsa.Caravan.Common.Logging.Models
                 Arguments = CaravanVariablesContext.GlobalVariables
                     .Union(CaravanVariablesContext.ThreadVariables)
                     .Union(Arguments)
-                    .ToArray();
+                    .ToGTuple();
 
                 for (var i = 0; i < Arguments.Count; ++i)
                 {
@@ -129,9 +130,9 @@ namespace Finsa.Caravan.Common.Logging.Models
                     {
                         continue;
                     }
-                    var tmpValue = RemoveBlankRows.Replace(kv.Value, string.Empty);
+                    var tmpValue = RemoveBlankRows.Replace(kv.Value.SafeToString(), string.Empty);
                     tmpValue = RemoveLastBlanks.Replace(tmpValue, Environment.NewLine);
-                    Arguments[i] = KeyValuePair.Create(kv.Key, tmpValue);
+                    Arguments[i] = KeyValuePair.Create<string, object>(kv.Key, tmpValue);
                 }
             }
 

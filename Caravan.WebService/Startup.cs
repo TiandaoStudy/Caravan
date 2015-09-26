@@ -30,7 +30,7 @@ namespace Finsa.Caravan.WebService
             var cache = kernel.Get<ICache>();
 
             // Inizializzatore per Caravan.
-            ServiceHelper.OnStart(config, LogManager.GetLogger<Startup>(), cache);
+            ServiceHelper.OnStartAsync(config, LogManager.GetLogger<Startup>(), cache).Wait();
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
             app.Use(kernel.Get<HttpLoggingMiddleware>());
 

@@ -1,4 +1,5 @@
 ﻿using Common.Logging;
+using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.DataAccess.Drivers.Sql;
 using Finsa.CodeServices.Common;
@@ -29,13 +30,13 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
         private const string CommandTimeoutVariable = "command_timeout";
         private const string TmpCommandStopwatch = "tmp_command_stopwatch";
 
-        readonly ILog _log;
+        readonly ICaravanLog _log;
 
         /// <summary>
         ///   Builds an SQL command logger, using given log.
         /// </summary>
         /// <param name="log">The log on which we should write.</param>
-        public SqlDbCommandLogger(ILog log)
+        public SqlDbCommandLogger(ICaravanLog log)
         {
             RaiseArgumentNullException.IfIsNull(log, nameof(log));
             _log = log;
@@ -72,18 +73,18 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
                 var queryInfo = ExtractQueryInfo(command);
                 var elapsedMilliseconds = StopStopwatchAndGetElapsedMilliseconds();
 
-                _log.Trace(new LogMessage
+                _log.Trace(() => new LogMessage
                 {
                     ShortMessage = $"Non query command '{queryInfo.CommandId}' executed with result '{interceptionContext.Result}'",
                     LongMessage = command.CommandText,
                     Context = "Executing a non query command",
                     Arguments = new[]
                     {
-                        KeyValuePair.Create(CommandIdVariable, queryInfo.CommandId),
-                        KeyValuePair.Create(CommandResultVariable, interceptionContext.Result.ToString(CultureInfo.InvariantCulture)),
-                        KeyValuePair.Create(CommandElapsedMillisecondsVariable, elapsedMilliseconds),
-                        KeyValuePair.Create(CommandParametersVariable, queryInfo.CommandParameters),
-                        KeyValuePair.Create(CommandTimeoutVariable, queryInfo.CommandTimeout)
+                        KeyValuePair.Create<string, object>(CommandIdVariable, queryInfo.CommandId),
+                        KeyValuePair.Create<string, object>(CommandResultVariable, interceptionContext.Result),
+                        KeyValuePair.Create<string, object>(CommandElapsedMillisecondsVariable, elapsedMilliseconds),
+                        KeyValuePair.Create<string, object>(CommandParametersVariable, queryInfo.CommandParameters),
+                        KeyValuePair.Create<string, object>(CommandTimeoutVariable, queryInfo.CommandTimeout)
                     }
                 });
             }
@@ -134,11 +135,11 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
                     Context = "Executing a reader command",
                     Arguments = new[]
                     {
-                        KeyValuePair.Create(CommandIdVariable, queryInfo.CommandId),
-                        KeyValuePair.Create(CommandResultVariable, interceptionContext.Result.SafeToString()),
-                        KeyValuePair.Create(CommandElapsedMillisecondsVariable, elapsedMilliseconds),
-                        KeyValuePair.Create(CommandParametersVariable, queryInfo.CommandParameters),
-                        KeyValuePair.Create(CommandTimeoutVariable, queryInfo.CommandTimeout)
+                        KeyValuePair.Create<string, object>(CommandIdVariable, queryInfo.CommandId),
+                        KeyValuePair.Create<string, object>(CommandResultVariable, interceptionContext.Result),
+                        KeyValuePair.Create<string, object>(CommandElapsedMillisecondsVariable, elapsedMilliseconds),
+                        KeyValuePair.Create<string, object>(CommandParametersVariable, queryInfo.CommandParameters),
+                        KeyValuePair.Create<string, object>(CommandTimeoutVariable, queryInfo.CommandTimeout)
                     }
                 });
             }
@@ -189,11 +190,11 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
                     Context = "Executing a scalar command",
                     Arguments = new[]
                     {
-                        KeyValuePair.Create(CommandIdVariable, queryInfo.CommandId),
-                        KeyValuePair.Create(CommandResultVariable, interceptionContext.Result.ToYamlString(LogMessage.ReadableYamlSettings)),
-                        KeyValuePair.Create(CommandElapsedMillisecondsVariable, elapsedMilliseconds),
-                        KeyValuePair.Create(CommandParametersVariable, queryInfo.CommandParameters),
-                        KeyValuePair.Create(CommandTimeoutVariable, queryInfo.CommandTimeout)
+                        KeyValuePair.Create<string, object>(CommandIdVariable, queryInfo.CommandId),
+                        KeyValuePair.Create<string, object>(CommandResultVariable, interceptionContext.Result.ToYamlString(LogMessage.ReadableYamlSettings)),
+                        KeyValuePair.Create<string, object>(CommandElapsedMillisecondsVariable, elapsedMilliseconds),
+                        KeyValuePair.Create<string, object>(CommandParametersVariable, queryInfo.CommandParameters),
+                        KeyValuePair.Create<string, object>(CommandTimeoutVariable, queryInfo.CommandTimeout)
                     }
                 });
             }
@@ -228,7 +229,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
             CommandId = UniqueIdGenerator.NewBase32("-"),
             CommandText = command.CommandText,
             CommandParameters = ExtractParameters(command.Parameters).ToYamlString(LogMessage.ReadableYamlSettings),
-            CommandTimeout = command.CommandTimeout.ToString(CultureInfo.InvariantCulture)
+            CommandTimeout = command.CommandTimeout
         };
 
         static IEnumerable<ParameterInfo> ExtractParameters(DbParameterCollection parameterCollection)
@@ -280,7 +281,7 @@ namespace Finsa.Caravan.DataAccess.Logging.Sql
 
             public string CommandParameters { get; set; }
 
-            public string CommandTimeout { get; set; }
+            public int CommandTimeout { get; set; }
         }
 
         sealed class ParameterInfo

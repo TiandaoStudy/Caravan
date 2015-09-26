@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace Finsa.Caravan.Common.Models.Logging
+namespace Finsa.Caravan.Common.Logging.Models
 {
     [Serializable, JsonObject(MemberSerialization.OptIn), DataContract]
     public sealed class LogEntryQuery

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.Common.Models.Rest;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.CodeServices.Common;
@@ -9,21 +8,12 @@ using Common.Logging;
 using Finsa.Caravan.Common.Logging.Exceptions;
 using Finsa.Caravan.Common.Security.Exceptions;
 using System.Threading.Tasks;
+using Finsa.Caravan.Common.Logging.Models;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Rest
 {
     internal sealed class RestLogRepository : AbstractLogRepository<RestLogRepository>
-    {
-        protected override LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IList<KeyValuePair<string, string>> args)
-        {
-            var client = new RestClient("http://localhost/Caravan.RestService/security");
-            var request = new RestRequest("{appName}/entries", Method.POST);
-
-            request.AddUrlSegment("appName", appName);
-
-            throw new NotImplementedException();
-        }
-
+    {    
         protected override IList<LogEntry> GetEntriesInternal(string appName, LogLevel? logLevel)
         {
             var client = new RestClient("http://localhost/Caravan.RestService/security");
@@ -167,12 +157,17 @@ namespace Finsa.Caravan.DataAccess.Drivers.Rest
             throw new NotImplementedException();
         }
 
-        protected override bool CleanUpEntriesInternal(string appName)
+        protected override Task AddEntryAsyncInternal(string appName, LogEntry logEntry)
         {
             throw new NotImplementedException();
         }
 
-        public override Task<LogResult> AddEntriesAsync(string appName, IEnumerable<LogEntry> logEntries)
+        protected override Task AddEntriesAsyncInternal(string appName, IEnumerable<LogEntry> logEntries)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task CleanUpEntriesAsyncInternal(string appName)
         {
             throw new NotImplementedException();
         }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common.Portability;
@@ -15,6 +14,7 @@ using Thinktecture.IdentityServer.Core.Configuration;
 using Thinktecture.IdentityServer.Core.Models;
 using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.Core.Services.InMemory;
+using Finsa.Caravan.Common.Security.Models;
 
 namespace Finsa.Caravan.WebService
 {

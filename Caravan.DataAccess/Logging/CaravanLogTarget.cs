@@ -1,16 +1,15 @@
 ﻿using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging.Models;
-using Finsa.CodeServices.Common.Collections.ReadOnly;
+using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Common.Extensions;
 using NLog;
 using NLog.Common;
 using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Finsa.Caravan.Common.Models.Logging;
 using LogLevel = Common.Logging.LogLevel;
 
 namespace Finsa.Caravan.DataAccess.Logging
@@ -56,19 +55,8 @@ namespace Finsa.Caravan.DataAccess.Logging
         {
             try
             {
-                var logMessage = ToLogMessage(logEvent);
-                
-                var result = CaravanDataSource.Logger.LogRaw(
-                    ParseLogLevel(logEvent.Level),
-                    CommonConfiguration.Instance.AppName,
-                    UserLogin.Render(logEvent),
-                    CodeUnit.Render(logEvent),
-                    Function.Render(logEvent),
-                    logMessage.ShortMessage,
-                    logMessage.LongMessage,
-                    logMessage.Context,
-                    logMessage.Arguments
-                );
+                var logEntry = ToLogEntry(logEvent);
+                var result = CaravanDataSource.Logger.AddEntryAsync(CommonConfiguration.Instance.AppName, logEntry).Result;
 
                 if (!result.Succeeded)
                 {
@@ -91,9 +79,8 @@ namespace Finsa.Caravan.DataAccess.Logging
         {
             try
             {
-                var appName = CommonConfiguration.Instance.AppName;
                 var logEntries = logEvents.Select(le => ToLogEntry(le.LogEvent));
-                var result = CaravanDataSource.Logger.AddEntriesAsync(appName, logEntries).Result;
+                var result = CaravanDataSource.Logger.AddEntriesAsync(CommonConfiguration.Instance.AppName, logEntries).Result;
 
                 if (!result.Succeeded)
                 {
@@ -145,39 +132,8 @@ namespace Finsa.Caravan.DataAccess.Logging
                 ShortMessage = logMessage.ShortMessage,
                 LongMessage = logMessage.LongMessage,
                 Context = Context?.Render(logEvent) ?? logMessage.Context,
-                Arguments = logMessage.Arguments ?? ReadOnlyList.Empty<KeyValuePair<string, string>>()
+                Arguments = logMessage.Arguments?.Select(a => KeyValuePair.Create(a.Key, a.Value.SafeToString())).ToGTuple()
             };
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private LogMessage ToLogMessage(LogEventInfo logEvent)
-        {
-            // Il messaggio che è giunto nel log: può essere una stringa semplice, oppure uno YAML
-            // di LogMessage.
-            var formattedMessage = logEvent.FormattedMessage;
-
-            // Verifico se è stato passato un LogMessage come parametro. Se si, lo uso, altrimenti
-            // ne creo uno vuoto e inserisco valori di default.
-            var logMessage = (logEvent.Parameters?.GetValue(0) as LogMessage) ?? new LogMessage
-            {
-                ShortMessage = formattedMessage,
-                LongMessage = string.Empty,
-                Context = string.Empty
-            };
-
-            // Valuto se si tratta di un messaggio a cui è stata allegata una eccezione.
-            var exception = logEvent.Exception;
-            if (exception != null)
-            {
-                // Arricchisco il messaggio di log con le info presenti nell'eccezione.
-                logMessage.Exception = exception;
-            }
-
-            logMessage.ShortMessage = logMessage.ShortMessage;
-            logMessage.LongMessage = logMessage.LongMessage;
-            logMessage.Context = Context?.Render(logEvent) ?? logMessage.Context;
-
-            return logMessage;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -218,8 +174,8 @@ namespace Finsa.Caravan.DataAccess.Logging
         {
             try
             {
-                // Devo loggare immediatamente l'eccezione che è stata ricevuta.
-                // Cerco di salvare comunque il messaggio di log appena emesso.
+                // Devo loggare immediatamente l'eccezione che è stata ricevuta. Cerco di salvare
+                // comunque il messaggio di log appena emesso.
                 ServiceProvider.EmergencyLog.Error($"Internal error while logging [{logMessage}]", ex);
             }
             catch

@@ -15,8 +15,9 @@ namespace Finsa.Caravan.Common.Logging
         {
             if (name.ToLowerInvariant() == "pommalabs.kvlite.memorycache")
             {
-                // Fatto per evitare loop - anche MemoryCache usa il log, 
-                // si corre il rischio di lavorare con istanze statiche nulle o di entrare in qualche ciclo durante ogni singolo log.
+                // Fatto per evitare loop - anche MemoryCache usa il log, si corre il rischio di
+                // lavorare con istanze statiche nulle o di entrare in qualche ciclo durante ogni
+                // singolo log...
                 return new NoOpLogger();
             }
             return new CaravanLogger(NLog.LogManager.GetLogger(name));

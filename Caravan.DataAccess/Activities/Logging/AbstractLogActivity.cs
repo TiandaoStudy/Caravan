@@ -1,10 +1,10 @@
-﻿using System;
-using System.Activities;
-using System.Collections.Generic;
-using Common.Logging;
+﻿using Common.Logging;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Models;
-using Finsa.Caravan.Common.Models.Logging;
+using System;
+using System.Activities;
+using System.Collections.Generic;
 using LL = Common.Logging.LogLevel;
 
 namespace Finsa.Caravan.DataAccess.Activities.Logging
@@ -12,9 +12,11 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
     public abstract class AbstractLogActivity<TLogActivity> : CodeActivity
         where TLogActivity : AbstractLogActivity<TLogActivity>
     {
+        protected ICaravanLog Log { get; } = ServiceProvider.FetchLog<TLogActivity>();
+
         #region Arguments
 
-        public InArgument<IList<KeyValuePair<string, string>>> Arguments { get; set; }
+        public InArgument<IList<KeyValuePair<string, object>>> Arguments { get; set; }
 
         public InArgument<string> Context { get; set; }
 
@@ -24,44 +26,43 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
         public InArgument<Exception> Exception { get; set; }
 
         [RequiredArgument]
-        public InArgument<LogLevel> LogLevel { get; set; }
+        public InArgument<LL> LogLevel { get; set; }
 
         public InArgument<string> LongMessage { get; set; }
 
         public InArgument<string> ShortMessage { get; set; }
 
-        #endregion
+        #endregion Arguments
 
         protected override void Execute(CodeActivityContext ctx)
         {
-            var log = GetCaravanLog();
             var logLevel = LogLevel.Get(ctx);
 
             var isEnabled = false;
             switch (logLevel)
             {
                 case LL.Trace:
-                    isEnabled = log.IsTraceEnabled;
+                    isEnabled = Log.IsTraceEnabled;
                     break;
 
                 case LL.Debug:
-                    isEnabled = log.IsDebugEnabled;
+                    isEnabled = Log.IsDebugEnabled;
                     break;
 
                 case LL.Info:
-                    isEnabled = log.IsInfoEnabled;
+                    isEnabled = Log.IsInfoEnabled;
                     break;
 
                 case LL.Warn:
-                    isEnabled = log.IsWarnEnabled;
+                    isEnabled = Log.IsWarnEnabled;
                     break;
 
                 case LL.Error:
-                    isEnabled = log.IsErrorEnabled;
+                    isEnabled = Log.IsErrorEnabled;
                     break;
 
                 case LL.Fatal:
-                    isEnabled = log.IsFatalEnabled;
+                    isEnabled = Log.IsFatalEnabled;
                     break;
             }
             if (!isEnabled)
@@ -95,34 +96,29 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
             switch (logLevel)
             {
                 case LL.Trace:
-                    log.TraceArgs(() => logMessage);
+                    Log.Trace(logMessage);
                     break;
 
                 case LL.Debug:
-                    log.DebugArgs(() => logMessage);
+                    Log.Debug(logMessage);
                     break;
 
                 case LL.Info:
-                    log.InfoArgs(() => logMessage);
+                    Log.Info(logMessage);
                     break;
 
                 case LL.Warn:
-                    log.WarnArgs(() => logMessage);
+                    Log.Warn(logMessage);
                     break;
 
                 case LL.Error:
-                    log.ErrorArgs(() => logMessage);
+                    Log.Error(logMessage);
                     break;
 
                 case LL.Fatal:
-                    log.FatalArgs(() => logMessage);
+                    Log.Fatal(logMessage);
                     break;
             }
-        }
-
-        protected virtual ICaravanLog GetCaravanLog()
-        {
-            return LogManager.GetLogger<TLogActivity>() as ICaravanLog;
         }
     }
 }

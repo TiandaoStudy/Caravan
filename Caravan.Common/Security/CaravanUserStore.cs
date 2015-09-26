@@ -1,7 +1,7 @@
-﻿using Finsa.Caravan.Common.Models.Security;
+﻿using Finsa.Caravan.Common.Security.Models;
 using Finsa.CodeServices.Common;
-using PommaLabs.Thrower;
 using Microsoft.AspNet.Identity;
+using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

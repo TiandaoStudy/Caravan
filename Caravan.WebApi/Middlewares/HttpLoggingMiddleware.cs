@@ -1,8 +1,7 @@
-﻿using Common.Logging;
+﻿using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.WebApi.Core;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Extensions;
 using Finsa.CodeServices.Serialization;
 using Microsoft.Owin;
 using PommaLabs.Thrower;
@@ -28,11 +27,11 @@ namespace Finsa.Caravan.WebApi.Middlewares
     {
         const int MinBufferSize = 512;
 
-        readonly ILog _log;
+        readonly ICaravanLog _log;
         AppFunc _next;
         bool _disposed;
 
-        public HttpLoggingMiddleware(ILog log)
+        public HttpLoggingMiddleware(ICaravanLog log)
         {
             RaiseArgumentNullException.IfIsNull(log, nameof(log));
             _log = log;
@@ -78,7 +77,8 @@ namespace Finsa.Caravan.WebApi.Middlewares
             }
             catch (Exception ex)
             {
-                // Non è un problema se questa operazione fallisce, ma devo comunque registrare lo strano evento.
+                // Non è un problema se questa operazione fallisce, ma devo comunque registrare lo
+                // strano evento.
                 _log.Error("Could not add the Caravan request ID header...", ex);
             }
 
@@ -100,21 +100,18 @@ namespace Finsa.Caravan.WebApi.Middlewares
                         Context = "Logging request",
                         Arguments = new[]
                         {
-                            KeyValuePair.Create("request_remote_ip_address", request.RemoteIpAddress.SafeToString()),
-                            KeyValuePair.Create("request_user_agent", request.Headers.Get("User-Agent").SafeToString()),
-                            KeyValuePair.Create("request_uri", request.Uri.SafeToString()),
-                            KeyValuePair.Create("request_method", request.Method.SafeToString()),
-                            KeyValuePair.Create("request_headers", request.Headers.ToYamlString(LogMessage.ReadableYamlSettings))
+                            KeyValuePair.Create<string, object>("request_remote_ip_address", request.RemoteIpAddress),
+                            KeyValuePair.Create<string, object>("request_user_agent", request.Headers.Get("User-Agent")),
+                            KeyValuePair.Create<string, object>("request_uri", request.Uri),
+                            KeyValuePair.Create<string, object>("request_method", request.Method),
+                            KeyValuePair.Create<string, object>("request_headers", request.Headers.ToYamlString(LogMessage.ReadableYamlSettings))
                         }
                     });
                 }
                 catch (Exception ex)
                 {
-                    _log.Error(new LogMessage
-                    {
-                        Exception = ex,
-                        Context = "Logging request"
-                    });
+                    // Eccezione NON rilanciata.
+                    _log.Exception(new LogMessage { Context = "Logging request", Exception = ex });
                 }
             }
 
@@ -128,16 +125,9 @@ namespace Finsa.Caravan.WebApi.Middlewares
                 // Run inner handlers
                 await _next.Invoke(environment);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (_log.Fatal(new LogMessage { Context = "Processing request", Exception = ex }))
             {
-                _log.Fatal(new LogMessage
-                {
-                    Exception = ex,
-                    Context = "Processing response"
-                });
-
-                // Should return a custom message?
-                throw;
+                // Eccezione rilanciata in automatico, la funzione di log ritorna sempre FALSE.
             }
 
             // Log response
@@ -163,18 +153,15 @@ namespace Finsa.Caravan.WebApi.Middlewares
                         Context = "Logging response",
                         Arguments = new[]
                         {
-                            KeyValuePair.Create("response_status_code", response.StatusCode.SafeToString()),
-                            KeyValuePair.Create("response_headers", response.Headers.ToYamlString(LogMessage.ReadableYamlSettings))
+                            KeyValuePair.Create<string, object>("response_status_code", response.StatusCode),
+                            KeyValuePair.Create<string, object>("response_headers", response.Headers.ToYamlString(LogMessage.ReadableYamlSettings))
                         }
                     });
                 }
                 catch (Exception ex)
                 {
-                    _log.Error(new LogMessage
-                    {
-                        Exception = ex,
-                        Context = "Logging response"
-                    });
+                    // Eccezione NON rilanciata.
+                    _log.Exception(new LogMessage { Context = "Logging response", Exception = ex });
                 }
             }
         }

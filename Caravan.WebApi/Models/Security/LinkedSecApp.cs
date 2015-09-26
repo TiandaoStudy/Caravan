@@ -3,9 +3,9 @@ using System.Runtime.Serialization;
 using System.Web.Http.Routing;
 using AutoMapper;
 using Finsa.Caravan.Common.Models.Linking;
-using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Models.Security;
 using Newtonsoft.Json;
+using Finsa.Caravan.Common.Logging.Models;
+using Finsa.Caravan.Common.Security.Models;
 
 namespace Finsa.Caravan.WebApi.Models.Security
 {

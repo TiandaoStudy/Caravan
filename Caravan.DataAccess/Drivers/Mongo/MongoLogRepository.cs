@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Finsa.Caravan.Common.Models.Logging;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Security;
 using Finsa.CodeServices.Common;
@@ -14,36 +12,37 @@ using MongoDB.Driver.Builders;
 using MongoDB.Driver.Linq;
 using Common.Logging;
 using System.Threading.Tasks;
+using Finsa.Caravan.Common.Logging.Models;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 {
     internal sealed class MongoLogRepository : AbstractLogRepository<MongoLogRepository>
     {
-        protected override LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IList<KeyValuePair<string, string>> args)
-        {
-            var app = MongoUtilities.GetSecAppCollection().AsQueryable().First(a => a.Name == appName);
+        //protected override LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IList<KeyValuePair<string, string>> args)
+        //{
+        //    var app = MongoUtilities.GetSecAppCollection().AsQueryable().First(a => a.Name == appName);
 
-            var newLogId = MongoUtilities.GetSequenceCollection().FindAndModify(new FindAndModifyArgs
-            {
-                Query = Query<MongoSequence>.Where(s => s.AppId == app.Id && s.CollectionName == MongoUtilities.LogEntryCollection),
-                Update = Update<MongoSequence>.Inc(s => s.LastNumber, 1),
-                VersionReturned = FindAndModifyDocumentVersion.Modified,
-                Upsert = true, // Creates a new document if it does not exist.
-            }).GetModifiedDocumentAs<MongoSequence>().LastNumber;
+        //    var newLogId = MongoUtilities.GetSequenceCollection().FindAndModify(new FindAndModifyArgs
+        //    {
+        //        Query = Query<MongoSequence>.Where(s => s.AppId == app.Id && s.CollectionName == MongoUtilities.LogEntryCollection),
+        //        Update = Update<MongoSequence>.Inc(s => s.LastNumber, 1),
+        //        VersionReturned = FindAndModifyDocumentVersion.Modified,
+        //        Upsert = true, // Creates a new document if it does not exist.
+        //    }).GetModifiedDocumentAs<MongoSequence>().LastNumber;
 
-            var logLevelStr = logLevel.ToString().ToLower();
-            MongoUtilities.GetLogEntryCollection().Insert(new MongoLogEntry
-            {
-                Id = MongoUtilities.CreateObjectId(newLogId),
-                AppId = app.Id,
-                LogId = newLogId,
-                Type = logLevelStr,
-                ShortMessage = shortMessage,
-                CodeUnit = codeUnit
-            });
+        //    var logLevelStr = logLevel.ToString().ToLower();
+        //    MongoUtilities.GetLogEntryCollection().Insert(new MongoLogEntry
+        //    {
+        //        Id = MongoUtilities.CreateObjectId(newLogId),
+        //        AppId = app.Id,
+        //        LogId = newLogId,
+        //        Type = logLevelStr,
+        //        ShortMessage = shortMessage,
+        //        CodeUnit = codeUnit
+        //    });
 
-            return LogResult.Success;
-        }
+        //    return LogResult.Success;
+        //}
 
         protected override IList<LogEntry> GetEntriesInternal(string appName, LogLevel? logLevel)
         {
@@ -158,12 +157,17 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
             throw new NotImplementedException();
         }
 
-        protected override bool CleanUpEntriesInternal(string appName)
+        protected override Task AddEntryAsyncInternal(string appName, LogEntry logEntry)
         {
             throw new NotImplementedException();
         }
 
-        public override Task<LogResult> AddEntriesAsync(string appName, IEnumerable<LogEntry> logEntries)
+        protected override Task AddEntriesAsyncInternal(string appName, IEnumerable<LogEntry> logEntries)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task CleanUpEntriesAsyncInternal(string appName)
         {
             throw new NotImplementedException();
         }

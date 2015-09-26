@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Finsa.CodeServices.Common;
 
-namespace Finsa.Caravan.Common.Models.Security
+namespace Finsa.Caravan.Common.Security.Models
 {
     [Serializable, JsonObject(MemberSerialization.OptIn), DataContract]
     public class SecUser : EquatableObject<SecUser>, IUser<string>
@@ -70,9 +70,9 @@ namespace Finsa.Caravan.Common.Models.Security
 
         protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return KeyValuePair.Create("AppName", AppName);
-            yield return KeyValuePair.Create("Login", Login);
-            yield return KeyValuePair.Create("FullName", FirstName + " " + LastName);
+            yield return KeyValuePair.Create(nameof(AppName), AppName);
+            yield return KeyValuePair.Create(nameof(Login), Login);
+            yield return KeyValuePair.Create(nameof(UserName), UserName);
         }
 
         protected override IEnumerable<object> GetIdentifyingMembers()
