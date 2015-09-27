@@ -95,7 +95,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="IdentityManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\IdentityManager.1.0.0-beta5-3\lib\net45\IdentityManager.dll</HintPath>
+      <HintPath>..\packages\IdentityManager.1.0.0-beta5-5\lib\net45\IdentityManager.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IdentityManager.AspNetIdentity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IdentityManager.AspNetIdentity.1.0.0-beta5-1\lib\net45\IdentityManager.AspNetIdentity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IdentityModel.Net45, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -275,9 +279,6 @@
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Thinktecture.IdentityModel.Core">
-      <HintPath>..\packages\Thinktecture.IdentityModel.Core.1.4.0\lib\net45\Thinktecture.IdentityModel.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Troschuetz.Random, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Troschuetz.Random.4.0\lib\net45\Troschuetz.Random.dll</HintPath>
       <Private>True</Private>
