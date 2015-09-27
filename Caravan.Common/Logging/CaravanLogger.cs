@@ -102,29 +102,25 @@ namespace Finsa.Caravan.Common.Logging
                 tmpLongMessage = RemoveBlankRows.Replace(tmpLongMessage, string.Empty);
                 tmpLongMessage = RemoveLastBlanks.Replace(tmpLongMessage, Environment.NewLine);
             }
+            
+            var argumentsHelper = CaravanVariablesContext.GlobalVariables
+                .Union(CaravanVariablesContext.ThreadVariables)
+                .Union(logMessage.Arguments ?? GTuple0<KeyValuePair<string, object>>.Instance)
+                .ToGTuple();
 
-            IList<KeyValuePair<string, string>> tmpArguments = null;
-            if (logMessage.Arguments != null)
+            var tmpArguments = new KeyValuePair<string, string>[argumentsHelper.Count];
+
+            for (var i = 0; i < argumentsHelper.Count; ++i)
             {
-                var helper = CaravanVariablesContext.GlobalVariables
-                    .Union(CaravanVariablesContext.ThreadVariables)
-                    .Union(logMessage.Arguments)
-                    .ToGTuple();
-
-                tmpArguments = new KeyValuePair<string, string>[helper.Count];
-
-                for (var i = 0; i < helper.Count; ++i)
+                var kv = argumentsHelper[i];
+                if (kv.Value == null)
                 {
-                    var kv = helper[i];
-                    if (kv.Value == null)
-                    {
-                        tmpArguments[i] = KeyValuePair.Create(kv.Key, (string) null);
-                        continue;
-                    }
-                    var tmpValue = RemoveBlankRows.Replace(kv.Value.SafeToString(), string.Empty);
-                    tmpValue = RemoveLastBlanks.Replace(tmpValue, Environment.NewLine);
-                    tmpArguments[i] = KeyValuePair.Create(kv.Key, tmpValue);
+                    tmpArguments[i] = KeyValuePair.Create(kv.Key, (string) null);
+                    continue;
                 }
+                var tmpValue = RemoveBlankRows.Replace(kv.Value.SafeToString(), string.Empty);
+                tmpValue = RemoveLastBlanks.Replace(tmpValue, Environment.NewLine);
+                tmpArguments[i] = KeyValuePair.Create(kv.Key, tmpValue);
             }
 
             return new LogEntry
