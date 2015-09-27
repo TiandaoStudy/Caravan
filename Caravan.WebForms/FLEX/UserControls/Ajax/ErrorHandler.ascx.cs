@@ -38,10 +38,8 @@ namespace FLEX.Web.UserControls.Ajax
                 Session[Settings.Default.ExceptionSessionKey] = ex;
                 ErrorManager.Instance.LogException(ex, Page);
             }
-            catch (Exception inner)
+            catch (Exception inner) when (Log.Rethrowing(inner))
             {
-                Log.Rethrowing(inner);
-                throw;
             }
         }
 

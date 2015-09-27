@@ -55,10 +55,6 @@
       <HintPath>..\packages\Common.Logging.Core.3.3.0\lib\net40\Common.Logging.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Common.Logging.NLog41, Version=3.3.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Common.Logging.NLog41.3.3.0\lib\net40\Common.Logging.NLog41.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Crc32C.NET">
       <HintPath>..\packages\Crc32C.NET.1.0.5.0\lib\net20\Crc32C.NET.dll</HintPath>
     </Reference>
@@ -144,6 +140,7 @@
     <Compile Include="Core\ErrorMessages.cs" />
     <Compile Include="Logging\CaravanLogger.cs" />
     <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />
+    <Compile Include="Logging\CaravanNoOpLogger.cs" />
     <Compile Include="Logging\CaravanVariablesContext.cs" />
     <Compile Include="Logging\ICaravanLogRepository.cs" />
     <Compile Include="Models\Formatting\PageOrientation.cs" />
