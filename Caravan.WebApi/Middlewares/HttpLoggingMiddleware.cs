@@ -56,6 +56,10 @@ namespace Finsa.Caravan.WebApi.Middlewares
             var request = owinContext.Request;
             var response = owinContext.Response;
 
+            // Utilizzato per associare request e response nel log.
+            var requestId = UniqueIdGenerator.NewBase32("-");
+            _log.ThreadVariablesContext.Set(Constants.RequestId, requestId);
+
             // Indica se è una richiesta per il logger: non vogliamo loggare le chiamate al log.
             // Inoltre, non devono finire nel log neanche le chiamate alle pagine di help di Swagger.
             var owinRequestUri = owinContext.Request.Uri.SafeToString().ToLowerInvariant();
@@ -64,10 +68,6 @@ namespace Finsa.Caravan.WebApi.Middlewares
                 await _next.Invoke(environment);
                 return;
             }
-
-            // Utilizzato per associare request e response nel log.
-            var requestId = UniqueIdGenerator.NewBase32("-");
-            _log.ThreadVariablesContext.Set(Constants.RequestId, requestId);
 
             try
             {
