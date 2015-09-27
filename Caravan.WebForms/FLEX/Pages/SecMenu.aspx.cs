@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web.UI.WebControls;
 using System.Xml;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Models.Security;
+using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebForms.Properties;
 using Finsa.CodeServices.Common.Collections;

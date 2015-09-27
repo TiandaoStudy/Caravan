@@ -111,7 +111,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
                 catch (Exception ex)
                 {
                     // Eccezione NON rilanciata.
-                    _log.Rethrowing(new LogMessage { Context = "Logging request", Exception = ex });
+                    _log.Catching(new LogMessage { Context = "Logging request", Exception = ex });
                 }
             }
 
@@ -161,7 +161,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
                 catch (Exception ex)
                 {
                     // Eccezione NON rilanciata.
-                    _log.Rethrowing(new LogMessage { Context = "Logging response", Exception = ex });
+                    _log.Catching(new LogMessage { Context = "Logging response", Exception = ex });
                 }
             }
         }

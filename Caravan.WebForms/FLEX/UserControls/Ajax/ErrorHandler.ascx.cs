@@ -1,61 +1,65 @@
-﻿using System;
+﻿using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.WebForms.Properties;
+using FLEX.WebForms;
+using PommaLabs.Thrower;
+using System;
 using System.Globalization;
 using System.Threading;
 using System.Web.UI;
-using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.WebForms.Properties;
-using PommaLabs.Thrower;
-using FLEX.WebForms;
 
-// ReSharper disable CheckNamespace
-// This is the correct namespace, despite the file physical position.
+// ReSharper disable CheckNamespace This is the correct namespace, despite the file physical position.
 
 namespace FLEX.Web.UserControls.Ajax
 // ReSharper restore CheckNamespace
 {
-   public partial class ErrorHandler : UserControl
-   {
-      public void CatchException(Exception ex, ErrorLocation location = ErrorLocation.EventHandler)
-      {
-         Raise<ArgumentNullException>.IfIsNull(ex);
-         var locationByte = (byte) location;
-         Raise<ArgumentException>.IfAreEqual(locationByte, 0);
+    public partial class ErrorHandler : UserControl
+    {
+        private static readonly ICaravanLog Log = CaravanServiceProvider.FetchLog<ErrorHandler>();
 
-         if (ex is ThreadAbortException)
-         {
-            // Le eccezioni di questo tipo non vanno catturate, perché servono per il corretto funzionamento di ASP.
-            throw ex;
-         }
+        public void CatchException(Exception ex, ErrorLocation location = ErrorLocation.EventHandler)
+        {
+            Raise<ArgumentNullException>.IfIsNull(ex);
+            var locationByte = (byte) location;
+            Raise<ArgumentException>.IfAreEqual(locationByte, 0);
 
-         try
-         {
-            txtSystemErrorCode.Text = locationByte.ToString(CultureInfo.InvariantCulture);
-            ex = ElaborateException(ex);
-            Session[Settings.Default.ExceptionSessionKey] = ex;
-            ErrorManager.Instance.LogException(ex, Page);
-         }
-         catch (Exception inner)
-         {
-            CaravanDataSource.Logger.LogError<ErrorHandler>(inner);
-            throw;
-         }
-      }
+            if (ex is ThreadAbortException)
+            {
+                // Le eccezioni di questo tipo non vanno catturate, perché servono per il corretto
+                // funzionamento di ASP.
+                throw ex;
+            }
 
-      private Exception ElaborateException(Exception ex)
-      {
-         while (ex.InnerException != null)
-         {
-            ex = ex.InnerException;
-         }
-         return ErrorManager.Instance.ElaborateException(ex, Page);
-      }
-   }
+            try
+            {
+                txtSystemErrorCode.Text = locationByte.ToString(CultureInfo.InvariantCulture);
+                ex = ElaborateException(ex);
+                Session[Settings.Default.ExceptionSessionKey] = ex;
+                ErrorManager.Instance.LogException(ex, Page);
+            }
+            catch (Exception inner)
+            {
+                Log.Rethrowing(inner);
+                throw;
+            }
+        }
 
-   [Flags]
-   public enum ErrorLocation : byte
-   {
-      EventHandler = 1,
-      PageEvent = 2,
-      ModalWindow = 4
-   }
+        private Exception ElaborateException(Exception ex)
+        {
+            while (ex.InnerException != null)
+            {
+                ex = ex.InnerException;
+            }
+            return ErrorManager.Instance.ElaborateException(ex, Page);
+        }
+    }
+
+    [Flags]
+    public enum ErrorLocation : byte
+    {
+        EventHandler = 1,
+        PageEvent = 2,
+        ModalWindow = 4
+    }
 }

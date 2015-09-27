@@ -14,7 +14,7 @@ namespace Finsa.Caravan.DataAccess.Core
 {
     internal abstract class AbstractSecurityRepository<TSec> : ICaravanSecurityRepository where TSec : AbstractSecurityRepository<TSec>
     {
-        protected ICaravanLog Log { get; } = ServiceProvider.FetchLog<TSec>();
+        protected ICaravanLog Log { get; } = CaravanServiceProvider.FetchLog<TSec>();
 
         public SecApp CurrentApp { get; private set; }
 

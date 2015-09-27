@@ -170,20 +170,20 @@
             <param name="logId">ID of the entry</param>
             <returns></returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.PostLog(System.String,Finsa.Caravan.Common.Models.Logging.LogEntry)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.PostLog(System.String,Finsa.Caravan.Common.Logging.Models.LogEntry)">
             <summary>
               Add a new log with the features specified in the body of the request
             </summary>
             <param name="appName">Application name</param>
-            <param name="log">The log to add</param>
+            <param name="logEntry">The log to add</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.PostLog(System.String,Common.Logging.LogLevel,Finsa.Caravan.Common.Models.Logging.LogEntry)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.PostLog(System.String,Common.Logging.LogLevel,Finsa.Caravan.Common.Logging.Models.LogEntry)">
             <summary>
               Add
             </summary>
             <param name="appName">Application name</param>
             <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
-            <param name="log">The log to add</param>
+            <param name="logEntry">The log to add</param>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.DeleteLog(System.String,System.Int32)">
             <summary>
@@ -213,7 +213,7 @@
             <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
             <returns></returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.PostSetting(System.String,Common.Logging.LogLevel,Finsa.Caravan.Common.Models.Logging.LogSetting)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.PostSetting(System.String,Common.Logging.LogLevel,Finsa.Caravan.Common.Logging.Models.LogSetting)">
             <summary>
               Add a new setting of type = logLevel
             </summary>
@@ -221,7 +221,7 @@
             <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
             <param name="settings">The setting to add</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.PutSetting(System.String,Common.Logging.LogLevel,Finsa.Caravan.Common.Models.Logging.LogSetting)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.PutSetting(System.String,Common.Logging.LogLevel,Finsa.Caravan.Common.Logging.Models.LogSetting)">
             <summary>
               Update the setting of a particular logLevel
             </summary>
@@ -254,7 +254,7 @@
             <param name="appName">The application to show</param>
             <returns>All the details of the specified application</returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostApp(Finsa.Caravan.Common.Models.Security.SecApp)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostApp(Finsa.Caravan.Common.Security.Models.SecApp)">
             <summary>
               Insert a new application
             </summary>
@@ -267,14 +267,14 @@
             <param name="appName">Application name</param>
             <returns>All the users of the specified application</returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostUser(System.String,Finsa.Caravan.Common.Models.Security.SecUser)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostUser(System.String,Finsa.Caravan.Common.Security.Models.SecUser)">
             <summary>
               Add a new user in the specified application
             </summary>
             <param name="appName">Application name</param>
             <param name="user">The new user to add</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutUser(System.String,System.String,Finsa.Caravan.Common.Models.Security.SecUserUpdates)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutUser(System.String,System.String,Finsa.Caravan.Common.Security.Models.SecUserUpdates)">
             <summary>
               Update the user with the specified userLogin in the specified application
             </summary>
@@ -321,7 +321,7 @@
             <param name="groupName">The group name</param>
             <returns></returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostGroup(System.String,Finsa.Caravan.Common.Models.Security.SecGroup)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostGroup(System.String,Finsa.Caravan.Common.Security.Models.SecGroup)">
             <summary>
               Add a new group to the specified application
             </summary>
@@ -335,7 +335,7 @@
             <param name="appName">The application name</param>
             <param name="groupName">The group name</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutGroup(System.String,System.String,Finsa.Caravan.Common.Models.Security.SecGroupUpdates)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutGroup(System.String,System.String,Finsa.Caravan.Common.Security.Models.SecGroupUpdates)">
             <summary>
               Update the specified group
             </summary>

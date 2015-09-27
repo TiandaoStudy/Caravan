@@ -15,7 +15,7 @@ namespace Finsa.Caravan.DataAccess.Core
 {
     internal abstract class AbstractLogRepository<TLog> : ICaravanLogRepository where TLog : AbstractLogRepository<TLog>
     {
-        protected ICaravanLog Log { get; } = ServiceProvider.FetchLog<TLog>();
+        protected ICaravanLog Log { get; } = CaravanServiceProvider.FetchLog<TLog>();
 
         protected abstract Task AddEntryAsyncInternal(string appName, LogEntry logEntry);
 

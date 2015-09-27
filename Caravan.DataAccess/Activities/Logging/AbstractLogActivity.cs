@@ -12,7 +12,7 @@ namespace Finsa.Caravan.DataAccess.Activities.Logging
     public abstract class AbstractLogActivity<TLogActivity> : CodeActivity
         where TLogActivity : AbstractLogActivity<TLogActivity>
     {
-        protected ICaravanLog Log { get; } = ServiceProvider.FetchLog<TLogActivity>();
+        protected ICaravanLog Log { get; } = CaravanServiceProvider.FetchLog<TLogActivity>();
 
         #region Arguments
 

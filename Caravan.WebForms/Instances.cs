@@ -6,6 +6,7 @@ using Finsa.Caravan.WebForms.Properties;
 using Finsa.CodeServices.Common.Reflection;
 using FLEX.Web;
 using ISecurityManager = FLEX.Web.ISecurityManager;
+using Finsa.Caravan.Common;
 
 namespace FLEX.WebForms
 {
@@ -21,7 +22,7 @@ namespace FLEX.WebForms
             try {
                CachedInstance = ServiceLocator.Load<IErrorManager>(Settings.Default.ErrorManagerTypeInfo);
             } catch (Exception ex) {
-                CaravanDataSource.Logger.LogFatal<IErrorManager>(ex, "Loading IErrorManager");
+                CaravanServiceProvider.EmergencyLog.Fatal("Loading IErrorManager", ex);
                 throw new ConfigurationErrorsException(ErrorMessages.TopLevel_ErrorManager_ErrorLoadingType, ex);
             }
         }
@@ -44,7 +45,7 @@ namespace FLEX.WebForms
             try {
                CachedInstance = ServiceLocator.Load<IPageManager>(Settings.Default.PageManagerTypeInfo);
             } catch (Exception ex) {
-                CaravanDataSource.Logger.LogFatal<IPageManager>(ex, "Loading IPageManager");
+                CaravanServiceProvider.EmergencyLog.Fatal("Loading IPageManager", ex);
                 throw new ConfigurationErrorsException(ErrorMessages.TopLevel_PageManager_ErrorLoadingType, ex);
             }
         }
@@ -66,8 +67,9 @@ namespace FLEX.WebForms
         {
             try {
                CachedInstance = ServiceLocator.Load<ISecurityManager>(Settings.Default.SecurityManagerTypeInfo);
-            } catch (Exception ex) {
-                CaravanDataSource.Logger.LogFatal<ISecurityManager>(ex, "Loading ISecurityRepository");
+            } catch (Exception ex)
+            {
+                CaravanServiceProvider.EmergencyLog.Fatal("Loading ISecurityRepository", ex);
                 throw new ConfigurationErrorsException(ErrorMessages.TopLevel_SecurityManager_ErrorLoadingType, ex);
             }
         }

@@ -69,7 +69,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
-                var utcNow = ServiceProvider.Clock.UtcNow;
+                var utcNow = CaravanServiceProvider.Clock.UtcNow;
 
                 var appIds = ((appName == null) ? ctx.SecApps : ctx.SecApps.Where(a => a.Name == appName)).Select(a => a.Id);
 
@@ -371,7 +371,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         private static async Task<Dictionary<string, SqlLogSetting>> GetAndSetCachedSettingsAsync(string appName, SqlDbContext ctx)
         {
             // Provo a recuperare le impostazioni di log dalla cache in memoria.
-            var maybe = ServiceProvider.MemoryCache.Get<Dictionary<string, SqlLogSetting>>(CachePartition, appName);
+            var maybe = CaravanServiceProvider.MemoryCache.Get<Dictionary<string, SqlLogSetting>>(CachePartition, appName);
 
             // Se le impostazioni in cache sono ancora valide, le restituisco.
             if (maybe.HasValue)
@@ -385,8 +385,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
             // Prima di restituirle, le metto in cache.
             var interval = DataAccessConfiguration.Instance.Logging_SettingsCache_Interval;
-            var utcExpiry = ServiceProvider.Clock.UtcNow.Add(interval);
-            ServiceProvider.MemoryCache.AddTimed(CachePartition, appName, settings, utcExpiry);
+            var utcExpiry = CaravanServiceProvider.Clock.UtcNow.Add(interval);
+            CaravanServiceProvider.MemoryCache.AddTimed(CachePartition, appName, settings, utcExpiry);
 
             // Restituisco le impostazioni appena lette da DB.
             return settings;
@@ -396,7 +396,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         {
             var sqlLogEntry = new SqlLogEntry
             {
-                Date = ServiceProvider.Clock.UtcNow,
+                Date = CaravanServiceProvider.Clock.UtcNow,
                 AppId = sqlLogSetting.AppId,
                 LogLevel = sqlLogSetting.LogLevel,
                 UserLogin = logEntry.UserLogin.Truncate(SqlDbContext.SmallLength).ToLowerInvariant(),

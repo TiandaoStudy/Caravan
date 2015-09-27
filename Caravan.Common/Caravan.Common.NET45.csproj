@@ -194,7 +194,7 @@
     <Compile Include="Security\Models\SecUser.cs" />
     <Compile Include="Security\Models\SecSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceProvider.cs" />
+    <Compile Include="CaravanServiceProvider.cs" />
     <Compile Include="WebForms\ISearchControl.cs" />
     <Compile Include="WebForms\SearchCriteria.cs" />
   </ItemGroup>

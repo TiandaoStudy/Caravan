@@ -1,8 +1,12 @@
 ﻿using Common.Logging;
 using Common.Logging.Factory;
 using Finsa.Caravan.Common.Logging.Models;
+using Finsa.CodeServices.Common;
 using PommaLabs.Thrower;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Finsa.Caravan.Common.Logging
 {
@@ -18,6 +22,17 @@ namespace Finsa.Caravan.Common.Logging
         ///   The tag used when the exception received as argument is null.
         /// </summary>
         private const string UndefinedExceptionType = "?UndefinedException?";
+
+        /// <summary>
+        ///   Regex usata per togliere le righe vuote dai singoli componenti del messaggio di log.
+        /// </summary>
+        private static readonly Regex RemoveBlankRows = new Regex(@"^[ \t]*((\r|\n)\n?)", RegexOptions.Compiled | RegexOptions.Multiline);
+
+        /// <summary>
+        ///   Regex usata per togliere gli spazi in fondo alle righe dei singoli componenti del
+        ///   messaggio di log.
+        /// </summary>
+        private static readonly Regex RemoveLastBlanks = new Regex(@"[ \t]+((\r|\n)\n?)", RegexOptions.Compiled | RegexOptions.Singleline);
 
         /// <summary>
         ///   Il tipo del logger, usato da NLog per capire meglio quale funzione abbia veramente
@@ -40,17 +55,79 @@ namespace Finsa.Caravan.Common.Logging
             _logger = logger;
         }
 
+        #region Logging
+
         protected override void WriteInternal(LogLevel logLevel, object message, Exception exception)
         {
-            var logEventInfo = new LogEventInfo(logLevel, _logger.Name, "{0}", new[] { message }, exception);
+            var logMessage = new LogMessage
+            {
+                ShortMessage = message.SafeToString(),
+                Exception = exception
+            };
+            var logEventInfo = new LogEventInfo(logLevel, _logger.Name, ToLogEntry(logMessage));
             _logger.Log(DeclaringType, logEventInfo);
         }
 
-        private void WriteLogMessage(LogLevel logLevel, LogMessage message)
+        private void WriteLogMessage(LogLevel logLevel, LogMessage logMessage)
         {
-            var logEventInfo = new LogEventInfo(logLevel, _logger.Name, "{0}", new[] { message }, null);
+            var logEventInfo = new LogEventInfo(logLevel, _logger.Name, ToLogEntry(logMessage));
             _logger.Log(DeclaringType, logEventInfo);
         }
+
+        /// <summary>
+        ///   Trasforma il messaggio di log in una vera voce di log, pronta per essere gestita da <see cref="ICaravanLogRepository"/>.
+        /// 
+        ///   Per farlo, formatta ogni singolo pezzo del messaggio, in modo che il risultato sia
+        ///   altamente leggibile.
+        /// </summary>
+        /// <param name="logMessage">Il messaggio di log da trasformare.</param>
+        public static LogEntry ToLogEntry(LogMessage logMessage)
+        {
+            // Eseguo una pulizia dell'oggetto .NET, in modo da avere un risultato molto pulito. Per
+            // ShortMessage e Context mi limito a una TRIM (è difficile che siano su più righe),
+            // mentre per LongMessage e per gli Arguments devo applicare pulizie più efficaci.
+
+            var tmpLongMessage = logMessage.LongMessage;
+            if (tmpLongMessage != null)
+            {
+                tmpLongMessage = RemoveBlankRows.Replace(tmpLongMessage, string.Empty);
+                tmpLongMessage = RemoveLastBlanks.Replace(tmpLongMessage, Environment.NewLine);
+            }
+
+            IList<KeyValuePair<string, string>> tmpArguments = null;
+            if (logMessage.Arguments != null)
+            {
+                var helper = CaravanVariablesContext.GlobalVariables
+                    .Union(CaravanVariablesContext.ThreadVariables)
+                    .Union(logMessage.Arguments)
+                    .ToGTuple();
+
+                tmpArguments = new KeyValuePair<string, string>[helper.Count];
+
+                for (var i = 0; i < helper.Count; ++i)
+                {
+                    var kv = helper[i];
+                    if (kv.Value == null)
+                    {
+                        tmpArguments[i] = KeyValuePair.Create(kv.Key, (string) null);
+                        continue;
+                    }
+                    var tmpValue = RemoveBlankRows.Replace(kv.Value.SafeToString(), string.Empty);
+                    tmpValue = RemoveLastBlanks.Replace(tmpValue, Environment.NewLine);
+                    tmpArguments[i] = KeyValuePair.Create(kv.Key, tmpValue);
+                }
+            }
+
+            return new LogEntry
+            {
+                ShortMessage = logMessage.ShortMessage?.Trim(),
+                LongMessage = tmpLongMessage,
+                Context = logMessage.Context?.Trim(),
+                Arguments = tmpArguments
+            };
+        }
+
+        #endregion Logging
 
         #region ILog members
 

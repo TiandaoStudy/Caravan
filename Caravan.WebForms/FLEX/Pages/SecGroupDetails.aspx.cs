@@ -1,5 +1,5 @@
 ﻿using System;
-using Finsa.Caravan.Common.Models.Security;
+using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common;
 using FLEX.Web.Pages;

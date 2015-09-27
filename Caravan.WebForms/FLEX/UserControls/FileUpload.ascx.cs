@@ -1,75 +1,76 @@
-﻿using System;
-using System.Web.UI.HtmlControls;
+﻿using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.DataAccess;
+using System;
+using System.Web.UI.HtmlControls;
 
-// ReSharper disable CheckNamespace
-// This is the correct namespace, despite the file physical position.
+// ReSharper disable CheckNamespace This is the correct namespace, despite the file physical position.
 
 namespace FLEX.Web.UserControls
 // ReSharper restore CheckNamespace
 {
-   /// <summary>
-   ///   TODO
-   /// </summary>
-   public partial class FileUpload : ControlBase
-   {
-      protected void Page_Load(object sender, EventArgs e)
-      {
-         try
-         {
-            // Empty, for now...
-         }
-         catch (Exception ex)
-         {
-            CaravanDataSource.Logger.LogError<FileUpload>(ex);
-            throw;
-         }
-      }
+    /// <summary>
+    ///   TODO
+    /// </summary>
+    public partial class FileUpload : ControlBase
+    {
+        private static readonly ICaravanLog Log = CaravanServiceProvider.FetchLog<FileUpload>();
 
-      #region Public Properties
-
-      public bool AllowMultiple
-      {
-         get { return inputFileUpload.Attributes["multiple"] == "multiple"; }
-         set
-         {
-            if (value)
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            try
             {
-               inputFileUpload.Attributes["multiple"] = "multiple";
+                // Empty, for now...
             }
-            else
+            catch (Exception ex) when (Log.Rethrowing(ex))
             {
-               inputFileUpload.Attributes.Remove("multiple");
             }
-         }
-      }
+        }
 
-      /// <summary>
-      ///   TODO
-      /// </summary>
-      public HtmlInputFile Input
-      {
-         get { return inputFileUpload; }
-      }
+        #region Public Properties
 
-      /// <summary>
-      ///   TODO
-      /// </summary>
-      public string OnClientClick
-      {
-         get { return inputFileUpload.Attributes["onclick"]; }
-         set { inputFileUpload.Attributes["onclick"] = value; }
-      }
+        public bool AllowMultiple
+        {
+            get { return inputFileUpload.Attributes["multiple"] == "multiple"; }
+            set
+            {
+                if (value)
+                {
+                    inputFileUpload.Attributes["multiple"] = "multiple";
+                }
+                else
+                {
+                    inputFileUpload.Attributes.Remove("multiple");
+                }
+            }
+        }
 
-      /// <summary>
-      ///   TODO
-      /// </summary>
-      public string Title
-      {
-         get { return inputFileUpload.Attributes["title"]; }
-         set { inputFileUpload.Attributes["title"] = value; }
-      }
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        public HtmlInputFile Input
+        {
+            get { return inputFileUpload; }
+        }
 
-      #endregion
-   }
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        public string OnClientClick
+        {
+            get { return inputFileUpload.Attributes["onclick"]; }
+            set { inputFileUpload.Attributes["onclick"] = value; }
+        }
+
+        /// <summary>
+        ///   TODO
+        /// </summary>
+        public string Title
+        {
+            get { return inputFileUpload.Attributes["title"]; }
+            set { inputFileUpload.Attributes["title"] = value; }
+        }
+
+        #endregion Public Properties
+    }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
-using Finsa.Caravan.Common.Models.Security;
+using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.Common.WebForms;
 using FLEX.Web.Pages;
 
