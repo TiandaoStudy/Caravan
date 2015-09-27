@@ -215,7 +215,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\Logging\AbstractLogActivity.cs" />
-    <Compile Include="DataAccessConfiguration.cs" />
+    <Compile Include="CaravanDataAccessConfiguration.cs" />
     <Compile Include="CaravanDataSourceKind.cs" />
     <Compile Include="Drivers\Sql\Attributes\DateTimeKindAttribute.cs" />
     <Compile Include="Logging\Sql\SqlDbCommandLogger.cs" />

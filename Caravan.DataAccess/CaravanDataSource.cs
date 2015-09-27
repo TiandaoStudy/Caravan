@@ -27,7 +27,7 @@ namespace Finsa.Caravan.DataAccess
     {
         static CaravanDataSource()
         {
-            var dataSourceKind = DataAccessConfiguration.Instance.DataSourceKind;
+            var dataSourceKind = CaravanDataAccessConfiguration.Instance.DataSourceKind;
             if (Enum.IsDefined(typeof(CaravanDataSourceKind), dataSourceKind))
             {
                 SetDataAccessKind(dataSourceKind);
@@ -128,7 +128,7 @@ namespace Finsa.Caravan.DataAccess
 
         internal static void StartRemoteTestingUseOnlyInsideUnitTestsPlease()
         {
-            RestAuthObject = DataAccessConfiguration.Instance.RestTestAuthObject;
+            RestAuthObject = CaravanDataAccessConfiguration.Instance.RestTestAuthObject;
         }
 
         #endregion Methods that must be used _ONLY_ inside (or for) Unit Tests

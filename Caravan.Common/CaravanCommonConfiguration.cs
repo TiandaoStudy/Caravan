@@ -22,7 +22,7 @@ namespace Finsa.Caravan.Common
     ///   Configuration class for Caravan.Common. Default values are set inside
     ///   the configuration file itself.
     /// </summary>
-    public sealed class CommonConfiguration : AppConfiguration
+    public sealed class CaravanCommonConfiguration : AppConfiguration
     {
         #region Static instance
 
@@ -30,9 +30,9 @@ namespace Finsa.Caravan.Common
         ///   Gets the static configuration instance.
         /// </summary>
         /// <value>The static configuration instance.</value>
-        public static CommonConfiguration Instance { get; } = InitializeInstance();
+        public static CaravanCommonConfiguration Instance { get; } = InitializeInstance();
 
-        static CommonConfiguration InitializeInstance()
+        static CaravanCommonConfiguration InitializeInstance()
         {
             var configurationFile = "Caravan.config";
             if (PortableEnvironment.AppIsRunningOnAspNet)
@@ -43,8 +43,8 @@ namespace Finsa.Caravan.Common
                 configurationFile = "~/" + configurationFile;
             }
 
-            var instance = new CommonConfiguration();
-            instance.Initialize(new ConfigurationFileConfigurationProvider<CommonConfiguration>
+            var instance = new CaravanCommonConfiguration();
+            instance.Initialize(new ConfigurationFileConfigurationProvider<CaravanCommonConfiguration>
             {
                 ConfigurationFile = PortableEnvironment.MapPath(configurationFile),
                 ConfigurationSection = "caravan.common"

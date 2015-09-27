@@ -144,7 +144,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging
     {
         public SqlLogEntryTypeConfiguration()
         {
-            ToTable("CRVN_LOG_ENTRIES", DataAccessConfiguration.Instance.SqlSchema);
+            ToTable("CRVN_LOG_ENTRIES", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             // SqlLogEntry(N) <-> SqlSecApp(1)
             HasRequired(x => x.App)

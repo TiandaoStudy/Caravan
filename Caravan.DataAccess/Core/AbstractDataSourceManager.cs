@@ -13,7 +13,7 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 if (string.IsNullOrWhiteSpace(_connectionString))
                 {
-                    _connectionString = ElaborateConnectionString(DataAccessConfiguration.Instance.ConnectionString);
+                    _connectionString = ElaborateConnectionString(CaravanDataAccessConfiguration.Instance.ConnectionString);
                 }
                 return _connectionString;
             }

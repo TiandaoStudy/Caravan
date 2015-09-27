@@ -12,7 +12,7 @@ namespace Finsa.Caravan.WebApi
     /// <summary>
     ///   Gestisce alcuni eventi comuni a tutte le applicazioni.
     /// </summary>
-    public sealed class ServiceHelper
+    public sealed class CaravanServiceHelper
     {
         /// <summary>
         ///   Esegue alcune operazioni preliminari all'avvio dell'applicazione.
@@ -28,7 +28,7 @@ namespace Finsa.Caravan.WebApi
             RaiseArgumentNullException.IfIsNull(cache, nameof(cache));
 
             // Loggo l'avvio dell'applicazione.
-            log.Info($"Application {CommonConfiguration.Instance.AppDescription} started");
+            log.Info($"Application {CaravanCommonConfiguration.Instance.AppDescription} started");
 
             // Run vacuum on the persistent cache. It should be put AFTER the connection string is
             // set, since that string it stored on the cache itself and we do not want conflicts, right?
@@ -42,7 +42,7 @@ namespace Finsa.Caravan.WebApi
             ApiOutputCache.RegisterAsCacheOutputProvider(configuration, cache);
 
             // Pulizia dei log più vecchi o che superano una certa soglia di quantità.
-            await CaravanDataSource.Logger.CleanUpEntriesAsync(CommonConfiguration.Instance.AppName);
+            await CaravanDataSource.Logger.CleanUpEntriesAsync(CaravanCommonConfiguration.Instance.AppName);
         }
     }
 }

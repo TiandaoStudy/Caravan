@@ -70,7 +70,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/ping")]
         public async Task<HttpResponseMessage> GetPing(string appName)
         {
-            appName = appName ?? CommonConfiguration.Instance.AppName;
+            appName = appName ?? CaravanCommonConfiguration.Instance.AppName;
             var result = await CaravanDataSource.Logger.AddEntryAsync(appName, new LogEntry
             {
                 ShortMessage = "Ping pong :)"
@@ -195,7 +195,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/settings")]
         public IQueryable<LogSetting> GetSettings(string appName)
         {
-            appName = appName ?? CommonConfiguration.Instance.AppName;
+            appName = appName ?? CaravanCommonConfiguration.Instance.AppName;
             return CaravanDataSource.Logger.GetSettings(appName).AsQueryable();
         }
 

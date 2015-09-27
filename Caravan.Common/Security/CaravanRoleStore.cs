@@ -26,14 +26,14 @@ namespace Finsa.Caravan.Common.Security
 
         public Task CreateAsync(SecGroup role)
         {
-            var appName = CommonConfiguration.Instance.AppName;
+            var appName = CaravanCommonConfiguration.Instance.AppName;
             _securityRepository.AddGroup(appName, role);
             return Task.FromResult(0);
         }
 
         public Task UpdateAsync(SecGroup role)
         {
-            var appName = CommonConfiguration.Instance.AppName;
+            var appName = CaravanCommonConfiguration.Instance.AppName;
             _securityRepository.UpdateGroup(appName, role.Name, new SecGroupUpdates
             {
                 Description = Option.Some(role.Description),
@@ -44,20 +44,20 @@ namespace Finsa.Caravan.Common.Security
 
         public Task DeleteAsync(SecGroup role)
         {
-            var appName = CommonConfiguration.Instance.AppName;
+            var appName = CaravanCommonConfiguration.Instance.AppName;
             _securityRepository.RemoveGroup(appName, role.Name);
             return Task.FromResult(0);
         }
 
         public Task<SecGroup> FindByIdAsync(string roleId)
         {
-            var appName = CommonConfiguration.Instance.AppName;
+            var appName = CaravanCommonConfiguration.Instance.AppName;
             return Task.FromResult(_securityRepository.GetGroupByName(appName, roleId));
         }
 
         public Task<SecGroup> FindByNameAsync(string roleName)
         {
-            var appName = CommonConfiguration.Instance.AppName;
+            var appName = CaravanCommonConfiguration.Instance.AppName;
             return Task.FromResult(_securityRepository.GetGroupByName(appName, roleName));
         }
 

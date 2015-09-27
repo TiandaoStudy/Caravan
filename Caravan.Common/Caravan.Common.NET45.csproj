@@ -140,7 +140,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonConfiguration.cs" />
+    <Compile Include="CaravanCommonConfiguration.cs" />
     <Compile Include="Core\ErrorMessages.cs" />
     <Compile Include="Logging\CaravanLogger.cs" />
     <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />

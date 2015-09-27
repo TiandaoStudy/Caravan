@@ -20,7 +20,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         static SqlDbContext()
         {
-            switch (DataAccessConfiguration.Instance.SqlInitializer)
+            switch (CaravanDataAccessConfiguration.Instance.SqlInitializer)
             {
                 case "CreateDatabaseIfNotExists":
                     Database.SetInitializer(new CreateDatabaseIfNotExists<SqlDbContext>());
@@ -98,7 +98,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         protected override void OnModelCreating(DbModelBuilder mb)
         {
             mb.Conventions.Remove(new PluralizingTableNameConvention());
-            mb.HasDefaultSchema(DataAccessConfiguration.Instance.SqlSchema);
+            mb.HasDefaultSchema(CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             base.OnModelCreating(mb);
 

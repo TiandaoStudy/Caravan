@@ -56,7 +56,7 @@ namespace Finsa.Caravan.DataAccess.Logging
             try
             {
                 var logEntry = ToLogEntry(logEvent);
-                var result = CaravanDataSource.Logger.AddEntryAsync(CommonConfiguration.Instance.AppName, logEntry).Result;
+                var result = CaravanDataSource.Logger.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, logEntry).Result;
 
                 if (!result.Succeeded)
                 {
@@ -80,7 +80,7 @@ namespace Finsa.Caravan.DataAccess.Logging
             try
             {
                 var logEntries = logEvents.Select(le => ToLogEntry(le.LogEvent));
-                var result = CaravanDataSource.Logger.AddEntriesAsync(CommonConfiguration.Instance.AppName, logEntries).Result;
+                var result = CaravanDataSource.Logger.AddEntriesAsync(CaravanCommonConfiguration.Instance.AppName, logEntries).Result;
 
                 if (!result.Succeeded)
                 {
@@ -125,7 +125,7 @@ namespace Finsa.Caravan.DataAccess.Logging
             return new LogEntry
             {
                 LogLevel = ParseLogLevel(logEvent.Level),
-                AppName = CommonConfiguration.Instance.AppName,
+                AppName = CaravanCommonConfiguration.Instance.AppName,
                 UserLogin = UserLogin.Render(logEvent),
                 CodeUnit = CodeUnit.Render(logEvent),
                 Function = Function.Render(logEvent),

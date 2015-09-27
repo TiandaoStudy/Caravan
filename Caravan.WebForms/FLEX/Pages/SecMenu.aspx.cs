@@ -84,13 +84,13 @@ namespace FLEX.Web.Pages
 
         protected void TreeView1_SelectedNodeChanged(object sender, EventArgs args)
         {
-            var entries = CaravanDataSource.Security.GetEntriesForObject(CommonConfiguration.Instance.AppName, "menu", TreeView1.SelectedValue);
+            var entries = CaravanDataSource.Security.GetEntriesForObject(CaravanCommonConfiguration.Instance.AppName, "menu", TreeView1.SelectedValue);
             
             var usersInEntries = entries.Where(e => e.UserLogin != null).Select(e => e.UserLogin).ToHashSet();
             var groupsInEntries = entries.Where(e => e.GroupName != null).Select(e => e.GroupName).ToHashSet();
 
-            var allUsers = CaravanDataSource.Security.GetUsers(CommonConfiguration.Instance.AppName);
-            var allGroups = CaravanDataSource.Security.GetGroups(CommonConfiguration.Instance.AppName);
+            var allUsers = CaravanDataSource.Security.GetUsers(CaravanCommonConfiguration.Instance.AppName);
+            var allGroups = CaravanDataSource.Security.GetGroups(CaravanCommonConfiguration.Instance.AppName);
 
             var allowedUsers = allUsers.Where(u => !usersInEntries.Contains(u.Login));
             var allowedGroups = allGroups.Where(g => !groupsInEntries.Contains(g.Name));
@@ -171,7 +171,7 @@ namespace FLEX.Web.Pages
             {
                 if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
                 {
-                    CaravanDataSource.Security.AddEntry(CommonConfiguration.Instance.AppName, secContext, secObject, oDrR["Login"].ToString(), null);
+                    CaravanDataSource.Security.AddEntry(CaravanCommonConfiguration.Instance.AppName, secContext, secObject, oDrR["Login"].ToString(), null);
                 }
             }
 
@@ -179,7 +179,7 @@ namespace FLEX.Web.Pages
             {
                 if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
                 {
-                    CaravanDataSource.Security.RemoveEntry(CommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, oDrL["Login"].ToString(), null);
+                    CaravanDataSource.Security.RemoveEntry(CaravanCommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, oDrL["Login"].ToString(), null);
                 }
             }
 
@@ -188,7 +188,7 @@ namespace FLEX.Web.Pages
             {
                 if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
                 {
-                    CaravanDataSource.Security.AddEntry(CommonConfiguration.Instance.AppName, secContext, secObject, null, oDrR["Name"].ToString());
+                    CaravanDataSource.Security.AddEntry(CaravanCommonConfiguration.Instance.AppName, secContext, secObject, null, oDrR["Name"].ToString());
                 }
             }
 
@@ -196,7 +196,7 @@ namespace FLEX.Web.Pages
             {
                 if (oDrR[MultiSelect.FlagCrud].ToString() == "R")
                 {
-                    CaravanDataSource.Security.RemoveEntry(CommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, null, oDrR["Name"].ToString());
+                    CaravanDataSource.Security.RemoveEntry(CaravanCommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, null, oDrR["Name"].ToString());
                 }
             }
         }

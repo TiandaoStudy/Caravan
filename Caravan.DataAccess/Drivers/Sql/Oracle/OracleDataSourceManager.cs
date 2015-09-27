@@ -32,7 +32,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Oracle
             // Statement Cache
             if (!lowerConnString.Contains("statement cache size"))
             {
-                connectionString += string.Format("Statement Cache Size={0};", DataAccessConfiguration.Instance.OracleStatementCacheSize);
+                connectionString += string.Format("Statement Cache Size={0};", CaravanDataAccessConfiguration.Instance.OracleStatementCacheSize);
             }
 
             return connectionString;

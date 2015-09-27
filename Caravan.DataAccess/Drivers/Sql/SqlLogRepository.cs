@@ -384,7 +384,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             var settings = await ctx.LogSettings.Where(s => s.AppId == appId).ToDictionaryAsync(s => s.LogLevel);
 
             // Prima di restituirle, le metto in cache.
-            var interval = DataAccessConfiguration.Instance.Logging_SettingsCache_Interval;
+            var interval = CaravanDataAccessConfiguration.Instance.Logging_SettingsCache_Interval;
             var utcExpiry = CaravanServiceProvider.Clock.UtcNow.Add(interval);
             CaravanServiceProvider.MemoryCache.AddTimed(CachePartition, appName, settings, utcExpiry);
 
