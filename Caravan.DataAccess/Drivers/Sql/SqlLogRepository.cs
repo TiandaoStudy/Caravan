@@ -396,7 +396,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         {
             var sqlLogEntry = new SqlLogEntry
             {
-                Date = CaravanServiceProvider.Clock.UtcNow,
+                Date = logEntry.Date,
                 AppId = sqlLogSetting.AppId,
                 LogLevel = sqlLogSetting.LogLevel,
                 UserLogin = logEntry.UserLogin.Truncate(SqlDbContext.SmallLength).ToLowerInvariant(),

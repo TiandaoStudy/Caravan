@@ -15,6 +15,7 @@ using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging.Exceptions;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.DataAccess;
+using Finsa.CodeServices.Clock;
 using Finsa.CodeServices.Common;
 using PommaLabs.Thrower;
 using System;
@@ -37,14 +38,17 @@ namespace Finsa.Caravan.WebService.Controllers
         static readonly IList<LogLevel> NoLogLevels = new LogLevel[0];
 
         readonly ILog _log;
+        readonly IClock _clock;
 
         /// <summary>
         ///   Inizializza il controller con l'istanza del log di Caravan.
         /// </summary>
-        public LoggerController(ILog log)
+        public LoggerController(ILog log, IClock clock)
         {
             RaiseArgumentNullException.IfIsNull(log, nameof(log));
+            RaiseArgumentNullException.IfIsNull(clock, nameof(clock));
             _log = log;
+            _clock = clock;
         }
 
         /// <summary>
@@ -73,6 +77,7 @@ namespace Finsa.Caravan.WebService.Controllers
             appName = appName ?? CaravanCommonConfiguration.Instance.AppName;
             var result = await CaravanDataSource.Logger.AddEntryAsync(appName, new LogEntry
             {
+                Date = _clock.UtcNow,
                 ShortMessage = "Ping pong :)"
             });
             if (result.Succeeded)

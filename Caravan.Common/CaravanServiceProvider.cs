@@ -15,7 +15,6 @@ using Finsa.Caravan.Common.Logging;
 using Finsa.CodeServices.Clock;
 using Ninject;
 using PommaLabs.KVLite;
-using System;
 
 namespace Finsa.Caravan.Common
 {
@@ -27,9 +26,25 @@ namespace Finsa.Caravan.Common
     public static class CaravanServiceProvider
     {
         /// <summary>
+        ///   Copia locale del kernel Ninject usato per la gestione automatica delle dipendenze.
+        /// </summary>
+        private static IKernel _ninjectKernel;
+
+        /// <summary>
         ///   Il kernel Ninject usato per la gestione automatica delle dipendenze.
         /// </summary>
-        public static IKernel Kernel { get; } = SetupKernel();
+        public static IKernel NinjectKernel
+        {
+            get { return _ninjectKernel; }
+            set
+            {
+                // Aggiorno le varie dipendenze.
+                Clock = value.Get<IClock>();
+
+                // Se tutto è andato bene, aggiorno il kernel globale.
+                _ninjectKernel = value;
+            }
+        }
 
         /// <summary>
         ///   La cache in memoria usata da alcuni punti critici di Caravan.
@@ -39,7 +54,7 @@ namespace Finsa.Caravan.Common
         /// <summary>
         ///   L'orologio usato di default per il calcolo dell'ora corrente.
         /// </summary>
-        public static IClock Clock { get; } = Kernel.Get<IClock>();
+        public static IClock Clock { get; private set; }
 
         /// <summary>
         ///   Il log di emergenza, usato quando il normale log di Caravan va in errore. Scrive
@@ -51,16 +66,5 @@ namespace Finsa.Caravan.Common
         ///   Il log standard di Caravan, che usualmente viene usato per portare i messaggi di log a database.
         /// </summary>
         public static ICaravanLog FetchLog<T>() => LogManager.GetLogger<T>() as ICaravanLog;
-
-        /// <summary>
-        ///   Va a cercare i moduli Ninject presenti nelle DLL caricate nell'AppDomain corrente.
-        /// </summary>
-        /// <returns>Un kernel Ninject propriamente configurato.</returns>
-        private static IKernel SetupKernel()
-        {
-            var kernel = new StandardKernel();
-            kernel.Load(AppDomain.CurrentDomain.GetAssemblies());
-            return kernel;
-        }
     }
 }

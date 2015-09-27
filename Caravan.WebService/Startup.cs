@@ -1,4 +1,5 @@
 ﻿using Common.Logging;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess.Logging.Sql;
 using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebApi.Middlewares;
@@ -26,7 +27,9 @@ namespace Finsa.Caravan.WebService
         public void Configuration(IAppBuilder app)
         {
             var config = new HttpConfiguration();
-            var kernel = CreateKernel();
+
+            // IMPORTANTE: Inizializzo anche il kernel di Caravan.
+            var kernel = CaravanServiceProvider.NinjectKernel = CreateKernel();
             var cache = kernel.Get<ICache>();
 
             // Inizializzatore per Caravan.

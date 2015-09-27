@@ -132,7 +132,7 @@
               Controller che si occupa della parte di logging.
             </summary>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.#ctor(Common.Logging.ILog)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.#ctor(Common.Logging.ILog,Finsa.CodeServices.Clock.IClock)">
             <summary>
               Inizializza il controller con l'istanza del log di Caravan.
             </summary>
