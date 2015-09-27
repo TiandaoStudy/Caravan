@@ -2,14 +2,20 @@
 using Common.Logging.Factory;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Serialization;
 using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace Finsa.Caravan.Common.Logging
 {
+    /// <summary>
+    ///   Logger personalizzato per gestire messaggi più complessi e per sfruttare al meglio le
+    ///   funzionalità introdotte in C#6.
+    /// </summary>
     sealed class CaravanLogger : AbstractLogger, ICaravanLog
     {
         /// <summary>
@@ -57,6 +63,7 @@ namespace Finsa.Caravan.Common.Logging
 
         #region Logging
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override void WriteInternal(LogLevel logLevel, object message, Exception exception)
         {
             var logMessage = new LogMessage
@@ -64,13 +71,14 @@ namespace Finsa.Caravan.Common.Logging
                 ShortMessage = message.SafeToString(),
                 Exception = exception
             };
-            var logEventInfo = new LogEventInfo(logLevel, _logger.Name, ToLogEntry(logMessage));
+            var logEventInfo = new LogEventInfo(logLevel, _logger.Name, ToLogEntry(logLevel, logMessage));
             _logger.Log(DeclaringType, logEventInfo);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void WriteLogMessage(LogLevel logLevel, LogMessage logMessage)
         {
-            var logEventInfo = new LogEventInfo(logLevel, _logger.Name, ToLogEntry(logMessage));
+            var logEventInfo = new LogEventInfo(logLevel, _logger.Name, ToLogEntry(logLevel, logMessage));
             _logger.Log(DeclaringType, logEventInfo);
         }
 
@@ -80,8 +88,9 @@ namespace Finsa.Caravan.Common.Logging
         ///   Per farlo, formatta ogni singolo pezzo del messaggio, in modo che il risultato sia
         ///   altamente leggibile.
         /// </summary>
+        /// <param name="logLevel">Il livello della voce di log.</param>
         /// <param name="logMessage">Il messaggio di log da trasformare.</param>
-        public static LogEntry ToLogEntry(LogMessage logMessage)
+        internal static LogEntry ToLogEntry(LogLevel logLevel, LogMessage logMessage)
         {
             // Eseguo una pulizia dell'oggetto .NET, in modo da avere un risultato molto pulito. Per
             // ShortMessage e Context mi limito a una TRIM (è difficile che siano su più righe),
@@ -120,6 +129,8 @@ namespace Finsa.Caravan.Common.Logging
 
             return new LogEntry
             {
+                LogLevel = logLevel,
+                AppName = CaravanCommonConfiguration.Instance.AppName,
                 ShortMessage = logMessage.ShortMessage?.Trim(),
                 LongMessage = tmpLongMessage,
                 Context = logMessage.Context?.Trim(),
@@ -313,7 +324,10 @@ namespace Finsa.Caravan.Common.Logging
 
         public void Catching(Action<FormatMessageHandler> formatMessageCallback, Exception exception)
         {
-            throw new NotImplementedException();
+            if (IsErrorEnabled)
+            {
+                WriteInternal(LogLevel.Error, new FormatMessageCallbackFormattedMessage(formatMessageCallback), exception);
+            }
         }
 
         public void Catching(object message, Exception exception)
@@ -335,17 +349,26 @@ namespace Finsa.Caravan.Common.Logging
 
         public void Catching(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback, Exception exception)
         {
-            throw new NotImplementedException();
+            if (IsErrorEnabled)
+            {
+                WriteInternal(LogLevel.Error, new FormatMessageCallbackFormattedMessage(formatProvider, formatMessageCallback), exception);
+            }
         }
 
         public void CatchingFormat(string format, Exception exception, params object[] args)
         {
-            throw new NotImplementedException();
+            if (IsErrorEnabled)
+            {
+                WriteInternal(LogLevel.Error, new StringFormatFormattedMessage(null, format, args), exception);
+            }
         }
 
         public void CatchingFormat(IFormatProvider formatProvider, string format, Exception exception, params object[] args)
         {
-            throw new NotImplementedException();
+            if (IsErrorEnabled)
+            {
+                WriteInternal(LogLevel.Error, new StringFormatFormattedMessage(formatProvider, format, args), exception);
+            }
         }
 
         #endregion Catching
@@ -370,7 +393,10 @@ namespace Finsa.Caravan.Common.Logging
 
         public void Throwing(Action<FormatMessageHandler> formatMessageCallback, Exception exception)
         {
-            throw new NotImplementedException();
+            if (IsErrorEnabled)
+            {
+                WriteInternal(LogLevel.Error, new FormatMessageCallbackFormattedMessage(formatMessageCallback), exception);
+            }
         }
 
         public void Throwing(object message, Exception exception)
@@ -392,17 +418,26 @@ namespace Finsa.Caravan.Common.Logging
 
         public void Throwing(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback, Exception exception)
         {
-            throw new NotImplementedException();
+            if (IsErrorEnabled)
+            {
+                WriteInternal(LogLevel.Error, new FormatMessageCallbackFormattedMessage(formatProvider, formatMessageCallback), exception);
+            }
         }
 
         public void ThrowingFormat(string format, Exception exception, params object[] args)
         {
-            throw new NotImplementedException();
+            if (IsErrorEnabled)
+            {
+                WriteInternal(LogLevel.Error, new StringFormatFormattedMessage(null, format, args), exception);
+            }
         }
 
         public void ThrowingFormat(IFormatProvider formatProvider, string format, Exception exception, params object[] args)
         {
-            throw new NotImplementedException();
+            if (IsErrorEnabled)
+            {
+                WriteInternal(LogLevel.Error, new StringFormatFormattedMessage(formatProvider, format, args), exception);
+            }
         }
 
         #endregion Throwing
@@ -429,7 +464,11 @@ namespace Finsa.Caravan.Common.Logging
 
         public bool Rethrowing(Action<FormatMessageHandler> formatMessageCallback, Exception exception)
         {
-            throw new NotImplementedException();
+            if (IsErrorEnabled)
+            {
+                WriteInternal(LogLevel.Error, new FormatMessageCallbackFormattedMessage(formatMessageCallback), exception);
+            }
+            return DoNotFilterException;
         }
 
         public bool Rethrowing(object message, Exception exception)
@@ -453,17 +492,29 @@ namespace Finsa.Caravan.Common.Logging
 
         public bool Rethrowing(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback, Exception exception)
         {
-            throw new NotImplementedException();
+            if (IsErrorEnabled)
+            {
+                WriteInternal(LogLevel.Error, new FormatMessageCallbackFormattedMessage(formatProvider, formatMessageCallback), exception);
+            }
+            return DoNotFilterException;
         }
 
         public bool RethrowingFormat(string format, Exception exception, params object[] args)
         {
-            throw new NotImplementedException();
+            if (IsErrorEnabled)
+            {
+                WriteInternal(LogLevel.Error, new StringFormatFormattedMessage(null, format, args), exception);
+            }
+            return DoNotFilterException;
         }
 
         public bool RethrowingFormat(IFormatProvider formatProvider, string format, Exception exception, params object[] args)
         {
-            throw new NotImplementedException();
+            if (IsErrorEnabled)
+            {
+                WriteInternal(LogLevel.Error, new StringFormatFormattedMessage(formatProvider, format, args), exception);
+            }
+            return DoNotFilterException;
         }
 
         #endregion Rethrowing
@@ -472,16 +523,17 @@ namespace Finsa.Caravan.Common.Logging
 
         #region Custom LogEventInfo
 
-        sealed class LogEventInfo : NLog.LogEventInfo
+        internal sealed class LogEventInfo : NLog.LogEventInfo
         {
             public LogEventInfo(LogLevel logLevel, string loggerName, LogEntry logEntry)
-                : base(ToNLogLevel(logLevel), loggerName, logEntry.ShortMessage)
+                : base(ToNLogLevel(logLevel), loggerName, ToFormattedMessage(logEntry))
             {
                 LogEntry = logEntry;
             }
 
             public LogEntry LogEntry { get; }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             private static NLog.LogLevel ToNLogLevel(LogLevel logLevel)
             {
                 switch (logLevel)
@@ -510,6 +562,18 @@ namespace Finsa.Caravan.Common.Logging
                     default:
                         throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, "Unknown log level");
                 }
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            private static string ToFormattedMessage(LogEntry logEntry)
+            {
+                // Generazione della serializzazione YAML.
+                var yaml = logEntry.ToYamlString(LogMessage.ReadableYamlSettings);
+                yaml = RemoveBlankRows.Replace(yaml, string.Empty);
+
+                // Aggiungo NewLine così che nei file di testo parta da una riga sotto, dato che il
+                // messaggio YAML è sicuramente molto lungo.
+                return Environment.NewLine + yaml;
             }
         }
 

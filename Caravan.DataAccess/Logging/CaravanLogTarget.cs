@@ -1,4 +1,5 @@
 ﻿using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Extensions;
@@ -48,7 +49,7 @@ namespace Finsa.Caravan.DataAccess.Logging
         public Layout Context { get; set; }
 
         /// <summary>
-        ///   Writes logging event to the log target. classes.
+        ///   Writes logging event to the log target classes.
         /// </summary>
         /// <param name="logEvent">Logging event to be written out.</param>
         protected override void Write(LogEventInfo logEvent)
@@ -70,16 +71,30 @@ namespace Finsa.Caravan.DataAccess.Logging
             }
         }
 
-        protected override void Write(AsyncLogEventInfo logEvent)
-        {
-            Write(logEvent.LogEvent);
-        }
-
-        protected override void Write(AsyncLogEventInfo[] logEvents)
+        protected override void Write(AsyncLogEventInfo asyncLogEvent)
         {
             try
             {
-                var logEntries = logEvents.Select(le => ToLogEntry(le.LogEvent));
+                var logEntry = ToLogEntry(asyncLogEvent.LogEvent);
+                var result = CaravanDataSource.Logger.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, logEntry).Result;
+
+                if (!result.Succeeded)
+                {
+                    throw result.Exception;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Uso il log di emergenza nel caso ci siano stati errori.
+                UseEmergencyLog(ex, asyncLogEvent.LogEvent.FormattedMessage);
+            }
+        }
+
+        protected override void Write(AsyncLogEventInfo[] asyncLogEvents)
+        {
+            try
+            {
+                var logEntries = asyncLogEvents.Select(le => ToLogEntry(le.LogEvent));
                 var result = CaravanDataSource.Logger.AddEntriesAsync(CaravanCommonConfiguration.Instance.AppName, logEntries).Result;
 
                 if (!result.Succeeded)
@@ -96,44 +111,38 @@ namespace Finsa.Caravan.DataAccess.Logging
 
         protected override void FlushAsync(AsyncContinuation asyncContinuation)
         {
+            // Nulla da fare...
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        
         private LogEntry ToLogEntry(LogEventInfo logEvent)
         {
-            // Il messaggio che è giunto nel log: può essere una stringa semplice, oppure uno YAML
-            // di LogMessage.
-            var formattedMessage = logEvent.FormattedMessage;
-
-            // Verifico se è stato passato un LogMessage come parametro. Se si, lo uso, altrimenti
-            // ne creo uno vuoto e inserisco valori di default.
-            var logMessage = (logEvent.Parameters?.GetValue(0) as LogMessage) ?? new LogMessage
+            LogEntry logEntry;
+            
+            var caravanLogEvent = logEvent as CaravanLogger.LogEventInfo;
+            if (caravanLogEvent != null)
             {
-                ShortMessage = formattedMessage,
-                LongMessage = string.Empty,
-                Context = string.Empty
-            };
-
-            // Valuto se si tratta di un messaggio a cui è stata allegata una eccezione.
-            var exception = logEvent.Exception;
-            if (exception != null)
+                // Innanzitutto, cerco di vedere se si tratta di un evento di log prodotto da Caravan,
+                // cosa che dovrebbe avvenire nel 100% dei casi. Se si, applico un meccanismo di log
+                // molto più efficiente, avendo già preparato il messaggio in precedenza.
+                logEntry = caravanLogEvent.LogEntry;
+            }
+            else
             {
-                // Arricchisco il messaggio di log con le info presenti nell'eccezione.
-                logMessage.Exception = exception;
+                // Se non lo è, cerco di generare comunque un messaggio abbozzato.
+                logEntry = CaravanLogger.ToLogEntry(ParseLogLevel(logEvent.Level), new LogMessage
+                {
+                    ShortMessage = logEvent.FormattedMessage?.Trim(),
+                    Exception = logEvent.Exception
+                });
             }
 
-            return new LogEntry
-            {
-                LogLevel = ParseLogLevel(logEvent.Level),
-                AppName = CaravanCommonConfiguration.Instance.AppName,
-                UserLogin = UserLogin.Render(logEvent),
-                CodeUnit = CodeUnit.Render(logEvent),
-                Function = Function.Render(logEvent),
-                ShortMessage = logMessage.ShortMessage,
-                LongMessage = logMessage.LongMessage,
-                Context = Context?.Render(logEvent) ?? logMessage.Context,
-                Arguments = logMessage.Arguments?.Select(a => KeyValuePair.Create(a.Key, a.Value.SafeToString())).ToGTuple()
-            };
+            // Arricchisco la voce di log con ulteriori informazioni.
+            logEntry.UserLogin = UserLogin.Render(logEvent);
+            logEntry.CodeUnit = CodeUnit.Render(logEvent);
+            logEntry.Function = Function.Render(logEvent);
+            logEntry.Context = Context?.Render(logEvent) ?? logEntry.Context;
+
+            return logEntry;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -170,6 +179,7 @@ namespace Finsa.Caravan.DataAccess.Logging
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void UseEmergencyLog(Exception ex, string logMessage)
         {
             try
