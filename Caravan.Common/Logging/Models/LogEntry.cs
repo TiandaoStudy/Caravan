@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
+using YamlDotNet.Serialization;
 
 namespace Finsa.Caravan.Common.Logging.Models
 {
@@ -15,7 +16,7 @@ namespace Finsa.Caravan.Common.Logging.Models
         [JsonProperty(Order = 0), DataMember(Order = 0)]
         public string AppName { get; set; }
 
-        [JsonProperty(Order = 1), DataMember(Order = 1)]
+        [JsonProperty(Order = 1), DataMember(Order = 1), YamlIgnore]
         public long Id { get; set; }
 
         [JsonProperty(Order = 2), DataMember(Order = 2), JsonConverter(typeof(StringEnumConverter))]
