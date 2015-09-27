@@ -80,7 +80,7 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 await CleanUpEntriesAsyncInternal(null);
             }
-            catch (Exception ex) when (Log.Exception(new LogMessage { Context = logCtx, Exception = ex }))
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
@@ -95,7 +95,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), nameof(appName));
                 await CleanUpEntriesAsyncInternal(appName.ToLowerInvariant());
             }
-            catch (Exception ex) when (Log.Exception(new LogMessage { Context = logCtx, Exception = ex }))
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }

@@ -53,7 +53,7 @@ namespace Finsa.Caravan.DataAccess.Core
                     throw new SecAppExistingException();
                 }
             }
-            catch (Exception ex) when (Log.Exception(new LogMessage { Context = logCtx, Exception = ex }))
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
@@ -98,7 +98,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 }
                 Log.Warn(() => new LogMessage { ShortMessage = $"ADDED GROUP '{newGroup.Name}' TO '{appName}'", Context = logCtx });
             }
-            catch (Exception ex) when (Log.Exception(new LogMessage { Context = logCtx, Exception = ex }))
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
@@ -119,7 +119,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 }
                 Log.Warn(() => new LogMessage { ShortMessage = $"REMOVED GROUP '{groupName}' FROM '{appName}'", Context = logCtx });
             }
-            catch (Exception ex) when (Log.Exception(new LogMessage { Context = logCtx, Exception = ex }))
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
@@ -149,7 +149,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 }
                 Log.Warn(() => new LogMessage { ShortMessage = $"UPDATED GROUP '{groupName}' IN '{appName}'", Context = logCtx });
             }
-            catch (Exception ex) when (Log.Exception(new LogMessage { Context = logCtx, Exception = ex }))
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
@@ -214,7 +214,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 }
                 Log.Warn(() => new LogMessage { ShortMessage = $"ADDED USER '{newUser.Login}' TO '{appName}'", Context = logCtx });
             }
-            catch (Exception ex) when (Log.Exception(new LogMessage { Context = logCtx, Exception = ex }))
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
@@ -235,7 +235,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 }
                 Log.Warn(() => new LogMessage { ShortMessage = $"REMOVED USER '{userLogin}' FROM '{appName}'", Context = logCtx });
             }
-            catch (Exception ex) when (Log.Exception(new LogMessage { Context = logCtx, Exception = ex }))
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
@@ -265,7 +265,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 }
                 Log.Warn(() => new LogMessage { ShortMessage = $"UPDATED USER '{userLogin}' IN '{appName}'", Context = logCtx });
             }
-            catch (Exception ex) when (Log.Exception(new LogMessage { Context = logCtx, Exception = ex }))
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
@@ -287,7 +287,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 }
                 Log.Warn(() => new LogMessage { ShortMessage = $"ADDED USER '{userLogin}' TO GROUP '{groupName}' IN '{appName}'", Context = logCtx });
             }
-            catch (Exception ex) when (Log.Exception(new LogMessage { Context = logCtx, Exception = ex }))
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
@@ -309,7 +309,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 }
                 Log.Warn(() => new LogMessage { ShortMessage = $"REMOVED USER '{userLogin}' FROM GROUP '{groupName}' IN '{appName}'", Context = logCtx });
             }
-            catch (Exception ex) when (Log.Exception(new LogMessage { Context = logCtx, Exception = ex }))
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
@@ -419,7 +419,7 @@ namespace Finsa.Caravan.DataAccess.Core
                     Context = logCtx
                 });
             }
-            catch (Exception ex) when (Log.Exception(new LogMessage { Context = logCtx, Exception = ex }))
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
@@ -453,7 +453,7 @@ namespace Finsa.Caravan.DataAccess.Core
                     Context = logCtx
                 });
             }
-            catch (Exception ex) when (Log.Exception(new LogMessage { Context = logCtx, Exception = ex }))
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
