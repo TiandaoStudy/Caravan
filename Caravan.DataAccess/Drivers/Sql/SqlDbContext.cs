@@ -4,6 +4,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Transactions;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Identity;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -76,6 +77,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         }
 
         #region DB Sets
+
+        //public DbSet<SqlIdnClient> IdnClients { get; set; }
 
         public DbSet<SqlLogEntry> LogEntries { get; set; }
 
