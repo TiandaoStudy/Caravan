@@ -10,7 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using Finsa.Caravan.Common.Models.Security;
+using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebApi.Models.Security;
 using System;

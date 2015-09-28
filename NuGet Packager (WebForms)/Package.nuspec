@@ -3,7 +3,7 @@
 <package>
     <metadata>
         <id>Finsa.Caravan.WebForms</id>
-        <version>1.17.0</version>
+        <version>1.18.0</version>
         <title>Finsa.Caravan.WebForms</title>
         <authors>Finsa S.p.A.</authors>
         <owners>Finsa S.p.A.</owners>
@@ -24,8 +24,8 @@ A short description of the package. If specified, this shows up in the middle pa
         <dependencies>
             <dependency id="ClosedXML" version="0.76.0" />
             <dependency id="Dapper" version="1.42" />
-            <dependency id="Finsa.Caravan.Common.Runtime" version="1.17.0" />
-            <dependency id="Finsa.Caravan.DataAccess.Runtime" version="1.17.0" />
+            <dependency id="Finsa.Caravan.Common.Runtime" version="1.18.0" />
+            <dependency id="Finsa.Caravan.DataAccess.Runtime" version="1.18.0" />
             <dependency id="iTextSharp-LGPL" version="4.1.6" />
             <dependency id="Microsoft.Report.Viewer" version="[11.0.0.0]" />
             <dependency id="Microsoft.SqlServer.Types" version="[11.0.1]" />
