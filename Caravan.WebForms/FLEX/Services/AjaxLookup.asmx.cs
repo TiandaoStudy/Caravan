@@ -16,6 +16,8 @@ using Finsa.CodeServices.Common.Collections;
 using Finsa.CodeServices.Common.Text;
 using FLEX.Web.XmlSettings.AjaxLookup;
 using PommaLabs.KVLite;
+using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common;
 
 // ReSharper disable CheckNamespace This is the correct namespace, despite the file physical position.
 
@@ -39,6 +41,8 @@ namespace FLEX.Web.Services
         private const string TokenStart = "{:";
         private const string UserQueryToken = "{:UserQuery:}";
 
+        private static readonly ICaravanLog Log = CaravanServiceProvider.FetchLog<AjaxLookup>();
+
         [WebMethod]
         public List<Result> Lookup(string xmlLookup, string lookupBy, string userQuery, string queryFilter)
         {
@@ -48,7 +52,7 @@ namespace FLEX.Web.Services
             }
             catch (Exception exc)
             {
-                CaravanDataSource.Logger.LogError<AjaxLookup>(exc);
+                Log.Catching(exc);
                 return new List<Result> { new Result("ERR", "Service Error", exc.Message) };
             }
         }

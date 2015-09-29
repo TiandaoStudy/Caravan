@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Models.Security;
+using Finsa.Caravan.Common.Logging.Models;
+using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using Finsa.CodeServices.Common;
@@ -16,7 +16,7 @@ namespace Finsa.Caravan.DataAccess
     ///   Configuration class for Caravan.DataAccess. Default values are set inside the
     ///   configuration file itself.
     /// </summary>
-    public sealed class DataAccessConfiguration : AppConfiguration
+    public sealed class CaravanDataAccessConfiguration : AppConfiguration
     {
         #region Static instance
 
@@ -24,9 +24,9 @@ namespace Finsa.Caravan.DataAccess
         ///   Gets the static configuration instance.
         /// </summary>
         /// <value>The static configuration instance.</value>
-        public static DataAccessConfiguration Instance { get; } = InitializeInstance();
+        public static CaravanDataAccessConfiguration Instance { get; } = InitializeInstance();
 
-        static DataAccessConfiguration InitializeInstance()
+        static CaravanDataAccessConfiguration InitializeInstance()
         {
             var configurationFile = "Caravan.config";
             if (PortableEnvironment.AppIsRunningOnAspNet)
@@ -37,8 +37,8 @@ namespace Finsa.Caravan.DataAccess
                 configurationFile = "~/" + configurationFile;
             }
 
-            var instance = new DataAccessConfiguration();
-            instance.Initialize(new ConfigurationFileConfigurationProvider<DataAccessConfiguration>
+            var instance = new CaravanDataAccessConfiguration();
+            instance.Initialize(new ConfigurationFileConfigurationProvider<CaravanDataAccessConfiguration>
             {
                 ConfigurationFile = PortableEnvironment.MapPath(configurationFile),
                 ConfigurationSection = "caravan.dataAccess"
@@ -52,10 +52,10 @@ namespace Finsa.Caravan.DataAccess
         #endregion Static instance
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="CommonConfiguration"/> class and sets the
+        ///   Initializes a new instance of the <see cref="CaravanCommonConfiguration"/> class and sets the
         ///   default values for each configuration entry.
         /// </summary>
-        public DataAccessConfiguration()
+        public CaravanDataAccessConfiguration()
         {
             ConnectionString = string.Empty;
             DataSourceKind = CaravanDataSourceKind.FakeSql;

@@ -1,4 +1,4 @@
-﻿using Finsa.Caravan.Common.Models.Logging;
+﻿using Finsa.Caravan.Common.Logging.Models;
 using Newtonsoft.Json;
 using System;
 using System.Net;

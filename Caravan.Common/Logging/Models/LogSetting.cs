@@ -1,13 +1,13 @@
 ﻿using Common.Logging;
+using Finsa.CodeServices.Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
-using Finsa.CodeServices.Common;
 
-namespace Finsa.Caravan.Common.Models.Logging
+namespace Finsa.Caravan.Common.Logging.Models
 {
     [Serializable, JsonObject(MemberSerialization.OptIn), DataContract]
     public class LogSetting : EquatableObject<LogSetting>
@@ -29,9 +29,9 @@ namespace Finsa.Caravan.Common.Models.Logging
 
         protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return KeyValuePair.Create("AppName", AppName);
-            yield return KeyValuePair.Create("LogLevel", LogLevel.ToString());
-            yield return KeyValuePair.Create("Enabled", Enabled.ToString(CultureInfo.InvariantCulture));
+            yield return KeyValuePair.Create(nameof(AppName), AppName);
+            yield return KeyValuePair.Create(nameof(LogLevel), LogLevel.ToString());
+            yield return KeyValuePair.Create(nameof(Enabled), Enabled.ToString(CultureInfo.InvariantCulture));
         }
 
         protected override IEnumerable<object> GetIdentifyingMembers()

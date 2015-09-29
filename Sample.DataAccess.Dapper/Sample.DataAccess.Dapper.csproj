@@ -115,9 +115,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Caravan.DataAccess\Caravan.DataAccess.csproj">
+    <ProjectReference Include="..\Caravan.DataAccess\Caravan.DataAccess.NET45.csproj">
       <Project>{418B2D91-D53E-49BF-98FC-66DA9490DC37}</Project>
-      <Name>Caravan.DataAccess</Name>
+      <Name>Caravan.DataAccess.NET45</Name>
     </ProjectReference>
     <ProjectReference Include="..\Caravan.Common\Caravan.Common.NET45.csproj">
       <Project>{11904ED0-33D2-4005-8766-B1E393A32EA7}</Project>

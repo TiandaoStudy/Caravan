@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common.Portability;
 using Finsa.CodeServices.Security.PasswordHashing;
 using Microsoft.AspNet.Identity;
 using Owin;
-using Thinktecture.IdentityServer.AspNetIdentity;
-using Thinktecture.IdentityServer.Core.Configuration;
-using Thinktecture.IdentityServer.Core.Models;
-using Thinktecture.IdentityServer.Core.Services;
-using Thinktecture.IdentityServer.Core.Services.InMemory;
+using IdentityServer3.AspNetIdentity;
+using IdentityServer3.Core.Configuration;
+using IdentityServer3.Core.Models;
+using IdentityServer3.Core.Services;
+using IdentityServer3.Core.Services.InMemory;
+using Finsa.Caravan.Common.Security.Models;
 
 namespace Finsa.Caravan.WebService
 {
@@ -30,7 +30,7 @@ namespace Finsa.Caravan.WebService
                     Enabled = true,
 
                     ClientId = "CaravanWebServiceDemo",
-                    ClientSecrets = new List<ClientSecret> {new ClientSecret("CaravanSecret".Sha256())},
+                    ClientSecrets = new List<Secret> {new Secret("CaravanSecret".Sha256())},
 
                     Flow = Flows.ResourceOwner,
                     AccessTokenType = AccessTokenType.Jwt,
@@ -85,8 +85,8 @@ namespace Finsa.Caravan.WebService
                 EnableWelcomePage = true,
 
                 Factory = Configure("MyIdentityDb"),
-
-                CorsPolicy = CorsPolicy.AllowAll
+                
+                //CorsPolicy = CorsPolicy.AllowAll
             }));
         }
 
@@ -98,32 +98,37 @@ namespace Finsa.Caravan.WebService
 
         class CaravanUserService : IUserService
         {
-            public Task<AuthenticateResult> PreAuthenticateAsync(SignInMessage message)
+            public Task PreAuthenticateAsync(PreAuthenticationContext context)
             {
                 throw new NotImplementedException();
             }
 
-            public Task<AuthenticateResult> AuthenticateLocalAsync(string username, string password, SignInMessage message)
+            public Task AuthenticateLocalAsync(LocalAuthenticationContext context)
             {
                 throw new NotImplementedException();
             }
 
-            public Task<AuthenticateResult> AuthenticateExternalAsync(ExternalIdentity externalUser, SignInMessage message)
+            public Task AuthenticateExternalAsync(ExternalAuthenticationContext context)
             {
                 throw new NotImplementedException();
             }
 
-            public Task SignOutAsync(ClaimsPrincipal subject)
+            public Task PostAuthenticateAsync(PostAuthenticationContext context)
             {
                 throw new NotImplementedException();
             }
 
-            public Task<IEnumerable<Claim>> GetProfileDataAsync(ClaimsPrincipal subject, IEnumerable<string> requestedClaimTypes = null)
+            public Task SignOutAsync(SignOutContext context)
             {
                 throw new NotImplementedException();
             }
 
-            public Task<bool> IsActiveAsync(ClaimsPrincipal subject)
+            public Task GetProfileDataAsync(ProfileDataRequestContext context)
+            {
+                throw new NotImplementedException();
+            }
+
+            public Task IsActiveAsync(IsActiveContext context)
             {
                 throw new NotImplementedException();
             }

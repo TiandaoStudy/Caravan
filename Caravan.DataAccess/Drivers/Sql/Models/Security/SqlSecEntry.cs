@@ -41,7 +41,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
     {
         public SqlSecEntryTypeConfiguration()
         {
-            ToTable("CRVN_SEC_ENTRIES", DataAccessConfiguration.Instance.SqlSchema);
+            ToTable("CRVN_SEC_ENTRIES", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             // SqlSecEntry(N) <-> SqlSecUser(1)
             HasOptional(x => x.User)

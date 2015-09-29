@@ -77,9 +77,9 @@
       <Project>{11904ED0-33D2-4005-8766-B1E393A32EA7}</Project>
       <Name>Caravan.Common.NET45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Caravan.DataAccess\Caravan.DataAccess.csproj">
+    <ProjectReference Include="..\Caravan.DataAccess\Caravan.DataAccess.NET45.csproj">
       <Project>{418b2d91-d53e-49bf-98fc-66da9490dc37}</Project>
-      <Name>Caravan.DataAccess</Name>
+      <Name>Caravan.DataAccess.NET45</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

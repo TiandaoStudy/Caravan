@@ -1,16 +1,21 @@
-﻿using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.Common.Security;
+﻿using Finsa.Caravan.Common.Security;
 using Finsa.CodeServices.Common;
 using PommaLabs.Thrower;
 using System;
 using System.Linq;
 using Finsa.Caravan.Common.Logging.Exceptions;
 using Finsa.Caravan.Common.Security.Exceptions;
+using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging.Models;
+using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Security.Models;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
     internal abstract class AbstractSecurityRepository<TSec> : ICaravanSecurityRepository where TSec : AbstractSecurityRepository<TSec>
     {
+        protected ICaravanLog Log { get; } = CaravanServiceProvider.FetchLog<TSec>();
+
         public SecApp CurrentApp { get; private set; }
 
         public SecUser CurrentUser { get; private set; }
@@ -38,7 +43,7 @@ namespace Finsa.Caravan.DataAccess.Core
             Raise<ArgumentNullException>.IfIsNull(app);
             Raise<ArgumentException>.IfIsEmpty(app.Name);
 
-            const string logCtx = "Adding a new app";
+            const string logCtx = "Adding a new APP";
 
             try
             {
@@ -48,10 +53,9 @@ namespace Finsa.Caravan.DataAccess.Core
                     throw new SecAppExistingException();
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
-                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx);
-                throw;
+                // Lascio emergere l'eccezione...
             }
         }
 
@@ -83,7 +87,7 @@ namespace Finsa.Caravan.DataAccess.Core
             Raise<ArgumentNullException>.IfIsNull(newGroup);
             Raise<ArgumentException>.IfIsEmpty(newGroup.Name);
 
-            const string logCtx = "Adding a new group";
+            const string logCtx = "Adding a new GROUP";
 
             try
             {
@@ -92,12 +96,11 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     throw new SecGroupExistingException();
                 }
-                CaravanDataSource.Logger.LogWarnAsync<TSec>("ADDED GROUP", context: logCtx, appName: appName);
+                Log.Warn(() => new LogMessage { ShortMessage = $"ADDED GROUP '{newGroup.Name}' TO '{appName}'", Context = logCtx });
             }
-            catch (Exception ex)
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
-                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
-                throw;
+                // Lascio emergere l'eccezione...
             }
         }
 
@@ -106,7 +109,7 @@ namespace Finsa.Caravan.DataAccess.Core
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(groupName);
 
-            const string logCtx = "Removing a group";
+            const string logCtx = "Removing a GROUP";
 
             try
             {
@@ -114,12 +117,11 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     throw new SecGroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
                 }
-                CaravanDataSource.Logger.LogWarnAsync<TSec>("REMOVED GROUP", context: logCtx, appName: appName);
+                Log.Warn(() => new LogMessage { ShortMessage = $"REMOVED GROUP '{groupName}' FROM '{appName}'", Context = logCtx });
             }
-            catch (Exception ex)
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
-                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
-                throw;
+                // Lascio emergere l'eccezione...
             }
         }
 
@@ -130,7 +132,7 @@ namespace Finsa.Caravan.DataAccess.Core
             Raise<ArgumentNullException>.IfIsNull(groupUpdates);
             Raise<ArgumentException>.If(groupUpdates.Name.HasValue && string.IsNullOrWhiteSpace(groupUpdates.Name.Value));
 
-            const string logCtx = "Updating a group";
+            const string logCtx = "Updating a GROUP";
 
             try
             {
@@ -145,13 +147,11 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     throw new SecGroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
                 }
-
-                CaravanDataSource.Logger.LogWarnAsync<TSec>("UPDATED GROUP", context: logCtx, appName: appName);
+                Log.Warn(() => new LogMessage { ShortMessage = $"UPDATED GROUP '{groupName}' IN '{appName}'", Context = logCtx });
             }
-            catch (Exception ex)
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
-                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
-                throw;
+                // Lascio emergere l'eccezione...
             }
         }
 
@@ -203,7 +203,7 @@ namespace Finsa.Caravan.DataAccess.Core
             Raise<ArgumentNullException>.IfIsNull(newUser);
             Raise<ArgumentException>.IfIsEmpty(newUser.Login);
 
-            const string logCtx = "Adding a new user";
+            const string logCtx = "Adding a new USER";
 
             try
             {
@@ -212,12 +212,11 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     throw new SecUserExistingException();
                 }
-                CaravanDataSource.Logger.LogWarnAsync<TSec>("ADDED USER", context: logCtx, appName: appName);
+                Log.Warn(() => new LogMessage { ShortMessage = $"ADDED USER '{newUser.Login}' TO '{appName}'", Context = logCtx });
             }
-            catch (Exception ex)
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
-                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
-                throw;
+                // Lascio emergere l'eccezione...
             }
         }
 
@@ -226,7 +225,7 @@ namespace Finsa.Caravan.DataAccess.Core
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(userLogin);
 
-            const string logCtx = "Removing an user";
+            const string logCtx = "Removing an USER";
 
             try
             {
@@ -234,12 +233,11 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     throw new SecUserNotFoundException();
                 }
-                CaravanDataSource.Logger.LogWarnAsync<TSec>("REMOVED USER", context: logCtx, appName: appName);
+                Log.Warn(() => new LogMessage { ShortMessage = $"REMOVED USER '{userLogin}' FROM '{appName}'", Context = logCtx });
             }
-            catch (Exception ex)
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
-                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
-                throw;
+                // Lascio emergere l'eccezione...
             }
         }
 
@@ -250,7 +248,7 @@ namespace Finsa.Caravan.DataAccess.Core
             Raise<ArgumentNullException>.IfIsNull(userUpdates);
             Raise<ArgumentException>.If(userUpdates.Login.HasValue && string.IsNullOrWhiteSpace(userUpdates.Login.Value));
 
-            const string logCtx = "Updating an user";
+            const string logCtx = "Updating an USER";
 
             try
             {
@@ -265,13 +263,11 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     throw new SecUserNotFoundException();
                 }
-
-                CaravanDataSource.Logger.LogWarnAsync<TSec>("UPDATED USER", context: logCtx, appName: appName);
+                Log.Warn(() => new LogMessage { ShortMessage = $"UPDATED USER '{userLogin}' IN '{appName}'", Context = logCtx });
             }
-            catch (Exception ex)
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
-                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
-                throw;
+                // Lascio emergere l'eccezione...
             }
         }
 
@@ -281,7 +277,7 @@ namespace Finsa.Caravan.DataAccess.Core
             Raise<ArgumentException>.IfIsEmpty(userLogin);
             Raise<ArgumentException>.IfIsEmpty(groupName);
 
-            const string logCtx = "Adding an user to a group";
+            const string logCtx = "Adding an USER to a GROUP";
 
             try
             {
@@ -289,12 +285,11 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     throw new SecUserExistingException();
                 }
-                CaravanDataSource.Logger.LogWarnAsync<TSec>("ADDED USER TO GROUP", context: logCtx, appName: appName);
+                Log.Warn(() => new LogMessage { ShortMessage = $"ADDED USER '{userLogin}' TO GROUP '{groupName}' IN '{appName}'", Context = logCtx });
             }
-            catch (Exception ex)
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
-                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
-                throw;
+                // Lascio emergere l'eccezione...
             }
         }
 
@@ -304,7 +299,7 @@ namespace Finsa.Caravan.DataAccess.Core
             Raise<ArgumentException>.IfIsEmpty(userLogin);
             Raise<ArgumentException>.IfIsEmpty(groupName);
 
-            const string logCtx = "Removing an user from a group";
+            const string logCtx = "Removing an USER from a GROUP";
 
             try
             {
@@ -312,12 +307,11 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     throw new SecUserNotFoundException();
                 }
-                CaravanDataSource.Logger.LogWarnAsync<TSec>("REMOVED USER FROM GROUP", context: logCtx, appName: appName);
+                Log.Warn(() => new LogMessage { ShortMessage = $"REMOVED USER '{userLogin}' FROM GROUP '{groupName}' IN '{appName}'", Context = logCtx });
             }
-            catch (Exception ex)
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
-                CaravanDataSource.Logger.LogErrorAsync<AbstractSecurityRepository<TSec>>(ex, logCtx, appName: appName);
-                throw;
+                // Lascio emergere l'eccezione...
             }
         }
 
@@ -401,7 +395,6 @@ namespace Finsa.Caravan.DataAccess.Core
             Raise<ArgumentException>.If(!string.IsNullOrWhiteSpace(userLogin) && groupName != null);
             Raise<ArgumentException>.If(!string.IsNullOrWhiteSpace(groupName) && userLogin != null);
 
-            const string logShort = "Security entry for object '{0}' in context '{1}' has been added for '{2}'";
             const string logCtx = "Adding a new security entry";
 
             try
@@ -420,12 +413,15 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     throw new LogEntryExistingException();
                 }
-                CaravanDataSource.Logger.LogWarnAsync<TSec>(string.Format(logShort, secObject.Name, secContext.Name, userLogin ?? groupName), context: logCtx, appName: appName);
+                Log.Warn(() => new LogMessage
+                {
+                    ShortMessage = $"Security entry for object '{secObject.Name}' in context '{secContext.Name}' has been added for '{userLogin ?? groupName}'",
+                    Context = logCtx
+                });
             }
-            catch (Exception ex)
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
-                CaravanDataSource.Logger.LogWarnAsync<TSec>(ex, logCtx, appName: appName);
-                throw;
+                // Lascio emergere l'eccezione...
             }
         }
 
@@ -438,7 +434,6 @@ namespace Finsa.Caravan.DataAccess.Core
             Raise<ArgumentException>.If(!string.IsNullOrWhiteSpace(userLogin) && groupName != null);
             Raise<ArgumentException>.If(!string.IsNullOrWhiteSpace(groupName) && userLogin != null);
 
-            const string logShort = "Security entry for object '{0}' in context '{1}' has been removed for '{2}'";
             const string logCtx = "Removing a security entry";
 
             try
@@ -452,12 +447,15 @@ namespace Finsa.Caravan.DataAccess.Core
                     groupName = groupName.ToLowerInvariant();
                 }
                 RemoveEntryInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant(), objectName.ToLowerInvariant(), userLogin, groupName);
-                CaravanDataSource.Logger.LogWarnAsync<TSec>(string.Format(logShort, objectName.ToLowerInvariant(), contextName.ToLowerInvariant(), userLogin ?? groupName), context: logCtx, appName: appName);
+                Log.Warn(() => new LogMessage
+                {
+                    ShortMessage = $"Security entry for object '{objectName.ToLowerInvariant()}' in context '{contextName.ToLowerInvariant()}' has been removed for '{userLogin ?? groupName}'",
+                    Context = logCtx
+                });
             }
-            catch (Exception ex)
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
-                CaravanDataSource.Logger.LogWarnAsync<TSec>(ex, logCtx, appName: appName);
-                throw;
+                // Lascio emergere l'eccezione...
             }
         }
 

@@ -1,7 +1,7 @@
 using AutoMapper;
 using Common.Logging;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Models.Logging;
+using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
@@ -24,136 +24,92 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         #endregion Constants
 
-        public override async Task<LogResult> AddEntriesAsync(string appName, IEnumerable<LogEntry> logEntries)
+        protected override async Task AddEntryAsyncInternal(string appName, LogEntry logEntry)
         {
-            try
+            // Creo un contesto di lettura perché non eseguo alcuna UPDATE.
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
-                RaiseArgumentNullException.IfIsNull(logEntries, nameof(logEntries));
+                var settings = await GetAndSetCachedSettingsAsync(appName, ctx);
 
-                // Creo un contesto di lettura perché non eseguo alcuna UPDATE.
-                using (var ctx = SqlDbContext.CreateReadContext())
+                var sqlLogSettingId = ToSqlLogSettingId(logEntry.LogLevel);
+                var sqlLogSetting = settings[sqlLogSettingId];
+
+                if (sqlLogSetting.Enabled)
                 {
-                    var settings = await GetAndSetCachedSettingsAsync(appName, ctx);
-
-                    foreach (var logEntry in logEntries)
-                    {
-                        var sqlLogSettingId = ToSqlLogSettingId(logEntry.LogLevel);
-                        var sqlLogSetting = settings[sqlLogSettingId];
-
-                        if (sqlLogSetting.Enabled)
-                        {
-                            ctx.LogEntries.Add(ToSqlLogEntry(logEntry, sqlLogSetting));
-                        }
-                    }
-
-                    await ctx.SaveChangesAsync();
-                    return LogResult.Success;
+                    ctx.LogEntries.Add(ToSqlLogEntry(logEntry, sqlLogSetting));
                 }
-            }
-            catch (Exception ex)
-            {
-                return LogResult.Failure(ex);
+
+                await ctx.SaveChangesAsync();
             }
         }
 
-        protected override LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function,
-           string shortMessage, string longMessage, string context, IList<KeyValuePair<string, string>> args)
+        protected override async Task AddEntriesAsyncInternal(string appName, IEnumerable<LogEntry> logEntries)
         {
-            try
+            // Creo un contesto di lettura perché non eseguo alcuna UPDATE.
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
-                Raise<ArgumentException>.IfIsEmpty(codeUnit);
+                var settings = await GetAndSetCachedSettingsAsync(appName, ctx);
 
-                using (var ctx = SqlDbContext.CreateWriteContext())
+                foreach (var logEntry in logEntries)
                 {
-                    var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
-                    var logLevelId = ToSqlLogSettingId(logLevel);
-                    var setting = ctx.LogSettings.First(s => s.AppId == appId && s.LogLevel == logLevelId);
+                    var sqlLogSettingId = ToSqlLogSettingId(logEntry.LogLevel);
+                    var sqlLogSetting = settings[sqlLogSettingId];
 
-                    // If log is enabled, then we can insert a new entry.
-                    if (setting.Enabled)
+                    if (sqlLogSetting.Enabled)
                     {
-                        var entry = new SqlLogEntry
-                        {
-                            Date = ServiceProvider.CurrentDateTime(),
-                            AppId = appId,
-                            LogLevel = logLevelId,
-                            UserLogin = userLogin.Truncate(SqlDbContext.SmallLength).ToLowerInvariant(),
-                            CodeUnit = codeUnit.Truncate(SqlDbContext.MediumLength).ToLowerInvariant(),
-                            Function = function.Truncate(SqlDbContext.MediumLength).ToLowerInvariant(),
-                            ShortMessage = shortMessage.Truncate(SqlDbContext.LargeLength),
-                            LongMessage = longMessage, // Not truncated, because it should be a CLOB/TEXT/whatever...
-                            Context = context.Truncate(SqlDbContext.MediumLength)
-                        };
-
-                        for (var i = 0; args != null && i < args.Count && i < MaxArgumentCount; ++i)
-                        {
-                            var tmp = args[i];
-                            var tmpKey = tmp.Key.Truncate(SqlDbContext.SmallLength);
-                            var tmpValue = tmp.Value.Truncate(SqlDbContext.LargeLength);
-                            switch (i)
-                            {
-                                case 0:
-                                    entry.Key0 = tmpKey;
-                                    entry.Value0 = tmpValue;
-                                    break;
-
-                                case 1:
-                                    entry.Key1 = tmpKey;
-                                    entry.Value1 = tmpValue;
-                                    break;
-
-                                case 2:
-                                    entry.Key2 = tmpKey;
-                                    entry.Value2 = tmpValue;
-                                    break;
-
-                                case 3:
-                                    entry.Key3 = tmpKey;
-                                    entry.Value3 = tmpValue;
-                                    break;
-
-                                case 4:
-                                    entry.Key4 = tmpKey;
-                                    entry.Value4 = tmpValue;
-                                    break;
-
-                                case 5:
-                                    entry.Key5 = tmpKey;
-                                    entry.Value5 = tmpValue;
-                                    break;
-
-                                case 6:
-                                    entry.Key6 = tmpKey;
-                                    entry.Value6 = tmpValue;
-                                    break;
-
-                                case 7:
-                                    entry.Key7 = tmpKey;
-                                    entry.Value7 = tmpValue;
-                                    break;
-
-                                case 8:
-                                    entry.Key8 = tmpKey;
-                                    entry.Value8 = tmpValue;
-                                    break;
-
-                                case 9:
-                                    entry.Key9 = tmpKey;
-                                    entry.Value9 = tmpValue;
-                                    break;
-                            }
-                        }
-
-                        ctx.LogEntries.Add(entry);
+                        ctx.LogEntries.Add(ToSqlLogEntry(logEntry, sqlLogSetting));
                     }
-
-                    ctx.SaveChanges();
-                    return LogResult.Success;
                 }
+
+                await ctx.SaveChangesAsync();
             }
-            catch (Exception ex)
+        }
+
+        protected override async Task CleanUpEntriesAsyncInternal(string appName)
+        {
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
-                return LogResult.Failure(ex);
+                var utcNow = CaravanServiceProvider.Clock.UtcNow;
+
+                var appIds = ((appName == null) ? ctx.SecApps : ctx.SecApps.Where(a => a.Name == appName)).Select(a => a.Id);
+
+                // We delete logs older than "settings.Days".
+
+                var oldLogs = from e in ctx.LogEntries
+                              where appIds.Contains(e.AppId)
+                              from s in ctx.LogSettings
+                              where s.AppId == e.AppId && s.LogLevel == e.LogLevel
+                              where DbFunctions.DiffDays(utcNow, e.Date) > s.Days
+                              select e;
+
+                ctx.LogEntries.RemoveRange(oldLogs);
+
+                // We delete enough entries to preserve the upper limit.
+
+                var logSettings = from e in ctx.LogEntries
+                                  where appIds.Contains(e.AppId)
+                                  from s in ctx.LogSettings
+                                  where s.AppId == e.AppId && s.LogLevel == e.LogLevel
+                                  select new { Entry = e, Setting = s };
+
+                var logCounts = from es in logSettings
+                                group es by new { es.Setting.AppId, es.Setting.LogLevel } into g
+                                where (g.Count() - g.FirstOrDefault().Setting.MaxEntries) > 0
+                                select new { g.Key.AppId, g.Key.LogLevel, Keep = g.FirstOrDefault().Setting.MaxEntries };
+
+                var logCountsArray = await logCounts.ToArrayAsync();
+                foreach (var lc in logCountsArray)
+                {
+                    var tooManyLogEntries = from e in ctx.LogEntries
+                                            where e.AppId == lc.AppId && e.LogLevel == lc.LogLevel
+                                            orderby e.Date descending
+                                            select e;
+
+                    ctx.LogEntries.RemoveRange(tooManyLogEntries.Skip(lc.Keep));
+                }
+
+                // Applico definitivamente i cambiamenti ed esco dalla procedura.
+                await ctx.SaveChangesAsync();
             }
         }
 
@@ -209,79 +165,71 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                 q = q.OrderByDescending(e => e.Date).ThenByDescending(e => e.Id);
 
                 // Reale esecuzione della query.
-                IEnumerable<SqlLogEntry> result;
-                if (logEntryQuery.TruncateLongMessage)
+                var result = !logEntryQuery.TruncateLongMessage ? q.AsEnumerable() : q.Select(e => new
                 {
-                    result = q.Select(e => new
-                    {
-                        AppName = e.App.Name,
-                        e.Id,
-                        e.LogLevel,
-                        e.Date,
-                        e.UserLogin,
-                        e.CodeUnit,
-                        e.Function,
-                        e.ShortMessage,
-                        LongMessage = e.LongMessage.Substring(0, logEntryQuery.MaxTruncatedLongMessageLength),
-                        e.Context,
-                        e.Key0,
-                        e.Value0,
-                        e.Key1,
-                        e.Value1,
-                        e.Key2,
-                        e.Value2,
-                        e.Key3,
-                        e.Value3,
-                        e.Key4,
-                        e.Value4,
-                        e.Key5,
-                        e.Value5,
-                        e.Key6,
-                        e.Value6,
-                        e.Key7,
-                        e.Value7,
-                        e.Key8,
-                        e.Value8,
-                        e.Key9,
-                        e.Value9,
-                    }).AsEnumerable().Select(e => new SqlLogEntry
-                    {
-                        App = new SqlSecApp { Name = e.AppName },
-                        Id = e.Id,
-                        LogLevel = e.LogLevel,
-                        Date = e.Date,
-                        UserLogin = e.UserLogin,
-                        CodeUnit = e.CodeUnit,
-                        Function = e.Function,
-                        ShortMessage = e.ShortMessage,
-                        LongMessage = e.LongMessage,
-                        Context = e.Context,
-                        Key0 = e.Key0,
-                        Value0 = e.Value0,
-                        Key1 = e.Key1,
-                        Value1 = e.Value1,
-                        Key2 = e.Key2,
-                        Value2 = e.Value2,
-                        Key3 = e.Key3,
-                        Value3 = e.Value3,
-                        Key4 = e.Key4,
-                        Value4 = e.Value4,
-                        Key5 = e.Key5,
-                        Value5 = e.Value5,
-                        Key6 = e.Key6,
-                        Value6 = e.Value6,
-                        Key7 = e.Key7,
-                        Value7 = e.Value7,
-                        Key8 = e.Key8,
-                        Value8 = e.Value8,
-                        Key9 = e.Key9,
-                        Value9 = e.Value9,
-                    });
-                }
-                else
+                    AppName = e.App.Name,
+                    e.Id,
+                    e.LogLevel,
+                    e.Date,
+                    e.UserLogin,
+                    e.CodeUnit,
+                    e.Function,
+                    e.ShortMessage,
+                    LongMessage = e.LongMessage.Substring(0, logEntryQuery.MaxTruncatedLongMessageLength),
+                    e.Context,
+                    e.Key0,
+                    e.Value0,
+                    e.Key1,
+                    e.Value1,
+                    e.Key2,
+                    e.Value2,
+                    e.Key3,
+                    e.Value3,
+                    e.Key4,
+                    e.Value4,
+                    e.Key5,
+                    e.Value5,
+                    e.Key6,
+                    e.Value6,
+                    e.Key7,
+                    e.Value7,
+                    e.Key8,
+                    e.Value8,
+                    e.Key9,
+                    e.Value9,
+                }).AsEnumerable().Select(e => new SqlLogEntry
                 {
-                    result = q.AsEnumerable();
-                }
+                    App = new SqlSecApp { Name = e.AppName },
+                    Id = e.Id,
+                    LogLevel = e.LogLevel,
+                    Date = e.Date,
+                    UserLogin = e.UserLogin,
+                    CodeUnit = e.CodeUnit,
+                    Function = e.Function,
+                    ShortMessage = e.ShortMessage,
+                    LongMessage = e.LongMessage,
+                    Context = e.Context,
+                    Key0 = e.Key0,
+                    Value0 = e.Value0,
+                    Key1 = e.Key1,
+                    Value1 = e.Value1,
+                    Key2 = e.Key2,
+                    Value2 = e.Value2,
+                    Key3 = e.Key3,
+                    Value3 = e.Value3,
+                    Key4 = e.Key4,
+                    Value4 = e.Value4,
+                    Key5 = e.Key5,
+                    Value5 = e.Value5,
+                    Key6 = e.Key6,
+                    Value6 = e.Value6,
+                    Key7 = e.Key7,
+                    Value7 = e.Value7,
+                    Key8 = e.Key8,
+                    Value8 = e.Value8,
+                    Key9 = e.Key9,
+                    Value9 = e.Value9,
+                });
 
                 return result.Select(Mapper.Map<LogEntry>).ToArray();
             }
@@ -315,55 +263,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
                     trx.Complete();
                 }
                 return deleted;
-            }
-        }
-
-        protected override bool CleanUpEntriesInternal(string appName)
-        {
-            using (var ctx = SqlDbContext.CreateReadContext())
-            {
-                var utcNow = ServiceProvider.CurrentDateTime();
-
-                var appIds = ((appName == null) ? ctx.SecApps : ctx.SecApps.Where(a => a.Name == appName.ToLower())).Select(a => a.Id);
-
-                // We delete logs older than "settings.Days".
-
-                var oldLogs = from e in ctx.LogEntries
-                              where appIds.Contains(e.AppId)
-                              from s in ctx.LogSettings
-                              where s.AppId == e.AppId && s.LogLevel == e.LogLevel
-                              where DbFunctions.DiffDays(utcNow, e.Date) > s.Days
-                              select e;
-
-                ctx.LogEntries.RemoveRange(oldLogs);
-
-                // We delete enough entries to preserve the upper limit.
-
-                var logSettings = from e in ctx.LogEntries
-                                  where appIds.Contains(e.AppId)
-                                  from s in ctx.LogSettings
-                                  where s.AppId == e.AppId && s.LogLevel == e.LogLevel
-                                  select new { Entry = e, Setting = s };
-
-                var logCounts = from es in logSettings
-                                group es by new { es.Setting.AppId, es.Setting.LogLevel } into g
-                                where (g.Count() - g.FirstOrDefault().Setting.MaxEntries) > 0
-                                select new { g.Key.AppId, g.Key.LogLevel, Keep = g.FirstOrDefault().Setting.MaxEntries };
-
-                var logCountsArray = logCounts.ToArray();
-                foreach (var lc in logCountsArray)
-                {
-                    var tooManyLogEntries = from e in ctx.LogEntries
-                                            where e.AppId == lc.AppId && e.LogLevel == lc.LogLevel
-                                            orderby e.Date descending
-                                            select e;
-
-                    ctx.LogEntries.RemoveRange(tooManyLogEntries.Skip(lc.Keep));
-                }
-
-                // Applico definitivamente i cambiamenti ed esco dalla procedura.
-                ctx.SaveChanges();
-                return true;
             }
         }
 
@@ -472,7 +371,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         private static async Task<Dictionary<string, SqlLogSetting>> GetAndSetCachedSettingsAsync(string appName, SqlDbContext ctx)
         {
             // Provo a recuperare le impostazioni di log dalla cache in memoria.
-            var maybe = ServiceProvider.MemoryCache.Get<Dictionary<string, SqlLogSetting>>(CachePartition, appName);
+            var maybe = CaravanServiceProvider.MemoryCache.Get<Dictionary<string, SqlLogSetting>>(CachePartition, appName);
 
             // Se le impostazioni in cache sono ancora valide, le restituisco.
             if (maybe.HasValue)
@@ -481,13 +380,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             }
 
             // Altrimenti, le devo leggere da DB.
-            var appId = await ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).FirstAsync();
+            var appId = await ctx.SecApps.Where(a => a.Name == appName).Select(a => a.Id).FirstAsync();
             var settings = await ctx.LogSettings.Where(s => s.AppId == appId).ToDictionaryAsync(s => s.LogLevel);
 
             // Prima di restituirle, le metto in cache.
-            var interval = DataAccessConfiguration.Instance.Logging_SettingsCache_Interval;
-            var utcExpiry = ServiceProvider.CurrentDateTime().Add(interval);
-            ServiceProvider.MemoryCache.AddTimed(CachePartition, appName, settings, utcExpiry);
+            var interval = CaravanDataAccessConfiguration.Instance.Logging_SettingsCache_Interval;
+            var utcExpiry = CaravanServiceProvider.Clock.UtcNow.Add(interval);
+            CaravanServiceProvider.MemoryCache.AddTimed(CachePartition, appName, settings, utcExpiry);
 
             // Restituisco le impostazioni appena lette da DB.
             return settings;
@@ -497,7 +396,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         {
             var sqlLogEntry = new SqlLogEntry
             {
-                Date = ServiceProvider.CurrentDateTime(),
+                Date = logEntry.Date,
                 AppId = sqlLogSetting.AppId,
                 LogLevel = sqlLogSetting.LogLevel,
                 UserLogin = logEntry.UserLogin.Truncate(SqlDbContext.SmallLength).ToLowerInvariant(),

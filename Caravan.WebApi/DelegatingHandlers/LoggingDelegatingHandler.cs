@@ -1,8 +1,6 @@
 ﻿using Common.Logging;
-using Finsa.Caravan.Common.Models.Logging;
 using Finsa.CodeServices.Common;
 using PommaLabs.Thrower;
-using Finsa.CodeServices.Common.Extensions;
 using Microsoft.Owin;
 using System;
 using System.Net.Http;
@@ -52,16 +50,16 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
 
                 _log.Trace(new LogMessage
                 {
-                    ShortMessage = string.Format("Request \"{0}\" at \"{1}\"", requestId, request.RequestUri.SafeToString()),
+                    ShortMessage = string.Format("Request '{0}' at '{1}'", requestId, request.RequestUri.SafeToString()),
                     LongMessage = requestBody,
                     Context = "Logging request",
                     Arguments = new[]
                     {
-                        KeyValuePair.Create("request_remote_ip_address", GetClientIP(request)),
-                        KeyValuePair.Create("request_user_agent", request.Headers.UserAgent.SafeToString()),
-                        KeyValuePair.Create("request_uri", request.RequestUri.SafeToString()),
-                        KeyValuePair.Create("request_method", request.Method.SafeToString()),
-                        KeyValuePair.Create("request_headers", request.Headers.SafeToString())
+                        KeyValuePair.Create<string, object>("request_remote_ip_address", GetClientIP(request)),
+                        KeyValuePair.Create<string, object>("request_user_agent", request.Headers.UserAgent),
+                        KeyValuePair.Create<string, object>("request_uri", request.RequestUri),
+                        KeyValuePair.Create<string, object>("request_method", request.Method),
+                        KeyValuePair.Create<string, object>("request_headers", request.Headers)
                     }
                 });
             }
@@ -87,13 +85,13 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
 
                         _log.Trace(new LogMessage
                         {
-                            ShortMessage = string.Format("Response \"{0}\" for \"{1}\"", requestId, request.RequestUri.SafeToString()),
+                            ShortMessage = string.Format("Response '{0}' for '{1}'", requestId, request.RequestUri.SafeToString()),
                             LongMessage = responseBody,
                             Context = "Logging response",
                             Arguments = new[]
                             {
-                                KeyValuePair.Create("response_status_code", response.StatusCode.SafeToString()),
-                                KeyValuePair.Create("response_headers", response.Headers.SafeToString())
+                                KeyValuePair.Create<string, object>("response_status_code", response.StatusCode),
+                                KeyValuePair.Create<string, object>("response_headers", response.Headers)
                             }
                         });
 

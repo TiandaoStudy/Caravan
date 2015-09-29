@@ -20,9 +20,6 @@ namespace Finsa.Caravan.Common.Logging.Models
     [Serializable]
     public sealed class LogMessage
     {
-        private static readonly Regex RemoveBlankRows = new Regex(@"^[ \t]*((\r|\n)\n?)", RegexOptions.Compiled | RegexOptions.Multiline);
-        private static readonly Regex RemoveLastBlanks = new Regex(@"[ \t]+((\r|\n)\n?)", RegexOptions.Compiled | RegexOptions.Singleline);
-
         /// <summary>
         ///   JSON serializer settings for a readable log.
         /// </summary>
@@ -65,7 +62,7 @@ namespace Finsa.Caravan.Common.Logging.Models
         ///   Arguments.
         /// </summary>
         [JsonProperty(Order = 3), YamlMember(Order = 3)]
-        public IList<KeyValuePair<string, string>> Arguments { get; set; }
+        public IList<KeyValuePair<string, object>> Arguments { get; set; }
 
         /// <summary>
         ///   Exception (optional), must _not_ be serialized. In fact, its content is assigned to
@@ -76,8 +73,11 @@ namespace Finsa.Caravan.Common.Logging.Models
         {
             set
             {
-                // Preconditions
-                RaiseArgumentNullException.IfIsNull(value, nameof(value));
+                if (value == null)
+                {
+                    // Nulla da fare...
+                    return;
+                }
 
                 var exception = value.GetBaseException();
 
@@ -88,61 +88,20 @@ namespace Finsa.Caravan.Common.Logging.Models
                 LongMessage = longMsgPrefix + exception.ToJsonString(ReadableJsonSettings);
 
                 // Prendo anche eventuali argomenti già inseriti.
-                Arguments = new List<KeyValuePair<string, string>>(Arguments ?? ReadOnlyList.Empty<KeyValuePair<string, string>>())
+                Arguments = new List<KeyValuePair<string, object>>(Arguments ?? ReadOnlyList.Empty<KeyValuePair<string, object>>())
                 {
-                    KeyValuePair.Create("exception_stacktrace", exception.StackTrace ?? string.Empty),
-                    KeyValuePair.Create("exception_data", exception.Data.ToYamlString(ReadableYamlSettings)),
-                    KeyValuePair.Create("exception_source", exception.Source ?? string.Empty),
-                    KeyValuePair.Create("exception_hresult", exception.HResult.ToString()),
+                    KeyValuePair.Create<string, object>("exception_stacktrace", exception.StackTrace),
+                    KeyValuePair.Create<string, object>("exception_data", exception.Data.ToYamlString(ReadableYamlSettings)),
+                    KeyValuePair.Create<string, object>("exception_source", exception.Source),
+                    KeyValuePair.Create<string, object>("exception_hresult", exception.HResult),
                 };
             }
         }
 
         /// <summary>
-        ///   Returns a complex JSON containing all log message information.
+        ///   Simply returns the short message.
         /// </summary>
-        public override string ToString()
-        {
-            // Pulizia dell'oggetto .NET, in modo da avere un file YAML molto pulito. Per
-            // ShortMessage e Context mi limito a una TRIM (è difficile che siano su più righe),
-            // mentre per LongMessage e per gli Arguments devo applicare pulizie più efficaci.
-            ShortMessage = ShortMessage?.Trim();
-            Context = Context?.Trim();
-
-            if (LongMessage != null)
-            {
-                LongMessage = RemoveBlankRows.Replace(LongMessage, string.Empty);
-                LongMessage = RemoveLastBlanks.Replace(LongMessage, Environment.NewLine);
-            }
-
-            if (Arguments != null)
-            {
-                Arguments = CaravanVariablesContext.GlobalVariables
-                    .Union(CaravanVariablesContext.ThreadVariables)
-                    .Union(Arguments)
-                    .ToArray();
-
-                for (var i = 0; i < Arguments.Count; ++i)
-                {
-                    var kv = Arguments[i];
-                    if (kv.Value == null)
-                    {
-                        continue;
-                    }
-                    var tmpValue = RemoveBlankRows.Replace(kv.Value, string.Empty);
-                    tmpValue = RemoveLastBlanks.Replace(tmpValue, Environment.NewLine);
-                    Arguments[i] = KeyValuePair.Create(kv.Key, tmpValue);
-                }
-            }
-
-            // Generazione della serializzazione YAML.
-            var yaml = this.ToYamlString(ReadableYamlSettings);
-            yaml = RemoveBlankRows.Replace(yaml, string.Empty);
-
-            // Aggiungo NewLine così che nei file di testo parta da una riga sotto, dato che il
-            // messaggio YAML è sicuramente molto lungo.
-            return Environment.NewLine + yaml;
-        }
+        public override string ToString() => ShortMessage;
 
         private static void IgnoreJsonSerializationError(object sender, ErrorEventArgs errorArgs)
         {

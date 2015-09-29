@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Common.Logging;
+using Finsa.Caravan.Common.Logging.Models;
+using Finsa.Caravan.Common.Security.Models;
+using Finsa.Caravan.DataAccess;
+using Finsa.CodeServices.Common;
+using NUnit.Framework;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Models.Security;
-using Finsa.Caravan.DataAccess;
-using NUnit.Framework;
-using Common.Logging;
-using Finsa.CodeServices.Common;
 
 namespace UnitTests.DataAccess
 {
@@ -91,10 +90,10 @@ namespace UnitTests.DataAccess
             Parallel.ForEach(Enumerable.Range(1, logCount), i =>
             {
                 var result = CaravanDataSource.Logger.LogInfo<LogManagerTests>("pino" + i, "pino pino" + i, "test" + i, new[]
-            {
-               KeyValuePair.Create("arg1"+i, "1"+i),
-               KeyValuePair.Create("arg2"+i, "2"+i),
-            });
+                {
+                   KeyValuePair.Create("arg1"+i, "1"+i),
+                   KeyValuePair.Create("arg2"+i, "2"+i),
+                });
             });
 
             for (var i = 1; i <= logCount; ++i)

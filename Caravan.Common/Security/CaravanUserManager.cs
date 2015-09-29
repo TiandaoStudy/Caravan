@@ -1,7 +1,7 @@
-﻿using System;
-using Finsa.Caravan.Common.Models.Security;
-using PommaLabs.Thrower;
+﻿using Finsa.Caravan.Common.Security.Models;
 using Microsoft.AspNet.Identity;
+using PommaLabs.Thrower;
+using System;
 
 namespace Finsa.Caravan.Common.Security
 {

@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 using System.Web;
 using Newtonsoft.Json;
 
-namespace Finsa.Caravan.Common.Models.Security
+namespace Finsa.Caravan.Common.Security.Models
 {
     [Serializable, JsonObject(MemberSerialization.OptIn), DataContract]
     public class SecSession
@@ -27,7 +27,7 @@ namespace Finsa.Caravan.Common.Models.Security
                 UserHostAddress = HttpContext.Current.Request.UserHostAddress == "::1" ? "localhost" : HttpContext.Current.Request.UserHostAddress;
                 UserHostName = HttpContext.Current.Request.UserHostName == "::1" ? "localhost" : HttpContext.Current.Request.UserHostAddress;
             }
-            LastVisit = ServiceProvider.CurrentDateTime();
+            LastVisit = CaravanServiceProvider.Clock.UtcNow;
         }
     }
 }

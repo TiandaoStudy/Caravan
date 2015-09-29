@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Finsa.Caravan.Common.Models.Logging;
-using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common;
 using NUnit.Framework;
 using Common.Logging;
 using Finsa.Caravan.Common.Logging.Exceptions;
 using Finsa.Caravan.Common.Security.Exceptions;
+using Finsa.Caravan.Common.Security.Models;
+using Finsa.Caravan.Common.Logging.Models;
 
 namespace UnitTests.DataAccess
 {

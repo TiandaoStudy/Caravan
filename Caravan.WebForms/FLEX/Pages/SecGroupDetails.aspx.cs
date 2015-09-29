@@ -1,5 +1,5 @@
 ﻿using System;
-using Finsa.Caravan.Common.Models.Security;
+using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common;
 using FLEX.Web.Pages;
@@ -63,7 +63,7 @@ namespace Finsa.Caravan.WebForms.Pages
 
       private void MostraMultiSelectForNew() 
       {
-         var allowedUsers = CaravanDataSource.Security.GetUsers(CommonConfiguration.Instance.AppName);
+         var allowedUsers = CaravanDataSource.Security.GetUsers(CaravanCommonConfiguration.Instance.AppName);
 
           //Users
           DataTable tableLeft = new DataTable();
@@ -96,7 +96,7 @@ namespace Finsa.Caravan.WebForms.Pages
             return;
          }
       
-         var group = CaravanDataSource.Security.GetGroupByName(CommonConfiguration.Instance.AppName, groupName);
+         var group = CaravanDataSource.Security.GetGroupByName(CaravanCommonConfiguration.Instance.AppName, groupName);
          Raise<ArgumentException>.IfIsNull(group, "Given group name does not exist");
 
          ViewState["group"] =group; 
@@ -112,7 +112,7 @@ namespace Finsa.Caravan.WebForms.Pages
           {
 
               var blockedUsersToGroup = ((SecGroup)ViewState["group"]).Users;
-              var allowedUsers = CaravanDataSource.Security.GetUsers(CommonConfiguration.Instance.AppName).Except(blockedUsersToGroup);
+              var allowedUsers = CaravanDataSource.Security.GetUsers(CaravanCommonConfiguration.Instance.AppName).Except(blockedUsersToGroup);
 
               //Users
               DataTable _tableLeft = new DataTable();
@@ -154,7 +154,7 @@ namespace Finsa.Caravan.WebForms.Pages
             if (Mode == NewMode)
             {
                var newGroup = new SecGroup { Name = txtGrpName.Text, Description = txtGrpDescr.Text, Notes = txtNotes.Text };
-               CaravanDataSource.Security.AddGroup(CommonConfiguration.Instance.AppName, newGroup);
+               CaravanDataSource.Security.AddGroup(CaravanCommonConfiguration.Instance.AppName, newGroup);
 
                if (crvnMultiSelectUsersGroups.RightDataTable != null) 
                {
@@ -162,7 +162,7 @@ namespace Finsa.Caravan.WebForms.Pages
                    {
                        if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
                        {
-                           CaravanDataSource.Security.AddUserToGroup(CommonConfiguration.Instance.AppName, oDrR["Login"].ToString(), newGroup.Name);
+                           CaravanDataSource.Security.AddUserToGroup(CaravanCommonConfiguration.Instance.AppName, oDrR["Login"].ToString(), newGroup.Name);
                        }
                    }
 
@@ -170,7 +170,7 @@ namespace Finsa.Caravan.WebForms.Pages
                    {
                        if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
                        {
-                           CaravanDataSource.Security.RemoveUserFromGroup(CommonConfiguration.Instance.AppName, oDrL["Login"].ToString(), newGroup.Name);
+                           CaravanDataSource.Security.RemoveUserFromGroup(CaravanCommonConfiguration.Instance.AppName, oDrL["Login"].ToString(), newGroup.Name);
                        }
                    }
                }
@@ -185,7 +185,7 @@ namespace Finsa.Caravan.WebForms.Pages
                     {
                         if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
                         {
-                            CaravanDataSource.Security.AddUserToGroup(CommonConfiguration.Instance.AppName, oDrR["Login"].ToString(), GroupName);
+                            CaravanDataSource.Security.AddUserToGroup(CaravanCommonConfiguration.Instance.AppName, oDrR["Login"].ToString(), GroupName);
                         }
                     }
 
@@ -193,7 +193,7 @@ namespace Finsa.Caravan.WebForms.Pages
                     {
                         if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
                         {
-                            CaravanDataSource.Security.RemoveUserFromGroup(CommonConfiguration.Instance.AppName, oDrL["Login"].ToString(), GroupName);
+                            CaravanDataSource.Security.RemoveUserFromGroup(CaravanCommonConfiguration.Instance.AppName, oDrL["Login"].ToString(), GroupName);
                         }
                     }
                 }
@@ -204,7 +204,7 @@ namespace Finsa.Caravan.WebForms.Pages
                    Description = Option.Some(txtGrpDescr.Text), 
                    Notes = Option.Some(txtNotes.Text)
                };
-               CaravanDataSource.Security.UpdateGroup(CommonConfiguration.Instance.AppName, GroupName, newGroup);
+               CaravanDataSource.Security.UpdateGroup(CaravanCommonConfiguration.Instance.AppName, GroupName, newGroup);
             }
             Master.RegisterCloseScript(this);
          }

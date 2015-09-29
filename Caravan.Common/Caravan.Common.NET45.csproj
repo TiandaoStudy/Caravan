@@ -55,10 +55,6 @@
       <HintPath>..\packages\Common.Logging.Core.3.3.0\lib\net40\Common.Logging.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Common.Logging.NLog41, Version=3.3.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Common.Logging.NLog41.3.3.0\lib\net40\Common.Logging.NLog41.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Crc32C.NET">
       <HintPath>..\packages\Crc32C.NET.1.0.5.0\lib\net20\Crc32C.NET.dll</HintPath>
     </Reference>
@@ -66,24 +62,24 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Clock, Version=2.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Finsa.CodeServices.Clock.2.6.0\lib\net40\Finsa.CodeServices.Clock.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Clock, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Clock.2.7.0\lib\net40\Finsa.CodeServices.Clock.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Common, Version=2.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Finsa.CodeServices.Common.2.6.0\lib\net45\Finsa.CodeServices.Common.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Common, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Common.2.7.0\lib\net45\Finsa.CodeServices.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Compression, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Finsa.CodeServices.Compression.2.5.0\lib\net40\Finsa.CodeServices.Compression.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Compression, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Compression.2.7.0\lib\net40\Finsa.CodeServices.Compression.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Serialization, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Finsa.CodeServices.Serialization.2.5.0\lib\net45\Finsa.CodeServices.Serialization.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Serialization, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Serialization.2.7.0\lib\net45\Finsa.CodeServices.Serialization.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LZ4, Version=1.0.5.93, Culture=neutral, PublicKeyToken=fd2bda0a70c5a705, processorArchitecture=MSIL">
-      <HintPath>..\packages\lz4net.1.0.5.93\lib\net40-client\LZ4.dll</HintPath>
+    <Reference Include="LZ4, Version=1.0.9.93, Culture=neutral, PublicKeyToken=62e1b5ec1eec9bdd, processorArchitecture=MSIL">
+      <HintPath>..\packages\lz4net.1.0.9.93\lib\net4-client\LZ4.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
@@ -94,8 +90,12 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NLog, Version=4.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.1.0\lib\net45\NLog.dll</HintPath>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.1.2\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Polenter.SharpSerializer, Version=2.20.0.0, Culture=neutral, PublicKeyToken=8f4f20011571ee5f, processorArchitecture=MSIL">
@@ -136,16 +136,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonConfiguration.cs" />
+    <Compile Include="CaravanCommonConfiguration.cs" />
     <Compile Include="Core\ErrorMessages.cs" />
     <Compile Include="Logging\CaravanLogger.cs" />
     <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />
+    <Compile Include="Logging\CaravanNoOpLogger.cs" />
     <Compile Include="Logging\CaravanVariablesContext.cs" />
     <Compile Include="Logging\ICaravanLogRepository.cs" />
     <Compile Include="Models\Formatting\PageOrientation.cs" />
-    <Compile Include="Models\Logging\LogEntryQuery.cs" />
-    <Compile Include="Models\Security\SecGroupUpdates.cs" />
-    <Compile Include="Models\Security\SecUserUpdates.cs" />
+    <Compile Include="Logging\Models\LogEntryQuery.cs" />
+    <Compile Include="Security\Models\SecGroupUpdates.cs" />
+    <Compile Include="Security\Models\SecUserUpdates.cs" />
     <Compile Include="Security\CaravanRoleStore.cs" />
     <Compile Include="Security\CaravanUserManager.cs" />
     <Compile Include="Security\CaravanUserStore.cs" />
@@ -176,21 +177,21 @@
     <Compile Include="Models\Linking\PreviousLink.cs" />
     <Compile Include="Models\Linking\RelatedLink.cs" />
     <Compile Include="Models\Linking\SelfLink.cs" />
-    <Compile Include="Models\Logging\LogEntry.cs" />
-    <Compile Include="Models\Logging\LogResult.cs" />
-    <Compile Include="Models\Logging\LogSetting.cs" />
+    <Compile Include="Logging\Models\LogEntry.cs" />
+    <Compile Include="Logging\Models\LogResult.cs" />
+    <Compile Include="Logging\Models\LogSetting.cs" />
     <Compile Include="Models\Rest\RestRequest.cs" />
     <Compile Include="Models\Rest\RestResponse.cs" />
-    <Compile Include="Models\Security\SecApp.cs" />
-    <Compile Include="Models\Security\SecContext.cs" />
-    <Compile Include="Models\Security\SecEntry.cs" />
-    <Compile Include="Models\Security\SecRole.cs" />
-    <Compile Include="Models\Security\SecGroup.cs" />
-    <Compile Include="Models\Security\SecObject.cs" />
-    <Compile Include="Models\Security\SecUser.cs" />
-    <Compile Include="Models\Security\SecSession.cs" />
+    <Compile Include="Security\Models\SecApp.cs" />
+    <Compile Include="Security\Models\SecContext.cs" />
+    <Compile Include="Security\Models\SecEntry.cs" />
+    <Compile Include="Security\Models\SecRole.cs" />
+    <Compile Include="Security\Models\SecGroup.cs" />
+    <Compile Include="Security\Models\SecObject.cs" />
+    <Compile Include="Security\Models\SecUser.cs" />
+    <Compile Include="Security\Models\SecSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceProvider.cs" />
+    <Compile Include="CaravanServiceProvider.cs" />
     <Compile Include="WebForms\ISearchControl.cs" />
     <Compile Include="WebForms\SearchCriteria.cs" />
   </ItemGroup>
@@ -205,6 +206,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

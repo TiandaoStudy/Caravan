@@ -1,17 +1,18 @@
 ﻿using Common.Logging;
 using Finsa.Caravan.Common;
-using PommaLabs.Thrower;
+using Finsa.Caravan.DataAccess;
 using PommaLabs.KVLite;
 using PommaLabs.KVLite.Web.Http;
+using PommaLabs.Thrower;
+using System.Threading.Tasks;
 using System.Web.Http;
-using Finsa.Caravan.DataAccess;
 
 namespace Finsa.Caravan.WebApi
 {
     /// <summary>
     ///   Gestisce alcuni eventi comuni a tutte le applicazioni.
     /// </summary>
-    public sealed class ServiceHelper
+    public sealed class CaravanServiceHelper
     {
         /// <summary>
         ///   Esegue alcune operazioni preliminari all'avvio dell'applicazione.
@@ -19,7 +20,7 @@ namespace Finsa.Caravan.WebApi
         /// <param name="configuration">La configurazione HTTP.</param>
         /// <param name="log">Un'istanza valida del log.</param>
         /// <param name="cache">Un'istanza valida della cache.</param>
-        public static void OnStart(HttpConfiguration configuration, ILog log, ICache cache)
+        public static async Task OnStartAsync(HttpConfiguration configuration, ILog log, ICache cache)
         {
             // Controlli di integrità.
             RaiseArgumentNullException.IfIsNull(configuration, nameof(configuration));
@@ -27,18 +28,21 @@ namespace Finsa.Caravan.WebApi
             RaiseArgumentNullException.IfIsNull(cache, nameof(cache));
 
             // Loggo l'avvio dell'applicazione.
-            log.InfoFormat("Application {0} started", CommonConfiguration.Instance.AppDescription);
+            log.Info($"Application {CaravanCommonConfiguration.Instance.AppDescription} started");
 
             // Run vacuum on the persistent cache. It should be put AFTER the connection string is
             // set, since that string it stored on the cache itself and we do not want conflicts, right?
             var persistentCache = cache as PersistentCache;
-            persistentCache?.Vacuum();
+            if (persistentCache != null)
+            {
+                await persistentCache.VacuumAsync();
+            }
 
             // Imposta KVLite come gestore della cache di output.
             ApiOutputCache.RegisterAsCacheOutputProvider(configuration, cache);
 
             // Pulizia dei log più vecchi o che superano una certa soglia di quantità.
-            CaravanDataSource.Logger.CleanUpEntries(CommonConfiguration.Instance.AppName);
+            await CaravanDataSource.Logger.CleanUpEntriesAsync(CaravanCommonConfiguration.Instance.AppName);
         }
     }
 }

@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using System.IO.Compression;
 using System.Web;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Models.Security;
 using Finsa.Caravan.DataAccess;
 using PommaLabs.KVLite;
+using Finsa.Caravan.Common.Security.Models;
+using Finsa.Caravan.Common.Logging;
 
 namespace Finsa.Caravan.WebForms
 {
     public sealed class GlobalHelper
     {
-        private GlobalHelper()
-        {
-            throw new InvalidOperationException();
-        }
+        private static readonly ICaravanLog Log = CaravanServiceProvider.FetchLog<GlobalHelper>();
 
         public static void Application_Start(object sender, EventArgs args, string connectionString)
         {
@@ -22,7 +20,7 @@ namespace Finsa.Caravan.WebForms
             CaravanDataSource.Manager.ConnectionString = connectionString;
 
             // After setting the connection string, we can use the logger.
-            CaravanDataSource.Logger.LogInfo<GlobalHelper>("Application started");
+            Log.Info("Application started");
 
             // Run vacuum on the persistent cache. It should be put AFTER the connection string is
             // set, since that string it stored on the cache itself and we do not want conflicts, right?
@@ -41,7 +39,7 @@ namespace Finsa.Caravan.WebForms
             }
 
             // Log application end.
-            CaravanDataSource.Logger.LogInfo<GlobalHelper>("Application ended");
+            Log.Info("Application ended");
         }
 
         public static void Application_PreSendRequestHeaders(object sender, EventArgs args)
@@ -71,7 +69,7 @@ namespace Finsa.Caravan.WebForms
             HttpContext.Current.Response.Filter = null;
 
             // Logs the error into the DB.
-            CaravanDataSource.Logger.LogFatal<GlobalHelper>(HttpContext.Current.Server.GetLastError());
+            Log.Fatal("Application error!", HttpContext.Current.Server.GetLastError());
         }
 
         public static void Session_Start(object sender, EventArgs e, HttpApplicationState Application, string SessionID)
@@ -148,7 +146,7 @@ namespace Finsa.Caravan.WebForms
                     if (_userList.ContainsKey(Cookies.Value))
                     {
                         SecSession _st = (SecSession) _userList[Cookies.Value];
-                        _st.LastVisit = ServiceProvider.CurrentDateTime();
+                        _st.LastVisit = CaravanServiceProvider.Clock.UtcNow;
                         _st.UserLogin = userName;
                         _userList[Cookies.Value] = _st;
                         //Salvo i dati

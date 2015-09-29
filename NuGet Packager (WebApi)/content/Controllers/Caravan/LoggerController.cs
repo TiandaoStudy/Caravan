@@ -13,8 +13,9 @@
 using Common.Logging;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging.Exceptions;
-using Finsa.Caravan.Common.Models.Logging;
+using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.DataAccess;
+using Finsa.CodeServices.Clock;
 using Finsa.CodeServices.Common;
 using PommaLabs.Thrower;
 using System;
@@ -22,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
 
@@ -36,14 +38,17 @@ namespace Finsa.Caravan.WebService.Controllers
         static readonly IList<LogLevel> NoLogLevels = new LogLevel[0];
 
         readonly ILog _log;
+        readonly IClock _clock;
 
         /// <summary>
         ///   Inizializza il controller con l'istanza del log di Caravan.
         /// </summary>
-        public LoggerController(ILog log)
+        public LoggerController(ILog log, IClock clock)
         {
             RaiseArgumentNullException.IfIsNull(log, nameof(log));
+            RaiseArgumentNullException.IfIsNull(clock, nameof(clock));
             _log = log;
+            _clock = clock;
         }
 
         /// <summary>
@@ -67,12 +72,12 @@ namespace Finsa.Caravan.WebService.Controllers
         ///   Writes a silly message into the log.
         /// </summary>
         [Route("{appName}/ping")]
-        public HttpResponseMessage GetPing(string appName)
+        public async Task<HttpResponseMessage> GetPing(string appName)
         {
-            appName = appName ?? CommonConfiguration.Instance.AppName;
-            var result = CaravanDataSource.Logger.LogInfo<LoggerController>(new LogEntry
+            appName = appName ?? CaravanCommonConfiguration.Instance.AppName;
+            var result = await CaravanDataSource.Logger.AddEntryAsync(appName, new LogEntry
             {
-                AppName = appName,
+                Date = _clock.UtcNow,
                 ShortMessage = "Ping pong :)"
             });
             if (result.Succeeded)
@@ -138,11 +143,11 @@ namespace Finsa.Caravan.WebService.Controllers
         ///   Add a new log with the features specified in the body of the request
         /// </summary>
         /// <param name="appName">Application name</param>
-        /// <param name="log">The log to add</param>
+        /// <param name="logEntry">The log to add</param>
         [Route("{appName}/entries")]
-        public void PostLog(string appName, [FromBody] LogEntry log)
+        public async void PostLog(string appName, [FromBody] LogEntry logEntry)
         {
-            CaravanDataSource.Logger.LogRaw(log.LogLevel, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
+            await CaravanDataSource.Logger.AddEntryAsync(appName, logEntry);
         }
 
         /// <summary>
@@ -150,11 +155,12 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <param name="appName">Application name</param>
         /// <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
-        /// <param name="log">The log to add</param>
+        /// <param name="logEntry">The log to add</param>
         [Route("{appName}/entries/{logLevel}")]
-        public void PostLog(string appName, LogLevel logLevel, [FromBody] LogEntry log)
+        public async void PostLog(string appName, LogLevel logLevel, [FromBody] LogEntry logEntry)
         {
-            CaravanDataSource.Logger.LogRaw(logLevel, appName, log.UserLogin, log.CodeUnit, log.Function, log.ShortMessage, log.LongMessage, log.Context, log.Arguments);
+            logEntry.LogLevel = logLevel;
+            await CaravanDataSource.Logger.AddEntryAsync(appName, logEntry);
         }
 
         /// <summary>
@@ -194,7 +200,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/settings")]
         public IQueryable<LogSetting> GetSettings(string appName)
         {
-            appName = appName ?? CommonConfiguration.Instance.AppName;
+            appName = appName ?? CaravanCommonConfiguration.Instance.AppName;
             return CaravanDataSource.Logger.GetSettings(appName).AsQueryable();
         }
 

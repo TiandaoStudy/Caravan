@@ -4,6 +4,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Transactions;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Identity;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -20,7 +21,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         static SqlDbContext()
         {
-            switch (DataAccessConfiguration.Instance.SqlInitializer)
+            switch (CaravanDataAccessConfiguration.Instance.SqlInitializer)
             {
                 case "CreateDatabaseIfNotExists":
                     Database.SetInitializer(new CreateDatabaseIfNotExists<SqlDbContext>());
@@ -77,6 +78,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         #region DB Sets
 
+        //public DbSet<SqlIdnClient> IdnClients { get; set; }
+
         public DbSet<SqlLogEntry> LogEntries { get; set; }
 
         public DbSet<SqlLogSetting> LogSettings { get; set; }
@@ -98,7 +101,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         protected override void OnModelCreating(DbModelBuilder mb)
         {
             mb.Conventions.Remove(new PluralizingTableNameConvention());
-            mb.HasDefaultSchema(DataAccessConfiguration.Instance.SqlSchema);
+            mb.HasDefaultSchema(CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             base.OnModelCreating(mb);
 

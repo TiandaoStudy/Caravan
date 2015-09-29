@@ -1,24 +1,22 @@
 using Common.Logging;
+using Finsa.CodeServices.Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
-using Finsa.CodeServices.Common;
+using YamlDotNet.Serialization;
 
-namespace Finsa.Caravan.Common.Models.Logging
+namespace Finsa.Caravan.Common.Logging.Models
 {
     [Serializable, JsonObject(MemberSerialization.OptIn), DataContract]
     public class LogEntry : EquatableObject<LogEntry>
     {
-        public const string AutoFilled = "Automatically filled parameter";
-        public const string NotSpecified = "...";
-
         [JsonProperty(Order = 0), DataMember(Order = 0)]
         public string AppName { get; set; }
 
-        [JsonProperty(Order = 1), DataMember(Order = 1)]
+        [JsonProperty(Order = 1), DataMember(Order = 1), YamlIgnore]
         public long Id { get; set; }
 
         [JsonProperty(Order = 2), DataMember(Order = 2), JsonConverter(typeof(StringEnumConverter))]
@@ -50,10 +48,10 @@ namespace Finsa.Caravan.Common.Models.Logging
 
         protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return KeyValuePair.Create("AppName", AppName);
-            yield return KeyValuePair.Create("Id", Id.ToString(CultureInfo.InvariantCulture));
-            yield return KeyValuePair.Create("LogLevel", LogLevel.ToString());
-            yield return KeyValuePair.Create("Date", Date.ToString(CultureInfo.InvariantCulture));
+            yield return KeyValuePair.Create(nameof(AppName), AppName);
+            yield return KeyValuePair.Create(nameof(Id), Id.ToString(CultureInfo.InvariantCulture));
+            yield return KeyValuePair.Create(nameof(LogLevel), LogLevel.ToString());
+            yield return KeyValuePair.Create(nameof(Date), Date.ToString(CultureInfo.InvariantCulture));
         }
 
         protected override IEnumerable<object> GetIdentifyingMembers()

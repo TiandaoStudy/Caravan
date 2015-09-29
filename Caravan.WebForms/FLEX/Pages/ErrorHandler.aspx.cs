@@ -17,7 +17,7 @@ namespace FLEX.Web.Pages
            string[] ErrorArray= new string[3];
            btnPrint.Attributes["onclick"]= "return openReportViewer('REPORT=StampaErrorHandler');";
 
-           txtTitle.Text = CommonConfiguration.Instance.AppName;
+           txtTitle.Text = CaravanCommonConfiguration.Instance.AppName;
 
            //Per errore potrei chiamare la pagina e la sessione è vuota
            if (Session[Settings.Default.ExceptionSessionKey] == null) 

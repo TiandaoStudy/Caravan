@@ -42,7 +42,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
     {
         public SqlSecAppTypeConfiguration()
         {
-            ToTable("CRVN_SEC_APPS", DataAccessConfiguration.Instance.SqlSchema);
+            ToTable("CRVN_SEC_APPS", CaravanDataAccessConfiguration.Instance.SqlSchema);
         }
     }
 }

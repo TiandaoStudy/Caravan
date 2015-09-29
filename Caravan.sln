@@ -54,9 +54,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{349512
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess", "Caravan.DataAccess\Caravan.DataAccess.csproj", "{418B2D91-D53E-49BF-98FC-66DA9490DC37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess.NET45", "Caravan.DataAccess\Caravan.DataAccess.NET45.csproj", "{418B2D91-D53E-49BF-98FC-66DA9490DC37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebApi", "Caravan.WebApi\Caravan.WebApi.csproj", "{27D82597-28B1-4441-8C42-0A220C38C4D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebApi.NET45", "Caravan.WebApi\Caravan.WebApi.NET45.csproj", "{27D82597-28B1-4441-8C42-0A220C38C4D8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External Libraries", "External Libraries", "{EEB0F070-8283-4D00-8129-64D81E908DCE}"
 	ProjectSection(SolutionItems) = preProject

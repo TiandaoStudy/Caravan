@@ -11,9 +11,10 @@
 // the License.
 
 using Common.Logging;
+using Finsa.Caravan.Common.Logging;
 using Finsa.CodeServices.Clock;
+using Ninject;
 using PommaLabs.KVLite;
-using System;
 
 namespace Finsa.Caravan.Common
 {
@@ -22,28 +23,48 @@ namespace Finsa.Caravan.Common
     ///   retrocompatibilità verso alcuni componenti che, oramai, non riescono più ad essere
     ///   adattati all'uso di Ninject.
     /// </summary>
-    public static class ServiceProvider
+    public static class CaravanServiceProvider
     {
+        /// <summary>
+        ///   Copia locale del kernel Ninject usato per la gestione automatica delle dipendenze.
+        /// </summary>
+        private static IKernel _ninjectKernel;
+
+        /// <summary>
+        ///   Il kernel Ninject usato per la gestione automatica delle dipendenze.
+        /// </summary>
+        public static IKernel NinjectKernel
+        {
+            get { return _ninjectKernel; }
+            set
+            {
+                // Aggiorno le varie dipendenze.
+                Clock = value.Get<IClock>();
+
+                // Se tutto è andato bene, aggiorno il kernel globale.
+                _ninjectKernel = value;
+            }
+        }
+
         /// <summary>
         ///   La cache in memoria usata da alcuni punti critici di Caravan.
         /// </summary>
-        public static MemoryCache MemoryCache { get; set; } = MemoryCache.DefaultInstance;
+        public static MemoryCache MemoryCache { get; } = MemoryCache.DefaultInstance;
 
         /// <summary>
         ///   L'orologio usato di default per il calcolo dell'ora corrente.
         /// </summary>
-        public static IClock Clock { get; set; } = new SystemClock();
-
-        /// <summary>
-        ///   La funzione usata per gestire l'ora corrente all'interno della sorgente dati. Di
-        ///   default, usa <see cref="Clock"/> e la proprietà <see cref="IClock.UtcNow"/>.
-        /// </summary>
-        public static Func<DateTime> CurrentDateTime { get; set; } = () => Clock.UtcNow;
+        public static IClock Clock { get; private set; }
 
         /// <summary>
         ///   Il log di emergenza, usato quando il normale log di Caravan va in errore. Scrive
         ///   rigorosamente, e semplicemente, su file, per evitare ulteriori errori.
         /// </summary>
         public static ILog EmergencyLog { get; } = LogManager.GetLogger("CaravanEmergencyLog");
+
+        /// <summary>
+        ///   Il log standard di Caravan, che usualmente viene usato per portare i messaggi di log a database.
+        /// </summary>
+        public static ICaravanLog FetchLog<T>() => LogManager.GetLogger<T>() as ICaravanLog;
     }
 }
