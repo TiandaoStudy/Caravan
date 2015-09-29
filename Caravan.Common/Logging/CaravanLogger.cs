@@ -16,7 +16,7 @@ namespace Finsa.Caravan.Common.Logging
     ///   Logger personalizzato per gestire messaggi più complessi e per sfruttare al meglio le
     ///   funzionalità introdotte in C#6.
     /// </summary>
-    sealed class CaravanLogger : AbstractLogger, ICaravanLog
+    public sealed class CaravanLogger : AbstractLogger, ICaravanLog
     {
         /// <summary>
         ///   Il valore di ritorno dei metodi di log, impostato a FALSE. Questo è stato deciso per

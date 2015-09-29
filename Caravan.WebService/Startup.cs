@@ -20,6 +20,7 @@ using System.Data.Entity.Infrastructure.Interception;
 using System.Web.Http;
 
 [assembly: OwinStartup(typeof(Startup))]
+
 namespace Finsa.Caravan.WebService
 {
     public sealed class Startup
@@ -28,8 +29,8 @@ namespace Finsa.Caravan.WebService
         {
             var config = new HttpConfiguration();
 
-            // IMPORTANTE: Inizializzo anche il kernel di Caravan.
-            var kernel = CaravanServiceProvider.NinjectKernel = CreateKernel();
+            // IMPORTANTE: Inizializzo anche il kernel di Caravan nel metodo di Create.
+            var kernel = CreateKernel();
             var cache = kernel.Get<ICache>();
 
             // Inizializzatore per Caravan.
@@ -48,7 +49,10 @@ namespace Finsa.Caravan.WebService
             IdentityConfig.Build(app);
         }
 
-        static IKernel CreateKernel() => new StandardKernel(new NinjectConfig());
+        static IKernel CreateKernel()
+        {
+            return CaravanServiceProvider.NinjectKernel ?? (CaravanServiceProvider.NinjectKernel = new StandardKernel(new NinjectConfig()));
+        }
 
         static void ConfigureHelpPages(HttpConfiguration config)
         {

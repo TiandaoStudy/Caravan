@@ -5,7 +5,10 @@ using System;
 
 namespace Finsa.Caravan.Common.Logging
 {
-    sealed class CaravanNoOpLogger : AbstractLogger, ICaravanLog
+    /// <summary>
+    ///   Stub che non fa nulla di nulla, può essere utile negli unit test.
+    /// </summary>
+    public sealed class CaravanNoOpLogger : AbstractLogger, ICaravanLog
     {
         public override bool IsDebugEnabled => false;
 
