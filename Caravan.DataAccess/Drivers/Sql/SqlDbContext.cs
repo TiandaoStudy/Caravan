@@ -1,10 +1,9 @@
-﻿using System.Data.Common;
+﻿using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Transactions;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Identity;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -105,6 +104,15 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
             base.OnModelCreating(mb);
 
+            #region Configurations - Logging
+
+            mb.Configurations.Add(new SqlLogSettingTypeConfiguration());
+            mb.Configurations.Add(new SqlLogEntryTypeConfiguration());
+
+            #endregion Configurations - Logging
+
+            #region Configurations - Security
+
             mb.Configurations.Add(new SqlSecAppTypeConfiguration());
             mb.Configurations.Add(new SqlSecContextTypeConfiguration());
             mb.Configurations.Add(new SqlSecEntryTypeConfiguration());
@@ -112,8 +120,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             mb.Configurations.Add(new SqlSecObjectTypeConfiguration());
             mb.Configurations.Add(new SqlSecRoleTypeConfiguration());
             mb.Configurations.Add(new SqlSecUserTypeConfiguration());
-            mb.Configurations.Add(new SqlLogSettingTypeConfiguration());
-            mb.Configurations.Add(new SqlLogEntryTypeConfiguration());
+
+            #endregion Configurations - Security
         }
     }
 }

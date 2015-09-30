@@ -1,4 +1,5 @@
-﻿using Finsa.Caravan.Common.Security;
+﻿using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common.Portability;
@@ -58,11 +59,11 @@ namespace Finsa.Caravan.WebService
 
         public static IdentityServerServiceFactory Configure(string connString)
         {
-            var t = new AspNetIdentityUserService<SecUser, string>(new UserManager<SecUser, string>(new CaravanUserStore(CaravanDataSource.Security)));
+            //var t = new AspNetIdentityUserService<SecUser, string>(new UserManager<SecUser, string>(new CaravanUserStore(CaravanDataSource.Security)));
 
             var factory = new IdentityServerServiceFactory
             {
-                UserService = new Registration<IUserService>(resolver => new AspNetIdentityUserService<SecUser, string>(new CaravanUserManager(CaravanDataSource.Security, new NoOpPasswordHasher())))
+                UserService = new Registration<IUserService>(resolver => new CaravanUserService())
             };
 
             var scopeStore = new InMemoryScopeStore(Scopes());
@@ -78,9 +79,14 @@ namespace Finsa.Caravan.WebService
         {
             app.Map("/identity", idsrvApp => idsrvApp.UseIdentityServer(new IdentityServerOptions
             {
-                SiteName = "Identity Server",
+                // Dettagli sul nome del servizio.
+                SiteName = CaravanCommonConfiguration.Instance.AppDescription,
                 IssuerUri = "https://idsrv3/mixit",
+
+                // Gestione della sicurezza della comunicazione.
                 SigningCertificate = LoadCertificate(),
+                RequireSsl = true,
+
                 EnableWelcomePage = true,
 
                 Factory = Configure("MyIdentityDb"),
@@ -91,20 +97,25 @@ namespace Finsa.Caravan.WebService
 
         static X509Certificate2 LoadCertificate()
         {
-            var certificatePath = PortableEnvironment.MapPath("~/CaravanDevCert.pfx");
-            return new X509Certificate2(certificatePath, "FinsaPassword");
+            var certificatePath = CaravanWebServiceConfiguration.Instance.Identity_SigningCertificatePath;
+            var mappedCertificatePath = PortableEnvironment.MapPath(certificatePath);
+            var certificatePassword = CaravanWebServiceConfiguration.Instance.Identity_SigningCertificatePassword;
+            return new X509Certificate2(mappedCertificatePath, certificatePassword);
         }
 
         class CaravanUserService : IUserService
         {
             public Task PreAuthenticateAsync(PreAuthenticationContext context)
             {
-                throw new NotImplementedException();
+                return Task.FromResult(0);
             }
 
             public Task AuthenticateLocalAsync(LocalAuthenticationContext context)
             {
-                throw new NotImplementedException();
+                context.AuthenticateResult = (context.UserName == context.Password)
+                    ? new AuthenticateResult("a", "b")
+                    : new AuthenticateResult("You shall not pass!");
+                return Task.FromResult(0);
             }
 
             public Task AuthenticateExternalAsync(ExternalAuthenticationContext context)
@@ -114,12 +125,12 @@ namespace Finsa.Caravan.WebService
 
             public Task PostAuthenticateAsync(PostAuthenticationContext context)
             {
-                throw new NotImplementedException();
+                return Task.FromResult(0);
             }
 
             public Task SignOutAsync(SignOutContext context)
             {
-                throw new NotImplementedException();
+                return Task.FromResult(0);
             }
 
             public Task GetProfileDataAsync(ProfileDataRequestContext context)
@@ -129,7 +140,8 @@ namespace Finsa.Caravan.WebService
 
             public Task IsActiveAsync(IsActiveContext context)
             {
-                throw new NotImplementedException();
+                context.IsActive = true;
+                return Task.FromResult(0);
             }
         }
     }

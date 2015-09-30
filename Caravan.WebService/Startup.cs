@@ -49,12 +49,12 @@ namespace Finsa.Caravan.WebService
             IdentityConfig.Build(app);
         }
 
-        static IKernel CreateKernel()
+        private static IKernel CreateKernel()
         {
             return CaravanServiceProvider.NinjectKernel ?? (CaravanServiceProvider.NinjectKernel = new StandardKernel(new NinjectConfig()));
         }
 
-        static void ConfigureHelpPages(HttpConfiguration config)
+        private static void ConfigureHelpPages(HttpConfiguration config)
         {
             // REQUIRED TO ENABLE HELP PAGES :)
             config.MapHttpAttributeRoutes();
@@ -69,7 +69,7 @@ namespace Finsa.Caravan.WebService
             });
         }
 
-        static void ConfigureFormatters(HttpConfiguration configuration)
+        private static void ConfigureFormatters(HttpConfiguration configuration)
         {
             // Controlli di integrità.
             Raise<ArgumentNullException>.IfIsNull(configuration);

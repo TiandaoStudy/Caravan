@@ -4,6 +4,30 @@
         <name>Finsa.Caravan.WebService</name>
     </assembly>
     <members>
+        <member name="T:Finsa.Caravan.WebService.CaravanWebServiceConfiguration">
+            <summary>
+              Configuration class for Caravan.Common. Default values are set inside the configuration
+              file itself.
+            </summary>
+        </member>
+        <member name="P:Finsa.Caravan.WebService.CaravanWebServiceConfiguration.Instance">
+            <summary>
+              Gets the static configuration instance.
+            </summary>
+            <value>The static configuration instance.</value>
+        </member>
+        <member name="P:Finsa.Caravan.WebService.CaravanWebServiceConfiguration.Identity_SigningCertificatePath">
+            <summary>
+              Il percorso del certificato richiesto dal servizio di autorizzazione/autenticazione
+              per firmare i TOKEN emessi.
+            </summary>
+        </member>
+        <member name="P:Finsa.Caravan.WebService.CaravanWebServiceConfiguration.Identity_SigningCertificatePassword">
+            <summary>
+              La password del certificato richiesto dal servizio di autorizzazione/autenticazione
+              per firmare i TOKEN emessi.
+            </summary>
+        </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.CacheController">
             <summary>
               Exposes the KVLite cache controller and allows further customizations.
