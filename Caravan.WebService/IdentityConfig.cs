@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
-using Finsa.Caravan.Common.Security;
+﻿using Finsa.Caravan.Common.Security;
+using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common.Portability;
 using Finsa.CodeServices.Security.PasswordHashing;
-using Microsoft.AspNet.Identity;
-using Owin;
 using IdentityServer3.AspNetIdentity;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 using IdentityServer3.Core.Services.InMemory;
-using Finsa.Caravan.Common.Security.Models;
+using Microsoft.AspNet.Identity;
+using Owin;
+using System;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
 namespace Finsa.Caravan.WebService
 {
@@ -85,7 +84,7 @@ namespace Finsa.Caravan.WebService
                 EnableWelcomePage = true,
 
                 Factory = Configure("MyIdentityDb"),
-                
+
                 //CorsPolicy = CorsPolicy.AllowAll
             }));
         }
