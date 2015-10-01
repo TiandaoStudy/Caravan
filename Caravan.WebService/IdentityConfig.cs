@@ -1,15 +1,9 @@
 ﻿using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Security;
-using Finsa.Caravan.Common.Security.Models;
-using Finsa.Caravan.DataAccess;
 using Finsa.CodeServices.Common.Portability;
-using Finsa.CodeServices.Security.PasswordHashing;
-using IdentityServer3.AspNetIdentity;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 using IdentityServer3.Core.Services.InMemory;
-using Microsoft.AspNet.Identity;
 using Owin;
 using System;
 using System.Collections.Generic;
@@ -18,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.WebService
 {
+    /// <summary>
+    ///   Configurazione del servizio di autorizzazione/autenticazione.
+    /// </summary>
     public static class IdentityConfig
     {
         public static IEnumerable<Client> Clients()
@@ -35,6 +32,22 @@ namespace Finsa.Caravan.WebService
                     Flow = Flows.ResourceOwner,
                     AccessTokenType = AccessTokenType.Jwt,
                     AccessTokenLifetime = 3600
+                },
+                new Client
+                {
+                    ClientName = "ASCESI Check",
+                    Enabled = true,
+
+                    ClientId = "ascesi_check",
+                    ClientSecrets = new List<Secret> {new Secret("check".Sha256())},
+
+                    Flow = Flows.AuthorizationCode,
+                    RedirectUris = new List<string> { "http://localhost/ascesicheck" },
+
+                    AccessTokenType = AccessTokenType.Jwt,
+                    AccessTokenLifetime = 3600,
+                    
+                    AllowedScopes = new List<string> { "publicApi" }
                 }
             };
         }
@@ -95,6 +108,10 @@ namespace Finsa.Caravan.WebService
             }));
         }
 
+        /// <summary>
+        ///   Carica il certificato necessario per firmare i TOKEN.
+        /// </summary>
+        /// <returns>Il certificato necessario per firmare i TOKEN.</returns>
         static X509Certificate2 LoadCertificate()
         {
             var certificatePath = CaravanWebServiceConfiguration.Instance.Identity_SigningCertificatePath;
@@ -113,7 +130,7 @@ namespace Finsa.Caravan.WebService
             public Task AuthenticateLocalAsync(LocalAuthenticationContext context)
             {
                 context.AuthenticateResult = (context.UserName == context.Password)
-                    ? new AuthenticateResult("a", "b")
+                    ? new AuthenticateResult(context.UserName, context.SignInMessage.ClientId)
                     : new AuthenticateResult("You shall not pass!");
                 return Task.FromResult(0);
             }

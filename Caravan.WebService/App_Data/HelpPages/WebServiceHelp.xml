@@ -480,5 +480,27 @@
             </summary>
             <param name="id">The id of the api to remove</param>
         </member>
+        <member name="T:Finsa.Caravan.WebService.IdentityConfig">
+            <summary>
+              Configurazione del servizio di autorizzazione/autenticazione.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.IdentityConfig.LoadCertificate">
+            <summary>
+              Carica il certificato necessario per firmare i TOKEN.
+            </summary>
+            <returns>Il certificato necessario per firmare i TOKEN.</returns>
+        </member>
+        <member name="T:Finsa.Caravan.WebService.Startup">
+            <summary>
+              Inizializza il servizio di Caravan.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Startup.Configuration(Owin.IAppBuilder)">
+            <summary>
+              Inizializza il servizio di Caravan.
+            </summary>
+            <param name="app">Necessario per configurare il servizio.</param>
+        </member>
     </members>
 </doc>

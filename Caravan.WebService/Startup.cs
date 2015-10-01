@@ -23,8 +23,15 @@ using System.Web.Http;
 
 namespace Finsa.Caravan.WebService
 {
+    /// <summary>
+    ///   Inizializza il servizio di Caravan.
+    /// </summary>
     public sealed class Startup
     {
+        /// <summary>
+        ///   Inizializza il servizio di Caravan.
+        /// </summary>
+        /// <param name="app">Necessario per configurare il servizio.</param>
         public void Configuration(IAppBuilder app)
         {
             var config = new HttpConfiguration();
