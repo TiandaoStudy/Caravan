@@ -1,7 +1,7 @@
 ﻿using IdentityServer3.EntityFramework.Entities;
 using System.Data.Entity.ModelConfiguration;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Identity
+namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Models
 {
     /// <summary>
     ///   Riferimento interno per <see cref="Client"/>.

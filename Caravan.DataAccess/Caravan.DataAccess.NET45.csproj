@@ -234,7 +234,10 @@
     <Compile Include="CaravanDataAccessConfiguration.cs" />
     <Compile Include="CaravanDataSourceKind.cs" />
     <Compile Include="Drivers\Sql\Attributes\DateTimeKindAttribute.cs" />
-    <Compile Include="Drivers\Sql\Models\Identity\SqlIdnClient.cs" />
+    <Compile Include="Drivers\Sql\Identity\Models\SqlIdnClient.cs" />
+    <Compile Include="Drivers\Sql\Identity\Models\SqlIdnToken.cs" />
+    <Compile Include="Drivers\Sql\Identity\Stores\AbstractSqlTokenStore.cs" />
+    <Compile Include="Drivers\Sql\Identity\Stores\SqlClientStore.cs" />
     <Compile Include="Logging\Sql\SqlDbCommandLogger.cs" />
     <Compile Include="Logging\CaravanLogTarget.cs" />
     <Compile Include="Drivers\Sql\Models\Security\SqlSecRole.cs" />

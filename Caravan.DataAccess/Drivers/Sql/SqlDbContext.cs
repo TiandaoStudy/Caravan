@@ -1,4 +1,5 @@
-﻿using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
+﻿using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Models;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using System.Data.Common;
 using System.Data.Entity;
@@ -77,7 +78,9 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         #region DB Sets
 
-        //public DbSet<SqlIdnClient> IdnClients { get; set; }
+        public DbSet<SqlIdnClient> IdnClients { get; set; }
+
+        public DbSet<SqlIdnToken> IdnTokens { get; set; }
 
         public DbSet<SqlLogEntry> LogEntries { get; set; }
 
@@ -122,6 +125,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             mb.Configurations.Add(new SqlSecUserTypeConfiguration());
 
             #endregion Configurations - Security
+
+            #region Configuration - Identity
+
+            mb.Configurations.Add(new SqlIdnClientTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnTokenTypeConfiguration());
+
+            #endregion Configuration - Identity
         }
     }
 }
