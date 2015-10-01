@@ -15,6 +15,7 @@ using Finsa.CodeServices.Common.Extensions;
 using PommaLabs.KVLite;
 using PommaLabs.Thrower;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web.Http;
@@ -50,10 +51,9 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <returns>All values.</returns>
         [Route(""), CacheOutput(ServerTimeSpan = OutputCacheSeconds, ClientTimeSpan = OutputCacheSeconds)]
-        public IQueryable<string> Get()
-        {
-            return _cache.GetItems<object>(CachePartition).Select(i => i.Value).Cast<string>().AsQueryable();
-        }
+        public IEnumerable<string> Get() => _cache
+            .GetItems<string>(CachePartition)
+            .Select(i => i.Value);
 
         /// <summary>
         ///   Looks up some data from ID.
@@ -61,10 +61,9 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="id">The id of the data.</param>
         /// <returns>The value of the data.</returns>
         [Route("{id}"), CacheOutput(ServerTimeSpan = OutputCacheSeconds, ClientTimeSpan = OutputCacheSeconds)]
-        public string Get(int id)
-        {
-            return _cache.Get<string>(CachePartition, id.ToString(CultureInfo.InvariantCulture)).Value;
-        }
+        public string Get(int id) => _cache
+            .Get<string>(CachePartition, id.ToString(CultureInfo.InvariantCulture))
+            .Value;
 
         /// <summary>
         ///   Adds given value.
@@ -74,8 +73,8 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("")]
         public void Post([FromBody] string value)
         {
-            var random = new Random().Next();
-            _cache.AddTimed(CachePartition, random.ToString(CultureInfo.InvariantCulture), value.Truncate(MaxStringLength), _clock.UtcNow.AddSeconds(CacheSeconds));
+            var randomKey = new Random().Next().ToString(CultureInfo.InvariantCulture);
+            _cache.AddTimed(CachePartition, randomKey, value.Truncate(MaxStringLength), _clock.UtcNow.AddSeconds(CacheSeconds));
         }
 
         /// <summary>
