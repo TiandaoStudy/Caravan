@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using IdentityServer3.Core.Services.Default;
 
 namespace Finsa.Caravan.WebService
 {
@@ -42,7 +43,7 @@ namespace Finsa.Caravan.WebService
                     ClientSecrets = new List<Secret> {new Secret("check".Sha256())},
 
                     Flow = Flows.AuthorizationCode,
-                    RedirectUris = new List<string> { "http://localhost/ascesicheck" },
+                    RedirectUris = new List<string> { "http://localhost/ascesicheck", "http://localhost:1731" },
 
                     AccessTokenType = AccessTokenType.Jwt,
                     AccessTokenLifetime = 3600,
@@ -85,6 +86,8 @@ namespace Finsa.Caravan.WebService
             var clientStore = new InMemoryClientStore(Clients());
             factory.ClientStore = new Registration<IClientStore>(resolver => clientStore);
 
+            factory.CorsPolicyService = new Registration<ICorsPolicyService>(r => new DefaultCorsPolicyService() {AllowAll = true});
+
             return factory;
         }
 
@@ -103,7 +106,7 @@ namespace Finsa.Caravan.WebService
                 EnableWelcomePage = true,
 
                 Factory = Configure("MyIdentityDb"),
-
+                
                 //CorsPolicy = CorsPolicy.AllowAll
             }));
         }
@@ -129,7 +132,7 @@ namespace Finsa.Caravan.WebService
 
             public Task AuthenticateLocalAsync(LocalAuthenticationContext context)
             {
-                context.AuthenticateResult = (context.UserName == context.Password)
+                context.AuthenticateResult = (context.Password.Length > 0)
                     ? new AuthenticateResult(context.UserName, context.SignInMessage.ClientId)
                     : new AuthenticateResult("You shall not pass!");
                 return Task.FromResult(0);
