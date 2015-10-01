@@ -17,6 +17,7 @@ using PommaLabs.Thrower;
 using Swashbuckle.Application;
 using System;
 using System.Data.Entity.Infrastructure.Interception;
+using System.Net.Http;
 using System.Web.Http;
 
 [assembly: OwinStartup(typeof(Startup))]
@@ -69,6 +70,7 @@ namespace Finsa.Caravan.WebService
             {
                 c.SingleApiVersion("v1", "wsCaravan");
                 c.IncludeXmlComments(PortableEnvironment.MapPath(@"~/App_Data/HelpPages/WebServiceHelp.xml"));
+                c.RootUrl(req => req.RequestUri.GetLeftPart(UriPartial.Authority) + req.GetRequestContext().VirtualPathRoot.TrimEnd('/'));
             }).EnableSwaggerUi(c =>
             {
                 c.DocExpansion(DocExpansion.None);
