@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
 using IdentityServer3.EntityFramework.Entities;
 
@@ -22,8 +23,16 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
     /// <summary>
     ///   Riferimento interno per <see cref="ClientIdPRestriction"/>.
     /// </summary>
-    public class SqlIdnClientIdPRestriction : ClientIdPRestriction
+    public class SqlIdnClientIdPRestriction
     {
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(200)]
+        public string Provider { get; set; }
+
+        public SqlIdnClient Client { get; set; }
     }
 
     /// <summary>
@@ -36,9 +45,15 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         /// </summary>
         public SqlIdnClientIdPRestrictionTypeConfiguration()
         {
-            ToTable("CRVN_IDN_CLI_PROV_RESTRICTIONS", CaravanDataAccessConfiguration.Instance.SqlSchema);
+            ToTable("CRVN_IDN_CLI_IDPR_RESTRICTIONS", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CCPR_ID");
+            Property(x => x.Provider).HasColumnName("CCPR_PROVIDER");
+
+            // SqlIdnClientIdPRestriction(N) <-> SqlIdnClient(1)
+            HasRequired(x => x.Client)
+                .WithMany(x => x.IdentityProviderRestrictions)
+                .WillCascadeOnDelete();
         }
     }
 }

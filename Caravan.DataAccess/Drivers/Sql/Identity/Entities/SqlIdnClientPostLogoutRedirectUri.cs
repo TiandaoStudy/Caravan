@@ -26,13 +26,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
     public class SqlIdnClientPostLogoutRedirectUri
     {
         [Key]
-        public virtual int Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(2000)]
-        public virtual string Uri { get; set; }
+        public string Uri { get; set; }
 
-        public virtual SqlIdnClient Client { get; set; }
+        public SqlIdnClient Client { get; set; }
     }
 
     /// <summary>

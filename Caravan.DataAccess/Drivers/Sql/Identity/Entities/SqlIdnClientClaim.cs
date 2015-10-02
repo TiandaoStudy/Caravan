@@ -14,16 +14,29 @@
  * limitations under the License.
  */
 
-using System.Data.Entity.ModelConfiguration;
 using IdentityServer3.EntityFramework.Entities;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.ModelConfiguration;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 {
     /// <summary>
     ///   Riferimento interno per <see cref="ClientClaim"/>.
     /// </summary>
-    public class SqlIdnClientClaim : ClientClaim
+    public class SqlIdnClientClaim
     {
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(250)]
+        public string Type { get; set; }
+
+        [Required]
+        [StringLength(250)]
+        public string Value { get; set; }
+
+        public SqlIdnClient Client { get; set; }
     }
 
     /// <summary>
@@ -39,6 +52,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             ToTable("CRVN_IDN_CLI_CLAIMS", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CCLM_ID");
+            Property(x => x.Type).HasColumnName("CCLM_TYPE");
+            Property(x => x.Value).HasColumnName("CCLM_VALUE");
+
+            // SqlIdnClientClaim(N) <-> SqlIdnClient(1)
+            HasRequired(x => x.Client)
+                .WithMany(x => x.Claims)
+                .WillCascadeOnDelete();
         }
     }
 }

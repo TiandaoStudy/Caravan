@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
+using IdentityServer3.Core.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using IdentityServer3.Core.Models;
-using IdentityServer3.EntityFramework.Entities;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 {
@@ -43,8 +42,10 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         [Required]
         [StringLength(200)]
         public string ClientName { get; set; }
+
         [StringLength(2000)]
         public string ClientUri { get; set; }
+
         public string LogoUri { get; set; }
 
         public bool RequireConsent { get; set; }
@@ -62,13 +63,16 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         // in seconds
         [Range(0, int.MaxValue)]
         public int IdentityTokenLifetime { get; set; }
+
         [Range(0, int.MaxValue)]
         public int AccessTokenLifetime { get; set; }
+
         [Range(0, int.MaxValue)]
         public int AuthorizationCodeLifetime { get; set; }
 
         [Range(0, int.MaxValue)]
         public int AbsoluteRefreshTokenLifetime { get; set; }
+
         [Range(0, int.MaxValue)]
         public int SlidingRefreshTokenLifetime { get; set; }
 

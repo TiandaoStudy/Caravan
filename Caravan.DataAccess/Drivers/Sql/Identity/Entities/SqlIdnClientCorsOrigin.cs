@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
 using IdentityServer3.EntityFramework.Entities;
 
@@ -24,6 +25,14 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
     /// </summary>
     public class SqlIdnClientCorsOrigin : ClientCorsOrigin
     {
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(150)]
+        public string Origin { get; set; }
+
+        public SqlIdnClient Client { get; set; }
     }
 
     /// <summary>
@@ -39,6 +48,12 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             ToTable("CRVN_IDN_CLI_CORS_ORIGINS", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CCCO_ID");
+            Property(x => x.Origin).HasColumnName("CCCO_ORIGIN");
+
+            // SqlIdnClientCorsOrigin(N) <-> SqlIdnClient(1)
+            HasRequired(x => x.Client)
+                .WithMany(x => x.AllowedCorsOrigins)
+                .WillCascadeOnDelete();
         }
     }
 }

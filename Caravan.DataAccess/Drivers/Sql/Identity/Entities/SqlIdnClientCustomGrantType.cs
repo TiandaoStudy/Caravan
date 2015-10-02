@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
 using IdentityServer3.EntityFramework.Entities;
 
@@ -22,8 +23,16 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
     /// <summary>
     ///   Riferimento interno per <see cref="ClientCustomGrantType"/>.
     /// </summary>
-    public class SqlIdnClientCustomGrantType : ClientCustomGrantType
+    public class SqlIdnClientCustomGrantType
     {
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(250)]
+        public string GrantType { get; set; }
+
+        public SqlIdnClient Client { get; set; }
     }
 
     /// <summary>
@@ -39,6 +48,12 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             ToTable("CRVN_IDN_CLI_CUSTOM_GRNT_TYPES", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CCGT_ID");
+            Property(x => x.GrantType).HasColumnName("CCGT_GRANT_TYPE");
+
+            // SqlIdnClientCustomGrantType(N) <-> SqlIdnClient(1)
+            HasRequired(x => x.Client)
+                .WithMany(x => x.AllowedCustomGrantTypes)
+                .WillCascadeOnDelete();
         }
     }
 }
