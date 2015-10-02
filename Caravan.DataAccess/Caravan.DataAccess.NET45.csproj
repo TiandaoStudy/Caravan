@@ -238,6 +238,8 @@
     <Compile Include="CaravanDataAccessConfiguration.cs" />
     <Compile Include="CaravanDataSourceKind.cs" />
     <Compile Include="Drivers\Sql\Attributes\DateTimeKindAttribute.cs" />
+    <Compile Include="Drivers\Sql\Identity\Extensions\EntitiesMap.cs" />
+    <Compile Include="Drivers\Sql\Identity\Extensions\ModelsMap.cs" />
     <Compile Include="Drivers\Sql\Identity\Models\SqlIdnClientSecret.cs" />
     <Compile Include="Drivers\Sql\Identity\Models\SqlIdnClientScopes.cs" />
     <Compile Include="Drivers\Sql\Identity\Models\SqlIdnClientRedirectUri.cs" />
