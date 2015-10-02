@@ -120,6 +120,12 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         public DbSet<SqlIdnClientSecret> IdnClientSecrets { get; set; }
 
+        public DbSet<SqlIdnConsent> IdnConsents { get; set; }
+
+        public DbSet<SqlIdnScope> IdnScopes { get; set; }
+
+        public DbSet<SqlIdnScopeClaim> IdnScopeClaims { get; set; }
+
         public DbSet<SqlIdnToken> IdnTokens { get; set; }
 
         #endregion DB Sets - Identity
@@ -161,6 +167,9 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             mb.Configurations.Add(new SqlIdnClientRedirectUriTypeConfiguration());
             mb.Configurations.Add(new SqlIdnClientScopeTypeConfiguration());
             mb.Configurations.Add(new SqlIdnClientSecretTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnConsentTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnScopeTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnScopeClaimTypeConfiguration());
             mb.Configurations.Add(new SqlIdnTokenTypeConfiguration());
 
             #endregion Configuration - Identity

@@ -16,7 +16,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Models
     public sealed class SqlIdnTokenTypeConfiguration : EntityTypeConfiguration<SqlIdnToken>
     {
         /// <summary>
-        ///   Mappa la classe <see cref="SqlIdnClient"/>.
+        ///   Mappa la classe <see cref="SqlIdnToken"/>.
         /// </summary>
         public SqlIdnTokenTypeConfiguration()
         {

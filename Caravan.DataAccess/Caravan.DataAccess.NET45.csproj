@@ -243,6 +243,9 @@
     <Compile Include="Drivers\Sql\Identity\Models\SqlIdnClientCorsOrigin.cs" />
     <Compile Include="Drivers\Sql\Identity\Models\SqlIdnClientClaim.cs" />
     <Compile Include="Drivers\Sql\Identity\Models\SqlIdnClient.cs" />
+    <Compile Include="Drivers\Sql\Identity\Models\SqlIdnConsent.cs" />
+    <Compile Include="Drivers\Sql\Identity\Models\SqlIdnScopeClaim.cs" />
+    <Compile Include="Drivers\Sql\Identity\Models\SqlIdnScope.cs" />
     <Compile Include="Drivers\Sql\Identity\Models\SqlIdnToken.cs" />
     <Compile Include="Drivers\Sql\Identity\Stores\AbstractSqlIdnTokenStore.cs" />
     <Compile Include="Drivers\Sql\Identity\Stores\SqlIdnClientStore.cs" />
