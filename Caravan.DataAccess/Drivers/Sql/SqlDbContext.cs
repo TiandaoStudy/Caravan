@@ -1,10 +1,13 @@
 ﻿using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Models;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
+using Finsa.CodeServices.Common.Portability;
+using InteractivePreGeneratedViews;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.IO;
 using System.Transactions;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Logging.Models;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Models;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -12,10 +15,10 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
     {
         #region Constants
 
-        internal const short TinyLength   = 8;    // 2^3
-        internal const short SmallLength  = 32;   // 2^5
+        internal const short TinyLength = 8;    // 2^3
+        internal const short SmallLength = 32;   // 2^5
         internal const short MediumLength = 256;  // 2^8
-        internal const short LargeLength  = 1024; // 2^10
+        internal const short LargeLength = 1024; // 2^10
 
         #endregion Constants
 
@@ -44,20 +47,33 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         public SqlDbContext()
             : base(GetConnection(), true)
         {
+            // Disabilito SEMPRE il lazy loading, è troppo pericoloso!
             Configuration.LazyLoadingEnabled = false;
         }
 
         public static SqlDbContext CreateReadContext()
         {
+            // Il DB è già inizializzato dalla chiamata sottostante.
             var ctx = CreateWriteContext();
+
+            // Disabilito i proxy, dato che per un contesto di lettura (NON UPDATE) non hanno alcuna utilità.
             ctx.Configuration.ProxyCreationEnabled = false;
+
             return ctx;
         }
 
         public static SqlDbContext CreateWriteContext()
         {
             var ctx = new SqlDbContext();
+
+            // Configura la generazione automatica delle viste per EF.
+            var mappedPregeneratedViewsPath = PortableEnvironment.MapPath(CaravanDataAccessConfiguration.Instance.Drivers_Sql_EFPregeneratedViewsPath);
+            var pregeneratedViews = Path.Combine(mappedPregeneratedViewsPath, "CaravanViews.xml");
+            InteractiveViews.SetViewCacheFactory(ctx, new FileViewCacheFactory(pregeneratedViews));
+
+            // Provo a inizializzare il DB.
             ctx.Database.Initialize(false);
+
             return ctx;
         }
 

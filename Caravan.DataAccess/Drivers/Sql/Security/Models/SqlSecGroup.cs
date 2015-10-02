@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
+namespace Finsa.Caravan.DataAccess.Drivers.Sql.Security.Models
 {
     [Serializable]
     public class SqlSecGroup
@@ -40,7 +40,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 
         public virtual ICollection<SqlSecEntry> SecEntries { get; set; }
 
-        #endregion
+        #endregion Relationships
     }
 
     public sealed class SqlSecGroupTypeConfiguration : EntityTypeConfiguration<SqlSecGroup>

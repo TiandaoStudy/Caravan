@@ -116,6 +116,10 @@
       <HintPath>..\packages\IdentityServer3.EntityFramework.2.0.0\lib\net45\IdentityServer3.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="InteractivePreGeneratedViews, Version=1.0.0.0, Culture=neutral, PublicKeyToken=46c4868af4307d2c, processorArchitecture=MSIL">
+      <HintPath>..\packages\EFInteractiveViews.1.0.1\lib\net45\InteractivePreGeneratedViews.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="LZ4, Version=1.0.9.93, Culture=neutral, PublicKeyToken=62e1b5ec1eec9bdd, processorArchitecture=MSIL">
       <HintPath>..\packages\lz4net.1.0.9.93\lib\net4-client\LZ4.dll</HintPath>
       <Private>True</Private>
@@ -248,10 +252,15 @@
     <Compile Include="Drivers\Sql\Identity\Models\SqlIdnScope.cs" />
     <Compile Include="Drivers\Sql\Identity\Models\SqlIdnToken.cs" />
     <Compile Include="Drivers\Sql\Identity\Stores\AbstractSqlIdnTokenStore.cs" />
+    <Compile Include="Drivers\Sql\Identity\Stores\SqlIdnAuthorizationCodeStore.cs" />
     <Compile Include="Drivers\Sql\Identity\Stores\SqlIdnClientStore.cs" />
+    <Compile Include="Drivers\Sql\Identity\Stores\SqlIdnConsentStore.cs" />
+    <Compile Include="Drivers\Sql\Identity\Stores\SqlIdnRefreshTokenStore.cs" />
+    <Compile Include="Drivers\Sql\Identity\Stores\SqlIdnScopeStore.cs" />
+    <Compile Include="Drivers\Sql\Identity\Stores\SqlIdnTokenHandleStore.cs" />
     <Compile Include="Logging\Sql\SqlDbCommandLogger.cs" />
     <Compile Include="Logging\CaravanLogTarget.cs" />
-    <Compile Include="Drivers\Sql\Models\Security\SqlSecRole.cs" />
+    <Compile Include="Drivers\Sql\Security\Models\SqlSecRole.cs" />
     <Compile Include="Core\AbstractDataSourceManager.cs" />
     <Compile Include="Core\AbstractLogRepository.cs" />
     <Compile Include="Core\AbstractSecurityRepository.cs" />
@@ -270,14 +279,14 @@
     <Compile Include="Drivers\Mongo\MongoSecurityRepository.cs" />
     <Compile Include="Drivers\Mongo\MongoUtilities.cs" />
     <Compile Include="Drivers\Sql\FakeSql\FakeSqlDataSourceManager.cs" />
-    <Compile Include="Drivers\Sql\Models\Logging\SqlLogEntry.cs" />
-    <Compile Include="Drivers\Sql\Models\Logging\SqlLogSetting.cs" />
-    <Compile Include="Drivers\Sql\Models\Security\SqlSecApp.cs" />
-    <Compile Include="Drivers\Sql\Models\Security\SqlSecContext.cs" />
-    <Compile Include="Drivers\Sql\Models\Security\SqlSecEntry.cs" />
-    <Compile Include="Drivers\Sql\Models\Security\SqlSecGroup.cs" />
-    <Compile Include="Drivers\Sql\Models\Security\SqlSecObject.cs" />
-    <Compile Include="Drivers\Sql\Models\Security\SqlSecUser.cs" />
+    <Compile Include="Drivers\Sql\Logging\Models\SqlLogEntry.cs" />
+    <Compile Include="Drivers\Sql\Logging\Models\SqlLogSetting.cs" />
+    <Compile Include="Drivers\Sql\Security\Models\SqlSecApp.cs" />
+    <Compile Include="Drivers\Sql\Security\Models\SqlSecContext.cs" />
+    <Compile Include="Drivers\Sql\Security\Models\SqlSecEntry.cs" />
+    <Compile Include="Drivers\Sql\Security\Models\SqlSecGroup.cs" />
+    <Compile Include="Drivers\Sql\Security\Models\SqlSecObject.cs" />
+    <Compile Include="Drivers\Sql\Security\Models\SqlSecUser.cs" />
     <Compile Include="Drivers\Sql\MySql\MySqlDataSourceManager.cs" />
     <Compile Include="Drivers\Sql\Oracle\OracleDynamicParameters.cs" />
     <Compile Include="CaravanDataSource.cs" />

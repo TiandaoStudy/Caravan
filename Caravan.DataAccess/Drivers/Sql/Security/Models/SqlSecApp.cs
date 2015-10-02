@@ -1,11 +1,11 @@
-﻿using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
+﻿using Finsa.Caravan.DataAccess.Drivers.Sql.Logging.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
+namespace Finsa.Caravan.DataAccess.Drivers.Sql.Security.Models
 {
     [Serializable]
     public class SqlSecApp

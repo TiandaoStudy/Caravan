@@ -28,23 +28,23 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
 {
-    internal abstract class AbstractSqlIdnTokenStore<T> 
+    internal abstract class AbstractSqlIdnTokenStore<T>
         where T : class
     {
-        protected readonly SqlDbContext _context;
-        protected readonly TokenType _tokenType;
-        protected readonly IScopeStore _scopeStore;
-        protected readonly IClientStore _clientStore;
+        protected readonly SqlDbContext Context;
+        protected readonly TokenType TokenType;
+        protected readonly IScopeStore ScopeStore;
+        protected readonly IClientStore ClientStore;
 
         protected AbstractSqlIdnTokenStore(SqlDbContext context, TokenType tokenType, IScopeStore scopeStore, IClientStore clientStore)
         {
             RaiseArgumentNullException.IfIsNull(context, nameof(context));
             RaiseArgumentNullException.IfIsNull(scopeStore, nameof(scopeStore));
             RaiseArgumentNullException.IfIsNull(clientStore, nameof(clientStore));
-            _context = context;
-            _tokenType = tokenType;
-            _scopeStore = scopeStore;
-            _clientStore = clientStore;
+            Context = context;
+            TokenType = tokenType;
+            ScopeStore = scopeStore;
+            ClientStore = clientStore;
         }
 
         private JsonSerializerSettings GetJsonSerializerSettings()
@@ -52,8 +52,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new ClaimConverter());
             settings.Converters.Add(new ClaimsPrincipalConverter());
-            settings.Converters.Add(new ClientConverter(_clientStore));
-            settings.Converters.Add(new ScopeConverter(_scopeStore));
+            settings.Converters.Add(new ClientConverter(ClientStore));
+            settings.Converters.Add(new ScopeConverter(ScopeStore));
             return settings;
         }
 
@@ -69,7 +69,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
 
         public async Task<T> GetAsync(string key)
         {
-            var token = await _context.IdnTokens.FindAsync(key, _tokenType);
+            var token = await Context.IdnTokens.FindAsync(key, TokenType);
 
             if (token == null || token.Expiry < DateTimeOffset.UtcNow)
             {
@@ -81,20 +81,20 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
 
         public async Task RemoveAsync(string key)
         {
-            var token = await _context.IdnTokens.FindAsync(key, _tokenType);
+            var token = await Context.IdnTokens.FindAsync(key, TokenType);
 
             if (token != null)
             {
-                _context.IdnTokens.Remove(token);
-                await _context.SaveChangesAsync();
+                Context.IdnTokens.Remove(token);
+                await Context.SaveChangesAsync();
             }
         }
 
         public async Task<IEnumerable<ITokenMetadata>> GetAllAsync(string subject)
         {
-            var tokens = await _context.IdnTokens.Where(x =>
+            var tokens = await Context.IdnTokens.Where(x =>
                 x.SubjectId == subject &&
-                x.TokenType == _tokenType).ToArrayAsync();
+                x.TokenType == TokenType).ToArrayAsync();
 
             var results = tokens.Select(x => ConvertFromJson(x.JsonCode)).ToArray();
             return results.Cast<ITokenMetadata>();
@@ -102,12 +102,12 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
 
         public async Task RevokeAsync(string subject, string client)
         {
-            _context.IdnTokens.RemoveRange(_context.IdnTokens.Where(x =>
+            Context.IdnTokens.RemoveRange(Context.IdnTokens.Where(x =>
                 x.SubjectId == subject &&
                 x.ClientId == client &&
-                x.TokenType == _tokenType));
+                x.TokenType == TokenType));
 
-            await _context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
         }
 
         public abstract Task StoreAsync(string key, T value);

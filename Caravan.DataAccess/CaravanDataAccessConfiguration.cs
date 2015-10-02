@@ -2,12 +2,12 @@
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.Common.Security.Models;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Portability;
 using System;
 using System.Collections.Generic;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Logging.Models;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Models;
 using Westwind.Utilities.Configuration;
 
 namespace Finsa.Caravan.DataAccess
@@ -87,6 +87,11 @@ namespace Finsa.Caravan.DataAccess
         public string SqlSchema { get; set; }
 
         public string SqlInitializer { get; set; }
+
+        /// <summary>
+        ///   Il percorso dove memorizzare le viste pre-generate per EF.
+        /// </summary>
+        public string Drivers_Sql_EFPregeneratedViewsPath { get; set; } = "~/App_Data/EFPregeneratedViews";
 
         #region Oracle
 

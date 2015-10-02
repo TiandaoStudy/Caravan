@@ -3,8 +3,6 @@ using Common.Logging;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Extensions;
 using PommaLabs.Thrower;
@@ -13,6 +11,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Logging.Models;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Models;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
+namespace Finsa.Caravan.DataAccess.Drivers.Sql.Security.Models
 {
     [Serializable]
     public class SqlSecEntry
@@ -34,7 +34,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security
 
         public SqlSecUser User { get; set; }
 
-        #endregion
+        #endregion Relationships
     }
 
     public sealed class SqlSecEntryTypeConfiguration : EntityTypeConfiguration<SqlSecEntry>
