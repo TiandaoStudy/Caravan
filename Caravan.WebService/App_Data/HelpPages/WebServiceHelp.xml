@@ -491,6 +491,12 @@
             </summary>
             <returns>Il certificato necessario per firmare i TOKEN.</returns>
         </member>
+        <member name="M:Finsa.Caravan.WebService.IdentityConfig.ConfigureFactory">
+            <summary>
+              Configura il generatore dei servizi usati dalla parte di autenticazione/autorizzazione.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Finsa.Caravan.WebService.Startup">
             <summary>
               Inizializza il servizio di Caravan.

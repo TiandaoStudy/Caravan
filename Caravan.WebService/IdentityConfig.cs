@@ -1,15 +1,14 @@
 ﻿using Finsa.Caravan.Common;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Identity;
 using Finsa.CodeServices.Common.Portability;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
-using IdentityServer3.Core.Services.InMemory;
 using Owin;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using IdentityServer3.Core.Services.Default;
 
 namespace Finsa.Caravan.WebService
 {
@@ -47,7 +46,7 @@ namespace Finsa.Caravan.WebService
 
                     AccessTokenType = AccessTokenType.Jwt,
                     AccessTokenLifetime = 3600,
-                    
+
                     AllowedScopes = new List<string> { "publicApi" }
                 }
             };
@@ -71,26 +70,6 @@ namespace Finsa.Caravan.WebService
             return scopes;
         }
 
-        public static IdentityServerServiceFactory Configure(string connString)
-        {
-            //var t = new AspNetIdentityUserService<SecUser, string>(new UserManager<SecUser, string>(new CaravanUserStore(CaravanDataSource.Security)));
-
-            var factory = new IdentityServerServiceFactory
-            {
-                UserService = new Registration<IUserService>(resolver => new CaravanUserService())
-            };
-
-            var scopeStore = new InMemoryScopeStore(Scopes());
-            factory.ScopeStore = new Registration<IScopeStore>(resolver => scopeStore);
-
-            var clientStore = new InMemoryClientStore(Clients());
-            factory.ClientStore = new Registration<IClientStore>(resolver => clientStore);
-
-            factory.CorsPolicyService = new Registration<ICorsPolicyService>(r => new DefaultCorsPolicyService() {AllowAll = true});
-
-            return factory;
-        }
-
         public static void Build(IAppBuilder app)
         {
             app.Map("/identity", idsrvApp => idsrvApp.UseIdentityServer(new IdentityServerOptions
@@ -105,9 +84,7 @@ namespace Finsa.Caravan.WebService
 
                 EnableWelcomePage = true,
 
-                Factory = Configure("MyIdentityDb"),
-                
-                //CorsPolicy = CorsPolicy.AllowAll
+                Factory = ConfigureFactory(),
             }));
         }
 
@@ -121,6 +98,19 @@ namespace Finsa.Caravan.WebService
             var mappedCertificatePath = PortableEnvironment.MapPath(certificatePath);
             var certificatePassword = CaravanWebServiceConfiguration.Instance.Identity_SigningCertificatePassword;
             return new X509Certificate2(mappedCertificatePath, certificatePassword);
+        }
+
+        /// <summary>
+        ///   Configura il generatore dei servizi usati dalla parte di autenticazione/autorizzazione.
+        /// </summary>
+        /// <returns></returns>
+        public static IdentityServerServiceFactory ConfigureFactory()
+        {
+            //var t = new AspNetIdentityUserService<SecUser, string>(new UserManager<SecUser, string>(new CaravanUserStore(CaravanDataSource.Security)));
+
+            var factory = SqlIdnServiceFactory.Configure();
+            factory.UserService = new Registration<IUserService, CaravanUserService>();
+            return factory;
         }
 
         class CaravanUserService : IUserService
