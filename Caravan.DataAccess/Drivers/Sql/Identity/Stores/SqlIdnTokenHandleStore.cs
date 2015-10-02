@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
+using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities;
 using Finsa.CodeServices.Clock;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 using PommaLabs.Thrower;
 using System.Threading.Tasks;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
 {

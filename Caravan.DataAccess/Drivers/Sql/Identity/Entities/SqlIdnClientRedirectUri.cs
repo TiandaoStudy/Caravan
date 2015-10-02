@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
+using IdentityServer3.EntityFramework.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
-using IdentityServer3.EntityFramework.Entities;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 {

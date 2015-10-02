@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities;
 using IdentityServer3.Core.Services;
 using PommaLabs.Thrower;
 using System;
@@ -21,7 +22,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
 {

@@ -14,16 +14,38 @@
  * limitations under the License.
  */
 
-using System.Data.Entity.ModelConfiguration;
 using IdentityServer3.EntityFramework.Entities;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 {
     /// <summary>
     ///   Riferimento interno per <see cref="Token"/>.
     /// </summary>
-    public class SqlIdnToken : Token
+    public class SqlIdnToken
     {
+        [Key, Column(Order = 0)]
+        public string Key { get; set; }
+
+        [Key, Column(Order = 1)]
+        public TokenType TokenType { get; set; }
+
+        [StringLength(200)]
+        public string SubjectId { get; set; }
+
+        [Required]
+        [StringLength(200)]
+        public string ClientId { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        public string JsonCode { get; set; }
+
+        [Required]
+        public DateTimeOffset Expiry { get; set; }
     }
 
     /// <summary>
@@ -38,7 +60,12 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         {
             ToTable("CRVN_IDN_TOKENS", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
+            Property(x => x.Key).HasColumnName("CTOK_KEY");
+            Property(x => x.TokenType).HasColumnName("CTOK_TYPE");
+            Property(x => x.SubjectId).HasColumnName("CTOK_SUBJECT_ID");
             Property(x => x.ClientId).HasColumnName("CCLI_CLIENT_ID");
+            Property(x => x.JsonCode).HasColumnName("CTOK_JSON_CODE");
+            Property(x => x.Expiry).HasColumnName("CTOK_EXPIRY");
         }
     }
 }

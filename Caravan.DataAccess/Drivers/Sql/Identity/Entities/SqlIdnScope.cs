@@ -14,16 +14,43 @@
  * limitations under the License.
  */
 
-using System.Data.Entity.ModelConfiguration;
 using IdentityServer3.EntityFramework.Entities;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.ModelConfiguration;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 {
     /// <summary>
     ///   Riferimento interno per <see cref="Scope"/>.
     /// </summary>
-    public class SqlIdnScope : Scope
+    public class SqlIdnScope
     {
+        [Key]
+        public int Id { get; set; }
+
+        public bool Enabled { get; set; }
+
+        [Required]
+        [StringLength(200)]
+        public string Name { get; set; }
+
+        [StringLength(200)]
+        public string DisplayName { get; set; }
+
+        [StringLength(1000)]
+        public string Description { get; set; }
+
+        public bool Required { get; set; }
+        public bool Emphasize { get; set; }
+        public int Type { get; set; }
+        public virtual ICollection<SqlIdnScopeClaim> ScopeClaims { get; set; }
+        public bool IncludeAllClaimsForUser { get; set; }
+
+        [StringLength(200)]
+        public string ClaimsRule { get; set; }
+
+        public bool ShowInDiscoveryDocument { get; set; }
     }
 
     /// <summary>
@@ -39,6 +66,16 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             ToTable("CRVN_IDN_SCOPES", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CSCO_ID");
+            Property(x => x.Enabled).HasColumnName("CSCO_ENABLED");
+            Property(x => x.Name).HasColumnName("CSCO_SCOPE_NAME");
+            Property(x => x.DisplayName).HasColumnName("CSCO_DISPLAY_NAME");
+            Property(x => x.Description).HasColumnName("CSCO_DESCR");
+            Property(x => x.Required).HasColumnName("CSCO_REQUIRED");
+            Property(x => x.Emphasize).HasColumnName("CSCO_EMPHASIZE");
+            Property(x => x.Type).HasColumnName("CSCO_TYPE");
+            Property(x => x.IncludeAllClaimsForUser).HasColumnName("CSCO_INCL_ALL_CLAIMS_FOR_USER");
+            Property(x => x.ClaimsRule).HasColumnName("CSCO_CLAIMS_RULE");
+            Property(x => x.ShowInDiscoveryDocument).HasColumnName("CSCO_SHOW_IN_DISCOVERY_DOC");
         }
     }
 }

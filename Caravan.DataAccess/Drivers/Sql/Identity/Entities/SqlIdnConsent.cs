@@ -14,16 +14,29 @@
  * limitations under the License.
  */
 
-using System.Data.Entity.ModelConfiguration;
 using IdentityServer3.EntityFramework.Entities;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 {
     /// <summary>
     ///   Riferimento interno per <see cref="Consent"/>.
     /// </summary>
-    public class SqlIdnConsent : Consent
+    public class SqlIdnConsent
     {
+        [Key, Column(Order = 0)]
+        [StringLength(200)]
+        public string Subject { get; set; }
+
+        [Key, Column(Order = 1)]
+        [StringLength(200)]
+        public string ClientId { get; set; }
+
+        [Required]
+        [StringLength(2000)]
+        public string Scopes { get; set; }
     }
 
     /// <summary>
@@ -38,7 +51,9 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         {
             ToTable("CRVN_IDN_CONSENTS", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
+            Property(x => x.Subject).HasColumnName("CCON_SUBJECT");
             Property(x => x.ClientId).HasColumnName("CCLI_CLIENT_ID");
+            Property(x => x.Scopes).HasColumnName("CSCO_SCOPE_NAMES");
         }
     }
 }

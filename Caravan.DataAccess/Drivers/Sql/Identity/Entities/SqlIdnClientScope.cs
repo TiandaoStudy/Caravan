@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
+using IdentityServer3.EntityFramework.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
-using IdentityServer3.EntityFramework.Entities;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 {
@@ -48,7 +48,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             ToTable("CRVN_IDN_CLI_SCOPES", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CCSC_ID");
-            Property(x => x.Scope).HasColumnName("CCSC_SCOPE");
+            Property(x => x.Scope).HasColumnName("CSCO_SCOPE_NAME");
 
             // SqlIdnClientScope(N) <-> SqlIdnClient(1)
             HasRequired(x => x.Client)

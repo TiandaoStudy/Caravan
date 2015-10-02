@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
+using IdentityServer3.EntityFramework.Entities;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
-using IdentityServer3.EntityFramework.Entities;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 {
@@ -59,7 +59,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             Property(x => x.Id).HasColumnName("CCSE_ID");
             Property(x => x.Value).HasColumnName("CCSE_VALUE");
             Property(x => x.Type).HasColumnName("CCSE_TYPE");
-            Property(x => x.Description).HasColumnName("CCSE_DESCRIPTION");
+            Property(x => x.Description).HasColumnName("CCSE_DESCR");
             Property(x => x.Expiration).HasColumnName("CCSE_EXPIRATION");
 
             // SqlIdnClientSecret(N) <-> SqlIdnClient(1)

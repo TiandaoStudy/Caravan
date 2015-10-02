@@ -15,11 +15,11 @@
  */
 
 using AutoMapper;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities;
 using IdentityServer3.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Extensions
 {

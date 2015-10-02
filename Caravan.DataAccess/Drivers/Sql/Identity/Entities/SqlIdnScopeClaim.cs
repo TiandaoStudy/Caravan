@@ -14,16 +14,30 @@
  * limitations under the License.
  */
 
-using System.Data.Entity.ModelConfiguration;
 using IdentityServer3.EntityFramework.Entities;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.ModelConfiguration;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 {
     /// <summary>
     ///   Riferimento interno per <see cref="ScopeClaim"/>.
     /// </summary>
-    public class SqlIdnScopeClaim : ScopeClaim
+    public class SqlIdnScopeClaim
     {
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(200)]
+        public string Name { get; set; }
+
+        [StringLength(1000)]
+        public string Description { get; set; }
+
+        public bool AlwaysIncludeInIdToken { get; set; }
+
+        public SqlIdnScope Scope { get; set; }
     }
 
     /// <summary>
@@ -38,7 +52,15 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         {
             ToTable("CRVN_IDN_SCO_CLAIMS", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
-            Property(x => x.Id).HasColumnName("CSCO_ID");
+            Property(x => x.Id).HasColumnName("CSCL_ID");
+            Property(x => x.Name).HasColumnName("CSCL_NAME");
+            Property(x => x.Description).HasColumnName("CSCL_DESCR");
+            Property(x => x.AlwaysIncludeInIdToken).HasColumnName("CSCL_ALWAYS_INCL_IN_TOKEN");
+
+            // SqlIdnScopeClaim(N) <-> SqlIdnScope(1)
+            HasRequired(x => x.Scope)
+                .WithMany(x => x.ScopeClaims)
+                .WillCascadeOnDelete();
         }
     }
 }
