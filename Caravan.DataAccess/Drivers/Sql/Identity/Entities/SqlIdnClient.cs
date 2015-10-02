@@ -1,13 +1,27 @@
-﻿using System;
+﻿/*
+ * Copyright 2014 Dominick Baier, Brock Allen
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using IdentityServer3.EntityFramework.Entities;
 using System.Data.Entity.ModelConfiguration;
 using IdentityServer3.Core.Models;
-using Client = IdentityServer3.EntityFramework.Entities.Client;
+using IdentityServer3.EntityFramework.Entities;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Models
+namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 {
     /// <summary>
     ///   Riferimento interno per <see cref="IdentityServer3.EntityFramework.Entities.Client"/>.
@@ -39,11 +53,11 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Models
         public Flows Flow { get; set; }
         public bool AllowClientCredentialsOnly { get; set; }
 
-        public virtual ICollection<ClientRedirectUri> RedirectUris { get; set; }
-        public virtual ICollection<ClientPostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
+        public virtual ICollection<SqlIdnClientRedirectUri> RedirectUris { get; set; }
+        public virtual ICollection<SqlIdnClientPostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
 
         public bool AllowAccessToAllScopes { get; set; }
-        public ICollection<ClientScope> AllowedScopes { get; set; }
+        public ICollection<SqlIdnClientScope> AllowedScopes { get; set; }
 
         // in seconds
         [Range(0, int.MaxValue)]
@@ -66,18 +80,18 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Models
         public AccessTokenType AccessTokenType { get; set; }
 
         public bool EnableLocalLogin { get; set; }
-        public virtual ICollection<ClientIdPRestriction> IdentityProviderRestrictions { get; set; }
+        public virtual ICollection<SqlIdnClientIdPRestriction> IdentityProviderRestrictions { get; set; }
 
         public bool IncludeJwtId { get; set; }
 
-        public virtual ICollection<ClientClaim> Claims { get; set; }
+        public virtual ICollection<SqlIdnClientClaim> Claims { get; set; }
         public bool AlwaysSendClientClaims { get; set; }
         public bool PrefixClientClaims { get; set; }
 
         public bool AllowAccessToAllGrantTypes { get; set; }
 
-        public virtual ICollection<ClientCustomGrantType> AllowedCustomGrantTypes { get; set; }
-        public virtual ICollection<ClientCorsOrigin> AllowedCorsOrigins { get; set; }
+        public virtual ICollection<SqlIdnClientCustomGrantType> AllowedCustomGrantTypes { get; set; }
+        public virtual ICollection<SqlIdnClientCorsOrigin> AllowedCorsOrigins { get; set; }
     }
 
     /// <summary>

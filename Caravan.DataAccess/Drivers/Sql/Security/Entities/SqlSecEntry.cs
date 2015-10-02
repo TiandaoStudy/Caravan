@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Security.Models
+namespace Finsa.Caravan.DataAccess.Drivers.Sql.Security.Entities
 {
     [Serializable]
     public class SqlSecEntry
