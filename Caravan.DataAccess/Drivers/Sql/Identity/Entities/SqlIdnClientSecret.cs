@@ -18,6 +18,7 @@ using IdentityServer3.EntityFramework.Entities;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Attributes;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 {
@@ -39,7 +40,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         [StringLength(2000)]
         public virtual string Description { get; set; }
 
-        public virtual DateTimeOffset? Expiration { get; set; }
+        [DateTimeKind(DateTimeKind.Utc)]
+        public virtual DateTime? Expiration { get; set; }
 
         public virtual SqlIdnClient Client { get; set; }
     }

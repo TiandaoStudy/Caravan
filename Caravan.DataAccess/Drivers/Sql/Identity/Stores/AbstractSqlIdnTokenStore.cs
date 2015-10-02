@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Finsa.CodeServices.Clock;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
 {
@@ -35,16 +36,19 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
         protected readonly TokenType TokenType;
         protected readonly IScopeStore ScopeStore;
         protected readonly IClientStore ClientStore;
+        protected readonly IClock Clock;
 
-        protected AbstractSqlIdnTokenStore(SqlDbContext context, TokenType tokenType, IScopeStore scopeStore, IClientStore clientStore)
+        protected AbstractSqlIdnTokenStore(SqlDbContext context, TokenType tokenType, IScopeStore scopeStore, IClientStore clientStore, IClock clock)
         {
             RaiseArgumentNullException.IfIsNull(context, nameof(context));
             RaiseArgumentNullException.IfIsNull(scopeStore, nameof(scopeStore));
             RaiseArgumentNullException.IfIsNull(clientStore, nameof(clientStore));
+            RaiseArgumentNullException.IfIsNull(clock, nameof(clock));
             Context = context;
             TokenType = tokenType;
             ScopeStore = scopeStore;
             ClientStore = clientStore;
+            Clock = clock;
         }
 
         private JsonSerializerSettings GetJsonSerializerSettings()
@@ -71,7 +75,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
         {
             var token = await Context.IdnTokens.FindAsync(key, TokenType);
 
-            if (token == null || token.Expiry < DateTimeOffset.UtcNow)
+            if (token == null || token.Expiry < Clock.UtcNow)
             {
                 return null;
             }

@@ -18,20 +18,15 @@ using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities;
 using Finsa.CodeServices.Clock;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
-using PommaLabs.Thrower;
 using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
 {
     internal sealed class SqlIdnTokenHandleStore : AbstractSqlIdnTokenStore<Token>, ITokenHandleStore
     {
-        private readonly IClock _clock;
-
         public SqlIdnTokenHandleStore(SqlDbContext context, IScopeStore scopeStore, IClientStore clientStore, IClock clock)
-            : base(context, IdentityServer3.EntityFramework.Entities.TokenType.TokenHandle, scopeStore, clientStore)
+            : base(context, IdentityServer3.EntityFramework.Entities.TokenType.TokenHandle, scopeStore, clientStore, clock)
         {
-            RaiseArgumentNullException.IfIsNull(clock, nameof(clock));
-            _clock = clock;
         }
 
         public override async Task StoreAsync(string key, Token value)
@@ -42,7 +37,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
                 SubjectId = value.SubjectId,
                 ClientId = value.ClientId,
                 JsonCode = ConvertToJson(value),
-                Expiry = _clock.UtcNowOffset.AddSeconds(value.Lifetime),
+                Expiry = Clock.UtcNow.AddSeconds(value.Lifetime),
                 TokenType = TokenType
             });
 

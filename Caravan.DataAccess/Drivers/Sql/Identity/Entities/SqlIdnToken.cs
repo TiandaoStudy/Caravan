@@ -19,6 +19,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Attributes;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 {
@@ -45,7 +46,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         public virtual string JsonCode { get; set; }
 
         [Required]
-        public virtual DateTimeOffset Expiry { get; set; }
+        [DateTimeKind(DateTimeKind.Utc)]
+        public virtual DateTime Expiry { get; set; }
     }
 
     /// <summary>

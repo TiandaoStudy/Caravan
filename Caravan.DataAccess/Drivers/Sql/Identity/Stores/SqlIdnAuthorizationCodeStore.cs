@@ -19,20 +19,15 @@ using Finsa.CodeServices.Clock;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 using IdentityServer3.EntityFramework.Entities;
-using PommaLabs.Thrower;
 using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
 {
     internal sealed class SqlIdnAuthorizationCodeStore : AbstractSqlIdnTokenStore<AuthorizationCode>, IAuthorizationCodeStore
     {
-        private readonly IClock _clock;
-
         public SqlIdnAuthorizationCodeStore(SqlDbContext context, IScopeStore scopeStore, IClientStore clientStore, IClock clock)
-            : base(context, TokenType.AuthorizationCode, scopeStore, clientStore)
+            : base(context, TokenType.AuthorizationCode, scopeStore, clientStore, clock)
         {
-            RaiseArgumentNullException.IfIsNull(clock, nameof(clock));
-            _clock = clock;
         }
 
         public override async Task StoreAsync(string key, AuthorizationCode value)
@@ -43,7 +38,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
                 SubjectId = value.SubjectId,
                 ClientId = value.ClientId,
                 JsonCode = ConvertToJson(value),
-                Expiry = _clock.UtcNowOffset.AddSeconds(value.Client.AuthorizationCodeLifetime),
+                Expiry = Clock.UtcNow.AddSeconds(value.Client.AuthorizationCodeLifetime),
                 TokenType = TokenType
             });
 

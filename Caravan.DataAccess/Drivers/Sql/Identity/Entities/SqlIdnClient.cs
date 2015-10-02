@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
+using Finsa.CodeServices.Common;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 {
@@ -51,7 +52,15 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         public virtual bool RequireConsent { get; set; }
         public virtual bool AllowRememberConsent { get; set; }
 
-        public virtual Flows Flow { get; set; }
+        [NotMapped]
+        public Flows Flow { get; set; }
+
+        public virtual string FlowString
+        {
+            get { return Flow.ToString().ToLowerInvariant(); }
+            set { Flow = value.ToEnum<Flows>(); }
+        }
+
         public virtual bool AllowClientCredentialsOnly { get; set; }
 
         public virtual ICollection<SqlIdnClientRedirectUri> RedirectUris { get; set; }
@@ -64,24 +73,50 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         [Range(0, int.MaxValue)]
         public virtual int IdentityTokenLifetime { get; set; }
 
+        // in seconds
         [Range(0, int.MaxValue)]
         public virtual int AccessTokenLifetime { get; set; }
 
+        // in seconds
         [Range(0, int.MaxValue)]
         public virtual int AuthorizationCodeLifetime { get; set; }
 
+        // in seconds
         [Range(0, int.MaxValue)]
         public virtual int AbsoluteRefreshTokenLifetime { get; set; }
 
+        // in seconds
         [Range(0, int.MaxValue)]
         public virtual int SlidingRefreshTokenLifetime { get; set; }
 
-        public virtual TokenUsage RefreshTokenUsage { get; set; }
+        [NotMapped]
+        public TokenUsage RefreshTokenUsage { get; set; }
+
+        public virtual string RefreshTokenUsageString
+        {
+            get { return RefreshTokenUsage.ToString().ToLowerInvariant(); }
+            set { RefreshTokenUsage = value.ToEnum<TokenUsage>(); }
+        }
+
         public virtual bool UpdateAccessTokenOnRefresh { get; set; }
 
-        public virtual TokenExpiration RefreshTokenExpiration { get; set; }
+        [NotMapped]
+        public TokenExpiration RefreshTokenExpiration { get; set; }
 
-        public virtual AccessTokenType AccessTokenType { get; set; }
+        public virtual string RefreshTokenExpirationString
+        {
+            get { return RefreshTokenExpiration.ToString().ToLowerInvariant(); }
+            set { RefreshTokenExpiration = value.ToEnum<TokenExpiration>(); }
+        }
+
+        [NotMapped]
+        public AccessTokenType AccessTokenType { get; set; }
+
+        public virtual string AccessTokenTypeString
+        {
+            get { return AccessTokenType.ToString().ToLowerInvariant(); }
+            set { AccessTokenType = value.ToEnum<AccessTokenType>(); }
+        }
 
         public virtual bool EnableLocalLogin { get; set; }
         public virtual ICollection<SqlIdnClientIdPRestriction> IdentityProviderRestrictions { get; set; }
@@ -117,7 +152,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             Property(x => x.LogoUri).HasColumnName("CCLI_LOGO_URI");
             Property(x => x.RequireConsent).HasColumnName("CCLI_REQUIRE_CONSENT");
             Property(x => x.AllowRememberConsent).HasColumnName("CCLI_ALLOW_REMEMBER_CONSENT");
-            Property(x => x.Flow).HasColumnName("CCLI_FLOW");
+            Property(x => x.FlowString).HasColumnName("CCLI_FLOW");
             Property(x => x.AllowClientCredentialsOnly).HasColumnName("CCLI_ALLOW_CLIENT_CREDS_ONLY");
             Property(x => x.AllowAccessToAllScopes).HasColumnName("CCLI_ALLOW_ACCESS_TO_ALL_SCPS");
             Property(x => x.IdentityTokenLifetime).HasColumnName("CCLI_IDENTITY_TOKEN_LIFETIME");
@@ -125,27 +160,15 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             Property(x => x.AuthorizationCodeLifetime).HasColumnName("CCLI_AUTH_CODE_LIFETIME");
             Property(x => x.AbsoluteRefreshTokenLifetime).HasColumnName("CCLI_ABS_REFR_TOKEN_LIFETIME");
             Property(x => x.SlidingRefreshTokenLifetime).HasColumnName("CCLI_SLID_REFR_TOKEN_LIFETIME");
-            Property(x => x.RefreshTokenUsage).HasColumnName("CCLI_REFRESH_TOKEN_USAGE");
+            Property(x => x.RefreshTokenUsageString).HasColumnName("CCLI_REFRESH_TOKEN_USAGE");
             Property(x => x.UpdateAccessTokenOnRefresh).HasColumnName("CCLI_UPD_ACCESS_TOKEN_ON_REFR");
-            Property(x => x.RefreshTokenExpiration).HasColumnName("CCLI_REFRESH_TOKEN_EXPIRATION");
-            Property(x => x.AccessTokenType).HasColumnName("CCLI_ACCESS_TOKEN_TYPE");
+            Property(x => x.RefreshTokenExpirationString).HasColumnName("CCLI_REFRESH_TOKEN_EXPIRATION");
+            Property(x => x.AccessTokenTypeString).HasColumnName("CCLI_ACCESS_TOKEN_TYPE");
             Property(x => x.EnableLocalLogin).HasColumnName("CCLI_ENABLE_LOCAL_LOGIN");
             Property(x => x.IncludeJwtId).HasColumnName("CCLI_INCLUDE_JWT_ID");
             Property(x => x.AlwaysSendClientClaims).HasColumnName("CCLI_ALWAYS_SEND_CLIENT_CLAIMS");
             Property(x => x.PrefixClientClaims).HasColumnName("CCLI_PREFIX_CLIENT_CLAIMS");
             Property(x => x.AllowAccessToAllGrantTypes).HasColumnName("CCLI_ALLOW_ACCESS_TO_ALL_GRTP");
-
-            // SqlLogEntry(N) <-> SqlSecApp(1)
-            //HasRequired(x => x.App)
-            //    .WithMany(x => x.LogEntries)
-            //    .HasForeignKey(x => x.AppId)
-            //    .WillCascadeOnDelete(true);
-
-            // SqlLogEntry(N) <-> SqlLogSettings(1)
-            //HasRequired(x => x.LogSetting)
-            //    .WithMany(x => x.LogEntries)
-            //    .HasForeignKey(x => new { x.AppId, x.LogLevel })
-            //    .WillCascadeOnDelete(true);
         }
     }
 }

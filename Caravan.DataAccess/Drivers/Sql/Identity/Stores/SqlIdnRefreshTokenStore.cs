@@ -19,20 +19,15 @@ using Finsa.CodeServices.Clock;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 using IdentityServer3.EntityFramework.Entities;
-using PommaLabs.Thrower;
 using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
 {
     internal sealed class SqlIdnRefreshTokenStore : AbstractSqlIdnTokenStore<RefreshToken>, IRefreshTokenStore
     {
-        private readonly IClock _clock;
-
         public SqlIdnRefreshTokenStore(SqlDbContext context, IScopeStore scopeStore, IClientStore clientStore, IClock clock)
-            : base(context, TokenType.RefreshToken, scopeStore, clientStore)
+            : base(context, TokenType.RefreshToken, scopeStore, clientStore, clock)
         {
-            RaiseArgumentNullException.IfIsNull(clock, nameof(clock));
-            _clock = clock;
         }
 
         public override async Task StoreAsync(string key, RefreshToken value)
@@ -51,7 +46,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
                 Context.IdnTokens.Add(token);
             }
 
-            token.Expiry = _clock.UtcNowOffset.AddSeconds(value.LifeTime);
+            token.Expiry = Clock.UtcNow.AddSeconds(value.LifeTime);
             await Context.SaveChangesAsync();
         }
     }
