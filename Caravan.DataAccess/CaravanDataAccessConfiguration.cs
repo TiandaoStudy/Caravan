@@ -6,8 +6,8 @@ using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Portability;
 using System;
 using System.Collections.Generic;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Logging.Models;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Models;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Logging.Entities;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Entities;
 using Westwind.Utilities.Configuration;
 
 namespace Finsa.Caravan.DataAccess

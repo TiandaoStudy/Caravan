@@ -15,9 +15,9 @@
  */
 
 using AutoMapper;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Models;
 using System.Linq;
 using System.Security.Claims;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Extensions
 {

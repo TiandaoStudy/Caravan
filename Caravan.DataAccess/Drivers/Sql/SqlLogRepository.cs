@@ -11,8 +11,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Logging.Models;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Models;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Logging.Entities;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Entities;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {

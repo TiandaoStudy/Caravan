@@ -5,7 +5,7 @@ using Finsa.Caravan.DataAccess.Core;
 using Finsa.CodeServices.Common;
 using System.Data.Entity;
 using System.Linq;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Models;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Entities;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {

@@ -1,4 +1,4 @@
-﻿namespace Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Logging
+﻿namespace Finsa.Caravan.DataAccess.Drivers.Mongo.Models.Logging
 {
     internal class MongoLogSettings : MongoDocument
     {
