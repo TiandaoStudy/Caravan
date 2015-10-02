@@ -22,11 +22,11 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
 {
-    internal sealed class SqlClientStore : IClientStore
+    internal sealed class SqlIdnClientStore : IClientStore
     {
         private readonly SqlDbContext _context;
 
-        public SqlClientStore(SqlDbContext context)
+        public SqlIdnClientStore(SqlDbContext context)
         {
             RaiseArgumentNullException.IfIsNull(context, nameof(context));
             _context = context;

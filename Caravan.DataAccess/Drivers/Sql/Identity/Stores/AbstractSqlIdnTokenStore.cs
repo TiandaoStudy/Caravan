@@ -28,14 +28,15 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
 {
-    internal abstract class AbstractSqlTokenStore<T> where T : class
+    internal abstract class AbstractSqlIdnTokenStore<T> 
+        where T : class
     {
         protected readonly SqlDbContext _context;
         protected readonly TokenType _tokenType;
         protected readonly IScopeStore _scopeStore;
         protected readonly IClientStore _clientStore;
 
-        protected AbstractSqlTokenStore(SqlDbContext context, TokenType tokenType, IScopeStore scopeStore, IClientStore clientStore)
+        protected AbstractSqlIdnTokenStore(SqlDbContext context, TokenType tokenType, IScopeStore scopeStore, IClientStore clientStore)
         {
             RaiseArgumentNullException.IfIsNull(context, nameof(context));
             RaiseArgumentNullException.IfIsNull(scopeStore, nameof(scopeStore));

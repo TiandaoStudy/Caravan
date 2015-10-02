@@ -12,10 +12,10 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
     {
         #region Constants
 
-        internal const short TinyLength = 8;     // 2^3
-        internal const short SmallLength = 32;   // 2^5
-        internal const short MediumLength = 256; // 2^8
-        internal const short LargeLength = 1024; // 2^10
+        internal const short TinyLength   = 8;    // 2^3
+        internal const short SmallLength  = 32;   // 2^5
+        internal const short MediumLength = 256;  // 2^8
+        internal const short LargeLength  = 1024; // 2^10
 
         #endregion Constants
 
@@ -76,15 +76,15 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             return CaravanDataSource.Manager.CreateConnection();
         }
 
-        #region DB Sets
-
-        public DbSet<SqlIdnClient> IdnClients { get; set; }
-
-        public DbSet<SqlIdnToken> IdnTokens { get; set; }
+        #region DB Sets - Logging
 
         public DbSet<SqlLogEntry> LogEntries { get; set; }
 
         public DbSet<SqlLogSetting> LogSettings { get; set; }
+
+        #endregion DB Sets - Logging
+
+        #region DB Sets - Security
 
         public DbSet<SqlSecApp> SecApps { get; set; }
 
@@ -98,7 +98,31 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         public DbSet<SqlSecUser> SecUsers { get; set; }
 
-        #endregion DB Sets
+        #endregion DB Sets - Security
+
+        #region DB Sets - Identity
+
+        public DbSet<SqlIdnClient> IdnClients { get; set; }
+
+        public DbSet<SqlIdnClientClaim> IdnClientClaims { get; set; }
+
+        public DbSet<SqlIdnClientCorsOrigin> IdnClientCorsOrigins { get; set; }
+
+        public DbSet<SqlIdnClientCustomGrantType> IdnClientCustomGrantTypes { get; set; }
+
+        public DbSet<SqlIdnClientIdPRestriction> IdnClientIdPRestrictions { get; set; }
+
+        public DbSet<SqlIdnClientPostLogoutRedirectUri> IdnClientPostLogoutRedirectUris { get; set; }
+
+        public DbSet<SqlIdnClientRedirectUri> IdnClientRedirectUris { get; set; }
+
+        public DbSet<SqlIdnClientScope> IdnClientScopes { get; set; }
+
+        public DbSet<SqlIdnClientSecret> IdnClientSecrets { get; set; }
+
+        public DbSet<SqlIdnToken> IdnTokens { get; set; }
+
+        #endregion DB Sets - Identity
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {
@@ -129,6 +153,14 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             #region Configuration - Identity
 
             mb.Configurations.Add(new SqlIdnClientTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnClientClaimTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnClientCorsOriginTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnClientCustomGrantTypeTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnClientIdPRestrictionTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnClientPostLogoutRedirectUriTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnClientRedirectUriTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnClientScopeTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnClientSecretTypeConfiguration());
             mb.Configurations.Add(new SqlIdnTokenTypeConfiguration());
 
             #endregion Configuration - Identity
