@@ -308,6 +308,8 @@
     <Compile Include="Drivers\Sql\SqlServer\SqlServerDataSourceManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_client.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Views\v_caravan_log_summary.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Views\v_caravan_log.sql" />
     <Content Include="Drivers\Sql\SqlServer\Scripts\Tables\crvn_log_entries.sql" />

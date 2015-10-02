@@ -26,13 +26,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
     public class SqlIdnClientIdPRestriction
     {
         [Key]
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         [Required]
         [StringLength(200)]
-        public string Provider { get; set; }
+        public virtual string Provider { get; set; }
 
-        public SqlIdnClient Client { get; set; }
+        public virtual SqlIdnClient Client { get; set; }
     }
 
     /// <summary>

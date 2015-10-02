@@ -28,71 +28,71 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
     public class SqlIdnClient
     {
         [Key]
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
-        public bool Enabled { get; set; }
+        public virtual bool Enabled { get; set; }
 
         [Required]
         [StringLength(200)]
         [Index(IsUnique = true)]
-        public string ClientId { get; set; }
+        public virtual string ClientId { get; set; }
 
         public virtual ICollection<SqlIdnClientSecret> ClientSecrets { get; set; }
 
         [Required]
         [StringLength(200)]
-        public string ClientName { get; set; }
+        public virtual string ClientName { get; set; }
 
         [StringLength(2000)]
-        public string ClientUri { get; set; }
+        public virtual string ClientUri { get; set; }
 
-        public string LogoUri { get; set; }
+        public virtual string LogoUri { get; set; }
 
-        public bool RequireConsent { get; set; }
-        public bool AllowRememberConsent { get; set; }
+        public virtual bool RequireConsent { get; set; }
+        public virtual bool AllowRememberConsent { get; set; }
 
-        public Flows Flow { get; set; }
-        public bool AllowClientCredentialsOnly { get; set; }
+        public virtual Flows Flow { get; set; }
+        public virtual bool AllowClientCredentialsOnly { get; set; }
 
         public virtual ICollection<SqlIdnClientRedirectUri> RedirectUris { get; set; }
         public virtual ICollection<SqlIdnClientPostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
 
-        public bool AllowAccessToAllScopes { get; set; }
-        public ICollection<SqlIdnClientScope> AllowedScopes { get; set; }
+        public virtual bool AllowAccessToAllScopes { get; set; }
+        public virtual ICollection<SqlIdnClientScope> AllowedScopes { get; set; }
 
         // in seconds
         [Range(0, int.MaxValue)]
-        public int IdentityTokenLifetime { get; set; }
+        public virtual int IdentityTokenLifetime { get; set; }
 
         [Range(0, int.MaxValue)]
-        public int AccessTokenLifetime { get; set; }
+        public virtual int AccessTokenLifetime { get; set; }
 
         [Range(0, int.MaxValue)]
-        public int AuthorizationCodeLifetime { get; set; }
+        public virtual int AuthorizationCodeLifetime { get; set; }
 
         [Range(0, int.MaxValue)]
-        public int AbsoluteRefreshTokenLifetime { get; set; }
+        public virtual int AbsoluteRefreshTokenLifetime { get; set; }
 
         [Range(0, int.MaxValue)]
-        public int SlidingRefreshTokenLifetime { get; set; }
+        public virtual int SlidingRefreshTokenLifetime { get; set; }
 
-        public TokenUsage RefreshTokenUsage { get; set; }
-        public bool UpdateAccessTokenOnRefresh { get; set; }
+        public virtual TokenUsage RefreshTokenUsage { get; set; }
+        public virtual bool UpdateAccessTokenOnRefresh { get; set; }
 
-        public TokenExpiration RefreshTokenExpiration { get; set; }
+        public virtual TokenExpiration RefreshTokenExpiration { get; set; }
 
-        public AccessTokenType AccessTokenType { get; set; }
+        public virtual AccessTokenType AccessTokenType { get; set; }
 
-        public bool EnableLocalLogin { get; set; }
+        public virtual bool EnableLocalLogin { get; set; }
         public virtual ICollection<SqlIdnClientIdPRestriction> IdentityProviderRestrictions { get; set; }
 
-        public bool IncludeJwtId { get; set; }
+        public virtual bool IncludeJwtId { get; set; }
 
         public virtual ICollection<SqlIdnClientClaim> Claims { get; set; }
-        public bool AlwaysSendClientClaims { get; set; }
-        public bool PrefixClientClaims { get; set; }
+        public virtual bool AlwaysSendClientClaims { get; set; }
+        public virtual bool PrefixClientClaims { get; set; }
 
-        public bool AllowAccessToAllGrantTypes { get; set; }
+        public virtual bool AllowAccessToAllGrantTypes { get; set; }
 
         public virtual ICollection<SqlIdnClientCustomGrantType> AllowedCustomGrantTypes { get; set; }
         public virtual ICollection<SqlIdnClientCorsOrigin> AllowedCorsOrigins { get; set; }

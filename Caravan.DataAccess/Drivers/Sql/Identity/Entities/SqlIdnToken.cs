@@ -28,24 +28,24 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
     public class SqlIdnToken
     {
         [Key, Column(Order = 0)]
-        public string Key { get; set; }
+        public virtual string Key { get; set; }
 
         [Key, Column(Order = 1)]
-        public TokenType TokenType { get; set; }
+        public virtual TokenType TokenType { get; set; }
 
         [StringLength(200)]
-        public string SubjectId { get; set; }
+        public virtual string SubjectId { get; set; }
 
         [Required]
         [StringLength(200)]
-        public string ClientId { get; set; }
+        public virtual string ClientId { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        public string JsonCode { get; set; }
+        public virtual string JsonCode { get; set; }
 
         [Required]
-        public DateTimeOffset Expiry { get; set; }
+        public virtual DateTimeOffset Expiry { get; set; }
     }
 
     /// <summary>

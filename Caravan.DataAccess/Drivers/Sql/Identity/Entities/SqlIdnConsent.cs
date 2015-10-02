@@ -28,15 +28,15 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
     {
         [Key, Column(Order = 0)]
         [StringLength(200)]
-        public string Subject { get; set; }
+        public virtual string Subject { get; set; }
 
         [Key, Column(Order = 1)]
         [StringLength(200)]
-        public string ClientId { get; set; }
+        public virtual string ClientId { get; set; }
 
         [Required]
         [StringLength(2000)]
-        public string Scopes { get; set; }
+        public virtual string Scopes { get; set; }
     }
 
     /// <summary>

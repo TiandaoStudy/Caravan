@@ -12,16 +12,16 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Security.Entities
     {
         [Key, Column("CAPP_ID", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         [Required, Column("CAPP_NAME", Order = 1)]
         [MaxLength(SqlDbContext.SmallLength)]
         [Index("UK_CRVN_SEC_APPS", 0, IsUnique = true)]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         [Column("CAPP_DESCR", Order = 2)]
         [MaxLength(SqlDbContext.MediumLength)]
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
         #region Relationships
 

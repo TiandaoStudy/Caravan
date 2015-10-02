@@ -26,18 +26,18 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
     public class SqlIdnScopeClaim
     {
         [Key]
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         [Required]
         [StringLength(200)]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         [StringLength(1000)]
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
-        public bool AlwaysIncludeInIdToken { get; set; }
+        public virtual bool AlwaysIncludeInIdToken { get; set; }
 
-        public SqlIdnScope Scope { get; set; }
+        public virtual SqlIdnScope Scope { get; set; }
     }
 
     /// <summary>

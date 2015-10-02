@@ -10,29 +10,29 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Security.Entities
     {
         [Key, Column("CSEC_ID", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+        public virtual long Id { get; set; }
 
         [Required, Column("COBJ_ID", Order = 1)]
-        public int ObjectId { get; set; }
+        public virtual int ObjectId { get; set; }
 
         [Column("CUSR_ID", Order = 2)]
-        public long? UserId { get; set; }
+        public virtual long? UserId { get; set; }
 
         [Column("CGRP_ID", Order = 3)]
-        public int? GroupId { get; set; }
+        public virtual int? GroupId { get; set; }
 
         [Column("CROL_ID", Order = 4)]
-        public int? RoleId { get; set; }
+        public virtual int? RoleId { get; set; }
 
         #region Relationships
 
-        public SqlSecGroup Group { get; set; }
+        public virtual SqlSecGroup Group { get; set; }
 
-        public SqlSecObject Object { get; set; }
+        public virtual SqlSecObject Object { get; set; }
 
-        public SqlSecRole Role { get; set; }
+        public virtual SqlSecRole Role { get; set; }
 
-        public SqlSecUser User { get; set; }
+        public virtual SqlSecUser User { get; set; }
 
         #endregion Relationships
     }

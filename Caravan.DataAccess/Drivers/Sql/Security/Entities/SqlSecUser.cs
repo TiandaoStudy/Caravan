@@ -11,39 +11,39 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Security.Entities
     {
         [Key, Column("CUSR_ID", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+        public virtual long Id { get; set; }
 
         [Required, Column("CAPP_ID", Order = 1)]
         [Index("UK_CRVN_SEC_USERS", 0, IsUnique = true)]
-        public int AppId { get; set; }
+        public virtual int AppId { get; set; }
 
         [Required, Column("CUSR_LOGIN", Order = 2)]
         [MaxLength(SqlDbContext.SmallLength)]
         [Index("UK_CRVN_SEC_USERS", 1, IsUnique = true)]
-        public string Login { get; set; }
+        public virtual string Login { get; set; }
 
         [Column("CUSR_HASHED_PWD", Order = 3)]
         [MaxLength(SqlDbContext.MediumLength)]
-        public string PasswordHash { get; set; }
+        public virtual string PasswordHash { get; set; }
 
         [Required, Column("CUSR_ACTIVE", Order = 4)]
-        public bool Active { get; set; }
+        public virtual bool Active { get; set; }
 
         [Column("CUSR_FIRST_NAME", Order = 5)]
         [MaxLength(SqlDbContext.MediumLength)]
-        public string FirstName { get; set; }
+        public virtual string FirstName { get; set; }
 
         [Column("CUSR_LAST_NAME", Order = 6)]
         [MaxLength(SqlDbContext.MediumLength)]
-        public string LastName { get; set; }
+        public virtual string LastName { get; set; }
 
         [Column("CUSR_EMAIL", Order = 7)]
         [MaxLength(SqlDbContext.MediumLength)]
-        public string Email { get; set; }
+        public virtual string Email { get; set; }
 
         #region Relationships
 
-        public SqlSecApp App { get; set; }
+        public virtual SqlSecApp App { get; set; }
 
         public virtual ICollection<SqlSecGroup> Groups { get; set; }
 

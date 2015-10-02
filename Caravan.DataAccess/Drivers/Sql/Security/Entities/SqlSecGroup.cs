@@ -11,28 +11,28 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Security.Entities
     {
         [Key, Column("CGRP_ID", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         [Required, Column("CAPP_ID", Order = 1)]
         [Index("UK_CRVN_SEC_GROUPS", 0, IsUnique = true)]
-        public int AppId { get; set; }
+        public virtual int AppId { get; set; }
 
         [Required, Column("CGRP_NAME", Order = 2)]
         [MaxLength(SqlDbContext.SmallLength)]
         [Index("UK_CRVN_SEC_GROUPS", 1, IsUnique = true)]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         [Column("CGRP_DESCR", Order = 3)]
         [MaxLength(SqlDbContext.MediumLength)]
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
         [Column("CGRP_NOTES", Order = 4)]
         [MaxLength(SqlDbContext.LargeLength)]
-        public string Notes { get; set; }
+        public virtual string Notes { get; set; }
 
         #region Relationships
 
-        public SqlSecApp App { get; set; }
+        public virtual SqlSecApp App { get; set; }
 
         public virtual ICollection<SqlSecRole> Roles { get; set; }
 
