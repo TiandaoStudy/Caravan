@@ -11,7 +11,10 @@ using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Models;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
-    internal sealed class SqlDbContext : DbContext
+    /// <summary>
+    ///   Contesto DB usato dalla parte di accesso ai dati di Caravan.
+    /// </summary>
+    public sealed class SqlDbContext : DbContext
     {
         #region Constants
 
