@@ -318,6 +318,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\EFPregeneratedViews\CaravanViews.xml" />
     <Content Include="App_Data\HelpPages\WebServiceHelp.xml" />
     <Content Include="KVLite.config" />
     <Content Include="KVLite\x64\SQLite.Interop.dll">

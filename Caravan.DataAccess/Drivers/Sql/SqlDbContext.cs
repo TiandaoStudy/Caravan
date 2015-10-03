@@ -18,9 +18,9 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
     {
         #region Constants
 
-        internal const short TinyLength = 8;    // 2^3
+        internal const short TinyLength = 8;     // 2^3
         internal const short SmallLength = 32;   // 2^5
-        internal const short MediumLength = 256;  // 2^8
+        internal const short MediumLength = 256; // 2^8
         internal const short LargeLength = 1024; // 2^10
 
         #endregion Constants
@@ -68,11 +68,6 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         public static SqlDbContext CreateWriteContext()
         {
             var ctx = new SqlDbContext();
-
-            // Configura la generazione automatica delle viste per EF.
-            var mappedPregeneratedViewsPath = PortableEnvironment.MapPath(CaravanDataAccessConfiguration.Instance.Drivers_Sql_EFPregeneratedViewsPath);
-            var pregeneratedViews = Path.Combine(mappedPregeneratedViewsPath, "CaravanViews.xml");
-            InteractiveViews.SetViewCacheFactory(ctx, new FileViewCacheFactory(pregeneratedViews));
 
             // Provo a inizializzare il DB.
             ctx.Database.Initialize(false);
