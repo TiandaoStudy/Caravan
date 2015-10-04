@@ -46,6 +46,7 @@ CREATE TABLE mydb.crvn_log_settings
    , clos_enabled     NUMBER(1)       NOT NULL
    , clos_days        NUMBER(3)       NOT NULL
    , clos_max_entries NUMBER(7)       NOT NULL
+   -- clos_ins_date, clos_ins_user, clos_upd_date, clos_upd_user
    , CHECK (clos_type IN ('debug', 'trace', 'info', 'warn', 'error', 'fatal')) ENABLE
    , CHECK (clos_enabled IN (0, 1)) ENABLE
    , CHECK (clos_days > 0 AND clos_max_entries > 0) ENABLE
@@ -317,7 +318,7 @@ CREATE SEQUENCE mydb.crvn_idn_clients_id;
 -- Identity: Clients ID trigger
 -- REPLACE 'mydb' WITH DB NAME
 
-CREATE OR REPLACE TRIGGER mydb.crvn_idn_clients_id
+CREATE OR REPLACE TRIGGER mydb.ti_crvn_idn_clients
 BEFORE INSERT ON mydb.crvn_idn_clients 
 FOR EACH ROW
 BEGIN
@@ -380,7 +381,7 @@ CREATE SEQUENCE mydb.crvn_idn_scopes_id;
 -- Identity: Scopes ID trigger
 -- REPLACE 'mydb' WITH DB NAME
 
-CREATE OR REPLACE TRIGGER mydb.crvn_idn_scopes_id
+CREATE OR REPLACE TRIGGER mydb.ti_crvn_idn_scopes
 BEFORE INSERT ON mydb.crvn_idn_scopes 
 FOR EACH ROW
 BEGIN
@@ -401,7 +402,6 @@ CREATE TABLE mydb.crvn_idn_cli_claims
    , CCLM_VALUE     NVARCHAR2(250)  NOT NULL
 
    , CONSTRAINT pk_crvn_idn_cli_claims PRIMARY KEY (CCLI_ID) ENABLE
-   , CONSTRAINT uk_crvn_idn_cli_claims UNIQUE (CCLI_CLIENT_ID) ENABLE
    , CONSTRAINT fk_crvnidn_cliclaims_clients FOREIGN KEY (CCLI_ID) REFERENCES mydb.crvn_idn_clients (CCLI_ID) ON DELETE CASCADE ENABLE
 );
 
@@ -410,7 +410,7 @@ CREATE SEQUENCE mydb.crvn_idn_cli_claims_id;
 -- Identity: Client claims ID trigger
 -- REPLACE 'mydb' WITH DB NAME
 
-CREATE OR REPLACE TRIGGER mydb.crvn_idn_cli_claims_id
+CREATE OR REPLACE TRIGGER mydb.ti_crvn_idn_cli_claims
 BEFORE INSERT ON mydb.crvn_idn_cli_claims 
 FOR EACH ROW
 BEGIN
@@ -430,7 +430,6 @@ CREATE TABLE mydb.crvn_idn_cli_cors_origins
    , CCCO_ORIGIN            NVARCHAR2(150)  NOT NULL
 
    , CONSTRAINT pk_crvn_idn_cli_cors_origins PRIMARY KEY (CCLI_ID) ENABLE
-   , CONSTRAINT uk_crvn_idn_cli_cors_origins UNIQUE (CCLI_CLIENT_ID) ENABLE
    , CONSTRAINT fk_crvnidn_clicorsorig_clients FOREIGN KEY (CCLI_ID) REFERENCES mydb.crvn_idn_clients (CCLI_ID) ON DELETE CASCADE ENABLE
 );
 
@@ -440,7 +439,7 @@ CREATE SEQUENCE mydb.crvn_idn_cli_cors_origins_id;
 -- Identity: Client CORS origins ID trigger
 -- REPLACE 'mydb' WITH DB NAME
 
-CREATE OR REPLACE TRIGGER mydb.crvn_idn_cli_cors_origins_id
+CREATE OR REPLACE TRIGGER mydb.ti_crvn_idn_cli_cors_origins
 BEFORE INSERT ON mydb.crvn_idn_cli_cors_origins 
 FOR EACH ROW
 BEGIN

@@ -312,6 +312,7 @@
     <Compile Include="Drivers\Sql\SqlServer\SqlServerDataSourceManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_cli_pstlgtrdr_uris.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_cli_idpr_restrictions.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_cli_cst_grnt_types.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_cli_cors_origins.sql" />
@@ -319,12 +320,13 @@
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_scopes.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_clients.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_idn_cli_idpr_restrictions_id.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_idn_cli_cst_grnt_types_id.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_idn_cli_cors_origins_id.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_idn_cli_claims_id.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_idn_scopes_id.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_idn_clients_id.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_pstlgtrdr_uris.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_idpr_restrictions.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_cst_grnt_types.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_cors_origins.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_claims.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_scopes.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_clients.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Views\v_caravan_log_summary.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Views\v_caravan_log.sql" />
     <Content Include="Drivers\Sql\SqlServer\Scripts\Tables\crvn_log_entries.sql" />

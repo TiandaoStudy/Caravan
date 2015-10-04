@@ -1,6 +1,6 @@
 ﻿-- REPLACE 'mydb' WITH DB NAME
 
-CREATE OR REPLACE TRIGGER mydb.crvn_idn_cli_idpr_restrictions_id
+CREATE OR REPLACE TRIGGER mydb.ti_crvn_idn_cli_idpr_restrictions
 BEFORE INSERT ON mydb.crvn_idn_cli_idpr_restrictions 
 FOR EACH ROW
 BEGIN

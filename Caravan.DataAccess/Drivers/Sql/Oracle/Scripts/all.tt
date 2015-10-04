@@ -21,25 +21,25 @@
 <#@ include file="Tables/crvn_idn_clients.sql" #>
 
 -- Identity: Clients ID trigger
-<#@ include file="Triggers/crvn_idn_clients_id.sql" #>
+<#@ include file="Triggers/ti_crvn_idn_clients.sql" #>
 
 -- Identity: Scopes
 <#@ include file="Tables/crvn_idn_scopes.sql" #>
 
 -- Identity: Scopes ID trigger
-<#@ include file="Triggers/crvn_idn_scopes_id.sql" #>
+<#@ include file="Triggers/ti_crvn_idn_scopes.sql" #>
 
 -- Identity: Client claims
 <#@ include file="Tables/crvn_idn_cli_claims.sql" #>
 
 -- Identity: Client claims ID trigger
-<#@ include file="Triggers/crvn_idn_cli_claims_id.sql" #>
+<#@ include file="Triggers/ti_crvn_idn_cli_claims.sql" #>
 
 -- Identity: Client CORS origins
 <#@ include file="Tables/crvn_idn_cli_cors_origins.sql" #>
 
 -- Identity: Client CORS origins ID trigger
-<#@ include file="Triggers/crvn_idn_cli_cors_origins_id.sql" #>
+<#@ include file="Triggers/ti_crvn_idn_cli_cors_origins.sql" #>
 
 -- Users
 <#@ include file="Tables/crvn_sec_users.sql" #>
