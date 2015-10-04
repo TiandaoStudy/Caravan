@@ -45,7 +45,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         /// </summary>
         public SqlIdnClientRedirectUriTypeConfiguration()
         {
-            ToTable("CRVN_IDN_CLI_REDIRECT_URIS", CaravanDataAccessConfiguration.Instance.SqlSchema);
+            ToTable("CRVN_IDN_CLI_RDRCT_URIS", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CCRU_ID");
             Property(x => x.Uri).HasColumnName("CCRU_URI");
