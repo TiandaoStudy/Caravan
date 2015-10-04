@@ -5,13 +5,13 @@
  *
  * @type {angular.Module}
  */
-angular.module('todomvc', ['ngRoute'])
+angular.module(moduleName, ['ngRoute'])
 	.config(function ($routeProvider) {
 		'use strict';
 
 		var routeConfig = {
 			controller: 'TodoCtrl',
-			templateUrl: 'todomvc-index.html',
+			templateUrl: 'caravanAdminUI-index.html',
 			resolve: {
 				store: function (todoStorage) {
 					// Get the correct module (API or localStorage).

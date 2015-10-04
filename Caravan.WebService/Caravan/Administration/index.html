@@ -5,12 +5,13 @@
         <title>AngularJS • TodoMVC</title>
         <link rel="stylesheet" href="node_modules/todomvc-common/base.css">
         <link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+        <link rel="stylesheet" href="css/_bootstrap.min.css">
         <style>[ng-cloak] { display: none; }</style>
     </head>
-    <body ng-app="todomvc">
+    <body ng-app="caravanAdminUI">
         <ng-view />
 
-        <script type="text/ng-template" id="todomvc-index.html">
+        <script type="text/ng-template" id="caravanAdminUI-index.html">
             <section id="todoapp">
                 <header id="header">
                     <h1>todos</h1>
@@ -64,8 +65,9 @@
             </footer>
         </script>
         <script src="node_modules/todomvc-common/base.js"></script>
-        <script src="../../Scripts/angular.min.js"></script>
-        <script src="../../Scripts/angular-route.min.js"></script>
+        <script src="js/_angular.min.js"></script>
+        <script src="js/_jquery.min.js"></script>
+        <script src="js/_bootstrap.min.js"></script>
 
         <!-- Tutti gli script CUSTOM definiti per l'applicazione -->
         <script src="js/_all.es5.min.js"></script>

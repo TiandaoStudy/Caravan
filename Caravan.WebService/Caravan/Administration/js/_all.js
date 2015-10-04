@@ -1,3 +1,4 @@
+const moduleName = "caravanAdminUI";
 /*global angular */
 
 /**
@@ -5,13 +6,13 @@
  *
  * @type {angular.Module}
  */
-angular.module('todomvc', ['ngRoute'])
+angular.module(moduleName, ['ngRoute'])
 	.config(function ($routeProvider) {
 		'use strict';
 
 		var routeConfig = {
 			controller: 'TodoCtrl',
-			templateUrl: 'todomvc-index.html',
+			templateUrl: 'caravanAdminUI-index.html',
 			resolve: {
 				store: function (todoStorage) {
 					// Get the correct module (API or localStorage).
@@ -38,8 +39,8 @@ angular.module('todomvc', ['ngRoute'])
  * - retrieves and persists the model via the todoStorage service
  * - exposes the model to the template and provides event handlers
  */
-angular.module('todomvc')
-	.controller('TodoCtrl', function TodoCtrl($scope, $routeParams, $filter, store) {
+angular.module(moduleName)
+	.controller('TodoCtrl', function TodoCtrl($scope, $routeParams, $filter, store, logService) {
 		'use strict';
 
 		var todos = $scope.todos = store.todos;
@@ -66,6 +67,8 @@ angular.module('todomvc')
 				title: $scope.newTodo.trim(),
 				completed: false
 			};
+
+			console.log(logService.getAllSettings());
 
 			if (!newTodo.title) {
 				return;
@@ -157,6 +160,50 @@ angular.module('todomvc')
 		};
 	});
 
+class LogService
+{
+    constructor($http)
+    {
+        this.$http = $http;
+    }
+
+    static logFactory($http) {
+        return new LogService($http);
+    }
+
+    getAllSettings() {
+        return this.$http.get('https://localhost:44300/logger/settings').then(result => result.data);
+    }
+
+    getActiveBooks(){
+        return this.$http.get('/api/activeBooks').then(result => result.data );
+    }
+
+    getArchivedBooks(){
+        return this.$http.get('/api/archivedBooks').then(result => result.data );
+    }
+
+    markBookRead(bookId, isBookRead){
+        return this.$http.put(`/api/markRead/${bookId}`, {bookId: bookId, read: isBookRead});
+    }
+
+    addToArchive(bookId){
+        return this.$http.put(`/api/addToArchive/${bookId}`,{});
+    }
+
+    checkIfBookExists(title){
+        return this.$http.get(`/api/bookExists/${title}`).then(result =>  result.data );
+    }
+
+    addBook(book){
+        return this.$http.post('/api/books', book);
+    }
+}
+
+LogService.logFactory.$inject = ['$http'];
+
+angular.module(moduleName)
+  .factory('logService', LogService.logFactory);
 /*global angular */
 
 /**
@@ -166,7 +213,7 @@ angular.module('todomvc')
  * They both follow the same API, returning promises for all changes to the
  * model.
  */
-angular.module('todomvc')
+angular.module(moduleName)
 	.factory('todoStorage', function ($http, $injector) {
 		'use strict';
 
@@ -345,13 +392,55 @@ angular.module('todomvc')
 		return store;
 	});
 
+//const HTTP = new WeakMap();
+
+//class BookShelfService
+//{
+//    constructor($http)
+//    {
+//        HTTP.set(this, $http);
+//    }
+
+//    getActiveBooks(){
+//        return HTTP.get(this).get('/api/activeBooks').then(result => result.data );
+//    }
+
+//    getArchivedBooks(){
+//        return HTTP.get(this).get('/api/archivedBooks').then(result => result.data );
+//    }
+
+//    markBookRead(bookId, isBookRead){
+//        return HTTP.get(this).put(`/api/markRead/${bookId}`, {bookId: bookId, read: isBookRead});
+//    }
+
+//    addToArchive(bookId){
+//        return HTTP.get(this).put(`/api/addToArchive/${bookId}`,{});
+//    }
+
+//    checkIfBookExists(title){
+//        return HTTP.get(this).get(`/api/bookExists/${title}`).then(result =>  result.data );
+//    }
+
+//    addBook(book){
+//        return HTTP.get(this).post('/api/books', book);
+//    }
+
+//    static bookShelfFactory($http){
+//        return new BookShelfService($http);
+//    }
+//}
+
+//BookShelfService.bookShelfFactory.$inject = ['$http'];
+
+//angular.module(moduleName, [])
+//  .factory('bookShelfSvc', BookShelfService.bookShelfFactory);
 /*global angular */
 
 /**
  * Directive that executes an expression when the element it is applied to gets
  * an `escape` keydown event.
  */
-angular.module('todomvc')
+angular.module(moduleName)
 	.directive('todoEscape', function () {
 		'use strict';
 
@@ -376,7 +465,7 @@ angular.module('todomvc')
  * Directive that places focus on the element it is applied to when the
  * expression it binds to evaluates to true
  */
-angular.module('todomvc')
+angular.module(moduleName)
 	.directive('todoFocus', function todoFocus($timeout) {
 		'use strict';
 

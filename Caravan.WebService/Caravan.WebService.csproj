@@ -323,14 +323,18 @@
   <ItemGroup>
     <Content Include="App_Data\EFPregeneratedViews\CaravanViews.xml" />
     <Content Include="App_Data\HelpPages\WebServiceHelp.xml" />
+    <Content Include="Caravan\Administration\js\config.js" />
+    <Content Include="Caravan\Administration\css\_bootstrap.css" />
+    <Content Include="Caravan\Administration\css\_bootstrap.min.css">
+      <DependentUpon>_bootstrap.css</DependentUpon>
+    </Content>
     <Content Include="Caravan\Administration\index.html" />
     <Content Include="Caravan\Administration\js\app.js" />
-    <Content Include="Caravan\Administration\js\app.min.js">
-      <DependentUpon>app.js</DependentUpon>
-    </Content>
     <Content Include="Caravan\Administration\js\controllers\todoCtrl.js" />
     <Content Include="Caravan\Administration\js\directives\todoEscape.js" />
     <Content Include="Caravan\Administration\js\directives\todoFocus.js" />
+    <Content Include="Caravan\Administration\js\services\userService.js" />
+    <Content Include="Caravan\Administration\js\services\logService.js" />
     <Content Include="Caravan\Administration\js\services\todoStorage.js" />
     <Content Include="Caravan\Administration\js\_all.es5.js">
       <DependentUpon>_all.js</DependentUpon>
@@ -339,6 +343,18 @@
       <DependentUpon>_all.es5.js</DependentUpon>
     </Content>
     <Content Include="Caravan\Administration\js\_all.js" />
+    <Content Include="Caravan\Administration\js\_angular.js" />
+    <Content Include="Caravan\Administration\js\_angular.min.js">
+      <DependentUpon>_angular.js</DependentUpon>
+    </Content>
+    <Content Include="Caravan\Administration\js\_bootstrap.js" />
+    <Content Include="Caravan\Administration\js\_bootstrap.min.js">
+      <DependentUpon>_bootstrap.js</DependentUpon>
+    </Content>
+    <Content Include="Caravan\Administration\js\_jquery.js" />
+    <Content Include="Caravan\Administration\js\_jquery.min.js">
+      <DependentUpon>_jquery.js</DependentUpon>
+    </Content>
     <Content Include="Caravan\Administration\node_modules\angular-route\angular-route.js" />
     <Content Include="Caravan\Administration\node_modules\angular\angular.js" />
     <Content Include="Caravan\Administration\node_modules\todomvc-app-css\index.css" />
@@ -347,6 +363,12 @@
     <Content Include="Caravan\Administration\test\config\karma.conf.js" />
     <Content Include="Caravan\Administration\test\unit\directivesSpec.js" />
     <Content Include="Caravan\Administration\test\unit\todoCtrlSpec.js" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ui-bootstrap-csp.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="KVLite.config" />
     <Content Include="KVLite\x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -357,6 +379,10 @@
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular-route.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\angular.min.js.map" />
@@ -364,11 +390,28 @@
     <Content Include="Caravan\Administration\package.json" />
     <Content Include="Caravan\Administration\readme.md" />
     <None Include="bundleconfig.json" />
+    <Content Include="Caravan\Administration\js\_angular.min.js.map">
+      <DependentUpon>_angular.min.js</DependentUpon>
+    </Content>
+    <Content Include="Caravan\Administration\js\_bootstrap.min.js.map">
+      <DependentUpon>_bootstrap.min.js</DependentUpon>
+    </Content>
+    <Content Include="Caravan\Administration\js\_jquery.min.js.map">
+      <DependentUpon>_jquery.min.js</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <Content Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Web.config">

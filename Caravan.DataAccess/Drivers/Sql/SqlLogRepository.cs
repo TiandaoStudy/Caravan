@@ -69,6 +69,9 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
+                // Log deletion might take a long time...
+                ctx.Database.CommandTimeout = 300;
+
                 var utcNow = CaravanServiceProvider.Clock.UtcNow;
 
                 var appIds = ((appName == null) ? ctx.SecApps : ctx.SecApps.Where(a => a.Name == appName)).Select(a => a.Id);
