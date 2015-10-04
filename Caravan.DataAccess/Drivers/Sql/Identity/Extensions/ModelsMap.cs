@@ -37,7 +37,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Extensions
 
             Mapper.CreateMap<Client, SqlIdnClient>(MemberList.Source)
                 .ForMember(x => x.UpdateAccessTokenOnRefresh, opt => opt.MapFrom(src => src.UpdateAccessTokenClaimsOnRefresh))
-                .ForMember(x => x.AllowAccessToAllGrantTypes, opt => opt.MapFrom(src => src.AllowAccessToAllCustomGrantTypes))
+                .ForMember(x => x.AllowAccessToAllCustomGrantTypes, opt => opt.MapFrom(src => src.AllowAccessToAllCustomGrantTypes))
                 .ForMember(x => x.AllowedCustomGrantTypes, opt => opt.MapFrom(src => src.AllowedCustomGrantTypes.Select(x => new SqlIdnClientCustomGrantType { GrantType = x })))
                 .ForMember(x => x.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris.Select(x => new SqlIdnClientRedirectUri { Uri = x })))
                 .ForMember(x => x.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris.Select(x => new SqlIdnClientPostLogoutRedirectUri { Uri = x })))

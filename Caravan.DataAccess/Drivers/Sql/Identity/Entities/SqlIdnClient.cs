@@ -29,6 +29,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
     public class SqlIdnClient
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public virtual int Id { get; set; }
 
         public virtual bool Enabled { get; set; }
@@ -127,7 +128,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         public virtual bool AlwaysSendClientClaims { get; set; }
         public virtual bool PrefixClientClaims { get; set; }
 
-        public virtual bool AllowAccessToAllGrantTypes { get; set; }
+        public virtual bool AllowAccessToAllCustomGrantTypes { get; set; }
 
         public virtual ICollection<SqlIdnClientCustomGrantType> AllowedCustomGrantTypes { get; set; }
         public virtual ICollection<SqlIdnClientCorsOrigin> AllowedCorsOrigins { get; set; }
@@ -154,7 +155,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             Property(x => x.AllowRememberConsent).HasColumnName("CCLI_ALLOW_REMEMBER_CONSENT");
             Property(x => x.FlowString).HasColumnName("CCLI_FLOW");
             Property(x => x.AllowClientCredentialsOnly).HasColumnName("CCLI_ALLOW_CLIENT_CREDS_ONLY");
-            Property(x => x.AllowAccessToAllScopes).HasColumnName("CCLI_ALLOW_ACCESS_TO_ALL_SCPS");
+            Property(x => x.AllowAccessToAllScopes).HasColumnName("CCLI_ALLOW_ACCESS2ALL_SCOPES");
             Property(x => x.IdentityTokenLifetime).HasColumnName("CCLI_IDENTITY_TOKEN_LIFETIME");
             Property(x => x.AccessTokenLifetime).HasColumnName("CCLI_ACCESS_TOKEN_LIFETIME");
             Property(x => x.AuthorizationCodeLifetime).HasColumnName("CCLI_AUTH_CODE_LIFETIME");
@@ -168,7 +169,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             Property(x => x.IncludeJwtId).HasColumnName("CCLI_INCLUDE_JWT_ID");
             Property(x => x.AlwaysSendClientClaims).HasColumnName("CCLI_ALWAYS_SEND_CLIENT_CLAIMS");
             Property(x => x.PrefixClientClaims).HasColumnName("CCLI_PREFIX_CLIENT_CLAIMS");
-            Property(x => x.AllowAccessToAllGrantTypes).HasColumnName("CCLI_ALLOW_ACCESS_TO_ALL_GRTP");
+            Property(x => x.AllowAccessToAllCustomGrantTypes).HasColumnName("CCLI_ALLOW_ACCESS2ALL_CST_GRTP");
         }
     }
 }
