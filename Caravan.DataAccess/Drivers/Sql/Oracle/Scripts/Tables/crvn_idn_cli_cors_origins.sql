@@ -7,7 +7,6 @@ CREATE TABLE mydb.crvn_idn_cli_cors_origins
    , CCCO_ORIGIN            NVARCHAR2(150)  NOT NULL
 
    , CONSTRAINT pk_crvn_idn_cli_cors_origins PRIMARY KEY (CCLI_ID) ENABLE
-   , CONSTRAINT uk_crvn_idn_cli_cors_origins UNIQUE (CCLI_CLIENT_ID) ENABLE
    , CONSTRAINT fk_crvnidn_clicorsorig_clients FOREIGN KEY (CCLI_ID) REFERENCES mydb.crvn_idn_clients (CCLI_ID) ON DELETE CASCADE ENABLE
 );
 

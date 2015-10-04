@@ -45,7 +45,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         /// </summary>
         public SqlIdnClientCustomGrantTypeTypeConfiguration()
         {
-            ToTable("CRVN_IDN_CLI_CUSTOM_GRNT_TYPES", CaravanDataAccessConfiguration.Instance.SqlSchema);
+            ToTable("CRVN_IDN_CLI_CST_GRNT_TYPES", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CCGT_ID");
             Property(x => x.GrantType).HasColumnName("CCGT_GRANT_TYPE");

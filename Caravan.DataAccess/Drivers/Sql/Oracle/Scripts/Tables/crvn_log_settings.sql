@@ -7,6 +7,7 @@ CREATE TABLE mydb.crvn_log_settings
    , clos_enabled     NUMBER(1)       NOT NULL
    , clos_days        NUMBER(3)       NOT NULL
    , clos_max_entries NUMBER(7)       NOT NULL
+   -- clos_ins_date, clos_ins_user, clos_upd_date, clos_upd_user
    , CHECK (clos_type IN ('debug', 'trace', 'info', 'warn', 'error', 'fatal')) ENABLE
    , CHECK (clos_enabled IN (0, 1)) ENABLE
    , CHECK (clos_days > 0 AND clos_max_entries > 0) ENABLE

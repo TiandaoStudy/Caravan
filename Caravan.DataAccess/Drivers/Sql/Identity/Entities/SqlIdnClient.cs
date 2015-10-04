@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
+using Finsa.Caravan.DataAccess.Drivers.Sql.Entities;
+using Finsa.CodeServices.Common;
 using IdentityServer3.Core.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Finsa.CodeServices.Common;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 {
     /// <summary>
     ///   Riferimento interno per <see cref="IdentityServer3.EntityFramework.Entities.Client"/>.
     /// </summary>
-    public class SqlIdnClient
+    public class SqlIdnClient : SqlTrackedEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
