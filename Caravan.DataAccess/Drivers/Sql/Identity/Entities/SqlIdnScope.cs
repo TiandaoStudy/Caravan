@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
+using Finsa.CodeServices.Common;
+using IdentityServer3.Core.Models;
 using IdentityServer3.EntityFramework.Entities;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
@@ -43,8 +46,18 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 
         public virtual bool Required { get; set; }
         public virtual bool Emphasize { get; set; }
-        public virtual int Type { get; set; }
+
+        [NotMapped]
+        public ScopeType Type { get; set; }
+
+        public virtual string TypeString
+        {
+            get { return Type.ToString().ToLowerInvariant(); }
+            set { Type = value.ToEnum<ScopeType>(); }
+        }
+
         public virtual ICollection<SqlIdnScopeClaim> ScopeClaims { get; set; }
+
         public virtual bool IncludeAllClaimsForUser { get; set; }
 
         [StringLength(200)]
@@ -72,7 +85,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             Property(x => x.Description).HasColumnName("CSCO_DESCR");
             Property(x => x.Required).HasColumnName("CSCO_REQUIRED");
             Property(x => x.Emphasize).HasColumnName("CSCO_EMPHASIZE");
-            Property(x => x.Type).HasColumnName("CSCO_TYPE");
+            Property(x => x.TypeString).HasColumnName("CSCO_TYPE");
             Property(x => x.IncludeAllClaimsForUser).HasColumnName("CSCO_INCL_ALL_CLAIMS_FOR_USER");
             Property(x => x.ClaimsRule).HasColumnName("CSCO_CLAIMS_RULE");
             Property(x => x.ShowInDiscoveryDocument).HasColumnName("CSCO_SHOW_IN_DISCOVERY_DOC");
