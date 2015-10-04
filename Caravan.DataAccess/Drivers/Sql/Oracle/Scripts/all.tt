@@ -35,6 +35,12 @@
 -- Identity: Client claims ID trigger
 <#@ include file="Triggers/crvn_idn_cli_claims_id.sql" #>
 
+-- Identity: Client CORS origins
+<#@ include file="Tables/crvn_idn_cli_cors_origins.sql" #>
+
+-- Identity: Client CORS origins ID trigger
+<#@ include file="Triggers/crvn_idn_cli_cors_origins_id.sql" #>
+
 -- Users
 <#@ include file="Tables/crvn_sec_users.sql" #>
 

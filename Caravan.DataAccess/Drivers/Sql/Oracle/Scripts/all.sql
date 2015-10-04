@@ -322,7 +322,7 @@ BEFORE INSERT ON mydb.crvn_idn_clients
 FOR EACH ROW
 BEGIN
   SELECT mydb.crvn_idn_clients_id.nextval
-    INTO :new.ccli_id
+    INTO :new.CCLI_ID
     FROM DUAL;
 END;
 /
@@ -385,7 +385,7 @@ BEFORE INSERT ON mydb.crvn_idn_scopes
 FOR EACH ROW
 BEGIN
   SELECT mydb.crvn_idn_scopes_id.nextval
-    INTO :new.csco_id
+    INTO :new.CSCO_ID
     FROM DUAL;
 END;
 /
@@ -416,6 +416,36 @@ FOR EACH ROW
 BEGIN
   SELECT mydb.crvn_idn_cli_claims_id.nextval
     INTO :new.CCLM_ID
+    FROM DUAL;
+END;
+/
+
+-- Identity: Client CORS origins
+-- REPLACE 'mydb' WITH DB NAME
+
+CREATE TABLE mydb.crvn_idn_cli_cors_origins
+(
+     CCCO_ID                NUMBER(10)      NOT NULL
+   , CCLI_ID                NUMBER(10)      NOT NULL
+   , CCCO_ORIGIN            NVARCHAR2(150)  NOT NULL
+
+   , CONSTRAINT pk_crvn_idn_cli_cors_origins PRIMARY KEY (CCLI_ID) ENABLE
+   , CONSTRAINT uk_crvn_idn_cli_cors_origins UNIQUE (CCLI_CLIENT_ID) ENABLE
+   , CONSTRAINT fk_crvnidn_clicorsorig_clients FOREIGN KEY (CCLI_ID) REFERENCES mydb.crvn_idn_clients (CCLI_ID) ON DELETE CASCADE ENABLE
+);
+
+CREATE SEQUENCE mydb.crvn_idn_cli_cors_origins_id;
+
+
+-- Identity: Client CORS origins ID trigger
+-- REPLACE 'mydb' WITH DB NAME
+
+CREATE OR REPLACE TRIGGER mydb.crvn_idn_cli_cors_origins_id
+BEFORE INSERT ON mydb.crvn_idn_cli_cors_origins 
+FOR EACH ROW
+BEGIN
+  SELECT mydb.crvn_idn_cli_cors_origins_id.nextval
+    INTO :new.CCCO_ID
     FROM DUAL;
 END;
 /

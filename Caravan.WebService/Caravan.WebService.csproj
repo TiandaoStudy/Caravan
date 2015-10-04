@@ -324,13 +324,6 @@
     <Content Include="App_Data\EFPregeneratedViews\CaravanViews.xml" />
     <Content Include="App_Data\HelpPages\WebServiceHelp.xml" />
     <Content Include="Caravan\Administration\index.html" />
-    <Content Include="Caravan\Administration\js\administration.es5.js">
-      <DependentUpon>administration.js</DependentUpon>
-    </Content>
-    <Content Include="Caravan\Administration\js\administration.es5.min.js">
-      <DependentUpon>administration.es5.js</DependentUpon>
-    </Content>
-    <Content Include="Caravan\Administration\js\administration.js" />
     <Content Include="Caravan\Administration\js\app.js" />
     <Content Include="Caravan\Administration\js\app.min.js">
       <DependentUpon>app.js</DependentUpon>
@@ -339,6 +332,12 @@
     <Content Include="Caravan\Administration\js\directives\todoEscape.js" />
     <Content Include="Caravan\Administration\js\directives\todoFocus.js" />
     <Content Include="Caravan\Administration\js\services\todoStorage.js" />
+    <Content Include="Caravan\Administration\js\_all.es5.js">
+      <DependentUpon>_all.js</DependentUpon>
+    </Content>
+    <Content Include="Caravan\Administration\js\_all.es5.min.js">
+      <DependentUpon>_all.es5.js</DependentUpon>
+    </Content>
     <Content Include="Caravan\Administration\js\_all.js" />
     <Content Include="Caravan\Administration\node_modules\angular-route\angular-route.js" />
     <Content Include="Caravan\Administration\node_modules\angular\angular.js" />
