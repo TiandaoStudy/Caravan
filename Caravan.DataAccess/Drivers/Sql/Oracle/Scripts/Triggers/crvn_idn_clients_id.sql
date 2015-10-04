@@ -5,7 +5,7 @@ BEFORE INSERT ON mydb.crvn_idn_clients
 FOR EACH ROW
 BEGIN
   SELECT mydb.crvn_idn_clients_id.nextval
-    INTO :new.ccli_id
+    INTO :new.CCLI_ID
     FROM DUAL;
 END;
 /

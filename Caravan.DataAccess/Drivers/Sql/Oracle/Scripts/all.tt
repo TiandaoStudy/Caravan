@@ -2,14 +2,38 @@
 <#@ assembly name="System.Core" #>
 <#@ output extension=".sql" #>
 
--- Apps
+-- Security: Apps
 <#@ include file="Tables/crvn_sec_apps.sql" #>
 
--- Log Settings
+-- Security: Apps ID trigger
+<#@ include file="Triggers/crvn_sec_apps_id.sql" #>
+
+-- Logging: Settings
 <#@ include file="Tables/crvn_log_settings.sql" #>
 
--- Log Entries
+-- Logging: Entries
 <#@ include file="Tables/crvn_log_entries.sql" #>
+
+-- Logging: Entries ID trigger
+<#@ include file="Triggers/crvn_log_entries_id.sql" #>
+
+-- Identity: Clients
+<#@ include file="Tables/crvn_idn_clients.sql" #>
+
+-- Identity: Clients ID trigger
+<#@ include file="Triggers/crvn_idn_clients_id.sql" #>
+
+-- Identity: Scopes
+<#@ include file="Tables/crvn_idn_scopes.sql" #>
+
+-- Identity: Scopes ID trigger
+<#@ include file="Triggers/crvn_idn_scopes_id.sql" #>
+
+-- Identity: Client claims
+<#@ include file="Tables/crvn_idn_cli_claims.sql" #>
+
+-- Identity: Client claims ID trigger
+<#@ include file="Triggers/crvn_idn_cli_claims_id.sql" #>
 
 -- Users
 <#@ include file="Tables/crvn_sec_users.sql" #>
@@ -34,12 +58,6 @@
 
 -- Sec Entries
 <#@ include file="Tables/crvn_sec_entries.sql" #>
-
--- Triggers: Apps Id
-<#@ include file="Triggers/crvn_sec_apps_id.sql" #>
-
--- Triggers: Log Entries Id
-<#@ include file="Triggers/crvn_log_entries_id.sql" #>
 
 -- Triggers: Users Id
 <#@ include file="Triggers/crvn_sec_users_id.sql" #>

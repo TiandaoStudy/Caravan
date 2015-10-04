@@ -1,5 +1,5 @@
 ﻿
--- Apps
+-- Security: Apps
 -- REPLACE 'mydb' WITH DB NAME
 
 CREATE TABLE mydb.crvn_sec_apps
@@ -23,7 +23,20 @@ COMMENT ON COLUMN mydb.crvn_sec_apps.capp_name
 COMMENT ON COLUMN mydb.crvn_sec_apps.capp_descr 
      IS 'Il nome esteso della applicazione';
 
--- Log Settings
+-- Security: Apps ID trigger
+-- REPLACE 'mydb' WITH DB NAME
+
+CREATE OR REPLACE TRIGGER mydb.crvn_sec_apps_id
+BEFORE INSERT ON mydb.crvn_sec_apps 
+FOR EACH ROW
+BEGIN
+  SELECT mydb.crvn_sec_apps_id.nextval
+    INTO :new.capp_id
+    FROM DUAL;
+END;
+/
+
+-- Logging: Settings
 -- REPLACE 'mydb' WITH DB NAME
 
 CREATE TABLE mydb.crvn_log_settings
@@ -62,7 +75,7 @@ Insert into mydb.CRVN_LOG_SETTINGS (CAPP_ID,CLOS_TYPE,CLOS_ENABLED,CLOS_DAYS,CLO
 Insert into mydb.CRVN_LOG_SETTINGS (CAPP_ID,CLOS_TYPE,CLOS_ENABLED,CLOS_DAYS,CLOS_MAX_ENTRIES) values (<CAPP_ID>,'trace',1,30,10000);
 
 
--- Log Entries
+-- Logging: Entries
 -- REPLACE 'mydb' WITH DB NAME
 
 CREATE TABLE mydb.crvn_log_entries 
@@ -187,6 +200,225 @@ CREATE INDEX mydb.ix_crvn_log_type ON mydb.crvn_log_entries (capp_id, clos_type)
 --> flex_log_settings
 
 CREATE SEQUENCE mydb.crvn_log_entries_id;
+
+-- Logging: Entries ID trigger
+-- REPLACE 'mydb' WITH DB NAME
+
+CREATE OR REPLACE TRIGGER mydb.crvn_log_entries_id
+BEFORE INSERT ON mydb.crvn_log_entries 
+FOR EACH ROW
+BEGIN
+  SELECT mydb.crvn_log_entries_id.nextval
+    INTO :new.clog_id
+    FROM DUAL;
+END;
+/
+
+-- Identity: Clients
+-- REPLACE 'mydb' WITH DB NAME
+
+CREATE TABLE mydb.crvn_idn_clients
+(
+     CCLI_ID                        NUMBER(10)      NOT NULL
+   , CCLI_ENABLED                   NUMBER(1)       NOT NULL DEFAULT 1
+   , CCLI_CLIENT_ID                 NVARCHAR2(200)  NOT NULL
+   , CCLI_CLIENT_NAME               NVARCHAR2(200)  NOT NULL
+   , CCLI_CLIENT_URI                NVARCHAR2(2000)
+   , CCLI_LOGO_URI                  NVARCHAR2(2000)
+   , CCLI_REQUIRE_CONSENT           NUMBER(1)       NOT NULL DEFAULT 1
+   , CCLI_ALLOW_REMEMBER_CONSENT    NUMBER(1)       NOT NULL DEFAULT 1
+   , CCLI_FLOW                      NVARCHAR2(100)  NOT NULL DEFAULT 'implicit'
+   , CCLI_ALLOW_CLIENT_CREDS_ONLY   NUMBER(1)       NOT NULL DEFAULT 0
+   , CCLI_ALLOW_ACCESS2ALL_SCOPES   NUMBER(1)       NOT NULL DEFAULT 0
+   , CCLI_IDENTITY_TOKEN_LIFETIME   NUMBER(10)      NOT NULL DEFAULT 300
+   , CCLI_ACCESS_TOKEN_LIFETIME     NUMBER(10)      NOT NULL DEFAULT 3600
+   , CCLI_AUTH_CODE_LIFETIME        NUMBER(10)      NOT NULL DEFAULT 300
+   , CCLI_ABS_REFR_TOKEN_LIFETIME   NUMBER(10)      NOT NULL DEFAULT 2592000
+   , CCLI_SLID_REFR_TOKEN_LIFETIME  NUMBER(10)      NOT NULL DEFAULT 1296000
+   , CCLI_REFRESH_TOKEN_USAGE       NVARCHAR2(100)  NOT NULL DEFAULT 'onetimeonly'
+   , CCLI_UPD_ACCESS_TOKEN_ON_REFR  NUMBER(1)       NOT NULL DEFAULT 0
+   , CCLI_REFRESH_TOKEN_EXPIRATION  NVARCHAR2(100)  NOT NULL DEFAULT 'absolute'
+   , CCLI_ACCESS_TOKEN_TYPE         NVARCHAR2(100)  NOT NULL DEFAULT 'jwt'
+   , CCLI_ENABLE_LOCAL_LOGIN        NUMBER(1)       NOT NULL DEFAULT 1
+   , CCLI_INCLUDE_JWT_ID            NUMBER(1)       NOT NULL DEFAULT 0
+   , CCLI_ALWAYS_SEND_CLIENT_CLAIMS NUMBER(1)       NOT NULL DEFAULT 0
+   , CCLI_PREFIX_CLIENT_CLAIMS      NUMBER(1)       NOT NULL DEFAULT 1
+   , CCLI_ALLOW_ACCESS2ALL_CST_GRTP NUMBER(1)       NOT NULL DEFAULT 0
+
+   , CHECK (CCLI_IDENTITY_TOKEN_LIFETIME > 0) ENABLE
+   , CHECK (CCLI_ACCESS_TOKEN_LIFETIME > 0) ENABLE
+   , CHECK (CCLI_AUTH_CODE_LIFETIME > 0) ENABLE
+   , CHECK (CCLI_ABS_REFR_TOKEN_LIFETIME > 0) ENABLE
+   , CHECK (CCLI_SLID_REFR_TOKEN_LIFETIME > 0) ENABLE
+   , CHECK (CCLI_FLOW IN ('authorizationcode', 'implicit', 'hybrid', 'clientcredentials', 'resourceowner', 'custom')) ENABLE
+   , CHECK (CCLI_REFRESH_TOKEN_USAGE IN ('reuse', 'onetimeonly')) ENABLE
+   , CHECK (CCLI_REFRESH_TOKEN_EXPIRATION IN ('sliding', 'absolute')) ENABLE
+   , CHECK (CCLI_ACCESS_TOKEN_TYPE IN ('jwt', 'reference')) ENABLE
+
+   , CONSTRAINT pk_crvn_idn_clients PRIMARY KEY (CCLI_ID) ENABLE
+   , CONSTRAINT uk_crvn_idn_clients UNIQUE (CCLI_CLIENT_ID) ENABLE
+);
+
+COMMENT ON TABLE mydb.crvn_idn_clients 
+     IS 'Models an OpenID Connect or OAuth2 client';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ID 
+     IS 'Auto-increment ID';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ENABLED 
+     IS 'Specifies if client is enabled (defaults to true)';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_CLIENT_ID 
+     IS 'Unique ID of the client';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_CLIENT_NAME 
+     IS 'Client display name (used for logging and consent screen)';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_CLIENT_URI 
+     IS 'URI to further information about client (used on consent screen)';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_LOGO_URI 
+     IS 'URI to client logo (used on consent screen)';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_REQUIRE_CONSENT 
+     IS 'Specifies whether a consent screen is required (defaults to true)';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_REMEMBER_CONSENT 
+     IS 'Specifies whether user can choose to store consent decisions (defaults to true)';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_FLOW 
+     IS 'Specifies allowed flow for client (either AuthorizationCode, Implicit, Hybrid, ResourceOwner, ClientCredentials or Custom). Defaults to Implicit';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_CLIENT_CREDS_ONLY 
+     IS 'Indicates whether this client is allowed to request token using client credentials only. This is e.g. useful when you want a client to be able to use both a user-centric flow like implicit and additionally client credentials flow';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_ACCESS2ALL_SCOPES 
+     IS 'Indicates whether the client has access to all scopes. Defaults to false. You can set the allowed scopes via the CRVN_IDN_CLI_SCOPES table';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_IDENTITY_TOKEN_LIFETIME 
+     IS 'Lifetime of identity token in seconds (defaults to 300 seconds / 5 minutes)';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ACCESS_TOKEN_LIFETIME 
+     IS 'Lifetime of access token in seconds (defaults to 3600 seconds / 1 hour)';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_AUTH_CODE_LIFETIME 
+     IS 'Lifetime of authorization code in seconds (defaults to 300 seconds / 5 minutes)';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ABS_REFR_TOKEN_LIFETIME 
+     IS 'Maximum lifetime of a refresh token in seconds. Defaults to 2592000 seconds / 30 days';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_SLID_REFR_TOKEN_LIFETIME 
+     IS 'Sliding lifetime of a refresh token in seconds. Defaults to 1296000 seconds / 15 days';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_REFRESH_TOKEN_USAGE 
+     IS 'ReUse: the refresh token handle will stay the same when refreshing tokens. OneTime: the refresh token handle will be updated when refreshing tokens';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_UPD_ACCESS_TOKEN_ON_REFR 
+     IS 'Indicates whether the access token (and its claims) should be updated on a refresh token request';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_REFRESH_TOKEN_EXPIRATION 
+     IS 'Absolute: the refresh token will expire on a fixed point in time (specified by the CCLI_ABS_REFR_TOKEN_LIFETIME). Sliding: when refreshing the token, the lifetime of the refresh token will be renewed (by the amount specified in CCLI_SLID_REFR_TOKEN_LIFETIME). The lifetime will not exceed CCLI_ABS_REFR_TOKEN_LIFETIME';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ACCESS_TOKEN_TYPE 
+     IS 'Specifies whether the access token is a reference token or a self contained JWT token (defaults to Jwt)';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ENABLE_LOCAL_LOGIN 
+     IS 'Indicates whether the local login is allowed for this client. Defaults to true';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_INCLUDE_JWT_ID 
+     IS 'Indicates whether JWT access tokens should include an identifier';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALWAYS_SEND_CLIENT_CLAIMS 
+     IS 'Indicates whether client claims should be always included in the access tokens - or only for client credentials flow';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_PREFIX_CLIENT_CLAIMS 
+     IS 'Indicates whether all client claims should be prefixed';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_ACCESS2ALL_CST_GRTP 
+     IS 'Indicates whether the client has access to all custom grant types. Defaults to false. You can set the allowed custom grant types via the CRVN_IDN_CLI_CUSTOM_GRNT_TYPES table';
+
+CREATE SEQUENCE mydb.crvn_idn_clients_id;
+
+-- Identity: Clients ID trigger
+-- REPLACE 'mydb' WITH DB NAME
+
+CREATE OR REPLACE TRIGGER mydb.crvn_idn_clients_id
+BEFORE INSERT ON mydb.crvn_idn_clients 
+FOR EACH ROW
+BEGIN
+  SELECT mydb.crvn_idn_clients_id.nextval
+    INTO :new.ccli_id
+    FROM DUAL;
+END;
+/
+
+-- Identity: Scopes
+-- REPLACE 'mydb' WITH DB NAME
+
+CREATE TABLE mydb.crvn_idn_scopes
+(
+     CSCO_ID                        NUMBER(10)      NOT NULL
+   , CSCO_ENABLED                   NUMBER(1)       NOT NULL DEFAULT 1
+   , CSCO_SCOPE_NAME                NVARCHAR2(200)  NOT NULL
+   , CSCO_DISPLAY_NAME              NVARCHAR2(200)
+   , CSCO_DESCR                     NVARCHAR2(1000)
+   , CSCO_REQUIRED                  NUMBER(1)       NOT NULL DEFAULT 0
+   , CSCO_EMPHASIZE                 NUMBER(1)       NOT NULL DEFAULT 0
+   , CSCO_TYPE                      NVARCHAR2(100)  NOT NULL DEFAULT 'resource'
+   , CSCO_INCL_ALL_CLAIMS_FOR_USER  NUMBER(1)       NOT NULL DEFAULT 0
+   , CSCO_CLAIMS_RULE               NVARCHAR2(200)
+   , CSCO_SHOW_IN_DISCOVERY_DOC     NUMBER(1)       NOT NULL DEFAULT 1
+
+   , CHECK (csco_type IN ('identity', 'resource')) ENABLE
+
+   , CONSTRAINT pk_crvn_idn_scopes PRIMARY KEY (CSCO_ID) ENABLE
+);
+
+COMMENT ON TABLE mydb.crvn_idn_scopes 
+     IS 'Models a resource (either identity resource or web api resource)';
+COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_ID 
+     IS 'Auto-increment ID';
+COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_ENABLED 
+     IS 'Indicates if scope is enabled and can be requested. Defaults to true';
+COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_SCOPE_NAME
+     IS 'Name of the scope. This is the value a client will use to request the scope';
+COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_DISPLAY_NAME
+     IS 'Display name. This value will be used e.g. on the consent screen';
+COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_DESCR
+     IS 'Description. This value will be used e.g. on the consent screen';
+COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_REQUIRED
+     IS 'Specifies whether the user can de-select the scope on the consent screen. Defaults to false';
+COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_EMPHASIZE
+     IS 'Specifies whether the consent screen will emphasize this scope. Use this setting for sensitive or important scopes. Defaults to false';
+COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_TYPE
+     IS 'Specifies whether this scope is about identity information from the userinfo endpoint, or a resource (e.g. a Web API). Defaults to Resource';
+COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_INCL_ALL_CLAIMS_FOR_USER
+     IS 'If enabled, all claims for the user will be included in the token. Defaults to false';
+COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_CLAIMS_RULE
+     IS 'Rule for determining which claims should be included in the token (this is implementation specific)';
+COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_SHOW_IN_DISCOVERY_DOC
+     IS 'Specifies whether this scope is shown in the discovery document. Defaults to true';
+
+CREATE SEQUENCE mydb.crvn_idn_scopes_id;
+
+
+-- Identity: Scopes ID trigger
+-- REPLACE 'mydb' WITH DB NAME
+
+CREATE OR REPLACE TRIGGER mydb.crvn_idn_scopes_id
+BEFORE INSERT ON mydb.crvn_idn_scopes 
+FOR EACH ROW
+BEGIN
+  SELECT mydb.crvn_idn_scopes_id.nextval
+    INTO :new.csco_id
+    FROM DUAL;
+END;
+/
+
+-- Identity: Client claims
+-- REPLACE 'mydb' WITH DB NAME
+
+CREATE TABLE mydb.crvn_idn_cli_claims
+(
+     CCLM_ID        NUMBER(10)      NOT NULL
+   , CCLI_ID        NUMBER(10)      NOT NULL
+   , CCLM_TYPE      NVARCHAR2(250)  NOT NULL
+   , CCLM_VALUE     NVARCHAR2(250)  NOT NULL
+
+   , CONSTRAINT pk_crvn_idn_cli_claims PRIMARY KEY (CCLI_ID) ENABLE
+   , CONSTRAINT uk_crvn_idn_cli_claims UNIQUE (CCLI_CLIENT_ID) ENABLE
+   , CONSTRAINT fk_crvnidn_cliclaims_clients FOREIGN KEY (CCLI_ID) REFERENCES mydb.crvn_idn_clients (CCLI_ID) ON DELETE CASCADE ENABLE
+);
+
+CREATE SEQUENCE mydb.crvn_idn_cli_claims_id;
+
+-- Identity: Client claims ID trigger
+-- REPLACE 'mydb' WITH DB NAME
+
+CREATE OR REPLACE TRIGGER mydb.crvn_idn_cli_claims_id
+BEFORE INSERT ON mydb.crvn_idn_cli_claims 
+FOR EACH ROW
+BEGIN
+  SELECT mydb.crvn_idn_cli_claims_id.nextval
+    INTO :new.CCLM_ID
+    FROM DUAL;
+END;
+/
 
 -- Users
 -- REPLACE 'mydb' WITH DB NAME
@@ -325,32 +557,6 @@ CREATE TABLE mydb.crvn_sec_entries
 );
 
 CREATE SEQUENCE mydb.crvn_sec_entries_id;
-
--- Triggers: Apps Id
--- REPLACE 'mydb' WITH DB NAME
-
-CREATE OR REPLACE TRIGGER mydb.crvn_sec_apps_id
-BEFORE INSERT ON mydb.crvn_sec_apps 
-FOR EACH ROW
-BEGIN
-  SELECT mydb.crvn_sec_apps_id.nextval
-    INTO :new.capp_id
-    FROM DUAL;
-END;
-/
-
--- Triggers: Log Entries Id
--- REPLACE 'mydb' WITH DB NAME
-
-CREATE OR REPLACE TRIGGER mydb.crvn_log_entries_id
-BEFORE INSERT ON mydb.crvn_log_entries 
-FOR EACH ROW
-BEGIN
-  SELECT mydb.crvn_log_entries_id.nextval
-    INTO :new.clog_id
-    FROM DUAL;
-END;
-/
 
 -- Triggers: Users Id
 -- REPLACE 'mydb' WITH DB NAME

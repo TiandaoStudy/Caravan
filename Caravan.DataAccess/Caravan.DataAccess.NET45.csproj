@@ -311,9 +311,11 @@
     <Compile Include="Drivers\Sql\SqlServer\SqlServerDataSourceManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_cli_claims.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_scopes.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_clients.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_idn_cli_claims_id.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_idn_scopes_id.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_idn_clients_id.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Views\v_caravan_log_summary.sql" />
