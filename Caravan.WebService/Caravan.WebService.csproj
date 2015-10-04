@@ -305,7 +305,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\PersistentCache\" />
-    <Folder Include="Caravan\" />
+    <Folder Include="Caravan\Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Packages\IdentityServer3.AspNetIdentity\IdentityServer3.AspNetIdentity.cs" />
@@ -323,16 +323,31 @@
   <ItemGroup>
     <Content Include="App_Data\EFPregeneratedViews\CaravanViews.xml" />
     <Content Include="App_Data\HelpPages\WebServiceHelp.xml" />
-    <Content Include="CaravanUI\index.html" />
-    <Content Include="CaravanUI\js\Application.js" />
-    <Content Include="CaravanUI\js\controllers\TodoCtrl.js" />
-    <Content Include="CaravanUI\js\directives\TodoBlur.js" />
-    <Content Include="CaravanUI\js\directives\TodoFocus.js" />
-    <Content Include="CaravanUI\js\interfaces\ITodoScope.js" />
-    <Content Include="CaravanUI\js\interfaces\ITodoStorage.js" />
-    <Content Include="CaravanUI\js\models\TodoItem.js" />
-    <Content Include="CaravanUI\js\services\TodoStorage.js" />
-    <Content Include="CaravanUI\js\_all.js" />
+    <Content Include="Caravan\Administration\index.html" />
+    <Content Include="Caravan\Administration\js\administration.es5.js">
+      <DependentUpon>administration.js</DependentUpon>
+    </Content>
+    <Content Include="Caravan\Administration\js\administration.es5.min.js">
+      <DependentUpon>administration.es5.js</DependentUpon>
+    </Content>
+    <Content Include="Caravan\Administration\js\administration.js" />
+    <Content Include="Caravan\Administration\js\app.js" />
+    <Content Include="Caravan\Administration\js\app.min.js">
+      <DependentUpon>app.js</DependentUpon>
+    </Content>
+    <Content Include="Caravan\Administration\js\controllers\todoCtrl.js" />
+    <Content Include="Caravan\Administration\js\directives\todoEscape.js" />
+    <Content Include="Caravan\Administration\js\directives\todoFocus.js" />
+    <Content Include="Caravan\Administration\js\services\todoStorage.js" />
+    <Content Include="Caravan\Administration\js\_all.js" />
+    <Content Include="Caravan\Administration\node_modules\angular-route\angular-route.js" />
+    <Content Include="Caravan\Administration\node_modules\angular\angular.js" />
+    <Content Include="Caravan\Administration\node_modules\todomvc-app-css\index.css" />
+    <Content Include="Caravan\Administration\node_modules\todomvc-common\base.css" />
+    <Content Include="Caravan\Administration\node_modules\todomvc-common\base.js" />
+    <Content Include="Caravan\Administration\test\config\karma.conf.js" />
+    <Content Include="Caravan\Administration\test\unit\directivesSpec.js" />
+    <Content Include="Caravan\Administration\test\unit\todoCtrlSpec.js" />
     <Content Include="KVLite.config" />
     <Content Include="KVLite\x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -347,6 +362,13 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
+    <Content Include="Caravan\Administration\package.json" />
+    <Content Include="Caravan\Administration\readme.md" />
+    <None Include="bundleconfig.json" />
+    <None Include="compilerconfig.json" />
+    <Content Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -390,7 +412,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Caravan.pfx" />
-    <Content Include="CaravanUI\js\Application.js.map" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -398,15 +419,6 @@
     <Content Include="Scripts\jquery-2.1.4.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="CaravanUI\js\Application.ts" />
-    <TypeScriptCompile Include="CaravanUI\js\controllers\TodoCtrl.ts" />
-    <TypeScriptCompile Include="CaravanUI\js\directives\TodoBlur.ts" />
-    <TypeScriptCompile Include="CaravanUI\js\directives\TodoFocus.ts" />
-    <TypeScriptCompile Include="CaravanUI\js\interfaces\ITodoScope.ts" />
-    <TypeScriptCompile Include="CaravanUI\js\interfaces\ITodoStorage.ts" />
-    <TypeScriptCompile Include="CaravanUI\js\models\TodoItem.ts" />
-    <TypeScriptCompile Include="CaravanUI\js\services\TodoStorage.ts" />
-    <TypeScriptCompile Include="CaravanUI\js\_all.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-mocks.d.ts" />

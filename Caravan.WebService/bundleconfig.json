@@ -1,0 +1,13 @@
+[
+    {
+        "outputFileName": "Caravan/Administration/js/_all.js",
+        "inputFiles": [
+            "Caravan/Administration/js/app.js",
+            "Caravan/Administration/js/controllers/*.js",
+            "Caravan/Administration/js/services/*.js",
+            "Caravan/Administration/js/directives/*.js"
+        ],
+        "minify": { "enabled": false },
+        "sourceMap": true
+    }
+]

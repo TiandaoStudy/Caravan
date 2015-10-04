@@ -1,0 +1,11 @@
+﻿[
+    {
+        "outputFile": "Caravan/Administration/js/_all.es5.js",
+        "inputFile": "Caravan/Administration/js/_all.js",
+        "minify": {
+            "enabled": true,
+            "renameLocals": false
+        },
+        "sourceMap": true
+    }
+]
