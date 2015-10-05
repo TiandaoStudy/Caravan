@@ -47,7 +47,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         /// </summary>
         public SqlIdnClientIdPRestrictionTypeConfiguration()
         {
-            ToTable("CRVN_IDN_CLI_IDPR_RESTRICTIONS", CaravanDataAccessConfiguration.Instance.SqlSchema);
+            ToTable("CRVN_IDN_CLI_IDPR_RESTRS", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CCPR_ID");
             Property(x => x.Provider).HasColumnName("CCPR_PROVIDER");

@@ -10,4 +10,4 @@ CREATE TABLE mydb.crvn_idn_cli_cst_grnt_types
    , CONSTRAINT fk_crvnidncli_cstgrntt_clients FOREIGN KEY (CCLI_ID) REFERENCES mydb.crvn_idn_clients (CCLI_ID) ON DELETE CASCADE ENABLE
 );
 
-CREATE SEQUENCE mydb.crvn_idn_cli_cst_grnt_types_id;
+CREATE SEQUENCE mydb.sq_crvn_idn_cli_cst_grnt_types;
