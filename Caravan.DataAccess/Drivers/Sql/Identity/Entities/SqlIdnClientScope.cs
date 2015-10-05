@@ -32,6 +32,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         [StringLength(200)]
         public virtual string Scope { get; set; }
 
+        public virtual int ClientId { get; set; }
+
         public virtual SqlIdnClient Client { get; set; }
     }
 
@@ -48,11 +50,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             ToTable("CRVN_IDN_CLI_SCOPES", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CCSC_ID");
+            Property(x => x.ClientId).HasColumnName("CCLI_ID");
             Property(x => x.Scope).HasColumnName("CSCO_SCOPE_NAME");
 
             // SqlIdnClientScope(N) <-> SqlIdnClient(1)
             HasRequired(x => x.Client)
                 .WithMany(x => x.AllowedScopes)
+                .HasForeignKey(x => x.ClientId)
                 .WillCascadeOnDelete();
         }
     }

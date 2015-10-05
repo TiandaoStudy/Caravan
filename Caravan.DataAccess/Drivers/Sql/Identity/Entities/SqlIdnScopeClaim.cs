@@ -37,6 +37,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 
         public virtual bool AlwaysIncludeInIdToken { get; set; }
 
+        public virtual int ScopeId { get; set; }
+
         public virtual SqlIdnScope Scope { get; set; }
     }
 
@@ -53,6 +55,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             ToTable("CRVN_IDN_SCO_CLAIMS", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CSCL_ID");
+            Property(x => x.ScopeId).HasColumnName("CSCO_ID");
             Property(x => x.Name).HasColumnName("CSCL_NAME");
             Property(x => x.Description).HasColumnName("CSCL_DESCR");
             Property(x => x.AlwaysIncludeInIdToken).HasColumnName("CSCL_ALWAYS_INCL_IN_TOKEN");
@@ -60,6 +63,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             // SqlIdnScopeClaim(N) <-> SqlIdnScope(1)
             HasRequired(x => x.Scope)
                 .WithMany(x => x.ScopeClaims)
+                .HasForeignKey(x => x.ScopeId)
                 .WillCascadeOnDelete();
         }
     }

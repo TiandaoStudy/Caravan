@@ -43,6 +43,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         [DateTimeKind(DateTimeKind.Utc)]
         public virtual DateTime? Expiration { get; set; }
 
+        public virtual int ClientId { get; set; }
+
         public virtual SqlIdnClient Client { get; set; }
     }
 
@@ -59,6 +61,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             ToTable("CRVN_IDN_CLI_SECRETS", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CCSE_ID");
+            Property(x => x.ClientId).HasColumnName("CCLI_ID");
             Property(x => x.Value).HasColumnName("CCSE_VALUE");
             Property(x => x.Type).HasColumnName("CCSE_TYPE");
             Property(x => x.Description).HasColumnName("CCSE_DESCR");
@@ -67,6 +70,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             // SqlIdnClientSecret(N) <-> SqlIdnClient(1)
             HasRequired(x => x.Client)
                 .WithMany(x => x.ClientSecrets)
+                .HasForeignKey(x => x.ClientId)
                 .WillCascadeOnDelete();
         }
     }

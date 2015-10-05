@@ -32,6 +32,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         [StringLength(2000)]
         public virtual string Uri { get; set; }
 
+        public virtual int ClientId { get; set; }
+
         public virtual SqlIdnClient Client { get; set; }
     }
 
@@ -45,14 +47,16 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         /// </summary>
         public SqlIdnClientPostLogoutRedirectUriTypeConfiguration()
         {
-            ToTable("CRVN_IDN_CLI_PST_LGT_RDR_URIS", CaravanDataAccessConfiguration.Instance.SqlSchema);
+            ToTable("CRVN_IDN_CLI_PSTLGTRDR_URIS", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CPLR_ID");
+            Property(x => x.ClientId).HasColumnName("CCLI_ID");
             Property(x => x.Uri).HasColumnName("CPLR_URI");
 
             // SqlIdnClientPostLogoutRedirectUri(N) <-> SqlIdnClient(1)
             HasRequired(x => x.Client)
                 .WithMany(x => x.PostLogoutRedirectUris)
+                .HasForeignKey(x => x.ClientId)
                 .WillCascadeOnDelete();
         }
     }

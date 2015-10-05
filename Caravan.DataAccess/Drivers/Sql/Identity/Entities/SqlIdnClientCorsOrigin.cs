@@ -32,6 +32,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         [StringLength(150)]
         public virtual string Origin { get; set; }
 
+        public virtual int ClientId { get; set; }
+
         public virtual SqlIdnClient Client { get; set; }
     }
 
@@ -48,11 +50,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             ToTable("CRVN_IDN_CLI_CORS_ORIGINS", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CCCO_ID");
+            Property(x => x.ClientId).HasColumnName("CCLI_ID");
             Property(x => x.Origin).HasColumnName("CCCO_ORIGIN");
 
             // SqlIdnClientCorsOrigin(N) <-> SqlIdnClient(1)
             HasRequired(x => x.Client)
                 .WithMany(x => x.AllowedCorsOrigins)
+                .HasForeignKey(x => x.ClientId)
                 .WillCascadeOnDelete();
         }
     }

@@ -1,42 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <views>
-  <mapping-views hash="9b05d2e69a7626afd3f135da1aee9e5ba44a4a80cef7d49544a0cf9089ac677d" conceptual-container="SqlDbContext" store-container="CodeFirstDatabase">
+  <mapping-views hash="d0fe4905da43c7364cf508ced1e0e0fa227fdf519305b7a768f1a14afd7cbcac" conceptual-container="SqlDbContext" store-container="CodeFirstDatabase">
     <view extent="CodeFirstDatabase.SqlIdnClientClaim"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnClientClaim
-        [CodeFirstDatabaseSchema.SqlIdnClientClaim](T3.[SqlIdnClientClaim.CCLM_ID], T3.[SqlIdnClientClaim.CCLM_TYPE], T3.[SqlIdnClientClaim.CCLM_VALUE], T3.[SqlIdnClientClaim.Client_Id])
+        [CodeFirstDatabaseSchema.SqlIdnClientClaim](T1.[SqlIdnClientClaim.CCLM_ID], T1.[SqlIdnClientClaim.CCLM_TYPE], T1.[SqlIdnClientClaim.CCLM_VALUE], T1.[SqlIdnClientClaim.CCLI_ID])
     FROM (
-        SELECT T1.[SqlIdnClientClaim.CCLM_ID], T2.[SqlIdnClientClaim.CCLM_TYPE], T2.[SqlIdnClientClaim.CCLM_VALUE], T1.[SqlIdnClientClaim.Client_Id], T2._from0, T1._from1
-        FROM  (
-            SELECT 
-                Key(T.SqlIdnClientClaim_Client_Source).Id AS [SqlIdnClientClaim.CCLM_ID], 
-                Key(T.SqlIdnClientClaim_Client_Target).Id AS [SqlIdnClientClaim.Client_Id], 
-                True AS _from1
-            FROM SqlDbContext.SqlIdnClientClaim_Client AS T) AS T1
-            INNER JOIN (
-            SELECT 
-                T.Id AS [SqlIdnClientClaim.CCLM_ID], 
-                T.Type AS [SqlIdnClientClaim.CCLM_TYPE], 
-                T.[Value] AS [SqlIdnClientClaim.CCLM_VALUE], 
-                True AS _from0
-            FROM SqlDbContext.IdnClientClaims AS T) AS T2
-            ON T1.[SqlIdnClientClaim.CCLM_ID] = T2.[SqlIdnClientClaim.CCLM_ID]
-    ) AS T3]]></view>
+        SELECT 
+            T.Id AS [SqlIdnClientClaim.CCLM_ID], 
+            T.Type AS [SqlIdnClientClaim.CCLM_TYPE], 
+            T.[Value] AS [SqlIdnClientClaim.CCLM_VALUE], 
+            T.ClientId AS [SqlIdnClientClaim.CCLI_ID], 
+            True AS _from0
+        FROM SqlDbContext.IdnClientClaims AS T
+    ) AS T1]]></view>
     <view extent="CodeFirstDatabase.SqlIdnClient"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnClient
-        [CodeFirstDatabaseSchema.SqlIdnClient](T1.[SqlIdnClient.CCLI_ID], T1.[SqlIdnClient.CCLI_ENABLED], T1.[SqlIdnClient.CCLI_CLIENT_ID], T1.[SqlIdnClient.CCLI_CLIENT_NAME], T1.SqlIdnClient_ClientUri, T1.[SqlIdnClient.CCLI_LOGO_URI], T1.[SqlIdnClient.CCLI_REQUIRE_CONSENT], T1.[SqlIdnClient.CCLI_ALLOW_REMEMBER_CONSENT], T1.[SqlIdnClient.CCLI_FLOW], T1.[SqlIdnClient.CCLI_ALLOW_CLIENT_CREDS_ONLY], T1.[SqlIdnClient.CCLI_ALLOW_ACCESS2ALL_SCOPES], T1.[SqlIdnClient.CCLI_IDENTITY_TOKEN_LIFETIME], T1.[SqlIdnClient.CCLI_ACCESS_TOKEN_LIFETIME], T1.[SqlIdnClient.CCLI_AUTH_CODE_LIFETIME], T1.[SqlIdnClient.CCLI_ABS_REFR_TOKEN_LIFETIME], T1.[SqlIdnClient.CCLI_SLID_REFR_TOKEN_LIFETIME], T1.[SqlIdnClient.CCLI_REFRESH_TOKEN_USAGE], T1.[SqlIdnClient.CCLI_UPD_ACCESS_TOKEN_ON_REFR], T1.[SqlIdnClient.CCLI_REFRESH_TOKEN_EXPIRATION], T1.[SqlIdnClient.CCLI_ACCESS_TOKEN_TYPE], T1.[SqlIdnClient.CCLI_ENABLE_LOCAL_LOGIN], T1.[SqlIdnClient.CCLI_INCLUDE_JWT_ID], T1.[SqlIdnClient.CCLI_ALWAYS_SEND_CLIENT_CLAIMS], T1.[SqlIdnClient.CCLI_PREFIX_CLIENT_CLAIMS], T1.[SqlIdnClient.CCLI_ALLOW_ACCESS2ALL_CST_GRTP])
+        [CodeFirstDatabaseSchema.SqlIdnClient](T1.[SqlIdnClient.CCLI_ID], T1.[SqlIdnClient.CCLI_ENABLED], T1.[SqlIdnClient.CCLI_CLIENT_ID], T1.[SqlIdnClient.CCLI_CLIENT_NAME], T1.[SqlIdnClient.CCLI_CLIENT_URI], T1.[SqlIdnClient.CCLI_LOGO_URI], T1.[SqlIdnClient.CCLI_REQUIRE_CONSENT], T1.[SqlIdnClient.CCLI_ALLOW_REMEMBER_CONSENT], T1.[SqlIdnClient.CCLI_FLOW], T1.[SqlIdnClient.CCLI_ALLOW_CLIENT_CREDS_ONLY], T1.[SqlIdnClient.CCLI_ALLOW_ACCESSALL_SCOPES], T1.[SqlIdnClient.CCLI_IDENTITY_TOKEN_LIFETIME], T1.[SqlIdnClient.CCLI_ACCESS_TOKEN_LIFETIME], T1.[SqlIdnClient.CCLI_AUTH_CODE_LIFETIME], T1.[SqlIdnClient.CCLI_ABS_REFR_TOKEN_LIFETIME], T1.[SqlIdnClient.CCLI_SLID_REFR_TOKEN_LIFETIME], T1.[SqlIdnClient.CCLI_REFRESH_TOKEN_USAGE], T1.[SqlIdnClient.CCLI_UPD_ACCESS_TOKEN_ON_REFR], T1.[SqlIdnClient.CCLI_REFRESH_TOKEN_EXPIRATION], T1.[SqlIdnClient.CCLI_ACCESS_TOKEN_TYPE], T1.[SqlIdnClient.CCLI_ENABLE_LOCAL_LOGIN], T1.[SqlIdnClient.CCLI_INCLUDE_JWT_ID], T1.[SqlIdnClient.CCLI_ALWAYS_SEND_CLIENT_CLAIMS], T1.[SqlIdnClient.CCLI_PREFIX_CLIENT_CLAIMS], T1.[SqlIdnClient.CCLI_ALLOW_ACCESSALL_CST_GRTP], T1.[SqlIdnClient.TRCK_INSERT_DATE], T1.[SqlIdnClient.TRCK_INSERT_DB_USER], T1.[SqlIdnClient.TRCK_INSERT_APP_USER], T1.[SqlIdnClient.TRCK_UPDATE_DATE], T1.[SqlIdnClient.TRCK_UPDATE_DB_USER], T1.[SqlIdnClient.TRCK_UPDATE_APP_USER])
     FROM (
         SELECT 
             T.Id AS [SqlIdnClient.CCLI_ID], 
             T.Enabled AS [SqlIdnClient.CCLI_ENABLED], 
             T.ClientId AS [SqlIdnClient.CCLI_CLIENT_ID], 
             T.ClientName AS [SqlIdnClient.CCLI_CLIENT_NAME], 
-            T.ClientUri AS SqlIdnClient_ClientUri, 
+            T.ClientUri AS [SqlIdnClient.CCLI_CLIENT_URI], 
             T.LogoUri AS [SqlIdnClient.CCLI_LOGO_URI], 
             T.RequireConsent AS [SqlIdnClient.CCLI_REQUIRE_CONSENT], 
             T.AllowRememberConsent AS [SqlIdnClient.CCLI_ALLOW_REMEMBER_CONSENT], 
             T.FlowString AS [SqlIdnClient.CCLI_FLOW], 
             T.AllowClientCredentialsOnly AS [SqlIdnClient.CCLI_ALLOW_CLIENT_CREDS_ONLY], 
-            T.AllowAccessToAllScopes AS [SqlIdnClient.CCLI_ALLOW_ACCESS2ALL_SCOPES], 
+            T.AllowAccessToAllScopes AS [SqlIdnClient.CCLI_ALLOW_ACCESSALL_SCOPES], 
             T.IdentityTokenLifetime AS [SqlIdnClient.CCLI_IDENTITY_TOKEN_LIFETIME], 
             T.AccessTokenLifetime AS [SqlIdnClient.CCLI_ACCESS_TOKEN_LIFETIME], 
             T.AuthorizationCodeLifetime AS [SqlIdnClient.CCLI_AUTH_CODE_LIFETIME], 
@@ -50,195 +42,124 @@
             T.IncludeJwtId AS [SqlIdnClient.CCLI_INCLUDE_JWT_ID], 
             T.AlwaysSendClientClaims AS [SqlIdnClient.CCLI_ALWAYS_SEND_CLIENT_CLAIMS], 
             T.PrefixClientClaims AS [SqlIdnClient.CCLI_PREFIX_CLIENT_CLAIMS], 
-            T.AllowAccessToAllCustomGrantTypes AS [SqlIdnClient.CCLI_ALLOW_ACCESS2ALL_CST_GRTP], 
+            T.AllowAccessToAllCustomGrantTypes AS [SqlIdnClient.CCLI_ALLOW_ACCESSALL_CST_GRTP], 
+            T.InsertDate AS [SqlIdnClient.TRCK_INSERT_DATE], 
+            T.InsertDbUser AS [SqlIdnClient.TRCK_INSERT_DB_USER], 
+            T.InsertAppUser AS [SqlIdnClient.TRCK_INSERT_APP_USER], 
+            T.UpdateDate AS [SqlIdnClient.TRCK_UPDATE_DATE], 
+            T.UpdateDbUser AS [SqlIdnClient.TRCK_UPDATE_DB_USER], 
+            T.UpdateAppUser AS [SqlIdnClient.TRCK_UPDATE_APP_USER], 
             True AS _from0
         FROM SqlDbContext.IdnClients AS T
     ) AS T1]]></view>
     <view extent="CodeFirstDatabase.SqlIdnClientCorsOrigin"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnClientCorsOrigin
-        [CodeFirstDatabaseSchema.SqlIdnClientCorsOrigin](T3.[SqlIdnClientCorsOrigin.CCCO_ID], T3.[SqlIdnClientCorsOrigin.CCCO_ORIGIN], T3.[SqlIdnClientCorsOrigin.Client_Id])
+        [CodeFirstDatabaseSchema.SqlIdnClientCorsOrigin](T1.[SqlIdnClientCorsOrigin.CCCO_ID], T1.[SqlIdnClientCorsOrigin.CCCO_ORIGIN], T1.[SqlIdnClientCorsOrigin.CCLI_ID])
     FROM (
-        SELECT T1.[SqlIdnClientCorsOrigin.CCCO_ID], T2.[SqlIdnClientCorsOrigin.CCCO_ORIGIN], T1.[SqlIdnClientCorsOrigin.Client_Id], T2._from0, T1._from1
-        FROM  (
-            SELECT 
-                Key(T.SqlIdnClientCorsOrigin_Client_Source).Id AS [SqlIdnClientCorsOrigin.CCCO_ID], 
-                Key(T.SqlIdnClientCorsOrigin_Client_Target).Id AS [SqlIdnClientCorsOrigin.Client_Id], 
-                True AS _from1
-            FROM SqlDbContext.SqlIdnClientCorsOrigin_Client AS T) AS T1
-            INNER JOIN (
-            SELECT 
-                T.Id AS [SqlIdnClientCorsOrigin.CCCO_ID], 
-                T.Origin AS [SqlIdnClientCorsOrigin.CCCO_ORIGIN], 
-                True AS _from0
-            FROM SqlDbContext.IdnClientCorsOrigins AS T) AS T2
-            ON T1.[SqlIdnClientCorsOrigin.CCCO_ID] = T2.[SqlIdnClientCorsOrigin.CCCO_ID]
-    ) AS T3]]></view>
+        SELECT 
+            T.Id AS [SqlIdnClientCorsOrigin.CCCO_ID], 
+            T.Origin AS [SqlIdnClientCorsOrigin.CCCO_ORIGIN], 
+            T.ClientId AS [SqlIdnClientCorsOrigin.CCLI_ID], 
+            True AS _from0
+        FROM SqlDbContext.IdnClientCorsOrigins AS T
+    ) AS T1]]></view>
     <view extent="CodeFirstDatabase.SqlIdnClientCustomGrantType"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnClientCustomGrantType
-        [CodeFirstDatabaseSchema.SqlIdnClientCustomGrantType](T3.[SqlIdnClientCustomGrantType.CCGT_ID], T3.[SqlIdnClientCustomGrantType.CCGT_GRANT_TYPE], T3.[SqlIdnClientCustomGrantType.Client_Id])
+        [CodeFirstDatabaseSchema.SqlIdnClientCustomGrantType](T1.[SqlIdnClientCustomGrantType.CCGT_ID], T1.[SqlIdnClientCustomGrantType.CCGT_GRANT_TYPE], T1.[SqlIdnClientCustomGrantType.CCLI_ID])
     FROM (
-        SELECT T1.[SqlIdnClientCustomGrantType.CCGT_ID], T1.[SqlIdnClientCustomGrantType.CCGT_GRANT_TYPE], T2.[SqlIdnClientCustomGrantType.Client_Id], T2._from0, T1._from1
-        FROM  (
-            SELECT 
-                T.Id AS [SqlIdnClientCustomGrantType.CCGT_ID], 
-                T.GrantType AS [SqlIdnClientCustomGrantType.CCGT_GRANT_TYPE], 
-                True AS _from1
-            FROM SqlDbContext.IdnClientCustomGrantTypes AS T) AS T1
-            INNER JOIN (
-            SELECT 
-                Key(T.SqlIdnClientCustomGrantType_Client_Source).Id AS [SqlIdnClientCustomGrantType.CCGT_ID], 
-                Key(T.SqlIdnClientCustomGrantType_Client_Target).Id AS [SqlIdnClientCustomGrantType.Client_Id], 
-                True AS _from0
-            FROM SqlDbContext.SqlIdnClientCustomGrantType_Client AS T) AS T2
-            ON T1.[SqlIdnClientCustomGrantType.CCGT_ID] = T2.[SqlIdnClientCustomGrantType.CCGT_ID]
-    ) AS T3]]></view>
+        SELECT 
+            T.Id AS [SqlIdnClientCustomGrantType.CCGT_ID], 
+            T.GrantType AS [SqlIdnClientCustomGrantType.CCGT_GRANT_TYPE], 
+            T.ClientId AS [SqlIdnClientCustomGrantType.CCLI_ID], 
+            True AS _from0
+        FROM SqlDbContext.IdnClientCustomGrantTypes AS T
+    ) AS T1]]></view>
     <view extent="CodeFirstDatabase.SqlIdnClientScope"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnClientScope
-        [CodeFirstDatabaseSchema.SqlIdnClientScope](T3.[SqlIdnClientScope.CCSC_ID], T3.[SqlIdnClientScope.CSCO_SCOPE_NAME], T3.[SqlIdnClientScope.Client_Id])
+        [CodeFirstDatabaseSchema.SqlIdnClientScope](T1.[SqlIdnClientScope.CCSC_ID], T1.[SqlIdnClientScope.CSCO_SCOPE_NAME], T1.[SqlIdnClientScope.CCLI_ID])
     FROM (
-        SELECT T1.[SqlIdnClientScope.CCSC_ID], T1.[SqlIdnClientScope.CSCO_SCOPE_NAME], T2.[SqlIdnClientScope.Client_Id], T2._from0, T1._from1
-        FROM  (
-            SELECT 
-                T.Id AS [SqlIdnClientScope.CCSC_ID], 
-                T.Scope AS [SqlIdnClientScope.CSCO_SCOPE_NAME], 
-                True AS _from1
-            FROM SqlDbContext.IdnClientScopes AS T) AS T1
-            INNER JOIN (
-            SELECT 
-                Key(T.SqlIdnClientScope_Client_Source).Id AS [SqlIdnClientScope.CCSC_ID], 
-                Key(T.SqlIdnClientScope_Client_Target).Id AS [SqlIdnClientScope.Client_Id], 
-                True AS _from0
-            FROM SqlDbContext.SqlIdnClientScope_Client AS T) AS T2
-            ON T1.[SqlIdnClientScope.CCSC_ID] = T2.[SqlIdnClientScope.CCSC_ID]
-    ) AS T3]]></view>
+        SELECT 
+            T.Id AS [SqlIdnClientScope.CCSC_ID], 
+            T.Scope AS [SqlIdnClientScope.CSCO_SCOPE_NAME], 
+            T.ClientId AS [SqlIdnClientScope.CCLI_ID], 
+            True AS _from0
+        FROM SqlDbContext.IdnClientScopes AS T
+    ) AS T1]]></view>
     <view extent="CodeFirstDatabase.SqlIdnClientSecret"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnClientSecret
-        [CodeFirstDatabaseSchema.SqlIdnClientSecret](T3.[SqlIdnClientSecret.CCSE_ID], T3.[SqlIdnClientSecret.CCSE_VALUE], T3.[SqlIdnClientSecret.CCSE_TYPE], T3.[SqlIdnClientSecret.CCSE_DESCR], T3.[SqlIdnClientSecret.CCSE_EXPIRATION], T3.[SqlIdnClientSecret.Client_Id])
+        [CodeFirstDatabaseSchema.SqlIdnClientSecret](T1.[SqlIdnClientSecret.CCSE_ID], T1.[SqlIdnClientSecret.CCSE_VALUE], T1.[SqlIdnClientSecret.CCSE_TYPE], T1.[SqlIdnClientSecret.CCSE_DESCR], T1.[SqlIdnClientSecret.CCSE_EXPIRATION], T1.[SqlIdnClientSecret.CCLI_ID])
     FROM (
-        SELECT T1.[SqlIdnClientSecret.CCSE_ID], T2.[SqlIdnClientSecret.CCSE_VALUE], T2.[SqlIdnClientSecret.CCSE_TYPE], T2.[SqlIdnClientSecret.CCSE_DESCR], T2.[SqlIdnClientSecret.CCSE_EXPIRATION], T1.[SqlIdnClientSecret.Client_Id], T2._from0, T1._from1
-        FROM  (
-            SELECT 
-                Key(T.SqlIdnClientSecret_Client_Source).Id AS [SqlIdnClientSecret.CCSE_ID], 
-                Key(T.SqlIdnClientSecret_Client_Target).Id AS [SqlIdnClientSecret.Client_Id], 
-                True AS _from1
-            FROM SqlDbContext.SqlIdnClientSecret_Client AS T) AS T1
-            INNER JOIN (
-            SELECT 
-                T.Id AS [SqlIdnClientSecret.CCSE_ID], 
-                T.[Value] AS [SqlIdnClientSecret.CCSE_VALUE], 
-                T.Type AS [SqlIdnClientSecret.CCSE_TYPE], 
-                T.Description AS [SqlIdnClientSecret.CCSE_DESCR], 
-                T.Expiration AS [SqlIdnClientSecret.CCSE_EXPIRATION], 
-                True AS _from0
-            FROM SqlDbContext.IdnClientSecrets AS T) AS T2
-            ON T1.[SqlIdnClientSecret.CCSE_ID] = T2.[SqlIdnClientSecret.CCSE_ID]
-    ) AS T3]]></view>
+        SELECT 
+            T.Id AS [SqlIdnClientSecret.CCSE_ID], 
+            T.[Value] AS [SqlIdnClientSecret.CCSE_VALUE], 
+            T.Type AS [SqlIdnClientSecret.CCSE_TYPE], 
+            T.Description AS [SqlIdnClientSecret.CCSE_DESCR], 
+            T.Expiration AS [SqlIdnClientSecret.CCSE_EXPIRATION], 
+            T.ClientId AS [SqlIdnClientSecret.CCLI_ID], 
+            True AS _from0
+        FROM SqlDbContext.IdnClientSecrets AS T
+    ) AS T1]]></view>
     <view extent="CodeFirstDatabase.SqlIdnClientIdPRestriction"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnClientIdPRestriction
-        [CodeFirstDatabaseSchema.SqlIdnClientIdPRestriction](T3.[SqlIdnClientIdPRestriction.CCPR_ID], T3.[SqlIdnClientIdPRestriction.CCPR_PROVIDER], T3.[SqlIdnClientIdPRestriction.Client_Id])
+        [CodeFirstDatabaseSchema.SqlIdnClientIdPRestriction](T1.[SqlIdnClientIdPRestriction.CCPR_ID], T1.[SqlIdnClientIdPRestriction.CCPR_PROVIDER], T1.[SqlIdnClientIdPRestriction.CCLI_ID])
     FROM (
-        SELECT T1.[SqlIdnClientIdPRestriction.CCPR_ID], T1.[SqlIdnClientIdPRestriction.CCPR_PROVIDER], T2.[SqlIdnClientIdPRestriction.Client_Id], T2._from0, T1._from1
-        FROM  (
-            SELECT 
-                T.Id AS [SqlIdnClientIdPRestriction.CCPR_ID], 
-                T.Provider AS [SqlIdnClientIdPRestriction.CCPR_PROVIDER], 
-                True AS _from1
-            FROM SqlDbContext.IdnClientIdPRestrictions AS T) AS T1
-            INNER JOIN (
-            SELECT 
-                Key(T.SqlIdnClientIdPRestriction_Client_Source).Id AS [SqlIdnClientIdPRestriction.CCPR_ID], 
-                Key(T.SqlIdnClientIdPRestriction_Client_Target).Id AS [SqlIdnClientIdPRestriction.Client_Id], 
-                True AS _from0
-            FROM SqlDbContext.SqlIdnClientIdPRestriction_Client AS T) AS T2
-            ON T1.[SqlIdnClientIdPRestriction.CCPR_ID] = T2.[SqlIdnClientIdPRestriction.CCPR_ID]
-    ) AS T3]]></view>
+        SELECT 
+            T.Id AS [SqlIdnClientIdPRestriction.CCPR_ID], 
+            T.Provider AS [SqlIdnClientIdPRestriction.CCPR_PROVIDER], 
+            T.ClientId AS [SqlIdnClientIdPRestriction.CCLI_ID], 
+            True AS _from0
+        FROM SqlDbContext.IdnClientIdPRestrictions AS T
+    ) AS T1]]></view>
     <view extent="CodeFirstDatabase.SqlIdnClientPostLogoutRedirectUri"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnClientPostLogoutRedirectUri
-        [CodeFirstDatabaseSchema.SqlIdnClientPostLogoutRedirectUri](T3.[SqlIdnClientPostLogoutRedirectUri.CPLR_ID], T3.[SqlIdnClientPostLogoutRedirectUri.CPLR_URI], T3.[SqlIdnClientPostLogoutRedirectUri.Client_Id])
+        [CodeFirstDatabaseSchema.SqlIdnClientPostLogoutRedirectUri](T1.[SqlIdnClientPostLogoutRedirectUri.CPLR_ID], T1.[SqlIdnClientPostLogoutRedirectUri.CPLR_URI], T1.[SqlIdnClientPostLogoutRedirectUri.CCLI_ID])
     FROM (
-        SELECT T1.[SqlIdnClientPostLogoutRedirectUri.CPLR_ID], T1.[SqlIdnClientPostLogoutRedirectUri.CPLR_URI], T2.[SqlIdnClientPostLogoutRedirectUri.Client_Id], T2._from0, T1._from1
-        FROM  (
-            SELECT 
-                T.Id AS [SqlIdnClientPostLogoutRedirectUri.CPLR_ID], 
-                T.Uri AS [SqlIdnClientPostLogoutRedirectUri.CPLR_URI], 
-                True AS _from1
-            FROM SqlDbContext.IdnClientPostLogoutRedirectUris AS T) AS T1
-            INNER JOIN (
-            SELECT 
-                Key(T.SqlIdnClientPostLogoutRedirectUri_Client_Source).Id AS [SqlIdnClientPostLogoutRedirectUri.CPLR_ID], 
-                Key(T.SqlIdnClientPostLogoutRedirectUri_Client_Target).Id AS [SqlIdnClientPostLogoutRedirectUri.Client_Id], 
-                True AS _from0
-            FROM SqlDbContext.SqlIdnClientPostLogoutRedirectUri_Client AS T) AS T2
-            ON T1.[SqlIdnClientPostLogoutRedirectUri.CPLR_ID] = T2.[SqlIdnClientPostLogoutRedirectUri.CPLR_ID]
-    ) AS T3]]></view>
+        SELECT 
+            T.Id AS [SqlIdnClientPostLogoutRedirectUri.CPLR_ID], 
+            T.Uri AS [SqlIdnClientPostLogoutRedirectUri.CPLR_URI], 
+            T.ClientId AS [SqlIdnClientPostLogoutRedirectUri.CCLI_ID], 
+            True AS _from0
+        FROM SqlDbContext.IdnClientPostLogoutRedirectUris AS T
+    ) AS T1]]></view>
     <view extent="CodeFirstDatabase.SqlIdnClientRedirectUri"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnClientRedirectUri
-        [CodeFirstDatabaseSchema.SqlIdnClientRedirectUri](T3.[SqlIdnClientRedirectUri.CCRU_ID], T3.[SqlIdnClientRedirectUri.CCRU_URI], T3.[SqlIdnClientRedirectUri.Client_Id])
+        [CodeFirstDatabaseSchema.SqlIdnClientRedirectUri](T1.[SqlIdnClientRedirectUri.CCRU_ID], T1.[SqlIdnClientRedirectUri.CCRU_URI], T1.[SqlIdnClientRedirectUri.CCLI_ID])
     FROM (
-        SELECT T1.[SqlIdnClientRedirectUri.CCRU_ID], T1.[SqlIdnClientRedirectUri.CCRU_URI], T2.[SqlIdnClientRedirectUri.Client_Id], T2._from0, T1._from1
-        FROM  (
-            SELECT 
-                T.Id AS [SqlIdnClientRedirectUri.CCRU_ID], 
-                T.Uri AS [SqlIdnClientRedirectUri.CCRU_URI], 
-                True AS _from1
-            FROM SqlDbContext.IdnClientRedirectUris AS T) AS T1
-            INNER JOIN (
-            SELECT 
-                Key(T.SqlIdnClientRedirectUri_Client_Source).Id AS [SqlIdnClientRedirectUri.CCRU_ID], 
-                Key(T.SqlIdnClientRedirectUri_Client_Target).Id AS [SqlIdnClientRedirectUri.Client_Id], 
-                True AS _from0
-            FROM SqlDbContext.SqlIdnClientRedirectUri_Client AS T) AS T2
-            ON T1.[SqlIdnClientRedirectUri.CCRU_ID] = T2.[SqlIdnClientRedirectUri.CCRU_ID]
-    ) AS T3]]></view>
+        SELECT 
+            T.Id AS [SqlIdnClientRedirectUri.CCRU_ID], 
+            T.Uri AS [SqlIdnClientRedirectUri.CCRU_URI], 
+            T.ClientId AS [SqlIdnClientRedirectUri.CCLI_ID], 
+            True AS _from0
+        FROM SqlDbContext.IdnClientRedirectUris AS T
+    ) AS T1]]></view>
     <view extent="SqlDbContext.IdnClientClaims"><![CDATA[
     SELECT VALUE -- Constructing IdnClientClaims
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientClaim](T1.SqlIdnClientClaim_Id, T1.SqlIdnClientClaim_Type, T1.SqlIdnClientClaim_Value) WITH 
-        RELATIONSHIP(CREATEREF(SqlDbContext.IdnClients, ROW(T1.[SqlIdnClientClaim_Client.SqlIdnClientClaim_Client_Target.Id]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientClaim_Client],SqlIdnClientClaim_Client_Source,SqlIdnClientClaim_Client_Target) 
+        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientClaim](T1.SqlIdnClientClaim_Id, T1.SqlIdnClientClaim_Type, T1.SqlIdnClientClaim_Value, T1.SqlIdnClientClaim_ClientId)
     FROM (
         SELECT 
             T.CCLM_ID AS SqlIdnClientClaim_Id, 
             T.CCLM_TYPE AS SqlIdnClientClaim_Type, 
             T.CCLM_VALUE AS SqlIdnClientClaim_Value, 
-            True AS _from0, 
-            T.Client_Id AS [SqlIdnClientClaim_Client.SqlIdnClientClaim_Client_Target.Id]
+            T.CCLI_ID AS SqlIdnClientClaim_ClientId, 
+            True AS _from0
         FROM CodeFirstDatabase.SqlIdnClientClaim AS T
     ) AS T1]]></view>
-    <view extent="SqlDbContext.SqlIdnClientClaim_Client"><![CDATA[
-    SELECT VALUE -- Constructing SqlIdnClientClaim_Client
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientClaim_Client](T3.[SqlIdnClientClaim_Client.SqlIdnClientClaim_Client_Source], T3.[SqlIdnClientClaim_Client.SqlIdnClientClaim_Client_Target])
-    FROM (
-        SELECT -- Constructing SqlIdnClientClaim_Client_Source
-            CreateRef(SqlDbContext.IdnClientClaims, row(T2.[SqlIdnClientClaim_Client.SqlIdnClientClaim_Client_Source.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientClaim]) AS [SqlIdnClientClaim_Client.SqlIdnClientClaim_Client_Source], 
-            T2.[SqlIdnClientClaim_Client.SqlIdnClientClaim_Client_Target]
-        FROM (
-            SELECT -- Constructing SqlIdnClientClaim_Client_Target
-                T1.[SqlIdnClientClaim_Client.SqlIdnClientClaim_Client_Source.Id], 
-                CreateRef(SqlDbContext.IdnClients, row(T1.[SqlIdnClientClaim_Client.SqlIdnClientClaim_Client_Target.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient]) AS [SqlIdnClientClaim_Client.SqlIdnClientClaim_Client_Target]
-            FROM (
-                SELECT 
-                    T.CCLM_ID AS [SqlIdnClientClaim_Client.SqlIdnClientClaim_Client_Source.Id], 
-                    T.Client_Id AS [SqlIdnClientClaim_Client.SqlIdnClientClaim_Client_Target.Id], 
-                    True AS _from0
-                FROM CodeFirstDatabase.SqlIdnClientClaim AS T
-            ) AS T1
-        ) AS T2
-    ) AS T3]]></view>
     <view extent="SqlDbContext.IdnClients"><![CDATA[
     SELECT VALUE -- Constructing IdnClients
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient](T1.SqlIdnClient_Id, T1.SqlIdnClient_Enabled, T1.SqlIdnClient_ClientId, T1.SqlIdnClient_ClientName, T1.SqlIdnClient_ClientUri, T1.SqlIdnClient_LogoUri, T1.SqlIdnClient_RequireConsent, T1.SqlIdnClient_AllowRememberConsent, T1.SqlIdnClient_FlowString, T1.SqlIdnClient_AllowClientCredentialsOnly, T1.SqlIdnClient_AllowAccessToAllScopes, T1.SqlIdnClient_IdentityTokenLifetime, T1.SqlIdnClient_AccessTokenLifetime, T1.SqlIdnClient_AuthorizationCodeLifetime, T1.SqlIdnClient_AbsoluteRefreshTokenLifetime, T1.SqlIdnClient_SlidingRefreshTokenLifetime, T1.SqlIdnClient_RefreshTokenUsageString, T1.SqlIdnClient_UpdateAccessTokenOnRefresh, T1.SqlIdnClient_RefreshTokenExpirationString, T1.SqlIdnClient_AccessTokenTypeString, T1.SqlIdnClient_EnableLocalLogin, T1.SqlIdnClient_IncludeJwtId, T1.SqlIdnClient_AlwaysSendClientClaims, T1.SqlIdnClient_PrefixClientClaims, T1.SqlIdnClient_AllowAccessToAllCustomGrantTypes)
+        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient](T1.SqlIdnClient_Id, T1.SqlIdnClient_Enabled, T1.SqlIdnClient_ClientId, T1.SqlIdnClient_ClientName, T1.SqlIdnClient_ClientUri, T1.SqlIdnClient_LogoUri, T1.SqlIdnClient_RequireConsent, T1.SqlIdnClient_AllowRememberConsent, T1.SqlIdnClient_FlowString, T1.SqlIdnClient_AllowClientCredentialsOnly, T1.SqlIdnClient_AllowAccessToAllScopes, T1.SqlIdnClient_IdentityTokenLifetime, T1.SqlIdnClient_AccessTokenLifetime, T1.SqlIdnClient_AuthorizationCodeLifetime, T1.SqlIdnClient_AbsoluteRefreshTokenLifetime, T1.SqlIdnClient_SlidingRefreshTokenLifetime, T1.SqlIdnClient_RefreshTokenUsageString, T1.SqlIdnClient_UpdateAccessTokenOnRefresh, T1.SqlIdnClient_RefreshTokenExpirationString, T1.SqlIdnClient_AccessTokenTypeString, T1.SqlIdnClient_EnableLocalLogin, T1.SqlIdnClient_IncludeJwtId, T1.SqlIdnClient_AlwaysSendClientClaims, T1.SqlIdnClient_PrefixClientClaims, T1.SqlIdnClient_AllowAccessToAllCustomGrantTypes, T1.SqlIdnClient_InsertDate, T1.SqlIdnClient_InsertDbUser, T1.SqlIdnClient_InsertAppUser, T1.SqlIdnClient_UpdateDate, T1.SqlIdnClient_UpdateDbUser, T1.SqlIdnClient_UpdateAppUser)
     FROM (
         SELECT 
             T.CCLI_ID AS SqlIdnClient_Id, 
             T.CCLI_ENABLED AS SqlIdnClient_Enabled, 
             T.CCLI_CLIENT_ID AS SqlIdnClient_ClientId, 
             T.CCLI_CLIENT_NAME AS SqlIdnClient_ClientName, 
-            T.ClientUri AS SqlIdnClient_ClientUri, 
+            T.CCLI_CLIENT_URI AS SqlIdnClient_ClientUri, 
             T.CCLI_LOGO_URI AS SqlIdnClient_LogoUri, 
             T.CCLI_REQUIRE_CONSENT AS SqlIdnClient_RequireConsent, 
             T.CCLI_ALLOW_REMEMBER_CONSENT AS SqlIdnClient_AllowRememberConsent, 
             T.CCLI_FLOW AS SqlIdnClient_FlowString, 
             T.CCLI_ALLOW_CLIENT_CREDS_ONLY AS SqlIdnClient_AllowClientCredentialsOnly, 
-            T.CCLI_ALLOW_ACCESS2ALL_SCOPES AS SqlIdnClient_AllowAccessToAllScopes, 
+            T.CCLI_ALLOW_ACCESSALL_SCOPES AS SqlIdnClient_AllowAccessToAllScopes, 
             T.CCLI_IDENTITY_TOKEN_LIFETIME AS SqlIdnClient_IdentityTokenLifetime, 
             T.CCLI_ACCESS_TOKEN_LIFETIME AS SqlIdnClient_AccessTokenLifetime, 
             T.CCLI_AUTH_CODE_LIFETIME AS SqlIdnClient_AuthorizationCodeLifetime, 
@@ -252,110 +173,52 @@
             T.CCLI_INCLUDE_JWT_ID AS SqlIdnClient_IncludeJwtId, 
             T.CCLI_ALWAYS_SEND_CLIENT_CLAIMS AS SqlIdnClient_AlwaysSendClientClaims, 
             T.CCLI_PREFIX_CLIENT_CLAIMS AS SqlIdnClient_PrefixClientClaims, 
-            T.CCLI_ALLOW_ACCESS2ALL_CST_GRTP AS SqlIdnClient_AllowAccessToAllCustomGrantTypes, 
+            T.CCLI_ALLOW_ACCESSALL_CST_GRTP AS SqlIdnClient_AllowAccessToAllCustomGrantTypes, 
+            T.TRCK_INSERT_DATE AS SqlIdnClient_InsertDate, 
+            T.TRCK_INSERT_DB_USER AS SqlIdnClient_InsertDbUser, 
+            T.TRCK_INSERT_APP_USER AS SqlIdnClient_InsertAppUser, 
+            T.TRCK_UPDATE_DATE AS SqlIdnClient_UpdateDate, 
+            T.TRCK_UPDATE_DB_USER AS SqlIdnClient_UpdateDbUser, 
+            T.TRCK_UPDATE_APP_USER AS SqlIdnClient_UpdateAppUser, 
             True AS _from0
         FROM CodeFirstDatabase.SqlIdnClient AS T
     ) AS T1]]></view>
     <view extent="SqlDbContext.IdnClientCorsOrigins"><![CDATA[
     SELECT VALUE -- Constructing IdnClientCorsOrigins
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientCorsOrigin](T1.SqlIdnClientCorsOrigin_Id, T1.SqlIdnClientCorsOrigin_Origin) WITH 
-        RELATIONSHIP(CREATEREF(SqlDbContext.IdnClients, ROW(T1.[SqlIdnClientCorsOrigin_Client.SqlIdnClientCorsOrigin_Client_Target.Id]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientCorsOrigin_Client],SqlIdnClientCorsOrigin_Client_Source,SqlIdnClientCorsOrigin_Client_Target) 
+        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientCorsOrigin](T1.SqlIdnClientCorsOrigin_Id, T1.SqlIdnClientCorsOrigin_Origin, T1.SqlIdnClientCorsOrigin_ClientId)
     FROM (
         SELECT 
             T.CCCO_ID AS SqlIdnClientCorsOrigin_Id, 
             T.CCCO_ORIGIN AS SqlIdnClientCorsOrigin_Origin, 
-            True AS _from0, 
-            T.Client_Id AS [SqlIdnClientCorsOrigin_Client.SqlIdnClientCorsOrigin_Client_Target.Id]
+            T.CCLI_ID AS SqlIdnClientCorsOrigin_ClientId, 
+            True AS _from0
         FROM CodeFirstDatabase.SqlIdnClientCorsOrigin AS T
     ) AS T1]]></view>
-    <view extent="SqlDbContext.SqlIdnClientCorsOrigin_Client"><![CDATA[
-    SELECT VALUE -- Constructing SqlIdnClientCorsOrigin_Client
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientCorsOrigin_Client](T3.[SqlIdnClientCorsOrigin_Client.SqlIdnClientCorsOrigin_Client_Source], T3.[SqlIdnClientCorsOrigin_Client.SqlIdnClientCorsOrigin_Client_Target])
-    FROM (
-        SELECT -- Constructing SqlIdnClientCorsOrigin_Client_Source
-            CreateRef(SqlDbContext.IdnClientCorsOrigins, row(T2.[SqlIdnClientCorsOrigin_Client.SqlIdnClientCorsOrigin_Client_Source.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientCorsOrigin]) AS [SqlIdnClientCorsOrigin_Client.SqlIdnClientCorsOrigin_Client_Source], 
-            T2.[SqlIdnClientCorsOrigin_Client.SqlIdnClientCorsOrigin_Client_Target]
-        FROM (
-            SELECT -- Constructing SqlIdnClientCorsOrigin_Client_Target
-                T1.[SqlIdnClientCorsOrigin_Client.SqlIdnClientCorsOrigin_Client_Source.Id], 
-                CreateRef(SqlDbContext.IdnClients, row(T1.[SqlIdnClientCorsOrigin_Client.SqlIdnClientCorsOrigin_Client_Target.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient]) AS [SqlIdnClientCorsOrigin_Client.SqlIdnClientCorsOrigin_Client_Target]
-            FROM (
-                SELECT 
-                    T.CCCO_ID AS [SqlIdnClientCorsOrigin_Client.SqlIdnClientCorsOrigin_Client_Source.Id], 
-                    T.Client_Id AS [SqlIdnClientCorsOrigin_Client.SqlIdnClientCorsOrigin_Client_Target.Id], 
-                    True AS _from0
-                FROM CodeFirstDatabase.SqlIdnClientCorsOrigin AS T
-            ) AS T1
-        ) AS T2
-    ) AS T3]]></view>
     <view extent="SqlDbContext.IdnClientCustomGrantTypes"><![CDATA[
     SELECT VALUE -- Constructing IdnClientCustomGrantTypes
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientCustomGrantType](T1.SqlIdnClientCustomGrantType_Id, T1.SqlIdnClientCustomGrantType_GrantType) WITH 
-        RELATIONSHIP(CREATEREF(SqlDbContext.IdnClients, ROW(T1.[SqlIdnClientCustomGrantType_Client.SqlIdnClientCustomGrantType_Client_Target.Id]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientCustomGrantType_Client],SqlIdnClientCustomGrantType_Client_Source,SqlIdnClientCustomGrantType_Client_Target) 
+        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientCustomGrantType](T1.SqlIdnClientCustomGrantType_Id, T1.SqlIdnClientCustomGrantType_GrantType, T1.SqlIdnClientCustomGrantType_ClientId)
     FROM (
         SELECT 
             T.CCGT_ID AS SqlIdnClientCustomGrantType_Id, 
             T.CCGT_GRANT_TYPE AS SqlIdnClientCustomGrantType_GrantType, 
-            True AS _from0, 
-            T.Client_Id AS [SqlIdnClientCustomGrantType_Client.SqlIdnClientCustomGrantType_Client_Target.Id]
+            T.CCLI_ID AS SqlIdnClientCustomGrantType_ClientId, 
+            True AS _from0
         FROM CodeFirstDatabase.SqlIdnClientCustomGrantType AS T
     ) AS T1]]></view>
-    <view extent="SqlDbContext.SqlIdnClientCustomGrantType_Client"><![CDATA[
-    SELECT VALUE -- Constructing SqlIdnClientCustomGrantType_Client
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientCustomGrantType_Client](T3.[SqlIdnClientCustomGrantType_Client.SqlIdnClientCustomGrantType_Client_Source], T3.[SqlIdnClientCustomGrantType_Client.SqlIdnClientCustomGrantType_Client_Target])
-    FROM (
-        SELECT -- Constructing SqlIdnClientCustomGrantType_Client_Source
-            CreateRef(SqlDbContext.IdnClientCustomGrantTypes, row(T2.[SqlIdnClientCustomGrantType_Client.SqlIdnClientCustomGrantType_Client_Source.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientCustomGrantType]) AS [SqlIdnClientCustomGrantType_Client.SqlIdnClientCustomGrantType_Client_Source], 
-            T2.[SqlIdnClientCustomGrantType_Client.SqlIdnClientCustomGrantType_Client_Target]
-        FROM (
-            SELECT -- Constructing SqlIdnClientCustomGrantType_Client_Target
-                T1.[SqlIdnClientCustomGrantType_Client.SqlIdnClientCustomGrantType_Client_Source.Id], 
-                CreateRef(SqlDbContext.IdnClients, row(T1.[SqlIdnClientCustomGrantType_Client.SqlIdnClientCustomGrantType_Client_Target.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient]) AS [SqlIdnClientCustomGrantType_Client.SqlIdnClientCustomGrantType_Client_Target]
-            FROM (
-                SELECT 
-                    T.CCGT_ID AS [SqlIdnClientCustomGrantType_Client.SqlIdnClientCustomGrantType_Client_Source.Id], 
-                    T.Client_Id AS [SqlIdnClientCustomGrantType_Client.SqlIdnClientCustomGrantType_Client_Target.Id], 
-                    True AS _from0
-                FROM CodeFirstDatabase.SqlIdnClientCustomGrantType AS T
-            ) AS T1
-        ) AS T2
-    ) AS T3]]></view>
     <view extent="SqlDbContext.IdnClientScopes"><![CDATA[
     SELECT VALUE -- Constructing IdnClientScopes
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientScope](T1.SqlIdnClientScope_Id, T1.SqlIdnClientScope_Scope) WITH 
-        RELATIONSHIP(CREATEREF(SqlDbContext.IdnClients, ROW(T1.[SqlIdnClientScope_Client.SqlIdnClientScope_Client_Target.Id]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientScope_Client],SqlIdnClientScope_Client_Source,SqlIdnClientScope_Client_Target) 
+        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientScope](T1.SqlIdnClientScope_Id, T1.SqlIdnClientScope_Scope, T1.SqlIdnClientScope_ClientId)
     FROM (
         SELECT 
             T.CCSC_ID AS SqlIdnClientScope_Id, 
             T.CSCO_SCOPE_NAME AS SqlIdnClientScope_Scope, 
-            True AS _from0, 
-            T.Client_Id AS [SqlIdnClientScope_Client.SqlIdnClientScope_Client_Target.Id]
+            T.CCLI_ID AS SqlIdnClientScope_ClientId, 
+            True AS _from0
         FROM CodeFirstDatabase.SqlIdnClientScope AS T
     ) AS T1]]></view>
-    <view extent="SqlDbContext.SqlIdnClientScope_Client"><![CDATA[
-    SELECT VALUE -- Constructing SqlIdnClientScope_Client
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientScope_Client](T3.[SqlIdnClientScope_Client.SqlIdnClientScope_Client_Source], T3.[SqlIdnClientScope_Client.SqlIdnClientScope_Client_Target])
-    FROM (
-        SELECT -- Constructing SqlIdnClientScope_Client_Source
-            CreateRef(SqlDbContext.IdnClientScopes, row(T2.[SqlIdnClientScope_Client.SqlIdnClientScope_Client_Source.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientScope]) AS [SqlIdnClientScope_Client.SqlIdnClientScope_Client_Source], 
-            T2.[SqlIdnClientScope_Client.SqlIdnClientScope_Client_Target]
-        FROM (
-            SELECT -- Constructing SqlIdnClientScope_Client_Target
-                T1.[SqlIdnClientScope_Client.SqlIdnClientScope_Client_Source.Id], 
-                CreateRef(SqlDbContext.IdnClients, row(T1.[SqlIdnClientScope_Client.SqlIdnClientScope_Client_Target.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient]) AS [SqlIdnClientScope_Client.SqlIdnClientScope_Client_Target]
-            FROM (
-                SELECT 
-                    T.CCSC_ID AS [SqlIdnClientScope_Client.SqlIdnClientScope_Client_Source.Id], 
-                    T.Client_Id AS [SqlIdnClientScope_Client.SqlIdnClientScope_Client_Target.Id], 
-                    True AS _from0
-                FROM CodeFirstDatabase.SqlIdnClientScope AS T
-            ) AS T1
-        ) AS T2
-    ) AS T3]]></view>
     <view extent="SqlDbContext.IdnClientSecrets"><![CDATA[
     SELECT VALUE -- Constructing IdnClientSecrets
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientSecret](T1.SqlIdnClientSecret_Id, T1.SqlIdnClientSecret_Value, T1.SqlIdnClientSecret_Type, T1.SqlIdnClientSecret_Description, T1.SqlIdnClientSecret_Expiration) WITH 
-        RELATIONSHIP(CREATEREF(SqlDbContext.IdnClients, ROW(T1.[SqlIdnClientSecret_Client.SqlIdnClientSecret_Client_Target.Id]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientSecret_Client],SqlIdnClientSecret_Client_Source,SqlIdnClientSecret_Client_Target) 
+        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientSecret](T1.SqlIdnClientSecret_Id, T1.SqlIdnClientSecret_Value, T1.SqlIdnClientSecret_Type, T1.SqlIdnClientSecret_Description, T1.SqlIdnClientSecret_Expiration, T1.SqlIdnClientSecret_ClientId)
     FROM (
         SELECT 
             T.CCSE_ID AS SqlIdnClientSecret_Id, 
@@ -363,126 +226,43 @@
             T.CCSE_TYPE AS SqlIdnClientSecret_Type, 
             T.CCSE_DESCR AS SqlIdnClientSecret_Description, 
             T.CCSE_EXPIRATION AS SqlIdnClientSecret_Expiration, 
-            True AS _from0, 
-            T.Client_Id AS [SqlIdnClientSecret_Client.SqlIdnClientSecret_Client_Target.Id]
+            T.CCLI_ID AS SqlIdnClientSecret_ClientId, 
+            True AS _from0
         FROM CodeFirstDatabase.SqlIdnClientSecret AS T
     ) AS T1]]></view>
-    <view extent="SqlDbContext.SqlIdnClientSecret_Client"><![CDATA[
-    SELECT VALUE -- Constructing SqlIdnClientSecret_Client
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientSecret_Client](T3.[SqlIdnClientSecret_Client.SqlIdnClientSecret_Client_Source], T3.[SqlIdnClientSecret_Client.SqlIdnClientSecret_Client_Target])
-    FROM (
-        SELECT -- Constructing SqlIdnClientSecret_Client_Source
-            CreateRef(SqlDbContext.IdnClientSecrets, row(T2.[SqlIdnClientSecret_Client.SqlIdnClientSecret_Client_Source.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientSecret]) AS [SqlIdnClientSecret_Client.SqlIdnClientSecret_Client_Source], 
-            T2.[SqlIdnClientSecret_Client.SqlIdnClientSecret_Client_Target]
-        FROM (
-            SELECT -- Constructing SqlIdnClientSecret_Client_Target
-                T1.[SqlIdnClientSecret_Client.SqlIdnClientSecret_Client_Source.Id], 
-                CreateRef(SqlDbContext.IdnClients, row(T1.[SqlIdnClientSecret_Client.SqlIdnClientSecret_Client_Target.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient]) AS [SqlIdnClientSecret_Client.SqlIdnClientSecret_Client_Target]
-            FROM (
-                SELECT 
-                    T.CCSE_ID AS [SqlIdnClientSecret_Client.SqlIdnClientSecret_Client_Source.Id], 
-                    T.Client_Id AS [SqlIdnClientSecret_Client.SqlIdnClientSecret_Client_Target.Id], 
-                    True AS _from0
-                FROM CodeFirstDatabase.SqlIdnClientSecret AS T
-            ) AS T1
-        ) AS T2
-    ) AS T3]]></view>
     <view extent="SqlDbContext.IdnClientIdPRestrictions"><![CDATA[
     SELECT VALUE -- Constructing IdnClientIdPRestrictions
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientIdPRestriction](T1.SqlIdnClientIdPRestriction_Id, T1.SqlIdnClientIdPRestriction_Provider) WITH 
-        RELATIONSHIP(CREATEREF(SqlDbContext.IdnClients, ROW(T1.[SqlIdnClientIdPRestriction_Client.SqlIdnClientIdPRestriction_Client_Target.Id]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientIdPRestriction_Client],SqlIdnClientIdPRestriction_Client_Source,SqlIdnClientIdPRestriction_Client_Target) 
+        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientIdPRestriction](T1.SqlIdnClientIdPRestriction_Id, T1.SqlIdnClientIdPRestriction_Provider, T1.SqlIdnClientIdPRestriction_ClientId)
     FROM (
         SELECT 
             T.CCPR_ID AS SqlIdnClientIdPRestriction_Id, 
             T.CCPR_PROVIDER AS SqlIdnClientIdPRestriction_Provider, 
-            True AS _from0, 
-            T.Client_Id AS [SqlIdnClientIdPRestriction_Client.SqlIdnClientIdPRestriction_Client_Target.Id]
+            T.CCLI_ID AS SqlIdnClientIdPRestriction_ClientId, 
+            True AS _from0
         FROM CodeFirstDatabase.SqlIdnClientIdPRestriction AS T
     ) AS T1]]></view>
-    <view extent="SqlDbContext.SqlIdnClientIdPRestriction_Client"><![CDATA[
-    SELECT VALUE -- Constructing SqlIdnClientIdPRestriction_Client
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientIdPRestriction_Client](T3.[SqlIdnClientIdPRestriction_Client.SqlIdnClientIdPRestriction_Client_Source], T3.[SqlIdnClientIdPRestriction_Client.SqlIdnClientIdPRestriction_Client_Target])
-    FROM (
-        SELECT -- Constructing SqlIdnClientIdPRestriction_Client_Source
-            CreateRef(SqlDbContext.IdnClientIdPRestrictions, row(T2.[SqlIdnClientIdPRestriction_Client.SqlIdnClientIdPRestriction_Client_Source.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientIdPRestriction]) AS [SqlIdnClientIdPRestriction_Client.SqlIdnClientIdPRestriction_Client_Source], 
-            T2.[SqlIdnClientIdPRestriction_Client.SqlIdnClientIdPRestriction_Client_Target]
-        FROM (
-            SELECT -- Constructing SqlIdnClientIdPRestriction_Client_Target
-                T1.[SqlIdnClientIdPRestriction_Client.SqlIdnClientIdPRestriction_Client_Source.Id], 
-                CreateRef(SqlDbContext.IdnClients, row(T1.[SqlIdnClientIdPRestriction_Client.SqlIdnClientIdPRestriction_Client_Target.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient]) AS [SqlIdnClientIdPRestriction_Client.SqlIdnClientIdPRestriction_Client_Target]
-            FROM (
-                SELECT 
-                    T.CCPR_ID AS [SqlIdnClientIdPRestriction_Client.SqlIdnClientIdPRestriction_Client_Source.Id], 
-                    T.Client_Id AS [SqlIdnClientIdPRestriction_Client.SqlIdnClientIdPRestriction_Client_Target.Id], 
-                    True AS _from0
-                FROM CodeFirstDatabase.SqlIdnClientIdPRestriction AS T
-            ) AS T1
-        ) AS T2
-    ) AS T3]]></view>
     <view extent="SqlDbContext.IdnClientPostLogoutRedirectUris"><![CDATA[
     SELECT VALUE -- Constructing IdnClientPostLogoutRedirectUris
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientPostLogoutRedirectUri](T1.SqlIdnClientPostLogoutRedirectUri_Id, T1.SqlIdnClientPostLogoutRedirectUri_Uri) WITH 
-        RELATIONSHIP(CREATEREF(SqlDbContext.IdnClients, ROW(T1.[SqlIdnClientPostLogoutRedirectUri_Client.SqlIdnClientPostLogoutRedirectUri_Client_Target.Id]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientPostLogoutRedirectUri_Client],SqlIdnClientPostLogoutRedirectUri_Client_Source,SqlIdnClientPostLogoutRedirectUri_Client_Target) 
+        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientPostLogoutRedirectUri](T1.SqlIdnClientPostLogoutRedirectUri_Id, T1.SqlIdnClientPostLogoutRedirectUri_Uri, T1.SqlIdnClientPostLogoutRedirectUri_ClientId)
     FROM (
         SELECT 
             T.CPLR_ID AS SqlIdnClientPostLogoutRedirectUri_Id, 
             T.CPLR_URI AS SqlIdnClientPostLogoutRedirectUri_Uri, 
-            True AS _from0, 
-            T.Client_Id AS [SqlIdnClientPostLogoutRedirectUri_Client.SqlIdnClientPostLogoutRedirectUri_Client_Target.Id]
+            T.CCLI_ID AS SqlIdnClientPostLogoutRedirectUri_ClientId, 
+            True AS _from0
         FROM CodeFirstDatabase.SqlIdnClientPostLogoutRedirectUri AS T
     ) AS T1]]></view>
-    <view extent="SqlDbContext.SqlIdnClientPostLogoutRedirectUri_Client"><![CDATA[
-    SELECT VALUE -- Constructing SqlIdnClientPostLogoutRedirectUri_Client
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientPostLogoutRedirectUri_Client](T3.[SqlIdnClientPostLogoutRedirectUri_Client.SqlIdnClientPostLogoutRedirectUri_Client_Source], T3.[SqlIdnClientPostLogoutRedirectUri_Client.SqlIdnClientPostLogoutRedirectUri_Client_Target])
-    FROM (
-        SELECT -- Constructing SqlIdnClientPostLogoutRedirectUri_Client_Source
-            CreateRef(SqlDbContext.IdnClientPostLogoutRedirectUris, row(T2.[SqlIdnClientPostLogoutRedirectUri_Client.SqlIdnClientPostLogoutRedirectUri_Client_Source.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientPostLogoutRedirectUri]) AS [SqlIdnClientPostLogoutRedirectUri_Client.SqlIdnClientPostLogoutRedirectUri_Client_Source], 
-            T2.[SqlIdnClientPostLogoutRedirectUri_Client.SqlIdnClientPostLogoutRedirectUri_Client_Target]
-        FROM (
-            SELECT -- Constructing SqlIdnClientPostLogoutRedirectUri_Client_Target
-                T1.[SqlIdnClientPostLogoutRedirectUri_Client.SqlIdnClientPostLogoutRedirectUri_Client_Source.Id], 
-                CreateRef(SqlDbContext.IdnClients, row(T1.[SqlIdnClientPostLogoutRedirectUri_Client.SqlIdnClientPostLogoutRedirectUri_Client_Target.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient]) AS [SqlIdnClientPostLogoutRedirectUri_Client.SqlIdnClientPostLogoutRedirectUri_Client_Target]
-            FROM (
-                SELECT 
-                    T.CPLR_ID AS [SqlIdnClientPostLogoutRedirectUri_Client.SqlIdnClientPostLogoutRedirectUri_Client_Source.Id], 
-                    T.Client_Id AS [SqlIdnClientPostLogoutRedirectUri_Client.SqlIdnClientPostLogoutRedirectUri_Client_Target.Id], 
-                    True AS _from0
-                FROM CodeFirstDatabase.SqlIdnClientPostLogoutRedirectUri AS T
-            ) AS T1
-        ) AS T2
-    ) AS T3]]></view>
     <view extent="SqlDbContext.IdnClientRedirectUris"><![CDATA[
     SELECT VALUE -- Constructing IdnClientRedirectUris
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientRedirectUri](T1.SqlIdnClientRedirectUri_Id, T1.SqlIdnClientRedirectUri_Uri) WITH 
-        RELATIONSHIP(CREATEREF(SqlDbContext.IdnClients, ROW(T1.[SqlIdnClientRedirectUri_Client.SqlIdnClientRedirectUri_Client_Target.Id]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientRedirectUri_Client],SqlIdnClientRedirectUri_Client_Source,SqlIdnClientRedirectUri_Client_Target) 
+        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientRedirectUri](T1.SqlIdnClientRedirectUri_Id, T1.SqlIdnClientRedirectUri_Uri, T1.SqlIdnClientRedirectUri_ClientId)
     FROM (
         SELECT 
             T.CCRU_ID AS SqlIdnClientRedirectUri_Id, 
             T.CCRU_URI AS SqlIdnClientRedirectUri_Uri, 
-            True AS _from0, 
-            T.Client_Id AS [SqlIdnClientRedirectUri_Client.SqlIdnClientRedirectUri_Client_Target.Id]
+            T.CCLI_ID AS SqlIdnClientRedirectUri_ClientId, 
+            True AS _from0
         FROM CodeFirstDatabase.SqlIdnClientRedirectUri AS T
     ) AS T1]]></view>
-    <view extent="SqlDbContext.SqlIdnClientRedirectUri_Client"><![CDATA[
-    SELECT VALUE -- Constructing SqlIdnClientRedirectUri_Client
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientRedirectUri_Client](T3.[SqlIdnClientRedirectUri_Client.SqlIdnClientRedirectUri_Client_Source], T3.[SqlIdnClientRedirectUri_Client.SqlIdnClientRedirectUri_Client_Target])
-    FROM (
-        SELECT -- Constructing SqlIdnClientRedirectUri_Client_Source
-            CreateRef(SqlDbContext.IdnClientRedirectUris, row(T2.[SqlIdnClientRedirectUri_Client.SqlIdnClientRedirectUri_Client_Source.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClientRedirectUri]) AS [SqlIdnClientRedirectUri_Client.SqlIdnClientRedirectUri_Client_Source], 
-            T2.[SqlIdnClientRedirectUri_Client.SqlIdnClientRedirectUri_Client_Target]
-        FROM (
-            SELECT -- Constructing SqlIdnClientRedirectUri_Client_Target
-                T1.[SqlIdnClientRedirectUri_Client.SqlIdnClientRedirectUri_Client_Source.Id], 
-                CreateRef(SqlDbContext.IdnClients, row(T1.[SqlIdnClientRedirectUri_Client.SqlIdnClientRedirectUri_Client_Target.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnClient]) AS [SqlIdnClientRedirectUri_Client.SqlIdnClientRedirectUri_Client_Target]
-            FROM (
-                SELECT 
-                    T.CCRU_ID AS [SqlIdnClientRedirectUri_Client.SqlIdnClientRedirectUri_Client_Source.Id], 
-                    T.Client_Id AS [SqlIdnClientRedirectUri_Client.SqlIdnClientRedirectUri_Client_Target.Id], 
-                    True AS _from0
-                FROM CodeFirstDatabase.SqlIdnClientRedirectUri AS T
-            ) AS T1
-        ) AS T2
-    ) AS T3]]></view>
     <view extent="CodeFirstDatabase.SqlIdnConsent"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnConsent
         [CodeFirstDatabaseSchema.SqlIdnConsent](T1.[SqlIdnConsent.CCON_SUBJECT], T1.[SqlIdnConsent.CCLI_CLIENT_ID], T1.[SqlIdnConsent.CSCO_SCOPE_NAMES])
@@ -507,25 +287,17 @@
     ) AS T1]]></view>
     <view extent="CodeFirstDatabase.SqlIdnScopeClaim"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnScopeClaim
-        [CodeFirstDatabaseSchema.SqlIdnScopeClaim](T3.[SqlIdnScopeClaim.CSCL_ID], T3.[SqlIdnScopeClaim.CSCL_NAME], T3.[SqlIdnScopeClaim.CSCL_DESCR], T3.[SqlIdnScopeClaim.CSCL_ALWAYS_INCL_IN_TOKEN], T3.[SqlIdnScopeClaim.Scope_Id])
+        [CodeFirstDatabaseSchema.SqlIdnScopeClaim](T1.[SqlIdnScopeClaim.CSCL_ID], T1.[SqlIdnScopeClaim.CSCL_NAME], T1.[SqlIdnScopeClaim.CSCL_DESCR], T1.[SqlIdnScopeClaim.CSCL_ALWAYS_INCL_IN_TOKEN], T1.[SqlIdnScopeClaim.CSCO_ID])
     FROM (
-        SELECT T1.[SqlIdnScopeClaim.CSCL_ID], T2.[SqlIdnScopeClaim.CSCL_NAME], T2.[SqlIdnScopeClaim.CSCL_DESCR], T2.[SqlIdnScopeClaim.CSCL_ALWAYS_INCL_IN_TOKEN], T1.[SqlIdnScopeClaim.Scope_Id], T2._from0, T1._from1
-        FROM  (
-            SELECT 
-                Key(T.SqlIdnScopeClaim_Scope_Source).Id AS [SqlIdnScopeClaim.CSCL_ID], 
-                Key(T.SqlIdnScopeClaim_Scope_Target).Id AS [SqlIdnScopeClaim.Scope_Id], 
-                True AS _from1
-            FROM SqlDbContext.SqlIdnScopeClaim_Scope AS T) AS T1
-            INNER JOIN (
-            SELECT 
-                T.Id AS [SqlIdnScopeClaim.CSCL_ID], 
-                T.Name AS [SqlIdnScopeClaim.CSCL_NAME], 
-                T.Description AS [SqlIdnScopeClaim.CSCL_DESCR], 
-                T.AlwaysIncludeInIdToken AS [SqlIdnScopeClaim.CSCL_ALWAYS_INCL_IN_TOKEN], 
-                True AS _from0
-            FROM SqlDbContext.IdnScopeClaims AS T) AS T2
-            ON T1.[SqlIdnScopeClaim.CSCL_ID] = T2.[SqlIdnScopeClaim.CSCL_ID]
-    ) AS T3]]></view>
+        SELECT 
+            T.Id AS [SqlIdnScopeClaim.CSCL_ID], 
+            T.Name AS [SqlIdnScopeClaim.CSCL_NAME], 
+            T.Description AS [SqlIdnScopeClaim.CSCL_DESCR], 
+            T.AlwaysIncludeInIdToken AS [SqlIdnScopeClaim.CSCL_ALWAYS_INCL_IN_TOKEN], 
+            T.ScopeId AS [SqlIdnScopeClaim.CSCO_ID], 
+            True AS _from0
+        FROM SqlDbContext.IdnScopeClaims AS T
+    ) AS T1]]></view>
     <view extent="CodeFirstDatabase.SqlIdnScope"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnScope
         [CodeFirstDatabaseSchema.SqlIdnScope](T1.[SqlIdnScope.CSCO_ID], T1.[SqlIdnScope.CSCO_ENABLED], T1.[SqlIdnScope.CSCO_SCOPE_NAME], T1.[SqlIdnScope.CSCO_DISPLAY_NAME], T1.[SqlIdnScope.CSCO_DESCR], T1.[SqlIdnScope.CSCO_REQUIRED], T1.[SqlIdnScope.CSCO_EMPHASIZE], T1.[SqlIdnScope.CSCO_TYPE], T1.[SqlIdnScope.CSCO_INCL_ALL_CLAIMS_FOR_USER], T1.[SqlIdnScope.CSCO_CLAIMS_RULE], T1.[SqlIdnScope.CSCO_SHOW_IN_DISCOVERY_DOC])
@@ -547,38 +319,17 @@
     ) AS T1]]></view>
     <view extent="SqlDbContext.IdnScopeClaims"><![CDATA[
     SELECT VALUE -- Constructing IdnScopeClaims
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnScopeClaim](T1.SqlIdnScopeClaim_Id, T1.SqlIdnScopeClaim_Name, T1.SqlIdnScopeClaim_Description, T1.SqlIdnScopeClaim_AlwaysIncludeInIdToken) WITH 
-        RELATIONSHIP(CREATEREF(SqlDbContext.IdnScopes, ROW(T1.[SqlIdnScopeClaim_Scope.SqlIdnScopeClaim_Scope_Target.Id]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnScope]),[Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnScopeClaim_Scope],SqlIdnScopeClaim_Scope_Source,SqlIdnScopeClaim_Scope_Target) 
+        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnScopeClaim](T1.SqlIdnScopeClaim_Id, T1.SqlIdnScopeClaim_Name, T1.SqlIdnScopeClaim_Description, T1.SqlIdnScopeClaim_AlwaysIncludeInIdToken, T1.SqlIdnScopeClaim_ScopeId)
     FROM (
         SELECT 
             T.CSCL_ID AS SqlIdnScopeClaim_Id, 
             T.CSCL_NAME AS SqlIdnScopeClaim_Name, 
             T.CSCL_DESCR AS SqlIdnScopeClaim_Description, 
             T.CSCL_ALWAYS_INCL_IN_TOKEN AS SqlIdnScopeClaim_AlwaysIncludeInIdToken, 
-            True AS _from0, 
-            T.Scope_Id AS [SqlIdnScopeClaim_Scope.SqlIdnScopeClaim_Scope_Target.Id]
+            T.CSCO_ID AS SqlIdnScopeClaim_ScopeId, 
+            True AS _from0
         FROM CodeFirstDatabase.SqlIdnScopeClaim AS T
     ) AS T1]]></view>
-    <view extent="SqlDbContext.SqlIdnScopeClaim_Scope"><![CDATA[
-    SELECT VALUE -- Constructing SqlIdnScopeClaim_Scope
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnScopeClaim_Scope](T3.[SqlIdnScopeClaim_Scope.SqlIdnScopeClaim_Scope_Source], T3.[SqlIdnScopeClaim_Scope.SqlIdnScopeClaim_Scope_Target])
-    FROM (
-        SELECT -- Constructing SqlIdnScopeClaim_Scope_Source
-            CreateRef(SqlDbContext.IdnScopeClaims, row(T2.[SqlIdnScopeClaim_Scope.SqlIdnScopeClaim_Scope_Source.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnScopeClaim]) AS [SqlIdnScopeClaim_Scope.SqlIdnScopeClaim_Scope_Source], 
-            T2.[SqlIdnScopeClaim_Scope.SqlIdnScopeClaim_Scope_Target]
-        FROM (
-            SELECT -- Constructing SqlIdnScopeClaim_Scope_Target
-                T1.[SqlIdnScopeClaim_Scope.SqlIdnScopeClaim_Scope_Source.Id], 
-                CreateRef(SqlDbContext.IdnScopes, row(T1.[SqlIdnScopeClaim_Scope.SqlIdnScopeClaim_Scope_Target.Id]), [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnScope]) AS [SqlIdnScopeClaim_Scope.SqlIdnScopeClaim_Scope_Target]
-            FROM (
-                SELECT 
-                    T.CSCL_ID AS [SqlIdnScopeClaim_Scope.SqlIdnScopeClaim_Scope_Source.Id], 
-                    T.Scope_Id AS [SqlIdnScopeClaim_Scope.SqlIdnScopeClaim_Scope_Target.Id], 
-                    True AS _from0
-                FROM CodeFirstDatabase.SqlIdnScopeClaim AS T
-            ) AS T1
-        ) AS T2
-    ) AS T3]]></view>
     <view extent="SqlDbContext.IdnScopes"><![CDATA[
     SELECT VALUE -- Constructing IdnScopes
         [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnScope](T1.SqlIdnScope_Id, T1.SqlIdnScope_Enabled, T1.SqlIdnScope_Name, T1.SqlIdnScope_DisplayName, T1.SqlIdnScope_Description, T1.SqlIdnScope_Required, T1.SqlIdnScope_Emphasize, T1.SqlIdnScope_TypeString, T1.SqlIdnScope_IncludeAllClaimsForUser, T1.SqlIdnScope_ClaimsRule, T1.SqlIdnScope_ShowInDiscoveryDocument)
@@ -604,7 +355,7 @@
     FROM (
         SELECT 
             T.[Key] AS [SqlIdnToken.CTOK_KEY], 
-            CAST(T.TokenType AS [Edm.Int16]) AS [SqlIdnToken.CTOK_TYPE], 
+            T.TokenTypeString AS [SqlIdnToken.CTOK_TYPE], 
             T.SubjectId AS [SqlIdnToken.CTOK_SUBJECT_ID], 
             T.ClientId AS [SqlIdnToken.CCLI_CLIENT_ID], 
             T.JsonCode AS [SqlIdnToken.CTOK_JSON_CODE], 
@@ -614,11 +365,11 @@
     ) AS T1]]></view>
     <view extent="SqlDbContext.IdnTokens"><![CDATA[
     SELECT VALUE -- Constructing IdnTokens
-        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnToken](T1.SqlIdnToken_Key, T1.SqlIdnToken_TokenType, T1.SqlIdnToken_SubjectId, T1.SqlIdnToken_ClientId, T1.SqlIdnToken_JsonCode, T1.SqlIdnToken_Expiry)
+        [Finsa.Caravan.DataAccess.Drivers.Sql.SqlIdnToken](T1.SqlIdnToken_Key, T1.SqlIdnToken_TokenTypeString, T1.SqlIdnToken_SubjectId, T1.SqlIdnToken_ClientId, T1.SqlIdnToken_JsonCode, T1.SqlIdnToken_Expiry)
     FROM (
         SELECT 
             T.CTOK_KEY AS SqlIdnToken_Key, 
-            CAST(T.CTOK_TYPE AS [Finsa.Caravan.DataAccess.Drivers.Sql.TokenType]) AS SqlIdnToken_TokenType, 
+            T.CTOK_TYPE AS SqlIdnToken_TokenTypeString, 
             T.CTOK_SUBJECT_ID AS SqlIdnToken_SubjectId, 
             T.CCLI_CLIENT_ID AS SqlIdnToken_ClientId, 
             T.CTOK_JSON_CODE AS SqlIdnToken_JsonCode, 

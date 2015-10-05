@@ -32,6 +32,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         [StringLength(2000)]
         public virtual string Uri { get; set; }
 
+        public virtual int ClientId { get; set; }
+
         public virtual SqlIdnClient Client { get; set; }
     }
 
@@ -48,11 +50,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             ToTable("CRVN_IDN_CLI_RDRCT_URIS", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CCRU_ID");
+            Property(x => x.ClientId).HasColumnName("CCLI_ID");
             Property(x => x.Uri).HasColumnName("CCRU_URI");
 
             // SqlIdnClientRedirectUri(N) <-> SqlIdnClient(1)
             HasRequired(x => x.Client)
                 .WithMany(x => x.RedirectUris)
+                .HasForeignKey(x => x.ClientId)
                 .WillCascadeOnDelete();
         }
     }

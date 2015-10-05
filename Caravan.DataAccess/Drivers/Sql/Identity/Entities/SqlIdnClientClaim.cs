@@ -35,6 +35,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         [Required]
         [StringLength(250)]
         public virtual string Value { get; set; }
+        
+        public virtual int ClientId { get; set; }
 
         public virtual SqlIdnClient Client { get; set; }
     }
@@ -52,12 +54,14 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             ToTable("CRVN_IDN_CLI_CLAIMS", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CCLM_ID");
+            Property(x => x.ClientId).HasColumnName("CCLI_ID");
             Property(x => x.Type).HasColumnName("CCLM_TYPE");
             Property(x => x.Value).HasColumnName("CCLM_VALUE");
 
             // SqlIdnClientClaim(N) <-> SqlIdnClient(1)
             HasRequired(x => x.Client)
                 .WithMany(x => x.Claims)
+                .HasForeignKey(x => x.ClientId)
                 .WillCascadeOnDelete();
         }
     }

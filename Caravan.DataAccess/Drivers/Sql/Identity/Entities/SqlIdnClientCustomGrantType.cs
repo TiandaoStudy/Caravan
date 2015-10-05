@@ -32,6 +32,8 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         [StringLength(250)]
         public virtual string GrantType { get; set; }
 
+        public virtual int ClientId { get; set; }
+
         public virtual SqlIdnClient Client { get; set; }
     }
 
@@ -48,11 +50,13 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             ToTable("CRVN_IDN_CLI_CST_GRNT_TYPES", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CCGT_ID");
+            Property(x => x.ClientId).HasColumnName("CCLI_ID");
             Property(x => x.GrantType).HasColumnName("CCGT_GRANT_TYPE");
 
             // SqlIdnClientCustomGrantType(N) <-> SqlIdnClient(1)
             HasRequired(x => x.Client)
                 .WithMany(x => x.AllowedCustomGrantTypes)
+                .HasForeignKey(x => x.ClientId)
                 .WillCascadeOnDelete();
         }
     }

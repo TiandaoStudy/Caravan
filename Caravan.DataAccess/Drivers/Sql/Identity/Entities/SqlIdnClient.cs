@@ -155,6 +155,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             Property(x => x.Enabled).HasColumnName("CCLI_ENABLED");
             Property(x => x.ClientId).HasColumnName("CCLI_CLIENT_ID");
             Property(x => x.ClientName).HasColumnName("CCLI_CLIENT_NAME");
+            Property(x => x.ClientUri).HasColumnName("CCLI_CLIENT_URI");
             Property(x => x.LogoUri).HasColumnName("CCLI_LOGO_URI");
             Property(x => x.RequireConsent).HasColumnName("CCLI_REQUIRE_CONSENT");
             Property(x => x.AllowRememberConsent).HasColumnName("CCLI_ALLOW_REMEMBER_CONSENT");
