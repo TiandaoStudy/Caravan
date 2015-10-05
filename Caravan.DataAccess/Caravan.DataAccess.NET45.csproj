@@ -326,6 +326,9 @@
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_cli_claims.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_scopes.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_clients.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_sco_claims.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_consents.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_secrets.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_scopes.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_rdrct_uris.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_pstlgtrdr_uris.sql" />
@@ -333,6 +336,7 @@
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_cst_grnt_types.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_cors_origins.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_claims.sql" />
+    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\tu_crvn_idn_consents.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\tu_crvn_idn_clients.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\tu_crvn_idn_scopes.sql" />
     <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_scopes.sql" />
