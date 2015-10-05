@@ -28,6 +28,16 @@ CREATE TABLE mydb.crvn_idn_clients
    , CCLI_PREFIX_CLIENT_CLAIMS      NUMBER(1)       NOT NULL DEFAULT 1
    , CCLI_ALLOW_ACCESS2ALL_CST_GRTP NUMBER(1)       NOT NULL DEFAULT 0
 
+   -- INSERT tracking
+   , TRCK_INSERT_DATE               DATE                                NOT NULL
+   , TRCK_INSERT_DB_USER            NVARCHAR2(32)                       NOT NULL
+   , TRCK_INSERT_APP_USER           NVARCHAR2(32) 
+   
+   -- UPDATE tracking
+   , TRCK_UPDATE_DATE               DATE            
+   , TRCK_UPDATE_DB_USER            NVARCHAR2(32)   
+   , TRCK_UPDATE_APP_USER           NVARCHAR2(32) 
+
    , CHECK (CCLI_IDENTITY_TOKEN_LIFETIME > 0) ENABLE
    , CHECK (CCLI_ACCESS_TOKEN_LIFETIME > 0) ENABLE
    , CHECK (CCLI_AUTH_CODE_LIFETIME > 0) ENABLE
@@ -37,6 +47,14 @@ CREATE TABLE mydb.crvn_idn_clients
    , CHECK (CCLI_REFRESH_TOKEN_USAGE IN ('reuse', 'onetimeonly')) ENABLE
    , CHECK (CCLI_REFRESH_TOKEN_EXPIRATION IN ('sliding', 'absolute')) ENABLE
    , CHECK (CCLI_ACCESS_TOKEN_TYPE IN ('jwt', 'reference')) ENABLE
+   
+   -- CHECKs for tracking
+   , CHECK (TRCK_INSERT_DB_USER = LOWER(TRCK_INSERT_DB_USER)) ENABLE
+   , CHECK (TRCK_INSERT_APP_USER = LOWER(TRCK_INSERT_APP_USER)) ENABLE
+   , CHECK (TRCK_UPDATE_DB_USER = LOWER(TRCK_UPDATE_DB_USER)) ENABLE
+   , CHECK (TRCK_UPDATE_APP_USER = LOWER(TRCK_UPDATE_APP_USER)) ENABLE
+   , CHECK ((TRCK_UPDATE_DATE IS NULL AND TRCK_UPDATE_DB_USER IS NULL) OR (TRCK_UPDATE_DATE IS NOT NULL AND TRCK_UPDATE_DB_USER IS NOT NULL)) ENABLE
+   , CHECK (TRCK_UPDATE_DATE IS NULL OR TRCK_UPDATE_DATE >= TRCK_INSERT_DATE) ENABLE
 
    , CONSTRAINT pk_crvn_idn_clients PRIMARY KEY (CCLI_ID) ENABLE
    , CONSTRAINT uk_crvn_idn_clients UNIQUE (CCLI_CLIENT_ID) ENABLE
@@ -95,4 +113,4 @@ COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_PREFIX_CLIENT_CLAIMS
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_ACCESS2ALL_CST_GRTP 
      IS 'Indicates whether the client has access to all custom grant types. Defaults to false. You can set the allowed custom grant types via the CRVN_IDN_CLI_CUSTOM_GRNT_TYPES table';
 
-CREATE SEQUENCE mydb.crvn_idn_clients_id;
+CREATE SEQUENCE mydb.sq_crvn_idn_clients;

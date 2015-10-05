@@ -44,5 +44,11 @@ namespace Finsa.Caravan.WebService.Controllers
             var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             return fvi.FileVersion;
         }
+
+        #region Self-checks
+
+        
+
+        #endregion
     }
 }

@@ -2,19 +2,37 @@
 
 CREATE TABLE mydb.crvn_idn_scopes
 (
-     CSCO_ID                        NUMBER(10)      NOT NULL
-   , CSCO_ENABLED                   NUMBER(1)       NOT NULL DEFAULT 1
-   , CSCO_SCOPE_NAME                NVARCHAR2(200)  NOT NULL
+     CSCO_ID                        NUMBER(10)                          NOT NULL 
+   , CSCO_ENABLED                   NUMBER(1)      DEFAULT 1            NOT NULL 
+   , CSCO_SCOPE_NAME                NVARCHAR2(200)                      NOT NULL
    , CSCO_DISPLAY_NAME              NVARCHAR2(200)
    , CSCO_DESCR                     NVARCHAR2(1000)
-   , CSCO_REQUIRED                  NUMBER(1)       NOT NULL DEFAULT 0
-   , CSCO_EMPHASIZE                 NUMBER(1)       NOT NULL DEFAULT 0
-   , CSCO_TYPE                      NVARCHAR2(100)  NOT NULL DEFAULT 'resource'
-   , CSCO_INCL_ALL_CLAIMS_FOR_USER  NUMBER(1)       NOT NULL DEFAULT 0
+   , CSCO_REQUIRED                  NUMBER(1)      DEFAULT 0            NOT NULL 
+   , CSCO_EMPHASIZE                 NUMBER(1)      DEFAULT 0            NOT NULL 
+   , CSCO_TYPE                      NVARCHAR2(100) DEFAULT 'resource'   NOT NULL 
+   , CSCO_INCL_ALL_CLAIMS_FOR_USER  NUMBER(1)      DEFAULT 0            NOT NULL 
    , CSCO_CLAIMS_RULE               NVARCHAR2(200)
-   , CSCO_SHOW_IN_DISCOVERY_DOC     NUMBER(1)       NOT NULL DEFAULT 1
+   , CSCO_SHOW_IN_DISCOVERY_DOC     NUMBER(1)      DEFAULT 1            NOT NULL 
+
+   -- INSERT tracking
+   , TRCK_INSERT_DATE               DATE                                NOT NULL
+   , TRCK_INSERT_DB_USER            NVARCHAR2(32)                       NOT NULL
+   , TRCK_INSERT_APP_USER           NVARCHAR2(32) 
+   
+   -- UPDATE tracking
+   , TRCK_UPDATE_DATE               DATE            
+   , TRCK_UPDATE_DB_USER            NVARCHAR2(32)   
+   , TRCK_UPDATE_APP_USER           NVARCHAR2(32)   
 
    , CHECK (csco_type IN ('identity', 'resource')) ENABLE
+   
+   -- CHECKs for tracking
+   , CHECK (TRCK_INSERT_DB_USER = LOWER(TRCK_INSERT_DB_USER)) ENABLE
+   , CHECK (TRCK_INSERT_APP_USER = LOWER(TRCK_INSERT_APP_USER)) ENABLE
+   , CHECK (TRCK_UPDATE_DB_USER = LOWER(TRCK_UPDATE_DB_USER)) ENABLE
+   , CHECK (TRCK_UPDATE_APP_USER = LOWER(TRCK_UPDATE_APP_USER)) ENABLE
+   , CHECK ((TRCK_UPDATE_DATE IS NULL AND TRCK_UPDATE_DB_USER IS NULL) OR (TRCK_UPDATE_DATE IS NOT NULL AND TRCK_UPDATE_DB_USER IS NOT NULL)) ENABLE
+   , CHECK (TRCK_UPDATE_DATE IS NULL OR TRCK_UPDATE_DATE >= TRCK_INSERT_DATE) ENABLE
 
    , CONSTRAINT pk_crvn_idn_scopes PRIMARY KEY (CSCO_ID) ENABLE
 );
@@ -44,4 +62,4 @@ COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_CLAIMS_RULE
 COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_SHOW_IN_DISCOVERY_DOC
      IS 'Specifies whether this scope is shown in the discovery document. Defaults to true';
 
-CREATE SEQUENCE mydb.crvn_idn_scopes_id;
+CREATE SEQUENCE mydb.sq_crvn_idn_scopes;
