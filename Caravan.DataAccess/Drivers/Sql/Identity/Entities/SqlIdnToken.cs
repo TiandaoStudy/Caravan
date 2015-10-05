@@ -20,6 +20,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Attributes;
+using Finsa.CodeServices.Common;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 {
@@ -31,8 +32,16 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         [Key, Column(Order = 0)]
         public virtual string Key { get; set; }
 
+        [NotMapped]
+        public TokenType TokenType { get; set; }
+
         [Key, Column(Order = 1)]
-        public virtual TokenType TokenType { get; set; }
+        [StringLength(100)]
+        public virtual string TokenTypeString
+        {
+            get { return TokenType.ToString().ToLowerInvariant(); }
+            set { TokenType = value.ToEnum<TokenType>(); }
+        }
 
         [StringLength(200)]
         public virtual string SubjectId { get; set; }
@@ -63,7 +72,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
             ToTable("CRVN_IDN_TOKENS", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Key).HasColumnName("CTOK_KEY");
-            Property(x => x.TokenType).HasColumnName("CTOK_TYPE");
+            Property(x => x.TokenTypeString).HasColumnName("CTOK_TYPE");
             Property(x => x.SubjectId).HasColumnName("CTOK_SUBJECT_ID");
             Property(x => x.ClientId).HasColumnName("CCLI_CLIENT_ID");
             Property(x => x.JsonCode).HasColumnName("CTOK_JSON_CODE");

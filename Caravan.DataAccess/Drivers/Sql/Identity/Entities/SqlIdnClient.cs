@@ -57,6 +57,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         [NotMapped]
         public Flows Flow { get; set; }
 
+        [StringLength(100)]
         public virtual string FlowString
         {
             get { return Flow.ToString().ToLowerInvariant(); }
@@ -94,6 +95,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         [NotMapped]
         public TokenUsage RefreshTokenUsage { get; set; }
 
+        [StringLength(100)]
         public virtual string RefreshTokenUsageString
         {
             get { return RefreshTokenUsage.ToString().ToLowerInvariant(); }
@@ -105,6 +107,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         [NotMapped]
         public TokenExpiration RefreshTokenExpiration { get; set; }
 
+        [StringLength(100)]
         public virtual string RefreshTokenExpirationString
         {
             get { return RefreshTokenExpiration.ToString().ToLowerInvariant(); }
@@ -114,6 +117,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         [NotMapped]
         public AccessTokenType AccessTokenType { get; set; }
 
+        [StringLength(100)]
         public virtual string AccessTokenTypeString
         {
             get { return AccessTokenType.ToString().ToLowerInvariant(); }

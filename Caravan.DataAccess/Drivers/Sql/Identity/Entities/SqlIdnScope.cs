@@ -15,17 +15,16 @@
  */
 
 using Finsa.CodeServices.Common;
-using IdentityServer3.Core.Models;
-using IdentityServer3.EntityFramework.Entities;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
+using IdentityServer3.Core.Models;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
 {
     /// <summary>
-    ///   Riferimento interno per <see cref="Scope"/>.
+    ///   Riferimento interno per <see cref="IdentityServer3.EntityFramework.Entities.Scope"/>.
     /// </summary>
     public class SqlIdnScope
     {
@@ -50,6 +49,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
         [NotMapped]
         public ScopeType Type { get; set; }
 
+        [StringLength(100)]
         public virtual string TypeString
         {
             get { return Type.ToString().ToLowerInvariant(); }

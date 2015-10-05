@@ -1,0 +1,13 @@
+﻿-- REPLACE 'mydb' WITH DB NAME
+
+CREATE TABLE mydb.crvn_idn_tokens
+(
+     CTOK_KEY           NVARCHAR2(2000) NOT NULL
+   , CTOK_TYPE          NVARCHAR2(100)  NOT NULL
+   , CTOK_SUBJECT_ID    NVARCHAR2(200)
+   , CCLI_CLIENT_ID     NVARCHAR2(200)  NOT NULL
+   , CTOK_JSON_CODE     NCLOB           NOT NULL
+   , CTOK_EXPIRY        DATE            NOT NULL
+
+   , CONSTRAINT pk_crvn_idn_tokens PRIMARY KEY (CTOK_KEY, CTOK_TYPE) ENABLE
+);
