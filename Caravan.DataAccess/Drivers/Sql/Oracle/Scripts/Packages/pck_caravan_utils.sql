@@ -1,6 +1,4 @@
-﻿-- REPLACE "CARAVAN" WITH DB NAME
-
---------------------------------------------------------
+﻿--------------------------------------------------------
 --  DDL for Package PCK_CARAVAN_UTILS
 --------------------------------------------------------
 
@@ -11,6 +9,9 @@
   
   /* Current DB user */
   function f_get_sysuser return nvarchar2;
+  
+  /* Error handling */
+  procedure sp_err_when_updating_trck_cols;
   
 END PCK_CARAVAN_UTILS;
 
@@ -34,6 +35,13 @@ END PCK_CARAVAN_UTILS;
   as
   begin
     return LOWER(SYS_CONTEXT('USERENV', 'SESSION_USER'));
+  end;
+  
+  /* Error handling */
+  procedure sp_err_when_updating_trck_cols
+  as
+  begin
+    RAISE_APPLICATION_ERROR(-20999, 'Tracking columns cannot be manually updated');
   end;
 
 END PCK_CARAVAN_UTILS;

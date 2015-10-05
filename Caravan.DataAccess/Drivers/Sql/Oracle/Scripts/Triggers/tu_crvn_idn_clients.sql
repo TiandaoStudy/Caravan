@@ -1,7 +1,7 @@
 ﻿-- REPLACE 'mydb' WITH DB NAME
 
-CREATE OR REPLACE TRIGGER mydb.tu_crvn_idn_scopes
-BEFORE UPDATE ON mydb.crvn_idn_scopes 
+CREATE OR REPLACE TRIGGER mydb.tu_crvn_idn_clients
+BEFORE UPDATE ON mydb.crvn_idn_clients 
 FOR EACH ROW
 BEGIN
   IF UPDATING('TRCK_INSERT_DATE') 

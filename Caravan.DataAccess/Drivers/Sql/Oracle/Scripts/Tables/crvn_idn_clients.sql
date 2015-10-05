@@ -2,35 +2,35 @@
 
 CREATE TABLE mydb.crvn_idn_clients
 (
-     CCLI_ID                        NUMBER(10)      NOT NULL
-   , CCLI_ENABLED                   NUMBER(1)       NOT NULL DEFAULT 1
-   , CCLI_CLIENT_ID                 NVARCHAR2(200)  NOT NULL
-   , CCLI_CLIENT_NAME               NVARCHAR2(200)  NOT NULL
+     CCLI_ID                        NUMBER(10)                              NOT NULL
+   , CCLI_ENABLED                   NUMBER(1)       DEFAULT 1               NOT NULL
+   , CCLI_CLIENT_ID                 NVARCHAR2(200)                          NOT NULL
+   , CCLI_CLIENT_NAME               NVARCHAR2(200)                          NOT NULL
    , CCLI_CLIENT_URI                NVARCHAR2(2000)
    , CCLI_LOGO_URI                  NVARCHAR2(2000)
-   , CCLI_REQUIRE_CONSENT           NUMBER(1)       NOT NULL DEFAULT 1
-   , CCLI_ALLOW_REMEMBER_CONSENT    NUMBER(1)       NOT NULL DEFAULT 1
-   , CCLI_FLOW                      NVARCHAR2(100)  NOT NULL DEFAULT 'implicit'
-   , CCLI_ALLOW_CLIENT_CREDS_ONLY   NUMBER(1)       NOT NULL DEFAULT 0
-   , CCLI_ALLOW_ACCESS2ALL_SCOPES   NUMBER(1)       NOT NULL DEFAULT 0
-   , CCLI_IDENTITY_TOKEN_LIFETIME   NUMBER(10)      NOT NULL DEFAULT 300
-   , CCLI_ACCESS_TOKEN_LIFETIME     NUMBER(10)      NOT NULL DEFAULT 3600
-   , CCLI_AUTH_CODE_LIFETIME        NUMBER(10)      NOT NULL DEFAULT 300
-   , CCLI_ABS_REFR_TOKEN_LIFETIME   NUMBER(10)      NOT NULL DEFAULT 2592000
-   , CCLI_SLID_REFR_TOKEN_LIFETIME  NUMBER(10)      NOT NULL DEFAULT 1296000
-   , CCLI_REFRESH_TOKEN_USAGE       NVARCHAR2(100)  NOT NULL DEFAULT 'onetimeonly'
-   , CCLI_UPD_ACCESS_TOKEN_ON_REFR  NUMBER(1)       NOT NULL DEFAULT 0
-   , CCLI_REFRESH_TOKEN_EXPIRATION  NVARCHAR2(100)  NOT NULL DEFAULT 'absolute'
-   , CCLI_ACCESS_TOKEN_TYPE         NVARCHAR2(100)  NOT NULL DEFAULT 'jwt'
-   , CCLI_ENABLE_LOCAL_LOGIN        NUMBER(1)       NOT NULL DEFAULT 1
-   , CCLI_INCLUDE_JWT_ID            NUMBER(1)       NOT NULL DEFAULT 0
-   , CCLI_ALWAYS_SEND_CLIENT_CLAIMS NUMBER(1)       NOT NULL DEFAULT 0
-   , CCLI_PREFIX_CLIENT_CLAIMS      NUMBER(1)       NOT NULL DEFAULT 1
-   , CCLI_ALLOW_ACCESS2ALL_CST_GRTP NUMBER(1)       NOT NULL DEFAULT 0
+   , CCLI_REQUIRE_CONSENT           NUMBER(1)       DEFAULT 1               NOT NULL
+   , CCLI_ALLOW_REMEMBER_CONSENT    NUMBER(1)       DEFAULT 1               NOT NULL
+   , CCLI_FLOW                      NVARCHAR2(100)  DEFAULT 'implicit'      NOT NULL
+   , CCLI_ALLOW_CLIENT_CREDS_ONLY   NUMBER(1)       DEFAULT 0               NOT NULL
+   , CCLI_ALLOW_ACCESSALL_SCOPES    NUMBER(1)       DEFAULT 0               NOT NULL
+   , CCLI_IDENTITY_TOKEN_LIFETIME   NUMBER(10)      DEFAULT 300             NOT NULL
+   , CCLI_ACCESS_TOKEN_LIFETIME     NUMBER(10)      DEFAULT 3600            NOT NULL
+   , CCLI_AUTH_CODE_LIFETIME        NUMBER(10)      DEFAULT 300             NOT NULL
+   , CCLI_ABS_REFR_TOKEN_LIFETIME   NUMBER(10)      DEFAULT 2592000         NOT NULL
+   , CCLI_SLID_REFR_TOKEN_LIFETIME  NUMBER(10)      DEFAULT 1296000         NOT NULL
+   , CCLI_REFRESH_TOKEN_USAGE       NVARCHAR2(100)  DEFAULT 'onetimeonly'   NOT NULL
+   , CCLI_UPD_ACCESS_TOKEN_ON_REFR  NUMBER(1)       DEFAULT 0               NOT NULL
+   , CCLI_REFRESH_TOKEN_EXPIRATION  NVARCHAR2(100)  DEFAULT 'absolute'      NOT NULL
+   , CCLI_ACCESS_TOKEN_TYPE         NVARCHAR2(100)  DEFAULT 'jwt'           NOT NULL
+   , CCLI_ENABLE_LOCAL_LOGIN        NUMBER(1)       DEFAULT 1               NOT NULL
+   , CCLI_INCLUDE_JWT_ID            NUMBER(1)       DEFAULT 0               NOT NULL
+   , CCLI_ALWAYS_SEND_CLIENT_CLAIMS NUMBER(1)       DEFAULT 0               NOT NULL
+   , CCLI_PREFIX_CLIENT_CLAIMS      NUMBER(1)       DEFAULT 1               NOT NULL
+   , CCLI_ALLOW_ACCESSALL_CST_GRTP  NUMBER(1)       DEFAULT 0               NOT NULL
 
    -- INSERT tracking
-   , TRCK_INSERT_DATE               DATE                                NOT NULL
-   , TRCK_INSERT_DB_USER            NVARCHAR2(32)                       NOT NULL
+   , TRCK_INSERT_DATE               DATE            NOT NULL
+   , TRCK_INSERT_DB_USER            NVARCHAR2(32)   NOT NULL
    , TRCK_INSERT_APP_USER           NVARCHAR2(32) 
    
    -- UPDATE tracking
@@ -82,7 +82,7 @@ COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_FLOW
      IS 'Specifies allowed flow for client (either AuthorizationCode, Implicit, Hybrid, ResourceOwner, ClientCredentials or Custom). Defaults to Implicit';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_CLIENT_CREDS_ONLY 
      IS 'Indicates whether this client is allowed to request token using client credentials only. This is e.g. useful when you want a client to be able to use both a user-centric flow like implicit and additionally client credentials flow';
-COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_ACCESS2ALL_SCOPES 
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_ACCESSALL_SCOPES 
      IS 'Indicates whether the client has access to all scopes. Defaults to false. You can set the allowed scopes via the CRVN_IDN_CLI_SCOPES table';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_IDENTITY_TOKEN_LIFETIME 
      IS 'Lifetime of identity token in seconds (defaults to 300 seconds / 5 minutes)';
@@ -110,7 +110,7 @@ COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALWAYS_SEND_CLIENT_CLAIMS
      IS 'Indicates whether client claims should be always included in the access tokens - or only for client credentials flow';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_PREFIX_CLIENT_CLAIMS 
      IS 'Indicates whether all client claims should be prefixed';
-COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_ACCESS2ALL_CST_GRTP 
-     IS 'Indicates whether the client has access to all custom grant types. Defaults to false. You can set the allowed custom grant types via the CRVN_IDN_CLI_CUSTOM_GRNT_TYPES table';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_ACCESSALL_CST_GRTP 
+     IS 'Indicates whether the client has access to all custom grant types. Defaults to false. You can set the allowed custom grant types via the CRVN_IDN_CLI_CST_GRNT_TYPES table';
 
 CREATE SEQUENCE mydb.sq_crvn_idn_clients;

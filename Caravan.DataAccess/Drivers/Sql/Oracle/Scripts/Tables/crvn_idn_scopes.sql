@@ -15,8 +15,8 @@ CREATE TABLE mydb.crvn_idn_scopes
    , CSCO_SHOW_IN_DISCOVERY_DOC     NUMBER(1)      DEFAULT 1            NOT NULL 
 
    -- INSERT tracking
-   , TRCK_INSERT_DATE               DATE                                NOT NULL
-   , TRCK_INSERT_DB_USER            NVARCHAR2(32)                       NOT NULL
+   , TRCK_INSERT_DATE               DATE            NOT NULL
+   , TRCK_INSERT_DB_USER            NVARCHAR2(32)   NOT NULL
    , TRCK_INSERT_APP_USER           NVARCHAR2(32) 
    
    -- UPDATE tracking
