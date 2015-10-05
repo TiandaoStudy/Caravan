@@ -123,7 +123,7 @@ namespace Finsa.Caravan.WebService
             public Task AuthenticateLocalAsync(LocalAuthenticationContext context)
             {
                 context.AuthenticateResult = (context.Password.Length > 0)
-                    ? new AuthenticateResult(context.UserName, context.SignInMessage.ClientId)
+                    ? new AuthenticateResult(context.UserName, context.SignInMessage?.ClientId ?? "caravan-admin-ui")
                     : new AuthenticateResult("You shall not pass!");
                 return Task.FromResult(0);
             }

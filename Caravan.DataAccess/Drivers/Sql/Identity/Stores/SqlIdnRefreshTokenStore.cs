@@ -32,7 +32,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
 
         public override async Task StoreAsync(string key, RefreshToken value)
         {
-            var token = await Context.IdnTokens.FindAsync(key, TokenType);
+            var token = await Context.IdnTokens.FindAsync(key, TokenTypeString);
             if (token == null)
             {
                 token = new SqlIdnToken
@@ -41,7 +41,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
                     SubjectId = value.SubjectId,
                     ClientId = value.ClientId,
                     JsonCode = ConvertToJson(value),
-                    TokenType = TokenType
+                    TokenTypeString = TokenTypeString
                 };
                 Context.IdnTokens.Add(token);
             }

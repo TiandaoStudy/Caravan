@@ -39,7 +39,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
                 ClientId = value.ClientId,
                 JsonCode = ConvertToJson(value),
                 Expiry = Clock.UtcNow.AddSeconds(value.Client.AuthorizationCodeLifetime),
-                TokenType = TokenType
+                TokenTypeString = TokenTypeString
             });
 
             await Context.SaveChangesAsync();

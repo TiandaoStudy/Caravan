@@ -33,7 +33,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
         where T : class
     {
         protected readonly SqlDbContext Context;
-        protected readonly TokenType TokenType;
+        protected readonly string TokenTypeString;
         protected readonly IScopeStore ScopeStore;
         protected readonly IClientStore ClientStore;
         protected readonly IClock Clock;
@@ -45,7 +45,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
             RaiseArgumentNullException.IfIsNull(clientStore, nameof(clientStore));
             RaiseArgumentNullException.IfIsNull(clock, nameof(clock));
             Context = context;
-            TokenType = tokenType;
+            TokenTypeString = tokenType.ToString().ToLowerInvariant();
             ScopeStore = scopeStore;
             ClientStore = clientStore;
             Clock = clock;
@@ -73,7 +73,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
 
         public async Task<T> GetAsync(string key)
         {
-            var token = await Context.IdnTokens.FindAsync(key, TokenType);
+            var token = await Context.IdnTokens.FindAsync(key, TokenTypeString);
 
             if (token == null || token.Expiry < Clock.UtcNow)
             {
@@ -85,7 +85,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
 
         public async Task RemoveAsync(string key)
         {
-            var token = await Context.IdnTokens.FindAsync(key, TokenType);
+            var token = await Context.IdnTokens.FindAsync(key, TokenTypeString);
 
             if (token != null)
             {
@@ -98,7 +98,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
         {
             var tokens = await Context.IdnTokens.Where(x =>
                 x.SubjectId == subject &&
-                x.TokenType == TokenType).ToArrayAsync();
+                x.TokenTypeString == TokenTypeString).ToArrayAsync();
 
             var results = tokens.Select(x => ConvertFromJson(x.JsonCode)).ToArray();
             return results.Cast<ITokenMetadata>();
@@ -109,7 +109,7 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
             Context.IdnTokens.RemoveRange(Context.IdnTokens.Where(x =>
                 x.SubjectId == subject &&
                 x.ClientId == client &&
-                x.TokenType == TokenType));
+                x.TokenTypeString == TokenTypeString));
 
             await Context.SaveChangesAsync();
         }
