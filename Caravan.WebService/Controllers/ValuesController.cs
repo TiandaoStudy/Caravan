@@ -11,7 +11,7 @@
 // the License.
 
 using Finsa.CodeServices.Clock;
-using Finsa.CodeServices.Common.Extensions;
+using Finsa.CodeServices.Common;
 using PommaLabs.KVLite;
 using PommaLabs.Thrower;
 using System;

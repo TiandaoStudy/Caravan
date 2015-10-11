@@ -3,7 +3,6 @@ using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.DataAccess.Drivers.Sql;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Extensions;
 using Finsa.CodeServices.Serialization;
 using PommaLabs.Thrower;
 using System;

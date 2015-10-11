@@ -2,7 +2,6 @@
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Extensions;
 using NLog;
 using NLog.Common;
 using NLog.Config;

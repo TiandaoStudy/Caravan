@@ -4,7 +4,6 @@ using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Extensions;
 using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
