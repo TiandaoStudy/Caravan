@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel
+namespace Finsa.Caravan.DataAccess.Drivers.Mongo.Models
 {
     internal abstract class MongoDocument
     {

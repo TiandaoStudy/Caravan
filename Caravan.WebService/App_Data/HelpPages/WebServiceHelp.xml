@@ -4,6 +4,30 @@
         <name>Finsa.Caravan.WebService</name>
     </assembly>
     <members>
+        <member name="T:Finsa.Caravan.WebService.CaravanWebServiceConfiguration">
+            <summary>
+              Configuration class for Caravan.Common. Default values are set inside the configuration
+              file itself.
+            </summary>
+        </member>
+        <member name="P:Finsa.Caravan.WebService.CaravanWebServiceConfiguration.Instance">
+            <summary>
+              Gets the static configuration instance.
+            </summary>
+            <value>The static configuration instance.</value>
+        </member>
+        <member name="P:Finsa.Caravan.WebService.CaravanWebServiceConfiguration.Identity_SigningCertificatePath">
+            <summary>
+              Il percorso del certificato richiesto dal servizio di autorizzazione/autenticazione
+              per firmare i TOKEN emessi.
+            </summary>
+        </member>
+        <member name="P:Finsa.Caravan.WebService.CaravanWebServiceConfiguration.Identity_SigningCertificatePassword">
+            <summary>
+              La password del certificato richiesto dal servizio di autorizzazione/autenticazione
+              per firmare i TOKEN emessi.
+            </summary>
+        </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.CacheController">
             <summary>
               Exposes the KVLite cache controller and allows further customizations.
@@ -455,6 +479,34 @@
               Delete the api with the Id retrieve from the body
             </summary>
             <param name="id">The id of the api to remove</param>
+        </member>
+        <member name="T:Finsa.Caravan.WebService.IdentityConfig">
+            <summary>
+              Configurazione del servizio di autorizzazione/autenticazione.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.IdentityConfig.LoadCertificate">
+            <summary>
+              Carica il certificato necessario per firmare i TOKEN.
+            </summary>
+            <returns>Il certificato necessario per firmare i TOKEN.</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.IdentityConfig.ConfigureFactory">
+            <summary>
+              Configura il generatore dei servizi usati dalla parte di autenticazione/autorizzazione.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Finsa.Caravan.WebService.Startup">
+            <summary>
+              Inizializza il servizio di Caravan.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Startup.Configuration(Owin.IAppBuilder)">
+            <summary>
+              Inizializza il servizio di Caravan.
+            </summary>
+            <param name="app">Necessario per configurare il servizio.</param>
         </member>
     </members>
 </doc>

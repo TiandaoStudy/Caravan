@@ -3,16 +3,15 @@ using Common.Logging;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using Finsa.CodeServices.Common;
-using Finsa.CodeServices.Common.Extensions;
 using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Logging.Entities;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Entities;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
@@ -69,6 +68,9 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
+                // Log deletion might take a long time...
+                ctx.Database.CommandTimeout = 300;
+
                 var utcNow = CaravanServiceProvider.Clock.UtcNow;
 
                 var appIds = ((appName == null) ? ctx.SecApps : ctx.SecApps.Where(a => a.Name == appName)).Select(a => a.Id);

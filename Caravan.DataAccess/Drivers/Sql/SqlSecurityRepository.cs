@@ -2,10 +2,10 @@
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
 using Finsa.CodeServices.Common;
 using System.Data.Entity;
 using System.Linq;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Entities;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {

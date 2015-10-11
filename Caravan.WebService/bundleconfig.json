@@ -1,0 +1,59 @@
+[
+    {
+        "outputFileName": "Caravan/Administration/js/_all.js",
+        "inputFiles": [
+            "Caravan/Administration/js/config.js",
+            "Caravan/Administration/js/app.js",
+            "Caravan/Administration/js/controllers/*.js",
+            "Caravan/Administration/js/services/*.js",
+            "Caravan/Administration/js/directives/*.js"
+        ],
+        "minify": { "enabled": false },
+        "sourceMap": true
+    },
+    {
+        "outputFileName": "Caravan/Administration/js/_angular.js",
+        "inputFiles": [
+            "Scripts/angular.js",
+            "Scripts/angular-route.js",
+            "Scripts/angular-ui/ui-bootstrap-tpls.js"
+        ],
+        "minify": {
+            "enabled": true,
+            "renameLocals": false
+        },
+        "sourceMap": true
+    },
+    {
+        "outputFileName": "Caravan/Administration/js/_jquery.js",
+        "inputFiles": [
+            "Scripts/jquery-2.1.4.js"
+        ],
+        "minify": {
+            "enabled": true,
+            "renameLocals": true
+        },
+        "sourceMap": true
+    },
+    {
+        "outputFileName": "Caravan/Administration/js/_bootstrap.js",
+        "inputFiles": [
+            "Scripts/bootstrap.js"
+        ],
+        "minify": {
+            "enabled": true,
+            "renameLocals": true
+        },
+        "sourceMap": true
+    },
+    {
+        "outputFileName": "Caravan/Administration/css/_bootstrap.css",
+        "inputFiles": [
+            "Content/bootstrap.css"
+        ],
+        "minify": {
+            "enabled": true
+        },
+        "sourceMap": true
+    }
+]

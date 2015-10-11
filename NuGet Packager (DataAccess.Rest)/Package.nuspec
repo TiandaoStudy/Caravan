@@ -3,7 +3,7 @@
 <package>
     <metadata>
         <id>Finsa.Caravan.DataAccess.Rest</id>
-        <version>1.18.0</version>
+        <version>1.19.0</version>
         <title>Finsa.Caravan.DataAccess.Rest</title>
         <authors>Finsa S.p.A.</authors>
         <owners>Finsa S.p.A.</owners>
@@ -22,7 +22,7 @@ A short description of the package. If specified, this shows up in the middle pa
         <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
         <copyright>Copyright © Finsa S.p.A. 2014-2024</copyright>
         <dependencies>
-            <dependency id="Finsa.Caravan.DataAccess" version="1.18.0" />
+            <dependency id="Finsa.Caravan.DataAccess" version="1.19.0" />
             <dependency id="RestSharp" version="105.2.3" />
         </dependencies>
         <references></references>

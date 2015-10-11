@@ -1,11 +1,11 @@
 ﻿using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel;
-using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Logging;
-using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Security;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using System.Collections.Generic;
+using Finsa.Caravan.DataAccess.Drivers.Mongo.Models;
+using Finsa.Caravan.DataAccess.Drivers.Mongo.Models.Logging;
+using Finsa.Caravan.DataAccess.Drivers.Mongo.Models.Security;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 {

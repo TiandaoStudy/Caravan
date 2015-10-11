@@ -2,8 +2,8 @@
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.Common.Security.Models;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Logging.Entities;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Entities;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Portability;
 using System;
@@ -26,7 +26,7 @@ namespace Finsa.Caravan.DataAccess
         /// <value>The static configuration instance.</value>
         public static CaravanDataAccessConfiguration Instance { get; } = InitializeInstance();
 
-        static CaravanDataAccessConfiguration InitializeInstance()
+        private static CaravanDataAccessConfiguration InitializeInstance()
         {
             var configurationFile = "Caravan.config";
             if (PortableEnvironment.AppIsRunningOnAspNet)
@@ -52,8 +52,8 @@ namespace Finsa.Caravan.DataAccess
         #endregion Static instance
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="CaravanCommonConfiguration"/> class and sets the
-        ///   default values for each configuration entry.
+        ///   Initializes a new instance of the <see cref="CaravanCommonConfiguration"/> class and
+        ///   sets the default values for each configuration entry.
         /// </summary>
         public CaravanDataAccessConfiguration()
         {
@@ -87,6 +87,16 @@ namespace Finsa.Caravan.DataAccess
         public string SqlSchema { get; set; }
 
         public string SqlInitializer { get; set; }
+
+        /// <summary>
+        ///   Il percorso dove memorizzare le viste pre-generate per EF.
+        /// </summary>
+        public string Drivers_Sql_EFPregeneratedViews_Path { get; set; } = "~/App_Data/EFPregeneratedViews";
+
+        /// <summary>
+        ///   Il nome del file dove memorizzare le viste pre-generate di Caravan.
+        /// </summary>
+        public string Drivers_Sql_EFPregeneratedViews_CaravanViewsFileName { get; set; } = "CaravanViews.xml";
 
         #region Oracle
 

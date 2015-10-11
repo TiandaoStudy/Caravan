@@ -1,14 +1,20 @@
-﻿using System.Data.Common;
+﻿using Finsa.CodeServices.Common.Portability;
+using InteractivePreGeneratedViews;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.IO;
 using System.Transactions;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Logging;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Security;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Models.Identity;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Logging.Entities;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Entities;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Sql
 {
-    internal sealed class SqlDbContext : DbContext
+    /// <summary>
+    ///   Contesto DB usato dalla parte di accesso ai dati di Caravan.
+    /// </summary>
+    public sealed class SqlDbContext : DbContext
     {
         #region Constants
 
@@ -44,20 +50,28 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
         public SqlDbContext()
             : base(GetConnection(), true)
         {
+            // Disabilito SEMPRE il lazy loading, è troppo pericoloso!
             Configuration.LazyLoadingEnabled = false;
         }
 
         public static SqlDbContext CreateReadContext()
         {
+            // Il DB è già inizializzato dalla chiamata sottostante.
             var ctx = CreateWriteContext();
+
+            // Disabilito i proxy, dato che per un contesto di lettura (NON UPDATE) non hanno alcuna utilità.
             ctx.Configuration.ProxyCreationEnabled = false;
+
             return ctx;
         }
 
         public static SqlDbContext CreateWriteContext()
         {
             var ctx = new SqlDbContext();
+
+            // Provo a inizializzare il DB.
             ctx.Database.Initialize(false);
+
             return ctx;
         }
 
@@ -76,13 +90,15 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             return CaravanDataSource.Manager.CreateConnection();
         }
 
-        #region DB Sets
-
-        //public DbSet<SqlIdnClient> IdnClients { get; set; }
+        #region DB Sets - Logging
 
         public DbSet<SqlLogEntry> LogEntries { get; set; }
 
         public DbSet<SqlLogSetting> LogSettings { get; set; }
+
+        #endregion DB Sets - Logging
+
+        #region DB Sets - Security
 
         public DbSet<SqlSecApp> SecApps { get; set; }
 
@@ -96,7 +112,37 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
         public DbSet<SqlSecUser> SecUsers { get; set; }
 
-        #endregion DB Sets
+        #endregion DB Sets - Security
+
+        #region DB Sets - Identity
+
+        public DbSet<SqlIdnClient> IdnClients { get; set; }
+
+        public DbSet<SqlIdnClientClaim> IdnClientClaims { get; set; }
+
+        public DbSet<SqlIdnClientCorsOrigin> IdnClientCorsOrigins { get; set; }
+
+        public DbSet<SqlIdnClientCustomGrantType> IdnClientCustomGrantTypes { get; set; }
+
+        public DbSet<SqlIdnClientIdPRestriction> IdnClientIdPRestrictions { get; set; }
+
+        public DbSet<SqlIdnClientPostLogoutRedirectUri> IdnClientPostLogoutRedirectUris { get; set; }
+
+        public DbSet<SqlIdnClientRedirectUri> IdnClientRedirectUris { get; set; }
+
+        public DbSet<SqlIdnClientScope> IdnClientScopes { get; set; }
+
+        public DbSet<SqlIdnClientSecret> IdnClientSecrets { get; set; }
+
+        public DbSet<SqlIdnConsent> IdnConsents { get; set; }
+
+        public DbSet<SqlIdnScope> IdnScopes { get; set; }
+
+        public DbSet<SqlIdnScopeClaim> IdnScopeClaims { get; set; }
+
+        public DbSet<SqlIdnToken> IdnTokens { get; set; }
+
+        #endregion DB Sets - Identity
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {
@@ -105,6 +151,15 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
 
             base.OnModelCreating(mb);
 
+            #region Configurations - Logging
+
+            mb.Configurations.Add(new SqlLogSettingTypeConfiguration());
+            mb.Configurations.Add(new SqlLogEntryTypeConfiguration());
+
+            #endregion Configurations - Logging
+
+            #region Configurations - Security
+
             mb.Configurations.Add(new SqlSecAppTypeConfiguration());
             mb.Configurations.Add(new SqlSecContextTypeConfiguration());
             mb.Configurations.Add(new SqlSecEntryTypeConfiguration());
@@ -112,8 +167,26 @@ namespace Finsa.Caravan.DataAccess.Drivers.Sql
             mb.Configurations.Add(new SqlSecObjectTypeConfiguration());
             mb.Configurations.Add(new SqlSecRoleTypeConfiguration());
             mb.Configurations.Add(new SqlSecUserTypeConfiguration());
-            mb.Configurations.Add(new SqlLogSettingTypeConfiguration());
-            mb.Configurations.Add(new SqlLogEntryTypeConfiguration());
+
+            #endregion Configurations - Security
+
+            #region Configuration - Identity
+
+            mb.Configurations.Add(new SqlIdnClientTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnClientClaimTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnClientCorsOriginTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnClientCustomGrantTypeTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnClientIdPRestrictionTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnClientPostLogoutRedirectUriTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnClientRedirectUriTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnClientScopeTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnClientSecretTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnConsentTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnScopeTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnScopeClaimTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnTokenTypeConfiguration());
+
+            #endregion Configuration - Identity
         }
     }
 }

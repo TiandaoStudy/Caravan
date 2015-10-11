@@ -17,14 +17,22 @@ using PommaLabs.Thrower;
 using Swashbuckle.Application;
 using System;
 using System.Data.Entity.Infrastructure.Interception;
+using System.Net.Http;
 using System.Web.Http;
 
 [assembly: OwinStartup(typeof(Startup))]
 
 namespace Finsa.Caravan.WebService
 {
+    /// <summary>
+    ///   Inizializza il servizio di Caravan.
+    /// </summary>
     public sealed class Startup
     {
+        /// <summary>
+        ///   Inizializza il servizio di Caravan.
+        /// </summary>
+        /// <param name="app">Necessario per configurare il servizio.</param>
         public void Configuration(IAppBuilder app)
         {
             var config = new HttpConfiguration();
@@ -49,12 +57,12 @@ namespace Finsa.Caravan.WebService
             IdentityConfig.Build(app);
         }
 
-        static IKernel CreateKernel()
+        private static IKernel CreateKernel()
         {
             return CaravanServiceProvider.NinjectKernel ?? (CaravanServiceProvider.NinjectKernel = new StandardKernel(new NinjectConfig()));
         }
 
-        static void ConfigureHelpPages(HttpConfiguration config)
+        private static void ConfigureHelpPages(HttpConfiguration config)
         {
             // REQUIRED TO ENABLE HELP PAGES :)
             config.MapHttpAttributeRoutes();
@@ -62,6 +70,7 @@ namespace Finsa.Caravan.WebService
             {
                 c.SingleApiVersion("v1", "wsCaravan");
                 c.IncludeXmlComments(PortableEnvironment.MapPath(@"~/App_Data/HelpPages/WebServiceHelp.xml"));
+                c.RootUrl(req => req.RequestUri.GetLeftPart(UriPartial.Authority) + req.GetRequestContext().VirtualPathRoot.TrimEnd('/'));
             }).EnableSwaggerUi(c =>
             {
                 c.DocExpansion(DocExpansion.None);
@@ -69,7 +78,7 @@ namespace Finsa.Caravan.WebService
             });
         }
 
-        static void ConfigureFormatters(HttpConfiguration configuration)
+        private static void ConfigureFormatters(HttpConfiguration configuration)
         {
             // Controlli di integrità.
             Raise<ArgumentNullException>.IfIsNull(configuration);

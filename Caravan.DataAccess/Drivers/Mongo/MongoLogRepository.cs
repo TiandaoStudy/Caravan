@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Logging;
-using Finsa.Caravan.DataAccess.Drivers.Mongo.DataModel.Security;
 using Finsa.CodeServices.Common;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -13,6 +11,8 @@ using MongoDB.Driver.Linq;
 using Common.Logging;
 using System.Threading.Tasks;
 using Finsa.Caravan.Common.Logging.Models;
+using Finsa.Caravan.DataAccess.Drivers.Mongo.Models.Logging;
+using Finsa.Caravan.DataAccess.Drivers.Mongo.Models.Security;
 
 namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 {
