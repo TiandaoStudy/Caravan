@@ -3,7 +3,7 @@
 <package>
     <metadata>
         <id>Finsa.Caravan.Common</id>
-        <version>1.18.0</version>
+        <version>1.19.0</version>
         <title>Finsa.Caravan.Common</title>
         <authors>Finsa S.p.A.</authors>
         <owners>Finsa S.p.A.</owners>
@@ -25,11 +25,11 @@ A short description of the package. If specified, this shows up in the middle pa
             <dependency id="BrockAllen.IdentityReboot" version="[2.0.0]" />
             <dependency id="Common.Logging" version="[3.3.0]" />
             <dependency id="Common.Logging.Core" version="[3.3.0]" />
-            <dependency id="Finsa.CodeServices.Common" version="2.7.0" />
+            <dependency id="Finsa.CodeServices.Common" version="[3.0.3, 4.0.0)" />
             <dependency id="Microsoft.AspNet.Identity.Core" version="[2.2.1]" />
             <dependency id="Ninject" version="[3.2.2.0]" />
             <dependency id="Newtonsoft.Json" version="[7.0.1]" />
-            <dependency id="PommaLabs.KVLite.Core" version="4.4.3" />
+            <dependency id="PommaLabs.KVLite.Core" version="[4.4.5, 5.0.0)" />
             <dependency id="Westwind.Utilities.Configuration" version="[2.25]" />
         </dependencies>
         <references></references>
