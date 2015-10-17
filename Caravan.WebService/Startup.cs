@@ -6,6 +6,8 @@ using Finsa.Caravan.WebApi.Middlewares;
 using Finsa.Caravan.WebService;
 using Finsa.CodeServices.Common.Portability;
 using Microsoft.Owin;
+using Microsoft.Owin.FileSystems;
+using Microsoft.Owin.StaticFiles;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Ninject;
@@ -42,9 +44,18 @@ namespace Finsa.Caravan.WebService
             var cache = kernel.Get<ICache>();
 
             // Inizializzatore per Caravan.
-            CaravanServiceHelper.OnStartAsync(config, LogManager.GetLogger<Startup>(), cache).Wait();
+            CaravanServiceHelper.OnStart(config, LogManager.GetLogger<Startup>(), cache);
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
             app.Use(kernel.Get<HttpLoggingMiddleware>());
+
+            var root = PortableEnvironment.MapPath("~/Caravan/Administration");
+            var fileSystem = new PhysicalFileSystem(root);
+            var options = new StaticFileOptions
+            {
+                RequestPath = new PathString("/admin"),
+                FileSystem = fileSystem
+            };
+            app.UseStaticFiles(options);
 
             // Inizializzatore per Ninject.
             app.UseNinjectMiddleware(CreateKernel).UseNinjectWebApi(config);
@@ -52,6 +63,9 @@ namespace Finsa.Caravan.WebService
             // Inizializzatori specifici del servizio.
             ConfigureHelpPages(config);
             ConfigureFormatters(config);
+
+            // Inizializzazione SignalR.
+            ConfigureSignalR(app);
 
             // Inizializzazione gestione identità.
             IdentityConfig.Build(app);
@@ -96,6 +110,11 @@ namespace Finsa.Caravan.WebService
             // Personalizzo le impostazioni del serializzatore XML.
             var xml = configuration.Formatters.XmlFormatter;
             xml.Indent = false;
+        }
+
+        private static void ConfigureSignalR(IAppBuilder app)
+        {
+            app.MapSignalR();
         }
     }
 }

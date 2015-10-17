@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <views>
-  <mapping-views hash="d0fe4905da43c7364cf508ced1e0e0fa227fdf519305b7a768f1a14afd7cbcac" conceptual-container="SqlDbContext" store-container="CodeFirstDatabase">
+  <mapping-views hash="b2133e39511ca14f05c24b1ea962fffc67ea5b0692f032629e2cf83abec00461" conceptual-container="SqlDbContext" store-container="CodeFirstDatabase">
     <view extent="CodeFirstDatabase.SqlIdnClientClaim"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnClientClaim
         [CodeFirstDatabaseSchema.SqlIdnClientClaim](T1.[SqlIdnClientClaim.CCLM_ID], T1.[SqlIdnClientClaim.CCLM_TYPE], T1.[SqlIdnClientClaim.CCLM_VALUE], T1.[SqlIdnClientClaim.CCLI_ID])

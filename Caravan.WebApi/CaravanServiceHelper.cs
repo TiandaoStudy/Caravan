@@ -20,7 +20,7 @@ namespace Finsa.Caravan.WebApi
         /// <param name="configuration">La configurazione HTTP.</param>
         /// <param name="log">Un'istanza valida del log.</param>
         /// <param name="cache">Un'istanza valida della cache.</param>
-        public static async Task OnStartAsync(HttpConfiguration configuration, ILog log, ICache cache)
+        public static async void OnStart(HttpConfiguration configuration, ILog log, ICache cache)
         {
             // Controlli di integrità.
             RaiseArgumentNullException.IfIsNull(configuration, nameof(configuration));
