@@ -327,7 +327,11 @@
     <Compile Include="Controllers\LoggerController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Hubs\ServerTimeHub.cs" />
+    <Compile Include="Hubs\StockTickerHub.cs" />
     <Compile Include="IdentityConfig.cs" />
+    <Compile Include="Models\SignalR\ServerUtcNow.cs" />
+    <Compile Include="Models\SignalR\Stock.cs" />
     <Compile Include="NinjectConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -363,6 +367,7 @@
     <Content Include="Caravan\Administration\js\_bootstrap.min.js">
       <DependentUpon>_bootstrap.js</DependentUpon>
     </Content>
+    <Content Include="Caravan\Administration\js\_hubs.js" />
     <Content Include="Caravan\Administration\js\_jquery.js" />
     <Content Include="Caravan\Administration\js\_jquery.min.js">
       <DependentUpon>_jquery.js</DependentUpon>
