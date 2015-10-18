@@ -12,7 +12,7 @@ namespace Finsa.Caravan.WebApi
     /// <summary>
     ///   Gestisce alcuni eventi comuni a tutte le applicazioni.
     /// </summary>
-    public sealed class CaravanServiceHelper
+    public sealed class CaravanWebApiHelper
     {
         /// <summary>
         ///   Esegue alcune operazioni preliminari all'avvio dell'applicazione.

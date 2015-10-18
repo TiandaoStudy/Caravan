@@ -44,28 +44,17 @@ namespace Finsa.Caravan.WebService
             var cache = kernel.Get<ICache>();
 
             // Inizializzatore per Caravan.
-            CaravanServiceHelper.OnStart(config, LogManager.GetLogger<Startup>(), cache);
+            CaravanWebApiHelper.OnStart(config, LogManager.GetLogger<Startup>(), cache);
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
             app.Use(kernel.Get<HttpLoggingMiddleware>());
-
-            var root = PortableEnvironment.MapPath("~/Caravan/Administration");
-            var fileSystem = new PhysicalFileSystem(root);
-            var options = new StaticFileOptions
-            {
-                RequestPath = new PathString("/admin"),
-                FileSystem = fileSystem
-            };
-            app.UseStaticFiles(options);
 
             // Inizializzatore per Ninject.
             app.UseNinjectMiddleware(CreateKernel).UseNinjectWebApi(config);
 
             // Inizializzatori specifici del servizio.
+            ConfigureAdminPages(app);
             ConfigureHelpPages(config);
             ConfigureFormatters(config);
-
-            // Inizializzazione SignalR.
-            ConfigureSignalR(app);
 
             // Inizializzazione gestione identità.
             IdentityConfig.Build(app);
@@ -74,6 +63,18 @@ namespace Finsa.Caravan.WebService
         private static IKernel CreateKernel()
         {
             return CaravanServiceProvider.NinjectKernel ?? (CaravanServiceProvider.NinjectKernel = new StandardKernel(new NinjectConfig()));
+        }
+
+        private static void ConfigureAdminPages(IAppBuilder app)
+        {
+            var root = PortableEnvironment.MapPath("~/Caravan/Administration");
+            var fileSystem = new PhysicalFileSystem(root);
+            var options = new StaticFileOptions
+            {
+                RequestPath = new PathString("/admin"),
+                FileSystem = fileSystem
+            };
+            app.UseStaticFiles(options);
         }
 
         private static void ConfigureHelpPages(HttpConfiguration config)
@@ -110,11 +111,6 @@ namespace Finsa.Caravan.WebService
             // Personalizzo le impostazioni del serializzatore XML.
             var xml = configuration.Formatters.XmlFormatter;
             xml.Indent = false;
-        }
-
-        private static void ConfigureSignalR(IAppBuilder app)
-        {
-            app.MapSignalR();
         }
     }
 }

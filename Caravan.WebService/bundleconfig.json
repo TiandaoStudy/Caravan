@@ -27,8 +27,7 @@
     {
         "outputFileName": "Caravan/Administration/js/_jquery.js",
         "inputFiles": [
-            "Scripts/jquery-2.1.4.js",
-            "Scripts/jquery.signalR-2.2.0.js"
+            "Scripts/jquery-2.1.4.js"
         ],
         "minify": {
             "enabled": true,
