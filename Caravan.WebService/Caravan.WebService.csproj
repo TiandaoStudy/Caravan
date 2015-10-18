@@ -394,6 +394,7 @@
     <Content Include="Scripts\angular-route.min.js.map" />
     <Content Include="Caravan\Administration\package.json" />
     <Content Include="Caravan\Administration\readme.md" />
+    <Content Include="bower.json" />
     <None Include="bundleconfig.json" />
     <Content Include="Caravan\Administration\js\_angular.min.js.map">
       <DependentUpon>_angular.min.js</DependentUpon>
