@@ -2,12 +2,15 @@
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.WebApi.Core;
 using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Common.IO.RecyclableMemoryStream;
 using Finsa.CodeServices.Serialization;
 using Microsoft.Owin;
 using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using AppFunc = System.Func<System.Collections.Generic.IDictionary<string, object>, System.Threading.Tasks.Task>;
 
@@ -25,6 +28,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
     /// </summary>
     public sealed class HttpLoggingMiddleware : IDisposable
     {
+        const string BufferTag = "HttpLoggingMiddleware.ResponseStream";
         const int MinBufferSize = 512;
 
         readonly ICaravanLog _log;
@@ -35,10 +39,19 @@ namespace Finsa.Caravan.WebApi.Middlewares
         {
             RaiseArgumentNullException.IfIsNull(log, nameof(log));
             _log = log;
-            Filter = HttpLoggingFilter.LogRequestBody | HttpLoggingFilter.LogResponseBody;
         }
 
-        public HttpLoggingFilter Filter { get; set; }
+        public HttpLoggingFilter Filter { get; set; } = HttpLoggingFilter.LogRequestBody | HttpLoggingFilter.LogResponseBody;
+
+        /// <summary>
+        ///   URI, o pezzi di URI, che non devono essere loggati.
+        /// </summary>
+        public IList<PathString> IgnoredUris { get; } = new List<PathString>
+        {
+            PathString.FromUriComponent("logger"),
+            PathString.FromUriComponent("swagger"),
+            PathString.FromUriComponent("signalr")
+        };
 
         public void Initialize(AppFunc next)
         {
@@ -60,15 +73,6 @@ namespace Finsa.Caravan.WebApi.Middlewares
             var requestId = UniqueIdGenerator.NewBase32("-");
             _log.ThreadVariablesContext.Set(Constants.RequestId, requestId);
 
-            // Indica se è una richiesta per il logger: non vogliamo loggare le chiamate al log.
-            // Inoltre, non devono finire nel log neanche le chiamate alle pagine di help di Swagger.
-            var owinRequestUri = owinContext.Request.Uri.SafeToString().ToLowerInvariant();
-            if (owinRequestUri.Contains("logger") || owinRequestUri.Contains("swagger"))
-            {
-                await _next.Invoke(environment);
-                return;
-            }
-
             try
             {
                 // Aggiungo l'ID della request agli header della response, in modo che sia più
@@ -82,13 +86,18 @@ namespace Finsa.Caravan.WebApi.Middlewares
                 _log.Error("Could not add the Caravan request ID header...", ex);
             }
 
+            // Indica se è una richiesta per il logger: non vogliamo loggare le chiamate al log.
+            // Inoltre, non devono finire nel log neanche le chiamate alle pagine di help di Swagger.
+            var owinRequestUri = owinContext.Request.Uri.SafeToString().ToLowerInvariant();
+            var uriIsIgnored = IgnoredUris.Any(iu => owinRequestUri.Contains(iu.Value));
+
             // Log request
             if (!_disposed)
             {
                 try
                 {
                     var body = string.Empty;
-                    if (Filter.HasFlag(HttpLoggingFilter.LogRequestBody))
+                    if (Filter.HasFlag(HttpLoggingFilter.LogRequestBody) && !uriIsIgnored)
                     {
                         body = await FormatBodyStreamAsync(request.Body);
                     }
@@ -115,19 +124,28 @@ namespace Finsa.Caravan.WebApi.Middlewares
                 }
             }
 
-            // Buffer the response
-            var responseStream = response.Body;
-            var responseBuffer = new MemoryStream(MinBufferSize);
-            response.Body = responseBuffer;
+            var responseStream = Stream.Null;
+            var responseBuffer = RecyclableMemoryStreamManager.Instance.GetStream(BufferTag, MinBufferSize);
 
-            try
+            // Perform request
+            if (!_disposed)
             {
-                // Run inner handlers
-                await _next.Invoke(environment);
-            }
-            catch (Exception ex) when (_log.Fatal(new LogMessage { Context = "Processing request", Exception = ex }))
-            {
-                // Eccezione rilanciata in automatico, la funzione di log ritorna sempre FALSE.
+                // Buffer the response - Only is the URI is not ignored
+                if (!uriIsIgnored)
+                {
+                    responseStream = response.Body;
+                    response.Body = responseBuffer;
+                }
+
+                try
+                {
+                    // Run inner handlers
+                    await _next.Invoke(environment);
+                }
+                catch (Exception ex) when (_log.Fatal(new LogMessage { Context = "Processing request", Exception = ex }))
+                {
+                    // Eccezione rilanciata in automatico, la funzione di log ritorna sempre FALSE.
+                }
             }
 
             // Log response
@@ -136,14 +154,16 @@ namespace Finsa.Caravan.WebApi.Middlewares
                 try
                 {
                     var body = string.Empty;
-                    if (Filter.HasFlag(HttpLoggingFilter.LogResponseBody))
+                    if (Filter.HasFlag(HttpLoggingFilter.LogResponseBody) && !uriIsIgnored)
                     {
                         body = await FormatBodyStreamAsync(response.Body);
 
                         // You need to do this so that the response we buffered is flushed out to
                         // the client application.
+                        Debug.Assert(responseStream != Stream.Null);
                         await responseBuffer.CopyToAsync(responseStream);
                         response.Body = responseStream;
+                        responseBuffer.Dispose();
                     }
 
                     _log.Trace(new LogMessage
