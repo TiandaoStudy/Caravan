@@ -1,7 +1,18 @@
-﻿using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Logging;
+﻿// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
+using AutoMapper;
 using Finsa.Caravan.Common.Logging.Models;
-using Finsa.CodeServices.Common;
+using Ninject;
 using NLog;
 using NLog.Common;
 using NLog.Config;
@@ -12,7 +23,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using LogLevel = Common.Logging.LogLevel;
 
-namespace Finsa.Caravan.DataAccess.Logging
+namespace Finsa.Caravan.Common.Logging
 {
     /// <summary>
     ///   Target per il log di Caravan su database.
@@ -23,6 +34,8 @@ namespace Finsa.Caravan.DataAccess.Logging
         private static readonly SimpleLayout DefaultUserLogin = new SimpleLayout("${identity:name=true:lowercase=true}");
         private static readonly SimpleLayout DefaultCodeUnit = new SimpleLayout("${callsite:className=true:methodName=false:lowercase=true}");
         private static readonly SimpleLayout DefaultFunction = new SimpleLayout("${callsite:className=false:methodName=true:lowercase=true}");
+
+        private static readonly ICaravanLogRepository LogRepository = CaravanServiceProvider.NinjectKernel.Get<ICaravanLogRepository>();
 
         /// <summary>
         ///   Il layout da applicare per mostrare l'utente loggato che ha prodotto il messaggio.
@@ -51,12 +64,12 @@ namespace Finsa.Caravan.DataAccess.Logging
         ///   Writes logging event to the log target classes.
         /// </summary>
         /// <param name="logEvent">Logging event to be written out.</param>
-        protected override void Write(LogEventInfo logEvent)
+        protected async override void Write(LogEventInfo logEvent)
         {
             try
             {
                 var logEntry = ToLogEntry(logEvent);
-                var result = CaravanDataSource.Logger.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, logEntry).Result;
+                var result = await LogRepository.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, logEntry);
 
                 if (!result.Succeeded)
                 {
@@ -70,12 +83,12 @@ namespace Finsa.Caravan.DataAccess.Logging
             }
         }
 
-        protected override void Write(AsyncLogEventInfo asyncLogEvent)
+        protected async override void Write(AsyncLogEventInfo asyncLogEvent)
         {
             try
             {
                 var logEntry = ToLogEntry(asyncLogEvent.LogEvent);
-                var result = CaravanDataSource.Logger.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, logEntry).Result;
+                var result = await LogRepository.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, logEntry);
 
                 if (!result.Succeeded)
                 {
@@ -89,12 +102,12 @@ namespace Finsa.Caravan.DataAccess.Logging
             }
         }
 
-        protected override void Write(AsyncLogEventInfo[] asyncLogEvents)
+        protected async override void Write(AsyncLogEventInfo[] asyncLogEvents)
         {
             try
             {
                 var logEntries = asyncLogEvents.Select(le => ToLogEntry(le.LogEvent));
-                var result = CaravanDataSource.Logger.AddEntriesAsync(CaravanCommonConfiguration.Instance.AppName, logEntries).Result;
+                var result = await LogRepository.AddEntriesAsync(CaravanCommonConfiguration.Instance.AppName, logEntries);
 
                 if (!result.Succeeded)
                 {
@@ -112,23 +125,23 @@ namespace Finsa.Caravan.DataAccess.Logging
         {
             // Nulla da fare...
         }
-        
+
         private LogEntry ToLogEntry(LogEventInfo logEvent)
         {
             LogEntry logEntry;
-            
+
             var caravanLogEvent = logEvent as CaravanLogger.LogEventInfo;
             if (caravanLogEvent != null)
             {
-                // Innanzitutto, cerco di vedere se si tratta di un evento di log prodotto da Caravan,
-                // cosa che dovrebbe avvenire nel 100% dei casi. Se si, applico un meccanismo di log
-                // molto più efficiente, avendo già preparato il messaggio in precedenza.
+                // Innanzitutto, cerco di vedere se si tratta di un evento di log prodotto da
+                // Caravan, cosa che dovrebbe avvenire nel 100% dei casi. Se si, applico un
+                // meccanismo di log molto più efficiente, avendo già preparato il messaggio in precedenza.
                 logEntry = caravanLogEvent.LogEntry;
             }
             else
             {
                 // Se non lo è, cerco di generare comunque un messaggio abbozzato.
-                logEntry = CaravanLogger.ToLogEntry(ParseLogLevel(logEvent.Level), new LogMessage
+                logEntry = CaravanLogger.ToLogEntry(Mapper.Map<LogLevel>(logEvent.Level), new LogMessage
                 {
                     ShortMessage = logEvent.FormattedMessage?.Trim(),
                     Exception = logEvent.Exception
@@ -142,40 +155,6 @@ namespace Finsa.Caravan.DataAccess.Logging
             logEntry.Context = Context?.Render(logEvent) ?? logEntry.Context;
 
             return logEntry;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static LogLevel ParseLogLevel(NLog.LogLevel logLevel)
-        {
-            switch (logLevel.Name[0])
-            {
-                case 'd':
-                case 'D':
-                    return LogLevel.Debug;
-
-                case 't':
-                case 'T':
-                    return LogLevel.Trace;
-
-                case 'i':
-                case 'I':
-                    return LogLevel.Info;
-
-                case 'w':
-                case 'W':
-                    return LogLevel.Warn;
-
-                case 'e':
-                case 'E':
-                    return LogLevel.Error;
-
-                case 'f':
-                case 'F':
-                    return LogLevel.Fatal;
-
-                default:
-                    return LogLevel.Debug;
-            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

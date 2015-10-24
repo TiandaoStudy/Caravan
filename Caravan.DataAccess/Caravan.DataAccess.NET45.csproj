@@ -85,9 +85,6 @@
       <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fasterflect">
-      <HintPath>..\packages\fasterflect.2.1.3\lib\net40\Fasterflect.dll</HintPath>
-    </Reference>
     <Reference Include="Finsa.CodeServices.Clock, Version=3.0.5.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
       <HintPath>..\packages\Finsa.CodeServices.Clock.3.0.5\lib\net45\Finsa.CodeServices.Clock.dll</HintPath>
       <Private>True</Private>
@@ -269,7 +266,6 @@
     <Compile Include="Sql\Identity\Stores\SqlIdnTokenHandleStore.cs" />
     <Compile Include="Sql\Entities\SqlTrackedEntity.cs" />
     <Compile Include="Sql\Logging\SqlDbCommandLogger.cs" />
-    <Compile Include="Logging\CaravanLogTarget.cs" />
     <Compile Include="Sql\Security\Entities\SqlSecRole.cs" />
     <Compile Include="Core\AbstractDataSourceManager.cs" />
     <Compile Include="Core\AbstractLogRepository.cs" />

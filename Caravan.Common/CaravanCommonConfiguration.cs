@@ -85,6 +85,7 @@ namespace Finsa.Caravan.Common
                 LogLevel logLevel;
                 return Enum.TryParse(str, true, out logLevel) ? logLevel : LogLevel.Debug;
             });
+            Mapper.CreateMap<NLog.LogLevel, LogLevel>();
         }
 
         #endregion OnStart
