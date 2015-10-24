@@ -179,7 +179,7 @@
     <Compile Include="Web\Models\Links\LastLink.cs" />
     <Compile Include="Web\Models\Links\Link.cs" />
     <Compile Include="Web\Models\Links\LinkedObject.cs" />
-    <Compile Include="Web\Models\Links\Links.cs" />
+    <Compile Include="Web\Models\Links\LinkCollection.cs" />
     <Compile Include="Web\Models\Links\NextLink.cs" />
     <Compile Include="Web\Models\Links\PreviousLink.cs" />
     <Compile Include="Web\Models\Links\RelatedLink.cs" />

@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using System.Web.Http.Routing;
 using AutoMapper;
-using Finsa.Caravan.Common.Models.Linking;
+using Finsa.Caravan.Web.Models.Links;
 using Newtonsoft.Json;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.Common.Security.Models;
