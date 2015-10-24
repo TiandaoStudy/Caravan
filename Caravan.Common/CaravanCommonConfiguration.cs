@@ -10,17 +10,17 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using System;
 using AutoMapper;
 using Common.Logging;
 using Finsa.CodeServices.Common.Portability;
+using System;
 using Westwind.Utilities.Configuration;
 
 namespace Finsa.Caravan.Common
 {
     /// <summary>
-    ///   Configuration class for Caravan.Common. Default values are set inside
-    ///   the configuration file itself.
+    ///   Configuration class for Caravan.Common. Default values are set inside the configuration
+    ///   file itself.
     /// </summary>
     public sealed class CaravanCommonConfiguration : AppConfiguration
     {
@@ -55,7 +55,7 @@ namespace Finsa.Caravan.Common
             return instance;
         }
 
-        #endregion
+        #endregion Static instance
 
         /// <summary>
         ///   Il nome identificativo dell'applicazione Caravan, rigorosamente minuscolo.
@@ -65,11 +65,11 @@ namespace Finsa.Caravan.Common
         /// <summary>
         ///   La descrizione estesa dell'applicazione, viene usata per mostrare il nome dell'applicativo.
         /// </summary>
-        public string AppDescription { get; set; } = "My Wow Caravan App";
+        public string AppDescription { get; set; } = "My WOW! Caravan App";
 
         /// <summary>
-        ///   L'intervallo dopo il quale le variabili di log memorizzate nel contesto in memoria
-        ///   di Caravan vengono automaticamente cancellate.
+        ///   L'intervallo dopo il quale le variabili di log memorizzate nel contesto in memoria di
+        ///   Caravan vengono automaticamente cancellate.
         /// 
         ///   L'intervallo di default è di 30 minuti.
         /// </summary>
@@ -87,6 +87,6 @@ namespace Finsa.Caravan.Common
             });
         }
 
-        #endregion
+        #endregion OnStart
     }
 }

@@ -58,10 +58,6 @@
     <Reference Include="Crc32C.NET">
       <HintPath>..\packages\Crc32C.NET.1.0.5.0\lib\net20\Crc32C.NET.dll</HintPath>
     </Reference>
-    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
-    </Reference>
     <Reference Include="Finsa.CodeServices.Clock, Version=3.0.5.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
       <HintPath>..\packages\Finsa.CodeServices.Clock.3.0.5\lib\net45\Finsa.CodeServices.Clock.dll</HintPath>
       <Private>True</Private>
@@ -86,6 +82,10 @@
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MoreLinq, Version=1.4.18916.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <HintPath>..\packages\morelinq.1.4.0\lib\net35\MoreLinq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -114,6 +114,7 @@
       <HintPath>..\packages\Snappy.NET.1.1.1.8\lib\net45\Snappy.NET.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -136,15 +137,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessModeling\Workflow.cs" />
     <Compile Include="CaravanCommonConfiguration.cs" />
     <Compile Include="CaravanNinjectConfig.cs" />
     <Compile Include="Core\ErrorMessages.cs" />
+    <Compile Include="Logging\Activities\AbstractLogActivity.cs" />
     <Compile Include="Logging\CaravanLogger.cs" />
     <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />
     <Compile Include="Logging\CaravanNoOpLogger.cs" />
     <Compile Include="Logging\CaravanVariablesContext.cs" />
     <Compile Include="Logging\ICaravanLogRepository.cs" />
-    <Compile Include="Models\Formatting\PageOrientation.cs" />
+    <Compile Include="Logging\Workflows\CleanUpLogRepository.cs" />
+    <Compile Include="Reporting\Models\PageOrientation.cs" />
     <Compile Include="Logging\Models\LogEntryQuery.cs" />
     <Compile Include="Security\Models\SecGroupUpdates.cs" />
     <Compile Include="Security\Models\SecUserUpdates.cs" />
@@ -164,25 +168,23 @@
     <Compile Include="Logging\Exceptions\LogSettingNotFoundException.cs" />
     <Compile Include="Security\Exceptions\SecUserExistingException.cs" />
     <Compile Include="Security\Exceptions\SecUserNotFoundException.cs" />
-    <Compile Include="Models\Formatting\TextAlignment.cs" />
-    <Compile Include="Models\Linking\AlternateLink.cs" />
-    <Compile Include="Models\Linking\CollectionLink.cs" />
-    <Compile Include="Models\Linking\EditLink.cs" />
-    <Compile Include="Models\Linking\EditMediaLink.cs" />
-    <Compile Include="Models\Linking\FirstLink.cs" />
-    <Compile Include="Models\Linking\LastLink.cs" />
-    <Compile Include="Models\Linking\Link.cs" />
-    <Compile Include="Models\Linking\LinkedObject.cs" />
-    <Compile Include="Models\Linking\Links.cs" />
-    <Compile Include="Models\Linking\NextLink.cs" />
-    <Compile Include="Models\Linking\PreviousLink.cs" />
-    <Compile Include="Models\Linking\RelatedLink.cs" />
-    <Compile Include="Models\Linking\SelfLink.cs" />
+    <Compile Include="Reporting\Models\TextAlignment.cs" />
+    <Compile Include="Web\Models\Links\AlternateLink.cs" />
+    <Compile Include="Web\Models\Links\CollectionLink.cs" />
+    <Compile Include="Web\Models\Links\EditLink.cs" />
+    <Compile Include="Web\Models\Links\EditMediaLink.cs" />
+    <Compile Include="Web\Models\Links\FirstLink.cs" />
+    <Compile Include="Web\Models\Links\LastLink.cs" />
+    <Compile Include="Web\Models\Links\Link.cs" />
+    <Compile Include="Web\Models\Links\LinkedObject.cs" />
+    <Compile Include="Web\Models\Links\Links.cs" />
+    <Compile Include="Web\Models\Links\NextLink.cs" />
+    <Compile Include="Web\Models\Links\PreviousLink.cs" />
+    <Compile Include="Web\Models\Links\RelatedLink.cs" />
+    <Compile Include="Web\Models\Links\SelfLink.cs" />
     <Compile Include="Logging\Models\LogEntry.cs" />
     <Compile Include="Logging\Models\LogResult.cs" />
     <Compile Include="Logging\Models\LogSetting.cs" />
-    <Compile Include="Models\Rest\RestRequest.cs" />
-    <Compile Include="Models\Rest\RestResponse.cs" />
     <Compile Include="Security\Models\SecApp.cs" />
     <Compile Include="Security\Models\SecContext.cs" />
     <Compile Include="Security\Models\SecEntry.cs" />
@@ -207,7 +209,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Security\Activities\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -238,38 +238,39 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activities\Logging\AbstractLogActivity.cs" />
     <Compile Include="CaravanDataAccessConfiguration.cs" />
     <Compile Include="CaravanDataSourceKind.cs" />
-    <Compile Include="Drivers\Sql\Attributes\DateTimeKindAttribute.cs" />
-    <Compile Include="Drivers\Sql\Identity\Extensions\EntitiesMap.cs" />
-    <Compile Include="Drivers\Sql\Identity\Extensions\ModelsMap.cs" />
-    <Compile Include="Drivers\Sql\Identity\Entities\SqlIdnClientSecret.cs" />
-    <Compile Include="Drivers\Sql\Identity\Entities\SqlIdnClientScope.cs" />
-    <Compile Include="Drivers\Sql\Identity\Entities\SqlIdnClientRedirectUri.cs" />
-    <Compile Include="Drivers\Sql\Identity\Entities\SqlIdnClientPostLogoutRedirectUri.cs" />
-    <Compile Include="Drivers\Sql\Identity\Entities\SqlIdnClientIdPRestriction.cs" />
-    <Compile Include="Drivers\Sql\Identity\Entities\SqlIdnClientCustomGrantType.cs" />
-    <Compile Include="Drivers\Sql\Identity\Entities\SqlIdnClientCorsOrigin.cs" />
-    <Compile Include="Drivers\Sql\Identity\Entities\SqlIdnClientClaim.cs" />
-    <Compile Include="Drivers\Sql\Identity\Entities\SqlIdnClient.cs" />
-    <Compile Include="Drivers\Sql\Identity\Entities\SqlIdnConsent.cs" />
-    <Compile Include="Drivers\Sql\Identity\Entities\SqlIdnScopeClaim.cs" />
-    <Compile Include="Drivers\Sql\Identity\Entities\SqlIdnScope.cs" />
-    <Compile Include="Drivers\Sql\Identity\Entities\SqlIdnToken.cs" />
-    <Compile Include="Drivers\Sql\Identity\Services\SqlIdnClientConfigurationCorsPolicyService.cs" />
-    <Compile Include="Drivers\Sql\Identity\SqlIdnServiceFactory.cs" />
-    <Compile Include="Drivers\Sql\Identity\Stores\AbstractSqlIdnTokenStore.cs" />
-    <Compile Include="Drivers\Sql\Identity\Stores\SqlIdnAuthorizationCodeStore.cs" />
-    <Compile Include="Drivers\Sql\Identity\Stores\SqlIdnClientStore.cs" />
-    <Compile Include="Drivers\Sql\Identity\Stores\SqlIdnConsentStore.cs" />
-    <Compile Include="Drivers\Sql\Identity\Stores\SqlIdnRefreshTokenStore.cs" />
-    <Compile Include="Drivers\Sql\Identity\Stores\SqlIdnScopeStore.cs" />
-    <Compile Include="Drivers\Sql\Identity\Stores\SqlIdnTokenHandleStore.cs" />
-    <Compile Include="Drivers\Sql\Entities\SqlTrackedEntity.cs" />
-    <Compile Include="Logging\Sql\SqlDbCommandLogger.cs" />
+    <Compile Include="Rest\Models\RestRequest.cs" />
+    <Compile Include="Rest\Models\RestResponse.cs" />
+    <Compile Include="Sql\Attributes\DateTimeKindAttribute.cs" />
+    <Compile Include="Sql\Identity\Extensions\EntitiesMap.cs" />
+    <Compile Include="Sql\Identity\Extensions\ModelsMap.cs" />
+    <Compile Include="Sql\Identity\Entities\SqlIdnClientSecret.cs" />
+    <Compile Include="Sql\Identity\Entities\SqlIdnClientScope.cs" />
+    <Compile Include="Sql\Identity\Entities\SqlIdnClientRedirectUri.cs" />
+    <Compile Include="Sql\Identity\Entities\SqlIdnClientPostLogoutRedirectUri.cs" />
+    <Compile Include="Sql\Identity\Entities\SqlIdnClientIdPRestriction.cs" />
+    <Compile Include="Sql\Identity\Entities\SqlIdnClientCustomGrantType.cs" />
+    <Compile Include="Sql\Identity\Entities\SqlIdnClientCorsOrigin.cs" />
+    <Compile Include="Sql\Identity\Entities\SqlIdnClientClaim.cs" />
+    <Compile Include="Sql\Identity\Entities\SqlIdnClient.cs" />
+    <Compile Include="Sql\Identity\Entities\SqlIdnConsent.cs" />
+    <Compile Include="Sql\Identity\Entities\SqlIdnScopeClaim.cs" />
+    <Compile Include="Sql\Identity\Entities\SqlIdnScope.cs" />
+    <Compile Include="Sql\Identity\Entities\SqlIdnToken.cs" />
+    <Compile Include="Sql\Identity\Services\SqlIdnClientConfigurationCorsPolicyService.cs" />
+    <Compile Include="Sql\Identity\SqlIdnServiceFactory.cs" />
+    <Compile Include="Sql\Identity\Stores\AbstractSqlIdnTokenStore.cs" />
+    <Compile Include="Sql\Identity\Stores\SqlIdnAuthorizationCodeStore.cs" />
+    <Compile Include="Sql\Identity\Stores\SqlIdnClientStore.cs" />
+    <Compile Include="Sql\Identity\Stores\SqlIdnConsentStore.cs" />
+    <Compile Include="Sql\Identity\Stores\SqlIdnRefreshTokenStore.cs" />
+    <Compile Include="Sql\Identity\Stores\SqlIdnScopeStore.cs" />
+    <Compile Include="Sql\Identity\Stores\SqlIdnTokenHandleStore.cs" />
+    <Compile Include="Sql\Entities\SqlTrackedEntity.cs" />
+    <Compile Include="Sql\Logging\SqlDbCommandLogger.cs" />
     <Compile Include="Logging\CaravanLogTarget.cs" />
-    <Compile Include="Drivers\Sql\Security\Entities\SqlSecRole.cs" />
+    <Compile Include="Sql\Security\Entities\SqlSecRole.cs" />
     <Compile Include="Core\AbstractDataSourceManager.cs" />
     <Compile Include="Core\AbstractLogRepository.cs" />
     <Compile Include="Core\AbstractSecurityRepository.cs" />
@@ -278,82 +279,82 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
-    <Compile Include="Drivers\Mongo\Models\Logging\MongoLogEntry.cs" />
-    <Compile Include="Drivers\Mongo\Models\Logging\MongoLogSettings.cs" />
-    <Compile Include="Drivers\Mongo\Models\MongoDocument.cs" />
-    <Compile Include="Drivers\Mongo\Models\MongoSequence.cs" />
-    <Compile Include="Drivers\Mongo\Models\Security\MongoSecApp.cs" />
-    <Compile Include="Drivers\Mongo\MongoDataSourceManager.cs" />
-    <Compile Include="Drivers\Mongo\MongoLogRepository.cs" />
-    <Compile Include="Drivers\Mongo\MongoSecurityRepository.cs" />
-    <Compile Include="Drivers\Mongo\MongoUtilities.cs" />
-    <Compile Include="Drivers\Sql\FakeSql\FakeSqlDataSourceManager.cs" />
-    <Compile Include="Drivers\Sql\Logging\Entities\SqlLogEntry.cs" />
-    <Compile Include="Drivers\Sql\Logging\Entities\SqlLogSetting.cs" />
-    <Compile Include="Drivers\Sql\Security\Entities\SqlSecApp.cs" />
-    <Compile Include="Drivers\Sql\Security\Entities\SqlSecContext.cs" />
-    <Compile Include="Drivers\Sql\Security\Entities\SqlSecEntry.cs" />
-    <Compile Include="Drivers\Sql\Security\Entities\SqlSecGroup.cs" />
-    <Compile Include="Drivers\Sql\Security\Entities\SqlSecObject.cs" />
-    <Compile Include="Drivers\Sql\Security\Entities\SqlSecUser.cs" />
-    <Compile Include="Drivers\Sql\MySql\MySqlDataSourceManager.cs" />
-    <Compile Include="Drivers\Sql\Oracle\OracleDynamicParameters.cs" />
+    <Compile Include="Mongo\Models\Logging\MongoLogEntry.cs" />
+    <Compile Include="Mongo\Models\Logging\MongoLogSettings.cs" />
+    <Compile Include="Mongo\Models\MongoDocument.cs" />
+    <Compile Include="Mongo\Models\MongoSequence.cs" />
+    <Compile Include="Mongo\Models\Security\MongoSecApp.cs" />
+    <Compile Include="Mongo\MongoDataSourceManager.cs" />
+    <Compile Include="Mongo\MongoLogRepository.cs" />
+    <Compile Include="Mongo\MongoSecurityRepository.cs" />
+    <Compile Include="Mongo\MongoUtilities.cs" />
+    <Compile Include="Sql\FakeSql\FakeSqlDataSourceManager.cs" />
+    <Compile Include="Sql\Logging\Entities\SqlLogEntry.cs" />
+    <Compile Include="Sql\Logging\Entities\SqlLogSetting.cs" />
+    <Compile Include="Sql\Security\Entities\SqlSecApp.cs" />
+    <Compile Include="Sql\Security\Entities\SqlSecContext.cs" />
+    <Compile Include="Sql\Security\Entities\SqlSecEntry.cs" />
+    <Compile Include="Sql\Security\Entities\SqlSecGroup.cs" />
+    <Compile Include="Sql\Security\Entities\SqlSecObject.cs" />
+    <Compile Include="Sql\Security\Entities\SqlSecUser.cs" />
+    <Compile Include="Sql\MySql\MySqlDataSourceManager.cs" />
+    <Compile Include="Sql\Oracle\OracleDynamicParameters.cs" />
     <Compile Include="CaravanDataSource.cs" />
     <Compile Include="ICaravanDataSourceManager.cs" />
-    <Compile Include="Drivers\Sql\PostgreSql\PostgreSqlDataSourceManager.cs" />
-    <Compile Include="Drivers\Sql\SqlSecurityRepository.cs" />
+    <Compile Include="Sql\PostgreSql\PostgreSqlDataSourceManager.cs" />
+    <Compile Include="Sql\SqlSecurityRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Drivers\Sql\SqlLogRepository.cs" />
-    <Compile Include="Drivers\Sql\Oracle\OracleDataSourceManager.cs" />
-    <Compile Include="Drivers\Rest\RestLogRepository.cs" />
-    <Compile Include="Drivers\Rest\RestSecurityRepository.cs" />
-    <Compile Include="Drivers\Sql\SqlServerCe\SqlServerCeDataSourceManager.cs" />
-    <Compile Include="Drivers\Sql\SqlDbContext.cs" />
-    <Compile Include="Drivers\Sql\SqlServer\SqlServerDataSourceManager.cs" />
+    <Compile Include="Sql\SqlLogRepository.cs" />
+    <Compile Include="Sql\Oracle\OracleDataSourceManager.cs" />
+    <Compile Include="Rest\RestLogRepository.cs" />
+    <Compile Include="Rest\RestSecurityRepository.cs" />
+    <Compile Include="Sql\SqlServerCe\SqlServerCeDataSourceManager.cs" />
+    <Compile Include="Sql\SqlDbContext.cs" />
+    <Compile Include="Sql\SqlServer\SqlServerDataSourceManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Drivers\Sql\Oracle\Scripts\Packages\pck_caravan_utils.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_tokens.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_sco_claims.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_consents.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_cli_secrets.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_cli_scopes.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_cli_rdrct_uris.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_cli_pstlgtrdr_uris.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_cli_idpr_restrs.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_cli_cst_grnt_types.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_cli_cors_origins.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_cli_claims.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_scopes.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_idn_clients.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_sco_claims.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_consents.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_secrets.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_scopes.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_rdrct_uris.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_pstlgtrdr_uris.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_idpr_restrs.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_cst_grnt_types.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_cors_origins.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_claims.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\tu_crvn_idn_consents.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\tu_crvn_idn_clients.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\tu_crvn_idn_scopes.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_scopes.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\ti_crvn_idn_clients.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Views\v_caravan_log_summary.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Views\v_caravan_log.sql" />
-    <Content Include="Drivers\Sql\SqlServer\Scripts\Tables\crvn_log_entries.sql" />
-    <Content Include="Drivers\Sql\SqlServer\Scripts\Tables\crvn_log_settings.sql" />
-    <Content Include="Drivers\Sql\SqlServer\Scripts\Tables\crvn_sec_apps.sql" />
+    <Content Include="Sql\Oracle\Scripts\Packages\pck_caravan_utils.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_tokens.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_sco_claims.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_consents.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_cli_secrets.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_cli_scopes.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_cli_rdrct_uris.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_cli_pstlgtrdr_uris.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_cli_idpr_restrs.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_cli_cst_grnt_types.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_cli_cors_origins.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_cli_claims.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_scopes.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_clients.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_sco_claims.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_consents.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_secrets.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_scopes.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_rdrct_uris.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_pstlgtrdr_uris.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_idpr_restrs.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_cst_grnt_types.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_cors_origins.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_claims.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\tu_crvn_idn_consents.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\tu_crvn_idn_clients.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\tu_crvn_idn_scopes.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_scopes.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_clients.sql" />
+    <Content Include="Sql\Oracle\Scripts\Views\v_caravan_log_summary.sql" />
+    <Content Include="Sql\Oracle\Scripts\Views\v_caravan_log.sql" />
+    <Content Include="Sql\SqlServer\Scripts\Tables\crvn_log_entries.sql" />
+    <Content Include="Sql\SqlServer\Scripts\Tables\crvn_log_settings.sql" />
+    <Content Include="Sql\SqlServer\Scripts\Tables\crvn_sec_apps.sql" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Drivers\Sql\MySql\Scripts\all.tt">
+    <None Include="Sql\MySql\Scripts\all.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>all.sql</LastGenOutput>
     </None>
-    <None Include="Drivers\Sql\Oracle\Scripts\all.tt">
+    <None Include="Sql\Oracle\Scripts\all.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>all.sql</LastGenOutput>
     </None>
@@ -367,33 +368,33 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="README.md" />
-    <Content Include="Drivers\Sql\MySql\Scripts\all.sql">
+    <Content Include="Sql\MySql\Scripts\all.sql">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>all.tt</DependentUpon>
     </Content>
-    <Content Include="Drivers\Sql\MySql\Scripts\grants.sql" />
-    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_log_entries.sql" />
-    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_log_settings.sql" />
-    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_apps.sql" />
-    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_contexts.sql" />
-    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_entries.sql" />
-    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_groups.sql" />
-    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_objects.sql" />
-    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_roles.sql" />
-    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_users.sql" />
-    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_user_groups.sql" />
-    <Content Include="Drivers\Sql\MySql\Scripts\Tables\crvn_sec_user_roles.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\all.sql">
+    <Content Include="Sql\MySql\Scripts\grants.sql" />
+    <Content Include="Sql\MySql\Scripts\Tables\crvn_log_entries.sql" />
+    <Content Include="Sql\MySql\Scripts\Tables\crvn_log_settings.sql" />
+    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_apps.sql" />
+    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_contexts.sql" />
+    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_entries.sql" />
+    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_groups.sql" />
+    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_objects.sql" />
+    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_roles.sql" />
+    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_users.sql" />
+    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_user_groups.sql" />
+    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_user_roles.sql" />
+    <Content Include="Sql\Oracle\Scripts\all.sql">
       <DependentUpon>all.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Content>
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_roles.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_user_roles.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_roles_id.sql" />
-    <Content Include="Drivers\Sql\SqlServerCe\Scripts\Schema.sql" />
-    <None Include="Drivers\Sql\SqlServer\Scripts\Tables.sqlce" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_roles.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_user_roles.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_roles_id.sql" />
+    <Content Include="Sql\SqlServerCe\Scripts\Schema.sql" />
+    <None Include="Sql\SqlServer\Scripts\Tables.sqlce" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Caravan.Common\Caravan.Common.NET45.csproj">
@@ -402,30 +403,27 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Drivers\Sql\Oracle\Scripts\grants.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Packages\pck_caravan_log.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_log_entries.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_groups.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_log_settings.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_users.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_user_groups.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_objects.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_apps.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_contexts.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Tables\crvn_sec_entries.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_entries_id.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_objects_id.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_groups_id.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_contexts_id.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_users_id.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_sec_apps_id.sql" />
-    <Content Include="Drivers\Sql\Oracle\Scripts\Triggers\crvn_log_entries_id.sql" />
-    <Content Include="Drivers\Sql\PostgreSql\Scripts\Schema.sql" />
+    <Content Include="Sql\Oracle\Scripts\grants.sql" />
+    <Content Include="Sql\Oracle\Scripts\Packages\pck_caravan_log.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_log_entries.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_groups.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_log_settings.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_users.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_user_groups.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_objects.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_apps.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_contexts.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_entries.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_entries_id.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_objects_id.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_groups_id.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_contexts_id.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_users_id.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_apps_id.sql" />
+    <Content Include="Sql\Oracle\Scripts\Triggers\crvn_log_entries_id.sql" />
+    <Content Include="Sql\PostgreSql\Scripts\Schema.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Activities\Security\" />
-    <Folder Include="Security\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Core\ErrorMessages.resx">
       <Generator>ResXFileCodeGenerator</Generator>

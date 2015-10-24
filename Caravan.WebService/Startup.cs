@@ -1,6 +1,6 @@
 ﻿using Common.Logging;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.DataAccess.Logging.Sql;
+using Finsa.Caravan.DataAccess.Drivers.Sql.Logging;
 using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebApi.Middlewares;
 using Finsa.Caravan.WebService;
@@ -44,7 +44,7 @@ namespace Finsa.Caravan.WebService
             var cache = kernel.Get<ICache>();
 
             // Inizializzatore per Caravan.
-            CaravanWebApiHelper.OnStart(config, LogManager.GetLogger<Startup>(), cache);
+            CaravanWebServiceHelper.OnStart(config, LogManager.GetLogger<Startup>(), cache);
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
             app.Use(kernel.Get<HttpLoggingMiddleware>());
 

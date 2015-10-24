@@ -149,7 +149,7 @@
     <Compile Include="Core\Constants.cs" />
     <Compile Include="DelegatingHandlers\LoggingDelegatingHandler.cs" />
     <Compile Include="Middlewares\HttpLoggingMiddleware.cs" />
-    <Compile Include="CaravanWebApiHelper.cs" />
+    <Compile Include="CaravanWebServiceHelper.cs" />
     <Compile Include="Models\Security\LinkedSecApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
