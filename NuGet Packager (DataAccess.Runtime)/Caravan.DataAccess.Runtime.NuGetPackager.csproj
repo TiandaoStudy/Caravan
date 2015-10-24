@@ -56,7 +56,6 @@
     <None Include="Package.nuspec" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="content\" />
     <Folder Include="lib\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -80,7 +79,7 @@
     <Message Text="SUCCESS: Published package." Condition=" '$(Configuration)|$(Platform)|$(ExitCode)' == 'Release|AnyCPU|0' " Importance="High" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>if not exist "$(SolutionDir)NuGet Packager (DataAccess.Runtime)/content" mkdir "$(SolutionDir)NuGet Packager (DataAccess.Runtime)/content"
-copy "$(SolutionDir)Caravan.DataAccess\NLog.config" "$(SolutionDir)NuGet Packager (DataAccess.Runtime)/content"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>

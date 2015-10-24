@@ -455,7 +455,8 @@
   <ItemGroup>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>

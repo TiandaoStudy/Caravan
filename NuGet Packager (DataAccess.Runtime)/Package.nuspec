@@ -32,6 +32,5 @@ A short description of the package. If specified, this shows up in the middle pa
         <tags>finsa caravan</tags>
     </metadata>
     <files>
-        <file src="content\" target="content" />
     </files>
 </package>

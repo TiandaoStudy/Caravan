@@ -49,6 +49,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="content\NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="NuGetPackage.ps1" />
     <None Include="NuGetSetup.ps1" />
     <None Include="NuGet.exe" />
@@ -58,7 +61,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="content\" />
     <Folder Include="lib\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -81,4 +83,8 @@
     <Message Text="SUCCESS: Created package." Condition=" '$(Configuration)|$(Platform)|$(ExitCode)' == 'Debug|AnyCPU|0' " Importance="High" />
     <Message Text="SUCCESS: Published package." Condition=" '$(Configuration)|$(Platform)|$(ExitCode)' == 'Release|AnyCPU|0' " Importance="High" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>if not exist "$(SolutionDir)NuGet Packager (Common.Runtime)/content" mkdir "$(SolutionDir)NuGet Packager (Common.Runtime)/content"
+copy "$(SolutionDir)Caravan.Common\NLog.config" "$(SolutionDir)NuGet Packager (Common.Runtime)/content"</PreBuildEvent>
+  </PropertyGroup>
 </Project>
