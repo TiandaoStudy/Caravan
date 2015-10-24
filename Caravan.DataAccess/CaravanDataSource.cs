@@ -121,9 +121,9 @@ namespace Finsa.Caravan.DataAccess
                     break;
 
                 case CaravanDataSourceKind.MongoDb:
-                    MongoUtilities.GetLogEntryCollection().Drop();
-                    MongoUtilities.GetSecAppCollection().Drop();
-                    MongoUtilities.GetSequenceCollection().Drop();
+                    //MongoUtilities.GetLogEntryCollection().Drop();
+                    //MongoUtilities.GetSecAppCollection().Drop();
+                    //MongoUtilities.GetSequenceCollection().Drop();
                     break;
             }
         }

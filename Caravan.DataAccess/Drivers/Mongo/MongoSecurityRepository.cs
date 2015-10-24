@@ -1,7 +1,6 @@
 ﻿using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess.Core;
 using MongoDB.Driver;
-using MongoDB.Driver.Builders;
 using System.Collections.Generic;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.Models;
 using Finsa.Caravan.DataAccess.Drivers.Mongo.Models.Logging;
@@ -23,22 +22,24 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
 
         protected override bool AddAppInternal(SecApp app)
         {
-            var newAppId = MongoUtilities.GetSequenceCollection().FindAndModify(new FindAndModifyArgs
-            {
-                Query = Query<MongoSequence>.Where(s => s.AppId == MongoUtilities.CreateObjectId(-1) && s.CollectionName == MongoUtilities.SecAppCollection),
-                Update = Update<MongoSequence>.Inc(s => s.LastNumber, 1),
-                VersionReturned = FindAndModifyDocumentVersion.Modified,
-                Upsert = true, // Creates a new document if it does not exist.
-            }).GetModifiedDocumentAs<MongoSequence>().LastNumber;
+            //var newAppId = MongoUtilities.GetSequenceCollection().FindOneAndUpdateAsync(new FindAndModifyArgs
+            //{
+            //    Query = Query<MongoSequence>.Where(s => s.AppId == MongoUtilities.CreateObjectId(-1) && s.CollectionName == MongoUtilities.SecAppCollection),
+            //    Update = Update<MongoSequence>.Inc(s => s.LastNumber, 1),
+            //    VersionReturned = FindAndModifyDocumentVersion.Modified,
+            //    Upsert = true, // Creates a new document if it does not exist.
+            //}).GetModifiedDocumentAs<MongoSequence>().LastNumber;
 
-            return MongoUtilities.GetSecAppCollection().Insert(new MongoSecApp
-            {
-                Id = MongoUtilities.CreateObjectId(newAppId),
-                AppId = newAppId,
-                Name = app.Name,
-                Description = app.Description,
-                LogSettings = new List<MongoLogSettings>()
-            }).Ok;
+            //MongoUtilities.GetSecAppCollection().InsertOneAsync(new MongoSecApp
+            //{
+            //    Id = MongoUtilities.CreateObjectId(newAppId),
+            //    AppId = newAppId,
+            //    Name = app.Name,
+            //    Description = app.Description,
+            //    LogSettings = new List<MongoLogSettings>()
+            //}).Wait();
+
+            return true;
         }
 
         protected override SecGroup[] GetGroupsInternal(string appName, string groupName)

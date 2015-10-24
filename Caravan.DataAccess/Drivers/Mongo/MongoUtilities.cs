@@ -30,23 +30,22 @@ namespace Finsa.Caravan.DataAccess.Drivers.Mongo
             return new ObjectId(hash12);
         }
 
-        public static MongoDatabase GetDatabase()
+        public static IMongoDatabase GetDatabase()
         {
-            var server = new MongoClient(CaravanDataSource.Manager.ConnectionString).GetServer();
-            return server.GetDatabase(CaravanDataAccessConfiguration.Instance.MongoDbName);
+            return new MongoClient(CaravanDataSource.Manager.ConnectionString).GetDatabase(CaravanDataAccessConfiguration.Instance.MongoDbName);
         }
 
-        public static MongoCollection<MongoLogEntry> GetLogEntryCollection()
+        public static IMongoCollection<MongoLogEntry> GetLogEntryCollection()
         {
             return GetDatabase().GetCollection<MongoLogEntry>(LogEntryCollection);
         }
 
-        public static MongoCollection<MongoSecApp> GetSecAppCollection()
+        public static IMongoCollection<MongoSecApp> GetSecAppCollection()
         {
             return GetDatabase().GetCollection<MongoSecApp>(SecAppCollection);
         }
 
-        public static MongoCollection<MongoSequence> GetSequenceCollection()
+        public static IMongoCollection<MongoSequence> GetSequenceCollection()
         {
             return GetDatabase().GetCollection<MongoSequence>(SequenceCollection);
         }
