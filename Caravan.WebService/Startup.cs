@@ -1,5 +1,6 @@
 ﻿using Common.Logging;
 using Finsa.Caravan.Common;
+using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataAccess.Drivers.Sql.Logging;
 using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebApi.Middlewares;
@@ -60,10 +61,12 @@ namespace Finsa.Caravan.WebService
             IdentityConfig.Build(app);
         }
 
-        private static IKernel CreateKernel()
-        {
-            return CaravanServiceProvider.NinjectKernel ?? (CaravanServiceProvider.NinjectKernel = new StandardKernel(new NinjectConfig()));
-        }
+        private static IKernel CreateKernel() => 
+            CaravanServiceProvider.NinjectKernel ?? 
+            (CaravanServiceProvider.NinjectKernel = new StandardKernel(
+                new NinjectConfig(),
+                new CaravanCommonNinjectConfig(DependencyHandling.Default),
+                new CaravanDataAccessNinjectConfig(DependencyHandling.Default)));
 
         private static void ConfigureAdminPages(IAppBuilder app)
         {

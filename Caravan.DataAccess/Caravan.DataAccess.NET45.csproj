@@ -232,6 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CaravanDataAccessConfiguration.cs" />
+    <Compile Include="CaravanDataAccessNinjectConfig.cs" />
     <Compile Include="CaravanDataSourceKind.cs" />
     <Compile Include="Rest\Models\RestRequest.cs" />
     <Compile Include="Rest\Models\RestResponse.cs" />

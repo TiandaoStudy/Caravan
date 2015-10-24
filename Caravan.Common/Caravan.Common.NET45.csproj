@@ -139,8 +139,9 @@
   <ItemGroup>
     <Compile Include="BusinessModeling\Workflow.cs" />
     <Compile Include="CaravanCommonConfiguration.cs" />
-    <Compile Include="CaravanNinjectConfig.cs" />
+    <Compile Include="CaravanCommonNinjectConfig.cs" />
     <Compile Include="Core\ErrorMessages.cs" />
+    <Compile Include="DependencyHandling.cs" />
     <Compile Include="Logging\Activities\AbstractLogActivity.cs" />
     <Compile Include="Logging\CaravanLogger.cs" />
     <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />
@@ -203,9 +204,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="NLog.config" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

@@ -10,25 +10,21 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using Finsa.CodeServices.Clock;
-using Ninject.Modules;
-
 namespace Finsa.Caravan.Common
 {
     /// <summary>
-    ///   Modulo astratto che dichiara le dipendenze di Caravan. Gli applicativi devono estendere
-    ///   questo modulo e lo devono arricchire con le loro dipendenze.
+    ///   Modalità di gestione delle dipendenze.
     /// </summary>
-    public abstract class CaravanNinjectConfig : NinjectModule
+    public enum DependencyHandling
     {
         /// <summary>
-        ///   Configura le dipendenze di Caravan. In questo momento esse sono:
-        /// 
-        ///   * <see cref="IClock"/> via <see cref="NtpClock"/>
+        ///   Modalità standard.
         /// </summary>
-        public override void Load()
-        {
-            Bind<IClock>().To<NtpClock>();
-        }
+        Default = 0,
+
+        /// <summary>
+        ///   Modalità dedicata agli UNIT TEST.
+        /// </summary>
+        UnitTesting = 1
     }
 }
