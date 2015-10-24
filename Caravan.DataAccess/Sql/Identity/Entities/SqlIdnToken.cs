@@ -19,10 +19,10 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Attributes;
+using Finsa.Caravan.DataAccess.Sql.Attributes;
 using Finsa.CodeServices.Common;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
+namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
 {
     /// <summary>
     ///   Riferimento interno per <see cref="Token"/>.

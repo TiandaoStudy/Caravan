@@ -15,11 +15,11 @@
  */
 
 using AutoMapper;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities;
+using Finsa.Caravan.DataAccess.Sql.Identity.Entities;
 using System.Linq;
 using System.Security.Claims;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Extensions
+namespace Finsa.Caravan.DataAccess.Sql.Identity.Extensions
 {
     public static class EntitiesMap
     {

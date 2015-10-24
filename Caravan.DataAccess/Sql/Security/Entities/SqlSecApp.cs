@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Logging.Entities;
+using Finsa.Caravan.DataAccess.Sql.Logging.Entities;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Security.Entities
+namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
 {
     [Serializable]
     public class SqlSecApp

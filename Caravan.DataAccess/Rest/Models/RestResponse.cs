@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Net;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Rest.Models
+namespace Finsa.Caravan.DataAccess.Rest.Models
 {
     [Serializable, JsonObject(MemberSerialization.OptIn)]
     public class RestResponse<TBody>

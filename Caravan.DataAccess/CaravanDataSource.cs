@@ -1,14 +1,14 @@
 ﻿using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
-using Finsa.Caravan.DataAccess.Drivers.Mongo;
-using Finsa.Caravan.DataAccess.Drivers.Rest;
-using Finsa.Caravan.DataAccess.Drivers.Sql;
-using Finsa.Caravan.DataAccess.Drivers.Sql.FakeSql;
-using Finsa.Caravan.DataAccess.Drivers.Sql.MySql;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Oracle;
-using Finsa.Caravan.DataAccess.Drivers.Sql.PostgreSql;
-using Finsa.Caravan.DataAccess.Drivers.Sql.SqlServer;
-using Finsa.Caravan.DataAccess.Drivers.Sql.SqlServerCe;
+using Finsa.Caravan.DataAccess.Mongo;
+using Finsa.Caravan.DataAccess.Rest;
+using Finsa.Caravan.DataAccess.Sql;
+using Finsa.Caravan.DataAccess.Sql.FakeSql;
+using Finsa.Caravan.DataAccess.Sql.MySql;
+using Finsa.Caravan.DataAccess.Sql.Oracle;
+using Finsa.Caravan.DataAccess.Sql.PostgreSql;
+using Finsa.Caravan.DataAccess.Sql.SqlServer;
+using Finsa.Caravan.DataAccess.Sql.SqlServerCe;
 using Finsa.CodeServices.Common.Portability;
 using InteractivePreGeneratedViews;
 using PommaLabs.Thrower;
@@ -25,7 +25,7 @@ namespace Finsa.Caravan.DataAccess
     /// <summary>
     ///   Punto di accesso ai dati - logger, security, ecc ecc.
     /// </summary>
-    public static class CaravanDataSource
+    internal static class CaravanDataSource
     {
         static CaravanDataSource()
         {

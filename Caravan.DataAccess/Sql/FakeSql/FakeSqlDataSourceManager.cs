@@ -1,7 +1,7 @@
 ﻿using System.Data.Common;
 using Finsa.Caravan.DataAccess.Core;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.FakeSql
+namespace Finsa.Caravan.DataAccess.Sql.FakeSql
 {
     internal sealed class FakeSqlDataSourceManager : AbstractDataSourceManager
     {

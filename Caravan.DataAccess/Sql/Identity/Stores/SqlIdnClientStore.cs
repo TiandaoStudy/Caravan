@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Extensions;
+using Finsa.Caravan.DataAccess.Sql.Identity.Extensions;
 using IdentityServer3.Core.Services;
 using PommaLabs.Thrower;
 using System.Data.Entity;
 using System.Threading.Tasks;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
+namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
     internal sealed class SqlIdnClientStore : IClientStore
     {

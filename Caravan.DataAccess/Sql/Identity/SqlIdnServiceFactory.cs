@@ -1,12 +1,12 @@
 ﻿using Finsa.Caravan.Common;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Services;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores;
+using Finsa.Caravan.DataAccess.Sql.Identity.Services;
+using Finsa.Caravan.DataAccess.Sql.Identity.Stores;
 using Finsa.CodeServices.Clock;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Services;
 using Ninject;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity
+namespace Finsa.Caravan.DataAccess.Sql.Identity
 {
     /// <summary>
     ///   Configura IdentityServer in modo da usare il driver SQL per l'accesso ai dati.

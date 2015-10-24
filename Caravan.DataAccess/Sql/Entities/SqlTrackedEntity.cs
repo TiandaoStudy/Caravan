@@ -1,9 +1,9 @@
-﻿using Finsa.Caravan.DataAccess.Drivers.Sql.Attributes;
+﻿using Finsa.Caravan.DataAccess.Sql.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Entities
+namespace Finsa.Caravan.DataAccess.Sql.Entities
 {
     /// <summary>
     ///   Contiene la sei colonne necessarie per il tracciamento delle modifiche alle righe di una

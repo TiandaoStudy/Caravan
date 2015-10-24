@@ -28,5 +28,6 @@ using System.Runtime.InteropServices;
 
 // Attributes added to allow stronger development.
 [assembly: InternalsVisibleTo("Finsa.Caravan.WebApi")]
+[assembly: InternalsVisibleTo("Finsa.Caravan.WebForms")]
 [assembly: InternalsVisibleTo("Finsa.Caravan.WebService")]
 [assembly: InternalsVisibleTo("UnitTests.DataAccess")]

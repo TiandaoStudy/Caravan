@@ -27,7 +27,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Finsa.CodeServices.Clock;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
+namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
     internal abstract class AbstractSqlIdnTokenStore<T>
         where T : class

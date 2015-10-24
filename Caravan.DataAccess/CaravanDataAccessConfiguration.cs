@@ -2,8 +2,8 @@
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.Common.Security.Models;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Logging.Entities;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Entities;
+using Finsa.Caravan.DataAccess.Sql.Logging.Entities;
+using Finsa.Caravan.DataAccess.Sql.Security.Entities;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Portability;
 using System;

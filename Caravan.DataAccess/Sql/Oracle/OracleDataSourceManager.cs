@@ -3,7 +3,7 @@ using System.Globalization;
 using Finsa.Caravan.DataAccess.Core;
 using Oracle.ManagedDataAccess.Client;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Oracle
+namespace Finsa.Caravan.DataAccess.Sql.Oracle
 {
     internal sealed class OracleDataSourceManager : AbstractDataSourceManager
     {

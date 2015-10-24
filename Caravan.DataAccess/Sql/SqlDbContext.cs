@@ -1,15 +1,12 @@
-﻿using Finsa.CodeServices.Common.Portability;
-using InteractivePreGeneratedViews;
+﻿using Finsa.Caravan.DataAccess.Sql.Identity.Entities;
+using Finsa.Caravan.DataAccess.Sql.Logging.Entities;
+using Finsa.Caravan.DataAccess.Sql.Security.Entities;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.IO;
 using System.Transactions;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Logging.Entities;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Entities;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql
+namespace Finsa.Caravan.DataAccess.Sql
 {
     /// <summary>
     ///   Contesto DB usato dalla parte di accesso ai dati di Caravan.

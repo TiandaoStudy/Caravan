@@ -21,7 +21,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Services
+namespace Finsa.Caravan.DataAccess.Sql.Identity.Services
 {
     public sealed class SqlIdnClientConfigurationCorsPolicyService : ICorsPolicyService
     {

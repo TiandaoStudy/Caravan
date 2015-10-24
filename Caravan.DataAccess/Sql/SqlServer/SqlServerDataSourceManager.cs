@@ -2,7 +2,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using Finsa.Caravan.DataAccess.Core;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.SqlServer
+namespace Finsa.Caravan.DataAccess.Sql.SqlServer
 {
     internal sealed class SqlServerDataSourceManager : AbstractDataSourceManager
     {

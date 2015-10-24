@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Attributes
+namespace Finsa.Caravan.DataAccess.Sql.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class DateTimeKindAttribute : Attribute

@@ -8,9 +8,9 @@ using Finsa.Caravan.Common.Logging.Exceptions;
 using Finsa.Caravan.Common.Security.Exceptions;
 using System.Threading.Tasks;
 using Finsa.Caravan.Common.Logging.Models;
-using Finsa.Caravan.DataAccess.Drivers.Rest.Models;
+using Finsa.Caravan.DataAccess.Rest.Models;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Rest
+namespace Finsa.Caravan.DataAccess.Rest
 {
     internal sealed class RestLogRepository : AbstractLogRepository<RestLogRepository>
     {    

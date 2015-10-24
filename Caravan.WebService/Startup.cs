@@ -1,7 +1,7 @@
 ﻿using Common.Logging;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Logging;
+using Finsa.Caravan.DataAccess.Sql.Logging;
 using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebApi.Middlewares;
 using Finsa.Caravan.WebService;

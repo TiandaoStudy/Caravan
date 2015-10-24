@@ -18,7 +18,7 @@ using IdentityServer3.EntityFramework.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
+namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
 {
     /// <summary>
     ///   Riferimento interno per <see cref="ClientCustomGrantType"/>.

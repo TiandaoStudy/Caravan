@@ -6,9 +6,9 @@ using System.Net;
 using Finsa.Caravan.Common.Logging.Exceptions;
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
-using Finsa.Caravan.DataAccess.Drivers.Rest.Models;
+using Finsa.Caravan.DataAccess.Rest.Models;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Rest
+namespace Finsa.Caravan.DataAccess.Rest
 {
     internal sealed class RestSecurityRepository : AbstractSecurityRepository<RestSecurityRepository>
     {

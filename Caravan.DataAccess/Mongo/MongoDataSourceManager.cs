@@ -2,7 +2,7 @@
 using System.Data.Common;
 using Finsa.Caravan.DataAccess.Core;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Mongo
+namespace Finsa.Caravan.DataAccess.Mongo
 {
     internal sealed class MongoDataSourceManager : AbstractDataSourceManager
     {

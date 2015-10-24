@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities;
+using Finsa.Caravan.DataAccess.Sql.Identity.Entities;
 using IdentityServer3.Core.Services;
 using PommaLabs.Thrower;
 using System;
@@ -23,7 +23,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
+namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
     internal sealed class SqlIdnConsentStore : IConsentStore
     {

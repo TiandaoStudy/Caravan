@@ -1,5 +1,5 @@
 ﻿using Finsa.Caravan.Common;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Identity;
+using Finsa.Caravan.DataAccess.Sql.Identity;
 using Finsa.CodeServices.Common.Portability;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Models;

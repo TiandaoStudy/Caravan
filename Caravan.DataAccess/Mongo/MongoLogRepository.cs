@@ -1,8 +1,8 @@
 ﻿using Common.Logging;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.DataAccess.Core;
-using Finsa.Caravan.DataAccess.Drivers.Mongo.Models.Logging;
-using Finsa.Caravan.DataAccess.Drivers.Mongo.Models.Security;
+using Finsa.Caravan.DataAccess.Mongo.Models.Logging;
+using Finsa.Caravan.DataAccess.Mongo.Models.Security;
 using Finsa.CodeServices.Common;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -13,7 +13,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Mongo
+namespace Finsa.Caravan.DataAccess.Mongo
 {
     internal sealed class MongoLogRepository : AbstractLogRepository<MongoLogRepository>
     {

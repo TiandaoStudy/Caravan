@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Logging
+namespace Finsa.Caravan.DataAccess.Sql.Logging
 {
     /// <summary>
     ///   Logs useful information about each SQL command. It does not log queries performed by

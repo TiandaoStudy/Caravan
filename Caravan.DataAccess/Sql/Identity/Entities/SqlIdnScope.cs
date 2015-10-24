@@ -21,7 +21,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 using IdentityServer3.Core.Models;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
+namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
 {
     /// <summary>
     ///   Riferimento interno per <see cref="IdentityServer3.EntityFramework.Entities.Scope"/>.

@@ -19,7 +19,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities
+namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
 {
     /// <summary>
     ///   Riferimento interno per <see cref="ClientIdPRestriction"/>.

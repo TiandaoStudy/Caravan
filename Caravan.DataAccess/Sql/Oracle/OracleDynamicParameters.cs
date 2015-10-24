@@ -5,7 +5,7 @@ using System.Linq;
 using Dapper;
 using Oracle.ManagedDataAccess.Client;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Oracle
+namespace Finsa.Caravan.DataAccess.Sql.Oracle
 {
     public class OracleDynamicParameters : SqlMapper.IDynamicParameters
     {

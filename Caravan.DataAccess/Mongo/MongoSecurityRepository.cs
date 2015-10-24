@@ -2,11 +2,11 @@
 using Finsa.Caravan.DataAccess.Core;
 using MongoDB.Driver;
 using System.Collections.Generic;
-using Finsa.Caravan.DataAccess.Drivers.Mongo.Models;
-using Finsa.Caravan.DataAccess.Drivers.Mongo.Models.Logging;
-using Finsa.Caravan.DataAccess.Drivers.Mongo.Models.Security;
+using Finsa.Caravan.DataAccess.Mongo.Models;
+using Finsa.Caravan.DataAccess.Mongo.Models.Logging;
+using Finsa.Caravan.DataAccess.Mongo.Models.Security;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Mongo
+namespace Finsa.Caravan.DataAccess.Mongo
 {
     internal sealed class MongoSecurityRepository : AbstractSecurityRepository<MongoSecurityRepository>
     {

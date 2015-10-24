@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-using Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Entities;
+using Finsa.Caravan.DataAccess.Sql.Identity.Entities;
 using Finsa.CodeServices.Clock;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 using System.Threading.Tasks;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.Identity.Stores
+namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
     internal sealed class SqlIdnTokenHandleStore : AbstractSqlIdnTokenStore<Token>, ITokenHandleStore
     {

@@ -2,7 +2,7 @@
 using Finsa.Caravan.DataAccess.Core;
 using Npgsql;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql.PostgreSql
+namespace Finsa.Caravan.DataAccess.Sql.PostgreSql
 {
     internal sealed class PostgreSqlDataSourceManager : AbstractDataSourceManager
     {

@@ -10,10 +10,10 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Logging.Entities;
-using Finsa.Caravan.DataAccess.Drivers.Sql.Security.Entities;
+using Finsa.Caravan.DataAccess.Sql.Logging.Entities;
+using Finsa.Caravan.DataAccess.Sql.Security.Entities;
 
-namespace Finsa.Caravan.DataAccess.Drivers.Sql
+namespace Finsa.Caravan.DataAccess.Sql
 {
     sealed class SqlLogRepository : AbstractLogRepository<SqlLogRepository>
     {
