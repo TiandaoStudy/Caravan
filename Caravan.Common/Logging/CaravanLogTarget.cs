@@ -35,7 +35,14 @@ namespace Finsa.Caravan.Common.Logging
         private static readonly SimpleLayout DefaultCodeUnit = new SimpleLayout("${callsite:className=true:methodName=false:lowercase=true}");
         private static readonly SimpleLayout DefaultFunction = new SimpleLayout("${callsite:className=false:methodName=true:lowercase=true}");
 
-        private static readonly ICaravanLogRepository LogRepository = CaravanServiceProvider.NinjectKernel.Get<ICaravanLogRepository>();
+        /// <summary>
+        ///   Il repository dei log su cui il target andrà a scrivere.
+        /// </summary>
+        /// <remarks>
+        ///   Il kernel Ninject non dovrebbe mai essere nullo, ma ci sono casi, dovuti a complicate
+        ///   gestione statiche, dove potrebbe esserlo. Quindi, prestare attenzione...
+        /// </remarks>
+        private readonly ICaravanLogRepository _logRepository = CaravanServiceProvider.NinjectKernel?.Get<ICaravanLogRepository>();
 
         /// <summary>
         ///   Il layout da applicare per mostrare l'utente loggato che ha prodotto il messaggio.
@@ -69,7 +76,7 @@ namespace Finsa.Caravan.Common.Logging
             try
             {
                 var logEntry = ToLogEntry(logEvent);
-                var result = await LogRepository.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, logEntry);
+                var result = await _logRepository.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, logEntry);
 
                 if (!result.Succeeded)
                 {
@@ -88,7 +95,7 @@ namespace Finsa.Caravan.Common.Logging
             try
             {
                 var logEntry = ToLogEntry(asyncLogEvent.LogEvent);
-                var result = await LogRepository.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, logEntry);
+                var result = await _logRepository.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, logEntry);
 
                 if (!result.Succeeded)
                 {
@@ -107,7 +114,7 @@ namespace Finsa.Caravan.Common.Logging
             try
             {
                 var logEntries = asyncLogEvents.Select(le => ToLogEntry(le.LogEvent));
-                var result = await LogRepository.AddEntriesAsync(CaravanCommonConfiguration.Instance.AppName, logEntries);
+                var result = await _logRepository.AddEntriesAsync(CaravanCommonConfiguration.Instance.AppName, logEntries);
 
                 if (!result.Succeeded)
                 {
