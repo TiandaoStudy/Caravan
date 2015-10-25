@@ -48,9 +48,9 @@ namespace Finsa.Caravan.WebApi.Middlewares
         /// </summary>
         public IList<PathString> IgnoredUris { get; } = new List<PathString>
         {
-            PathString.FromUriComponent("logger"),
-            PathString.FromUriComponent("swagger"),
-            PathString.FromUriComponent("signalr")
+            PathString.FromUriComponent("/logger"),
+            PathString.FromUriComponent("/swagger"),
+            PathString.FromUriComponent("/signalr")
         };
 
         public void Initialize(AppFunc next)

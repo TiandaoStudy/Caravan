@@ -51,13 +51,13 @@ namespace Finsa.Caravan.Common
                 case DependencyHandling.DevelopmentEnvironment:
                 case DependencyHandling.TestEnvironment:
                 case DependencyHandling.ProductionEnvironment:
-                    Bind<IClock>().To<NtpClock>();
+                    Bind<IClock>().To<SystemClock>().InSingletonScope();
                     Bind<ILog, ICaravanLog>().ToMethod(ctx => LogManager.GetLogger(ctx.Request.Target.Member.ReflectedType) as ICaravanLog);
                     break;
 
                 case DependencyHandling.UnitTesting:
-                    Bind<IClock>().To<MockClock>();
-                    Bind<ILog, ICaravanLog>().To<CaravanNoOpLogger>();
+                    Bind<IClock>().To<MockClock>().InSingletonScope();
+                    Bind<ILog, ICaravanLog>().To<CaravanNoOpLogger>().InSingletonScope();
                     break;
             }
         }
