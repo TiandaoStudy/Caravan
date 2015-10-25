@@ -48,6 +48,9 @@ namespace Finsa.Caravan.Common
             switch (_dependencyHandling)
             {
                 case DependencyHandling.Default:
+                case DependencyHandling.DevelopmentEnvironment:
+                case DependencyHandling.TestEnvironment:
+                case DependencyHandling.ProductionEnvironment:
                     Bind<IClock>().To<NtpClock>();
                     Bind<ILog, ICaravanLog>().ToMethod(ctx => LogManager.GetLogger(ctx.Request.Target.Member.ReflectedType) as ICaravanLog);
                     break;

@@ -140,7 +140,16 @@ namespace Finsa.Caravan.Common.Logging
             // per il flusso corrente.
             if (HttpContext.Current != null)
             {
-                return CacheKeyPrefixForRequest + HttpContext.Current.Request.GetHashCode();
+                try
+                {
+                    return CacheKeyPrefixForRequest + HttpContext.Current.Request.GetHashCode();
+                }
+                catch
+                {
+                    // Potrei finire qui durante l'Application_Start del Global.asax; infatti, lì il
+                    // contesto HTTP è valorizzato ma la request sembra ancora non accessibile.
+                    return CacheKeyPrefixForRequest + 0;
+                }
             }
 
             // Se non mi trovo in una request, allora uso il thread come riferimento per il flusso

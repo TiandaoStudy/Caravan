@@ -25,6 +25,21 @@ namespace Finsa.Caravan.Common
         /// <summary>
         ///   Modalità dedicata agli UNIT TEST.
         /// </summary>
-        UnitTesting = 1
+        UnitTesting = 1,
+
+        /// <summary>
+        ///   Modalità dedicata all'ambiente di DEVL.
+        /// </summary>
+        DevelopmentEnvironment = 2,
+
+        /// <summary>
+        ///   Modalità dedicata all'ambiente di TEST.
+        /// </summary>
+        TestEnvironment = 3,
+
+        /// <summary>
+        ///   Modalità dedicata all''ambiente di PROD.
+        /// </summary>
+        ProductionEnvironment = 4
     }
 }

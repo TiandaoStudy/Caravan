@@ -40,16 +40,15 @@ namespace Finsa.Caravan.Common
             {
                 // Aggiorno le varie dipendenze.
                 Clock = value.Get<IClock>();
+                LogRepository = value.Get<ICaravanLogRepository>();
+                MemoryCache = MemoryCache.DefaultInstance;
 
                 // Se tutto è andato bene, aggiorno il kernel globale.
                 _ninjectKernel = value;
             }
         }
 
-        /// <summary>
-        ///   La cache in memoria usata da alcuni punti critici di Caravan.
-        /// </summary>
-        public static MemoryCache MemoryCache { get; } = MemoryCache.DefaultInstance;
+        #region Services
 
         /// <summary>
         ///   L'orologio usato di default per il calcolo dell'ora corrente.
@@ -61,6 +60,18 @@ namespace Finsa.Caravan.Common
         ///   rigorosamente, e semplicemente, su file, per evitare ulteriori errori.
         /// </summary>
         public static ILog EmergencyLog { get; } = LogManager.GetLogger("CaravanEmergencyLog");
+
+        /// <summary>
+        ///   Il repository dei log su cui andare a persistere i messaggi.
+        /// </summary>
+        public static ICaravanLogRepository LogRepository { get; private set; }
+
+        /// <summary>
+        ///   La cache in memoria usata da alcuni punti critici di Caravan.
+        /// </summary>
+        public static MemoryCache MemoryCache { get; private set; }
+
+        #endregion Services
 
         /// <summary>
         ///   Il log standard di Caravan, che usualmente viene usato per portare i messaggi di log a database.

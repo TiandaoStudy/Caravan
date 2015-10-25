@@ -41,8 +41,22 @@ namespace Finsa.Caravan.DataAccess
         /// </summary>
         public override void Load()
         {
-            Bind<ICaravanLogRepository>().ToMethod(ctx => CaravanDataSource.Logger).InSingletonScope();
-            Bind<ICaravanSecurityRepository>().ToMethod(ctx => CaravanDataSource.Security).InSingletonScope();
+            switch (_dependencyHandling)
+            {
+                case DependencyHandling.Default:
+                case DependencyHandling.DevelopmentEnvironment:
+                case DependencyHandling.TestEnvironment:
+                case DependencyHandling.ProductionEnvironment:
+                    Bind<ICaravanLogRepository>().ToMethod(ctx => CaravanDataSource.Logger).InSingletonScope();
+                    Bind<ICaravanSecurityRepository>().ToMethod(ctx => CaravanDataSource.Security).InSingletonScope();
+                    break;
+
+                case DependencyHandling.UnitTesting:
+                    // TODO Migliorare questa gestione...
+                    Bind<ICaravanLogRepository>().ToMethod(ctx => CaravanDataSource.Logger).InSingletonScope();
+                    Bind<ICaravanSecurityRepository>().ToMethod(ctx => CaravanDataSource.Security).InSingletonScope();
+                    break;
+            }            
         }
     }
 }
