@@ -33,7 +33,7 @@ A short description of the package. If specified, this shows up in the middle pa
         </dependencies>
         <references></references>
         <frameworkAssemblies></frameworkAssemblies>
-        <tags>finsa caravan data access oracle odp net dapper entity framework</tags>
+        <tags>finsa caravan data access sql oracle odp net dapper entity framework</tags>
     </metadata>
     <files>
     </files>

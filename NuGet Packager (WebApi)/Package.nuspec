@@ -24,8 +24,8 @@ A short description of the package. If specified, this shows up in the middle pa
         <dependencies>
             <dependency id="Finsa.Caravan.Common.Runtime" version="1.21.0" />
             <dependency id="Finsa.Caravan.DataAccess.Runtime" version="1.21.0" />
-            <dependency id="Microsoft.AspNet.WebApi.Client" version="[5.2.3]" />
-            <dependency id="Microsoft.Owin" version="[3.0.1]" />
+            <dependency id="Microsoft.AspNet.WebApi.Client" version="[5.2.3, 6.0.0)" />
+            <dependency id="Microsoft.Owin" version="[3.0.1, 4.0.0)" />
             <dependency id="PommaLabs.KVLite.WebApi" version="[4.5.0, 5.0.0)" />
             <dependency id="Swashbuckle.Core" version="[5.2.2, 6.0.0)" />
             <dependency id="Thrower" version="[2.0.2, 3.0.0)" />

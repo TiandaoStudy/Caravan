@@ -26,7 +26,7 @@ A short description of the package. If specified, this shows up in the middle pa
             <dependency id="RestSharp" version="105.2.3" />
         </dependencies>
         <references></references>
-        <tags>finsa caravan</tags>
+        <tags>finsa caravan data access rest restsharp</tags>
     </metadata>
     <files>
     </files>

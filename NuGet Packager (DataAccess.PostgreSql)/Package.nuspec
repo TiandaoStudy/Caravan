@@ -32,7 +32,7 @@ A short description of the package. If specified, this shows up in the middle pa
         </dependencies>
         <references></references>
         <frameworkAssemblies></frameworkAssemblies>
-        <tags>finsa caravan</tags>
+        <tags>finsa caravan data access sql postgres postegresql dapper entity framework</tags>
     </metadata>
     <files>
     </files>
