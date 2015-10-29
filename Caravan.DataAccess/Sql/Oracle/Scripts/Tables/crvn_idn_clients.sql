@@ -113,4 +113,4 @@ COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_PREFIX_CLIENT_CLAIMS
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_ACCESSALL_CST_GRTP 
      IS 'Indicates whether the client has access to all custom grant types. Defaults to false. You can set the allowed custom grant types via the CRVN_IDN_CLI_CST_GRNT_TYPES table';
 
-CREATE SEQUENCE mydb.sq_crvn_idn_clients;
+CREATE SEQUENCE mydb.sq_crvn_idn_clients NOCACHE;

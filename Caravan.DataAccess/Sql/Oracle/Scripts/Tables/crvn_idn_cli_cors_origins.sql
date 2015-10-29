@@ -10,4 +10,4 @@ CREATE TABLE mydb.crvn_idn_cli_cors_origins
    , CONSTRAINT fk_crvnidn_clicorsorig_clients FOREIGN KEY (CCLI_ID) REFERENCES mydb.crvn_idn_clients (CCLI_ID) ON DELETE CASCADE ENABLE
 );
 
-CREATE SEQUENCE mydb.sq_crvn_idn_cli_cors_origins;
+CREATE SEQUENCE mydb.sq_crvn_idn_cli_cors_origins NOCACHE;

@@ -13,4 +13,4 @@ CREATE TABLE mydb.crvn_idn_cli_secrets
    , CONSTRAINT fk_crvnidncli_secrets_clients FOREIGN KEY (CCLI_ID) REFERENCES mydb.crvn_idn_clients (CCLI_ID) ON DELETE CASCADE ENABLE
 );
 
-CREATE SEQUENCE mydb.sq_crvn_idn_cli_secrets;
+CREATE SEQUENCE mydb.sq_crvn_idn_cli_secrets NOCACHE;

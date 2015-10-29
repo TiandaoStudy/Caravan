@@ -10,7 +10,7 @@ CREATE TABLE mydb.crvn_sec_apps
    , CONSTRAINT uk_crvn_sec_apps UNIQUE (capp_name) ENABLE
 );
 
-CREATE SEQUENCE mydb.crvn_sec_apps_id; 
+CREATE SEQUENCE mydb.crvn_sec_apps_id NOCACHE; 
 
 COMMENT ON TABLE mydb.crvn_sec_apps 
      IS 'Tabella che censisce le applicazioni FINSA';

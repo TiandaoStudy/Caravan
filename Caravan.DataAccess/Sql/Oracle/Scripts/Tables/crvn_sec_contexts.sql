@@ -12,4 +12,4 @@ CREATE TABLE mydb.crvn_sec_contexts
    , CONSTRAINT fk_crvnsecctxs_crvnsecapps FOREIGN KEY (capp_id) REFERENCES mydb.crvn_sec_apps (capp_id) ON DELETE CASCADE ENABLE
 );
 
-CREATE SEQUENCE mydb.crvn_sec_contexts_id;
+CREATE SEQUENCE mydb.crvn_sec_contexts_id NOCACHE;

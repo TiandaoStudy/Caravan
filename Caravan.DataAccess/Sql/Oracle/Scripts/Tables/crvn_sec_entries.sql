@@ -17,4 +17,4 @@ CREATE TABLE mydb.crvn_sec_entries
    , CONSTRAINT fk_crvnsec_crvnsecrol FOREIGN KEY (crol_id) REFERENCES mydb.crvn_sec_roles (crol_id) ON DELETE CASCADE ENABLE
 );
 
-CREATE SEQUENCE mydb.crvn_sec_entries_id;
+CREATE SEQUENCE mydb.crvn_sec_entries_id NOCACHE;

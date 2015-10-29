@@ -12,4 +12,4 @@ CREATE TABLE mydb.crvn_idn_sco_claims
    , CONSTRAINT fk_crvnidnsco_claims_scopes FOREIGN KEY (CSCO_ID) REFERENCES mydb.crvn_idn_scopes (CSCO_ID) ON DELETE CASCADE ENABLE
 );
 
-CREATE SEQUENCE mydb.sq_crvn_idn_sco_claims;
+CREATE SEQUENCE mydb.sq_crvn_idn_sco_claims NOCACHE;

@@ -62,4 +62,4 @@ COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_CLAIMS_RULE
 COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_SHOW_IN_DISCOVERY_DOC
      IS 'Specifies whether this scope is shown in the discovery document. Defaults to true';
 
-CREATE SEQUENCE mydb.sq_crvn_idn_scopes;
+CREATE SEQUENCE mydb.sq_crvn_idn_scopes NOCACHE;

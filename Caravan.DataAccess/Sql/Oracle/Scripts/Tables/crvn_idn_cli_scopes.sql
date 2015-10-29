@@ -10,4 +10,4 @@ CREATE TABLE mydb.crvn_idn_cli_scopes
    , CONSTRAINT fk_crvnidncli_scopes_clients FOREIGN KEY (CCLI_ID) REFERENCES mydb.crvn_idn_clients (CCLI_ID) ON DELETE CASCADE ENABLE
 );
 
-CREATE SEQUENCE mydb.sq_crvn_idn_cli_scopes;
+CREATE SEQUENCE mydb.sq_crvn_idn_cli_scopes NOCACHE;

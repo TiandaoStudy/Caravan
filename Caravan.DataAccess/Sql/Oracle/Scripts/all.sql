@@ -12,7 +12,7 @@ CREATE TABLE mydb.crvn_sec_apps
    , CONSTRAINT uk_crvn_sec_apps UNIQUE (capp_name) ENABLE
 );
 
-CREATE SEQUENCE mydb.crvn_sec_apps_id; 
+CREATE SEQUENCE mydb.crvn_sec_apps_id NOCACHE; 
 
 COMMENT ON TABLE mydb.crvn_sec_apps 
      IS 'Tabella che censisce le applicazioni FINSA';
@@ -200,7 +200,7 @@ CREATE INDEX mydb.ix_crvn_log_type ON mydb.crvn_log_entries (capp_id, clos_type)
 --> flex_log_seq
 --> flex_log_settings
 
-CREATE SEQUENCE mydb.crvn_log_entries_id;
+CREATE SEQUENCE mydb.crvn_log_entries_id NOCACHE;
 
 -- Logging: Entries ID trigger
 -- REPLACE 'mydb' WITH DB NAME
@@ -331,7 +331,7 @@ COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_PREFIX_CLIENT_CLAIMS
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_ACCESSALL_CST_GRTP 
      IS 'Indicates whether the client has access to all custom grant types. Defaults to false. You can set the allowed custom grant types via the CRVN_IDN_CLI_CST_GRNT_TYPES table';
 
-CREATE SEQUENCE mydb.sq_crvn_idn_clients;
+CREATE SEQUENCE mydb.sq_crvn_idn_clients NOCACHE;
 
 -- Identity: Clients ID trigger
 -- REPLACE 'mydb' WITH DB NAME
@@ -411,7 +411,7 @@ COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_CLAIMS_RULE
 COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_SHOW_IN_DISCOVERY_DOC
      IS 'Specifies whether this scope is shown in the discovery document. Defaults to true';
 
-CREATE SEQUENCE mydb.sq_crvn_idn_scopes;
+CREATE SEQUENCE mydb.sq_crvn_idn_scopes NOCACHE;
 
 
 -- Identity: Scopes ID trigger
@@ -441,7 +441,7 @@ CREATE TABLE mydb.crvn_idn_cli_claims
    , CONSTRAINT fk_crvnidn_cliclaims_clients FOREIGN KEY (CCLI_ID) REFERENCES mydb.crvn_idn_clients (CCLI_ID) ON DELETE CASCADE ENABLE
 );
 
-CREATE SEQUENCE mydb.sq_crvn_idn_cli_claims;
+CREATE SEQUENCE mydb.sq_crvn_idn_cli_claims NOCACHE;
 
 -- Identity: Client claims ID trigger
 -- REPLACE 'mydb' WITH DB NAME
@@ -469,7 +469,7 @@ CREATE TABLE mydb.crvn_idn_cli_cors_origins
    , CONSTRAINT fk_crvnidn_clicorsorig_clients FOREIGN KEY (CCLI_ID) REFERENCES mydb.crvn_idn_clients (CCLI_ID) ON DELETE CASCADE ENABLE
 );
 
-CREATE SEQUENCE mydb.sq_crvn_idn_cli_cors_origins;
+CREATE SEQUENCE mydb.sq_crvn_idn_cli_cors_origins NOCACHE;
 
 
 -- Identity: Client CORS origins ID trigger
@@ -504,7 +504,7 @@ CREATE TABLE mydb.crvn_sec_users
    , CONSTRAINT fk_crvnsecusers_crvnsecapps FOREIGN KEY (capp_id) REFERENCES mydb.crvn_sec_apps (capp_id) ON DELETE CASCADE ENABLE
 );
 
-CREATE SEQUENCE mydb.crvn_sec_users_id;
+CREATE SEQUENCE mydb.crvn_sec_users_id NOCACHE;
 
 -- Groups
 -- REPLACE 'mydb' WITH DB NAME
@@ -522,7 +522,7 @@ CREATE TABLE mydb.crvn_sec_groups
    , CONSTRAINT fk_crvnsecgroups_crvnsecapps FOREIGN KEY (capp_id) REFERENCES mydb.crvn_sec_apps (capp_id) ON DELETE CASCADE ENABLE
 );
 
-CREATE SEQUENCE mydb.crvn_sec_groups_id;
+CREATE SEQUENCE mydb.crvn_sec_groups_id NOCACHE;
 
 -- Roles
 -- REPLACE 'mydb' WITH DB NAME
@@ -540,7 +540,7 @@ CREATE TABLE mydb.crvn_sec_roles
    , CONSTRAINT fk_crvnsecroles_crvnsecapps FOREIGN KEY (capp_id) REFERENCES mydb.crvn_sec_apps (capp_id) ON DELETE CASCADE ENABLE
 );
 
-CREATE SEQUENCE mydb.crvn_sec_roles_id;
+CREATE SEQUENCE mydb.crvn_sec_roles_id NOCACHE;
 
 -- User Groups
 -- REPLACE 'mydb' WITH DB NAME
@@ -581,7 +581,7 @@ CREATE TABLE mydb.crvn_sec_contexts
    , CONSTRAINT fk_crvnsecctxs_crvnsecapps FOREIGN KEY (capp_id) REFERENCES mydb.crvn_sec_apps (capp_id) ON DELETE CASCADE ENABLE
 );
 
-CREATE SEQUENCE mydb.crvn_sec_contexts_id;
+CREATE SEQUENCE mydb.crvn_sec_contexts_id NOCACHE;
 
 -- Objects
 -- REPLACE 'mydb' WITH DB NAME
@@ -599,7 +599,7 @@ CREATE TABLE mydb.crvn_sec_objects
    , CONSTRAINT fk_crvnsecobjs_crvnsecctxs FOREIGN KEY (cctx_id) REFERENCES mydb.crvn_sec_contexts (cctx_id) ON DELETE CASCADE ENABLE
 );
 
-CREATE SEQUENCE mydb.crvn_sec_objects_id;
+CREATE SEQUENCE mydb.crvn_sec_objects_id NOCACHE;
 
 -- Sec Entries
 -- REPLACE 'mydb' WITH DB NAME
@@ -621,7 +621,7 @@ CREATE TABLE mydb.crvn_sec_entries
    , CONSTRAINT fk_crvnsec_crvnsecrol FOREIGN KEY (crol_id) REFERENCES mydb.crvn_sec_roles (crol_id) ON DELETE CASCADE ENABLE
 );
 
-CREATE SEQUENCE mydb.crvn_sec_entries_id;
+CREATE SEQUENCE mydb.crvn_sec_entries_id NOCACHE;
 
 -- Triggers: Users Id
 -- REPLACE 'mydb' WITH DB NAME

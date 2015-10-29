@@ -13,4 +13,4 @@ CREATE TABLE mydb.crvn_sec_objects
    , CONSTRAINT fk_crvnsecobjs_crvnsecctxs FOREIGN KEY (cctx_id) REFERENCES mydb.crvn_sec_contexts (cctx_id) ON DELETE CASCADE ENABLE
 );
 
-CREATE SEQUENCE mydb.crvn_sec_objects_id;
+CREATE SEQUENCE mydb.crvn_sec_objects_id NOCACHE;

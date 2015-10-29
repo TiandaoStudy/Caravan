@@ -121,4 +121,4 @@ CREATE INDEX mydb.ix_crvn_log_type ON mydb.crvn_log_entries (capp_id, clos_type)
 --> flex_log_seq
 --> flex_log_settings
 
-CREATE SEQUENCE mydb.crvn_log_entries_id;
+CREATE SEQUENCE mydb.crvn_log_entries_id NOCACHE;
