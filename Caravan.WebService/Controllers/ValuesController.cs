@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web.Http;
+using Finsa.Caravan.WebApi.Folders;
 using WebApi.OutputCache.V2;
 
 namespace Finsa.Caravan.WebService.Controllers
@@ -26,7 +27,7 @@ namespace Finsa.Caravan.WebService.Controllers
     /// <summary>
     ///   Sample controller with basic interactions.
     /// </summary>
-    [RoutePrefix("values")]
+    [RoutePrefix("values"), AuthorizeForCaravan]
     public sealed class ValuesController : ApiController
     {
         const int CacheSeconds = 120;

@@ -148,6 +148,7 @@
   <ItemGroup>
     <Compile Include="Core\Constants.cs" />
     <Compile Include="DelegatingHandlers\LoggingDelegatingHandler.cs" />
+    <Compile Include="Folders\AuthorizeForCaravanAttribute.cs" />
     <Compile Include="Middlewares\HttpLoggingMiddleware.cs" />
     <Compile Include="CaravanWebServiceHelper.cs" />
     <Compile Include="Models\Security\LinkedSecApp.cs" />
