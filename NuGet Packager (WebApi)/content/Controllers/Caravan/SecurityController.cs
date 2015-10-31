@@ -16,13 +16,14 @@ using Finsa.Caravan.WebApi.Models.Security;
 using System;
 using System.Linq;
 using System.Web.Http;
+using Finsa.Caravan.WebApi.Folders;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
     /// <summary>
     ///   Controller che si occupa della gestione della sicurezza.
     /// </summary>
-    [RoutePrefix("security")]
+    [RoutePrefix("security"), AuthorizeForCaravan]
     public sealed partial class SecurityController : ApiController
     {
         #region App

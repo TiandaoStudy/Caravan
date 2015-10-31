@@ -156,9 +156,9 @@ Desktop.ini
 ## NuGet
 
 packages/
-*Packager*/*.nupkg
-*Packager*/*.nupkg.bak
-*Packager*/lib
+*.nupkg
+*.nupkg.bak
+*NuGet*/lib
 
 ## KVLite Ignores
 

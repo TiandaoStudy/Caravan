@@ -12,9 +12,10 @@
 
 using Common.Logging;
 using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Exceptions;
 using Finsa.Caravan.Common.Logging.Models;
-using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.WebApi.Folders;
 using Finsa.CodeServices.Clock;
 using Finsa.CodeServices.Common;
 using PommaLabs.Thrower;
@@ -26,7 +27,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
-using Finsa.Caravan.WebApi.Folders;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -40,16 +40,19 @@ namespace Finsa.Caravan.WebService.Controllers
 
         readonly ILog _log;
         readonly IClock _clock;
+        readonly ICaravanLogRepository _logRepository;
 
         /// <summary>
         ///   Inizializza il controller con l'istanza del log di Caravan.
         /// </summary>
-        public LoggerController(ILog log, IClock clock)
+        public LoggerController(ILog log, IClock clock, ICaravanLogRepository logRepository)
         {
             RaiseArgumentNullException.IfIsNull(log, nameof(log));
             RaiseArgumentNullException.IfIsNull(clock, nameof(clock));
+            RaiseArgumentNullException.IfIsNull(logRepository, nameof(logRepository));
             _log = log;
             _clock = clock;
+            _logRepository = logRepository;
         }
 
         /// <summary>
@@ -76,7 +79,7 @@ namespace Finsa.Caravan.WebService.Controllers
         public async Task<HttpResponseMessage> GetPing(string appName)
         {
             appName = appName ?? CaravanCommonConfiguration.Instance.AppName;
-            var result = await CaravanDataSource.Logger.AddEntryAsync(appName, new LogEntry
+            var result = await _logRepository.AddEntryAsync(appName, new LogEntry
             {
                 Date = _clock.UtcNow,
                 ShortMessage = "Ping pong :)"
@@ -96,10 +99,10 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries")]
         public IEnumerable<LogEntry> GetEntries(string appName, string logLevels = null, DateTime? fromDate = null, DateTime? toDate = null)
         {
-            return CaravanDataSource.Logger.QueryEntries(new LogEntryQuery
+            return _logRepository.QueryEntries(new LogEntryQuery
             {
                 AppNames = new[] { appName },
-                LogLevels = logLevels?.Split(',').Select(ll => (LogLevel) Enum.Parse(typeof(LogLevel), ll, true)).ToArray() ?? NoLogLevels,
+                LogLevels = logLevels?.Split(',').Select(ll => (LogLevel)Enum.Parse(typeof(LogLevel), ll, true)).ToArray() ?? NoLogLevels,
                 TruncateLongMessage = true,
                 MaxTruncatedLongMessageLength = 30,
                 FromDate = fromDate?.ToOption() ?? Option.None<DateTime>(),
@@ -116,7 +119,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries/{logLevel:alpha}")]
         public IEnumerable<LogEntry> GetEntries(string appName, LogLevel logLevel, DateTime? fromDate = null, DateTime? toDate = null)
         {
-            return CaravanDataSource.Logger.QueryEntries(new LogEntryQuery
+            return _logRepository.QueryEntries(new LogEntryQuery
             {
                 AppNames = new[] { appName },
                 LogLevels = new[] { logLevel },
@@ -136,7 +139,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries/{logId:long}")]
         public NegotiatedContentResult<LogEntry> GetEntry(string appName, long logId)
         {
-            var result = CaravanDataSource.Logger.GetEntry(appName, logId);
+            var result = _logRepository.GetEntry(appName, logId);
             return result.HasValue ? Content(HttpStatusCode.OK, result.Value) : Content<LogEntry>(HttpStatusCode.NotFound, null);
         }
 
@@ -148,7 +151,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries")]
         public async void PostLog(string appName, [FromBody] LogEntry logEntry)
         {
-            await CaravanDataSource.Logger.AddEntryAsync(appName, logEntry);
+            await _logRepository.AddEntryAsync(appName, logEntry);
         }
 
         /// <summary>
@@ -161,7 +164,7 @@ namespace Finsa.Caravan.WebService.Controllers
         public async void PostLog(string appName, LogLevel logLevel, [FromBody] LogEntry logEntry)
         {
             logEntry.LogLevel = logLevel;
-            await CaravanDataSource.Logger.AddEntryAsync(appName, logEntry);
+            await _logRepository.AddEntryAsync(appName, logEntry);
         }
 
         /// <summary>
@@ -174,7 +177,7 @@ namespace Finsa.Caravan.WebService.Controllers
         {
             try
             {
-                CaravanDataSource.Logger.RemoveEntry(appName, logId);
+                _logRepository.RemoveEntry(appName, logId);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (LogEntryNotFoundException)
@@ -202,7 +205,7 @@ namespace Finsa.Caravan.WebService.Controllers
         public IQueryable<LogSetting> GetSettings(string appName)
         {
             appName = appName ?? CaravanCommonConfiguration.Instance.AppName;
-            return CaravanDataSource.Logger.GetSettings(appName).AsQueryable();
+            return _logRepository.GetSettings(appName).AsQueryable();
         }
 
         /// <summary>
@@ -214,7 +217,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/settings/{logLevel}")]
         public LogSetting GetSettings(string appName, LogLevel logLevel)
         {
-            var settings = CaravanDataSource.Logger.GetSettings(appName, logLevel);
+            var settings = _logRepository.GetSettings(appName, logLevel);
             if (settings == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -231,7 +234,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/settings/{logLevel}")]
         public void PostSetting(string appName, LogLevel logLevel, [FromBody] LogSetting settings)
         {
-            CaravanDataSource.Logger.AddSetting(appName, logLevel, settings);
+            _logRepository.AddSetting(appName, logLevel, settings);
         }
 
         /// <summary>
@@ -243,7 +246,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/settings/{logLevel}")]
         public void PutSetting(string appName, LogLevel logLevel, [FromBody] LogSetting settings)
         {
-            CaravanDataSource.Logger.UpdateSetting(appName, logLevel, settings);
+            _logRepository.UpdateSetting(appName, logLevel, settings);
         }
 
         /// <summary>
@@ -256,7 +259,7 @@ namespace Finsa.Caravan.WebService.Controllers
         {
             try
             {
-                CaravanDataSource.Logger.RemoveSetting(appName, logLevel);
+                _logRepository.RemoveSetting(appName, logLevel);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (LogSettingNotFoundException)

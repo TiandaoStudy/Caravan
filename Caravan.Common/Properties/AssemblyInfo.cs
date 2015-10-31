@@ -42,5 +42,4 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("Finsa.Caravan.DataAccess")]
 [assembly: InternalsVisibleTo("Finsa.Caravan.WebApi")]
 [assembly: InternalsVisibleTo("Finsa.Caravan.WebForms")]
-[assembly: InternalsVisibleTo("Finsa.Caravan.WebService")]
 [assembly: InternalsVisibleTo("UnitTests.Common")]

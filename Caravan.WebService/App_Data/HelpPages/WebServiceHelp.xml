@@ -140,6 +140,7 @@
               The HELP controller.
             </summary>
             <remarks>Adjust routing prefix according to your own needs.</remarks>
+            <remarks>Questo servizio dovrebbe essere esposto pubblicamente.</remarks>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.Get">
             <summary>
@@ -156,7 +157,7 @@
               Controller che si occupa della parte di logging.
             </summary>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.#ctor(Common.Logging.ILog,Finsa.CodeServices.Clock.IClock)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.#ctor(Common.Logging.ILog,Finsa.CodeServices.Clock.IClock,Finsa.Caravan.Common.Logging.ICaravanLogRepository)">
             <summary>
               Inizializza il controller con l'istanza del log di Caravan.
             </summary>
@@ -263,6 +264,11 @@
         <member name="T:Finsa.Caravan.WebService.Controllers.SecurityController">
             <summary>
               Controller che si occupa della gestione della sicurezza.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.#ctor(Finsa.Caravan.Common.Security.ICaravanSecurityRepository)">
+            <summary>
+              Inizializza il controller con l'istanza della sicurezza di Caravan.
             </summary>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetApps">

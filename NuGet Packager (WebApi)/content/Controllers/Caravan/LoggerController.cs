@@ -26,13 +26,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
+using Finsa.Caravan.WebApi.Folders;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
     /// <summary>
     ///   Controller che si occupa della parte di logging.
     /// </summary>
-    [RoutePrefix("logger")]
+    [RoutePrefix("logger"), AuthorizeForCaravan]
     public sealed partial class LoggerController : ApiController
     {
         static readonly IList<LogLevel> NoLogLevels = new LogLevel[0];

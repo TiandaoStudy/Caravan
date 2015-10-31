@@ -16,13 +16,14 @@ using PommaLabs.KVLite.Web.Http;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using Finsa.Caravan.WebApi.Folders;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
     /// <summary>
     ///   Exposes the KVLite cache controller and allows further customizations.
     /// </summary>
-    [RoutePrefix("cache")]
+    [RoutePrefix("cache"), AuthorizeForCaravan]
     public sealed partial class CacheController : AbstractCacheController
     {
         /// <summary>

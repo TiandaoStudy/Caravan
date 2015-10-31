@@ -20,6 +20,7 @@ namespace Finsa.Caravan.WebService.Controllers
     ///   The HELP controller.
     /// </summary>
     /// <remarks>Adjust routing prefix according to your own needs.</remarks>
+    /// <remarks>Questo servizio dovrebbe essere esposto pubblicamente.</remarks>
     [RoutePrefix("")]
     public sealed class HelpController : ApiController
     {
@@ -44,11 +45,5 @@ namespace Finsa.Caravan.WebService.Controllers
             var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             return fvi.FileVersion;
         }
-
-        #region Self-checks
-
-        
-
-        #endregion
     }
 }
