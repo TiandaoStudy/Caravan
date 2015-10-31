@@ -83,6 +83,7 @@
   <PropertyGroup>
     <PreBuildEvent>if not exist "$(SolutionDir)NuGet Packager (WebApi)/lib/net45" mkdir "$(SolutionDir)NuGet Packager (WebApi)/lib/net45"
 copy "$(SolutionDir)Caravan.WebApi\bin\Release\Finsa.Caravan.WebApi.dll" "$(SolutionDir)NuGet Packager (WebApi)/lib/net45"
+copy "$(SolutionDir)Caravan.WebApi\bin\Release\Finsa.Caravan.WebApi.pdb" "$(SolutionDir)NuGet Packager (WebApi)/lib/net45"
 copy "$(SolutionDir)Caravan.WebApi\bin\Release\Finsa.Caravan.WebApi.xml" "$(SolutionDir)NuGet Packager (WebApi)/lib/net45"</PreBuildEvent>
   </PropertyGroup>
 </Project>

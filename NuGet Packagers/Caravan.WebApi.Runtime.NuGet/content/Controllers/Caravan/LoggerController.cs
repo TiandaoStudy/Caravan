@@ -15,7 +15,6 @@ using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Exceptions;
 using Finsa.Caravan.Common.Logging.Models;
-using Finsa.Caravan.WebApi.Folders;
 using Finsa.CodeServices.Clock;
 using Finsa.CodeServices.Common;
 using PommaLabs.Thrower;
@@ -27,6 +26,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
+using Finsa.Caravan.WebApi.FilterAttributes;
 
 namespace Finsa.Caravan.WebService.Controllers
 {

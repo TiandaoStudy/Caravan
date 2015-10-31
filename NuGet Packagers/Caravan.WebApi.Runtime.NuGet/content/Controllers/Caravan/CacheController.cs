@@ -16,7 +16,7 @@ using PommaLabs.KVLite.Web.Http;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using Finsa.Caravan.WebApi.Folders;
+using Finsa.Caravan.WebApi.FilterAttributes;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
