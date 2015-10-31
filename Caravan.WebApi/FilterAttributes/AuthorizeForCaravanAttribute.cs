@@ -10,22 +10,28 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Common.Logging;
+using Finsa.Caravan.WebApi.Models;
+using PommaLabs.Thrower;
 using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
-using Common.Logging;
-using Finsa.Caravan.WebApi.Models;
-using PommaLabs.Thrower;
 
 namespace Finsa.Caravan.WebApi.FilterAttributes
 {
+    /// <summary>
+    ///   Gestisce le autorizzazioni per i servizi di Caravan. Di default tutti i servizi sono disabilitati.
+    /// </summary>
     public sealed class AuthorizeForCaravanAttribute : ActionFilterAttribute
     {
         private static readonly ILog Log = LogManager.GetLogger<AuthorizeForCaravanAttribute>();
 
+        /// <summary>
+        ///   La funzione da modificare per gestire le autorizzazioni.
+        /// </summary>
         public static Func<HttpActionContext, CancellationToken, ILog, Task<AuthorizationResult>> AuthorizationGranted { get; set; } = (actionContext, cancellationToken, log) =>
         {
             const string className = nameof(AuthorizeForCaravanAttribute);
@@ -39,11 +45,20 @@ namespace Finsa.Caravan.WebApi.FilterAttributes
             });
         };
 
+        /// <summary>
+        ///   Occurs before the action method is invoked.
+        /// </summary>
+        /// <param name="actionContext">The action context.</param>
         public override async void OnActionExecuting(HttpActionContext actionContext)
         {
             await OnActionExecutingAsync(actionContext, CancellationToken.None);
         }
 
+        /// <summary>
+        ///   Occurs before the action method is invoked.
+        /// </summary>
+        /// <param name="actionContext">The action context.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         public override async Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
             var authorizationResult = await AuthorizationGranted(actionContext, cancellationToken, Log);
