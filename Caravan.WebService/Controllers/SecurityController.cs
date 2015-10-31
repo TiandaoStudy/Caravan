@@ -12,12 +12,12 @@
 
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.Common.Security.Models;
-using Finsa.Caravan.WebApi.Folders;
 using Finsa.Caravan.WebApi.Models.Security;
 using PommaLabs.Thrower;
 using System;
 using System.Linq;
 using System.Web.Http;
+using Finsa.Caravan.WebApi.FilterAttributes;
 
 namespace Finsa.Caravan.WebService.Controllers
 {

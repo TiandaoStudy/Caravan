@@ -81,6 +81,10 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -149,10 +153,24 @@
     <Compile Include="CaravanErrorCodes.cs" />
     <Compile Include="Core\Constants.cs" />
     <Compile Include="DelegatingHandlers\LoggingDelegatingHandler.cs" />
-    <Compile Include="Folders\HttpExceptionFilterAttribute.cs" />
-    <Compile Include="Folders\AuthorizeForCaravanAttribute.cs" />
+    <Compile Include="FilterAttributes\HttpExceptionFilterAttribute.cs" />
+    <Compile Include="FilterAttributes\AuthorizeForCaravanAttribute.cs" />
     <Compile Include="Middlewares\HttpLoggingMiddleware.cs" />
     <Compile Include="CaravanWebServiceHelper.cs" />
+    <Compile Include="Models\AuthorizationResult.cs" />
+    <Compile Include="Models\Links\AlternateLink.cs" />
+    <Compile Include="Models\Links\CollectionLink.cs" />
+    <Compile Include="Models\Links\EditLink.cs" />
+    <Compile Include="Models\Links\EditMediaLink.cs" />
+    <Compile Include="Models\Links\FirstLink.cs" />
+    <Compile Include="Models\Links\LastLink.cs" />
+    <Compile Include="Models\Links\Link.cs" />
+    <Compile Include="Models\Links\LinkCollection.cs" />
+    <Compile Include="Models\Links\LinkedObject.cs" />
+    <Compile Include="Models\Links\NextLink.cs" />
+    <Compile Include="Models\Links\PreviousLink.cs" />
+    <Compile Include="Models\Links\RelatedLink.cs" />
+    <Compile Include="Models\Links\SelfLink.cs" />
     <Compile Include="Models\Security\LinkedSecApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -160,10 +178,6 @@
     <ProjectReference Include="..\Caravan.Common\Caravan.Common.NET45.csproj">
       <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>
       <Name>Caravan.Common.NET45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Caravan.DataAccess\Caravan.DataAccess.NET45.csproj">
-      <Project>{418b2d91-d53e-49bf-98fc-66da9490dc37}</Project>
-      <Name>Caravan.DataAccess.NET45</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

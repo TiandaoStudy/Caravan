@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web.Http;
-using Finsa.Caravan.WebApi.Folders;
+using Finsa.Caravan.WebApi.FilterAttributes;
 using WebApi.OutputCache.V2;
 
 namespace Finsa.Caravan.WebService.Controllers

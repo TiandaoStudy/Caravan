@@ -12,7 +12,8 @@
 
 using Common.Logging;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.Common.Logging;
+using Ninject;
 using PommaLabs.KVLite;
 using PommaLabs.KVLite.Web.Http;
 using PommaLabs.Thrower;
@@ -29,20 +30,18 @@ namespace Finsa.Caravan.WebApi
         ///   Esegue alcune operazioni preliminari all'avvio dell'applicazione.
         /// </summary>
         /// <param name="configuration">La configurazione HTTP.</param>
-        /// <param name="log">Un'istanza valida del log.</param>
-        /// <param name="cache">Un'istanza valida della cache.</param>
-        public static async void OnStart(HttpConfiguration configuration, ILog log, ICache cache)
+        public static async void OnStart(HttpConfiguration configuration)
         {
             // Controlli di integrità.
             RaiseArgumentNullException.IfIsNull(configuration, nameof(configuration));
-            RaiseArgumentNullException.IfIsNull(log, nameof(log));
-            RaiseArgumentNullException.IfIsNull(cache, nameof(cache));
 
             // Loggo l'avvio dell'applicazione.
+            var log = CaravanServiceProvider.NinjectKernel.Get<ILog>();
             log.Info($"Application {CaravanCommonConfiguration.Instance.AppDescription} started");
 
             // Run vacuum on the persistent cache. It should be put AFTER the connection string is
             // set, since that string it stored on the cache itself and we do not want conflicts, right?
+            var cache = CaravanServiceProvider.NinjectKernel.Get<ICache>();
             var persistentCache = cache as PersistentCache;
             if (persistentCache != null)
             {
@@ -53,7 +52,8 @@ namespace Finsa.Caravan.WebApi
             ApiOutputCache.RegisterAsCacheOutputProvider(configuration, cache);
 
             // Pulizia dei log più vecchi o che superano una certa soglia di quantità.
-            await CaravanDataSource.Logger.CleanUpEntriesAsync(CaravanCommonConfiguration.Instance.AppName);
+            var logRepository = CaravanServiceProvider.NinjectKernel.Get<ICaravanLogRepository>();
+            await logRepository.CleanUpEntriesAsync(CaravanCommonConfiguration.Instance.AppName);
         }
     }
 }

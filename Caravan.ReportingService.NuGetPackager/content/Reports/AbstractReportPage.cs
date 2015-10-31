@@ -10,7 +10,6 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using Finsa.Caravan.Common.Reporting.Models;
 using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
@@ -18,6 +17,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Web;
 using System.Web.UI;
+using Finsa.Caravan.ReportingService.Models;
 
 namespace Finsa.Caravan.ReportingService
 {

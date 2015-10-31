@@ -1,5 +1,4 @@
-﻿using Common.Logging;
-using Finsa.Caravan.Common;
+﻿using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataAccess.Sql.Logging;
 using Finsa.Caravan.WebApi;
@@ -15,7 +14,6 @@ using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
-using PommaLabs.KVLite;
 using PommaLabs.Thrower;
 using Swashbuckle.Application;
 using System;
@@ -38,14 +36,12 @@ namespace Finsa.Caravan.WebService
         /// <param name="app">Necessario per configurare il servizio.</param>
         public void Configuration(IAppBuilder app)
         {
-            var config = new HttpConfiguration();
-
             // IMPORTANTE: Inizializzo anche il kernel di Caravan nel metodo di Create.
+            var config = new HttpConfiguration();
             var kernel = CreateKernel();
-            var cache = kernel.Get<ICache>();
 
             // Inizializzatore per Caravan.
-            CaravanWebServiceHelper.OnStart(config, LogManager.GetLogger<Startup>(), cache);
+            CaravanWebServiceHelper.OnStart(config);
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
             app.Use(kernel.Get<HttpLoggingMiddleware>());
 
@@ -61,8 +57,8 @@ namespace Finsa.Caravan.WebService
             IdentityConfig.Build(app);
         }
 
-        private static IKernel CreateKernel() => 
-            CaravanServiceProvider.NinjectKernel ?? 
+        private static IKernel CreateKernel() =>
+            CaravanServiceProvider.NinjectKernel ??
             (CaravanServiceProvider.NinjectKernel = new StandardKernel(
                 new NinjectConfig(),
                 new CaravanCommonNinjectConfig(DependencyHandling.Default),

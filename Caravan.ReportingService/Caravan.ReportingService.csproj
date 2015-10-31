@@ -221,6 +221,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\PageOrientation.cs" />
+    <Compile Include="Models\TextAlignment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\AbstractReportPage.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -242,7 +244,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Reports\ReportMasterH.rdlc">
@@ -293,6 +294,7 @@ if not exist "$(SolutionDir)Caravan.ReportingService.NuGetPackager/content/Conte
 
 XCOPY $(ProjectDir)Content\ReportViewer\* "$(SolutionDir)Caravan.ReportingService.NuGetPackager/lib/net45" /s /i /y
 XCOPY $(ProjectDir)Reports\* "$(SolutionDir)Caravan.ReportingService.NuGetPackager/content/Reports" /s /i /y
+XCOPY $(ProjectDir)Models\* "$(SolutionDir)Caravan.ReportingService.NuGetPackager/content/Models" /s /i /y
 
 COPY "$(ProjectDir)App_Start\BundleConfig.cs" "$(SolutionDir)Caravan.ReportingService.NuGetPackager/content/App_Start/BundleConfig.cs"
 COPY "$(ProjectDir)Content\modern-reportviewer.css" "$(SolutionDir)Caravan.ReportingService.NuGetPackager/content/Content/modern-reportviewer.css"</PostBuildEvent>
