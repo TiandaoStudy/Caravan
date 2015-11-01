@@ -36,7 +36,7 @@ namespace Finsa.Caravan.WebApi
             RaiseArgumentNullException.IfIsNull(configuration, nameof(configuration));
 
             // Loggo l'avvio dell'applicazione.
-            var log = CaravanServiceProvider.NinjectKernel.Get<ILog>();
+            var log = LogManager.GetLogger<CaravanWebServiceHelper>();
             log.Info($"Application {CaravanCommonConfiguration.Instance.AppDescription} started");
 
             // Run vacuum on the persistent cache. It should be put AFTER the connection string is
