@@ -148,6 +148,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebApi.Runtime.NuGe
 		{EE783385-E6CC-4F01-BCCC-DAB9C6DBDE55} = {EE783385-E6CC-4F01-BCCC-DAB9C6DBDE55}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess.Effort.NuGet", "NuGet Packagers\Caravan.DataAccess.Effort.NuGet\Caravan.DataAccess.Effort.NuGet.csproj", "{D6409413-0B11-4CB1-ACBE-6B52ECA39F04}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BD471427-A76A-4764-94C1-08C8C3BC1379} = {BD471427-A76A-4764-94C1-08C8C3BC1379}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Caravan.Common.UnitTests\Caravan.Common.UnitTests.projitems*{aae514be-2b2a-4534-b728-6503815d3ac7}*SharedItemsImports = 13
@@ -265,6 +270,10 @@ Global
 		{27ECD842-1D24-455F-A239-5BC127CAC559}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
 		{27ECD842-1D24-455F-A239-5BC127CAC559}.Publish|Any CPU.Build.0 = Debug|Any CPU
 		{27ECD842-1D24-455F-A239-5BC127CAC559}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6409413-0B11-4CB1-ACBE-6B52ECA39F04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6409413-0B11-4CB1-ACBE-6B52ECA39F04}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6409413-0B11-4CB1-ACBE-6B52ECA39F04}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{D6409413-0B11-4CB1-ACBE-6B52ECA39F04}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -295,5 +304,6 @@ Global
 		{A998BAE5-711B-4AA6-B969-4994B0096E2A} = {45D0B279-E785-43E6-86DF-0CCB02B91F6F}
 		{C4F15F53-0FF6-4512-8C6D-BBFE2148B228} = {45D0B279-E785-43E6-86DF-0CCB02B91F6F}
 		{27ECD842-1D24-455F-A239-5BC127CAC559} = {45D0B279-E785-43E6-86DF-0CCB02B91F6F}
+		{D6409413-0B11-4CB1-ACBE-6B52ECA39F04} = {45D0B279-E785-43E6-86DF-0CCB02B91F6F}
 	EndGlobalSection
 EndGlobal
