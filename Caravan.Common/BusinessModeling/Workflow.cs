@@ -51,7 +51,23 @@ namespace Finsa.Caravan.Common.BusinessModeling
         /// </summary>
         /// <param name="input">Istanza della classe di input.</param>
         /// <returns></returns>
-        public static TOutput Invoke(TInput input) => InvokeAsync(input).Result;
+        public static TOutput Invoke(TInput input)
+        {
+            try
+            {
+                return InvokeAsync(input).Result;
+            }
+            catch (AggregateException aggregate) when (aggregate.InnerExceptions.Count == 1)
+            {
+                // Se si tratta di un aggregato di eccezioni, cerco di capire quante siano. Se è
+                // soltanto una, allora la rilancio, di modo che al di fuori arrivi direttamente
+                // quell'eccezione e non l'aggregato. Altrimenti, non posso fare nulla e quindi uso
+                // il filtro sopra per non toccare minimamente lo stacktrace.
+                throw aggregate.InnerExceptions[0];
+            }
+
+            // Lascio correrre eventuali altre eccezioni, va bene così.
+        }
 
         /// <summary>
         ///   Attiva il flusso di lavoro in modo asincrono.
