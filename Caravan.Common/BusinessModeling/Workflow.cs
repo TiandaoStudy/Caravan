@@ -96,19 +96,21 @@ namespace Finsa.Caravan.Common.BusinessModeling
                 throw;
             }
 
-            // Imposto l'ID del flusso tra le variabili legate al thread.
+            // Recupero l'ID del flusso padre.
             var parentWorkflowId = workflow.Log.ThreadVariablesContext.Get(WorkflowIdVariable);
-            workflow.Log.ThreadVariablesContext.Set(WorkflowIdVariable, workflow.WorkflowId);
 
             // Qui sotto eseguo veramente la chiamata al flusso.
             try
             {
+                // Imposto l'ID del flusso tra le variabili legate al thread, sostituendo quello del padre.
+                workflow.Log.ThreadVariablesContext.Set(WorkflowIdVariable, workflow.WorkflowId);
+
                 // Registro l'ingresso all'interno del flusso.
                 workflow.Log.Trace(new LogMessage
                 {
-                    ShortMessage = $"Workflow {typeof(TWorkflow).Name}@{workflow.WorkflowId} STARTED",
+                    ShortMessage = $"Workflow {typeof(TWorkflow).Name}@{workflow.WorkflowId} started",
                     LongMessage = input.ToJsonString(LogMessage.ReadableJsonSettings),
-                    Context = "Workflow START - Input is logged into the long message"
+                    Context = "Workflow start - Input is logged into the long message"
                 });
 
                 // Eseguo il flusso e ne registro l'output.
@@ -117,9 +119,9 @@ namespace Finsa.Caravan.Common.BusinessModeling
                 // Registro l'ingresso all'interno del flusso.
                 workflow.Log.Trace(new LogMessage
                 {
-                    ShortMessage = $"Workflow {typeof(TWorkflow).Name}@{workflow.WorkflowId} ENDED",
+                    ShortMessage = $"Workflow {typeof(TWorkflow).Name}@{workflow.WorkflowId} ended",
                     LongMessage = output.ToJsonString(LogMessage.ReadableJsonSettings),
-                    Context = "Workflow END - Output is logged into the long message"
+                    Context = "Workflow end - Output is logged into the long message"
                 });
 
                 return output;
