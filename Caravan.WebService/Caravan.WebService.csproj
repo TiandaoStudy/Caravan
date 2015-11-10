@@ -318,6 +318,7 @@
     <Compile Include="CaravanWebServiceConfiguration.cs" />
     <Compile Include="Controllers\CacheController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
+    <Compile Include="Controllers\IdentityController.cs" />
     <Compile Include="Controllers\LoggerController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -432,6 +433,9 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="TempUsers.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

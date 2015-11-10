@@ -7,8 +7,11 @@ using IdentityServer3.Core.Services;
 using Owin;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Finsa.Caravan.WebService
 {
@@ -122,10 +125,17 @@ namespace Finsa.Caravan.WebService
 
             public Task AuthenticateLocalAsync(LocalAuthenticationContext context)
             {
-                context.AuthenticateResult = (context.Password.Length > 0)
+                var logins = JsonConvert.DeserializeObject<UserPwd[]>(File.ReadAllText(PortableEnvironment.MapPath("~/TempUsers.json")));
+                context.AuthenticateResult = logins.Any(l => l.user == context.UserName && l.pwd == context.Password)
                     ? new AuthenticateResult(context.UserName, context.SignInMessage?.ClientId ?? "caravan-admin-ui")
                     : new AuthenticateResult("You shall not pass!");
                 return Task.FromResult(0);
+            }
+
+            private struct UserPwd
+            {
+                public string user { get; set; }
+                public string pwd { get; set; }
             }
 
             public Task AuthenticateExternalAsync(ExternalAuthenticationContext context)
