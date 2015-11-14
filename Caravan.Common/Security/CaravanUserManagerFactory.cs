@@ -10,7 +10,10 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Microsoft.AspNet.Identity;
 using PommaLabs.Thrower;
+using System;
+using System.Threading.Tasks;
 
 namespace Finsa.Caravan.Common.Security
 {
@@ -27,9 +30,13 @@ namespace Finsa.Caravan.Common.Security
 
         public ICaravanSecurityRepository SecurityRepository { get; }
 
-        public CaravanUserManager Create(string appName)
+        public async Task<CaravanUserManager> CreateAsync(string appName)
         {
-            return new CaravanUserManager(new CaravanUserStore(appName, SecurityRepository), null);
+            var userStore = new CaravanUserStore(appName, SecurityRepository);
+            var app = await SecurityRepository.GetAppAsync(appName);
+            var passwordHasherType = Type.GetType(app.PasswordHasher, true, true);
+            var passwordHasher = Activator.CreateInstance(passwordHasherType) as IPasswordHasher;
+            return new CaravanUserManager(userStore, passwordHasher);
         }
     }
 }

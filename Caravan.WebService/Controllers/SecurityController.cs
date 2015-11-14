@@ -93,9 +93,9 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">Application name</param>
         /// <returns>All the users of the specified application</returns>
         [Route("{appName}/users")]
-        public IEnumerable<SecUser> GetUsers(string appName)
+        public async Task<IEnumerable<SecUser>> GetUsers(string appName)
         {
-            using (var userManager = _userManagerFactory.Create(appName))
+            using (var userManager = await _userManagerFactory.CreateAsync(appName))
             {
                 return userManager.Users;
             }
@@ -110,7 +110,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/users/{userId:long}")]
         public async Task<SecUser> GetUserByLogin(string appName, long userId)
         {
-            using (var userManager = _userManagerFactory.Create(appName))
+            using (var userManager = await _userManagerFactory.CreateAsync(appName))
             {
                 return await userManager.FindByIdAsync(userId);
             }
@@ -125,7 +125,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/users/{userLogin}")]
         public async Task<SecUser> GetUserByLogin(string appName, string userLogin)
         {
-            using (var userManager = _userManagerFactory.Create(appName))
+            using (var userManager = await _userManagerFactory.CreateAsync(appName))
             {
                 return await userManager.FindByNameAsync(userLogin);
             }
@@ -139,7 +139,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/users")]
         public async Task<IdentityResult> PostUser(string appName, [FromBody] SecUser user)
         {
-            using (var userManager = _userManagerFactory.Create(appName))
+            using (var userManager = await _userManagerFactory.CreateAsync(appName))
             {
                 return await userManager.CreateAsync(user);
             }
@@ -154,7 +154,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/users/{userLogin}")]
         public async Task<IdentityResult> PutUserByLogin(string appName, string userLogin, [FromBody] SecUserUpdates userUpdates)
         {
-            using (var userManager = _userManagerFactory.Create(appName))
+            using (var userManager = await _userManagerFactory.CreateAsync(appName))
             {
                 var user = await userManager.FindByNameAsync(userLogin);
                 userUpdates.FirstName.Do(x => user.FirstName = x);
@@ -171,7 +171,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/users/{userLogin}")]
         public async Task<IdentityResult> DeleteUserByLogin(string appName, string userLogin)
         {
-            using (var userManager = _userManagerFactory.Create(appName))
+            using (var userManager = await _userManagerFactory.CreateAsync(appName))
             {
                 var user = await userManager.FindByNameAsync(userLogin);
                 return await userManager.DeleteAsync(user);
@@ -187,7 +187,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/users/{userLogin}/{groupName}")]
         public async Task<IdentityResult> PostUserToGroup(string appName, string userLogin, string groupName)
         {
-            using (var userManager = _userManagerFactory.Create(appName))
+            using (var userManager = await _userManagerFactory.CreateAsync(appName))
             {
                 var user = await userManager.FindByNameAsync(userLogin);
                 return await userManager.AddToRoleAsync(user.Id, groupName);
@@ -204,7 +204,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/users/{userLogin}/{groupName}")]
         public async Task<IdentityResult> DeleteUserFromGroup(string appName, string userLogin, string groupName)
         {
-            using (var userManager = _userManagerFactory.Create(appName))
+            using (var userManager = await _userManagerFactory.CreateAsync(appName))
             {
                 var user = await userManager.FindByNameAsync(userLogin);
                 return await userManager.RemoveFromRoleAsync(user.Id, groupName);
@@ -221,9 +221,9 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <returns></returns>
         [Route("{appName}/groups")]
-        public IEnumerable<SecGroup> GetGroups(string appName)
+        public async Task<IEnumerable<SecGroup>> GetGroups(string appName)
         {
-            using (var groupManager = _groupManagerFactory.Create(appName))
+            using (var groupManager = await _groupManagerFactory.CreateAsync(appName))
             {
                 return groupManager.Roles;
             }
@@ -238,7 +238,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/groups/{groupId:int}")]
         public async Task<SecGroup> GetGroupById(string appName, int groupId)
         {
-            using (var groupManager = _groupManagerFactory.Create(appName))
+            using (var groupManager = await _groupManagerFactory.CreateAsync(appName))
             {
                 return await groupManager.FindByIdAsync(groupId);
             }
@@ -253,7 +253,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/groups/{groupName}")]
         public async Task<SecGroup> GetGroupByName(string appName, string groupName)
         {
-            using (var groupManager = _groupManagerFactory.Create(appName))
+            using (var groupManager = await _groupManagerFactory.CreateAsync(appName))
             {
                 return await groupManager.FindByNameAsync(groupName);
             }
@@ -267,7 +267,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/groups")]
         public async Task<IdentityResult> PostGroup(string appName, [FromBody] SecGroup group)
         {
-            using (var groupManager = _groupManagerFactory.Create(appName))
+            using (var groupManager = await _groupManagerFactory.CreateAsync(appName))
             {
                 return await groupManager.CreateAsync(group);
             }
@@ -282,7 +282,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/groups/{groupName}")]
         public async Task<IdentityResult> PutGroupByName(string appName, string groupName, [FromBody] SecGroupUpdates groupUpdates)
         {
-            using (var groupManager = _groupManagerFactory.Create(appName))
+            using (var groupManager = await _groupManagerFactory.CreateAsync(appName))
             {
                 var group = await groupManager.FindByNameAsync(groupName);
                 groupUpdates.Name.Do(x => group.Name = x);
@@ -300,7 +300,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/groups/{groupName}")]
         public async Task<IdentityResult> DeleteGroupByName(string appName, string groupName)
         {
-            using (var groupManager = _groupManagerFactory.Create(appName))
+            using (var groupManager = await _groupManagerFactory.CreateAsync(appName))
             {
                 var group = await groupManager.FindByNameAsync(groupName);
                 return await groupManager.DeleteAsync(group);

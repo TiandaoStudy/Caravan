@@ -10,6 +10,8 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using System.Threading.Tasks;
+
 namespace Finsa.Caravan.Common.Security
 {
     /// <summary>
@@ -27,6 +29,6 @@ namespace Finsa.Caravan.Common.Security
         /// </summary>
         /// <param name="appName">Il nome dell'applicativo Caravan.</param>
         /// <returns>Uno RoleManager specifico per un dato applicativo Caravan.</returns>
-        CaravanGroupManager Create(string appName);
+        Task<CaravanGroupManager> CreateAsync(string appName);
     }
 }

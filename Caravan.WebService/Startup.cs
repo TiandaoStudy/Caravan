@@ -19,7 +19,10 @@ using Swashbuckle.Application;
 using System;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using Finsa.Caravan.WebApi.Filters;
+using Finsa.Caravan.WebApi.Models;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -52,6 +55,11 @@ namespace Finsa.Caravan.WebService
             ConfigureAdminPages(app);
             ConfigureHelpPages(config);
             ConfigureFormatters(config);
+            AuthorizeForCaravanAttribute.AuthorizationGranted = (context, token, log) => Task.FromResult(new AuthorizationResult
+            {
+                // Liberi tutti, per ora...
+                Authorized = true
+            });
 
             // Inizializzazione gestione identità.
             IdentityConfig.Build(app);

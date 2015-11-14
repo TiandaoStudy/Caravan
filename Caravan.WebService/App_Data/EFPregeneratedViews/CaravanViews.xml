@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <views>
-  <mapping-views hash="530f091a6c20181f41a27e5c4c466ed21d18698acef0005d6fcf33879bf8cbf2" conceptual-container="SqlDbContext" store-container="CodeFirstDatabase">
+  <mapping-views hash="bdb582af6edcfc7cb015689572ca0b2cde2ee334f5782e8bf11919b7db6a1050" conceptual-container="SqlDbContext" store-container="CodeFirstDatabase">
     <view extent="CodeFirstDatabase.SqlIdnClientClaim"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnClientClaim
         [CodeFirstDatabaseSchema.SqlIdnClientClaim](T1.[SqlIdnClientClaim.CCLM_ID], T1.[SqlIdnClientClaim.CCLM_TYPE], T1.[SqlIdnClientClaim.CCLM_VALUE], T1.[SqlIdnClientClaim.CCLI_ID])
@@ -417,12 +417,13 @@
     ) AS T1]]></view>
     <view extent="CodeFirstDatabase.SqlSecApp"><![CDATA[
     SELECT VALUE -- Constructing SqlSecApp
-        [CodeFirstDatabaseSchema.SqlSecApp](T1.[SqlSecApp.CAPP_ID], T1.[SqlSecApp.CAPP_NAME], T1.[SqlSecApp.CAPP_DESCR])
+        [CodeFirstDatabaseSchema.SqlSecApp](T1.[SqlSecApp.CAPP_ID], T1.[SqlSecApp.CAPP_NAME], T1.[SqlSecApp.CAPP_DESCR], T1.[SqlSecApp.CAPP_PWD_HASHER])
     FROM (
         SELECT 
             T.Id AS [SqlSecApp.CAPP_ID], 
             T.Name AS [SqlSecApp.CAPP_NAME], 
             T.Description AS [SqlSecApp.CAPP_DESCR], 
+            T.PasswordHasher AS [SqlSecApp.CAPP_PWD_HASHER], 
             True AS _from0
         FROM SqlDbContext.SecApps AS T
     ) AS T1]]></view>
@@ -579,12 +580,13 @@
     ) AS T1]]></view>
     <view extent="SqlDbContext.SecApps"><![CDATA[
     SELECT VALUE -- Constructing SecApps
-        [Finsa.Caravan.DataAccess.Sql.SqlSecApp](T1.SqlSecApp_Id, T1.SqlSecApp_Name, T1.SqlSecApp_Description)
+        [Finsa.Caravan.DataAccess.Sql.SqlSecApp](T1.SqlSecApp_Id, T1.SqlSecApp_Name, T1.SqlSecApp_Description, T1.SqlSecApp_PasswordHasher)
     FROM (
         SELECT 
             T.CAPP_ID AS SqlSecApp_Id, 
             T.CAPP_NAME AS SqlSecApp_Name, 
             T.CAPP_DESCR AS SqlSecApp_Description, 
+            T.CAPP_PWD_HASHER AS SqlSecApp_PasswordHasher, 
             True AS _from0
         FROM CodeFirstDatabase.SqlSecApp AS T
     ) AS T1]]></view>

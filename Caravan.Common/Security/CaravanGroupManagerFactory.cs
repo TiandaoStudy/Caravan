@@ -10,6 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using System.Threading.Tasks;
 using PommaLabs.Thrower;
 
 namespace Finsa.Caravan.Common.Security
@@ -27,9 +28,11 @@ namespace Finsa.Caravan.Common.Security
 
         public ICaravanSecurityRepository SecurityRepository { get; }
 
-        public CaravanGroupManager Create(string appName)
+        public Task<CaravanGroupManager> CreateAsync(string appName)
         {
-            return new CaravanGroupManager(new CaravanGroupStore(appName, SecurityRepository));
+            var groupStore = new CaravanGroupStore(appName, SecurityRepository);
+            var groupManager = new CaravanGroupManager(groupStore);
+            return Task.FromResult(groupManager);
         }
     }
 }

@@ -23,6 +23,10 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
         [MaxLength(SqlDbContext.MediumLength)]
         public virtual string Description { get; set; }
 
+        [Column("CAPP_PWD_HASHER", Order = 3)]
+        [MaxLength(SqlDbContext.MediumLength)]
+        public virtual string PasswordHasher { get; set; }
+
         #region Relationships
 
         public virtual ICollection<SqlSecUser> Users { get; set; }
