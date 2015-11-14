@@ -11,7 +11,6 @@
 // the License.
 
 using Finsa.Caravan.Common.Security.Models;
-using Finsa.CodeServices.Common;
 using Microsoft.AspNet.Identity;
 using PommaLabs.Thrower;
 using System.Linq;
@@ -59,7 +58,7 @@ namespace Finsa.Caravan.Common.Security
             var appName = CaravanCommonConfiguration.Instance.AppName;
             await _securityRepository.UpdateGroupByIdAsync(appName, role.Id, new SecGroupUpdates
             {
-                Name = Option.Some(role.Name)
+                Name = role.Name
             });
         }
 

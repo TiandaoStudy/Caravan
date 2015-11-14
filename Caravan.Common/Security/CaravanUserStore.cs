@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.Common.Security
 {
-    public class CaravanUserStore : IUserStore<SecUser>,
+    public sealed class CaravanUserStore : IUserStore<SecUser>,
         IUserEmailStore<SecUser>,
         IUserPhoneNumberStore<SecUser>,
         IUserLoginStore<SecUser>,

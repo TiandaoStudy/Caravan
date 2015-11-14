@@ -10,22 +10,28 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.CodeServices.Common;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Runtime.Serialization;
 using System.Web;
-using Newtonsoft.Json;
 
 namespace Finsa.Caravan.Common.Security.Models
 {
-    [Serializable, JsonObject(MemberSerialization.OptIn), DataContract]
-    public class SecSession
+    [Serializable, DataContract]
+    public class SecSession : FormattableObject
     {
+        [DataMember(Order = 0)]
         public string UserLogin { get; set; }
 
+        [DataMember(Order = 1)]
         public string UserHostAddress { get; private set; }
 
+        [DataMember(Order = 2)]
         public string UserHostName { get; private set; }
 
+        [DataMember(Order = 3)]
         public DateTime LastVisit { get; set; }
 
         public void FillData()
@@ -41,5 +47,15 @@ namespace Finsa.Caravan.Common.Security.Models
             }
             LastVisit = CaravanServiceProvider.Clock.UtcNow;
         }
+
+        #region FormattableObject members
+
+        protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()
+        {
+            yield return KeyValuePair.Create(nameof(UserLogin), UserLogin);
+            yield return KeyValuePair.Create(nameof(LastVisit), LastVisit.ToString(CultureInfo.InvariantCulture));
+        }
+
+        #endregion FormattableObject members
     }
 }

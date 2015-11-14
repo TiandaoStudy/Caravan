@@ -10,12 +10,11 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using Newtonsoft.Json;
+using Finsa.CodeServices.Common;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
-using Finsa.CodeServices.Common;
 
 namespace Finsa.Caravan.Common.Security.Models
 {
@@ -25,22 +24,22 @@ namespace Finsa.Caravan.Common.Security.Models
         [DataMember(Order = 0)]
         public long Id { get; set; }
 
-        [DataMember(Order = 2)]
+        [DataMember(Order = 1)]
         public string Name { get; set; }
 
-        [JsonProperty(Order = 0), DataMember(Order = 0)]
+        [DataMember(Order = 2)]
         public string AppName { get; set; }
 
-        [JsonProperty(Order = 1), DataMember(Order = 1)]
+        [DataMember(Order = 3)]
         public string GroupName { get; set; }
 
-        [JsonProperty(Order = 3), DataMember(Order = 3)]
+        [DataMember(Order = 4)]
         public string Description { get; set; }
 
-        [JsonProperty(Order = 4), DataMember(Order = 4)]
+        [DataMember(Order = 5)]
         public string Notes { get; set; }
 
-        [JsonProperty(Order = 5), DataMember(Order = 5)]
+        [DataMember(Order = 6)]
         public SecUser[] Users { get; set; }
 
         protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()

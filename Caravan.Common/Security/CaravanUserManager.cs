@@ -17,7 +17,7 @@ using System;
 
 namespace Finsa.Caravan.Common.Security
 {
-    public class CaravanUserManager : UserManager<SecUser, string>
+    public sealed class CaravanUserManager : UserManager<SecUser, string>
     {
         public CaravanUserManager(IUserStore<SecUser, string> store, IPasswordHasher passwordHasher)
             : base(store)

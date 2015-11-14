@@ -10,70 +10,69 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.CodeServices.Common;
 using Microsoft.AspNet.Identity;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Runtime.Serialization;
-using Finsa.CodeServices.Common;
 
 namespace Finsa.Caravan.Common.Security.Models
 {
-    [Serializable, JsonObject(MemberSerialization.OptIn), DataContract]
-    public class SecUser : EquatableObject<SecUser>, IUser<string>
+    [Serializable, DataContract]
+    public class SecUser : EquatableObject<SecUser>, IUser<long>
     {
-        [JsonProperty(Order = 0), DataMember(Order = 0)]
+        /// <summary>
+        ///   Unique key for the user.
+        /// </summary>
+        [DataMember(Order = 0)]
+        public long Id { get; set; }
+
+        [DataMember(Order = 1)]
         public string AppName { get; set; }
 
-        [JsonProperty(Order = 1), DataMember(Order = 1)]
+        [DataMember(Order = 2)]
         public string Login { get; set; }
 
-        [JsonProperty(Order = 2), DataMember(Order = 2)]
+        [DataMember(Order = 3)]
         public string PasswordHash { get; set; }
 
-        [JsonProperty(Order = 3), DataMember(Order = 3)]
+        [DataMember(Order = 4)]
         public bool Active { get; set; }
 
-        [JsonProperty(Order = 4), DataMember(Order = 4)]
+        [DataMember(Order = 5)]
         public string FirstName { get; set; }
 
-        [JsonProperty(Order = 5), DataMember(Order = 5)]
+        [DataMember(Order = 6)]
         public string LastName { get; set; }
 
-        [JsonProperty(Order = 6), DataMember(Order = 6)]
+        [DataMember(Order = 7)]
         public string Email { get; set; }
 
-        [JsonProperty(Order = 7), DataMember(Order = 7)]
+        [DataMember(Order = 8)]
         public bool EmailConfirmed { get; set; }
 
-        [JsonProperty(Order = 8), DataMember(Order = 8)]
+        [DataMember(Order = 9)]
         public string PhoneNumber { get; set; }
 
-        [JsonProperty(Order = 9), DataMember(Order = 9)]
+        [DataMember(Order = 10)]
         public bool PhoneNumberConfirmed { get; set; }
 
-        [JsonProperty(Order = 10), DataMember(Order = 10)]
+        [DataMember(Order = 11)]
         public SecGroup[] Groups { get; set; }
 
-        [JsonProperty(Order = 11), DataMember(Order = 11)]
+        [DataMember(Order = 12)]
         public SecRole[] Roles { get; set; }
 
         #region IUser members
 
-        public string Id
-        {
-            get { return Login; }
-        }
-
+        /// <summary>
+        ///   Unique username.
+        /// </summary>
         public string UserName
         {
-            get { return FirstName + " " + LastName; }
-            set
-            {
-                var parts = value.Split(new[] { ' ' }, 2);
-                FirstName = (parts.Length >= 1) ? parts[0] : string.Empty;
-                LastName = (parts.Length >= 2) ? parts[0] : string.Empty;
-            }
+            get { return Login; }
+            set { Login = value; }
         }
 
         #endregion IUser members
@@ -82,15 +81,15 @@ namespace Finsa.Caravan.Common.Security.Models
 
         protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()
         {
-            yield return KeyValuePair.Create(nameof(AppName), AppName);
+            yield return KeyValuePair.Create(nameof(Id), Id.ToString(CultureInfo.InvariantCulture));
             yield return KeyValuePair.Create(nameof(Login), Login);
+            yield return KeyValuePair.Create(nameof(AppName), AppName);
             yield return KeyValuePair.Create(nameof(UserName), UserName);
         }
 
         protected override IEnumerable<object> GetIdentifyingMembers()
         {
-            yield return AppName;
-            yield return Login;
+            yield return Id;
         }
 
         #endregion FormattableObject members

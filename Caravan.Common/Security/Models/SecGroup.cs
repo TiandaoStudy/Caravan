@@ -12,7 +12,6 @@
 
 using Finsa.CodeServices.Common;
 using Microsoft.AspNet.Identity;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -23,9 +22,15 @@ namespace Finsa.Caravan.Common.Security.Models
     [Serializable, DataContract]
     public class SecGroup : EquatableObject<SecGroup>, IRole<long>
     {
+        /// <summary>
+        ///   Id of the group.
+        /// </summary>
         [DataMember(Order = 0)]
         public long Id { get; set; }
 
+        /// <summary>
+        ///   Name of the group.
+        /// </summary>
         [DataMember(Order = 1)]
         public string Name { get; set; }
 
