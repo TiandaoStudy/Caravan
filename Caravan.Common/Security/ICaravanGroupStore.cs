@@ -18,7 +18,7 @@ namespace Finsa.Caravan.Common.Security
     /// <summary>
     ///   RoleStore personalizzato per Caravan.
     /// </summary>
-    public interface ICaravanGroupStore : IQueryableRoleStore<SecGroup, long>
+    public interface ICaravanGroupStore : IQueryableRoleStore<SecGroup, int>
     {
         /// <summary>
         ///   Il nome dell'applicativo Caravan per cui lo store è stato istanziato.

@@ -22,7 +22,7 @@ namespace Finsa.Caravan.Common.Security.Models
     public class SecContext : EquatableObject<SecContext>
     {
         [DataMember(Order = 0)]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [DataMember(Order = 1)]
         public string AppName { get; set; }

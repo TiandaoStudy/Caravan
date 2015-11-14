@@ -1,4 +1,16 @@
-﻿using Finsa.Caravan.Common.Security;
+﻿// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
+using Finsa.Caravan.Common.Security;
 using Finsa.CodeServices.Common;
 using PommaLabs.Thrower;
 using System;
@@ -16,11 +28,17 @@ namespace Finsa.Caravan.DataAccess.Core
     internal abstract class AbstractSecurityRepository<TSec> : ICaravanSecurityRepository 
         where TSec : AbstractSecurityRepository<TSec>
     {
-        protected ICaravanLog Log { get; } = CaravanServiceProvider.FetchLog<TSec>();
+        protected AbstractSecurityRepository(ICaravanLog log)
+        {
+            RaiseArgumentNullException.IfIsNull(log, nameof(log));
+            Log = log;
+        }  
 
         public SecApp CurrentApp { get; private set; }
 
         public SecUser CurrentUser { get; private set; }
+
+        protected ICaravanLog Log { get; }
 
         #region Apps
 
@@ -30,7 +48,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
-                return await GetAppsAsyncInternal();
+                return await GetAppsAsyncInternal(null);
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
@@ -45,16 +63,16 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
 
             appName = appName?.ToLowerInvariant();
-            var logCtx = "Retrieving an APP - " + appName;
+            var logCtx = $"Retrieving {appName} APP";
 
             try
             {
-                var app = await GetAppAsyncInternal(appName);
-                if (app == null)
+                var apps = await GetAppsAsyncInternal(appName);
+                if (apps.Length == 0)
                 {
                     throw new SecAppNotFoundException(appName);
                 }
-                return app;
+                return apps[0];
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
@@ -63,24 +81,29 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public async Task<long> AddAppAsync(SecApp app)
+        public async Task<int> AddAppAsync(SecApp app)
         {
             // Preconditions
             RaiseArgumentNullException.IfIsNull(app, nameof(app));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(app.Name), ErrorMessages.NullOrWhiteSpaceAppName, nameof(app.Name));
 
             app.Name = app.Name.ToLowerInvariant();
-            var logCtx = "Adding a new APP - " + app.Name;
+            var logCtx = $"Adding new '{app.Name}' APP";
 
             try
             {
                 await AddAppAsyncInternal(app);
+                Log.Warn(new LogMessage
+                {
+                    ShortMessage = $"Added new '{app.Name}' APP",
+                    Context = logCtx
+                });
                 return app.Id;
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
-                return default(long);
+                return default(int);
             }
         }
 
@@ -88,43 +111,97 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Groups
 
-        public SecGroup[] GetGroups(string appName)
+        public async Task<SecGroup[]> GetGroupsAsync(string appName)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
-            return GetGroupsInternal(appName.ToLowerInvariant(), null);
-        }
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
 
-        public SecGroup GetGroupByName(string appName, string groupName)
-        {
-            // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
-            Raise<ArgumentException>.IfIsEmpty(groupName);
-            var group = GetGroupsInternal(appName.ToLowerInvariant(), groupName.ToLowerInvariant()).FirstOrDefault();
-            if (group == null)
-            {
-                throw new SecGroupNotFoundException(ErrorMessages.AbstractSecurityRepository_GroupNotFound);
-            }
-            return group;
-        }
-
-        public void AddGroup(string appName, SecGroup newGroup)
-        {
-            // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
-            Raise<ArgumentNullException>.IfIsNull(newGroup);
-            Raise<ArgumentException>.IfIsEmpty(newGroup.Name);
-
-            const string logCtx = "Adding a new GROUP";
+            appName = appName?.ToLowerInvariant();
+            var logCtx = $"Retrieving all GROUPs from '{appName}' APP";
 
             try
             {
-                newGroup.Name = newGroup.Name.ToLowerInvariant();
-                if (!AddGroupInternal(appName.ToLowerInvariant(), newGroup))
+                return await GetGroupsInternal(appName, null);
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(SecGroup[]);
+            }
+        }
+
+        public async Task<SecGroup> GetGroupByNameAsync(string appName, string groupName)
+        {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+
+            appName = appName?.ToLowerInvariant();
+            groupName = groupName?.ToLowerInvariant();
+            var logCtx = $"Retrieving '{groupName}' GROUP from '{appName}' APP";
+
+            try
+            {
+                var groups = await GetGroupsInternal(appName, groupName);
+                if (groups.Length == 0)
                 {
-                    throw new SecGroupExistingException();
+                    throw new SecGroupNotFoundException(appName, groupName);
                 }
-                Log.Warn(() => new LogMessage { ShortMessage = $"ADDED GROUP '{newGroup.Name}' TO '{appName}'", Context = logCtx });
+                return groups[0];
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(SecGroup);
+            }
+        }
+
+        public async Task<int> AddGroupAsync(string appName, SecGroup newGroup)
+        {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentNullException.IfIsNull(newGroup, nameof(newGroup));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(newGroup.Name), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(newGroup.Name));
+
+            appName = appName?.ToLowerInvariant();
+            newGroup.Name = newGroup.Name.ToLowerInvariant();
+            var logCtx = $"Adding new '{newGroup.Name}' GROUP to '{appName}' APP";
+
+            try
+            {
+                await AddGroupInternal(appName, newGroup);
+                Log.Warn(new LogMessage
+                {
+                    ShortMessage = $"Added new '{newGroup.Name}' GROUP to '{appName}' APP",
+                    Context = logCtx
+                });
+                return newGroup.Id;
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(int);
+            }
+        }
+
+        public async Task RemoveGroupByNameAsync(string appName, string groupName)
+        {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+
+            appName = appName?.ToLowerInvariant();
+            groupName = groupName?.ToLowerInvariant();
+            var logCtx = $"Removing '{groupName}' GROUP from '{appName}' APP";
+
+            try
+            {
+                await RemoveGroupInternal(appName, groupName);
+                Log.Warn(new LogMessage
+                {
+                    ShortMessage = $"Removed '{groupName}' GROUP from '{appName}' APP",
+                    Context = logCtx
+                });
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
@@ -132,52 +209,27 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public void RemoveGroup(string appName, string groupName)
+        public async Task UpdateGroupByNameAsync(string appName, string groupName, SecGroupUpdates groupUpdates)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
-            Raise<ArgumentException>.IfIsEmpty(groupName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+            RaiseArgumentNullException.IfIsNull(groupUpdates, nameof(groupUpdates));
+            RaiseArgumentException.If(groupUpdates.Name.HasValue && string.IsNullOrWhiteSpace(groupUpdates.Name.Value));
 
-            const string logCtx = "Removing a GROUP";
+            appName = appName?.ToLowerInvariant();
+            groupName = groupName?.ToLowerInvariant();
+            var logCtx = $"Updating '{groupName}' GROUP in '{appName}' APP";
 
             try
             {
-                if (!RemoveGroupInternal(appName.ToLowerInvariant(), groupName.ToLowerInvariant()))
+                groupUpdates.Name.Do(x => groupUpdates.Name = x.ToLowerInvariant());
+                await UpdateGroupInternal(appName, groupName, groupUpdates);
+                Log.Warn(new LogMessage
                 {
-                    throw new SecGroupNotFoundException(ErrorMessages.AbstractSecurityRepository_GroupNotFound);
-                }
-                Log.Warn(() => new LogMessage { ShortMessage = $"REMOVED GROUP '{groupName}' FROM '{appName}'", Context = logCtx });
-            }
-            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
-            {
-                // Lascio emergere l'eccezione...
-            }
-        }
-
-        public void UpdateGroup(string appName, string groupName, SecGroupUpdates groupUpdates)
-        {
-            // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
-            Raise<ArgumentException>.IfIsEmpty(groupName);
-            Raise<ArgumentNullException>.IfIsNull(groupUpdates);
-            Raise<ArgumentException>.If(groupUpdates.Name.HasValue && string.IsNullOrWhiteSpace(groupUpdates.Name.Value));
-
-            const string logCtx = "Updating a GROUP";
-
-            try
-            {
-                appName = appName.ToLowerInvariant();
-                groupName = groupName.ToLowerInvariant();
-                if (groupUpdates.Name.HasValue)
-                {
-                    groupUpdates.Name = Option.Some(groupUpdates.Name.Value.ToLowerInvariant());
-                }
-
-                if (!UpdateGroupInternal(appName, groupName, groupUpdates))
-                {
-                    throw new SecGroupNotFoundException(ErrorMessages.AbstractSecurityRepository_GroupNotFound);
-                }
-                Log.Warn(() => new LogMessage { ShortMessage = $"UPDATED GROUP '{groupName}' IN '{appName}'", Context = logCtx });
+                    ShortMessage = $"Updated '{groupName}' GROUP in '{appName}' APP",
+                    Context = logCtx
+                });
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
@@ -189,17 +241,18 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Users
 
-        public SecUser[] GetUsers(string appName)
+        public Task<SecUser[]> GetUsersAsync(string appName)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+
             return GetUsersInternal(appName.ToLowerInvariant(), null, null);
         }
 
-        public SecUser GetUserByLogin(string appName, string userLogin)
+        public Task<SecUser> GetUserByLoginAsync(string appName, string userLogin)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             Raise<ArgumentException>.IfIsEmpty(userLogin);
 
             appName = appName.ToLowerInvariant();
@@ -213,10 +266,10 @@ namespace Finsa.Caravan.DataAccess.Core
             return user;
         }
 
-        public SecUser GetUserByEmail(string appName, string userEmail)
+        public Task<SecUser> GetUserByEmailAsync(string appName, string userEmail)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             Raise<ArgumentException>.IfIsEmpty(userEmail);
 
             appName = appName.ToLowerInvariant();
@@ -230,10 +283,10 @@ namespace Finsa.Caravan.DataAccess.Core
             return user;
         }
 
-        public void AddUser(string appName, SecUser newUser)
+        public async Task<long> AddUserAsync(string appName, SecUser newUser)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             Raise<ArgumentNullException>.IfIsNull(newUser);
             Raise<ArgumentException>.IfIsEmpty(newUser.Login);
 
@@ -251,13 +304,14 @@ namespace Finsa.Caravan.DataAccess.Core
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
+                return default(int);
             }
         }
 
-        public void RemoveUser(string appName, string userLogin)
+        public async Task RemoveUserAsync(string appName, string userLogin)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             Raise<ArgumentException>.IfIsEmpty(userLogin);
 
             const string logCtx = "Removing an USER";
@@ -276,10 +330,10 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public void UpdateUser(string appName, string userLogin, SecUserUpdates userUpdates)
+        public async Task UpdateUserByLoginAsync(string appName, string userLogin, SecUserUpdates userUpdates)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             Raise<ArgumentException>.IfIsEmpty(userLogin);
             Raise<ArgumentNullException>.IfIsNull(userUpdates);
             Raise<ArgumentException>.If(userUpdates.Login.HasValue && string.IsNullOrWhiteSpace(userUpdates.Login.Value));
@@ -307,12 +361,12 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public void AddUserToGroup(string appName, string userLogin, string groupName)
+        public async Task AddUserToGroupAsync(string appName, string userLogin, string groupName)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             Raise<ArgumentException>.IfIsEmpty(userLogin);
-            Raise<ArgumentException>.IfIsEmpty(groupName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
 
             const string logCtx = "Adding an USER to a GROUP";
 
@@ -330,12 +384,12 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public void RemoveUserFromGroup(string appName, string userLogin, string groupName)
+        public async Task RemoveUserFromGroupAsync(string appName, string userLogin, string groupName)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             Raise<ArgumentException>.IfIsEmpty(userLogin);
-            Raise<ArgumentException>.IfIsEmpty(groupName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
 
             const string logCtx = "Removing an USER from a GROUP";
 
@@ -357,10 +411,10 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Contexts
 
-        public SecContext[] GetContexts(string appName)
+        public Task<SecContext[]> GetContextsAsync(string appName)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             return GetContextsInternal(appName.ToLowerInvariant());
         }
 
@@ -368,17 +422,17 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Objects
 
-        public SecObject[] GetObjects(string appName)
+        public Task<SecObject[]> GetObjectsAsync(string appName)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             return GetObjectsInternal(appName.ToLowerInvariant(), null);
         }
 
-        public SecObject[] GetObjects(string appName, string contextName)
+        public Task<SecObject[]> GetObjectsAsync(string appName, string contextName)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             Raise<ArgumentException>.IfIsEmpty(contextName);
             return GetObjectsInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant());
         }
@@ -387,53 +441,53 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Entries
 
-        public SecEntry[] GetEntries(string appName)
+        public Task<SecEntry[]> GetEntriesAsync(string appName)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             return GetEntriesInternal(appName.ToLowerInvariant(), null, null, null);
         }
 
-        public SecEntry[] GetEntries(string appName, string contextName)
+        public Task<SecEntry[]> GetEntriesAsync(string appName, string contextName)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             Raise<ArgumentException>.IfIsEmpty(contextName);
             return GetEntriesInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant(), null, null);
         }
 
-        public SecEntry[] GetEntriesForUser(string appName, string contextName, string userLogin)
+        public Task<SecEntry[]> GetEntriesForUserAsync(string appName, string contextName, string userLogin)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             Raise<ArgumentException>.IfIsEmpty(contextName);
             Raise<ArgumentException>.IfIsEmpty(userLogin);
             return GetEntriesInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant(), null, userLogin.ToLowerInvariant());
         }
 
-        public SecEntry[] GetEntriesForObject(string appName, string contextName, string objectName)
+        public Task<SecEntry[]> GetEntriesForObjectAsync(string appName, string contextName, string objectName)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             Raise<ArgumentException>.IfIsEmpty(contextName);
             Raise<ArgumentException>.IfIsEmpty(objectName);
             return GetEntriesInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant(), objectName.ToLowerInvariant(), null);
         }
 
-        public SecEntry[] GetEntriesForObjectAndUser(string appName, string contextName, string objectName, string userLogin)
+        public Task<SecEntry[]> GetEntriesForObjectAndUserAsync(string appName, string contextName, string objectName, string userLogin)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             Raise<ArgumentException>.IfIsEmpty(contextName);
             Raise<ArgumentException>.IfIsEmpty(objectName);
             Raise<ArgumentException>.IfIsEmpty(userLogin);
             return GetEntriesInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant(), objectName.ToLowerInvariant(), userLogin.ToLowerInvariant());
         }
 
-        public void AddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+        public Task<long> AddEntryAsync(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             Raise<ArgumentException>.IfIsNull(secContext);
             Raise<ArgumentException>.IfIsEmpty(secContext.Name);
             Raise<ArgumentException>.IfIsNull(secObject);
@@ -472,10 +526,10 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public void RemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)
+        public Task RemoveEntryAsync(string appName, string contextName, string objectName, string userLogin, string groupName)
         {
             // Preconditions
-            Raise<ArgumentException>.IfIsEmpty(appName);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             Raise<ArgumentException>.IfIsEmpty(contextName);
             Raise<ArgumentException>.IfIsEmpty(objectName);
             Raise<ArgumentException>.If(string.IsNullOrWhiteSpace(userLogin) && string.IsNullOrWhiteSpace(groupName));
@@ -511,9 +565,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Abstract Methods
 
-        protected abstract Task<SecApp[]> GetAppsAsyncInternal();
-
-        protected abstract Task<SecApp> GetAppAsyncInternal(string appName);
+        protected abstract Task<SecApp[]> GetAppsAsyncInternal(string appName);
 
         protected abstract Task AddAppAsyncInternal(SecApp app);
 

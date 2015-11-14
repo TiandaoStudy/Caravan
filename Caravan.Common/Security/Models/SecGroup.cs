@@ -20,13 +20,13 @@ using System.Runtime.Serialization;
 namespace Finsa.Caravan.Common.Security.Models
 {
     [Serializable, DataContract]
-    public class SecGroup : EquatableObject<SecGroup>, IRole<long>
+    public class SecGroup : EquatableObject<SecGroup>, IRole<int>
     {
         /// <summary>
         ///   Id of the group.
         /// </summary>
         [DataMember(Order = 0)]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         ///   Name of the group.

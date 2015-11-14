@@ -103,7 +103,7 @@ namespace Finsa.Caravan.Common.Security
         /// </summary>
         /// <param name="roleId"/>
         /// <returns/>
-        public async Task<SecGroup> FindByIdAsync(long roleId) => await SecurityRepository.GetGroupByIdAsync(AppName, roleId);
+        public async Task<SecGroup> FindByIdAsync(int roleId) => await SecurityRepository.GetGroupByIdAsync(AppName, roleId);
 
         /// <summary>
         ///   Finds a role by name.

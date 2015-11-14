@@ -50,7 +50,7 @@ namespace Finsa.Caravan.Common.Security
         /// </exception>
         /// <exception cref="ArgumentNullException"><paramref name="app"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="app.Name"/> is null or empty.</exception>
-        Task<long> AddAppAsync(SecApp app);
+        Task<int> AddAppAsync(SecApp app);
 
         #endregion Apps
 
@@ -91,7 +91,7 @@ namespace Finsa.Caravan.Common.Security
         ///   <paramref name="appName"/> or <paramref name="newGroup.Name"/> are null or empty.
         /// </exception>
         /// <exception cref="ArgumentNullException"><paramref name="newGroup"/> is null.</exception>
-        Task<long> AddGroupAsync(string appName, SecGroup newGroup);
+        Task<int> AddGroupAsync(string appName, SecGroup newGroup);
 
         /// <summary>
         ///   </summary>
@@ -307,7 +307,7 @@ namespace Finsa.Caravan.Common.Security
         ///   <paramref name="appName"/> or <paramref name="newRole.Name"/> are null or empty.
         /// </exception>
         /// <exception cref="ArgumentNullException"><paramref name="newRole"/> is null.</exception>
-        Task<long> AddRoleAsync(string appName, SecRole newRole);
+        Task<int> AddRoleAsync(string appName, SecRole newRole);
 
         /// <summary>
         ///   </summary>

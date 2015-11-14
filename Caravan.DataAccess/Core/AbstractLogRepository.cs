@@ -1,21 +1,37 @@
+// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
 using Common.Logging;
 using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Logging.Exceptions;
+using Finsa.Caravan.Common.Logging.Models;
+using Finsa.CodeServices.Common;
+using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
-using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Logging.Exceptions;
-using Finsa.CodeServices.Common;
-using PommaLabs.Thrower;
-using Finsa.Caravan.Common.Logging.Models;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
     internal abstract class AbstractLogRepository<TLog> : ICaravanLogRepository where TLog : AbstractLogRepository<TLog>
     {
-        protected ICaravanLog Log { get; } = CaravanServiceProvider.FetchLog<TLog>();
+        protected AbstractLogRepository(ICaravanLog log)
+        {
+            RaiseArgumentNullException.IfIsNull(log, nameof(log));
+            Log = log;
+        }
+
+        protected ICaravanLog Log { get; }
 
         protected abstract Task AddEntryAsyncInternal(string appName, LogEntry logEntry);
 
@@ -64,7 +80,6 @@ namespace Finsa.Caravan.DataAccess.Core
                 RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), nameof(appName));
                 await AddEntriesAsyncInternal(appName.ToLowerInvariant(), logEntries);
                 return LogResult.Success;
-
             }
             catch (Exception ex)
             {
@@ -84,7 +99,6 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 // Lascio emergere l'eccezione...
             }
-
         }
 
         public async Task CleanUpEntriesAsync(string appName)
@@ -128,14 +142,14 @@ namespace Finsa.Caravan.DataAccess.Core
         public IList<LogEntry> QueryEntries(LogEntryQuery logEntryQuery)
         {
             Raise<ArgumentNullException>.If(logEntryQuery == null);
-            
+
             // Metto in lower i nomi delle applicazioni, se ce ne sono.
             var appNames = logEntryQuery.AppNames;
             if (appNames != null && appNames.Count > 0)
             {
                 logEntryQuery.AppNames = appNames.Where(n => !string.IsNullOrWhiteSpace(n)).Select(n => n.ToLowerInvariant()).ToArray();
             }
-            
+
             return QueryEntriesInternal(logEntryQuery);
         }
 

@@ -72,11 +72,6 @@ namespace Finsa.Caravan.DataAccess.Sql
             return ctx;
         }
 
-        public static TransactionScope BeginTrasaction()
-        {
-            return new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Snapshot });
-        }
-
         private static DbConnection GetConnection()
         {
             if (CaravanDataSource.Manager.DataSourceKind == CaravanDataSourceKind.FakeSql)

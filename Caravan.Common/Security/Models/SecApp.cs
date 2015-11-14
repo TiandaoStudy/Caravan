@@ -23,7 +23,7 @@ namespace Finsa.Caravan.Common.Security.Models
     public class SecApp : EquatableObject<SecApp>
     {
         [DataMember(Order = 0)]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [DataMember(Order = 1)]
         public string Name { get; set; }

@@ -2,8 +2,8 @@
 
 CREATE TABLE mydb.crvn_sec_groups
 (
-     cgrp_id          NUMBER          NOT NULL
-   , capp_id          NUMBER          NOT NULL 
+     cgrp_id          NUMBER(10)      NOT NULL
+   , capp_id          NUMBER(10)      NOT NULL 
    , cgrp_name        NVARCHAR2(32)   NOT NULL
    , cgrp_descr       NVARCHAR2(256)  NOT NULL
    , cgrp_notes       NVARCHAR2(1024) NOT NULL

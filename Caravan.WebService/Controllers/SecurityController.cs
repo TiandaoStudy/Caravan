@@ -17,7 +17,6 @@ using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Finsa.Caravan.WebApi.Filters;
@@ -236,8 +235,8 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <param name="groupId">The group name</param>
         /// <returns></returns>
-        [Route("{appName}/groups/{groupId:long}")]
-        public async Task<SecGroup> GetGroupById(string appName, long groupId)
+        [Route("{appName}/groups/{groupId:int}")]
+        public async Task<SecGroup> GetGroupById(string appName, int groupId)
         {
             using (var groupManager = _groupManagerFactory.Create(appName))
             {

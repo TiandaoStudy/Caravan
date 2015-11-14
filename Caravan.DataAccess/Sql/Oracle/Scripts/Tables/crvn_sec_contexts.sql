@@ -2,8 +2,8 @@
 
 CREATE TABLE mydb.crvn_sec_contexts
 (
-     cctx_id          NUMBER          NOT NULL
-   , capp_id          NUMBER          NOT NULL 
+     cctx_id          NUMBER(10)      NOT NULL
+   , capp_id          NUMBER(10)      NOT NULL 
    , cctx_name        NVARCHAR2(32)   NOT NULL
    , cctx_descr       NVARCHAR2(256)  NOT NULL
    , CHECK (cctx_name = lower(cctx_name)) ENABLE

@@ -5,15 +5,20 @@ using Finsa.CodeServices.Common;
 using RestSharp;
 using Common.Logging;
 using Finsa.Caravan.Common.Logging.Exceptions;
-using Finsa.Caravan.Common.Security.Exceptions;
 using System.Threading.Tasks;
+using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.DataAccess.Rest.Models;
 
 namespace Finsa.Caravan.DataAccess.Rest
 {
     internal sealed class RestLogRepository : AbstractLogRepository<RestLogRepository>
-    {    
+    {
+        public RestLogRepository(ICaravanLog log)
+            : base(log)
+        {
+        }
+
         protected override IList<LogEntry> GetEntriesInternal(string appName, LogLevel? logLevel)
         {
             var client = new RestClient("http://localhost/Caravan.RestService/security");
@@ -51,8 +56,8 @@ namespace Finsa.Caravan.DataAccess.Rest
 
                 if (response.ErrorException != null)
                 {
-                    if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
-                        throw new SecAppNotFoundException();
+                    //if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
+                    //    throw new SecAppNotFoundException();
                     throw new Exception(response.ErrorMessage);
                 }
                 var settings = new List<LogSetting> { response.Data.Body };
@@ -95,12 +100,12 @@ namespace Finsa.Caravan.DataAccess.Rest
 
                 if (response.ErrorException != null)
                 {
-                    if (response.ErrorMessage == SecAppExistingException.TheMessage)
-                        throw new SecAppExistingException();
+                    //if (response.ErrorMessage == SecAppExistingException.TheMessage)
+                    //    throw new SecAppExistingException();
                     if (response.ErrorMessage == LogSettingExistingException.TheMessage)
                         throw new LogSettingExistingException();
-                    if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
-                        throw new SecAppNotFoundException();
+                    //if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
+                    //    throw new SecAppNotFoundException();
                     throw new Exception(response.ErrorMessage);
                 }
                 return true;
@@ -136,12 +141,12 @@ namespace Finsa.Caravan.DataAccess.Rest
 
                 if (response.ErrorException != null)
                 {
-                    if (response.ErrorMessage == SecAppExistingException.TheMessage)
-                        throw new SecAppExistingException();
+                    //if (response.ErrorMessage == SecAppExistingException.TheMessage)
+                    //    throw new SecAppExistingException();
                     if (response.ErrorMessage == LogSettingExistingException.TheMessage)
                         throw new LogSettingExistingException();
-                    if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
-                        throw new SecAppNotFoundException();
+                    //if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
+                    //    throw new SecAppNotFoundException();
                     throw new Exception(response.ErrorMessage);
                 }
                 return true;

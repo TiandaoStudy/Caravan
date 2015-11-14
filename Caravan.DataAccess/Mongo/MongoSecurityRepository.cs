@@ -1,27 +1,23 @@
-﻿using Finsa.Caravan.Common.Security.Models;
+﻿using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess.Core;
-using MongoDB.Driver;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Finsa.Caravan.DataAccess.Mongo.Models;
-using Finsa.Caravan.DataAccess.Mongo.Models.Logging;
-using Finsa.Caravan.DataAccess.Mongo.Models.Security;
 
 namespace Finsa.Caravan.DataAccess.Mongo
 {
     internal sealed class MongoSecurityRepository : AbstractSecurityRepository<MongoSecurityRepository>
     {
-        protected override Task<SecApp[]> GetAppsAsyncInternal()
+        public MongoSecurityRepository(ICaravanLog log)
+            : base(log)
+        {
+        }
+
+        protected override Task<SecApp[]> GetAppsAsyncInternal(string appName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override Task<SecApp> GetAppAsyncInternal(string appName)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        protected override bool AddAppAsyncInternal(SecApp app)
+        protected override Task AddAppAsyncInternal(SecApp app)
         {
             //var newAppId = MongoUtilities.GetSequenceCollection().FindOneAndUpdateAsync(new FindAndModifyArgs
             //{
@@ -39,81 +35,80 @@ namespace Finsa.Caravan.DataAccess.Mongo
             //    Description = app.Description,
             //    LogSettings = new List<MongoLogSettings>()
             //}).Wait();
-
-            return true;
+            throw new System.NotImplementedException();
         }
 
-        protected override SecGroup[] GetGroupsInternal(string appName, string groupName)
+        protected override Task<SecGroup[]> GetGroupsInternal(string appName, string groupName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override bool AddGroupInternal(string appName, SecGroup newGroup)
+        protected override Task AddGroupInternal(string appName, SecGroup newGroup)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override bool RemoveGroupInternal(string appName, string groupName)
+        protected override Task RemoveGroupInternal(string appName, string groupName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override bool UpdateGroupInternal(string appName, string groupName, SecGroupUpdates groupUpdates)
+        protected override Task UpdateGroupInternal(string appName, string groupName, SecGroupUpdates groupUpdates)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override SecUser[] GetUsersInternal(string appName, string userLogin, string userEmail)
+        protected override Task<SecUser[]> GetUsersInternal(string appName, string userLogin, string userEmail)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override bool AddUserInternal(string appName, SecUser newUser)
+        protected override Task AddUserInternal(string appName, SecUser newUser)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override bool RemoveUserInternal(string appName, string userLogin)
+        protected override Task RemoveUserInternal(string appName, string userLogin)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override bool UpdateUserInternal(string appName, string userLogin, SecUserUpdates userUpdates)
+        protected override Task UpdateUserInternal(string appName, string userLogin, SecUserUpdates userUpdates)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override bool AddUserToGroupInternal(string appName, string userLogin, string groupName)
+        protected override Task AddUserToGroupInternal(string appName, string userLogin, string groupName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override bool RemoveUserFromGroupInternal(string appName, string userLogin, string groupName)
+        protected override Task RemoveUserFromGroupInternal(string appName, string userLogin, string groupName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override SecContext[] GetContextsInternal(string appName)
+        protected override Task<SecContext[]> GetContextsInternal(string appName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override SecObject[] GetObjectsInternal(string appName, string contextName)
+        protected override Task<SecObject[]> GetObjectsInternal(string appName, string contextName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override SecEntry[] GetEntriesInternal(string appName, string contextName, string objectName, string userLogin)
+        protected override Task<SecEntry[]> GetEntriesInternal(string appName, string contextName, string objectName, string userLogin)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override bool AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+        protected override Task AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override bool RemoveEntryInternal(string appName, string contextName, string objectName, string userLogin, string groupName)
+        protected override Task RemoveEntryInternal(string appName, string contextName, string objectName, string userLogin, string groupName)
         {
             throw new System.NotImplementedException();
         }

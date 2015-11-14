@@ -1,17 +1,16 @@
 using AutoMapper;
 using Common.Logging;
 using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.DataAccess.Sql.Logging.Entities;
+using Finsa.Caravan.DataAccess.Sql.Security.Entities;
 using Finsa.CodeServices.Common;
-using PommaLabs.Thrower;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Finsa.Caravan.DataAccess.Sql.Logging.Entities;
-using Finsa.Caravan.DataAccess.Sql.Security.Entities;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
@@ -22,6 +21,11 @@ namespace Finsa.Caravan.DataAccess.Sql
         const int MaxArgumentCount = 10;
 
         #endregion Constants
+
+        public SqlLogRepository(ICaravanLog log)
+            : base(log)
+        {
+        }
 
         protected override async Task AddEntryAsyncInternal(string appName, LogEntry logEntry)
         {
@@ -252,7 +256,6 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override bool DoRemoveEntry(string appName, int logId)
         {
-            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var deleted = false;
@@ -262,7 +265,6 @@ namespace Finsa.Caravan.DataAccess.Sql
                     ctx.LogEntries.Remove(log);
                     deleted = true;
                     ctx.SaveChanges();
-                    trx.Complete();
                 }
                 return deleted;
             }
@@ -292,7 +294,6 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override bool DoAddSetting(string appName, LogLevel logLevel, LogSetting setting)
         {
-            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var added = false;
@@ -315,14 +316,12 @@ namespace Finsa.Caravan.DataAccess.Sql
                 }
 
                 ctx.SaveChanges();
-                trx.Complete();
                 return added;
             }
         }
 
         protected override bool DoRemoveSetting(string appName, LogLevel logLevel)
         {
-            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var deleted = false;
@@ -335,7 +334,6 @@ namespace Finsa.Caravan.DataAccess.Sql
                     ctx.LogSettings.Remove(settings);
                     deleted = true;
                     ctx.SaveChanges();
-                    trx.Complete();
                 }
                 return deleted;
             }
@@ -343,7 +341,6 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override bool DoUpdateSetting(string appName, LogLevel logLevel, LogSetting setting)
         {
-            using (var trx = SqlDbContext.BeginTrasaction())
             using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var update = false;
@@ -361,7 +358,6 @@ namespace Finsa.Caravan.DataAccess.Sql
                 }
 
                 ctx.SaveChanges();
-                trx.Complete();
                 return update;
             }
         }

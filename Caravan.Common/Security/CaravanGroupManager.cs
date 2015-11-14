@@ -18,7 +18,7 @@ namespace Finsa.Caravan.Common.Security
     /// <summary>
     ///   Exposes user related APIs which will automatically save changes to the RoleStore.
     /// </summary>
-    public sealed class CaravanGroupManager : RoleManager<SecGroup, long>
+    public sealed class CaravanGroupManager : RoleManager<SecGroup, int>
     {
         /// <summary>
         ///   Inizializza il gestore personalizzato.

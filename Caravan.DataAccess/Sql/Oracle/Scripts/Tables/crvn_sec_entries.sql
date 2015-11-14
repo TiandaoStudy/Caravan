@@ -2,11 +2,11 @@
 
 CREATE TABLE mydb.crvn_sec_entries
 (
-     csec_id          NUMBER          NOT NULL
-   , cobj_id          NUMBER          NOT NULL
-   , cusr_id          NUMBER          -- Might be null, either user, group or role
-   , cgrp_id          NUMBER          -- Might be null, either user, group or role
-   , crol_id          NUMBER          -- Might be null, either user, group or role
+     csec_id          NUMBER(10)      NOT NULL
+   , cobj_id          NUMBER(19)      NOT NULL
+   , cusr_id          NUMBER(19)      -- Might be null, either user, group or role
+   , cgrp_id          NUMBER(10)      -- Might be null, either user, group or role
+   , crol_id          NUMBER(10)      -- Might be null, either user, group or role
    , CHECK ((cusr_id IS NULL AND crol_id IS NULL AND cgrp_id IS NOT NULL) OR 
             (cusr_id IS NOT NULL AND crol_id IS NULL AND cgrp_id IS NULL) OR
 			(cusr_id IS NULL AND crol_id IS NOT NULL AND cgrp_id IS NULL)) ENABLE

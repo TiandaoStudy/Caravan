@@ -13,7 +13,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
         public virtual long Id { get; set; }
 
         [Required, Column("COBJ_ID", Order = 1)]
-        public virtual int ObjectId { get; set; }
+        public virtual long ObjectId { get; set; }
 
         [Column("CUSR_ID", Order = 2)]
         public virtual long? UserId { get; set; }

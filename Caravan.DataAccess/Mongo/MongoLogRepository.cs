@@ -12,11 +12,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Finsa.Caravan.Common.Logging;
 
 namespace Finsa.Caravan.DataAccess.Mongo
 {
     internal sealed class MongoLogRepository : AbstractLogRepository<MongoLogRepository>
     {
+        public MongoLogRepository(ICaravanLog log)
+            : base(log)
+        {
+        }
+
         //protected override LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IList<KeyValuePair<string, string>> args)
         //{
         //    var app = MongoUtilities.GetSecAppCollection().AsQueryable().First(a => a.Name == appName);

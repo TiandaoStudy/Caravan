@@ -1,4 +1,5 @@
-﻿using Finsa.Caravan.Common.Logging;
+﻿using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.DataAccess.Mongo;
 using Finsa.Caravan.DataAccess.Rest;
@@ -11,6 +12,7 @@ using Finsa.Caravan.DataAccess.Sql.SqlServer;
 using Finsa.Caravan.DataAccess.Sql.SqlServerCe;
 using Finsa.CodeServices.Common.Portability;
 using InteractivePreGeneratedViews;
+using Ninject;
 using PommaLabs.Thrower;
 using RestSharp;
 using System;
@@ -150,8 +152,8 @@ namespace Finsa.Caravan.DataAccess
 
                 case CaravanDataSourceKind.MongoDb:
                     Manager = new MongoDataSourceManager();
-                    Logger = new MongoLogRepository();
-                    Security = new MongoSecurityRepository();
+                    Logger = CaravanServiceProvider.NinjectKernel.Get<MongoLogRepository>();
+                    Security = CaravanServiceProvider.NinjectKernel.Get<MongoSecurityRepository>();
                     break;
 
                 case CaravanDataSourceKind.MySql:
@@ -167,8 +169,8 @@ namespace Finsa.Caravan.DataAccess
                     break;
 
                 case CaravanDataSourceKind.Rest:
-                    Logger = new RestLogRepository();
-                    Security = new RestSecurityRepository();
+                    Logger = CaravanServiceProvider.NinjectKernel.Get<RestLogRepository>();
+                    Security = CaravanServiceProvider.NinjectKernel.Get<RestSecurityRepository>();
                     break;
 
                 case CaravanDataSourceKind.SqlServer:
@@ -189,8 +191,8 @@ namespace Finsa.Caravan.DataAccess
                 case CaravanDataSourceKind.PostgreSql:
                 case CaravanDataSourceKind.SqlServer:
                 case CaravanDataSourceKind.SqlServerCe:
-                    Logger = new SqlLogRepository();
-                    Security = new SqlSecurityRepository();
+                    Logger = CaravanServiceProvider.NinjectKernel.Get<SqlLogRepository>();
+                    Security = CaravanServiceProvider.NinjectKernel.Get<SqlSecurityRepository>();
 
                     // Configura la generazione automatica delle viste per EF.
                     using (var ctx = new SqlDbContext())

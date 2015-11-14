@@ -11,7 +11,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
     {
         [Key, Column("COBJ_ID", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public virtual int Id { get; set; }
+        public virtual long Id { get; set; }
 
         [Required, Column("CCTX_ID", Order = 1)]
         [Index("UK_CRVN_SEC_OBJECTS", 0, IsUnique = true)]

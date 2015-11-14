@@ -2,8 +2,8 @@
 
 CREATE TABLE mydb.crvn_sec_users
 (
-     cusr_id          NUMBER          NOT NULL
-   , capp_id          NUMBER          NOT NULL 
+     cusr_id          NUMBER(19)      NOT NULL
+   , capp_id          NUMBER(10)      NOT NULL 
    , cusr_login       NVARCHAR2(32)   NOT NULL
    , cusr_hashed_pwd  NVARCHAR2(256)
    , cusr_active      NUMBER(1)       NOT NULL

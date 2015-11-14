@@ -465,7 +465,7 @@ CREATE TABLE mydb.crvn_idn_cli_cors_origins
    , CCLI_ID                NUMBER(10)      NOT NULL
    , CCCO_ORIGIN            NVARCHAR2(150)  NOT NULL
 
-   , CONSTRAINT pk_crvn_idn_cli_cors_origins PRIMARY KEY (CCLI_ID) ENABLE
+   , CONSTRAINT pk_crvn_idn_cli_cors_origins PRIMARY KEY (CCCO_ID) ENABLE
    , CONSTRAINT fk_crvnidn_clicorsorig_clients FOREIGN KEY (CCLI_ID) REFERENCES mydb.crvn_idn_clients (CCLI_ID) ON DELETE CASCADE ENABLE
 );
 
@@ -490,8 +490,8 @@ END;
 
 CREATE TABLE mydb.crvn_sec_users
 (
-     cusr_id          NUMBER          NOT NULL
-   , capp_id          NUMBER          NOT NULL 
+     cusr_id          NUMBER(19)      NOT NULL
+   , capp_id          NUMBER(10)      NOT NULL 
    , cusr_login       NVARCHAR2(32)   NOT NULL
    , cusr_hashed_pwd  NVARCHAR2(256)
    , cusr_active      NUMBER(1)       NOT NULL
@@ -511,8 +511,8 @@ CREATE SEQUENCE mydb.crvn_sec_users_id NOCACHE;
 
 CREATE TABLE mydb.crvn_sec_groups
 (
-     cgrp_id          NUMBER          NOT NULL
-   , capp_id          NUMBER          NOT NULL 
+     cgrp_id          NUMBER(10)      NOT NULL
+   , capp_id          NUMBER(10)      NOT NULL 
    , cgrp_name        NVARCHAR2(32)   NOT NULL
    , cgrp_descr       NVARCHAR2(256)  NOT NULL
    , cgrp_notes       NVARCHAR2(1024) NOT NULL
@@ -529,15 +529,15 @@ CREATE SEQUENCE mydb.crvn_sec_groups_id NOCACHE;
 
 CREATE TABLE mydb.crvn_sec_roles
 (
-     crol_id          NUMBER          NOT NULL
-   , capp_id          NUMBER          NOT NULL 
+     crol_id          NUMBER(10)      NOT NULL
+   , cgrp_id          NUMBER(10)      NOT NULL 
    , crol_name        NVARCHAR2(32)   NOT NULL
    , crol_descr       NVARCHAR2(256)  NOT NULL
    , crol_notes       NVARCHAR2(1024) NOT NULL
    , CHECK (crol_name = lower(crol_name)) ENABLE
    , CONSTRAINT pk_crvn_sec_roles PRIMARY KEY (crol_id) ENABLE
-   , CONSTRAINT uk_crvn_sec_roles UNIQUE (crol_name, capp_id) ENABLE
-   , CONSTRAINT fk_crvnsecroles_crvnsecapps FOREIGN KEY (capp_id) REFERENCES mydb.crvn_sec_apps (capp_id) ON DELETE CASCADE ENABLE
+   , CONSTRAINT uk_crvn_sec_roles UNIQUE (crol_name, cgrp_id) ENABLE
+   , CONSTRAINT fk_crvnsecroles_crvnsecgrps FOREIGN KEY (cgrp_id) REFERENCES mydb.crvn_sec_groups (cgrp_id) ON DELETE CASCADE ENABLE
 );
 
 CREATE SEQUENCE mydb.crvn_sec_roles_id NOCACHE;
@@ -547,8 +547,8 @@ CREATE SEQUENCE mydb.crvn_sec_roles_id NOCACHE;
 
 CREATE TABLE mydb.crvn_sec_user_groups
 (
-     cusr_id          NUMBER          NOT NULL
-   , cgrp_id          NUMBER          NOT NULL
+     cusr_id          NUMBER(19)      NOT NULL
+   , cgrp_id          NUMBER(10)      NOT NULL
    , CONSTRAINT pk_crvn_sec_usrgrp PRIMARY KEY (cusr_id, cgrp_id) ENABLE
    , CONSTRAINT fk_crvnsecusrgrp_crvnsecusr FOREIGN KEY (cusr_id) REFERENCES mydb.crvn_sec_users (cusr_id) ON DELETE CASCADE ENABLE
    , CONSTRAINT fk_crvnsecusrgrp_crvnsecgrp FOREIGN KEY (cgrp_id) REFERENCES mydb.crvn_sec_groups (cgrp_id) ON DELETE CASCADE ENABLE
@@ -559,8 +559,8 @@ CREATE TABLE mydb.crvn_sec_user_groups
 
 CREATE TABLE mydb.crvn_sec_user_roles
 (
-     cusr_id          NUMBER          NOT NULL
-   , crol_id          NUMBER          NOT NULL
+     cusr_id          NUMBER(19)      NOT NULL
+   , crol_id          NUMBER(10)      NOT NULL
    , CONSTRAINT pk_crvn_sec_usrrol PRIMARY KEY (cusr_id, crol_id) ENABLE
    , CONSTRAINT fk_crvnsecusrrol_crvnsecusr FOREIGN KEY (cusr_id) REFERENCES mydb.crvn_sec_users (cusr_id) ON DELETE CASCADE ENABLE
    , CONSTRAINT fk_crvnsecusrrol_crvnsecrol FOREIGN KEY (crol_id) REFERENCES mydb.crvn_sec_roles (crol_id) ON DELETE CASCADE ENABLE
@@ -571,8 +571,8 @@ CREATE TABLE mydb.crvn_sec_user_roles
 
 CREATE TABLE mydb.crvn_sec_contexts
 (
-     cctx_id          NUMBER          NOT NULL
-   , capp_id          NUMBER          NOT NULL 
+     cctx_id          NUMBER(10)      NOT NULL
+   , capp_id          NUMBER(10)      NOT NULL 
    , cctx_name        NVARCHAR2(32)   NOT NULL
    , cctx_descr       NVARCHAR2(256)  NOT NULL
    , CHECK (cctx_name = lower(cctx_name)) ENABLE
@@ -588,8 +588,8 @@ CREATE SEQUENCE mydb.crvn_sec_contexts_id NOCACHE;
 
 CREATE TABLE mydb.crvn_sec_objects
 (
-     cobj_id          NUMBER          NOT NULL
-   , cctx_id          NUMBER          NOT NULL
+     cobj_id          NUMBER(19)      NOT NULL
+   , cctx_id          NUMBER(10)      NOT NULL
    , cobj_name        NVARCHAR2(32)   NOT NULL
    , cobj_descr       NVARCHAR2(256)  NOT NULL
    , cobj_type        NVARCHAR2(8)    NOT NULL
@@ -606,11 +606,11 @@ CREATE SEQUENCE mydb.crvn_sec_objects_id NOCACHE;
 
 CREATE TABLE mydb.crvn_sec_entries
 (
-     csec_id          NUMBER          NOT NULL
-   , cobj_id          NUMBER          NOT NULL
-   , cusr_id          NUMBER          -- Might be null, either user, group or role
-   , cgrp_id          NUMBER          -- Might be null, either user, group or role
-   , crol_id          NUMBER          -- Might be null, either user, group or role
+     csec_id          NUMBER(10)      NOT NULL
+   , cobj_id          NUMBER(19)      NOT NULL
+   , cusr_id          NUMBER(19)      -- Might be null, either user, group or role
+   , cgrp_id          NUMBER(10)      -- Might be null, either user, group or role
+   , crol_id          NUMBER(10)      -- Might be null, either user, group or role
    , CHECK ((cusr_id IS NULL AND crol_id IS NULL AND cgrp_id IS NOT NULL) OR 
             (cusr_id IS NOT NULL AND crol_id IS NULL AND cgrp_id IS NULL) OR
 			(cusr_id IS NULL AND crol_id IS NOT NULL AND cgrp_id IS NULL)) ENABLE

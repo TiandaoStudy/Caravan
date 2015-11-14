@@ -2,8 +2,8 @@
 
 CREATE TABLE mydb.crvn_sec_objects
 (
-     cobj_id          NUMBER          NOT NULL
-   , cctx_id          NUMBER          NOT NULL
+     cobj_id          NUMBER(19)      NOT NULL
+   , cctx_id          NUMBER(10)      NOT NULL
    , cobj_name        NVARCHAR2(32)   NOT NULL
    , cobj_descr       NVARCHAR2(256)  NOT NULL
    , cobj_type        NVARCHAR2(8)    NOT NULL
