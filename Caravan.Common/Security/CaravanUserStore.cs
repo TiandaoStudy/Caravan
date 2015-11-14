@@ -11,6 +11,7 @@
 // the License.
 
 using Finsa.Caravan.Common.Security.Models;
+using Finsa.CodeServices.Serialization;
 using Microsoft.AspNet.Identity;
 using PommaLabs.Thrower;
 using System;
@@ -259,13 +260,26 @@ namespace Finsa.Caravan.Common.Security
         #region IUserClaimStore members
 
         /// <summary>
+        ///   Serializzatore binario usato per serializzare/deserializzare i claim degli utenti.
+        /// 
+        ///   Non viene passato al costruttore perché è importante che rimanga bloccato nel tempo.
+        /// </summary>
+        private static readonly BinarySerializer BinarySerializer = new BinarySerializer();
+
+        /// <summary>
         ///   Returns the claims for the user with the issuer set.
         /// </summary>
         /// <param name="user"/>
         /// <returns/>
         public Task<IList<Claim>> GetClaimsAsync(SecUser user)
         {
-            throw new NotImplementedException();
+            IList<Claim> claims = new Claim[user.Claims.Length];
+            for (var i = 0; i < claims.Count; ++i)
+            {
+                var serializedClaim = user.Claims[i].Claim;
+                claims[i] = BinarySerializer.DeserializeFromString<Claim>(serializedClaim);
+            }
+            return Task.FromResult(claims);
         }
 
         /// <summary>
@@ -274,9 +288,13 @@ namespace Finsa.Caravan.Common.Security
         /// <param name="user"/>
         /// <param name="claim"/>
         /// <returns/>
-        public Task AddClaimAsync(SecUser user, Claim claim)
+        public async Task AddClaimAsync(SecUser user, Claim claim)
         {
-            throw new NotImplementedException();
+            var serializedClaim = BinarySerializer.SerializeToString(claim);
+            await SecurityRepository.AddUserClaimAsync(AppName, user.Login, new SecClaim
+            {
+                Claim = serializedClaim
+            });
         }
 
         /// <summary>
@@ -285,9 +303,10 @@ namespace Finsa.Caravan.Common.Security
         /// <param name="user"/>
         /// <param name="claim"/>
         /// <returns/>
-        public Task RemoveClaimAsync(SecUser user, Claim claim)
+        public async Task RemoveClaimAsync(SecUser user, Claim claim)
         {
-            throw new NotImplementedException();
+            var serializedClaim = BinarySerializer.SerializeToString(claim);
+            await SecurityRepository.RemoveUserClaimAsync(AppName, user.Login, serializedClaim);
         }
 
         #endregion IUserClaimStore members

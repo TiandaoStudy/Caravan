@@ -13,21 +13,23 @@
 using Finsa.Caravan.Common.Security.Models;
 using Microsoft.AspNet.Identity;
 using PommaLabs.Thrower;
-using System;
 
 namespace Finsa.Caravan.Common.Security
 {
-    public sealed class CaravanUserManager : UserManager<SecUser, string>
+    /// <summary>
+    ///   Exposes user related APIs which will automatically save changes to the UserStore.
+    /// </summary>
+    public sealed class CaravanUserManager : UserManager<SecUser, long>
     {
-        public CaravanUserManager(IUserStore<SecUser, string> store, IPasswordHasher passwordHasher)
+        public CaravanUserManager(IUserStore<SecUser, long> store, IPasswordHasher passwordHasher)
             : base(store)
         {
-            Raise<ArgumentNullException>.IfIsNull(passwordHasher);
+            RaiseArgumentNullException.IfIsNull(passwordHasher, nameof(passwordHasher));
             PasswordHasher = passwordHasher;
         }
 
-        public CaravanUserManager(ICaravanSecurityRepository securityRepository, IPasswordHasher passwordHasher)
-            : this(new CaravanUserStore(securityRepository), passwordHasher)
+        public CaravanUserManager(string appName, ICaravanSecurityRepository securityRepository, IPasswordHasher passwordHasher)
+            : this(new CaravanUserStore(appName, securityRepository), passwordHasher)
         {
         }
     }

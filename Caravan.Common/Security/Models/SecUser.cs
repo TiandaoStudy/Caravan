@@ -79,6 +79,9 @@ namespace Finsa.Caravan.Common.Security.Models
         [DataMember(Order = 16)]
         public SecRole[] Roles { get; set; }
 
+        [DataMember(Order = 17)]
+        public SecClaim[] Claims { get; set; }
+
         #region IUser members
 
         /// <summary>

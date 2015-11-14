@@ -113,6 +113,10 @@
     <Reference Include="Snappy.NET">
       <HintPath>..\packages\Snappy.NET.1.1.1.8\lib\net45\Snappy.NET.dll</HintPath>
     </Reference>
+    <Reference Include="Stateless, Version=2.5.29.0, Culture=neutral, PublicKeyToken=93038f0927583c9a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stateless.2.5.29.0\lib\portable-net40+sl50+win+wp80+MonoAndroid10+xamarinios10+MonoTouch10\Stateless.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Activities" />
     <Reference Include="System.Configuration" />
@@ -154,6 +158,7 @@
     <Compile Include="Logging\Models\LogEntryQuery.cs" />
     <Compile Include="Security\Exceptions\SecRoleExistingException.cs" />
     <Compile Include="Security\Exceptions\SecRoleNotFoundException.cs" />
+    <Compile Include="Security\Models\SecClaim.cs" />
     <Compile Include="Security\Models\SecRoleUpdates.cs" />
     <Compile Include="Security\Models\SecGroupUpdates.cs" />
     <Compile Include="Security\Models\SecUserUpdates.cs" />

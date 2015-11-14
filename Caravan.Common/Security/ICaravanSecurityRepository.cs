@@ -17,6 +17,9 @@ using Finsa.Caravan.Common.Security.Models;
 
 namespace Finsa.Caravan.Common.Security
 {
+    /// <summary>
+    ///   Il repository tramite cui accedere alla parte di sicurezza di Caravan.
+    /// </summary>
     public interface ICaravanSecurityRepository
     {
         SecApp CurrentApp { get; }
@@ -261,6 +264,10 @@ namespace Finsa.Caravan.Common.Security
         /// </exception>
         Task RemoveUserFromRoleAsync(string appName, string userLogin, string roleName);
 
+        Task<long> AddUserClaimAsync(string appName, string userLogin, SecClaim claim);
+
+        Task RemoveUserClaimAsync(string appName, string userLogin, string serializedClaim);
+
         #endregion Users
 
         #region Roles
@@ -346,33 +353,33 @@ namespace Finsa.Caravan.Common.Security
 
         #region Contexts
 
-        SecContext[] GetContexts(string appName);
+        Task<SecContext[]> GetContextsAsync(string appName);
 
         #endregion Contexts
 
         #region Objects
 
-        SecObject[] GetObjects(string appName);
+        Task<SecObject[]> GetObjectsAsync(string appName);
 
-        SecObject[] GetObjects(string appName, string contextName);
+        Task<SecObject[]> GetObjectsAsync(string appName, string contextName);
 
         #endregion Objects
 
         #region Entries
 
-        SecEntry[] GetEntries(string appName);
+        Task<SecEntry[]> GetEntriesAsync(string appName);
 
-        SecEntry[] GetEntries(string appName, string contextName);
+        Task<SecEntry[]> GetEntriesAsync(string appName, string contextName);
 
-        SecEntry[] GetEntriesForUser(string appName, string contextName, string userLogin);
+        Task<SecEntry[]> GetEntriesForUserAsync(string appName, string contextName, string userLogin);
 
-        SecEntry[] GetEntriesForObject(string appName, string contextName, string objectName);
+        Task<SecEntry[]> GetEntriesForObjectAsync(string appName, string contextName, string objectName);
 
-        SecEntry[] GetEntriesForObjectAndUser(string appName, string contextName, string objectName, string userLogin);
+        Task<SecEntry[]> GetEntriesForObjectAndUserAsync(string appName, string contextName, string objectName, string userLogin);
 
-        void AddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName);
+        Task<long> AddEntryAsync(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName);
 
-        void RemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName);
+        Task RemoveEntryAsync(string appName, string contextName, string objectName, string userLogin, string groupName);
 
         #endregion Entries
     }
