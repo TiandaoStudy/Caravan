@@ -49,5 +49,14 @@ namespace Finsa.Caravan.Common.Security.Models
 
         [DataMember(Order = 8)]
         public Option<bool> PhoneNumberConfirmed { get; set; }
+
+        [DataMember(Order = 9)]
+        public Option<int> AccessFailedCount { get; set; }
+
+        [DataMember(Order = 10)]
+        public Option<bool> LockoutEnabled { get; set; }
+
+        [DataMember(Order = 11)]
+        public Option<DateTimeOffset?> LockoutEndDate { get; set; }
     }
 }

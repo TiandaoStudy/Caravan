@@ -154,6 +154,7 @@
     <Compile Include="Logging\Models\LogEntryQuery.cs" />
     <Compile Include="Security\Exceptions\SecRoleExistingException.cs" />
     <Compile Include="Security\Exceptions\SecRoleNotFoundException.cs" />
+    <Compile Include="Security\Models\SecRoleUpdates.cs" />
     <Compile Include="Security\Models\SecGroupUpdates.cs" />
     <Compile Include="Security\Models\SecUserUpdates.cs" />
     <Compile Include="Security\CaravanRoleStore.cs" />

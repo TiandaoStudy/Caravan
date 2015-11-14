@@ -18,67 +18,100 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.Common.Security
 {
+    /// <summary>
+    ///   Exposes basic role management APIs.
+    /// </summary>
+    /// <remarks>ASP.NET Identity ROLES are mapped to Caravan security GROUPS.</remarks>
     public sealed class CaravanRoleStore : IQueryableRoleStore<SecGroup, long>
     {
-        private readonly ICaravanSecurityRepository _securityRepository;
-
-        public CaravanRoleStore(ICaravanSecurityRepository securityRepository)
+        /// <summary>
+        ///   Inizializza lo store.
+        /// </summary>
+        /// <param name="appName">Nome dell'applicativo Caravan.</param>
+        /// <param name="securityRepository">Il repository della sicurezza di Caravan.</param>
+        public CaravanRoleStore(string appName, ICaravanSecurityRepository securityRepository)
         {
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), "Application name cannot be null, empty or blank", nameof(appName));
             RaiseArgumentNullException.IfIsNull(securityRepository, nameof(securityRepository));
-            _securityRepository = securityRepository;
+            AppName = appName;
+            SecurityRepository = securityRepository;
         }
+
+        /// <summary>
+        ///   Il nome dell'applicativo Caravan per cui lo store è stato istanziato.
+        /// </summary>
+        public string AppName { get; }
+
+        /// <summary>
+        ///   Il repository della sicurezza di Caravan.
+        /// </summary>
+        public ICaravanSecurityRepository SecurityRepository { get; }
 
         #region IQueryableRoleStore members
 
         /// <summary>
-        ///   IQueryable Roles.
+        ///   IQueryable roles.
         /// </summary>
-        public IQueryable<SecGroup> Roles
-        {
-            get
-            {
-                var appName = CaravanCommonConfiguration.Instance.AppName;
-                return _securityRepository.GetGroupsAsync(appName).Result.AsQueryable();
-            }
-        }
+        public IQueryable<SecGroup> Roles => SecurityRepository.GetGroupsAsync(AppName).Result.AsQueryable();
 
+        /// <summary>
+        ///   Performs application-defined tasks associated with freeing, releasing, or resetting
+        ///   unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             // Nulla, perché questo store non apre connessioni.
         }
 
+        /// <summary>
+        ///   Creates a new role.
+        /// </summary>
+        /// <param name="role"/>
+        /// <returns/>
         public async Task CreateAsync(SecGroup role)
         {
-            var appName = CaravanCommonConfiguration.Instance.AppName;
-            await _securityRepository.AddGroupAsync(appName, role);
+            
+            await SecurityRepository.AddGroupAsync(AppName, role);
         }
 
+        /// <summary>
+        ///   Updates a role.
+        /// </summary>
+        /// <param name="role"/>
+        /// <returns/>
         public async Task UpdateAsync(SecGroup role)
         {
-            var appName = CaravanCommonConfiguration.Instance.AppName;
-            await _securityRepository.UpdateGroupByIdAsync(appName, role.Id, new SecGroupUpdates
+            
+            await SecurityRepository.UpdateGroupByIdAsync(AppName, role.Id, new SecGroupUpdates
             {
                 Name = role.Name
             });
         }
 
+        /// <summary>
+        ///   Deletes a role.
+        /// </summary>
+        /// <param name="role"/>
+        /// <returns/>
         public async Task DeleteAsync(SecGroup role)
         {
-            var appName = CaravanCommonConfiguration.Instance.AppName;
-            await _securityRepository.RemoveGroupAsync(appName, role.Name);
+            
+            await SecurityRepository.RemoveGroupByIdAsync(AppName, role.Id);
         }
 
-        public async Task<SecGroup> FindByIdAsync(long roleId)
-        {
-            var appName = CaravanCommonConfiguration.Instance.AppName;
-            return await _securityRepository.GetGroupByIdAsync(appName, roleId);
-        }
+        /// <summary>
+        ///   Finds a role by ID.
+        /// </summary>
+        /// <param name="roleId"/>
+        /// <returns/>
+        public async Task<SecGroup> FindByIdAsync(long roleId) => await SecurityRepository.GetGroupByIdAsync(AppName, roleId);
 
-        public async Task<SecGroup> FindByNameAsync(string roleName)
-        {
-            var appName = CaravanCommonConfiguration.Instance.AppName;
-            return await _securityRepository.GetGroupByNameAsync(appName, roleName);
-        }
+        /// <summary>
+        ///   Finds a role by name.
+        /// </summary>
+        /// <param name="roleName"/>
+        /// <returns/>
+        public async Task<SecGroup> FindByNameAsync(string roleName) => await SecurityRepository.GetGroupByNameAsync(AppName, roleName);
 
         #endregion IQueryableRoleStore members
     }

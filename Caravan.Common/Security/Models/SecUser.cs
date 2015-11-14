@@ -59,9 +59,18 @@ namespace Finsa.Caravan.Common.Security.Models
         public bool PhoneNumberConfirmed { get; set; }
 
         [DataMember(Order = 11)]
-        public SecGroup[] Groups { get; set; }
+        public int AccessFailedCount { get; set; }
 
         [DataMember(Order = 12)]
+        public bool LockoutEnabled { get; set; }
+
+        [DataMember(Order = 13)]
+        public DateTimeOffset? LockoutEndDate { get; set; }
+
+        [DataMember(Order = 14)]
+        public SecGroup[] Groups { get; set; }
+
+        [DataMember(Order = 15)]
         public SecRole[] Roles { get; set; }
 
         #region IUser members
