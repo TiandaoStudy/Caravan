@@ -368,7 +368,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
         }
 
-        protected override async Task AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+        protected override async Task<long> AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
         {
             
             using (var ctx = SqlDbContext.CreateUpdateContext())
@@ -421,19 +421,22 @@ namespace Finsa.Caravan.DataAccess.Sql
                     groupId = ctx.SecGroups.Where(g => g.AppId == appId && g.Name == groupName).Select(g => (int?) g.Id).FirstOrDefault();
                     q = q.Where(e => e.GroupId == groupId);
                 }
-                var added = false;
-                if (!q.Any())
+
+                if (q.Any())
                 {
-                    var secEntry = new SqlSecEntry
-                    {
-                        UserId = userId,
-                        GroupId = groupId,
-                        ObjectId = dbObject.Id
-                    };
-                    ctx.SecEntries.Add(secEntry);
-                    added = true;
+                    
+                    //added = true;
                 }
+
+                var secEntry = ctx.SecEntries.Add(new SqlSecEntry
+                {
+                    UserId = userId,
+                    GroupId = groupId,
+                    ObjectId = dbObject.Id
+                });
+
                 await ctx.SaveChangesAsync();
+                return secEntry.Id;
             }
         }
 

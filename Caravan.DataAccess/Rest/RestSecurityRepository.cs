@@ -522,7 +522,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+        protected override async Task<long> AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
         {
             try
             {
@@ -557,6 +557,8 @@ namespace Finsa.Caravan.DataAccess.Rest
                         throw new LogEntryExistingException();
                     throw new Exception(response.ErrorMessage);
                 }
+
+                return 0L;
             }
             catch (Exception exception)
             {

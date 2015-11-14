@@ -285,7 +285,7 @@
               Controller che si occupa della gestione della sicurezza.
             </summary>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.#ctor(Finsa.Caravan.Common.Security.ICaravanSecurityRepository)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.#ctor(Finsa.Caravan.Common.Security.ICaravanSecurityRepository,Finsa.Caravan.Common.Security.ICaravanUserManagerFactory,Finsa.Caravan.Common.Security.ICaravanGroupManagerFactory)">
             <summary>
               Inizializza il controller con l'istanza della sicurezza di Caravan.
             </summary>
@@ -316,6 +316,22 @@
             <param name="appName">Application name</param>
             <returns>All the users of the specified application</returns>
         </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetUserByLogin(System.String,System.Int64)">
+            <summary>
+              Return details on the specified group belong to the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="userId">The group name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetUserByLogin(System.String,System.String)">
+            <summary>
+              Return details on the specified group belong to the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="userLogin">The group name</param>
+            <returns></returns>
+        </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostUser(System.String,Finsa.Caravan.Common.Security.Models.SecUser)">
             <summary>
               Add a new user in the specified application
@@ -323,7 +339,7 @@
             <param name="appName">Application name</param>
             <param name="user">The new user to add</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutUser(System.String,System.String,Finsa.Caravan.Common.Security.Models.SecUserUpdates)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutUserByLogin(System.String,System.String,Finsa.Caravan.Common.Security.Models.SecUserUpdates)">
             <summary>
               Update the user with the specified userLogin in the specified application
             </summary>
@@ -331,7 +347,7 @@
             <param name="userLogin">The user login</param>
             <param name="userUpdates">The user containing element to update</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteUser(System.String,System.String)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteUserByLogin(System.String,System.String)">
             <summary>
               Delete the user with the specified user login from the specified application
             </summary>
@@ -362,7 +378,15 @@
             <param name="appName">The application name</param>
             <returns></returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetGroup(System.String,System.String)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetGroupById(System.String,System.Int32)">
+            <summary>
+              Return details on the specified group belong to the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="groupId">The group name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetGroupByName(System.String,System.String)">
             <summary>
               Return details on the specified group belong to the specified application
             </summary>
@@ -377,20 +401,20 @@
             <param name="appName">The application name</param>
             <param name="group">Group to add</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteGroup(System.String,System.String)">
-            <summary>
-              Remove the group specified from the application specified
-            </summary>
-            <param name="appName">The application name</param>
-            <param name="groupName">The group name</param>
-        </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutGroup(System.String,System.String,Finsa.Caravan.Common.Security.Models.SecGroupUpdates)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutGroupByName(System.String,System.String,Finsa.Caravan.Common.Security.Models.SecGroupUpdates)">
             <summary>
               Update the specified group
             </summary>
             <param name="appName">The application name</param>
             <param name="groupName">The group name</param>
             <param name="groupUpdates">The group containing element/s to update</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteGroupByName(System.String,System.String)">
+            <summary>
+              Remove the group specified from the application specified
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="groupName">The group name</param>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetContexts(System.String)">
             <summary>
@@ -520,7 +544,7 @@
             <summary>
               Configura il generatore dei servizi usati dalla parte di autenticazione/autorizzazione.
             </summary>
-            <returns></returns>
+            <returns>La factory per IdentityServer.</returns>
         </member>
         <member name="T:Finsa.Caravan.WebService.Startup">
             <summary>

@@ -122,7 +122,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <param name="userLogin">The group name</param>
         /// <returns></returns>
-        [Route("{appName}/users/{userLogin:string}")]
+        [Route("{appName}/users/{userLogin}")]
         public async Task<SecUser> GetUserByLogin(string appName, string userLogin)
         {
             using (var userManager = _userManagerFactory.Create(appName))
@@ -151,7 +151,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <param name="userLogin">The user login</param>
         /// <param name="userUpdates">The user containing element to update</param>
-        [Route("{appName}/users/{userLogin:string}")]
+        [Route("{appName}/users/{userLogin}")]
         public async Task<IdentityResult> PutUserByLogin(string appName, string userLogin, [FromBody] SecUserUpdates userUpdates)
         {
             using (var userManager = _userManagerFactory.Create(appName))
@@ -168,7 +168,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <param name="appName">the application name</param>
         /// <param name="userLogin">the user login</param>
-        [Route("{appName}/users/{userLogin:string}")]
+        [Route("{appName}/users/{userLogin}")]
         public async Task<IdentityResult> DeleteUserByLogin(string appName, string userLogin)
         {
             using (var userManager = _userManagerFactory.Create(appName))
@@ -250,7 +250,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <param name="groupName">The group name</param>
         /// <returns></returns>
-        [Route("{appName}/groups/{groupName:string}")]
+        [Route("{appName}/groups/{groupName}")]
         public async Task<SecGroup> GetGroupByName(string appName, string groupName)
         {
             using (var groupManager = _groupManagerFactory.Create(appName))

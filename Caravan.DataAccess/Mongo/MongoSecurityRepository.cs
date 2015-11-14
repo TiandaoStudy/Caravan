@@ -103,7 +103,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
             throw new System.NotImplementedException();
         }
 
-        protected override Task AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+        protected override Task<long> AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
         {
             throw new System.NotImplementedException();
         }

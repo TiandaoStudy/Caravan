@@ -277,31 +277,11 @@ namespace Finsa.Caravan.Common.Security
         /// <summary>
         ///   </summary>
         /// <param name="appName"></param>
-        /// <param name="roleId"></param>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="appName"/> or <paramref name="roleId"/> are null or empty.
-        /// </exception>
-        Task RemoveRoleByIdAsync(string appName, long roleId);
-
-        /// <summary>
-        ///   </summary>
-        /// <param name="appName"></param>
         /// <param name="roleName"></param>
         /// <exception cref="ArgumentException">
         ///   <paramref name="appName"/> or <paramref name="roleName"/> are null or empty.
         /// </exception>
-        Task RemoveRoleByNameAsync(string appName, string roleName);
-
-        /// <summary>
-        ///   </summary>
-        /// <param name="appName"></param>
-        /// <param name="roleId"></param>
-        /// <param name="roleUpdates"></param>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="appName"/>, <paramref name="roleId"/> or
-        ///   <paramref name="roleUpdates.Name"/> are null or empty.
-        /// </exception>
-        Task UpdateRoleByIdAsync(string appName, long roleId, SecRoleUpdates roleUpdates);
+        Task RemoveRoleAsync(string appName, string roleName);
 
         /// <summary>
         ///   </summary>
@@ -312,7 +292,7 @@ namespace Finsa.Caravan.Common.Security
         ///   <paramref name="appName"/>, <paramref name="roleName"/> or
         ///   <paramref name="roleUpdates.Name"/> are null or empty.
         /// </exception>
-        Task UpdateRoleByNameAsync(string appName, string roleName, SecRoleUpdates roleUpdates);
+        Task UpdateRoleAsync(string appName, string roleName, SecRoleUpdates roleUpdates);
 
         #endregion Roles
 

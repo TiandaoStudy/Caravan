@@ -38,13 +38,13 @@ namespace Finsa.Caravan.Common
             get { return _ninjectKernel; }
             set
             {
-                // Aggiorno le varie dipendenze.
+                // Aggiorno immediatamente il kernel globale.
+                _ninjectKernel = value;
+
+                // Quindi, aggiorno anche le varie dipendenze.
                 Clock = value.Get<IClock>();
                 LogRepository = value.Get<ICaravanLogRepository>();
                 MemoryCache = MemoryCache.DefaultInstance;
-
-                // Se tutto è andato bene, aggiorno il kernel globale.
-                _ninjectKernel = value;
             }
         }
 
