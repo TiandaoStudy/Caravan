@@ -22,14 +22,14 @@ namespace Finsa.Caravan.Common.Security
     ///   Exposes basic role management APIs.
     /// </summary>
     /// <remarks>ASP.NET Identity ROLES are mapped to Caravan security GROUPS.</remarks>
-    sealed class CaravanRoleStore : ICaravanRoleStore
+    sealed class CaravanGroupStore : ICaravanGroupStore
     {
         /// <summary>
         ///   Inizializza lo store.
         /// </summary>
         /// <param name="appName">Nome dell'applicativo Caravan.</param>
         /// <param name="securityRepository">Il repository della sicurezza di Caravan.</param>
-        public CaravanRoleStore(string appName, ICaravanSecurityRepository securityRepository)
+        public CaravanGroupStore(string appName, ICaravanSecurityRepository securityRepository)
         {
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             RaiseArgumentNullException.IfIsNull(securityRepository, nameof(securityRepository));
@@ -82,7 +82,9 @@ namespace Finsa.Caravan.Common.Security
         {
             await SecurityRepository.UpdateGroupByIdAsync(AppName, role.Id, new SecGroupUpdates
             {
-                Name = role.Name
+                Name = role.Name,
+                Description = role.Description,
+                Notes = role.Notes
             });
         }
 

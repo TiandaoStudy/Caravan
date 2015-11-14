@@ -16,17 +16,18 @@ using Microsoft.AspNet.Identity;
 namespace Finsa.Caravan.Common.Security
 {
     /// <summary>
-    ///   Exposes user related APIs which will automatically save changes to the RoleStore.
+    ///   RoleStore personalizzato per Caravan.
     /// </summary>
-    public sealed class CaravanRoleManager : RoleManager<SecGroup, long>
+    public interface ICaravanGroupStore : IQueryableRoleStore<SecGroup, long>
     {
         /// <summary>
-        ///   Inizializza il gestore personalizzato.
+        ///   Il nome dell'applicativo Caravan per cui lo store è stato istanziato.
         /// </summary>
-        /// <param name="roleStore">Lo store per gli utenti.</param>
-        public CaravanRoleManager(ICaravanRoleStore roleStore)
-            : base(roleStore)
-        {
-        }
+        string AppName { get; }
+
+        /// <summary>
+        ///   Il repository della sicurezza di Caravan.
+        /// </summary>
+        ICaravanSecurityRepository SecurityRepository { get; }
     }
 }

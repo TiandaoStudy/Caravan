@@ -10,23 +10,26 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using PommaLabs.Thrower;
+
 namespace Finsa.Caravan.Common.Security
 {
     /// <summary>
     ///   Gestisce la creazione di RoleManager specifici per un dato applicativo Caravan.
     /// </summary>
-    public interface ICaravanRoleManagerFactory
+    sealed class CaravanGroupManagerFactory : ICaravanGroupManagerFactory
     {
-        /// <summary>
-        ///   Il repository della sicurezza di Caravan.
-        /// </summary>
-        ICaravanSecurityRepository SecurityRepository { get; }
+        public CaravanGroupManagerFactory(ICaravanSecurityRepository securityRepository)
+        {
+            RaiseArgumentNullException.IfIsNull(securityRepository, nameof(securityRepository));
+            SecurityRepository = securityRepository;
+        }
 
-        /// <summary>
-        ///   Restituisce uno RoleManager specifico per un dato applicativo Caravan.
-        /// </summary>
-        /// <param name="appName">Il nome dell'applicativo Caravan.</param>
-        /// <returns>Uno RoleManager specifico per un dato applicativo Caravan.</returns>
-        CaravanRoleManager Create(string appName);
+        public ICaravanSecurityRepository SecurityRepository { get; }
+
+        public CaravanGroupManager Create(string appName)
+        {
+            return new CaravanGroupManager(new CaravanGroupStore(appName, SecurityRepository));
+        }
     }
 }
