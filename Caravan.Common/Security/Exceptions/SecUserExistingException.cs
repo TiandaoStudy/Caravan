@@ -22,7 +22,7 @@ namespace Finsa.Caravan.Common.Security.Exceptions
     public class SecUserExistingException : Exception
     {
         public SecUserExistingException(string appName, string userLogin)
-            : base($"User {userLogin} is already existing inside application {appName}")
+            : base($"User '{userLogin}' is already existing inside application '{appName}'")
         {
         }
 

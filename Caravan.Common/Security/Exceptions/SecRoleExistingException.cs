@@ -22,7 +22,7 @@ namespace Finsa.Caravan.Common.Security.Exceptions
     public class SecRoleExistingException : Exception
     {
         public SecRoleExistingException(string appName, string groupName, string roleName)
-            : base($"Role {roleName} is already existing inside group {groupName} of application {appName}")
+            : base($"Role '{roleName}' is already existing inside group '{groupName}' of application '{appName}'")
         {
         }
 

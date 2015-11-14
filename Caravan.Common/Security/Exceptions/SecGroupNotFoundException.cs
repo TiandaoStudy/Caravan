@@ -22,7 +22,7 @@ namespace Finsa.Caravan.Common.Security.Exceptions
     public class SecGroupNotFoundException : Exception
     {
         public SecGroupNotFoundException(string appName, string groupName)
-            : base($"Group {groupName} not found inside application {appName}")
+            : base($"Group '{groupName}' not found inside application '{appName}'")
         {
         }
 

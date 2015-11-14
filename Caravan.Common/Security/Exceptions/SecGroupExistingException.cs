@@ -22,7 +22,7 @@ namespace Finsa.Caravan.Common.Security.Exceptions
     public class SecGroupExistingException : Exception
     {
         public SecGroupExistingException(string appName, string groupName)
-            : base($"Group {groupName} is already existing inside application {appName}")
+            : base($"Group '{groupName}' is already existing inside application '{appName}'")
         {
         }
 

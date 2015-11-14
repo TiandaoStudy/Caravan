@@ -22,7 +22,7 @@ namespace Finsa.Caravan.Common.Security.Exceptions
     public class SecAppNotFoundException : Exception
     {
         public SecAppNotFoundException(string appName)
-            : base($"Application {appName} not found")
+            : base($"Application '{appName}' not found")
         {
         }
 

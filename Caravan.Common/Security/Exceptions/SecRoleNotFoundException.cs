@@ -22,7 +22,7 @@ namespace Finsa.Caravan.Common.Security.Exceptions
     public class SecRoleNotFoundException : Exception
     {
         public SecRoleNotFoundException(string appName, string groupName, string roleName)
-            : base($"Role {roleName} not found inside group {groupName} of application {appName}")
+            : base($"Role '{roleName}' not found inside group '{groupName}' of application '{appName}'")
         {
         }
 

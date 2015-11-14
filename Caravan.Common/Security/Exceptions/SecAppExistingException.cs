@@ -22,7 +22,7 @@ namespace Finsa.Caravan.Common.Security.Exceptions
     public class SecAppExistingException : Exception
     {
         public SecAppExistingException(string appName)
-            : base($"Application {appName} is already existing")
+            : base($"Application '{appName}' is already existing")
         {
         }
 

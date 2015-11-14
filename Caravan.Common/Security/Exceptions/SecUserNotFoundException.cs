@@ -22,7 +22,7 @@ namespace Finsa.Caravan.Common.Security.Exceptions
     public class SecUserNotFoundException : Exception
     {
         public SecUserNotFoundException(string appName, string userLogin)
-            : base($"User {userLogin} not found inside application {appName}")
+            : base($"User '{userLogin}' not found inside application '{appName}'")
         {
         }
 
