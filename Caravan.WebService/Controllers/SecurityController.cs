@@ -351,9 +351,9 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <returns>All entries of the specified application</returns>
         [Route("{appName}/entries")]
-        public IQueryable<SecEntry> GetEntries(string appName)
+        public async Task<SecEntry[]> GetEntries(string appName)
         {
-            return _securityRepository.GetEntries(appName).AsQueryable();
+            return await _securityRepository.GetEntriesAsync(appName);
         }
 
         /// <summary>
@@ -363,9 +363,9 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="contextName">The context name</param>
         /// <returns></returns>
         [Route("{appName}/entries/{contextName}")]
-        public IQueryable<SecEntry> GetEntries(string appName, string contextName)
+        public async Task<SecEntry[]> GetEntries(string appName, string contextName)
         {
-            return _securityRepository.GetEntries(appName, contextName).AsQueryable();
+            return await _securityRepository.GetEntriesAsync(appName, contextName);
         }
 
         /// <summary>
@@ -376,9 +376,9 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="userLogin">The user login name</param>
         /// <returns></returns>
         [Route("{appName}/entries/{contextName}/forUser/{userLogin}")]
-        public IQueryable<SecEntry> GetEntriesForUser(string appName, string contextName, string userLogin)
+        public async Task<SecEntry[]> GetEntriesForUser(string appName, string contextName, string userLogin)
         {
-            return _securityRepository.GetEntriesForUser(appName, contextName, userLogin).AsQueryable();
+            return await _securityRepository.GetEntriesForUserAsync(appName, contextName, userLogin);
         }
 
         /// <summary>
@@ -389,9 +389,9 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="objectName">The object name</param>
         /// <returns></returns>
         [Route("{appName}/entries/{contextName}/forObject/{objectName}")]
-        public IQueryable<SecEntry> GetEntriesForObject(string appName, string contextName, string objectName)
+        public async Task<SecEntry[]> GetEntriesForObject(string appName, string contextName, string objectName)
         {
-            return _securityRepository.GetEntriesForObject(appName, contextName, objectName).AsQueryable();
+            return await _securityRepository.GetEntriesForObjectAsync(appName, contextName, objectName);
         }
 
         /// <summary>
@@ -403,9 +403,9 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="userLogin">The user login</param>
         /// <returns></returns>
         [Route("{appName}/entries/{contextName}/forObject/{objectName}/forUser/{userLogin}")]
-        public IQueryable<SecEntry> GetEntriesForObject(string appName, string contextName, string objectName, string userLogin)
+        public async Task<SecEntry[]> GetEntriesForObject(string appName, string contextName, string objectName, string userLogin)
         {
-            return _securityRepository.GetEntriesForObjectAndUser(appName, contextName, objectName, userLogin).AsQueryable();
+            return await _securityRepository.GetEntriesForObjectAndUserAsync(appName, contextName, objectName, userLogin);
         }
 
         /// <summary>
@@ -414,9 +414,9 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <param name="entry">The entry to add</param>
         [Route("{appName}/entries/")]
-        public void PostEntry(string appName, [FromBody] SecEntryForAdd entry)
+        public async Task PostEntry(string appName, [FromBody] SecEntryForAdd entry)
         {
-            _securityRepository.AddEntry(appName, entry.Context, entry.Object, entry.UserLogin, entry.GroupName);
+            await _securityRepository.AddEntryAsync(appName, entry.Context, entry.Object, entry.UserLogin, entry.GroupName);
         }
 
         /// <summary>
@@ -428,10 +428,9 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="userLogin">The user login (must be null if the group name is present)</param>
         /// <param name="groupName">The group name (must be null if the user login is present)</param>
         [Route("{appName}/entries/{contextName}/{objectName}")]
-        public void DeleteEntry(string appName, string contextname, string objectName, string userLogin,
-            string groupName)
+        public async Task DeleteEntry(string appName, string contextname, string objectName, string userLogin, string groupName)
         {
-            _securityRepository.RemoveEntry(appName, contextname, objectName, userLogin, groupName);
+            await _securityRepository.RemoveEntryAsync(appName, contextname, objectName, userLogin, groupName);
         }
 
         public sealed class SecEntryForAdd

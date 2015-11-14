@@ -61,7 +61,7 @@ namespace Finsa.Caravan.WebService
             CaravanServiceProvider.NinjectKernel ??
             (CaravanServiceProvider.NinjectKernel = new StandardKernel(
                 new NinjectConfig(),
-                new CaravanCommonNinjectConfig(DependencyHandling.Default),
+                new CaravanCommonNinjectConfig(DependencyHandling.Default, "wsCaravan"),
                 new CaravanDataAccessNinjectConfig(DependencyHandling.Default)));
 
         private static void ConfigureAdminPages(IAppBuilder app)

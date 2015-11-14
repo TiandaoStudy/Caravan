@@ -48,21 +48,21 @@ namespace Finsa.Caravan.WebForms.Pages
 
       #region Grid Events
 
-      protected void fdtgGroups_DataSourceUpdating(object sender, EventArgs args)
+      protected async void fdtgGroups_DataSourceUpdating(object sender, EventArgs args)
       {
           var groups = new DataTable();
           if(SearchCriteria["CGRP_NAME"].Count > 0)
           {
               var groupName = SearchCriteria["CGRP_NAME"][0];
               // This should not catch any exception, others will do.
-              groups = (from g in DataAccess.CaravanDataSource.Security.GetGroups(CaravanCommonConfiguration.Instance.AppName)
+              groups = (from g in await DataAccess.CaravanDataSource.Security.GetGroupsAsync(CaravanCommonConfiguration.Instance.AppName)
                             select new SecGroup { Name = g.Name, Description = g.Description, Notes = g.Notes }).Where(x => x.Name == groupName.ToString())
                             .ToDataTable();
           }
 
           else
           {
-             groups = (from g in DataAccess.CaravanDataSource.Security.GetGroups(CaravanCommonConfiguration.Instance.AppName)
+             groups = (from g in await DataAccess.CaravanDataSource.Security.GetGroupsAsync(CaravanCommonConfiguration.Instance.AppName)
                     select new SecGroup { Name = g.Name, Description = g.Description, Notes = g.Notes })
                            .ToDataTable();
           }
@@ -102,13 +102,13 @@ namespace Finsa.Caravan.WebForms.Pages
          }
       }
 
-      protected void hiddenDelete_OnTriggered(object sender, EventArgs e)
+      protected async void hiddenDelete_OnTriggered(object sender, EventArgs e)
       {
          try
          {
             var groupName = groupNameToBeDeleted.Value;
             Raise<ArgumentException>.IfIsEmpty(groupName);
-            DataAccess.CaravanDataSource.Security.RemoveGroup(CaravanCommonConfiguration.Instance.AppName, groupName);
+            await DataAccess.CaravanDataSource.Security.RemoveGroupByNameAsync(CaravanCommonConfiguration.Instance.AppName, groupName);
             fdtgGroups.UpdateDataSource();
          }
          catch (Exception ex)

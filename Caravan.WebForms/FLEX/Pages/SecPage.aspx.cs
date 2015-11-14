@@ -161,7 +161,7 @@ namespace FLEX.Web.Pages
 
       }
 
-      protected void btnSave_Click(object sender, EventArgs e)
+      protected async void btnSave_Click(object sender, EventArgs e)
       {
          //Users
 
@@ -172,7 +172,7 @@ namespace FLEX.Web.Pages
          {
             if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
             {
-               CaravanDataSource.Security.AddEntry(CaravanCommonConfiguration.Instance.AppName, secContext, secObject, oDrR["Login"].ToString(), null);
+               await CaravanDataSource.Security.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, secContext, secObject, oDrR["Login"].ToString(), null);
             }
          }
 
@@ -180,7 +180,7 @@ namespace FLEX.Web.Pages
          {
             if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
             {
-               CaravanDataSource.Security.RemoveEntry(CaravanCommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, oDrL["Login"].ToString(), null);
+               await CaravanDataSource.Security.RemoveEntryAsync(CaravanCommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, oDrL["Login"].ToString(), null);
             }
          }
         
@@ -189,7 +189,7 @@ namespace FLEX.Web.Pages
          {
             if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
             {
-               CaravanDataSource.Security.AddEntry(CaravanCommonConfiguration.Instance.AppName, secContext, secObject, null, oDrR["Name"].ToString());
+               await CaravanDataSource.Security.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, secContext, secObject, null, oDrR["Name"].ToString());
             }
          }
 
@@ -197,7 +197,7 @@ namespace FLEX.Web.Pages
          {
             if (oDrR[MultiSelect.FlagCrud].ToString() == "R")
             {
-               CaravanDataSource.Security.RemoveEntry(CaravanCommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, null, oDrR["Name"].ToString());
+               await CaravanDataSource.Security.RemoveEntryAsync(CaravanCommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, null, oDrR["Name"].ToString());
             }
          }
 

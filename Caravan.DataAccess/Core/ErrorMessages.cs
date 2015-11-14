@@ -7,5 +7,7 @@
     {
         public const string InvalidEnumValue = "Given enum value is not valid";
         public const string NullOrWhiteSpaceAppName = "Caravan application name cannot be null, empty or blank";
+
+        public const string AbstractSecurityRepository_GroupNotFound = "Group has not been specified or it does not exist";
     }
 }

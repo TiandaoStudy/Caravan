@@ -12,7 +12,8 @@ using Finsa.Caravan.Common.Security.Models;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
-    internal abstract class AbstractSecurityRepository<TSec> : ICaravanSecurityRepository where TSec : AbstractSecurityRepository<TSec>
+    internal abstract class AbstractSecurityRepository<TSec> : ICaravanSecurityRepository 
+        where TSec : AbstractSecurityRepository<TSec>
     {
         protected ICaravanLog Log { get; } = CaravanServiceProvider.FetchLog<TSec>();
 
@@ -76,7 +77,7 @@ namespace Finsa.Caravan.DataAccess.Core
             var group = GetGroupsInternal(appName.ToLowerInvariant(), groupName.ToLowerInvariant()).FirstOrDefault();
             if (group == null)
             {
-                throw new SecGroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
+                throw new SecGroupNotFoundException(ErrorMessages.AbstractSecurityRepository_GroupNotFound);
             }
             return group;
         }
@@ -115,7 +116,7 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 if (!RemoveGroupInternal(appName.ToLowerInvariant(), groupName.ToLowerInvariant()))
                 {
-                    throw new SecGroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
+                    throw new SecGroupNotFoundException(ErrorMessages.AbstractSecurityRepository_GroupNotFound);
                 }
                 Log.Warn(() => new LogMessage { ShortMessage = $"REMOVED GROUP '{groupName}' FROM '{appName}'", Context = logCtx });
             }
@@ -145,7 +146,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
                 if (!UpdateGroupInternal(appName, groupName, groupUpdates))
                 {
-                    throw new SecGroupNotFoundException(ErrorMessages.Core_SecurityManagerBase_GroupNotFound);
+                    throw new SecGroupNotFoundException(ErrorMessages.AbstractSecurityRepository_GroupNotFound);
                 }
                 Log.Warn(() => new LogMessage { ShortMessage = $"UPDATED GROUP '{groupName}' IN '{appName}'", Context = logCtx });
             }

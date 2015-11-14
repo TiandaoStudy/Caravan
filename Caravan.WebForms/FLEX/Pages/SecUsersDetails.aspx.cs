@@ -59,14 +59,14 @@ namespace Finsa.Caravan.WebForms.Pages
 
       }
 
-      private void LoadForEdit(string login)
+      private async void LoadForEdit(string login)
       {
          if (IsPostBack)
          {
             return;
          }
 
-         var user = CaravanDataSource.Security.GetUserByLogin(CaravanCommonConfiguration.Instance.AppName, login);
+         var user = await CaravanDataSource.Security.GetUserByLoginAsync(CaravanCommonConfiguration.Instance.AppName, login);
          Raise<ArgumentException>.IfIsNull(user, "Given user name does not exist");
 
          txtFirstName.Text = user.FirstName;
@@ -80,14 +80,14 @@ namespace Finsa.Caravan.WebForms.Pages
 
       #region Buttons
 
-      protected void hiddenSave_OnTriggered(object sender, EventArgs e)
+      protected async void hiddenSave_OnTriggered(object sender, EventArgs e)
       {
           try
           {
               if (Mode == NewMode)
               {
                   var newUser = new SecUser { FirstName = txtFirstName.Text, LastName = txtLastName.Text, Email = txtEmail.Text, Active = chkIsActive.Checked };
-                  CaravanDataSource.Security.AddUser(CaravanCommonConfiguration.Instance.AppName, newUser);
+                  await CaravanDataSource.Security.AddUserAsync(CaravanCommonConfiguration.Instance.AppName, newUser);
 
               }
               else if (Mode == EditMode)
@@ -100,7 +100,7 @@ namespace Finsa.Caravan.WebForms.Pages
                       Active = Option.Some(chkIsActive.Checked), 
                       Login = Option.Some(Login)
                   };
-                  CaravanDataSource.Security.UpdateUser(CaravanCommonConfiguration.Instance.AppName, Login, newUser);
+                  await CaravanDataSource.Security.UpdateUserByLoginAsync(CaravanCommonConfiguration.Instance.AppName, Login, newUser);
               }
               Master.RegisterCloseScript(this);
           }
