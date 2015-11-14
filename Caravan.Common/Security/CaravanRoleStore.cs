@@ -10,12 +10,11 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.Caravan.Common.Core;
 using Finsa.Caravan.Common.Security.Models;
-using Microsoft.AspNet.Identity;
 using PommaLabs.Thrower;
 using System.Linq;
 using System.Threading.Tasks;
-using Finsa.Caravan.Common.Core;
 
 namespace Finsa.Caravan.Common.Security
 {
@@ -23,7 +22,7 @@ namespace Finsa.Caravan.Common.Security
     ///   Exposes basic role management APIs.
     /// </summary>
     /// <remarks>ASP.NET Identity ROLES are mapped to Caravan security GROUPS.</remarks>
-    public sealed class CaravanRoleStore : IQueryableRoleStore<SecGroup, long>
+    sealed class CaravanRoleStore : ICaravanRoleStore
     {
         /// <summary>
         ///   Inizializza lo store.

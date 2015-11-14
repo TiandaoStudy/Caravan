@@ -15,9 +15,11 @@ using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.WebApi.Models.Security;
 using PommaLabs.Thrower;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
-using Finsa.Caravan.WebApi.FilterAttributes;
+using Finsa.Caravan.WebApi.Filters;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -25,17 +27,20 @@ namespace Finsa.Caravan.WebService.Controllers
     ///   Controller che si occupa della gestione della sicurezza.
     /// </summary>
     [RoutePrefix("security"), AuthorizeForCaravan]
-    public sealed partial class SecurityController : ApiController
+    public sealed class SecurityController : ApiController
     {
-        readonly ICaravanSecurityRepository _securityRepository;
+        private readonly ICaravanSecurityRepository _securityRepository;
+        private readonly ICaravanUserManagerFactory _userManagerFactory;
 
         /// <summary>
         ///   Inizializza il controller con l'istanza della sicurezza di Caravan.
         /// </summary>
-        public SecurityController(ICaravanSecurityRepository securityRepository)
+        public SecurityController(ICaravanSecurityRepository securityRepository, ICaravanUserManagerFactory userManagerFactory)
         {
             RaiseArgumentNullException.IfIsNull(securityRepository, nameof(securityRepository));
+            RaiseArgumentNullException.IfIsNull(userManagerFactory, nameof(userManagerFactory));
             _securityRepository = securityRepository;
+            _userManagerFactory = userManagerFactory;
         }
 
         #region App
@@ -44,10 +49,11 @@ namespace Finsa.Caravan.WebService.Controllers
         ///   Returns all the applications
         /// </summary>
         /// <returns>All the applications</returns>
-        [Route("", Name = "GetApps")]
-        public IQueryable<LinkedSecApp> GetApps()
+        [Route("")]
+        public async Task<IEnumerable<LinkedSecApp>> GetApps()
         {
-            return _securityRepository.GetApps().AsQueryable().Select(a => new LinkedSecApp(a, Url));
+            var apps = await _securityRepository.GetAppsAsync();
+            return apps.Select(a => new LinkedSecApp(a, Url));
         }
 
         /// <summary>
@@ -56,9 +62,10 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application to show</param>
         /// <returns>All the details of the specified application</returns>
         [Route("{appName}")]
-        public SecApp GetApp(string appName)
+        public async Task<LinkedSecApp> GetApp(string appName)
         {
-            return _securityRepository.GetApp(appName);
+            var app = await _securityRepository.GetAppAsync(appName);
+            return new LinkedSecApp(app, Url);
         }
 
         /// <summary>
@@ -66,9 +73,9 @@ namespace Finsa.Caravan.WebService.Controllers
         /// </summary>
         /// <param name="app">The application to insert</param>
         [Route("")]
-        public void PostApp([FromBody] SecApp app)
+        public async Task PostApp([FromBody] SecApp app)
         {
-            _securityRepository.AddApp(app);
+            await _securityRepository.AddAppAsync(app);
         }
 
         #endregion App
@@ -81,9 +88,12 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">Application name</param>
         /// <returns>All the users of the specified application</returns>
         [Route("{appName}/users")]
-        public IQueryable<SecUser> GetUsers(string appName)
+        public IEnumerable<SecUser> GetUsers(string appName)
         {
-            return _securityRepository.GetUsers(appName).AsQueryable();
+            using (var userManager = _userManagerFactory.Create(appName))
+            {
+                return userManager.Users;
+            }
         }
 
         /// <summary>
@@ -92,9 +102,12 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">Application name</param>
         /// <param name="user">The new user to add</param>
         [Route("{appName}/users")]
-        public void PostUser(string appName, [FromBody] SecUser user)
+        public async Task PostUser(string appName, [FromBody] SecUser user)
         {
-            _securityRepository.AddUser(appName, user);
+            using (var userManager = _userManagerFactory.Create(appName))
+            {
+                await userManager.CreateAsync(user);
+            }
         }
 
         /// <summary>

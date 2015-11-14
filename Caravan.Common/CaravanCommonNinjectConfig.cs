@@ -53,9 +53,13 @@ namespace Finsa.Caravan.Common
         ///     <see cref="CaravanNoOpLogger"/> per gli unit test.
         ///   * <see cref="ICaravanLog"/> via Caravan LOG configurabile con NLog, oppure
         ///     <see cref="CaravanNoOpLogger"/> per gli unit test.
-        ///   * <see cref="IUserStore{TUser, TKey}"/> via <see cref="CaravanUserStore"/>,
+        ///   * <see cref="ICaravanUserStore"/> via <see cref="CaravanUserStore"/>,
         ///     indipendentemente dall'ambiente di esecuzione.
-        ///   * <see cref="IRoleStore{TUser, TKey}"/> via <see cref="CaravanRoleStore"/>,
+        ///   * <see cref="ICaravanRoleStore"/> via <see cref="CaravanRoleStore"/>,
+        ///     indipendentemente dall'ambiente di esecuzione.
+        ///   * <see cref="ICaravanUserManagerFactory"/> via <see cref="CaravanUserManagerFactory"/>,
+        ///     indipendentemente dall'ambiente di esecuzione.
+        ///   * <see cref="ICaravanRoleManagerFactory"/> via <see cref="CaravanRoleManagerFactory"/>,
         ///     indipendentemente dall'ambiente di esecuzione.
         /// </summary>
         public override void Load()
@@ -77,8 +81,10 @@ namespace Finsa.Caravan.Common
             }
 
             // Bind indipendenti dall'ambiente di esecuzione:
-            Bind<IUserStore<SecUser, long>>().To<CaravanUserStore>().InSingletonScope().WithConstructorArgument("appName", _appName);
-            Bind<IRoleStore<SecGroup, long>>().To<CaravanRoleStore>().InSingletonScope().WithConstructorArgument("appName", _appName);
+            Bind<ICaravanUserStore>().To<CaravanUserStore>().InSingletonScope().WithConstructorArgument("appName", _appName);
+            Bind<ICaravanRoleStore>().To<CaravanRoleStore>().InSingletonScope().WithConstructorArgument("appName", _appName);
+            Bind<ICaravanUserManagerFactory>().To<CaravanUserManagerFactory>().InSingletonScope();
+            Bind<ICaravanRoleManagerFactory>().To<CaravanRoleManagerFactory>().InSingletonScope();
         }
     }
 }

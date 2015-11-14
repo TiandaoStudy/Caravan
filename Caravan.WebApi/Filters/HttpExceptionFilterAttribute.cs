@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Filters;
 
-namespace Finsa.Caravan.WebApi.FilterAttributes
+namespace Finsa.Caravan.WebApi.Filters
 {
     public class HttpExceptionFilterAttribute : ExceptionFilterAttribute
     {

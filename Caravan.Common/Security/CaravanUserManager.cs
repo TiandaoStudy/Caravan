@@ -12,6 +12,7 @@
 
 using Finsa.Caravan.Common.Security.Models;
 using Microsoft.AspNet.Identity;
+using Ninject;
 using PommaLabs.Thrower;
 
 namespace Finsa.Caravan.Common.Security
@@ -21,8 +22,13 @@ namespace Finsa.Caravan.Common.Security
     /// </summary>
     public sealed class CaravanUserManager : UserManager<SecUser, long>
     {
-        public CaravanUserManager(IUserStore<SecUser, long> store, IPasswordHasher passwordHasher)
-            : base(store)
+        /// <summary>
+        ///   Inizializza il gestore personalizzato.
+        /// </summary>
+        /// <param name="userStore">Lo store per gli utenti.</param>
+        /// <param name="passwordHasher"></param>
+        public CaravanUserManager(ICaravanUserStore userStore, IPasswordHasher passwordHasher)
+            : base(userStore)
         {
             RaiseArgumentNullException.IfIsNull(passwordHasher, nameof(passwordHasher));
             PasswordHasher = passwordHasher;

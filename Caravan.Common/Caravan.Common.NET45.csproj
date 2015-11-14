@@ -157,8 +157,14 @@
     <Compile Include="Logging\Workflows\CleanUpLogRepository.cs" />
     <Compile Include="Logging\Models\LogEntryQuery.cs" />
     <Compile Include="Security\CaravanRoleManager.cs" />
+    <Compile Include="Security\CaravanRoleManagerFactory.cs" />
+    <Compile Include="Security\CaravanUserManagerFactory.cs" />
     <Compile Include="Security\Exceptions\SecRoleExistingException.cs" />
     <Compile Include="Security\Exceptions\SecRoleNotFoundException.cs" />
+    <Compile Include="Security\ICaravanRoleManagerFactory.cs" />
+    <Compile Include="Security\ICaravanUserManagerFactory.cs" />
+    <Compile Include="Security\ICaravanUserStore.cs" />
+    <Compile Include="Security\ICaravanRoleStore.cs" />
     <Compile Include="Security\Models\SecClaim.cs" />
     <Compile Include="Security\Models\SecRoleUpdates.cs" />
     <Compile Include="Security\Models\SecGroupUpdates.cs" />

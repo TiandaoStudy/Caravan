@@ -27,17 +27,7 @@ namespace Finsa.Caravan.Common.Security
     ///   Exposes basic user management APIs.
     /// </summary>
     /// <remarks>ASP.NET Identity USERS are mapped to Caravan security USERS.</remarks>
-    public sealed class CaravanUserStore : IQueryableUserStore<SecUser, long>,
-        IUserEmailStore<SecUser, long>,
-        IUserPhoneNumberStore<SecUser, long>,
-        IUserPasswordStore<SecUser, long>,
-        IUserClaimStore<SecUser, long>,
-        IUserLockoutStore<SecUser, long>,
-        IUserRoleStore<SecUser, long>,
-        IUserSecurityStampStore<SecUser, long>,
-        IUserTwoFactorStore<SecUser, long>
-    //NOT IMPLEMENTED:
-    //IUserLoginStore<SecUser, long>
+    sealed class CaravanUserStore : ICaravanUserStore
     {
         /// <summary>
         ///   Inizializza lo store.

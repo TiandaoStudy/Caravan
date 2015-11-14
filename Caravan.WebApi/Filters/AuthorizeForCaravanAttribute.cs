@@ -10,17 +10,17 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using Common.Logging;
-using Finsa.Caravan.WebApi.Models;
-using PommaLabs.Thrower;
 using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+using Common.Logging;
+using Finsa.Caravan.WebApi.Models;
+using PommaLabs.Thrower;
 
-namespace Finsa.Caravan.WebApi.FilterAttributes
+namespace Finsa.Caravan.WebApi.Filters
 {
     /// <summary>
     ///   Gestisce le autorizzazioni per i servizi di Caravan. Di default tutti i servizi sono disabilitati.

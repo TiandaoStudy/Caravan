@@ -153,8 +153,8 @@
     <Compile Include="CaravanErrorCodes.cs" />
     <Compile Include="Core\Constants.cs" />
     <Compile Include="DelegatingHandlers\LoggingDelegatingHandler.cs" />
-    <Compile Include="FilterAttributes\HttpExceptionFilterAttribute.cs" />
-    <Compile Include="FilterAttributes\AuthorizeForCaravanAttribute.cs" />
+    <Compile Include="Filters\HttpExceptionFilterAttribute.cs" />
+    <Compile Include="Filters\AuthorizeForCaravanAttribute.cs" />
     <Compile Include="Middlewares\HttpLoggingMiddleware.cs" />
     <Compile Include="CaravanWebServiceHelper.cs" />
     <Compile Include="Models\AuthorizationResult.cs" />
