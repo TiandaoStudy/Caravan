@@ -57,6 +57,12 @@ namespace Finsa.Caravan.Common.Security.Models
         public Option<bool> LockoutEnabled { get; set; }
 
         [DataMember(Order = 11)]
-        public Option<DateTimeOffset?> LockoutEndDate { get; set; }
+        public Option<DateTimeOffset> LockoutEndDate { get; set; }
+
+        [IgnoreDataMember]
+        public Option<string> SecurityStamp { get; set; }
+
+        [DataMember(Order = 12)]
+        public Option<bool> TwoFactorAuthenticationEnabled { get; set; }
     }
 }

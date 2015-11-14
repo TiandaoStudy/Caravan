@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Finsa.CodeServices.Common;
 
 namespace Finsa.Caravan.Common.Security
 {
@@ -29,13 +28,14 @@ namespace Finsa.Caravan.Common.Security
     public sealed class CaravanUserStore : IQueryableUserStore<SecUser, long>,
         IUserEmailStore<SecUser, long>,
         IUserPhoneNumberStore<SecUser, long>,
-        IUserLoginStore<SecUser, long>,
         IUserPasswordStore<SecUser, long>,
         IUserClaimStore<SecUser, long>,
         IUserLockoutStore<SecUser, long>,
         IUserRoleStore<SecUser, long>,
         IUserSecurityStampStore<SecUser, long>,
         IUserTwoFactorStore<SecUser, long>
+    //NOT IMPLEMENTED:
+    //IUserLoginStore<SecUser, long>
     {
         /// <summary>
         ///   Inizializza lo store.
@@ -224,6 +224,248 @@ namespace Finsa.Caravan.Common.Security
 
         #endregion IUserPhoneNumberStore members
 
+        #region IUserPasswordStore members
+
+        /// <summary>
+        ///   Sets the user password hash.
+        /// </summary>
+        /// <param name="user"/>
+        /// <param name="passwordHash"/>
+        /// <returns/>
+        public async Task SetPasswordHashAsync(SecUser user, string passwordHash)
+        {
+            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            {
+                PasswordHash = passwordHash
+            });
+        }
+
+        /// <summary>
+        ///   Gets the user password hash.
+        /// </summary>
+        /// <param name="user"/>
+        /// <returns/>
+        public Task<string> GetPasswordHashAsync(SecUser user) => Task.FromResult(user.PasswordHash);
+
+        /// <summary>
+        ///   Returns true if a user has a password set.
+        /// </summary>
+        /// <param name="user"/>
+        /// <returns/>
+        public Task<bool> HasPasswordAsync(SecUser user) => Task.FromResult(string.IsNullOrWhiteSpace(user.PasswordHash));
+
+        #endregion IUserPasswordStore members
+
+        #region IUserClaimStore members
+
+        /// <summary>
+        ///   Returns the claims for the user with the issuer set.
+        /// </summary>
+        /// <param name="user"/>
+        /// <returns/>
+        public Task<IList<Claim>> GetClaimsAsync(SecUser user)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   Adds a new user claim.
+        /// </summary>
+        /// <param name="user"/>
+        /// <param name="claim"/>
+        /// <returns/>
+        public Task AddClaimAsync(SecUser user, Claim claim)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   Removes a user claim.
+        /// </summary>
+        /// <param name="user"/>
+        /// <param name="claim"/>
+        /// <returns/>
+        public Task RemoveClaimAsync(SecUser user, Claim claim)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion IUserClaimStore members
+
+        #region IUserLockoutStore members
+
+        /// <summary>
+        ///   Returns the DateTimeOffset that represents the end of a user's lockout, any time in
+        ///   the past should be considered not locked out.
+        /// </summary>
+        /// <param name="user"/>
+        /// <returns/>
+        public Task<DateTimeOffset> GetLockoutEndDateAsync(SecUser user) => Task.FromResult(user.LockoutEndDate);
+
+        /// <summary>
+        ///   Locks a user out until the specified end date (set to a past date, to unlock a user).
+        /// </summary>
+        /// <param name="user"/>
+        /// <param name="lockoutEnd"/>
+        /// <returns/>
+        public async Task SetLockoutEndDateAsync(SecUser user, DateTimeOffset lockoutEnd)
+        {
+            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            {
+                LockoutEndDate = lockoutEnd
+            });
+        }
+
+        /// <summary>
+        ///   Used to record when an attempt to access the user has failed.
+        /// </summary>
+        /// <param name="user"/>
+        /// <returns/>
+        public async Task<int> IncrementAccessFailedCountAsync(SecUser user)
+        {
+            var newAccessFailedCount = user.AccessFailedCount + 1;
+            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            {
+                AccessFailedCount = newAccessFailedCount
+            });
+            return newAccessFailedCount;
+        }
+
+        /// <summary>
+        ///   Used to reset the access failed count, typically after the account is successfully accessed.
+        /// </summary>
+        /// <param name="user"/>
+        /// <returns/>
+        public async Task ResetAccessFailedCountAsync(SecUser user)
+        {
+            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            {
+                AccessFailedCount = 0
+            });
+        }
+
+        /// <summary>
+        ///   Returns the current number of failed access attempts. This number usually will be
+        ///   reset whenever the password is verified or the account is locked out.
+        /// </summary>
+        /// <param name="user"/>
+        /// <returns/>
+        public Task<int> GetAccessFailedCountAsync(SecUser user) => Task.FromResult(user.AccessFailedCount);
+
+        /// <summary>
+        ///   Returns whether the user can be locked out.
+        /// </summary>
+        /// <param name="user"/>
+        /// <returns/>
+        public Task<bool> GetLockoutEnabledAsync(SecUser user) => Task.FromResult(user.LockoutEnabled);
+
+        /// <summary>
+        ///   Sets whether the user can be locked out.
+        /// </summary>
+        /// <param name="user"/>
+        /// <param name="enabled"/>
+        /// <returns/>
+        public async Task SetLockoutEnabledAsync(SecUser user, bool enabled)
+        {
+            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            {
+                LockoutEnabled = enabled
+            });
+        }
+
+        #endregion IUserLockoutStore members
+
+        #region IUserRoleStore members
+
+        /// <summary>
+        ///   Adds a user to a role.
+        /// </summary>
+        /// <param name="user"/>
+        /// <param name="roleName"/>
+        /// <returns/>
+        public async Task AddToRoleAsync(SecUser user, string roleName)
+        {
+            await SecurityRepository.AddUserToGroupAsync(AppName, user.Login, roleName);
+        }
+
+        /// <summary>
+        ///   Removes the role for the user.
+        /// </summary>
+        /// <param name="user"/>
+        /// <param name="roleName"/>
+        /// <returns/>
+        public async Task RemoveFromRoleAsync(SecUser user, string roleName)
+        {
+            await SecurityRepository.RemoveUserFromGroupAsync(AppName, user.Login, roleName);
+        }
+
+        /// <summary>
+        ///   Returns the roles for this user.
+        /// </summary>
+        /// <param name="user"/>
+        /// <returns/>
+        public Task<IList<string>> GetRolesAsync(SecUser user) => Task.FromResult(user.Groups.Select(g => g.Name).ToArray() as IList<string>);
+
+        /// <summary>
+        ///   Returns true if a user is in the role.
+        /// </summary>
+        /// <param name="user"/>
+        /// <param name="roleName"/>
+        /// <returns/>
+        public Task<bool> IsInRoleAsync(SecUser user, string roleName) => Task.FromResult(user.Groups.Any(g => g.Name == roleName));
+
+        #endregion IUserRoleStore members
+
+        #region IUserSecurityStampStore members
+
+        /// <summary>
+        ///   Sets the security stamp for the user.
+        /// </summary>
+        /// <param name="user"/>
+        /// <param name="stamp"/>
+        /// <returns/>
+        public async Task SetSecurityStampAsync(SecUser user, string stamp)
+        {
+            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            {
+                SecurityStamp = stamp
+            });
+        }
+
+        /// <summary>
+        ///   Gets the user security stamp.
+        /// </summary>
+        /// <param name="user"/>
+        /// <returns/>
+        public Task<string> GetSecurityStampAsync(SecUser user) => Task.FromResult(user.SecurityStamp);
+
+        #endregion IUserSecurityStampStore members
+
+        #region IUserTwoFactorStore members
+
+        /// <summary>
+        ///   Sets whether two factor authentication is enabled for the user.
+        /// </summary>
+        /// <param name="user"/>
+        /// <param name="enabled"/>
+        /// <returns/>
+        public async Task SetTwoFactorEnabledAsync(SecUser user, bool enabled)
+        {
+            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            {
+                TwoFactorAuthenticationEnabled = enabled
+            });
+        }
+
+        /// <summary>
+        ///   Returns whether two factor authentication is enabled for the user.
+        /// </summary>
+        /// <param name="user"/>
+        /// <returns/>
+        public Task<bool> GetTwoFactorEnabledAsync(SecUser user) => Task.FromResult(user.TwoFactorAuthenticationEnabled);
+
+        #endregion IUserTwoFactorStore members
+
         #region IUserLoginStore members - NOT IMPLEMENTED!
 
         /// <summary>
@@ -268,147 +510,5 @@ namespace Finsa.Caravan.Common.Security
         }
 
         #endregion IUserLoginStore members - NOT IMPLEMENTED!
-
-        #region IUserPasswordStore members
-
-        /// <summary>
-        ///   Sets the user password hash.
-        /// </summary>
-        /// <param name="user"/>
-        /// <param name="passwordHash"/>
-        /// <returns/>
-        public async Task SetPasswordHashAsync(SecUser user, string passwordHash)
-        {
-            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
-            {
-                PasswordHash = passwordHash
-            });
-        }
-
-        /// <summary>
-        ///   Gets the user password hash.
-        /// </summary>
-        /// <param name="user"/>
-        /// <returns/>
-        public Task<string> GetPasswordHashAsync(SecUser user) => Task.FromResult(user.PasswordHash);
-
-        /// <summary>
-        ///   Returns true if a user has a password set.
-        /// </summary>
-        /// <param name="user"/>
-        /// <returns/>
-        public Task<bool> HasPasswordAsync(SecUser user) => Task.FromResult(string.IsNullOrWhiteSpace(user.PasswordHash));
-
-        #endregion IUserPasswordStore members
-
-        #region IUserClaimStore members
-
-        public Task<IList<Claim>> GetClaimsAsync(SecUser user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task AddClaimAsync(SecUser user, Claim claim)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task RemoveClaimAsync(SecUser user, Claim claim)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region IUserLockoutStore members
-
-        public Task<DateTimeOffset> GetLockoutEndDateAsync(SecUser user) => Task.FromResult(user.LockoutEndDate.GetValueOrDefault());
-
-        public async Task SetLockoutEndDateAsync(SecUser user, DateTimeOffset lockoutEnd)
-        {
-            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
-            {
-                LockoutEndDate = (lockoutEnd == DateTimeOffset.MinValue) ? new DateTimeOffset?() : lockoutEnd
-            });
-        }
-
-        public async Task<int> IncrementAccessFailedCountAsync(SecUser user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task ResetAccessFailedCountAsync(SecUser user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> GetAccessFailedCountAsync(SecUser user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> GetLockoutEnabledAsync(SecUser user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task SetLockoutEnabledAsync(SecUser user, bool enabled)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region IUserRoleStore members
-
-        public Task AddToRoleAsync(SecUser user, string roleName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task RemoveFromRoleAsync(SecUser user, string roleName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IList<string>> GetRolesAsync(SecUser user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> IsInRoleAsync(SecUser user, string roleName)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region IUserSecurityStampStore members - NOT IMPLEMENTED!
-
-        public Task SetSecurityStampAsync(SecUser user, string stamp)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> GetSecurityStampAsync(SecUser user)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region IUserTwoFactorStore members - NOT IMPLEMENTED!
-
-        public Task SetTwoFactorEnabledAsync(SecUser user, bool enabled)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> GetTwoFactorEnabledAsync(SecUser user)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
     }
 }

@@ -65,12 +65,18 @@ namespace Finsa.Caravan.Common.Security.Models
         public bool LockoutEnabled { get; set; }
 
         [DataMember(Order = 13)]
-        public DateTimeOffset? LockoutEndDate { get; set; }
+        public DateTimeOffset LockoutEndDate { get; set; }
+
+        [IgnoreDataMember]
+        public string SecurityStamp { get; set; }
 
         [DataMember(Order = 14)]
-        public SecGroup[] Groups { get; set; }
+        public bool TwoFactorAuthenticationEnabled { get; set; }
 
         [DataMember(Order = 15)]
+        public SecGroup[] Groups { get; set; }
+
+        [DataMember(Order = 16)]
         public SecRole[] Roles { get; set; }
 
         #region IUser members
