@@ -143,7 +143,7 @@ namespace Finsa.Caravan.WebForms.Pages
             {
                 var login = loginToBeDeleted.Value;
                 Raise<ArgumentException>.IfIsEmpty(login);
-                await DataAccess.CaravanDataSource.Security.RemoveUserByLoginAsync(CaravanCommonConfiguration.Instance.AppName, login);
+                await DataAccess.CaravanDataSource.Security.RemoveUserAsync(CaravanCommonConfiguration.Instance.AppName, login);
                 fdtgUsers.UpdateDataSource();
             }
             catch (Exception ex)

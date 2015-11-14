@@ -100,7 +100,7 @@ namespace Finsa.Caravan.WebForms.Pages
                       Active = Option.Some(chkIsActive.Checked), 
                       Login = Option.Some(Login)
                   };
-                  await CaravanDataSource.Security.UpdateUserByLoginAsync(CaravanCommonConfiguration.Instance.AppName, Login, newUser);
+                  await CaravanDataSource.Security.UpdateUserAsync(CaravanCommonConfiguration.Instance.AppName, Login, newUser);
               }
               Master.RegisterCloseScript(this);
           }

@@ -204,7 +204,7 @@ namespace Finsa.Caravan.WebForms.Pages
                    Description = Option.Some(txtGrpDescr.Text), 
                    Notes = Option.Some(txtNotes.Text)
                };
-               await CaravanDataSource.Security.UpdateGroupByNameAsync(CaravanCommonConfiguration.Instance.AppName, GroupName, newGroup);
+               await CaravanDataSource.Security.UpdateGroupAsync(CaravanCommonConfiguration.Instance.AppName, GroupName, newGroup);
             }
             Master.RegisterCloseScript(this);
          }

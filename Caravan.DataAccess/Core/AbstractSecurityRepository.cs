@@ -184,7 +184,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public async Task RemoveGroupByNameAsync(string appName, string groupName)
+        public async Task RemoveGroupAsync(string appName, string groupName)
         {
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
@@ -209,7 +209,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public async Task UpdateGroupByNameAsync(string appName, string groupName, SecGroupUpdates groupUpdates)
+        public async Task UpdateGroupAsync(string appName, string groupName, SecGroupUpdates groupUpdates)
         {
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
@@ -319,16 +319,19 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentNullException.IfIsNull(newUser, nameof(newUser));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(newUser.Login), ErrorMessages.NullOrWhiteSpaceUserLogin, nameof(newUser.Login));
 
-            const string logCtx = "Adding a new USER";
+            appName = appName?.ToLowerInvariant();
+            newUser.Login = newUser.Login.ToLowerInvariant();
+            var logCtx = $"Adding new '{newUser.Login}' USER to '{appName}' APP";
 
             try
             {
-                newUser.Login = newUser.Login.ToLowerInvariant();
-                if (!AddUserInternal(appName.ToLowerInvariant(), newUser))
+                await AddUserInternal(appName, newUser);
+                Log.Warn(new LogMessage
                 {
-                    throw new SecUserExistingException();
-                }
-                Log.Warn(() => new LogMessage { ShortMessage = $"ADDED USER '{newUser.Login}' TO '{appName}'", Context = logCtx });
+                    ShortMessage = $"Added new '{newUser.Login}' USER to '{appName}' APP",
+                    Context = logCtx
+                });
+                return newUser.Id;
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
@@ -343,15 +346,18 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(userLogin), ErrorMessages.NullOrWhiteSpaceUserLogin, nameof(userLogin));
 
-            const string logCtx = "Removing an USER";
+            appName = appName?.ToLowerInvariant();
+            userLogin = userLogin?.ToLowerInvariant();
+            var logCtx = $"Removing '{userLogin}' USER from '{appName}' APP";
 
             try
             {
-                if (!RemoveUserInternal(appName.ToLowerInvariant(), userLogin))
+                await RemoveUserInternal(appName, userLogin);
+                Log.Warn(new LogMessage
                 {
-                    throw new SecUserNotFoundException();
-                }
-                Log.Warn(() => new LogMessage { ShortMessage = $"REMOVED USER '{userLogin}' FROM '{appName}'", Context = logCtx });
+                    ShortMessage = $"Removed '{userLogin}' USER from '{appName}' APP",
+                    Context = logCtx
+                });
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
@@ -359,7 +365,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public async Task UpdateUserByLoginAsync(string appName, string userLogin, SecUserUpdates userUpdates)
+        public async Task UpdateUserAsync(string appName, string userLogin, SecUserUpdates userUpdates)
         {
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
@@ -367,22 +373,19 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentNullException.IfIsNull(userUpdates, nameof(userUpdates));
             RaiseArgumentException.If(userUpdates.Login.HasValue && string.IsNullOrWhiteSpace(userUpdates.Login.Value), ErrorMessages.NullOrWhiteSpaceUserLogin);
 
-            const string logCtx = "Updating an USER";
+            appName = appName?.ToLowerInvariant();
+            userLogin = userLogin?.ToLowerInvariant();
+            var logCtx = $"Updating '{userLogin}' USER in '{appName}' APP";
 
             try
             {
-                appName = appName.ToLowerInvariant();
-                userLogin = userLogin.ToLowerInvariant();
-                if (userUpdates.Login.HasValue)
+                userUpdates.Login.Do(x => userUpdates.Login = x.ToLowerInvariant());
+                await UpdateUserInternal(appName, userLogin, userUpdates);
+                Log.Warn(new LogMessage
                 {
-                    userUpdates.Login = Option.Some(userUpdates.Login.Value.ToLowerInvariant());
-                }
-
-                if (!UpdateUserInternal(appName, userLogin, userUpdates))
-                {
-                    throw new SecUserNotFoundException();
-                }
-                Log.Warn(() => new LogMessage { ShortMessage = $"UPDATED USER '{userLogin}' IN '{appName}'", Context = logCtx });
+                    ShortMessage = $"Updated '{userLogin}' USER in '{appName}' APP",
+                    Context = logCtx
+                });
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {

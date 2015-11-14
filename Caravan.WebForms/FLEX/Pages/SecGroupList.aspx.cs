@@ -108,7 +108,7 @@ namespace Finsa.Caravan.WebForms.Pages
          {
             var groupName = groupNameToBeDeleted.Value;
             Raise<ArgumentException>.IfIsEmpty(groupName);
-            await DataAccess.CaravanDataSource.Security.RemoveGroupByNameAsync(CaravanCommonConfiguration.Instance.AppName, groupName);
+            await DataAccess.CaravanDataSource.Security.RemoveGroupAsync(CaravanCommonConfiguration.Instance.AppName, groupName);
             fdtgGroups.UpdateDataSource();
          }
          catch (Exception ex)

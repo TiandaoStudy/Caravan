@@ -96,31 +96,11 @@ namespace Finsa.Caravan.Common.Security
         /// <summary>
         ///   </summary>
         /// <param name="appName"></param>
-        /// <param name="groupId"></param>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="appName"/> or <paramref name="groupId"/> are null or empty.
-        /// </exception>
-        Task RemoveGroupByIdAsync(string appName, long groupId);
-
-        /// <summary>
-        ///   </summary>
-        /// <param name="appName"></param>
         /// <param name="groupName"></param>
         /// <exception cref="ArgumentException">
         ///   <paramref name="appName"/> or <paramref name="groupName"/> are null or empty.
         /// </exception>
-        Task RemoveGroupByNameAsync(string appName, string groupName);
-
-        /// <summary>
-        ///   </summary>
-        /// <param name="appName"></param>
-        /// <param name="groupId"></param>
-        /// <param name="groupUpdates"></param>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="appName"/>, <paramref name="groupId"/> or
-        ///   <paramref name="groupUpdates.Name"/> are null or empty.
-        /// </exception>
-        Task UpdateGroupByIdAsync(string appName, long groupId, SecGroupUpdates groupUpdates);
+        Task RemoveGroupAsync(string appName, string groupName);
 
         /// <summary>
         ///   </summary>
@@ -131,7 +111,7 @@ namespace Finsa.Caravan.Common.Security
         ///   <paramref name="appName"/>, <paramref name="groupName"/> or
         ///   <paramref name="groupUpdates.Name"/> are null or empty.
         /// </exception>
-        Task UpdateGroupByNameAsync(string appName, string groupName, SecGroupUpdates groupUpdates);
+        Task UpdateGroupAsync(string appName, string groupName, SecGroupUpdates groupUpdates);
 
         #endregion Groups
 
@@ -193,24 +173,9 @@ namespace Finsa.Caravan.Common.Security
         /// <summary>
         ///   </summary>
         /// <param name="appName"></param>
-        /// <param name="userId"></param>
-        /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
-        Task RemoveUserByIdAsync(string appName, long userId);
-
-        /// <summary>
-        ///   </summary>
-        /// <param name="appName"></param>
         /// <param name="userLogin"></param>
         /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
-        Task RemoveUserByLoginAsync(string appName, string userLogin);
-
-        /// <summary>
-        ///   </summary>
-        /// <param name="appName"></param>
-        /// <param name="userId"></param>
-        /// <param name="userUpdates"></param>
-        /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
-        Task UpdateUserByIdAsync(string appName, long userId, SecUserUpdates userUpdates);
+        Task RemoveUserAsync(string appName, string userLogin);
 
         /// <summary>
         ///   </summary>
@@ -218,7 +183,7 @@ namespace Finsa.Caravan.Common.Security
         /// <param name="userLogin"></param>
         /// <param name="userUpdates"></param>
         /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
-        Task UpdateUserByLoginAsync(string appName, string userLogin, SecUserUpdates userUpdates);
+        Task UpdateUserAsync(string appName, string userLogin, SecUserUpdates userUpdates);
 
         /// <summary>
         ///   </summary>

@@ -80,7 +80,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task UpdateAsync(SecGroup role)
         {
-            await SecurityRepository.UpdateGroupByIdAsync(AppName, role.Id, new SecGroupUpdates
+            await SecurityRepository.UpdateGroupAsync(AppName, role.Name, new SecGroupUpdates
             {
                 Name = role.Name,
                 Description = role.Description,
@@ -95,7 +95,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task DeleteAsync(SecGroup role)
         {
-            await SecurityRepository.RemoveGroupByIdAsync(AppName, role.Id);
+            await SecurityRepository.RemoveGroupAsync(AppName, role.Name);
         }
 
         /// <summary>

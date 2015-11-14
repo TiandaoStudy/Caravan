@@ -85,7 +85,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task UpdateAsync(SecUser user)
         {
-            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            await SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
             {
                 Login = user.UserName, // Lo UserName di Identity è la Login di Caravan.
                 FirstName = user.FirstName,
@@ -100,7 +100,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task DeleteAsync(SecUser user)
         {
-            await SecurityRepository.RemoveUserByIdAsync(AppName, user.Id);
+            await SecurityRepository.RemoveUserAsync(AppName, user.Login);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task SetEmailAsync(SecUser user, string email)
         {
-            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            await SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
             {
                 Email = email
             });
@@ -157,7 +157,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task SetEmailConfirmedAsync(SecUser user, bool confirmed)
         {
-            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            await SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
             {
                 EmailConfirmed = confirmed
             });
@@ -182,7 +182,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task SetPhoneNumberAsync(SecUser user, string phoneNumber)
         {
-            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            await SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
             {
                 PhoneNumber = phoneNumber
             });
@@ -210,7 +210,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task SetPhoneNumberConfirmedAsync(SecUser user, bool confirmed)
         {
-            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            await SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
             {
                 PhoneNumberConfirmed = confirmed
             });
@@ -228,7 +228,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task SetPasswordHashAsync(SecUser user, string passwordHash)
         {
-            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            await SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
             {
                 PasswordHash = passwordHash
             });
@@ -322,7 +322,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task SetLockoutEndDateAsync(SecUser user, DateTimeOffset lockoutEnd)
         {
-            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            await SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
             {
                 LockoutEndDate = lockoutEnd
             });
@@ -336,7 +336,7 @@ namespace Finsa.Caravan.Common.Security
         public async Task<int> IncrementAccessFailedCountAsync(SecUser user)
         {
             var newAccessFailedCount = user.AccessFailedCount + 1;
-            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            await SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
             {
                 AccessFailedCount = newAccessFailedCount
             });
@@ -350,7 +350,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task ResetAccessFailedCountAsync(SecUser user)
         {
-            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            await SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
             {
                 AccessFailedCount = 0
             });
@@ -379,7 +379,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task SetLockoutEnabledAsync(SecUser user, bool enabled)
         {
-            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            await SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
             {
                 LockoutEnabled = enabled
             });
@@ -438,7 +438,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task SetSecurityStampAsync(SecUser user, string stamp)
         {
-            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            await SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
             {
                 SecurityStamp = stamp
             });
@@ -463,7 +463,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task SetTwoFactorEnabledAsync(SecUser user, bool enabled)
         {
-            await SecurityRepository.UpdateUserByIdAsync(AppName, user.Id, new SecUserUpdates
+            await SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
             {
                 TwoFactorAuthenticationEnabled = enabled
             });
