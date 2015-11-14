@@ -253,7 +253,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoRemoveEntry(string appName, int logId)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
-            using (var ctx = SqlDbContext.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var deleted = false;
                 var log = ctx.LogEntries.FirstOrDefault(l => l.App.Name == appName && l.Id == logId);
@@ -293,7 +293,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoAddSetting(string appName, LogLevel logLevel, LogSetting setting)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
-            using (var ctx = SqlDbContext.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var added = false;
                 var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
@@ -323,7 +323,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoRemoveSetting(string appName, LogLevel logLevel)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
-            using (var ctx = SqlDbContext.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var deleted = false;
                 var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
@@ -344,7 +344,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool DoUpdateSetting(string appName, LogLevel logLevel, LogSetting setting)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
-            using (var ctx = SqlDbContext.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var update = false;
                 var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();

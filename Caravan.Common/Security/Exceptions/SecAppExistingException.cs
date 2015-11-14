@@ -15,21 +15,14 @@ using System.Runtime.Serialization;
 
 namespace Finsa.Caravan.Common.Security.Exceptions
 {
+    /// <summary>
+    ///   Segnala che esiste già un'applicazione con il medesimo nome.
+    /// </summary>
     [Serializable]
     public class SecAppExistingException : Exception
     {
-        public SecAppExistingException()
-            : base(TheMessage)
-        {
-        }
-
-        public SecAppExistingException(string message)
-            : base(message)
-        {
-        }
-
-        public SecAppExistingException(string message, Exception inner)
-            : base(message, inner)
+        public SecAppExistingException(string appName)
+            : base($"Application {appName} is already existing")
         {
         }
 
@@ -37,7 +30,5 @@ namespace Finsa.Caravan.Common.Security.Exceptions
             : base(info, context)
         {
         }
-
-        public static string TheMessage { get; } = "Application already existing";
     }
 }

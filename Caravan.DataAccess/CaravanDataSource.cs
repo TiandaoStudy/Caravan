@@ -77,7 +77,7 @@ namespace Finsa.Caravan.DataAccess
                     // A new connection is created and persisted for the whole test duration.
                     (Manager as FakeSqlDataSourceManager).ResetConnection();
                     // The database is recreated, since it is in-memory and probably it does not exist.
-                    using (var ctx = SqlDbContext.CreateWriteContext())
+                    using (var ctx = SqlDbContext.CreateUpdateContext())
                     {
                         ctx.Database.CreateIfNotExists();
                         Database.SetInitializer(new DropCreateDatabaseAlways<SqlDbContext>());
@@ -92,7 +92,7 @@ namespace Finsa.Caravan.DataAccess
                 case CaravanDataSourceKind.SqlServer:
                 case CaravanDataSourceKind.SqlServerCe:
                     using (var trx = new TransactionScope(TransactionScopeOption.Suppress))
-                    using (var ctx = SqlDbContext.CreateWriteContext())
+                    using (var ctx = SqlDbContext.CreateUpdateContext())
                     {
                         ctx.LogEntries.RemoveRange(ctx.LogEntries.ToList());
                         ctx.SaveChanges();

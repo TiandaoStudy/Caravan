@@ -15,21 +15,14 @@ using System.Runtime.Serialization;
 
 namespace Finsa.Caravan.Common.Security.Exceptions
 {
+    /// <summary>
+    ///   Segnala che esiste già un utente con la medesima login all'interno dell'applicazione data.
+    /// </summary>
     [Serializable]
     public class SecUserExistingException : Exception
     {
-        public SecUserExistingException()
-            : base(TheMessage)
-        {
-        }
-
-        public SecUserExistingException(string message)
-            : base(TheMessage)
-        {
-        }
-
-        public SecUserExistingException(Exception inner)
-            : base(TheMessage, inner)
+        public SecUserExistingException(string appName, string userLogin)
+            : base($"User {userLogin} is already existing inside application {appName}")
         {
         }
 
@@ -37,7 +30,5 @@ namespace Finsa.Caravan.Common.Security.Exceptions
             : base(info, context)
         {
         }
-
-        public static string TheMessage { get; } = "User already existing";
     }
 }

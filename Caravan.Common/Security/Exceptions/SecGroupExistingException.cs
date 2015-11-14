@@ -15,21 +15,14 @@ using System.Runtime.Serialization;
 
 namespace Finsa.Caravan.Common.Security.Exceptions
 {
+    /// <summary>
+    ///   Segnala che esiste già un gruppo con il medesimo nome all'interno dell'applicazione data.
+    /// </summary>
     [Serializable]
     public class SecGroupExistingException : Exception
     {
-        public SecGroupExistingException()
-            : base(TheMessage)
-        {
-        }
-
-        public SecGroupExistingException(string message)
-            : base(message)
-        {
-        }
-
-        public SecGroupExistingException(string message, Exception inner)
-            : base(message, inner)
+        public SecGroupExistingException(string appName, string groupName)
+            : base($"Group {groupName} is already existing inside application {appName}")
         {
         }
 
@@ -37,7 +30,5 @@ namespace Finsa.Caravan.Common.Security.Exceptions
             : base(info, context)
         {
         }
-
-        public static string TheMessage { get; } = "Group already existing";
     }
 }

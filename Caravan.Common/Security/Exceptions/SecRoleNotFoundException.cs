@@ -15,21 +15,14 @@ using System.Runtime.Serialization;
 
 namespace Finsa.Caravan.Common.Security.Exceptions
 {
+    /// <summary>
+    ///   Segnala che non esiste un ruolo con il nome dato all'interno del gruppo e dell'applicazione dati.
+    /// </summary>
     [Serializable]
     public class SecRoleNotFoundException : Exception
     {
-        public SecRoleNotFoundException()
-            : base(TheMessage)
-        {
-        }
-
-        public SecRoleNotFoundException(string message)
-            : base(message)
-        {
-        }
-
-        public SecRoleNotFoundException(string message, Exception inner)
-            : base(message, inner)
+        public SecRoleNotFoundException(string appName, string groupName, string roleName)
+            : base($"Role {roleName} not found inside group {groupName} of application {appName}")
         {
         }
 
@@ -37,7 +30,5 @@ namespace Finsa.Caravan.Common.Security.Exceptions
             : base(info, context)
         {
         }
-
-        public static string TheMessage { get; } = "Role not found";
     }
 }

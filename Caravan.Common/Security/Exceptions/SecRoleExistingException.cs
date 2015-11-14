@@ -15,21 +15,14 @@ using System.Runtime.Serialization;
 
 namespace Finsa.Caravan.Common.Security.Exceptions
 {
+    /// <summary>
+    ///   Segnala che esiste già un ruolo con il medesimo nome all'interno del gruppo e dell'applicazione dati.
+    /// </summary>
     [Serializable]
     public class SecRoleExistingException : Exception
     {
-        public SecRoleExistingException()
-            : base(TheMessage)
-        {
-        }
-
-        public SecRoleExistingException(string message)
-            : base(TheMessage)
-        {
-        }
-
-        public SecRoleExistingException(Exception inner)
-            : base(TheMessage, inner)
+        public SecRoleExistingException(string appName, string groupName, string roleName)
+            : base($"Role {roleName} is already existing inside group {groupName} of application {appName}")
         {
         }
 
@@ -37,7 +30,5 @@ namespace Finsa.Caravan.Common.Security.Exceptions
             : base(info, context)
         {
         }
-
-        public static string TheMessage { get; } = "Role already existing";
     }
 }

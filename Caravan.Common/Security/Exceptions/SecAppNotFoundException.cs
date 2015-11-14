@@ -15,21 +15,14 @@ using System.Runtime.Serialization;
 
 namespace Finsa.Caravan.Common.Security.Exceptions
 {
+    /// <summary>
+    ///   Segnala che non esiste un'applicazione con il nome dato.
+    /// </summary>
     [Serializable]
     public class SecAppNotFoundException : Exception
     {
-        public SecAppNotFoundException()
-            : base(TheMessage)
-        {
-        }
-
-        public SecAppNotFoundException(string message)
-            : base(message)
-        {
-        }
-
-        public SecAppNotFoundException(string message, Exception inner)
-            : base(message, inner)
+        public SecAppNotFoundException(string appName)
+            : base($"Application {appName} not found")
         {
         }
 
@@ -37,7 +30,5 @@ namespace Finsa.Caravan.Common.Security.Exceptions
             : base(info, context)
         {
         }
-
-        public static string TheMessage { get; } = "Application not found";
     }
 }

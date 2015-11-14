@@ -41,6 +41,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public async Task<SecApp> GetAppAsync(string appName)
         {
+            // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
 
             appName = appName?.ToLowerInvariant();
@@ -51,7 +52,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 var app = await GetAppAsyncInternal(appName);
                 if (app == null)
                 {
-                    throw new SecAppNotFoundException();
+                    throw new SecAppNotFoundException(appName);
                 }
                 return app;
             }
@@ -64,6 +65,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public async Task<long> AddAppAsync(SecApp app)
         {
+            // Preconditions
             RaiseArgumentNullException.IfIsNull(app, nameof(app));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(app.Name), ErrorMessages.NullOrWhiteSpaceAppName, nameof(app.Name));
 
@@ -72,14 +74,13 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
-                if (!await AddAppAsyncInternal(app))
-                {
-                    throw new SecAppExistingException();
-                }
+                await AddAppAsyncInternal(app);
+                return app.Id;
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
+                return default(long);
             }
         }
 
@@ -89,12 +90,14 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public SecGroup[] GetGroups(string appName)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             return GetGroupsInternal(appName.ToLowerInvariant(), null);
         }
 
         public SecGroup GetGroupByName(string appName, string groupName)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(groupName);
             var group = GetGroupsInternal(appName.ToLowerInvariant(), groupName.ToLowerInvariant()).FirstOrDefault();
@@ -107,6 +110,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public void AddGroup(string appName, SecGroup newGroup)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentNullException>.IfIsNull(newGroup);
             Raise<ArgumentException>.IfIsEmpty(newGroup.Name);
@@ -130,6 +134,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public void RemoveGroup(string appName, string groupName)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(groupName);
 
@@ -151,6 +156,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public void UpdateGroup(string appName, string groupName, SecGroupUpdates groupUpdates)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(groupName);
             Raise<ArgumentNullException>.IfIsNull(groupUpdates);
@@ -185,12 +191,14 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public SecUser[] GetUsers(string appName)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             return GetUsersInternal(appName.ToLowerInvariant(), null, null);
         }
 
         public SecUser GetUserByLogin(string appName, string userLogin)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(userLogin);
 
@@ -207,6 +215,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public SecUser GetUserByEmail(string appName, string userEmail)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(userEmail);
 
@@ -223,6 +232,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public void AddUser(string appName, SecUser newUser)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentNullException>.IfIsNull(newUser);
             Raise<ArgumentException>.IfIsEmpty(newUser.Login);
@@ -246,6 +256,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public void RemoveUser(string appName, string userLogin)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(userLogin);
 
@@ -267,6 +278,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public void UpdateUser(string appName, string userLogin, SecUserUpdates userUpdates)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(userLogin);
             Raise<ArgumentNullException>.IfIsNull(userUpdates);
@@ -297,6 +309,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public void AddUserToGroup(string appName, string userLogin, string groupName)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(userLogin);
             Raise<ArgumentException>.IfIsEmpty(groupName);
@@ -319,6 +332,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public void RemoveUserFromGroup(string appName, string userLogin, string groupName)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(userLogin);
             Raise<ArgumentException>.IfIsEmpty(groupName);
@@ -345,6 +359,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public SecContext[] GetContexts(string appName)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             return GetContextsInternal(appName.ToLowerInvariant());
         }
@@ -355,12 +370,14 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public SecObject[] GetObjects(string appName)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             return GetObjectsInternal(appName.ToLowerInvariant(), null);
         }
 
         public SecObject[] GetObjects(string appName, string contextName)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(contextName);
             return GetObjectsInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant());
@@ -372,12 +389,14 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public SecEntry[] GetEntries(string appName)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             return GetEntriesInternal(appName.ToLowerInvariant(), null, null, null);
         }
 
         public SecEntry[] GetEntries(string appName, string contextName)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(contextName);
             return GetEntriesInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant(), null, null);
@@ -385,6 +404,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public SecEntry[] GetEntriesForUser(string appName, string contextName, string userLogin)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(contextName);
             Raise<ArgumentException>.IfIsEmpty(userLogin);
@@ -393,6 +413,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public SecEntry[] GetEntriesForObject(string appName, string contextName, string objectName)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(contextName);
             Raise<ArgumentException>.IfIsEmpty(objectName);
@@ -401,6 +422,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public SecEntry[] GetEntriesForObjectAndUser(string appName, string contextName, string objectName, string userLogin)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(contextName);
             Raise<ArgumentException>.IfIsEmpty(objectName);
@@ -410,6 +432,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public void AddEntry(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsNull(secContext);
             Raise<ArgumentException>.IfIsEmpty(secContext.Name);
@@ -451,6 +474,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public void RemoveEntry(string appName, string contextName, string objectName, string userLogin, string groupName)
         {
+            // Preconditions
             Raise<ArgumentException>.IfIsEmpty(appName);
             Raise<ArgumentException>.IfIsEmpty(contextName);
             Raise<ArgumentException>.IfIsEmpty(objectName);
@@ -491,37 +515,37 @@ namespace Finsa.Caravan.DataAccess.Core
 
         protected abstract Task<SecApp> GetAppAsyncInternal(string appName);
 
-        protected abstract bool AddAppAsyncInternal(SecApp app);
+        protected abstract Task AddAppAsyncInternal(SecApp app);
 
-        protected abstract SecGroup[] GetGroupsInternal(string appName, string groupName);
+        protected abstract Task<SecGroup[]> GetGroupsInternal(string appName, string groupName);
 
-        protected abstract bool AddGroupInternal(string appName, SecGroup newGroup);
+        protected abstract Task AddGroupInternal(string appName, SecGroup newGroup);
 
-        protected abstract bool RemoveGroupInternal(string appName, string groupName);
+        protected abstract Task RemoveGroupInternal(string appName, string groupName);
 
-        protected abstract bool UpdateGroupInternal(string appName, string groupName, SecGroupUpdates groupUpdates);
+        protected abstract Task UpdateGroupInternal(string appName, string groupName, SecGroupUpdates groupUpdates);
 
-        protected abstract SecUser[] GetUsersInternal(string appName, string userLogin, string userEmail);
+        protected abstract Task<SecUser[]> GetUsersInternal(string appName, string userLogin, string userEmail);
 
-        protected abstract bool AddUserInternal(string appName, SecUser newUser);
+        protected abstract Task AddUserInternal(string appName, SecUser newUser);
 
-        protected abstract bool RemoveUserInternal(string appName, string userLogin);
+        protected abstract Task RemoveUserInternal(string appName, string userLogin);
 
-        protected abstract bool UpdateUserInternal(string appName, string userLogin, SecUserUpdates userUpdates);
+        protected abstract Task UpdateUserInternal(string appName, string userLogin, SecUserUpdates userUpdates);
 
-        protected abstract bool AddUserToGroupInternal(string appName, string userLogin, string groupName);
+        protected abstract Task AddUserToGroupInternal(string appName, string userLogin, string groupName);
 
-        protected abstract bool RemoveUserFromGroupInternal(string appName, string userLogin, string groupName);
+        protected abstract Task RemoveUserFromGroupInternal(string appName, string userLogin, string groupName);
 
-        protected abstract SecContext[] GetContextsInternal(string appName);
+        protected abstract Task<SecContext[]> GetContextsInternal(string appName);
 
-        protected abstract SecObject[] GetObjectsInternal(string appName, string contextName);
+        protected abstract Task<SecObject[]> GetObjectsInternal(string appName, string contextName);
 
-        protected abstract SecEntry[] GetEntriesInternal(string appName, string contextName, string objectName, string userLogin);
+        protected abstract Task<SecEntry[]> GetEntriesInternal(string appName, string contextName, string objectName, string userLogin);
 
-        protected abstract bool AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName);
+        protected abstract Task AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName);
 
-        protected abstract bool RemoveEntryInternal(string appName, string contextName, string objectName, string userLogin, string groupName);
+        protected abstract Task RemoveEntryInternal(string appName, string contextName, string objectName, string userLogin, string groupName);
 
         #endregion Abstract Methods
     }

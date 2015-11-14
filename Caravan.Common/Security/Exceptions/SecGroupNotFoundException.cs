@@ -15,21 +15,14 @@ using System.Runtime.Serialization;
 
 namespace Finsa.Caravan.Common.Security.Exceptions
 {
+    /// <summary>
+    ///   Segnala che non esiste un gruppo con il nome dato all'interno dell'applicazione data.
+    /// </summary>
     [Serializable]
     public class SecGroupNotFoundException : Exception
     {
-        public SecGroupNotFoundException()
-            : base(TheMessage)
-        {
-        }
-
-        public SecGroupNotFoundException(string message)
-            : base(message)
-        {
-        }
-
-        public SecGroupNotFoundException(string message, Exception inner)
-            : base(message, inner)
+        public SecGroupNotFoundException(string appName, string groupName)
+            : base($"Group {groupName} not found inside application {appName}")
         {
         }
 
@@ -37,7 +30,5 @@ namespace Finsa.Caravan.Common.Security.Exceptions
             : base(info, context)
         {
         }
-
-        public static string TheMessage { get; } = "Group not found";
     }
 }

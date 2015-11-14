@@ -54,7 +54,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         public static SqlDbContext CreateReadContext()
         {
             // Il DB è già inizializzato dalla chiamata sottostante.
-            var ctx = CreateWriteContext();
+            var ctx = CreateUpdateContext();
 
             // Disabilito i proxy, dato che per un contesto di lettura (NON UPDATE) non hanno alcuna utilità.
             ctx.Configuration.ProxyCreationEnabled = false;
@@ -62,7 +62,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             return ctx;
         }
 
-        public static SqlDbContext CreateWriteContext()
+        public static SqlDbContext CreateUpdateContext()
         {
             var ctx = new SqlDbContext();
 

@@ -15,21 +15,14 @@ using System.Runtime.Serialization;
 
 namespace Finsa.Caravan.Common.Security.Exceptions
 {
+    /// <summary>
+    ///   Segnala che non esiste un utente con la login data all'interno dell'applicazione data.
+    /// </summary>
     [Serializable]
     public class SecUserNotFoundException : Exception
     {
-        public SecUserNotFoundException()
-            : base(TheMessage)
-        {
-        }
-
-        public SecUserNotFoundException(string message)
-            : base(message)
-        {
-        }
-
-        public SecUserNotFoundException(string message, Exception inner)
-            : base(message, inner)
+        public SecUserNotFoundException(string appName, string userLogin)
+            : base($"User {userLogin} not found inside application {appName}")
         {
         }
 
@@ -37,7 +30,5 @@ namespace Finsa.Caravan.Common.Security.Exceptions
             : base(info, context)
         {
         }
-
-        public static string TheMessage { get; } = "User not found";
     }
 }

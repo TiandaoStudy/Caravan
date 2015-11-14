@@ -37,7 +37,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity
             };
 
             // Further services registrations...
-            factory.Register(new Registration<SqlDbContext>(r => SqlDbContext.CreateWriteContext()));
+            factory.Register(new Registration<SqlDbContext>(r => SqlDbContext.CreateUpdateContext()));
             factory.Register(new Registration<IClock>(r => CaravanServiceProvider.NinjectKernel.Get<IClock>()));
 
             return factory;

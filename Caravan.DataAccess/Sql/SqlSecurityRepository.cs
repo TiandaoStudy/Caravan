@@ -42,22 +42,21 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
         }
 
-        protected override bool AddAppAsyncInternal(SecApp app)
+        protected override async Task AddAppAsyncInternal(SecApp app)
         {
-            using (var ctx = SqlDbContext.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
-                var added = false;
-                if (!ctx.SecApps.Any(a => a.Name == app.Name))
+                if (await ctx.SecApps.AnyAsync(a => a.Name == app.Name))
                 {
-                    ctx.SecApps.Add(new SqlSecApp
-                    {
-                        Name = app.Name,
-                        Description = app.Description
-                    });
-                    added = true;
+                    throw new SecAppExistingException(app.Name);
                 }
-                ctx.SaveChanges();
-                return added;
+                var sqlApp = ctx.SecApps.Add(new SqlSecApp
+                {
+                    Name = app.Name,
+                    Description = app.Description
+                });
+                await ctx.SaveChangesAsync();
+                app.Id = sqlApp.Id;
             }
         }
 
@@ -87,7 +86,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool AddGroupInternal(string appName, SecGroup newGroup)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
-            using (var ctx = SqlDbContext.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
                 var added = false;
@@ -111,7 +110,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool RemoveGroupInternal(string appName, string groupName)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
-            using (var ctx = SqlDbContext.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var removed = false;
                 var appId = GetAppIdByName(ctx, appName);
@@ -130,7 +129,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool UpdateGroupInternal(string appName, string groupName, SecGroupUpdates groupUpdates)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
-            using (var ctx = SqlDbContext.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var updated = false;
                 var appId = GetAppIdByName(ctx, appName);
@@ -182,7 +181,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool AddUserInternal(string appName, SecUser newUser)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
-            using (var ctx = SqlDbContext.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
                 var added = false;
@@ -209,7 +208,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool RemoveUserInternal(string appName, string userLogin)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
-            using (var ctx = SqlDbContext.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var removed = false;
                 var appId = GetAppIdByName(ctx, appName);
@@ -228,7 +227,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool UpdateUserInternal(string appName, string userLogin, SecUserUpdates userUpdates)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
-            using (var ctx = SqlDbContext.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var updated = false;
                 var appId = GetAppIdByName(ctx, appName);
@@ -258,7 +257,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool AddUserToGroupInternal(string appName, string userLogin, string groupName)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
-            using (var ctx = SqlDbContext.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
                 var user = GetUserByLogin(ctx, appId, userLogin);
@@ -278,7 +277,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool RemoveUserFromGroupInternal(string appName, string userLogin, string groupName)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
-            using (var ctx = SqlDbContext.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
                 var user = GetUserByLogin(ctx, appId, userLogin);
@@ -380,7 +379,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
-            using (var ctx = SqlDbContext.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
                 var dbContext = ctx.SecContexts.FirstOrDefault(c => c.AppId == appId && c.Name == secContext.Name);
@@ -451,7 +450,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         protected override bool RemoveEntryInternal(string appName, string contextName, string objectName, string userLogin, string groupName)
         {
             using (var trx = SqlDbContext.BeginTrasaction())
-            using (var ctx = SqlDbContext.CreateWriteContext())
+            using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var appId = GetAppIdByName(ctx, appName);
                 //var entry = ctx.SecEntries.FirstOrDefault(e => e.AppId == appId && e.Context.Name == contextName && e.Object.Name == objectName && (e.User == null || e.User.Login == userLogin) && (e.Group == null || e.Group.Name == groupName));
