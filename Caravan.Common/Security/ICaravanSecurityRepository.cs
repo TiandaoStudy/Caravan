@@ -1,4 +1,17 @@
-﻿using System;
+﻿// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
+using System;
+using System.Threading.Tasks;
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
 
@@ -45,7 +58,17 @@ namespace Finsa.Caravan.Common.Security
         /// <param name="appName"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
-        SecGroup[] GetGroups(string appName);
+        Task<SecGroup[]> GetGroupsAsync(string appName);
+
+        /// <summary>
+        ///   </summary>
+        /// <param name="appName"></param>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="appName"/> or <paramref name="groupId"/> are null or empty.
+        /// </exception>
+        Task<SecGroup> GetGroupByIdAsync(string appName, long groupId);
 
         /// <summary>
         ///   </summary>
@@ -55,7 +78,7 @@ namespace Finsa.Caravan.Common.Security
         /// <exception cref="ArgumentException">
         ///   <paramref name="appName"/> or <paramref name="groupName"/> are null or empty.
         /// </exception>
-        SecGroup GetGroupByName(string appName, string groupName);
+        Task<SecGroup> GetGroupByNameAsync(string appName, string groupName);
 
         /// <summary>
         ///   </summary>
@@ -65,7 +88,7 @@ namespace Finsa.Caravan.Common.Security
         ///   <paramref name="appName"/> or <paramref name="newGroup.Name"/> are null or empty.
         /// </exception>
         /// <exception cref="ArgumentNullException"><paramref name="newGroup"/> is null.</exception>
-        void AddGroup(string appName, SecGroup newGroup);
+        Task<long> AddGroupAsync(string appName, SecGroup newGroup);
 
         /// <summary>
         ///   </summary>
@@ -74,7 +97,18 @@ namespace Finsa.Caravan.Common.Security
         /// <exception cref="ArgumentException">
         ///   <paramref name="appName"/> or <paramref name="groupName"/> are null or empty.
         /// </exception>
-        void RemoveGroup(string appName, string groupName);
+        Task RemoveGroupAsync(string appName, string groupName);
+
+        /// <summary>
+        ///   </summary>
+        /// <param name="appName"></param>
+        /// <param name="groupId"></param>
+        /// <param name="groupUpdates"></param>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="appName"/>, <paramref name="groupId"/> or
+        ///   <paramref name="groupUpdates.Name"/> are null or empty.
+        /// </exception>
+        Task UpdateGroupByIdAsync(string appName, long groupId, SecGroupUpdates groupUpdates);
 
         /// <summary>
         ///   </summary>
@@ -85,7 +119,7 @@ namespace Finsa.Caravan.Common.Security
         ///   <paramref name="appName"/>, <paramref name="groupName"/> or
         ///   <paramref name="groupUpdates.Name"/> are null or empty.
         /// </exception>
-        void UpdateGroup(string appName, string groupName, SecGroupUpdates groupUpdates);
+        Task UpdateGroupByNameAsync(string appName, string groupName, SecGroupUpdates groupUpdates);
 
         #endregion Groups
 

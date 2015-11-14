@@ -137,6 +137,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessModeling\StateMachine.cs" />
     <Compile Include="BusinessModeling\Workflow.cs" />
     <Compile Include="CaravanCommonConfiguration.cs" />
     <Compile Include="CaravanCommonNinjectConfig.cs" />
@@ -151,6 +152,8 @@
     <Compile Include="Logging\ICaravanLogRepository.cs" />
     <Compile Include="Logging\Workflows\CleanUpLogRepository.cs" />
     <Compile Include="Logging\Models\LogEntryQuery.cs" />
+    <Compile Include="Security\Exceptions\SecRoleExistingException.cs" />
+    <Compile Include="Security\Exceptions\SecRoleNotFoundException.cs" />
     <Compile Include="Security\Models\SecGroupUpdates.cs" />
     <Compile Include="Security\Models\SecUserUpdates.cs" />
     <Compile Include="Security\CaravanRoleStore.cs" />

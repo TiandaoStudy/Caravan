@@ -12,7 +12,6 @@
 
 using AutoMapper;
 using Finsa.Caravan.Common.Logging.Models;
-using Ninject;
 using NLog;
 using NLog.Common;
 using NLog.Config;

@@ -13,32 +13,31 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Finsa.Caravan.Common.Logging.Models
+namespace Finsa.Caravan.Common.Security.Exceptions
 {
-    [Serializable, DataContract]
-    public struct LogResult
+    [Serializable]
+    public class SecRoleExistingException : Exception
     {
-        public static LogResult Success { get; } = new LogResult
+        public SecRoleExistingException()
+            : base(TheMessage)
         {
-            Succeeded = true
-        };
+        }
 
-        [DataMember(Order = 0)]
-        public bool Succeeded { get; set; }
-
-        [DataMember(Order = 1)]
-        public Exception Exception { get; set; }
-
-        public static LogResult Failure(string cause) => new LogResult
+        public SecRoleExistingException(string message)
+            : base(TheMessage)
         {
-            Succeeded = false,
-            Exception = new Exception(cause)
-        };
+        }
 
-        public static LogResult Failure(Exception ex) => new LogResult
+        public SecRoleExistingException(Exception inner)
+            : base(TheMessage, inner)
         {
-            Succeeded = false,
-            Exception = ex
-        };
+        }
+
+        protected SecRoleExistingException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
+
+        public static string TheMessage { get; } = "Role already existing";
     }
 }

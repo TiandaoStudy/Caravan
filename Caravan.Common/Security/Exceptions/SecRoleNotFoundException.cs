@@ -13,32 +13,31 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Finsa.Caravan.Common.Logging.Models
+namespace Finsa.Caravan.Common.Security.Exceptions
 {
-    [Serializable, DataContract]
-    public struct LogResult
+    [Serializable]
+    public class SecRoleNotFoundException : Exception
     {
-        public static LogResult Success { get; } = new LogResult
+        public SecRoleNotFoundException()
+            : base(TheMessage)
         {
-            Succeeded = true
-        };
+        }
 
-        [DataMember(Order = 0)]
-        public bool Succeeded { get; set; }
-
-        [DataMember(Order = 1)]
-        public Exception Exception { get; set; }
-
-        public static LogResult Failure(string cause) => new LogResult
+        public SecRoleNotFoundException(string message)
+            : base(message)
         {
-            Succeeded = false,
-            Exception = new Exception(cause)
-        };
+        }
 
-        public static LogResult Failure(Exception ex) => new LogResult
+        public SecRoleNotFoundException(string message, Exception inner)
+            : base(message, inner)
         {
-            Succeeded = false,
-            Exception = ex
-        };
+        }
+
+        protected SecRoleNotFoundException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
+
+        public static string TheMessage { get; } = "Role not found";
     }
 }

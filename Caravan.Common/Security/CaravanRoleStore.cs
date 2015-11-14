@@ -1,66 +1,86 @@
-﻿using Finsa.Caravan.Common.Security.Models;
+﻿// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
+using Finsa.Caravan.Common.Security.Models;
 using Finsa.CodeServices.Common;
 using Microsoft.AspNet.Identity;
 using PommaLabs.Thrower;
-using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Finsa.Caravan.Common.Security
 {
-    public class CaravanRoleStore : IRoleStore<SecGroup>
+    public sealed class CaravanRoleStore : IQueryableRoleStore<SecGroup, long>
     {
         private readonly ICaravanSecurityRepository _securityRepository;
 
         public CaravanRoleStore(ICaravanSecurityRepository securityRepository)
         {
-            Raise<ArgumentNullException>.IfIsNull(securityRepository);
+            RaiseArgumentNullException.IfIsNull(securityRepository, nameof(securityRepository));
             _securityRepository = securityRepository;
         }
 
-        #region IRoleStore members
+        #region IQueryableRoleStore members
+
+        /// <summary>
+        ///   IQueryable Roles.
+        /// </summary>
+        public IQueryable<SecGroup> Roles
+        {
+            get
+            {
+                var appName = CaravanCommonConfiguration.Instance.AppName;
+                return _securityRepository.GetGroupsAsync(appName).Result.AsQueryable();
+            }
+        }
 
         public void Dispose()
         {
             // Nulla, perché questo store non apre connessioni.
         }
 
-        public Task CreateAsync(SecGroup role)
+        public async Task CreateAsync(SecGroup role)
         {
             var appName = CaravanCommonConfiguration.Instance.AppName;
-            _securityRepository.AddGroup(appName, role);
-            return Task.FromResult(0);
+            await _securityRepository.AddGroupAsync(appName, role);
         }
 
-        public Task UpdateAsync(SecGroup role)
+        public async Task UpdateAsync(SecGroup role)
         {
             var appName = CaravanCommonConfiguration.Instance.AppName;
-            _securityRepository.UpdateGroup(appName, role.Name, new SecGroupUpdates
+            await _securityRepository.UpdateGroupByIdAsync(appName, role.Id, new SecGroupUpdates
             {
-                Description = Option.Some(role.Description),
-                Notes = Option.Some(role.Notes)
+                Name = Option.Some(role.Name)
             });
-            return Task.FromResult(0);
         }
 
-        public Task DeleteAsync(SecGroup role)
+        public async Task DeleteAsync(SecGroup role)
         {
             var appName = CaravanCommonConfiguration.Instance.AppName;
-            _securityRepository.RemoveGroup(appName, role.Name);
-            return Task.FromResult(0);
+            await _securityRepository.RemoveGroupAsync(appName, role.Name);
         }
 
-        public Task<SecGroup> FindByIdAsync(string roleId)
+        public async Task<SecGroup> FindByIdAsync(long roleId)
         {
             var appName = CaravanCommonConfiguration.Instance.AppName;
-            return Task.FromResult(_securityRepository.GetGroupByName(appName, roleId));
+            return await _securityRepository.GetGroupByIdAsync(appName, roleId);
         }
 
-        public Task<SecGroup> FindByNameAsync(string roleName)
+        public async Task<SecGroup> FindByNameAsync(string roleName)
         {
             var appName = CaravanCommonConfiguration.Instance.AppName;
-            return Task.FromResult(_securityRepository.GetGroupByName(appName, roleName));
+            return await _securityRepository.GetGroupByNameAsync(appName, roleName);
         }
 
-        #endregion IRoleStore members
+        #endregion IQueryableRoleStore members
     }
 }

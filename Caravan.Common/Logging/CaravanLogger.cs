@@ -1,4 +1,16 @@
-﻿using Common.Logging;
+﻿// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
+using Common.Logging;
 using Common.Logging.Factory;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.CodeServices.Common;
@@ -102,7 +114,7 @@ namespace Finsa.Caravan.Common.Logging
                 tmpLongMessage = RemoveBlankRows.Replace(tmpLongMessage, string.Empty);
                 tmpLongMessage = RemoveLastBlanks.Replace(tmpLongMessage, Environment.NewLine);
             }
-            
+
             var argumentsHelper = CaravanVariablesContext.GlobalVariables
                 .Union(CaravanVariablesContext.ThreadVariables)
                 .Union(logMessage.Arguments ?? GTuple0<KeyValuePair<string, object>>.Instance)
@@ -115,7 +127,7 @@ namespace Finsa.Caravan.Common.Logging
                 var kv = argumentsHelper[i];
                 if (kv.Value == null)
                 {
-                    tmpArguments[i] = KeyValuePair.Create(kv.Key, (string) null);
+                    tmpArguments[i] = KeyValuePair.Create(kv.Key, (string)null);
                     continue;
                 }
                 var tmpValue = RemoveBlankRows.Replace(kv.Value.SafeToString(), string.Empty);

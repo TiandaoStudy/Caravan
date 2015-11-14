@@ -122,8 +122,7 @@ namespace Finsa.Caravan.DataAccess
 
         private static void OnStart()
         {
-            // Mappings (SQL --> Models)
-            Mapper.CreateMap<SqlLogSetting, LogSetting>();
+            // Mappings (SQL --> Models) for Security
             Mapper.CreateMap<SqlSecApp, SecApp>();
             Mapper.CreateMap<SqlSecContext, SecContext>();
             Mapper.CreateMap<SqlSecEntry, SecEntry>().AfterMap((se, e) =>
@@ -132,7 +131,10 @@ namespace Finsa.Caravan.DataAccess
             });
             Mapper.CreateMap<SqlSecGroup, SecGroup>();
             Mapper.CreateMap<SqlSecObject, SecObject>();
+            Mapper.CreateMap<SqlSecRole, SecRole>();
             Mapper.CreateMap<SqlSecUser, SecUser>();
+
+            // Mappings (SQL --> Models) for Logging
             Mapper.CreateMap<SqlLogEntry, LogEntry>().AfterMap((sl, l) =>
             {
                 var array = new KeyValuePair<string, string>[10];
@@ -180,6 +182,7 @@ namespace Finsa.Caravan.DataAccess
                 Array.Resize(ref array, index);
                 l.Arguments = array;
             });
+            Mapper.CreateMap<SqlLogSetting, LogSetting>();
         }
 
         #endregion OnStart
