@@ -2,6 +2,7 @@
 using Finsa.Caravan.DataAccess.Core;
 using MongoDB.Driver;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Finsa.Caravan.DataAccess.Mongo.Models;
 using Finsa.Caravan.DataAccess.Mongo.Models.Logging;
 using Finsa.Caravan.DataAccess.Mongo.Models.Security;
@@ -10,17 +11,17 @@ namespace Finsa.Caravan.DataAccess.Mongo
 {
     internal sealed class MongoSecurityRepository : AbstractSecurityRepository<MongoSecurityRepository>
     {
-        protected override SecApp[] GetAppsInternal()
+        protected override Task<SecApp[]> GetAppsAsyncInternal()
         {
             throw new System.NotImplementedException();
         }
 
-        protected override SecApp GetAppInternal(string appName)
+        protected override Task<SecApp> GetAppAsyncInternal(string appName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override bool AddAppInternal(SecApp app)
+        protected override bool AddAppAsyncInternal(SecApp app)
         {
             //var newAppId = MongoUtilities.GetSequenceCollection().FindOneAndUpdateAsync(new FindAndModifyArgs
             //{

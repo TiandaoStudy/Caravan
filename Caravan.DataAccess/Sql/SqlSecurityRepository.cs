@@ -5,6 +5,7 @@ using Finsa.Caravan.DataAccess.Core;
 using Finsa.CodeServices.Common;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using Finsa.Caravan.DataAccess.Sql.Security.Entities;
 
 namespace Finsa.Caravan.DataAccess.Sql
@@ -13,18 +14,22 @@ namespace Finsa.Caravan.DataAccess.Sql
     {
         #region Apps
 
-        protected override SecApp[] GetAppsInternal()
+        protected override Task<SecApp[]> GetAppsAsyncInternal()
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
-                var q = ctx.SecApps.Include(a => a.Users).Include(a => a.Groups).Include("Contexts.Objects").Include(a => a.LogSettings);
-                return q.AsEnumerable()
+                return Task.FromResult(ctx.SecApps
+                    .Include(a => a.Users)
+                    .Include(a => a.Groups)
+                    .Include("Contexts.Objects")
+                    .Include(a => a.LogSettings)
+                    .AsEnumerable()
                     .Select(Mapper.Map<SecApp>)
-                    .ToArray();
+                    .ToArray());
             }
         }
 
-        protected override SecApp GetAppInternal(string appName)
+        protected override async Task<SecApp> GetAppAsyncInternal(string appName)
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
@@ -33,11 +38,11 @@ namespace Finsa.Caravan.DataAccess.Sql
                 {
                     q = q.Where(a => a.Name == appName);
                 }
-                return Mapper.Map<SecApp>(q.First());
+                return Mapper.Map<SecApp>(await q.FirstAsync());
             }
         }
 
-        protected override bool AddAppInternal(SecApp app)
+        protected override bool AddAppAsyncInternal(SecApp app)
         {
             using (var ctx = SqlDbContext.CreateWriteContext())
             {

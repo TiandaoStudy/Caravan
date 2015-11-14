@@ -3,6 +3,7 @@ using Finsa.Caravan.DataAccess.Core;
 using RestSharp;
 using System;
 using System.Net;
+using System.Threading.Tasks;
 using Finsa.Caravan.Common.Logging.Exceptions;
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
@@ -12,7 +13,7 @@ namespace Finsa.Caravan.DataAccess.Rest
 {
     internal sealed class RestSecurityRepository : AbstractSecurityRepository<RestSecurityRepository>
     {
-        protected override SecApp[] GetAppsInternal()
+        protected override async Task<SecApp[]> GetAppsAsyncInternal()
         {
             try
             {
@@ -22,7 +23,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                 //request.AddUrlSegment("appName", appName);
                 request.AddJsonBody(new RestRequest<object> { Auth = "AA", Body = new object() });
 
-                var response = client.Execute<Models.RestResponse<SecApp>>(request);
+                var response = await client.ExecuteTaskAsync<Models.RestResponse<SecApp>>(request);
 
                 var apps = new[] { response.Data.Body };
 
@@ -34,7 +35,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override SecApp GetAppInternal(string appName)
+        protected override async Task<SecApp> GetAppAsyncInternal(string appName)
         {
             try
             {
@@ -44,7 +45,7 @@ namespace Finsa.Caravan.DataAccess.Rest
                 request.AddUrlSegment("appName", appName);
                 request.AddJsonBody(new RestRequest<object> { Auth = "AA", Body = new object() });
 
-                var response = client.Execute<Models.RestResponse<SecApp>>(request);
+                var response = await client.ExecuteTaskAsync<Models.RestResponse<SecApp>>(request);
 
                 if (response.ErrorException != null)
                 {
@@ -61,7 +62,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override bool AddAppInternal(SecApp app)
+        protected override bool AddAppAsyncInternal(SecApp app)
         {
             try
             {

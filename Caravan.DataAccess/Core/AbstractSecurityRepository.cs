@@ -9,6 +9,7 @@ using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security.Models;
+using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
@@ -23,33 +24,55 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Apps
 
-        public SecApp[] GetApps()
+        public async Task<SecApp[]> GetAppsAsync()
         {
-            return GetAppsInternal();
-        }
-
-        public SecApp GetApp(string appName)
-        {
-            Raise<ArgumentException>.IfIsEmpty(appName);
-            var app = GetAppInternal(appName.ToLowerInvariant());
-            if (app == null)
-            {
-                throw new SecAppNotFoundException();
-            }
-            return app;
-        }
-
-        public void AddApp(SecApp app)
-        {
-            Raise<ArgumentNullException>.IfIsNull(app);
-            Raise<ArgumentException>.IfIsEmpty(app.Name);
-
-            const string logCtx = "Adding a new APP";
+            const string logCtx = "Retrieving all APPs";
 
             try
             {
-                app.Name = app.Name.ToLowerInvariant();
-                if (!AddAppInternal(app))
+                return await GetAppsAsyncInternal();
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(SecApp[]);
+            }
+        }
+
+        public async Task<SecApp> GetAppAsync(string appName)
+        {
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+
+            appName = appName?.ToLowerInvariant();
+            var logCtx = "Retrieving an APP - " + appName;
+
+            try
+            {
+                var app = await GetAppAsyncInternal(appName);
+                if (app == null)
+                {
+                    throw new SecAppNotFoundException();
+                }
+                return app;
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(SecApp);
+            }
+        }
+
+        public async Task<long> AddAppAsync(SecApp app)
+        {
+            RaiseArgumentNullException.IfIsNull(app, nameof(app));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(app.Name), ErrorMessages.NullOrWhiteSpaceAppName, nameof(app.Name));
+
+            app.Name = app.Name.ToLowerInvariant();
+            var logCtx = "Adding a new APP - " + app.Name;
+
+            try
+            {
+                if (!await AddAppAsyncInternal(app))
                 {
                     throw new SecAppExistingException();
                 }
@@ -464,11 +487,11 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Abstract Methods
 
-        protected abstract SecApp[] GetAppsInternal();
+        protected abstract Task<SecApp[]> GetAppsAsyncInternal();
 
-        protected abstract SecApp GetAppInternal(string appName);
+        protected abstract Task<SecApp> GetAppAsyncInternal(string appName);
 
-        protected abstract bool AddAppInternal(SecApp app);
+        protected abstract bool AddAppAsyncInternal(SecApp app);
 
         protected abstract SecGroup[] GetGroupsInternal(string appName, string groupName);
 
