@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Finsa.Caravan.Common.Core;
 
 namespace Finsa.Caravan.Common.Security
 {
@@ -45,7 +46,7 @@ namespace Finsa.Caravan.Common.Security
         /// <param name="securityRepository">Il repository della sicurezza di Caravan.</param>
         public CaravanUserStore(string appName, ICaravanSecurityRepository securityRepository)
         {
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), "Application name cannot be null, empty or blank", nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             RaiseArgumentNullException.IfIsNull(securityRepository, nameof(securityRepository));
             AppName = appName;
             SecurityRepository = securityRepository;

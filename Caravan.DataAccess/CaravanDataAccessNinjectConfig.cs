@@ -10,10 +10,13 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using System;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
+using Finsa.Caravan.DataAccess.Core;
 using Ninject.Modules;
+using PommaLabs.Thrower;
 
 namespace Finsa.Caravan.DataAccess
 {
@@ -30,6 +33,7 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="dependencyHandling">Modalità di gestione delle dipendenze.</param>
         public CaravanDataAccessNinjectConfig(DependencyHandling dependencyHandling)
         {
+            RaiseArgumentException.IfNot(Enum.IsDefined(typeof(DependencyHandling), dependencyHandling), ErrorMessages.InvalidEnumValue, nameof(dependencyHandling));
             _dependencyHandling = dependencyHandling;
         }
 

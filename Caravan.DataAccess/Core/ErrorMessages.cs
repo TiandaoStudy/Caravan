@@ -1,4 +1,4 @@
-﻿namespace Finsa.Caravan.Common.Core
+﻿namespace Finsa.Caravan.DataAccess.Core
 {
     /// <summary>
     ///   Messaggi di errore usati nella libreria Common.

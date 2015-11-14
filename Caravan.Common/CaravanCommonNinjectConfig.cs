@@ -11,9 +11,15 @@
 // the License.
 
 using Common.Logging;
+using Finsa.Caravan.Common.Core;
 using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Security;
+using Finsa.Caravan.Common.Security.Models;
 using Finsa.CodeServices.Clock;
+using Microsoft.AspNet.Identity;
 using Ninject.Modules;
+using PommaLabs.Thrower;
+using System;
 
 namespace Finsa.Caravan.Common
 {
@@ -22,26 +28,35 @@ namespace Finsa.Caravan.Common
     /// </summary>
     public sealed class CaravanCommonNinjectConfig : NinjectModule
     {
-        readonly DependencyHandling _dependencyHandling;
+        private readonly DependencyHandling _dependencyHandling;
+        private readonly string _appName;
 
         /// <summary>
         ///   Inizializza il modulo.
         /// </summary>
         /// <param name="dependencyHandling">Modalità di gestione delle dipendenze.</param>
-        public CaravanCommonNinjectConfig(DependencyHandling dependencyHandling)
+        /// <param name="appName">Il nome dell'applicativo su Caravan.</param>
+        public CaravanCommonNinjectConfig(DependencyHandling dependencyHandling, string appName)
         {
+            RaiseArgumentException.IfNot(Enum.IsDefined(typeof(DependencyHandling), dependencyHandling), ErrorMessages.InvalidEnumValue, nameof(dependencyHandling));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             _dependencyHandling = dependencyHandling;
+            _appName = appName;
         }
 
         /// <summary>
         ///   Configura le dipendenze di Caravan.Common. In questo momento esse sono:
         /// 
-        ///   * <see cref="IClock"/> via <see cref="NtpClock"/>, oppure <see cref="MockClock"/> per
-        ///     gli unit test.
-        ///   * <see cref="ILog"/> via Caravan LOG, oppure <see cref="CaravanNoOpLogger"/> per gli
-        ///     unit test.
-        ///   * <see cref="ICaravanLog"/> via Caravan LOG, oppure <see cref="CaravanNoOpLogger"/>
+        ///   * <see cref="IClock"/> via <see cref="SystemClock"/>, oppure <see cref="MockClock"/>
         ///     per gli unit test.
+        ///   * <see cref="ILog"/> via Caravan LOG configurabile con NLog, oppure
+        ///     <see cref="CaravanNoOpLogger"/> per gli unit test.
+        ///   * <see cref="ICaravanLog"/> via Caravan LOG configurabile con NLog, oppure
+        ///     <see cref="CaravanNoOpLogger"/> per gli unit test.
+        ///   * <see cref="IUserStore{TUser, TKey}"/> via <see cref="CaravanUserStore"/>,
+        ///     indipendentemente dall'ambiente di esecuzione.
+        ///   * <see cref="IRoleStore{TUser, TKey}"/> via <see cref="CaravanRoleStore"/>,
+        ///     indipendentemente dall'ambiente di esecuzione.
         /// </summary>
         public override void Load()
         {
@@ -60,6 +75,10 @@ namespace Finsa.Caravan.Common
                     Bind<ILog, ICaravanLog>().To<CaravanNoOpLogger>().InSingletonScope();
                     break;
             }
+
+            // Bind indipendenti dall'ambiente di esecuzione:
+            Bind<IUserStore<SecUser, long>>().To<CaravanUserStore>().InSingletonScope().WithConstructorArgument("appName", _appName);
+            Bind<IRoleStore<SecGroup, long>>().To<CaravanRoleStore>().InSingletonScope().WithConstructorArgument("appName", _appName);
         }
     }
 }

@@ -234,6 +234,7 @@
     <Compile Include="CaravanDataAccessConfiguration.cs" />
     <Compile Include="CaravanDataAccessNinjectConfig.cs" />
     <Compile Include="CaravanDataSourceKind.cs" />
+    <Compile Include="Core\ErrorMessages.cs" />
     <Compile Include="Rest\Models\RestRequest.cs" />
     <Compile Include="Rest\Models\RestResponse.cs" />
     <Compile Include="Sql\Attributes\DateTimeKindAttribute.cs" />
@@ -267,11 +268,6 @@
     <Compile Include="Core\AbstractDataSourceManager.cs" />
     <Compile Include="Core\AbstractLogRepository.cs" />
     <Compile Include="Core\AbstractSecurityRepository.cs" />
-    <Compile Include="Core\ErrorMessages.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ErrorMessages.resx</DependentUpon>
-    </Compile>
     <Compile Include="Mongo\Models\Logging\MongoLogEntry.cs" />
     <Compile Include="Mongo\Models\Logging\MongoLogSettings.cs" />
     <Compile Include="Mongo\Models\MongoDocument.cs" />
@@ -411,12 +407,6 @@
     <Content Include="Sql\PostgreSql\Scripts\Schema.sql" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="Core\ErrorMessages.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

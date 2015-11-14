@@ -1,17 +1,26 @@
-﻿using Finsa.Caravan.Common;
+﻿// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
+using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Security;
+using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess.Sql.Identity;
 using Finsa.CodeServices.Common.Portability;
+using IdentityServer3.AspNetIdentity;
 using IdentityServer3.Core.Configuration;
-using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
+using Ninject;
 using Owin;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace Finsa.Caravan.WebService
 {
@@ -20,59 +29,6 @@ namespace Finsa.Caravan.WebService
     /// </summary>
     public static class IdentityConfig
     {
-        public static IEnumerable<Client> Clients()
-        {
-            return new[]
-            {
-                new Client
-                {
-                    ClientName = "Caravan.WebService.Demo",
-                    Enabled = true,
-
-                    ClientId = "CaravanWebServiceDemo",
-                    ClientSecrets = new List<Secret> {new Secret("CaravanSecret".Sha256())},
-
-                    Flow = Flows.ResourceOwner,
-                    AccessTokenType = AccessTokenType.Jwt,
-                    AccessTokenLifetime = 3600
-                },
-                new Client
-                {
-                    ClientName = "ASCESI Check",
-                    Enabled = true,
-
-                    ClientId = "ascesi_check",
-                    ClientSecrets = new List<Secret> {new Secret("check".Sha256())},
-
-                    Flow = Flows.AuthorizationCode,
-                    RedirectUris = new List<string> { "http://localhost/ascesicheck", "http://localhost:1731" },
-
-                    AccessTokenType = AccessTokenType.Jwt,
-                    AccessTokenLifetime = 3600,
-
-                    AllowedScopes = new List<string> { "publicApi" }
-                }
-            };
-        }
-
-        public static IEnumerable<Scope> Scopes()
-        {
-            var scopes = new List<Scope>
-            {
-                new Scope
-                {
-                    Enabled = true,
-                    Name = "publicApi",
-                    Description = "Access to our public API",
-                    Type = ScopeType.Resource
-                }
-            };
-
-            scopes.AddRange(StandardScopes.All);
-
-            return scopes;
-        }
-
         public static void Build(IAppBuilder app)
         {
             app.Map("/identity", idsrvApp => idsrvApp.UseIdentityServer(new IdentityServerOptions
@@ -85,8 +41,10 @@ namespace Finsa.Caravan.WebService
                 SigningCertificate = LoadCertificate(),
                 RequireSsl = true,
 
+                // Gestione estetica del servizio.
                 EnableWelcomePage = true,
 
+                // Gestione della sorgente dati per gli utenti.
                 Factory = ConfigureFactory(),
             }));
         }
@@ -106,63 +64,13 @@ namespace Finsa.Caravan.WebService
         /// <summary>
         ///   Configura il generatore dei servizi usati dalla parte di autenticazione/autorizzazione.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>La factory per IdentityServer.</returns>
         public static IdentityServerServiceFactory ConfigureFactory()
         {
-            //var t = new AspNetIdentityUserService<SecUser, string>(new UserManager<SecUser, string>(new CaravanUserStore(CaravanDataSource.Security)));
-
             var factory = SqlIdnServiceFactory.Configure();
-            factory.UserService = new Registration<IUserService, CaravanUserService>();
+            var caravanUserManager = CaravanServiceProvider.NinjectKernel.Get<CaravanUserManager>();
+            factory.UserService = new Registration<IUserService>(new AspNetIdentityUserService<SecUser, long>(caravanUserManager));
             return factory;
-        }
-
-        class CaravanUserService : IUserService
-        {
-            public Task PreAuthenticateAsync(PreAuthenticationContext context)
-            {
-                return Task.FromResult(0);
-            }
-
-            public Task AuthenticateLocalAsync(LocalAuthenticationContext context)
-            {
-                var logins = JsonConvert.DeserializeObject<UserPwd[]>(File.ReadAllText(PortableEnvironment.MapPath("~/TempUsers.json")));
-                context.AuthenticateResult = logins.Any(l => l.user == context.UserName && l.pwd == context.Password)
-                    ? new AuthenticateResult(context.UserName, context.SignInMessage?.ClientId ?? "caravan-admin-ui")
-                    : new AuthenticateResult("You shall not pass!");
-                return Task.FromResult(0);
-            }
-
-            private struct UserPwd
-            {
-                public string user { get; set; }
-                public string pwd { get; set; }
-            }
-
-            public Task AuthenticateExternalAsync(ExternalAuthenticationContext context)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task PostAuthenticateAsync(PostAuthenticationContext context)
-            {
-                return Task.FromResult(0);
-            }
-
-            public Task SignOutAsync(SignOutContext context)
-            {
-                return Task.FromResult(0);
-            }
-
-            public Task GetProfileDataAsync(ProfileDataRequestContext context)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task IsActiveAsync(IsActiveContext context)
-            {
-                context.IsActive = true;
-                return Task.FromResult(0);
-            }
         }
     }
 }

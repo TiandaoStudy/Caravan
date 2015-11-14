@@ -156,6 +156,7 @@
     <Compile Include="Logging\ICaravanLogRepository.cs" />
     <Compile Include="Logging\Workflows\CleanUpLogRepository.cs" />
     <Compile Include="Logging\Models\LogEntryQuery.cs" />
+    <Compile Include="Security\CaravanRoleManager.cs" />
     <Compile Include="Security\Exceptions\SecRoleExistingException.cs" />
     <Compile Include="Security\Exceptions\SecRoleNotFoundException.cs" />
     <Compile Include="Security\Models\SecClaim.cs" />

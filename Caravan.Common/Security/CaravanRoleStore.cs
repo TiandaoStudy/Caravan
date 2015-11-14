@@ -15,6 +15,7 @@ using Microsoft.AspNet.Identity;
 using PommaLabs.Thrower;
 using System.Linq;
 using System.Threading.Tasks;
+using Finsa.Caravan.Common.Core;
 
 namespace Finsa.Caravan.Common.Security
 {
@@ -31,7 +32,7 @@ namespace Finsa.Caravan.Common.Security
         /// <param name="securityRepository">Il repository della sicurezza di Caravan.</param>
         public CaravanRoleStore(string appName, ICaravanSecurityRepository securityRepository)
         {
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), "Application name cannot be null, empty or blank", nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             RaiseArgumentNullException.IfIsNull(securityRepository, nameof(securityRepository));
             AppName = appName;
             SecurityRepository = securityRepository;
@@ -70,7 +71,6 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task CreateAsync(SecGroup role)
         {
-            
             await SecurityRepository.AddGroupAsync(AppName, role);
         }
 
@@ -81,7 +81,6 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task UpdateAsync(SecGroup role)
         {
-            
             await SecurityRepository.UpdateGroupByIdAsync(AppName, role.Id, new SecGroupUpdates
             {
                 Name = role.Name
@@ -95,7 +94,6 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task DeleteAsync(SecGroup role)
         {
-            
             await SecurityRepository.RemoveGroupByIdAsync(AppName, role.Id);
         }
 

@@ -17,15 +17,13 @@ using PommaLabs.Thrower;
 namespace Finsa.Caravan.Common.Security
 {
     /// <summary>
-    ///   Exposes user related APIs which will automatically save changes to the UserStore.
+    ///   Exposes user related APIs which will automatically save changes to the RoleStore.
     /// </summary>
-    public sealed class CaravanUserManager : UserManager<SecUser, long>
+    public sealed class CaravanRoleManager : RoleManager<SecGroup, long>
     {
-        public CaravanUserManager(IUserStore<SecUser, long> store, IPasswordHasher passwordHasher)
+        public CaravanRoleManager(IRoleStore<SecGroup, long> store)
             : base(store)
         {
-            RaiseArgumentNullException.IfIsNull(passwordHasher, nameof(passwordHasher));
-            PasswordHasher = passwordHasher;
         }
     }
 }
