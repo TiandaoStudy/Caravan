@@ -26,15 +26,15 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
     public class SqlIdnClientCorsOrigin : ClientCorsOrigin
     {
         [Key]
-        public virtual int Id { get; set; }
+        public override int Id { get; set; }
 
         [Required]
         [StringLength(150)]
-        public virtual string Origin { get; set; }
+        public override string Origin { get; set; }
 
         public virtual int ClientId { get; set; }
 
-        public virtual SqlIdnClient Client { get; set; }
+        public virtual new SqlIdnClient Client { get; set; }
     }
 
     /// <summary>

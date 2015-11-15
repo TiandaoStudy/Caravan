@@ -18,7 +18,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
 
             // Add a semicolor in order to avoid issues
             connectionString = connectionString.TrimEnd();
-            if (!connectionString.EndsWith(";"))
+            if (!connectionString.EndsWith(";", System.StringComparison.Ordinal))
             {
                 connectionString += ';';
             }

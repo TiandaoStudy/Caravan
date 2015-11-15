@@ -38,7 +38,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
             throw new System.NotImplementedException();
         }
 
-        protected override Task<SecGroup[]> GetGroupsAsyncInternal(string appName, string groupName)
+        protected override Task<SecGroup[]> GetGroupsAsyncInternal(string appName, int? groupId, string groupName)
         {
             throw new System.NotImplementedException();
         }
@@ -58,7 +58,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
             throw new System.NotImplementedException();
         }
 
-        protected override Task<SecUser[]> GetUsersAsyncInternal(string appName, string userLogin, string userEmail)
+        protected override Task<SecUser[]> GetUsersAsyncInternal(string appName, long? userId, string userLogin, string userEmail)
         {
             throw new System.NotImplementedException();
         }

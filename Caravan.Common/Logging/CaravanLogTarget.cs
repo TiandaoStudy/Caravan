@@ -80,11 +80,15 @@ namespace Finsa.Caravan.Common.Logging
             }
         }
 
-        protected async override void Write(AsyncLogEventInfo asyncLogEvent)
+        /// <summary>
+        ///   Writes log event to the log target. Must be overridden in inheriting classes.
+        /// </summary>
+        /// <param name="logEvent">Log event to be written out.</param>
+        protected async override void Write(AsyncLogEventInfo logEvent)
         {
             try
             {
-                var logEntry = ToLogEntry(asyncLogEvent.LogEvent);
+                var logEntry = ToLogEntry(logEvent.LogEvent);
                 var result = await CaravanServiceProvider.LogRepository.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, logEntry);
 
                 if (!result.Succeeded)
@@ -95,15 +99,21 @@ namespace Finsa.Caravan.Common.Logging
             catch (Exception ex)
             {
                 // Uso il log di emergenza nel caso ci siano stati errori.
-                UseEmergencyLog(ex, asyncLogEvent.LogEvent.FormattedMessage);
+                UseEmergencyLog(ex, logEvent.LogEvent.FormattedMessage);
             }
         }
 
-        protected async override void Write(AsyncLogEventInfo[] asyncLogEvents)
+        /// <summary>
+        ///   Writes an array of logging events to the log target. By default it iterates on all
+        ///   events and passes them to "Write" method. Inheriting classes can use this method to
+        ///   optimize batch writes.
+        /// </summary>
+        /// <param name="logEvents">Logging events to be written out.</param>
+        protected async override void Write(AsyncLogEventInfo[] logEvents)
         {
             try
             {
-                var logEntries = asyncLogEvents.Select(le => ToLogEntry(le.LogEvent));
+                var logEntries = logEvents.Select(le => ToLogEntry(le.LogEvent));
                 var result = await CaravanServiceProvider.LogRepository.AddEntriesAsync(CaravanCommonConfiguration.Instance.AppName, logEntries);
 
                 if (!result.Succeeded)
@@ -118,6 +128,10 @@ namespace Finsa.Caravan.Common.Logging
             }
         }
 
+        /// <summary>
+        ///   Flush any pending log messages asynchronously (in case of asynchronous targets).
+        /// </summary>
+        /// <param name="asyncContinuation">The asynchronous continuation.</param>
         protected override void FlushAsync(AsyncContinuation asyncContinuation)
         {
             // Nulla da fare...

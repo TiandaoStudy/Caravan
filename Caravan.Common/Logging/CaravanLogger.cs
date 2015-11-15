@@ -76,14 +76,14 @@ namespace Finsa.Caravan.Common.Logging
         #region Logging
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected override void WriteInternal(LogLevel logLevel, object message, Exception exception)
+        protected override void WriteInternal(LogLevel level, object message, Exception exception)
         {
             var logMessage = new LogMessage
             {
                 ShortMessage = message.SafeToString(),
                 Exception = exception
             };
-            var logEventInfo = new LogEventInfo(logLevel, _logger.Name, ToLogEntry(logLevel, logMessage));
+            var logEventInfo = new LogEventInfo(level, _logger.Name, ToLogEntry(level, logMessage));
             _logger.Log(DeclaringType, logEventInfo);
         }
 

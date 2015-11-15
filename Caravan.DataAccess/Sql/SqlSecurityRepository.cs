@@ -65,7 +65,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         #region Groups
 
-        protected override async Task<SecGroup[]> GetGroupsAsyncInternal(string appName, string groupName)
+        protected override async Task<SecGroup[]> GetGroupsAsyncInternal(string appName, int? groupId, string groupName)
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
@@ -77,6 +77,10 @@ namespace Finsa.Caravan.DataAccess.Sql
                     .Include(g => g.Roles)
                     .Where(g => g.App.Id == appId);
 
+                if (groupId != null)
+                {
+                    q = q.Where(g => g.Id == groupId);
+                }
                 if (groupName != null)
                 {
                     q = q.Where(g => g.Name == groupName);
@@ -153,7 +157,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         #region Users
 
-        protected override async Task<SecUser[]> GetUsersAsyncInternal(string appName, string userLogin, string userEmail)
+        protected override async Task<SecUser[]> GetUsersAsyncInternal(string appName, long? userId, string userLogin, string userEmail)
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
@@ -165,6 +169,10 @@ namespace Finsa.Caravan.DataAccess.Sql
                     .Include(u => u.Roles)
                     .Where(u => u.AppId == appId);
 
+                if (userId != null)
+                {
+                    q = q.Where(u => u.Id == userId);
+                }
                 if (userLogin != null)
                 {
                     q = q.Where(u => u.Login == userLogin);

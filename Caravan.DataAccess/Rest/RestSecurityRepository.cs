@@ -98,7 +98,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task<SecGroup[]> GetGroupsAsyncInternal(string appName, string groupName)
+        protected override async Task<SecGroup[]> GetGroupsAsyncInternal(string appName, int? groupId, string groupName)
         {
             try
             {
@@ -232,7 +232,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task<SecUser[]> GetUsersAsyncInternal(string appName, string userLogin, string userEmail)
+        protected override async Task<SecUser[]> GetUsersAsyncInternal(string appName, long? userId, string userLogin, string userEmail)
         {
             try
             {

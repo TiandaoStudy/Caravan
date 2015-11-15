@@ -36,7 +36,7 @@ namespace Finsa.Caravan.Common.Logging
                 if (properties["configFile"] != null)
                 {
                     path = properties["configFile"];
-                    if (path.StartsWith("~/") || path.StartsWith("~\\"))
+                    if (path.StartsWith("~/", StringComparison.Ordinal) || path.StartsWith("~\\", StringComparison.Ordinal))
                     {
                         path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory.TrimEnd('/', '\\') + "/", path.Substring(2));
                     }

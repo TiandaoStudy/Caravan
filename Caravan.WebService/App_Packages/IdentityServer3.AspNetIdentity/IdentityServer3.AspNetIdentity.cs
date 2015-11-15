@@ -41,7 +41,7 @@ namespace IdentityServer3.AspNetIdentity
         
         public AspNetIdentityUserService(Microsoft.AspNet.Identity.UserManager<TUser, TKey> userManager, Func<string, TKey> parseSubject = null)
         {
-            if (userManager == null) throw new ArgumentNullException("userManager");
+            if (userManager == null) throw new ArgumentNullException(nameof(userManager));
             
             this.userManager = userManager;
 
@@ -95,12 +95,12 @@ namespace IdentityServer3.AspNetIdentity
             return key;
         }
         
-        public override async Task GetProfileDataAsync(ProfileDataRequestContext ctx)
+        public override async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
-            var subject = ctx.Subject;
-            var requestedClaimTypes = ctx.RequestedClaimTypes;
+            var subject = context.Subject;
+            var requestedClaimTypes = context.RequestedClaimTypes;
 
-            if (subject == null) throw new ArgumentNullException("subject");
+            if (subject == null) throw new ArgumentNullException(nameof(subject));
 
             TKey key = ConvertSubjectToKey(subject.GetSubjectId());
             var acct = await userManager.FindByIdAsync(key);
@@ -115,7 +115,7 @@ namespace IdentityServer3.AspNetIdentity
                 claims = claims.Where(x => requestedClaimTypes.Contains(x.Type));
             }
             
-            ctx.IssuedClaims = claims;
+            context.IssuedClaims = claims;
         }
 
         protected virtual async Task<IEnumerable<Claim>> GetClaimsFromAccount(TUser user)
@@ -410,17 +410,17 @@ namespace IdentityServer3.AspNetIdentity
             return claims;
         }
 
-        public override async Task IsActiveAsync(IsActiveContext ctx)
+        public override async Task IsActiveAsync(IsActiveContext context)
         {
-            var subject = ctx.Subject;
+            var subject = context.Subject;
 
-            if (subject == null) throw new ArgumentNullException("subject");
+            if (subject == null) throw new ArgumentNullException(nameof(subject));
 
             var id = subject.GetSubjectId();
             TKey key = ConvertSubjectToKey(id);
             var acct = await userManager.FindByIdAsync(key);
 
-            ctx.IsActive = false;
+            context.IsActive = false;
 
             if (acct != null)
             {
@@ -437,7 +437,7 @@ namespace IdentityServer3.AspNetIdentity
                     }
                 }
 
-                ctx.IsActive = true;
+                context.IsActive = true;
             }
         }
     }

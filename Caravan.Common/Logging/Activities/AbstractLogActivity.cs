@@ -69,10 +69,10 @@ namespace Finsa.Caravan.Common.Logging.Activities
         /// <summary>
         ///   Scrive un messaggio nel log.
         /// </summary>
-        /// <param name="ctx">Contesto dell'attività.</param>
-        protected override void Execute(CodeActivityContext ctx)
+        /// <param name="context">Contesto dell'attività.</param>
+        protected override void Execute(CodeActivityContext context)
         {
-            var logLevel = LogLevel.Get(ctx);
+            var logLevel = LogLevel.Get(context);
 
             var isEnabled = false;
             switch (logLevel)
@@ -108,15 +108,15 @@ namespace Finsa.Caravan.Common.Logging.Activities
 
             // Preparazione del messaggio di log, condizionato dalla presenza di un'eccezione.
             LogMessage logMessage;
-            var exception = Exception.Get(ctx);
+            var exception = Exception.Get(context);
             if (exception == null)
             {
                 logMessage = new LogMessage
                 {
-                    ShortMessage = ShortMessage.Get(ctx),
-                    LongMessage = LongMessage.Get(ctx),
-                    Context = Context.Get(ctx),
-                    Arguments = Arguments.Get(ctx)
+                    ShortMessage = ShortMessage.Get(context),
+                    LongMessage = LongMessage.Get(context),
+                    Context = Context.Get(context),
+                    Arguments = Arguments.Get(context)
                 };
             }
             else
@@ -124,8 +124,8 @@ namespace Finsa.Caravan.Common.Logging.Activities
                 logMessage = new LogMessage
                 {
                     Exception = exception,
-                    Context = Context.Get(ctx),
-                    Arguments = Arguments.Get(ctx)
+                    Context = Context.Get(context),
+                    Arguments = Arguments.Get(context)
                 };
             }
 
