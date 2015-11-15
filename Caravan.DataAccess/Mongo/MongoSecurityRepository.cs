@@ -38,77 +38,77 @@ namespace Finsa.Caravan.DataAccess.Mongo
             throw new System.NotImplementedException();
         }
 
-        protected override Task<SecGroup[]> GetGroupsInternal(string appName, string groupName)
+        protected override Task<SecGroup[]> GetGroupsAsyncInternal(string appName, string groupName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override Task AddGroupInternal(string appName, SecGroup newGroup)
+        protected override Task AddGroupAsyncInternal(string appName, SecGroup newGroup)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override Task RemoveGroupInternal(string appName, string groupName)
+        protected override Task RemoveGroupAsyncInternal(string appName, string groupName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override Task UpdateGroupInternal(string appName, string groupName, SecGroupUpdates groupUpdates)
+        protected override Task UpdateGroupAsyncInternal(string appName, string groupName, SecGroupUpdates groupUpdates)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override Task<SecUser[]> GetUsersInternal(string appName, string userLogin, string userEmail)
+        protected override Task<SecUser[]> GetUsersAsyncInternal(string appName, string userLogin, string userEmail)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override Task AddUserInternal(string appName, SecUser newUser)
+        protected override Task AddUserAsyncInternal(string appName, SecUser newUser)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override Task RemoveUserInternal(string appName, string userLogin)
+        protected override Task RemoveUserAsyncInternal(string appName, string userLogin)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override Task UpdateUserInternal(string appName, string userLogin, SecUserUpdates userUpdates)
+        protected override Task UpdateUserAsyncInternal(string appName, string userLogin, SecUserUpdates userUpdates)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override Task AddUserToGroupInternal(string appName, string userLogin, string groupName)
+        protected override Task AddUserToGroupAsyncInternal(string appName, string userLogin, string groupName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override Task RemoveUserFromGroupInternal(string appName, string userLogin, string groupName)
+        protected override Task RemoveUserFromGroupAsyncInternal(string appName, string userLogin, string groupName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override Task<SecContext[]> GetContextsInternal(string appName)
+        protected override Task<SecContext[]> GetContextsAsyncInternal(string appName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override Task<SecObject[]> GetObjectsInternal(string appName, string contextName)
+        protected override Task<SecObject[]> GetObjectsAsyncInternal(string appName, string contextName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override Task<SecEntry[]> GetEntriesInternal(string appName, string contextName, string objectName, string userLogin)
+        protected override Task<SecEntry[]> GetEntriesAsyncInternal(string appName, string contextName, string objectName, string userLogin)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override Task<long> AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+        protected override Task<long> AddEntryAsyncInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override Task RemoveEntryInternal(string appName, string contextName, string objectName, string userLogin, string groupName)
+        protected override Task RemoveEntryAsyncInternal(string appName, string contextName, string objectName, string userLogin, string groupName)
         {
             throw new System.NotImplementedException();
         }

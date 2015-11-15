@@ -98,7 +98,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task<SecGroup[]> GetGroupsInternal(string appName, string groupName)
+        protected override async Task<SecGroup[]> GetGroupsAsyncInternal(string appName, string groupName)
         {
             try
             {
@@ -138,7 +138,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task AddGroupInternal(string appName, SecGroup newGroup)
+        protected override async Task AddGroupAsyncInternal(string appName, SecGroup newGroup)
         {
             try
             {
@@ -172,7 +172,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task RemoveGroupInternal(string appName, string groupName)
+        protected override async Task RemoveGroupAsyncInternal(string appName, string groupName)
         {
             try
             {
@@ -199,7 +199,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task UpdateGroupInternal(string appName, string groupName, SecGroupUpdates groupUpdates)
+        protected override async Task UpdateGroupAsyncInternal(string appName, string groupName, SecGroupUpdates groupUpdates)
         {
             try
             {
@@ -232,7 +232,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task<SecUser[]> GetUsersInternal(string appName, string userLogin, string userEmail)
+        protected override async Task<SecUser[]> GetUsersAsyncInternal(string appName, string userLogin, string userEmail)
         {
             try
             {
@@ -277,7 +277,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task AddUserInternal(string appName, SecUser newUser)
+        protected override async Task AddUserAsyncInternal(string appName, SecUser newUser)
         {
             try
             {
@@ -316,7 +316,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task RemoveUserInternal(string appName, string userLogin)
+        protected override async Task RemoveUserAsyncInternal(string appName, string userLogin)
         {
             try
             {
@@ -345,7 +345,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task UpdateUserInternal(string appName, string userLogin, SecUserUpdates userUpdates)
+        protected override async Task UpdateUserAsyncInternal(string appName, string userLogin, SecUserUpdates userUpdates)
         {
             try
             {
@@ -383,7 +383,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task AddUserToGroupInternal(string appName, string userLogin, string groupName)
+        protected override async Task AddUserToGroupAsyncInternal(string appName, string userLogin, string groupName)
         {
             try
             {
@@ -411,7 +411,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task RemoveUserFromGroupInternal(string appName, string userLogin, string groupName)
+        protected override async Task RemoveUserFromGroupAsyncInternal(string appName, string userLogin, string groupName)
         {
             try
             {
@@ -441,7 +441,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task<SecContext[]> GetContextsInternal(string appName)
+        protected override async Task<SecContext[]> GetContextsAsyncInternal(string appName)
         {
             var client = new RestClient("http://localhost/Caravan.RestService/security");
             var request = new RestRequest("{appName}/contexts", Method.POST);
@@ -463,7 +463,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             return contexts;
         }
 
-        protected override async Task<SecObject[]> GetObjectsInternal(string appName, string contextName)
+        protected override async Task<SecObject[]> GetObjectsAsyncInternal(string appName, string contextName)
         {
             var client = new RestClient("http://localhost/Caravan.RestService/security");
             var request = new RestRequest("{appName}/objects", Method.POST);
@@ -480,7 +480,7 @@ namespace Finsa.Caravan.DataAccess.Rest
 
         #region Entries
 
-        protected override async Task<SecEntry[]> GetEntriesInternal(string appName, string contextName, string objectName, string userLogin)
+        protected override async Task<SecEntry[]> GetEntriesAsyncInternal(string appName, string contextName, string objectName, string userLogin)
         {
             try
             {
@@ -522,7 +522,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task<long> AddEntryInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+        protected override async Task<long> AddEntryAsyncInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
         {
             try
             {
@@ -566,7 +566,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task RemoveEntryInternal(string appName, string contextName, string objectName, string userLogin, string groupName)
+        protected override async Task RemoveEntryAsyncInternal(string appName, string contextName, string objectName, string userLogin, string groupName)
         {
             try
             {
