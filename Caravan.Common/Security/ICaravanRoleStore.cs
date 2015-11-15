@@ -10,6 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using System.Threading.Tasks;
 using Finsa.Caravan.Common.Security.Models;
 using Microsoft.AspNet.Identity;
 
@@ -29,5 +30,13 @@ namespace Finsa.Caravan.Common.Security
         ///   Il repository della sicurezza di Caravan.
         /// </summary>
         ICaravanSecurityRepository SecurityRepository { get; }
+
+        /// <summary>
+        ///   Finds a role by Caravan group name and role name.
+        /// </summary>
+        /// <param name="groupName"/>
+        /// <param name="roleName"/>
+        /// <returns/>
+        Task<SecRole> FindByNameAsync(string groupName, string roleName);
     }
 }

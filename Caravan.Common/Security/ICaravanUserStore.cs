@@ -12,6 +12,7 @@
 
 using Finsa.Caravan.Common.Security.Models;
 using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
 
 namespace Finsa.Caravan.Common.Security
 {
@@ -41,5 +42,32 @@ namespace Finsa.Caravan.Common.Security
         ///   Il repository della sicurezza di Caravan.
         /// </summary>
         ICaravanSecurityRepository SecurityRepository { get; }
+
+        /// <summary>
+        ///   Adds a user to a role.
+        /// </summary>
+        /// <param name="user"/>
+        /// <param name="groupName"/>
+        /// <param name="roleName"/>
+        /// <returns/>
+        Task AddToRoleAsync(SecUser user, string groupName, string roleName);
+
+        /// <summary>
+        ///   Removes the role for the user.
+        /// </summary>
+        /// <param name="user"/>
+        /// <param name="groupName"/>
+        /// <param name="roleName"/>
+        /// <returns/>
+        Task RemoveFromRoleAsync(SecUser user, string groupName, string roleName);
+
+        /// <summary>
+        ///   Returns true if a user is in the role.
+        /// </summary>
+        /// <param name="user"/>
+        /// <param name="groupName"/>
+        /// <param name="roleName"/>
+        /// <returns/>
+        Task<bool> IsInRoleAsync(SecUser user, string groupName, string roleName);
     }
 }

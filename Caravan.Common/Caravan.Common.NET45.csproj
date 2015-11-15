@@ -146,6 +146,7 @@
     <Compile Include="CaravanCommonConfiguration.cs" />
     <Compile Include="CaravanCommonNinjectConfig.cs" />
     <Compile Include="Core\ErrorMessages.cs" />
+    <Compile Include="Core\TaskExtensions.cs" />
     <Compile Include="DependencyHandling.cs" />
     <Compile Include="Logging\Activities\AbstractLogActivity.cs" />
     <Compile Include="Logging\CaravanLogger.cs" />

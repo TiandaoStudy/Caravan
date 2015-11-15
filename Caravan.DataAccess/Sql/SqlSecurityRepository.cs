@@ -262,9 +262,10 @@ namespace Finsa.Caravan.DataAccess.Sql
                 var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
                 var group = await GetGroupByNameAsync(ctx, appId, appName, groupName);
                 var role = await GetRoleByNameAsync(ctx, appName, group.Id, groupName, roleName);
-                
+
                 // Le chiamate sopra mi assicurano che utente, gruppo e ruolo esistano.
-                if (await ctx.SecUsers.AnyAsync(u => u.Id == user.Id && u.Roles.Any(r => r.Id == role.Id)))
+                await ctx.Entry(user).Collection(u => u.Roles).LoadAsync();
+                if (user.Roles.Any(r => r.Id == role.Id))
                 {
                     throw new SecUserExistingException(appName, groupName, roleName, userLogin);
                 }
@@ -276,7 +277,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override async Task RemoveUserFromRoleAsyncInternal(string appName, string userLogin, string groupName, string roleName)
         {
-            using (var ctx = SqlDbContext.CreateUpdateContext())
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var appId = await GetAppIdByNameAsync(ctx, appName);
                 var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
@@ -284,6 +285,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 var role = await GetRoleByNameAsync(ctx, appName, group.Id, groupName, roleName);
 
                 // Le chiamate sopra mi assicurano che utente, gruppo e ruolo esistano.
+                await ctx.Entry(user).Collection(u => u.Roles).LoadAsync();
                 user.Roles.Remove(role);
 
                 await ctx.SaveChangesAsync();

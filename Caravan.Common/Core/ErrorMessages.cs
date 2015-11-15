@@ -22,5 +22,9 @@ namespace Finsa.Caravan.Common.Core
         public const string InvalidRoleName = "Role name cannot contain slashes";
 
         public const string NullOrWhiteSpaceAppName = "Caravan application name cannot be null, empty or blank";
+
+        public const string CaravanUserManager_UserIdNotFound = "User ID {0} not found";
+        public const string CaravanUserManager_UserAlreadyInRole = "User is already in role";
+        public const string CaravanUserManager_UserNotInRole = "User is not in role";
     }
 }

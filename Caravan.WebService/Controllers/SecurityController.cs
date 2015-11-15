@@ -156,7 +156,7 @@ namespace Finsa.Caravan.WebService.Controllers
         {
             using (var userManager = await _userManagerFactory.CreateAsync(appName))
             {
-                return await userManager.CreateAsync(user);
+                return await userManager.CreateAsync(user, user.PasswordHash);
             }
         }
 
@@ -207,7 +207,7 @@ namespace Finsa.Caravan.WebService.Controllers
             {
                 var user = await userManager.FindByNameAsync(userLogin);
                 var identityRoleName = SecRole.ToIdentityRoleName(groupName, roleName);
-                return await userManager.AddToRoleAsync(user.Id, identityRoleName);
+                return await userManager.AddToRoleAsync(user.Id, groupName, roleName);
             }
         }
 

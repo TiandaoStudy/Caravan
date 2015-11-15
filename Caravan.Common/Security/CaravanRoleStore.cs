@@ -11,8 +11,10 @@
 // the License.
 
 using Finsa.Caravan.Common.Core;
+using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
 using PommaLabs.Thrower;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -106,17 +108,52 @@ namespace Finsa.Caravan.Common.Security
         /// </summary>
         /// <param name="roleId"/>
         /// <returns/>
-        public async Task<SecRole> FindByIdAsync(int roleId) => await SecurityRepository.GetRoleByIdAsync(AppName, roleId);
+        public async Task<SecRole> FindByIdAsync(int roleId)
+        {
+            try
+            {
+                return await SecurityRepository.GetRoleByIdAsync(AppName, roleId);
+            }
+            catch (SecRoleNotFoundException)
+            {
+                return null;
+            }
+        }
 
         /// <summary>
-        ///   Finds a role by name.
+        ///   Finds a role by ASP.NET role name.
         /// </summary>
+        /// <param name="identityRoleName"/>
+        /// <returns/>
+        public async Task<SecRole> FindByNameAsync(string identityRoleName)
+        {
+            var tuple = SecRole.FromIdentityRoleName(identityRoleName);
+            try
+            {
+                return await SecurityRepository.GetRoleByNameAsync(AppName, tuple.Item1, tuple.Item2);
+            }
+            catch (Exception ex) when (ex is SecGroupNotFoundException || ex is SecRoleNotFoundException)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        ///   Finds a role by Caravan group name and role name.
+        /// </summary>
+        /// <param name="groupName"/>
         /// <param name="roleName"/>
         /// <returns/>
-        public async Task<SecRole> FindByNameAsync(string roleName)
+        public async Task<SecRole> FindByNameAsync(string groupName, string roleName)
         {
-            var tuple = SecRole.FromIdentityRoleName(roleName);
-            return await SecurityRepository.GetRoleByNameAsync(AppName, tuple.Item1, tuple.Item2);
+            try
+            {
+                return await SecurityRepository.GetRoleByNameAsync(AppName, groupName, roleName);
+            }
+            catch (Exception ex) when (ex is SecGroupNotFoundException || ex is SecRoleNotFoundException)
+            {
+                return null;
+            }
         }
 
         #endregion IQueryableRoleStore members
