@@ -18,6 +18,9 @@ namespace Finsa.Caravan.Common.Core
     internal static class ErrorMessages
     {
         public const string InvalidEnumValue = "Given enum value is not valid";
+        public const string InvalidGroupName = "Group name cannot contain slashes";
+        public const string InvalidRoleName = "Role name cannot contain slashes";
+
         public const string NullOrWhiteSpaceAppName = "Caravan application name cannot be null, empty or blank";
     }
 }

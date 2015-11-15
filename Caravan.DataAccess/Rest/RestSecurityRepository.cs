@@ -383,7 +383,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task AddUserToGroupAsyncInternal(string appName, string userLogin, string groupName)
+        protected override async Task AddUserToRoleAsyncInternal(string appName, string userLogin, string groupName, string roleName)
         {
             try
             {
@@ -411,7 +411,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task RemoveUserFromGroupAsyncInternal(string appName, string userLogin, string groupName)
+        protected override async Task RemoveUserFromRoleAsyncInternal(string appName, string userLogin, string groupName, string roleName)
         {
             try
             {

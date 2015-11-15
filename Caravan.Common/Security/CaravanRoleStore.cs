@@ -21,15 +21,15 @@ namespace Finsa.Caravan.Common.Security
     /// <summary>
     ///   Exposes basic role management APIs.
     /// </summary>
-    /// <remarks>ASP.NET Identity ROLES are mapped to Caravan security GROUPS.</remarks>
-    sealed class CaravanGroupStore : ICaravanGroupStore
+    /// <remarks>ASP.NET Identity ROLES are mapped to Caravan security GROUPS and ROLES.</remarks>
+    sealed class CaravanRoleStore : ICaravanRoleStore
     {
         /// <summary>
         ///   Inizializza lo store.
         /// </summary>
         /// <param name="appName">Nome dell'applicativo Caravan.</param>
         /// <param name="securityRepository">Il repository della sicurezza di Caravan.</param>
-        public CaravanGroupStore(string appName, ICaravanSecurityRepository securityRepository)
+        public CaravanRoleStore(string appName, ICaravanSecurityRepository securityRepository)
         {
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             RaiseArgumentNullException.IfIsNull(securityRepository, nameof(securityRepository));
@@ -52,7 +52,7 @@ namespace Finsa.Caravan.Common.Security
         /// <summary>
         ///   IQueryable roles.
         /// </summary>
-        public IQueryable<SecGroup> Roles => SecurityRepository.GetGroupsAsync(AppName).Result.AsQueryable();
+        public IQueryable<SecRole> Roles => SecurityRepository.GetRolesAsync(AppName).Result.AsQueryable();
 
         /// <summary>
         ///   Performs application-defined tasks associated with freeing, releasing, or resetting
@@ -68,9 +68,10 @@ namespace Finsa.Caravan.Common.Security
         /// </summary>
         /// <param name="role"/>
         /// <returns/>
-        public async Task CreateAsync(SecGroup role)
+        public async Task CreateAsync(SecRole role)
         {
-            await SecurityRepository.AddGroupAsync(AppName, role);
+            var tuple = SecRole.FromIdentityRoleName(role);
+            await SecurityRepository.AddRoleAsync(AppName, tuple.Item1, role);
         }
 
         /// <summary>
@@ -78,9 +79,10 @@ namespace Finsa.Caravan.Common.Security
         /// </summary>
         /// <param name="role"/>
         /// <returns/>
-        public async Task UpdateAsync(SecGroup role)
+        public async Task UpdateAsync(SecRole role)
         {
-            await SecurityRepository.UpdateGroupAsync(AppName, role.Name, new SecGroupUpdates
+            var tuple = SecRole.FromIdentityRoleName(role);
+            await SecurityRepository.UpdateRoleAsync(AppName, tuple.Item1, tuple.Item2, new SecRoleUpdates
             {
                 Name = role.Name,
                 Description = role.Description,
@@ -93,9 +95,10 @@ namespace Finsa.Caravan.Common.Security
         /// </summary>
         /// <param name="role"/>
         /// <returns/>
-        public async Task DeleteAsync(SecGroup role)
+        public async Task DeleteAsync(SecRole role)
         {
-            await SecurityRepository.RemoveGroupAsync(AppName, role.Name);
+            var tuple = SecRole.FromIdentityRoleName(role);
+            await SecurityRepository.RemoveRoleAsync(AppName, tuple.Item1, tuple.Item2);
         }
 
         /// <summary>
@@ -103,14 +106,18 @@ namespace Finsa.Caravan.Common.Security
         /// </summary>
         /// <param name="roleId"/>
         /// <returns/>
-        public async Task<SecGroup> FindByIdAsync(int roleId) => await SecurityRepository.GetGroupByIdAsync(AppName, roleId);
+        public async Task<SecRole> FindByIdAsync(int roleId) => await SecurityRepository.GetRoleByIdAsync(AppName, roleId);
 
         /// <summary>
         ///   Finds a role by name.
         /// </summary>
         /// <param name="roleName"/>
         /// <returns/>
-        public async Task<SecGroup> FindByNameAsync(string roleName) => await SecurityRepository.GetGroupByNameAsync(AppName, roleName);
+        public async Task<SecRole> FindByNameAsync(string roleName)
+        {
+            var tuple = SecRole.FromIdentityRoleName(roleName);
+            return await SecurityRepository.GetRoleByNameAsync(AppName, tuple.Item1, tuple.Item2);
+        }
 
         #endregion IQueryableRoleStore members
     }

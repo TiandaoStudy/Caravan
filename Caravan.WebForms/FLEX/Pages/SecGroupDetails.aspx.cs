@@ -162,7 +162,7 @@ namespace Finsa.Caravan.WebForms.Pages
                    {
                        if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
                        {
-                           await CaravanDataSource.Security.AddUserToGroupAsync(CaravanCommonConfiguration.Instance.AppName, oDrR["Login"].ToString(), newGroup.Name);
+                           await CaravanDataSource.Security.AddUserToRoleAsync(CaravanCommonConfiguration.Instance.AppName, oDrR["Login"].ToString(), newGroup.Name, "role");
                        }
                    }
 
@@ -170,7 +170,7 @@ namespace Finsa.Caravan.WebForms.Pages
                    {
                        if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
                        {
-                           await CaravanDataSource.Security.RemoveUserFromGroupAsync(CaravanCommonConfiguration.Instance.AppName, oDrL["Login"].ToString(), newGroup.Name);
+                           await CaravanDataSource.Security.RemoveUserFromRoleAsync(CaravanCommonConfiguration.Instance.AppName, oDrL["Login"].ToString(), newGroup.Name, "role");
                        }
                    }
                }
@@ -185,7 +185,7 @@ namespace Finsa.Caravan.WebForms.Pages
                     {
                         if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
                         {
-                            await CaravanDataSource.Security.AddUserToGroupAsync(CaravanCommonConfiguration.Instance.AppName, oDrR["Login"].ToString(), GroupName);
+                            await CaravanDataSource.Security.AddUserToRoleAsync(CaravanCommonConfiguration.Instance.AppName, oDrR["Login"].ToString(), GroupName, "role");
                         }
                     }
 
@@ -193,7 +193,7 @@ namespace Finsa.Caravan.WebForms.Pages
                     {
                         if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
                         {
-                            await CaravanDataSource.Security.RemoveUserFromGroupAsync(CaravanCommonConfiguration.Instance.AppName, oDrL["Login"].ToString(), GroupName);
+                            await CaravanDataSource.Security.RemoveUserFromRoleAsync(CaravanCommonConfiguration.Instance.AppName, oDrL["Login"].ToString(), GroupName, "role");
                         }
                     }
                 }

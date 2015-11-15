@@ -18,9 +18,9 @@ namespace Finsa.Caravan.Common.Security
     /// <summary>
     ///   Gestisce la creazione di RoleManager specifici per un dato applicativo Caravan.
     /// </summary>
-    sealed class CaravanGroupManagerFactory : ICaravanGroupManagerFactory
+    sealed class CaravanRoleManagerFactory : ICaravanRoleManagerFactory
     {
-        public CaravanGroupManagerFactory(ICaravanSecurityRepository securityRepository)
+        public CaravanRoleManagerFactory(ICaravanSecurityRepository securityRepository)
         {
             RaiseArgumentNullException.IfIsNull(securityRepository, nameof(securityRepository));
             SecurityRepository = securityRepository;
@@ -28,11 +28,11 @@ namespace Finsa.Caravan.Common.Security
 
         public ICaravanSecurityRepository SecurityRepository { get; }
 
-        public Task<CaravanGroupManager> CreateAsync(string appName)
+        public Task<CaravanRoleManager> CreateAsync(string appName)
         {
-            var groupStore = new CaravanGroupStore(appName, SecurityRepository);
-            var groupManager = new CaravanGroupManager(groupStore);
-            return Task.FromResult(groupManager);
+            var roleStore = new CaravanRoleStore(appName, SecurityRepository);
+            var roleManager = new CaravanRoleManager(roleStore);
+            return Task.FromResult(roleManager);
         }
     }
 }

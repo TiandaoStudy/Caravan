@@ -285,7 +285,7 @@
               Controller che si occupa della gestione della sicurezza.
             </summary>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.#ctor(Finsa.Caravan.Common.Security.ICaravanSecurityRepository,Finsa.Caravan.Common.Security.ICaravanUserManagerFactory,Finsa.Caravan.Common.Security.ICaravanGroupManagerFactory)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.#ctor(Finsa.Caravan.Common.Security.ICaravanSecurityRepository,Finsa.Caravan.Common.Security.ICaravanUserManagerFactory,Finsa.Caravan.Common.Security.ICaravanRoleManagerFactory)">
             <summary>
               Inizializza il controller con l'istanza della sicurezza di Caravan.
             </summary>
@@ -316,7 +316,7 @@
             <param name="appName">Application name</param>
             <returns>All the users of the specified application</returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetUserByLogin(System.String,System.Int64)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetUserById(System.String,System.Int64)">
             <summary>
               Return details on the specified group belong to the specified application
             </summary>
@@ -332,6 +332,14 @@
             <param name="userLogin">The group name</param>
             <returns></returns>
         </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetUserByEmail(System.String,System.String)">
+            <summary>
+              Return details on the specified group belong to the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="userEmail">The group name</param>
+            <returns></returns>
+        </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostUser(System.String,Finsa.Caravan.Common.Security.Models.SecUser)">
             <summary>
               Add a new user in the specified application
@@ -339,7 +347,7 @@
             <param name="appName">Application name</param>
             <param name="user">The new user to add</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutUserByLogin(System.String,System.String,Finsa.Caravan.Common.Security.Models.SecUserUpdates)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutUser(System.String,System.String,Finsa.Caravan.Common.Security.Models.SecUserUpdates)">
             <summary>
               Update the user with the specified userLogin in the specified application
             </summary>
@@ -347,28 +355,30 @@
             <param name="userLogin">The user login</param>
             <param name="userUpdates">The user containing element to update</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteUserByLogin(System.String,System.String)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteUser(System.String,System.String)">
             <summary>
               Delete the user with the specified user login from the specified application
             </summary>
             <param name="appName">the application name</param>
             <param name="userLogin">the user login</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostUserToGroup(System.String,System.String,System.String)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostUserToRole(System.String,System.String,System.String,System.String)">
             <summary>
               Add a user to a the specified group of the specified application
             </summary>
             <param name="appName">The application name</param>
             <param name="userLogin">The user login of the user to add</param>
             <param name="groupName">The group name</param>
+            <param name="roleName">The role name</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteUserFromGroup(System.String,System.String,System.String)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteUserFromRole(System.String,System.String,System.String,System.String)">
             <summary>
               Delete the user with the specified login from the specified group
             </summary>
             <param name="appName">The application name</param>
             <param name="userLogin">The user login</param>
             <param name="groupName">The group name</param>
+            <param name="roleName">The role name</param>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetGroups(System.String)">
@@ -415,6 +425,62 @@
             </summary>
             <param name="appName">The application name</param>
             <param name="groupName">The group name</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetRoles(System.String)">
+            <summary>
+              Returns all groups of the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetRoles(System.String,System.String)">
+            <summary>
+              Returns all groups of the specified application
+            </summary>
+            <param name="appName">The application name.</param>
+            <param name="groupName">The group name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetRoleById(System.String,System.Int32)">
+            <summary>
+              Return details on the specified group belong to the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="roleId">The group name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetRoleByName(System.String,System.String,System.String)">
+            <summary>
+              Return details on the specified group belong to the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="groupName">The group name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PostRole(System.String,System.String,Finsa.Caravan.Common.Security.Models.SecRole)">
+            <summary>
+              Add a new group to the specified application
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="groupName">The group name</param>
+            <param name="role">Group to add</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.PutRole(System.String,System.String,System.String,Finsa.Caravan.Common.Security.Models.SecRoleUpdates)">
+            <summary>
+              Update the specified group
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="groupName">The group name</param>
+            <param name="roleName">The role name</param>
+            <param name="roleUpdates">The group containing element/s to update</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteRole(System.String,System.String,System.String)">
+            <summary>
+              Remove the group specified from the application specified
+            </summary>
+            <param name="appName">The application name</param>
+            <param name="groupName">The group name</param>
+            <param name="roleName">The role name</param>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetContexts(System.String)">
             <summary>
@@ -490,7 +556,10 @@
             <param name="objectName">The object name</param>
             <param name="userLogin">The user login (must be null if the group name is present)</param>
             <param name="groupName">The group name (must be null if the user login is present)</param>
-            <param name="roleName">The role name (must be null if the user login is present, group name should be specified otherwise)</param>
+            <param name="roleName">
+              The role name (must be null if the user login is present, group name should be
+              specified otherwise)
+            </param>
         </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.ValuesController">
             <summary>

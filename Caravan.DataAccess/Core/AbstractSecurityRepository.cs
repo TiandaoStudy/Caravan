@@ -439,21 +439,28 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public async Task AddUserToGroupAsync(string appName, string userLogin, string groupName)
+        public async Task RemoveUserFromGroupAsync(string appName, string userLogin, string groupName)
+        {
+            
+        }
+
+        public async Task AddUserToRoleAsync(string appName, string userLogin, string groupName, string roleName)
         {
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(userLogin), ErrorMessages.NullOrWhiteSpaceUserLogin, nameof(userLogin));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(roleName), ErrorMessages.NullOrWhiteSpaceRoleName, nameof(roleName));
 
             appName = appName?.ToLowerInvariant();
             userLogin = userLogin?.ToLowerInvariant();
             groupName = groupName?.ToLowerInvariant();
-            var logCtx = $"Adding user '{userLogin}' to group '{groupName}' in application '{appName}'";
+            roleName = roleName?.ToLowerInvariant();
+            var logCtx = $"Adding user '{userLogin}' to group '{groupName}' and role '{roleName}' in application '{appName}'";
 
             try
             {
-                await AddUserToGroupAsyncInternal(appName, userLogin, groupName);
+                await AddUserToRoleAsyncInternal(appName, userLogin, groupName, roleName);
                 Log.Warn(new LogMessage
                 {
                     ShortMessage = $"Added user '{userLogin}' to group '{groupName}' in application '{appName}'",
@@ -466,21 +473,23 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public async Task RemoveUserFromGroupAsync(string appName, string userLogin, string groupName)
+        public async Task RemoveUserFromRoleAsync(string appName, string userLogin, string groupName, string roleName)
         {
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(userLogin), ErrorMessages.NullOrWhiteSpaceUserLogin, nameof(userLogin));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(roleName), ErrorMessages.NullOrWhiteSpaceRoleName, nameof(roleName));
 
             appName = appName?.ToLowerInvariant();
             userLogin = userLogin?.ToLowerInvariant();
             groupName = groupName?.ToLowerInvariant();
-            var logCtx = $"Removing user '{userLogin}' from group '{groupName}' in application '{appName}'";
+            roleName = roleName?.ToLowerInvariant();
+            var logCtx = $"Removing user '{userLogin}' from group '{groupName}' and role '{roleName}' in application '{appName}'";
 
             try
             {
-                await RemoveUserFromGroupAsyncInternal(appName, userLogin, groupName);
+                await RemoveUserFromRoleAsyncInternal(appName, userLogin, groupName, roleName);
                 Log.Warn(new LogMessage
                 {
                     ShortMessage = $"Removed user '{userLogin}' from group '{groupName}' in application '{appName}'",
@@ -491,16 +500,6 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 // Lascio emergere l'eccezione...
             }
-        }
-
-        public Task AddUserToRoleAsync(string appName, string userLogin, string roleName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task RemoveUserFromRoleAsync(string appName, string userLogin, string roleName)
-        {
-            throw new NotImplementedException();
         }
 
         public Task<long> AddUserClaimAsync(string appName, string userLogin, SecClaim claim)
@@ -522,6 +521,11 @@ namespace Finsa.Caravan.DataAccess.Core
             throw new NotImplementedException();
         }
 
+        public Task<SecRole[]> GetRolesAsync(string appName, string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<SecRole> GetRoleByIdAsync(string appName, long roleId)
         {
             throw new NotImplementedException();
@@ -532,17 +536,22 @@ namespace Finsa.Caravan.DataAccess.Core
             throw new NotImplementedException();
         }
 
-        public Task<int> AddRoleAsync(string appName, SecRole newRole)
+        public Task<SecRole> GetRoleByNameAsync(string appName, string groupName, string roleName)
         {
             throw new NotImplementedException();
         }
 
-        public Task RemoveRoleAsync(string appName, string roleName)
+        public Task<int> AddRoleAsync(string appName, string groupName, SecRole newRole)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateRoleAsync(string appName, string roleName, SecRoleUpdates roleUpdates)
+        public Task RemoveRoleAsync(string appName, string groupName, string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateRoleAsync(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates)
         {
             throw new NotImplementedException();
         }
@@ -727,9 +736,9 @@ namespace Finsa.Caravan.DataAccess.Core
 
         protected abstract Task UpdateUserAsyncInternal(string appName, string userLogin, SecUserUpdates userUpdates);
 
-        protected abstract Task AddUserToGroupAsyncInternal(string appName, string userLogin, string groupName);
+        protected abstract Task AddUserToRoleAsyncInternal(string appName, string userLogin, string groupName, string roleName);
 
-        protected abstract Task RemoveUserFromGroupAsyncInternal(string appName, string userLogin, string groupName);
+        protected abstract Task RemoveUserFromRoleAsyncInternal(string appName, string userLogin, string groupName, string roleName);
 
         protected abstract Task<SecContext[]> GetContextsAsyncInternal(string appName);
 

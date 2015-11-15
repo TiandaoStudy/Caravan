@@ -397,7 +397,8 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task AddToRoleAsync(SecUser user, string roleName)
         {
-            await SecurityRepository.AddUserToGroupAsync(AppName, user.Login, roleName);
+            var tuple = SecRole.FromIdentityRoleName(roleName);
+            await SecurityRepository.AddUserToRoleAsync(AppName, user.Login, tuple.Item1, tuple.Item2);
         }
 
         /// <summary>
@@ -408,7 +409,8 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task RemoveFromRoleAsync(SecUser user, string roleName)
         {
-            await SecurityRepository.RemoveUserFromGroupAsync(AppName, user.Login, roleName);
+            var tuple = SecRole.FromIdentityRoleName(roleName);
+            await SecurityRepository.RemoveUserFromRoleAsync(AppName, user.Login, tuple.Item1, tuple.Item2);
         }
 
         /// <summary>
@@ -416,7 +418,9 @@ namespace Finsa.Caravan.Common.Security
         /// </summary>
         /// <param name="user"/>
         /// <returns/>
-        public Task<IList<string>> GetRolesAsync(SecUser user) => Task.FromResult(user.Groups.Select(g => g.Name).ToArray() as IList<string>);
+        public Task<IList<string>> GetRolesAsync(SecUser user) => Task.FromResult(user.Roles
+            .Select(r => SecRole.ToIdentityRoleName(r.GroupName, r.Name))
+            .ToArray() as IList<string>);
 
         /// <summary>
         ///   Returns true if a user is in the role.
@@ -424,7 +428,11 @@ namespace Finsa.Caravan.Common.Security
         /// <param name="user"/>
         /// <param name="roleName"/>
         /// <returns/>
-        public Task<bool> IsInRoleAsync(SecUser user, string roleName) => Task.FromResult(user.Groups.Any(g => g.Name == roleName));
+        public Task<bool> IsInRoleAsync(SecUser user, string roleName)
+        {
+            var tuple = SecRole.FromIdentityRoleName(roleName);
+            return Task.FromResult(user.Roles.Any(r => r.GroupName == tuple.Item1 && r.Name == tuple.Item2));
+        }
 
         #endregion IUserRoleStore members
 

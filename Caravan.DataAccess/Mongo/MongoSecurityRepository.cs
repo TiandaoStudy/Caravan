@@ -78,12 +78,12 @@ namespace Finsa.Caravan.DataAccess.Mongo
             throw new System.NotImplementedException();
         }
 
-        protected override Task AddUserToGroupAsyncInternal(string appName, string userLogin, string groupName)
+        protected override Task AddUserToRoleAsyncInternal(string appName, string userLogin, string groupName, string roleName)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override Task RemoveUserFromGroupAsyncInternal(string appName, string userLogin, string groupName)
+        protected override Task RemoveUserFromRoleAsyncInternal(string appName, string userLogin, string groupName, string roleName)
         {
             throw new System.NotImplementedException();
         }

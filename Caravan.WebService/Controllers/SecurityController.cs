@@ -12,16 +12,16 @@
 
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.Common.Security.Models;
+using Finsa.Caravan.WebApi.Filters;
 using Finsa.Caravan.WebApi.Models.Security;
+using Finsa.CodeServices.Common;
+using Microsoft.AspNet.Identity;
 using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Finsa.Caravan.WebApi.Filters;
-using Finsa.CodeServices.Common;
-using Microsoft.AspNet.Identity;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -33,28 +33,28 @@ namespace Finsa.Caravan.WebService.Controllers
     {
         private readonly ICaravanSecurityRepository _securityRepository;
         private readonly ICaravanUserManagerFactory _userManagerFactory;
-        private readonly ICaravanGroupManagerFactory _groupManagerFactory;
+        private readonly ICaravanRoleManagerFactory _roleManagerFactory;
 
         /// <summary>
         ///   Inizializza il controller con l'istanza della sicurezza di Caravan.
         /// </summary>
-        public SecurityController(ICaravanSecurityRepository securityRepository, ICaravanUserManagerFactory userManagerFactory, ICaravanGroupManagerFactory groupManagerFactory)
+        public SecurityController(ICaravanSecurityRepository securityRepository, ICaravanUserManagerFactory userManagerFactory, ICaravanRoleManagerFactory roleManagerFactory)
         {
             RaiseArgumentNullException.IfIsNull(securityRepository, nameof(securityRepository));
             RaiseArgumentNullException.IfIsNull(userManagerFactory, nameof(userManagerFactory));
-            RaiseArgumentNullException.IfIsNull(groupManagerFactory, nameof(groupManagerFactory));
+            RaiseArgumentNullException.IfIsNull(roleManagerFactory, nameof(roleManagerFactory));
             _securityRepository = securityRepository;
             _userManagerFactory = userManagerFactory;
-            _groupManagerFactory = groupManagerFactory;
+            _roleManagerFactory = roleManagerFactory;
         }
 
-        #region App
+        #region Apps
 
         /// <summary>
         ///   Returns all the applications
         /// </summary>
         /// <returns>All the applications</returns>
-        [Route("")]
+        [Route("", Name = "GetApps")]
         public async Task<IEnumerable<LinkedSecApp>> GetApps()
         {
             var apps = await _securityRepository.GetAppsAsync();
@@ -83,9 +83,9 @@ namespace Finsa.Caravan.WebService.Controllers
             await _securityRepository.AddAppAsync(app);
         }
 
-        #endregion App
+        #endregion Apps
 
-        #region User
+        #region Users
 
         /// <summary>
         ///   Returns all the users of the specified application
@@ -108,7 +108,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="userId">The group name</param>
         /// <returns></returns>
         [Route("{appName}/users/{userId:long}")]
-        public async Task<SecUser> GetUserByLogin(string appName, long userId)
+        public async Task<SecUser> GetUserById(string appName, long userId)
         {
             using (var userManager = await _userManagerFactory.CreateAsync(appName))
             {
@@ -122,12 +122,27 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <param name="userLogin">The group name</param>
         /// <returns></returns>
-        [Route("{appName}/users/{userLogin}")]
+        [Route("{appName}/users/byLogin/{userLogin}")]
         public async Task<SecUser> GetUserByLogin(string appName, string userLogin)
         {
             using (var userManager = await _userManagerFactory.CreateAsync(appName))
             {
                 return await userManager.FindByNameAsync(userLogin);
+            }
+        }
+
+        /// <summary>
+        ///   Return details on the specified group belong to the specified application
+        /// </summary>
+        /// <param name="appName">The application name</param>
+        /// <param name="userEmail">The group name</param>
+        /// <returns></returns>
+        [Route("{appName}/users/byEmail/{userEmail}")]
+        public async Task<SecUser> GetUserByEmail(string appName, string userEmail)
+        {
+            using (var userManager = await _userManagerFactory.CreateAsync(appName))
+            {
+                return await userManager.FindByEmailAsync(userEmail);
             }
         }
 
@@ -152,7 +167,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="userLogin">The user login</param>
         /// <param name="userUpdates">The user containing element to update</param>
         [Route("{appName}/users/{userLogin}")]
-        public async Task<IdentityResult> PutUserByLogin(string appName, string userLogin, [FromBody] SecUserUpdates userUpdates)
+        public async Task<IdentityResult> PutUser(string appName, string userLogin, [FromBody] SecUserUpdates userUpdates)
         {
             using (var userManager = await _userManagerFactory.CreateAsync(appName))
             {
@@ -169,7 +184,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">the application name</param>
         /// <param name="userLogin">the user login</param>
         [Route("{appName}/users/{userLogin}")]
-        public async Task<IdentityResult> DeleteUserByLogin(string appName, string userLogin)
+        public async Task<IdentityResult> DeleteUser(string appName, string userLogin)
         {
             using (var userManager = await _userManagerFactory.CreateAsync(appName))
             {
@@ -184,13 +199,15 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <param name="userLogin">The user login of the user to add</param>
         /// <param name="groupName">The group name</param>
-        [Route("{appName}/users/{userLogin}/{groupName}")]
-        public async Task<IdentityResult> PostUserToGroup(string appName, string userLogin, string groupName)
+        /// <param name="roleName">The role name</param>
+        [Route("{appName}/users/{userLogin}/{groupName}/{roleName}")]
+        public async Task<IdentityResult> PostUserToRole(string appName, string userLogin, string groupName, string roleName)
         {
             using (var userManager = await _userManagerFactory.CreateAsync(appName))
             {
                 var user = await userManager.FindByNameAsync(userLogin);
-                return await userManager.AddToRoleAsync(user.Id, groupName);
+                var identityRoleName = SecRole.ToIdentityRoleName(groupName, roleName);
+                return await userManager.AddToRoleAsync(user.Id, identityRoleName);
             }
         }
 
@@ -200,20 +217,22 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <param name="userLogin">The user login</param>
         /// <param name="groupName">The group name</param>
+        /// <param name="roleName">The role name</param>
         /// <exception cref="NotImplementedException"></exception>
-        [Route("{appName}/users/{userLogin}/{groupName}")]
-        public async Task<IdentityResult> DeleteUserFromGroup(string appName, string userLogin, string groupName)
+        [Route("{appName}/users/{userLogin}/{groupName}/{roleName}")]
+        public async Task<IdentityResult> DeleteUserFromRole(string appName, string userLogin, string groupName, string roleName)
         {
             using (var userManager = await _userManagerFactory.CreateAsync(appName))
             {
                 var user = await userManager.FindByNameAsync(userLogin);
-                return await userManager.RemoveFromRoleAsync(user.Id, groupName);
+                var identityRoleName = SecRole.ToIdentityRoleName(groupName, roleName);
+                return await userManager.RemoveFromRoleAsync(user.Id, identityRoleName);
             }
         }
 
-        #endregion User
+        #endregion Users
 
-        #region Group
+        #region Groups
 
         /// <summary>
         ///   Returns all groups of the specified application
@@ -223,10 +242,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/groups")]
         public async Task<IEnumerable<SecGroup>> GetGroups(string appName)
         {
-            using (var groupManager = await _groupManagerFactory.CreateAsync(appName))
-            {
-                return groupManager.Roles;
-            }
+            return await _securityRepository.GetGroupsAsync(appName);
         }
 
         /// <summary>
@@ -238,10 +254,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/groups/{groupId:int}")]
         public async Task<SecGroup> GetGroupById(string appName, int groupId)
         {
-            using (var groupManager = await _groupManagerFactory.CreateAsync(appName))
-            {
-                return await groupManager.FindByIdAsync(groupId);
-            }
+            return await _securityRepository.GetGroupByIdAsync(appName, groupId);
         }
 
         /// <summary>
@@ -253,10 +266,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/groups/{groupName}")]
         public async Task<SecGroup> GetGroupByName(string appName, string groupName)
         {
-            using (var groupManager = await _groupManagerFactory.CreateAsync(appName))
-            {
-                return await groupManager.FindByNameAsync(groupName);
-            }
+            return await _securityRepository.GetGroupByNameAsync(appName, groupName);
         }
 
         /// <summary>
@@ -265,12 +275,9 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <param name="group">Group to add</param>
         [Route("{appName}/groups")]
-        public async Task<IdentityResult> PostGroup(string appName, [FromBody] SecGroup group)
+        public async Task<int> PostGroup(string appName, [FromBody] SecGroup group)
         {
-            using (var groupManager = await _groupManagerFactory.CreateAsync(appName))
-            {
-                return await groupManager.CreateAsync(group);
-            }
+            return await _securityRepository.AddGroupAsync(appName, group);
         }
 
         /// <summary>
@@ -280,16 +287,9 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="groupName">The group name</param>
         /// <param name="groupUpdates">The group containing element/s to update</param>
         [Route("{appName}/groups/{groupName}")]
-        public async Task<IdentityResult> PutGroupByName(string appName, string groupName, [FromBody] SecGroupUpdates groupUpdates)
+        public async Task PutGroupByName(string appName, string groupName, [FromBody] SecGroupUpdates groupUpdates)
         {
-            using (var groupManager = await _groupManagerFactory.CreateAsync(appName))
-            {
-                var group = await groupManager.FindByNameAsync(groupName);
-                groupUpdates.Name.Do(x => group.Name = x);
-                groupUpdates.Description.Do(x => group.Description = x);
-                groupUpdates.Notes.Do(x => group.Notes = x);
-                return await groupManager.CreateAsync(group);
-            }
+            await _securityRepository.UpdateGroupAsync(appName, groupName, groupUpdates);
         }
 
         /// <summary>
@@ -298,18 +298,132 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name</param>
         /// <param name="groupName">The group name</param>
         [Route("{appName}/groups/{groupName}")]
-        public async Task<IdentityResult> DeleteGroupByName(string appName, string groupName)
+        public async Task DeleteGroupByName(string appName, string groupName)
         {
-            using (var groupManager = await _groupManagerFactory.CreateAsync(appName))
+            await _securityRepository.RemoveGroupAsync(appName, groupName);
+        }
+
+        #endregion Groups
+
+        #region Roles
+
+        /// <summary>
+        ///   Returns all groups of the specified application
+        /// </summary>
+        /// <param name="appName">The application name</param>
+        /// <returns></returns>
+        [Route("{appName}/roles")]
+        public async Task<IEnumerable<SecRole>> GetRoles(string appName)
+        {
+            using (var roleManager = await _roleManagerFactory.CreateAsync(appName))
             {
-                var group = await groupManager.FindByNameAsync(groupName);
-                return await groupManager.DeleteAsync(group);
+                return roleManager.Roles;
             }
         }
 
-        #endregion Group
+        /// <summary>
+        ///   Returns all groups of the specified application
+        /// </summary>
+        /// <param name="appName">The application name.</param>
+        /// <param name="groupName">The group name.</param>
+        /// <returns></returns>
+        [Route("{appName}/roles/{groupName}")]
+        public async Task<IEnumerable<SecRole>> GetRoles(string appName, string groupName)
+        {
+            using (var roleManager = await _roleManagerFactory.CreateAsync(appName))
+            {
+                return roleManager.Roles.Where(r => r.GroupName == groupName);
+            }
+        }
 
-        #region Context
+        /// <summary>
+        ///   Return details on the specified group belong to the specified application
+        /// </summary>
+        /// <param name="appName">The application name</param>
+        /// <param name="roleId">The group name</param>
+        /// <returns></returns>
+        [Route("{appName}/roles/{roleId:int}")]
+        public async Task<SecRole> GetRoleById(string appName, int roleId)
+        {
+            using (var roleManager = await _roleManagerFactory.CreateAsync(appName))
+            {
+                return await roleManager.FindByIdAsync(roleId);
+            }
+        }
+
+        /// <summary>
+        ///   Return details on the specified group belong to the specified application
+        /// </summary>
+        /// <param name="appName">The application name</param>
+        /// <param name="groupName">The group name</param>
+        /// <returns></returns>
+        [Route("{appName}/roles/{groupName}/{roleName}")]
+        public async Task<SecRole> GetRoleByName(string appName, string groupName, string roleName)
+        {
+            using (var roleManager = await _roleManagerFactory.CreateAsync(appName))
+            {
+                var identityRoleName = SecRole.ToIdentityRoleName(groupName, roleName);
+                return await roleManager.FindByNameAsync(identityRoleName);
+            }
+        }
+
+        /// <summary>
+        ///   Add a new group to the specified application
+        /// </summary>
+        /// <param name="appName">The application name</param>
+        /// <param name="groupName">The group name</param>
+        /// <param name="role">Group to add</param>
+        [Route("{appName}/roles/{groupName}")]
+        public async Task<IdentityResult> PostRole(string appName, string groupName, [FromBody] SecRole role)
+        {
+            using (var roleManager = await _roleManagerFactory.CreateAsync(appName))
+            {
+                role.GroupName = groupName;
+                return await roleManager.CreateAsync(role);
+            }
+        }
+
+        /// <summary>
+        ///   Update the specified group
+        /// </summary>
+        /// <param name="appName">The application name</param>
+        /// <param name="groupName">The group name</param>
+        /// <param name="roleName">The role name</param>
+        /// <param name="roleUpdates">The group containing element/s to update</param>
+        [Route("{appName}/roles/{groupName}/{roleName}")]
+        public async Task<IdentityResult> PutRole(string appName, string groupName, string roleName, [FromBody] SecRoleUpdates roleUpdates)
+        {
+            using (var roleManager = await _roleManagerFactory.CreateAsync(appName))
+            {
+                var identityRoleName = SecRole.ToIdentityRoleName(groupName, roleName);
+                var role = await roleManager.FindByNameAsync(identityRoleName);
+                roleUpdates.Name.Do(x => role.Name = x);
+                roleUpdates.Description.Do(x => role.Description = x);
+                roleUpdates.Notes.Do(x => role.Notes = x);
+                return await roleManager.CreateAsync(role);
+            }
+        }
+
+        /// <summary>
+        ///   Remove the group specified from the application specified
+        /// </summary>
+        /// <param name="appName">The application name</param>
+        /// <param name="groupName">The group name</param>
+        /// <param name="roleName">The role name</param>
+        [Route("{appName}/roles/{groupName}/{roleName}")]
+        public async Task<IdentityResult> DeleteRole(string appName, string groupName, string roleName)
+        {
+            using (var roleManager = await _roleManagerFactory.CreateAsync(appName))
+            {
+                var identityRoleName = SecRole.ToIdentityRoleName(groupName, roleName);
+                var role = await roleManager.FindByNameAsync(identityRoleName);
+                return await roleManager.DeleteAsync(role);
+            }
+        }
+
+        #endregion Roles
+
+        #region Contexts
 
         /// <summary>
         ///   Returns all contexts of the specified application
@@ -322,7 +436,7 @@ namespace Finsa.Caravan.WebService.Controllers
             return await _securityRepository.GetContextsAsync(appName);
         }
 
-        #endregion Context
+        #endregion Contexts
 
         #region Objects
 
@@ -426,7 +540,10 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="objectName">The object name</param>
         /// <param name="userLogin">The user login (must be null if the group name is present)</param>
         /// <param name="groupName">The group name (must be null if the user login is present)</param>
-        /// <param name="roleName">The role name (must be null if the user login is present, group name should be specified otherwise)</param>
+        /// <param name="roleName">
+        ///   The role name (must be null if the user login is present, group name should be
+        ///   specified otherwise)
+        /// </param>
         [Route("{appName}/entries/{contextName}/{objectName}")]
         public async Task DeleteEntry(string appName, string contextname, string objectName, string userLogin, string groupName, string roleName)
         {

@@ -55,11 +55,11 @@ namespace Finsa.Caravan.Common
         ///     <see cref="CaravanNoOpLogger"/> per gli unit test.
         ///   * <see cref="ICaravanUserStore"/> via <see cref="CaravanUserStore"/>,
         ///     indipendentemente dall'ambiente di esecuzione.
-        ///   * <see cref="ICaravanGroupStore"/> via <see cref="CaravanGroupStore"/>,
+        ///   * <see cref="ICaravanRoleStore"/> via <see cref="CaravanRoleStore"/>,
         ///     indipendentemente dall'ambiente di esecuzione.
         ///   * <see cref="ICaravanUserManagerFactory"/> via <see cref="CaravanUserManagerFactory"/>,
         ///     indipendentemente dall'ambiente di esecuzione.
-        ///   * <see cref="ICaravanGroupManagerFactory"/> via <see cref="CaravanGroupManagerFactory"/>,
+        ///   * <see cref="ICaravanRoleManagerFactory"/> via <see cref="CaravanRoleManagerFactory"/>,
         ///     indipendentemente dall'ambiente di esecuzione.
         /// </summary>
         public override void Load()
@@ -82,9 +82,9 @@ namespace Finsa.Caravan.Common
 
             // Bind indipendenti dall'ambiente di esecuzione:
             Bind<ICaravanUserStore>().To<CaravanUserStore>().InSingletonScope().WithConstructorArgument("appName", _appName);
-            Bind<ICaravanGroupStore>().To<CaravanGroupStore>().InSingletonScope().WithConstructorArgument("appName", _appName);
+            Bind<ICaravanRoleStore>().To<CaravanRoleStore>().InSingletonScope().WithConstructorArgument("appName", _appName);
             Bind<ICaravanUserManagerFactory>().To<CaravanUserManagerFactory>().InSingletonScope();
-            Bind<ICaravanGroupManagerFactory>().To<CaravanGroupManagerFactory>().InSingletonScope();
+            Bind<ICaravanRoleManagerFactory>().To<CaravanRoleManagerFactory>().InSingletonScope();
         }
     }
 }

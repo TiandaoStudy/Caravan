@@ -26,8 +26,8 @@ namespace Finsa.Caravan.Common.Security.Exceptions
         {
         }
 
-        public SecUserExistingException(string appName, string groupName, string userLogin)
-            : base($"User '{userLogin}' is already existing inside group '{groupName}' of application '{appName}'")
+        public SecUserExistingException(string appName, string groupName, string roleName, string userLogin)
+            : base($"User '{userLogin}' is already existing inside group '{groupName}' and role '{roleName}' of application '{appName}'")
         {
         }
 

@@ -166,7 +166,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 var q = ctx.SecUsers
                     .Include(u => u.App)
                     .Include(u => u.Groups)
-                    .Include(u => u.Roles)
+                    .Include("Roles.Group")
                     .Where(u => u.AppId == appId);
 
                 if (userId != null)
@@ -254,35 +254,37 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
         }
 
-        protected override async Task AddUserToGroupAsyncInternal(string appName, string userLogin, string groupName)
+        protected override async Task AddUserToRoleAsyncInternal(string appName, string userLogin, string groupName, string roleName)
         {
-            using (var ctx = SqlDbContext.CreateReadContext())
+            using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var appId = await GetAppIdByNameAsync(ctx, appName);
                 var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
                 var group = await GetGroupByNameAsync(ctx, appId, appName, groupName);
+                var role = await GetRoleByNameAsync(ctx, appName, group.Id, groupName, roleName);
                 
-                // Le chiamate sopra mi assicurano che utente e gruppo esistano.
-                if (group.Users.Any(u => u.Login == userLogin))
+                // Le chiamate sopra mi assicurano che utente, gruppo e ruolo esistano.
+                if (await ctx.SecUsers.AnyAsync(u => u.Id == user.Id && u.Roles.Any(r => r.Id == role.Id)))
                 {
-                    throw new SecUserExistingException(appName, groupName, userLogin);
+                    throw new SecUserExistingException(appName, groupName, roleName, userLogin);
                 }
-                group.Users.Add(user);
+                user.Roles.Add(role);
 
                 await ctx.SaveChangesAsync();
             }
         }
 
-        protected override async Task RemoveUserFromGroupAsyncInternal(string appName, string userLogin, string groupName)
+        protected override async Task RemoveUserFromRoleAsyncInternal(string appName, string userLogin, string groupName, string roleName)
         {
-            using (var ctx = SqlDbContext.CreateReadContext())
+            using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var appId = await GetAppIdByNameAsync(ctx, appName);
                 var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
                 var group = await GetGroupByNameAsync(ctx, appId, appName, groupName);
+                var role = await GetRoleByNameAsync(ctx, appName, group.Id, groupName, roleName);
 
-                // Le chiamate sopra mi assicurano che utente e gruppo esistano.
-                group.Users.Remove(user);
+                // Le chiamate sopra mi assicurano che utente, gruppo e ruolo esistano.
+                user.Roles.Remove(role);
 
                 await ctx.SaveChangesAsync();
             }
@@ -507,44 +509,31 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         private static async Task<SqlSecGroup> GetGroupByNameAsync(SqlDbContext ctx, int appId, string appName, string groupName)
         {
-            var group = await ctx.SecGroups
-                .Include(g => g.Users)
-                .FirstOrDefaultAsync(g => g.AppId == appId && g.Name == groupName);
-
+            var group = await ctx.SecGroups.FirstOrDefaultAsync(g => g.AppId == appId && g.Name == groupName);
             if (group == null)
             {
                 throw new SecGroupNotFoundException(appName, groupName);
             }
-
             return group;
         }
 
         private static async Task<SqlSecRole> GetRoleByNameAsync(SqlDbContext ctx, string appName, int groupId, string groupName, string roleName)
         {
-            var role = await ctx.SecRoles
-                .Include(r => r.Group)
-                .Include(r => r.Users)
-                .FirstOrDefaultAsync(r => r.GroupId == groupId && r.Name == roleName);
-
+            var role = await ctx.SecRoles.FirstOrDefaultAsync(r => r.GroupId == groupId && r.Name == roleName);
             if (role == null)
             {
                 throw new SecRoleNotFoundException(appName, groupName, roleName);
             }
-
             return role;
         }
 
         private static async Task<SqlSecUser> GetUserByLoginAsync(SqlDbContext ctx, int appId, string appName, string userLogin)
         {
-            var user = await ctx.SecUsers
-                .Include(u => u.Groups)
-                .FirstOrDefaultAsync(u => u.AppId == appId && u.Login == userLogin);
-
+            var user = await ctx.SecUsers.FirstOrDefaultAsync(u => u.AppId == appId && u.Login == userLogin);
             if (user == null)
             {
                 throw new SecUserNotFoundException(appName, userLogin);
             }
-
             return user;
         }
 

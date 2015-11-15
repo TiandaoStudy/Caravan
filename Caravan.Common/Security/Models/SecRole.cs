@@ -15,12 +15,18 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
+using Finsa.Caravan.Common.Core;
+using Microsoft.AspNet.Identity;
+using PommaLabs.Thrower;
 
 namespace Finsa.Caravan.Common.Security.Models
 {
     [Serializable, DataContract]
-    public class SecRole : EquatableObject<SecRole>
+    public class SecRole : EquatableObject<SecRole>, IRole<int>
     {
+        /// <summary>
+        ///   ID of the role.
+        /// </summary>
         [DataMember(Order = 0)]
         public int Id { get; set; }
 
@@ -41,6 +47,61 @@ namespace Finsa.Caravan.Common.Security.Models
 
         [DataMember(Order = 6)]
         public SecUser[] Users { get; set; }
+
+        #region ASP.NET Identity
+
+        /// <summary>
+        ///   Name of the role.
+        /// </summary>
+        string IRole<int>.Name
+        {
+            get { return ToIdentityRoleName(GroupName, Name); }
+            set
+            {
+                var tuple = FromIdentityRoleName(value);
+                GroupName = tuple.Item1;
+                Name = tuple.Item2;
+            }
+        }
+
+        /// <summary>
+        ///   Aggrega gruppo e ruolo in una stringa unica che rappresenta il ruolo ASP.NET.
+        /// </summary>
+        /// <param name="groupName">Nome del gruppo.</param>
+        /// <param name="roleName">Nome del ruolo.</param>
+        /// <returns>Gruppo e ruolo aggregati in una stringa unica che rappresenta il ruolo ASP.NET.</returns>
+        public static string ToIdentityRoleName(string groupName, string roleName)
+        {
+            RaiseArgumentException.If(groupName.Contains("/"), ErrorMessages.InvalidGroupName, nameof(groupName));
+            RaiseArgumentException.If(roleName.Contains("/"), ErrorMessages.InvalidRoleName, nameof(roleName));
+            return $"{groupName}/{roleName}";
+        }
+
+        /// <summary>
+        ///   Decodifica gruppo e ruolo dalla stringa di ruolo ASP.NET.
+        /// </summary>
+        /// <param name="identityRoleName">L'aggregazione di gruppo e ruolo.</param>
+        /// <returns>Una tupla con il nome del gruppo e il nome del ruolo.</returns>
+        public static GTuple2<string> FromIdentityRoleName(string identityRoleName)
+        {
+            RaiseArgumentNullException.IfIsNull(identityRoleName, nameof(identityRoleName));
+            var split = identityRoleName.Split('/');
+            return GTuple.Create<string>(split[0], split[1]);
+        }
+
+        /// <summary>
+        ///   Decodifica gruppo e ruolo dalla stringa di ruolo ASP.NET.
+        /// </summary>
+        /// <param name="secRole">Oggetto contenente l'aggregazione di gruppo e ruolo.</param>
+        /// <returns>Una tupla con il nome del gruppo e il nome del ruolo.</returns>
+        public static GTuple2<string> FromIdentityRoleName(SecRole secRole)
+        {
+            RaiseArgumentNullException.IfIsNull(secRole, nameof(secRole));
+            var split = (secRole as IRole<int>).Name.Split('/');
+            return GTuple.Create<string>(split[0], split[1]);
+        }
+
+        #endregion
 
         protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()
         {

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <views>
-  <mapping-views hash="bdb582af6edcfc7cb015689572ca0b2cde2ee334f5782e8bf11919b7db6a1050" conceptual-container="SqlDbContext" store-container="CodeFirstDatabase">
+  <mapping-views hash="fb2bd40509ab12cc55acc97c9af0b12c983a78c3cd5212967ec67aa28e0438b8" conceptual-container="SqlDbContext" store-container="CodeFirstDatabase">
     <view extent="CodeFirstDatabase.SqlIdnClientClaim"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnClientClaim
         [CodeFirstDatabaseSchema.SqlIdnClientClaim](T1.[SqlIdnClientClaim.CCLM_ID], T1.[SqlIdnClientClaim.CCLM_TYPE], T1.[SqlIdnClientClaim.CCLM_VALUE], T1.[SqlIdnClientClaim.CCLI_ID])
@@ -489,7 +489,7 @@
             T.Description AS [SqlSecRole.CROL_DESCR], 
             T.Notes AS [SqlSecRole.CROL_NOTES], 
             True AS _from0
-        FROM SqlDbContext.SqlSecRoles AS T
+        FROM SqlDbContext.SecRoles AS T
     ) AS T1]]></view>
     <view extent="CodeFirstDatabase.SqlSecUser"><![CDATA[
     SELECT VALUE -- Constructing SqlSecUser
@@ -641,8 +641,8 @@
             True AS _from0
         FROM CodeFirstDatabase.SqlSecGroup AS T
     ) AS T1]]></view>
-    <view extent="SqlDbContext.SqlSecRoles"><![CDATA[
-    SELECT VALUE -- Constructing SqlSecRoles
+    <view extent="SqlDbContext.SecRoles"><![CDATA[
+    SELECT VALUE -- Constructing SecRoles
         [Finsa.Caravan.DataAccess.Sql.SqlSecRole](T1.SqlSecRole_Id, T1.SqlSecRole_GroupId, T1.SqlSecRole_Name, T1.SqlSecRole_Description, T1.SqlSecRole_Notes)
     FROM (
         SELECT 
@@ -688,7 +688,7 @@
         [Finsa.Caravan.DataAccess.Sql.SqlSecRole_Users](T3.[SqlSecRole_Users.SqlSecRole_Users_Source], T3.[SqlSecRole_Users.SqlSecRole_Users_Target])
     FROM (
         SELECT -- Constructing SqlSecRole_Users_Source
-            CreateRef(SqlDbContext.SqlSecRoles, row(T2.[SqlSecRole_Users.SqlSecRole_Users_Source.Id]), [Finsa.Caravan.DataAccess.Sql.SqlSecRole]) AS [SqlSecRole_Users.SqlSecRole_Users_Source], 
+            CreateRef(SqlDbContext.SecRoles, row(T2.[SqlSecRole_Users.SqlSecRole_Users_Source.Id]), [Finsa.Caravan.DataAccess.Sql.SqlSecRole]) AS [SqlSecRole_Users.SqlSecRole_Users_Source], 
             T2.[SqlSecRole_Users.SqlSecRole_Users_Target]
         FROM (
             SELECT -- Constructing SqlSecRole_Users_Target

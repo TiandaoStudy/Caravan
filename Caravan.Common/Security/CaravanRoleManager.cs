@@ -10,25 +10,23 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using System.Threading.Tasks;
+using Finsa.Caravan.Common.Security.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Finsa.Caravan.Common.Security
 {
     /// <summary>
-    ///   Gestisce la creazione di RoleManager specifici per un dato applicativo Caravan.
+    ///   Exposes user related APIs which will automatically save changes to the RoleStore.
     /// </summary>
-    public interface ICaravanGroupManagerFactory
+    public sealed class CaravanRoleManager : RoleManager<SecRole, int>
     {
         /// <summary>
-        ///   Il repository della sicurezza di Caravan.
+        ///   Inizializza il gestore personalizzato.
         /// </summary>
-        ICaravanSecurityRepository SecurityRepository { get; }
-
-        /// <summary>
-        ///   Restituisce uno RoleManager specifico per un dato applicativo Caravan.
-        /// </summary>
-        /// <param name="appName">Il nome dell'applicativo Caravan.</param>
-        /// <returns>Uno RoleManager specifico per un dato applicativo Caravan.</returns>
-        Task<CaravanGroupManager> CreateAsync(string appName);
+        /// <param name="roleStore">Lo store per i ruoli.</param>
+        public CaravanRoleManager(ICaravanRoleStore roleStore)
+            : base(roleStore)
+        {
+        }
     }
 }
