@@ -45,9 +45,6 @@ namespace Finsa.Caravan.Common.Security.Models
         [DataMember(Order = 5)]
         public string Notes { get; set; }
 
-        [DataMember(Order = 6)]
-        public SecUser[] Users { get; set; }
-
         #region ASP.NET Identity
 
         /// <summary>

@@ -45,8 +45,6 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
 
         public virtual SqlSecApp App { get; set; }
 
-        public virtual ICollection<SqlSecGroup> Groups { get; set; }
-
         public virtual ICollection<SqlSecRole> Roles { get; set; }
 
         public virtual ICollection<SqlSecEntry> SecEntries { get; set; }

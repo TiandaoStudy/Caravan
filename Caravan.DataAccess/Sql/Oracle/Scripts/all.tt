@@ -50,9 +50,6 @@
 -- Roles
 <#@ include file="Tables/crvn_sec_roles.sql" #>
 
--- User Groups
-<#@ include file="Tables/crvn_sec_user_groups.sql" #>
-
 -- User Roles
 <#@ include file="Tables/crvn_sec_user_roles.sql" #>
 

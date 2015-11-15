@@ -25,7 +25,6 @@ namespace Finsa.Caravan.DataAccess.Sql
             using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var q = ctx.SecApps
-                    .Include(a => a.Users)
                     .Include(a => a.Groups)
                     .Include("Contexts.Objects")
                     .Include(a => a.LogSettings);
@@ -73,7 +72,6 @@ namespace Finsa.Caravan.DataAccess.Sql
 
                 var q = ctx.SecGroups
                     .Include(g => g.App)
-                    .Include(g => g.Users)
                     .Include(g => g.Roles)
                     .Where(g => g.App.Id == appId);
 
@@ -165,7 +163,6 @@ namespace Finsa.Caravan.DataAccess.Sql
 
                 var q = ctx.SecUsers
                     .Include(u => u.App)
-                    .Include(u => u.Groups)
                     .Include("Roles.Group")
                     .Where(u => u.AppId == appId);
 
@@ -364,7 +361,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 if (userLogin != null)
                 {
                     var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
-                    var groupIds = user.Groups.Select(g => g.Id).ToArray();
+                    var groupIds = user.Roles.Select(r => r.GroupId).Distinct().ToArray();
                     q = q.Where(e => e.UserId == user.Id || groupIds.Contains(e.Group.Id));
                 }
 
@@ -479,7 +476,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 if (userLogin != null)
                 {
                     var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
-                    var groupIds = user.Groups.Select(g => g.Id).ToList();
+                    var groupIds = user.Roles.Select(r => r.GroupId).Distinct().ToArray();
                     q = q.Where(e => e.UserId == user.Id || groupIds.Contains(e.Group.Id));
                 }
                 if (q != null)

@@ -111,7 +111,7 @@ namespace Finsa.Caravan.WebForms.Pages
           if (ViewState["group"] != null)
           {
 
-              var blockedUsersToGroup = ((SecGroup)ViewState["group"]).Users;
+              SecUser[] blockedUsersToGroup = null;// ((SecGroup)ViewState["group"]).Users;
               var allowedUsers = (await CaravanDataSource.Security.GetUsersAsync(CaravanCommonConfiguration.Instance.AppName)).Except(blockedUsersToGroup);
 
               //Users

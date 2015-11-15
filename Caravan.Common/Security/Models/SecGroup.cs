@@ -44,9 +44,6 @@ namespace Finsa.Caravan.Common.Security.Models
         public string Notes { get; set; }
 
         [DataMember(Order = 5)]
-        public SecUser[] Users { get; set; }
-
-        [DataMember(Order = 6)]
         public SecRole[] Roles { get; set; }
 
         #region FormattableObject members

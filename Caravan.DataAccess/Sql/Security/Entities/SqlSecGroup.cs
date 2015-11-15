@@ -36,8 +36,6 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
 
         public virtual ICollection<SqlSecRole> Roles { get; set; }
 
-        public virtual ICollection<SqlSecUser> Users { get; set; }
-
         public virtual ICollection<SqlSecEntry> SecEntries { get; set; }
 
         #endregion Relationships
@@ -54,13 +52,6 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
                 .WithMany(x => x.Groups)
                 .HasForeignKey(x => x.AppId)
                 .WillCascadeOnDelete(true);
-
-            // SqlSecGroup(N) <-> SqlSecUser(N)
-            HasMany(x => x.Users)
-                .WithMany(x => x.Groups)
-                .Map(x => x.MapLeftKey("CGRP_ID")
-                           .MapRightKey("CUSR_ID")
-                           .ToTable("CRVN_SEC_USER_GROUPS", CaravanDataAccessConfiguration.Instance.SqlSchema));
         }
     }
 }

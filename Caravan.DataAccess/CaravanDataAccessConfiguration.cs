@@ -8,6 +8,7 @@ using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.Portability;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Westwind.Utilities.Configuration;
 
 namespace Finsa.Caravan.DataAccess
@@ -132,7 +133,14 @@ namespace Finsa.Caravan.DataAccess
             Mapper.CreateMap<SqlSecGroup, SecGroup>();
             Mapper.CreateMap<SqlSecObject, SecObject>();
             Mapper.CreateMap<SqlSecRole, SecRole>();
-            Mapper.CreateMap<SqlSecUser, SecUser>();
+            Mapper.CreateMap<SqlSecUser, SecUser>().AfterMap((su, u) =>
+            {
+                u.Groups = su.Roles
+                    .Select(r => r.Group)
+                    .Distinct()
+                    .Select(Mapper.Map<SecGroup>)
+                    .ToArray();
+            });
 
             // Mappings (SQL --> Models) for Logging
             Mapper.CreateMap<SqlLogEntry, LogEntry>().AfterMap((sl, l) =>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <views>
-  <mapping-views hash="fb2bd40509ab12cc55acc97c9af0b12c983a78c3cd5212967ec67aa28e0438b8" conceptual-container="SqlDbContext" store-container="CodeFirstDatabase">
+  <mapping-views hash="645ec1ddc783ba52d5e70e359db0852111d29b0dfd237975b671c7394439b345" conceptual-container="SqlDbContext" store-container="CodeFirstDatabase">
     <view extent="CodeFirstDatabase.SqlIdnClientClaim"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnClientClaim
         [CodeFirstDatabaseSchema.SqlIdnClientClaim](T1.[SqlIdnClientClaim.CCLM_ID], T1.[SqlIdnClientClaim.CCLM_TYPE], T1.[SqlIdnClientClaim.CCLM_VALUE], T1.[SqlIdnClientClaim.CCLI_ID])
@@ -530,16 +530,6 @@
             True AS _from0
         FROM SqlDbContext.SqlSecRole_Users AS T
     ) AS T1]]></view>
-    <view extent="CodeFirstDatabase.SqlSecGroupSqlSecUser"><![CDATA[
-    SELECT VALUE -- Constructing SqlSecGroupSqlSecUser
-        [CodeFirstDatabaseSchema.SqlSecGroupSqlSecUser](T1.[SqlSecGroupSqlSecUser.CGRP_ID], T1.[SqlSecGroupSqlSecUser.CUSR_ID])
-    FROM (
-        SELECT 
-            Key(T.SqlSecGroup_Users_Source).Id AS [SqlSecGroupSqlSecUser.CGRP_ID], 
-            Key(T.SqlSecGroup_Users_Target).Id AS [SqlSecGroupSqlSecUser.CUSR_ID], 
-            True AS _from0
-        FROM SqlDbContext.SqlSecGroup_Users AS T
-    ) AS T1]]></view>
     <view extent="SqlDbContext.LogEntries"><![CDATA[
     SELECT VALUE -- Constructing LogEntries
         [Finsa.Caravan.DataAccess.Sql.SqlLogEntry](T1.SqlLogEntry_Id, T1.SqlLogEntry_AppId, T1.SqlLogEntry_LogLevel, T1.SqlLogEntry_Date, T1.SqlLogEntry_UserLogin, T1.SqlLogEntry_CodeUnit, T1.SqlLogEntry_Function, T1.SqlLogEntry_ShortMessage, T1.SqlLogEntry_LongMessage, T1.SqlLogEntry_Context, T1.SqlLogEntry_Key0, T1.SqlLogEntry_Value0, T1.SqlLogEntry_Key1, T1.SqlLogEntry_Value1, T1.SqlLogEntry_Key2, T1.SqlLogEntry_Value2, T1.SqlLogEntry_Key3, T1.SqlLogEntry_Value3, T1.SqlLogEntry_Key4, T1.SqlLogEntry_Value4, T1.SqlLogEntry_Key5, T1.SqlLogEntry_Value5, T1.SqlLogEntry_Key6, T1.SqlLogEntry_Value6, T1.SqlLogEntry_Key7, T1.SqlLogEntry_Value7, T1.SqlLogEntry_Key8, T1.SqlLogEntry_Value8, T1.SqlLogEntry_Key9, T1.SqlLogEntry_Value9)
@@ -700,26 +690,6 @@
                     T.CUSR_ID AS [SqlSecRole_Users.SqlSecRole_Users_Target.Id], 
                     True AS _from0
                 FROM CodeFirstDatabase.SqlSecRoleSqlSecUser AS T
-            ) AS T1
-        ) AS T2
-    ) AS T3]]></view>
-    <view extent="SqlDbContext.SqlSecGroup_Users"><![CDATA[
-    SELECT VALUE -- Constructing SqlSecGroup_Users
-        [Finsa.Caravan.DataAccess.Sql.SqlSecGroup_Users](T3.[SqlSecGroup_Users.SqlSecGroup_Users_Source], T3.[SqlSecGroup_Users.SqlSecGroup_Users_Target])
-    FROM (
-        SELECT -- Constructing SqlSecGroup_Users_Source
-            CreateRef(SqlDbContext.SecGroups, row(T2.[SqlSecGroup_Users.SqlSecGroup_Users_Source.Id]), [Finsa.Caravan.DataAccess.Sql.SqlSecGroup]) AS [SqlSecGroup_Users.SqlSecGroup_Users_Source], 
-            T2.[SqlSecGroup_Users.SqlSecGroup_Users_Target]
-        FROM (
-            SELECT -- Constructing SqlSecGroup_Users_Target
-                T1.[SqlSecGroup_Users.SqlSecGroup_Users_Source.Id], 
-                CreateRef(SqlDbContext.SecUsers, row(T1.[SqlSecGroup_Users.SqlSecGroup_Users_Target.Id]), [Finsa.Caravan.DataAccess.Sql.SqlSecUser]) AS [SqlSecGroup_Users.SqlSecGroup_Users_Target]
-            FROM (
-                SELECT 
-                    T.CGRP_ID AS [SqlSecGroup_Users.SqlSecGroup_Users_Source.Id], 
-                    T.CUSR_ID AS [SqlSecGroup_Users.SqlSecGroup_Users_Target.Id], 
-                    True AS _from0
-                FROM CodeFirstDatabase.SqlSecGroupSqlSecUser AS T
             ) AS T1
         ) AS T2
     ) AS T3]]></view>

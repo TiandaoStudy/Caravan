@@ -392,7 +392,6 @@
     <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_groups.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\crvn_log_settings.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_users.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_user_groups.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_objects.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_apps.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_contexts.sql" />
