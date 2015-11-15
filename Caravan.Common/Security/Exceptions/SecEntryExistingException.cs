@@ -16,22 +16,17 @@ using System.Runtime.Serialization;
 namespace Finsa.Caravan.Common.Security.Exceptions
 {
     /// <summary>
-    ///   Segnala che esiste già un utente con la medesima login all'interno dell'applicazione data.
+    ///   Segnala che esiste già un ruolo con il medesimo nome all'interno del gruppo e dell'applicazione dati.
     /// </summary>
     [Serializable]
-    public class SecUserExistingException : Exception
+    public class SecEntryExistingException : Exception
     {
-        public SecUserExistingException(string appName, string userLogin)
-            : base($"User '{userLogin}' is already existing inside application '{appName}'")
+        public SecEntryExistingException(string appName, string userLogin, string groupName, string roleName, string contextName, string objectName)
+            : base($"A security entry for application '{appName}', user '{userLogin}', group '{groupName}', role '{roleName}', context '{contextName}' and object '{objectName}' is already existing")
         {
         }
 
-        public SecUserExistingException(string appName, string groupName, string userLogin)
-            : base($"User '{userLogin}' is already existing inside group '{groupName}' of application '{appName}'")
-        {
-        }
-
-        protected SecUserExistingException(SerializationInfo info, StreamingContext context)
+        protected SecEntryExistingException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

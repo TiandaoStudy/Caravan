@@ -481,7 +481,7 @@
             <param name="appName">The application name</param>
             <param name="entry">The entry to add</param>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteEntry(System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.DeleteEntry(System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
               Delete the specified entry from the application
             </summary>
@@ -490,6 +490,7 @@
             <param name="objectName">The object name</param>
             <param name="userLogin">The user login (must be null if the group name is present)</param>
             <param name="groupName">The group name (must be null if the user login is present)</param>
+            <param name="roleName">The role name (must be null if the user login is present, group name should be specified otherwise)</param>
         </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.ValuesController">
             <summary>

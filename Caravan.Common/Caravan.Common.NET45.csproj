@@ -159,6 +159,7 @@
     <Compile Include="Security\CaravanGroupManager.cs" />
     <Compile Include="Security\CaravanGroupManagerFactory.cs" />
     <Compile Include="Security\CaravanUserManagerFactory.cs" />
+    <Compile Include="Security\Exceptions\SecEntryExistingException.cs" />
     <Compile Include="Security\Exceptions\SecRoleExistingException.cs" />
     <Compile Include="Security\Exceptions\SecRoleNotFoundException.cs" />
     <Compile Include="Security\ICaravanGroupManagerFactory.cs" />

@@ -171,7 +171,7 @@ namespace FLEX.Web.Pages
             {
                 if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
                 {
-                    await CaravanDataSource.Security.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, secContext, secObject, oDrR["Login"].ToString(), null);
+                    await CaravanDataSource.Security.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, secContext, secObject, oDrR["Login"].ToString(), null, null);
                 }
             }
 
@@ -179,7 +179,7 @@ namespace FLEX.Web.Pages
             {
                 if (oDrL[MultiSelect.FlagCrud].ToString() == "R")
                 {
-                    await CaravanDataSource.Security.RemoveEntryAsync(CaravanCommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, oDrL["Login"].ToString(), null);
+                    await CaravanDataSource.Security.RemoveEntryAsync(CaravanCommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, oDrL["Login"].ToString(), null, null);
                 }
             }
 
@@ -188,7 +188,7 @@ namespace FLEX.Web.Pages
             {
                 if (oDrR[MultiSelect.FlagCrud].ToString() == "L")
                 {
-                    await CaravanDataSource.Security.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, secContext, secObject, null, oDrR["Name"].ToString());
+                    await CaravanDataSource.Security.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, secContext, secObject, null, oDrR["Name"].ToString(), null);
                 }
             }
 
@@ -196,7 +196,7 @@ namespace FLEX.Web.Pages
             {
                 if (oDrR[MultiSelect.FlagCrud].ToString() == "R")
                 {
-                    await CaravanDataSource.Security.RemoveEntryAsync(CaravanCommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, null, oDrR["Name"].ToString());
+                    await CaravanDataSource.Security.RemoveEntryAsync(CaravanCommonConfiguration.Instance.AppName, secContext.Name, secObject.Name, null, oDrR["Name"].ToString(), null);
                 }
             }
         }

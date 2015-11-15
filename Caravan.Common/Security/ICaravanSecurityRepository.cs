@@ -322,9 +322,9 @@ namespace Finsa.Caravan.Common.Security
 
         Task<SecEntry[]> GetEntriesForObjectAndUserAsync(string appName, string contextName, string objectName, string userLogin);
 
-        Task<long> AddEntryAsync(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName);
+        Task<long> AddEntryAsync(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName, string roleName);
 
-        Task RemoveEntryAsync(string appName, string contextName, string objectName, string userLogin, string groupName);
+        Task RemoveEntryAsync(string appName, string contextName, string objectName, string userLogin, string groupName, string roleName);
 
         #endregion Entries
     }

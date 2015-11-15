@@ -587,7 +587,7 @@ namespace Finsa.Caravan.DataAccess.Core
             return GetEntriesAsyncInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant(), objectName.ToLowerInvariant(), userLogin.ToLowerInvariant());
         }
 
-        public async Task<long> AddEntryAsync(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+        public async Task<long> AddEntryAsync(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName, string roleName)
         {
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
@@ -613,7 +613,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     groupName = groupName.ToLowerInvariant();
                 }
-                var entryId = await AddEntryAsyncInternal(appName.ToLowerInvariant(), secContext, secObject, userLogin, groupName);
+                var entryId = await AddEntryAsyncInternal(appName.ToLowerInvariant(), secContext, secObject, userLogin, groupName,roleName);
                 Log.Warn(() => new LogMessage
                 {
                     ShortMessage = $"Security entry for object '{secObject.Name}' in context '{secContext.Name}' has been added for '{userLogin ?? groupName}'",
@@ -628,7 +628,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public async Task RemoveEntryAsync(string appName, string contextName, string objectName, string userLogin, string groupName)
+        public async Task RemoveEntryAsync(string appName, string contextName, string objectName, string userLogin, string groupName, string roleName)
         {
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
@@ -650,7 +650,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     groupName = groupName.ToLowerInvariant();
                 }
-                await RemoveEntryAsyncInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant(), objectName.ToLowerInvariant(), userLogin, groupName);
+                await RemoveEntryAsyncInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant(), objectName.ToLowerInvariant(), userLogin, groupName, roleName);
                 Log.Warn(() => new LogMessage
                 {
                     ShortMessage = $"Security entry for object '{objectName.ToLowerInvariant()}' in context '{contextName.ToLowerInvariant()}' has been removed for '{userLogin ?? groupName}'",
@@ -697,9 +697,9 @@ namespace Finsa.Caravan.DataAccess.Core
 
         protected abstract Task<SecEntry[]> GetEntriesAsyncInternal(string appName, string contextName, string objectName, string userLogin);
 
-        protected abstract Task<long> AddEntryAsyncInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName);
+        protected abstract Task<long> AddEntryAsyncInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName, string roleName);
 
-        protected abstract Task RemoveEntryAsyncInternal(string appName, string contextName, string objectName, string userLogin, string groupName);
+        protected abstract Task RemoveEntryAsyncInternal(string appName, string contextName, string objectName, string userLogin, string groupName, string roleName);
 
         #endregion Abstract Methods
     }

@@ -415,7 +415,7 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/entries/")]
         public async Task PostEntry(string appName, [FromBody] SecEntryForAdd entry)
         {
-            await _securityRepository.AddEntryAsync(appName, entry.Context, entry.Object, entry.UserLogin, entry.GroupName);
+            await _securityRepository.AddEntryAsync(appName, entry.Context, entry.Object, entry.UserLogin, entry.GroupName, entry.RoleName);
         }
 
         /// <summary>
@@ -426,10 +426,11 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="objectName">The object name</param>
         /// <param name="userLogin">The user login (must be null if the group name is present)</param>
         /// <param name="groupName">The group name (must be null if the user login is present)</param>
+        /// <param name="roleName">The role name (must be null if the user login is present, group name should be specified otherwise)</param>
         [Route("{appName}/entries/{contextName}/{objectName}")]
-        public async Task DeleteEntry(string appName, string contextname, string objectName, string userLogin, string groupName)
+        public async Task DeleteEntry(string appName, string contextname, string objectName, string userLogin, string groupName, string roleName)
         {
-            await _securityRepository.RemoveEntryAsync(appName, contextname, objectName, userLogin, groupName);
+            await _securityRepository.RemoveEntryAsync(appName, contextname, objectName, userLogin, groupName, roleName);
         }
 
         public sealed class SecEntryForAdd
@@ -441,6 +442,8 @@ namespace Finsa.Caravan.WebService.Controllers
             public string UserLogin { get; set; }
 
             public string GroupName { get; set; }
+
+            public string RoleName { get; set; }
         }
 
         #endregion Entries

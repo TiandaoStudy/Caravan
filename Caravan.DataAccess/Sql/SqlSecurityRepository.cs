@@ -209,7 +209,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override async Task RemoveUserAsyncInternal(string appName, string userLogin)
         {
-            using (var ctx = SqlDbContext.CreateUpdateContext())
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var appId = await GetAppIdByNameAsync(ctx, appName);
                 var sqlUser = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
@@ -223,64 +223,59 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override async Task UpdateUserAsyncInternal(string appName, string userLogin, SecUserUpdates userUpdates)
         {
-            
             using (var ctx = SqlDbContext.CreateUpdateContext())
             {
-                var updated = false;
                 var appId = await GetAppIdByNameAsync(ctx, appName);
-                var user = ctx.SecUsers.FirstOrDefault(u => u.App.Id == appId && u.Login == userLogin);
-                if (user != null)
+                var sqlUser = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
+
+                // La chiamata sopra mi assicura che l'utente ci sia.
+                userUpdates.Login.Do(async x =>
                 {
-                    userUpdates.Login.Do(x =>
+                    if (userLogin != x && await ctx.SecUsers.AnyAsync(u => u.AppId == sqlUser.AppId && u.Login == x))
                     {
-                        if (userLogin != x && ctx.SecUsers.Any(u => u.AppId == user.AppId && u.Login == x))
-                        {
-                            throw new SecUserExistingException(appName, userLogin);
-                        }
-                        user.Login = x;
-                    });
-                    userUpdates.FirstName.Do(x => user.FirstName = x);
-                    userUpdates.LastName.Do(x => user.LastName = x);
-                    userUpdates.Email.Do(x => user.Email = x);
-                    userUpdates.Active.Do(x => user.Active = x);
-                    updated = true;
-                }
+                        throw new SecUserExistingException(appName, userLogin);
+                    }
+                    sqlUser.Login = x;
+                });
+                userUpdates.FirstName.Do(x => sqlUser.FirstName = x);
+                userUpdates.LastName.Do(x => sqlUser.LastName = x);
+                userUpdates.Email.Do(x => sqlUser.Email = x);
+                userUpdates.Active.Do(x => sqlUser.Active = x);
+
                 await ctx.SaveChangesAsync();
             }
         }
 
         protected override async Task AddUserToGroupAsyncInternal(string appName, string userLogin, string groupName)
         {
-            
-            using (var ctx = SqlDbContext.CreateUpdateContext())
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var appId = await GetAppIdByNameAsync(ctx, appName);
                 var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
                 var group = await GetGroupByNameAsync(ctx, appId, appName, groupName);
-                var added = false;
-                if (!group.Users.Contains(user))
+                
+                // Le chiamate sopra mi assicurano che utente e gruppo esistano.
+                if (group.Users.Any(u => u.Login == userLogin))
                 {
-                    group.Users.Add(user);
-                    added = true;
+                    throw new SecUserExistingException(appName, groupName, userLogin);
                 }
+                group.Users.Add(user);
+
                 await ctx.SaveChangesAsync();
             }
         }
 
         protected override async Task RemoveUserFromGroupAsyncInternal(string appName, string userLogin, string groupName)
         {
-            
-            using (var ctx = SqlDbContext.CreateUpdateContext())
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var appId = await GetAppIdByNameAsync(ctx, appName);
                 var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
                 var group = await GetGroupByNameAsync(ctx, appId, appName, groupName);
-                var removed = false;
-                if (group.Users.Contains(user))
-                {
-                    group.Users.Remove(user);
-                    removed = true;
-                }
+
+                // Le chiamate sopra mi assicurano che utente e gruppo esistano.
+                group.Users.Remove(user);
+
                 await ctx.SaveChangesAsync();
             }
         }
@@ -294,9 +289,10 @@ namespace Finsa.Caravan.DataAccess.Sql
             using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var appId = await GetAppIdByNameAsync(ctx, appName);
-                var q = ctx.SecContexts.Include(c => c.Objects);
 
-                q = q.Where(c => c.App.Id == appId);
+                var q = ctx.SecContexts
+                    .Include(c => c.Objects)
+                    .Where(c => c.App.Id == appId);
 
                 return q.AsEnumerable()
                     .Select(Mapper.Map<SecContext>)
@@ -312,14 +308,11 @@ namespace Finsa.Caravan.DataAccess.Sql
         {
             using (var ctx = SqlDbContext.CreateReadContext())
             {
-                var q = ctx.SecObjects
-                    .Include(o => o.SecEntries);
+                var appId = await GetAppIdByNameAsync(ctx, appName);
 
-                if (appName != null)
-                {
-                    var appId = await GetAppIdByNameAsync(ctx, appName);
-                    q = q.Where(o => o.Context.AppId == appId);
-                }
+                var q = ctx.SecObjects
+                    .Include(o => o.SecEntries)
+                    .Where(o => o.Context.AppId == appId);
 
                 if (contextName != null)
                 {
@@ -345,12 +338,9 @@ namespace Finsa.Caravan.DataAccess.Sql
                 var q = ctx.SecEntries
                     .Include(e => e.Object.Context)
                     .Include(e => e.User)
-                    .Include(e => e.Group);
+                    .Include(e => e.Group)
+                    .Where(e => e.Object.Context.AppId == appId);
 
-                if (appName != null)
-                {
-                    q = q.Where(e => e.Object.Context.AppId == appId);
-                }
                 if (contextName != null)
                 {
                     q = q.Where(e => e.Object.Context.Name == contextName);
@@ -362,7 +352,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 if (userLogin != null)
                 {
                     var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
-                    var groupIds = user.Groups.Select(g => g.Id).ToList();
+                    var groupIds = user.Groups.Select(g => g.Id).ToArray();
                     q = q.Where(e => e.UserId == user.Id || groupIds.Contains(e.Group.Id));
                 }
 
@@ -372,39 +362,38 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
         }
 
-        protected override async Task<long> AddEntryAsyncInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName)
+        protected override async Task<long> AddEntryAsyncInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName, string roleName)
         {
-            
             using (var ctx = SqlDbContext.CreateUpdateContext())
             {
                 var appId = await GetAppIdByNameAsync(ctx, appName);
-                var dbContext = ctx.SecContexts.FirstOrDefault(c => c.AppId == appId && c.Name == secContext.Name);
+
+                var dbContext = await ctx.SecContexts.FirstOrDefaultAsync(c => c.AppId == appId && c.Name == secContext.Name);
                 if (dbContext == null)
                 {
-                    dbContext = new SqlSecContext
+                    dbContext = ctx.SecContexts.Add(new SqlSecContext
                     {
                         AppId = appId,
                         Name = secContext.Name,
                         Description = secContext.Description
-                    };
-                    ctx.SecContexts.Add(dbContext);
+                    });
                     await ctx.SaveChangesAsync(); // Required, we need the generated context ID.
                 }
                 else
                 {
                     dbContext.Description = secContext.Description;
                 }
-                var dbObject = ctx.SecObjects.FirstOrDefault(o => o.Context.AppId == appId && o.ContextId == dbContext.Id && o.Name == secObject.Name);
+
+                var dbObject = await ctx.SecObjects.FirstOrDefaultAsync(o => o.Context.AppId == appId && o.ContextId == dbContext.Id && o.Name == secObject.Name);
                 if (dbObject == null)
                 {
-                    dbObject = new SqlSecObject
+                    dbObject = ctx.SecObjects.Add(new SqlSecObject
                     {
                         ContextId = dbContext.Id,
                         Name = secObject.Name,
                         Description = secObject.Description,
                         Type = secObject.Type
-                    };
-                    ctx.SecObjects.Add(dbObject);
+                    });
                     await ctx.SaveChangesAsync(); // Required, we need the generated context ID.
                 }
                 else
@@ -412,30 +401,48 @@ namespace Finsa.Caravan.DataAccess.Sql
                     dbObject.Description = secObject.Description;
                     dbObject.Type = secObject.Type;
                 }
-                var q = ctx.SecEntries.Where(e => e.Object.Context.AppId == appId && e.Object.ContextId == dbContext.Id && e.ObjectId == dbObject.Id);
+
+                var q = ctx.SecEntries
+                    .Where(e => e.Object.Context.AppId == appId)
+                    .Where(e => e.Object.ContextId == dbContext.Id && e.ObjectId == dbObject.Id);
+
                 long? userId = null;
-                if (!string.IsNullOrWhiteSpace(userLogin))
+                if (userLogin != null)
                 {
-                    userId = ctx.SecUsers.Where(u => u.AppId == appId && u.Login == userLogin).Select(u => (long?) u.Id).FirstOrDefault();
+                    var sqlUser = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
+                    userId = sqlUser.Id;
                     q = q.Where(e => e.UserId == userId);
                 }
+
                 int? groupId = null;
-                if (!string.IsNullOrWhiteSpace(groupName))
+                int? roleId = null;
+                if (groupName != null)
                 {
-                    groupId = ctx.SecGroups.Where(g => g.AppId == appId && g.Name == groupName).Select(g => (int?) g.Id).FirstOrDefault();
-                    q = q.Where(e => e.GroupId == groupId);
+                    var sqlGroup = await GetGroupByNameAsync(ctx, appId, appName, groupName);
+                    
+                    if (roleName != null)
+                    {
+                        var sqlRole = await GetRoleByNameAsync(ctx, appName, sqlGroup.Id, groupName, roleName);
+                        roleId = sqlRole.Id;
+                        q = q.Where(e => e.RoleId == roleId);
+                    }
+                    else
+                    {
+                        groupId = sqlGroup.Id;
+                        q = q.Where(e => e.GroupId == groupId);
+                    }
                 }
 
                 if (q.Any())
                 {
-                    
-                    //added = true;
+                    throw new SecEntryExistingException(appName, userLogin, groupName, roleName, dbContext.Name, dbObject.Name);
                 }
 
                 var secEntry = ctx.SecEntries.Add(new SqlSecEntry
                 {
                     UserId = userId,
                     GroupId = groupId,
+                    RoleId = roleId,
                     ObjectId = dbObject.Id
                 });
 
@@ -444,15 +451,18 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
         }
 
-        protected override async Task RemoveEntryAsyncInternal(string appName, string contextName, string objectName, string userLogin, string groupName)
+        protected override async Task RemoveEntryAsyncInternal(string appName, string contextName, string objectName, string userLogin, string groupName, string roleName)
         {
-            
-            using (var ctx = SqlDbContext.CreateUpdateContext())
+            using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var appId = await GetAppIdByNameAsync(ctx, appName);
                 //var entry = ctx.SecEntries.FirstOrDefault(e => e.AppId == appId && e.Context.Name == contextName && e.Object.Name == objectName && (e.User == null || e.User.Login == userLogin) && (e.Group == null || e.Group.Name == groupName));
 
-                var q = ctx.SecEntries.Include(e => e.Object).Include(e => e.User).Include(e => e.Group);
+                var q = ctx.SecEntries
+                    .Include(e => e.Object)
+                    .Include(e => e.User)
+                    .Include(e => e.Group)
+                    .Include(e => e.Role);
 
                 if (userLogin != null)
                 {
@@ -460,11 +470,9 @@ namespace Finsa.Caravan.DataAccess.Sql
                     var groupIds = user.Groups.Select(g => g.Id).ToList();
                     q = q.Where(e => e.UserId == user.Id || groupIds.Contains(e.Group.Id));
                 }
-                var removed = false;
                 if (q != null)
                 {
                     ctx.SecEntries.Remove(q.First());
-                    removed = true;
                 }
                 await ctx.SaveChangesAsync();
             }
@@ -501,6 +509,21 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
 
             return group;
+        }
+
+        private static async Task<SqlSecRole> GetRoleByNameAsync(SqlDbContext ctx, string appName, int groupId, string groupName, string roleName)
+        {
+            var role = await ctx.SecRoles
+                .Include(r => r.Group)
+                .Include(r => r.Users)
+                .FirstOrDefaultAsync(r => r.GroupId == groupId && r.Name == roleName);
+
+            if (role == null)
+            {
+                throw new SecRoleNotFoundException(appName, groupName, roleName);
+            }
+
+            return role;
         }
 
         private static async Task<SqlSecUser> GetUserByLoginAsync(SqlDbContext ctx, int appId, string appName, string userLogin)

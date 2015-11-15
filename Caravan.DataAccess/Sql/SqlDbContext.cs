@@ -102,6 +102,8 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         public DbSet<SqlSecObject> SecObjects { get; set; }
 
+        public DbSet<SqlSecRole> SecRoles { get; set; }
+
         public DbSet<SqlSecUser> SecUsers { get; set; }
 
         #endregion DB Sets - Security
