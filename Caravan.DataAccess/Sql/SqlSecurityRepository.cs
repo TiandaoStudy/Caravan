@@ -246,6 +246,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 userUpdates.LastName.Do(x => sqlUser.LastName = x);
                 userUpdates.Email.Do(x => sqlUser.Email = x);
                 userUpdates.Active.Do(x => sqlUser.Active = x);
+                userUpdates.PasswordHash.Do(x => sqlUser.PasswordHash = x);
 
                 await ctx.SaveChangesAsync();
             }

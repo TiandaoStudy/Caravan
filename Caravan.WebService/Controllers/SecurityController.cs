@@ -154,9 +154,11 @@ namespace Finsa.Caravan.WebService.Controllers
         [Route("{appName}/users")]
         public async Task<IdentityResult> PostUser(string appName, [FromBody] SecUser user)
         {
+            var password = user.PasswordHash;
+            user.PasswordHash = string.Empty;
             using (var userManager = await _userManagerFactory.CreateAsync(appName))
             {
-                return await userManager.CreateAsync(user, user.PasswordHash);
+                return await userManager.CreateAsync(user, password);
             }
         }
 
