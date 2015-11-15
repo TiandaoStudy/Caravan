@@ -71,7 +71,7 @@ namespace Finsa.Caravan.Common.Security
         /// <exception cref="ArgumentException">
         ///   <paramref name="appName"/> or <paramref name="groupId"/> are null or empty.
         /// </exception>
-        Task<SecGroup> GetGroupByIdAsync(string appName, long groupId);
+        Task<SecGroup> GetGroupByIdAsync(string appName, int groupId);
 
         /// <summary>
         ///   </summary>

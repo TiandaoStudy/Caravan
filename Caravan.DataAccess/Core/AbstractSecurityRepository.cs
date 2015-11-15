@@ -10,29 +10,27 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.Common.Security;
+using Finsa.Caravan.Common.Security.Exceptions;
+using Finsa.Caravan.Common.Security.Models;
 using Finsa.CodeServices.Common;
 using PommaLabs.Thrower;
 using System;
-using System.Linq;
-using Finsa.Caravan.Common.Logging.Exceptions;
-using Finsa.Caravan.Common.Security.Exceptions;
-using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Logging.Models;
-using Finsa.Caravan.Common.Logging;
-using Finsa.Caravan.Common.Security.Models;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
-    internal abstract class AbstractSecurityRepository<TSec> : ICaravanSecurityRepository 
+    internal abstract class AbstractSecurityRepository<TSec> : ICaravanSecurityRepository
         where TSec : AbstractSecurityRepository<TSec>
     {
         protected AbstractSecurityRepository(ICaravanLog log)
         {
             RaiseArgumentNullException.IfIsNull(log, nameof(log));
             Log = log;
-        }  
+        }
 
         public SecApp CurrentApp { get; private set; }
 
@@ -44,7 +42,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public async Task<SecApp[]> GetAppsAsync()
         {
-            const string logCtx = "Retrieving all APPs";
+            const string logCtx = "Retrieving all applications";
 
             try
             {
@@ -63,7 +61,7 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
 
             appName = appName?.ToLowerInvariant();
-            var logCtx = $"Retrieving {appName} APP";
+            var logCtx = $"Retrieving application '{appName}'";
 
             try
             {
@@ -88,14 +86,14 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(app.Name), ErrorMessages.NullOrWhiteSpaceAppName, nameof(app.Name));
 
             app.Name = app.Name.ToLowerInvariant();
-            var logCtx = $"Adding new '{app.Name}' APP";
+            var logCtx = $"Adding new application '{app.Name}'";
 
             try
             {
                 await AddAppAsyncInternal(app);
                 Log.Warn(new LogMessage
                 {
-                    ShortMessage = $"Added new '{app.Name}' APP",
+                    ShortMessage = $"Added new application '{app.Name}'",
                     Context = logCtx
                 });
                 return app.Id;
@@ -117,11 +115,11 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
 
             appName = appName?.ToLowerInvariant();
-            var logCtx = $"Retrieving all GROUPs from '{appName}' APP";
+            var logCtx = $"Retrieving all groups from application '{appName}'";
 
             try
             {
-                return await GetGroupsAsyncInternal(appName, null);
+                return await GetGroupsAsyncInternal(appName, null, null);
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
@@ -130,9 +128,28 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public Task<SecGroup> GetGroupByIdAsync(string appName, long groupId)
+        public async Task<SecGroup> GetGroupByIdAsync(string appName, int groupId)
         {
-            throw new NotImplementedException();
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+
+            appName = appName?.ToLowerInvariant();
+            var logCtx = $"Retrieving group #{groupId} from application '{appName}'";
+
+            try
+            {
+                var groups = await GetGroupsAsyncInternal(appName, groupId, null);
+                if (groups.Length == 0)
+                {
+                    throw new SecGroupNotFoundException(appName, groupId.ToString(CultureInfo.InvariantCulture));
+                }
+                return groups[0];
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(SecGroup);
+            }
         }
 
         public async Task<SecGroup> GetGroupByNameAsync(string appName, string groupName)
@@ -143,11 +160,11 @@ namespace Finsa.Caravan.DataAccess.Core
 
             appName = appName?.ToLowerInvariant();
             groupName = groupName?.ToLowerInvariant();
-            var logCtx = $"Retrieving '{groupName}' GROUP from '{appName}' APP";
+            var logCtx = $"Retrieving group '{groupName}' from application '{appName}'";
 
             try
             {
-                var groups = await GetGroupsAsyncInternal(appName, groupName);
+                var groups = await GetGroupsAsyncInternal(appName, null, groupName);
                 if (groups.Length == 0)
                 {
                     throw new SecGroupNotFoundException(appName, groupName);
@@ -170,14 +187,14 @@ namespace Finsa.Caravan.DataAccess.Core
 
             appName = appName?.ToLowerInvariant();
             newGroup.Name = newGroup.Name.ToLowerInvariant();
-            var logCtx = $"Adding new '{newGroup.Name}' GROUP to '{appName}' APP";
+            var logCtx = $"Adding new group '{newGroup.Name}' to application '{appName}'";
 
             try
             {
                 await AddGroupAsyncInternal(appName, newGroup);
                 Log.Warn(new LogMessage
                 {
-                    ShortMessage = $"Added new '{newGroup.Name}' GROUP to '{appName}' APP",
+                    ShortMessage = $"Added new group '{newGroup.Name}' to application '{appName}'",
                     Context = logCtx
                 });
                 return newGroup.Id;
@@ -197,14 +214,14 @@ namespace Finsa.Caravan.DataAccess.Core
 
             appName = appName?.ToLowerInvariant();
             groupName = groupName?.ToLowerInvariant();
-            var logCtx = $"Removing '{groupName}' GROUP from '{appName}' APP";
+            var logCtx = $"Removing group '{groupName}' from application '{appName}'";
 
             try
             {
                 await RemoveGroupAsyncInternal(appName, groupName);
                 Log.Warn(new LogMessage
                 {
-                    ShortMessage = $"Removed '{groupName}' GROUP from '{appName}' APP",
+                    ShortMessage = $"Removed group '{groupName}' from application '{appName}'",
                     Context = logCtx
                 });
             }
@@ -224,7 +241,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
             appName = appName?.ToLowerInvariant();
             groupName = groupName?.ToLowerInvariant();
-            var logCtx = $"Updating '{groupName}' GROUP in '{appName}' APP";
+            var logCtx = $"Updating group '{groupName}' in application '{appName}'";
 
             try
             {
@@ -232,7 +249,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 await UpdateGroupAsyncInternal(appName, groupName, groupUpdates);
                 Log.Warn(new LogMessage
                 {
-                    ShortMessage = $"Updated '{groupName}' GROUP in '{appName}' APP",
+                    ShortMessage = $"Updated group '{groupName}' in application '{appName}'",
                     Context = logCtx
                 });
             }
@@ -252,11 +269,11 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
 
             appName = appName?.ToLowerInvariant();
-            var logCtx = $"Retrieving all USERs from '{appName}' APP";
+            var logCtx = $"Retrieving all users from application '{appName}'";
 
             try
             {
-                return await GetUsersAsyncInternal(appName, null, null);
+                return await GetUsersAsyncInternal(appName, null, null, null);
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
@@ -265,9 +282,28 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public Task<SecUser> GetUserByIdAsync(string appName, long userId)
+        public async Task<SecUser> GetUserByIdAsync(string appName, long userId)
         {
-            throw new NotImplementedException();
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+
+            appName = appName?.ToLowerInvariant();
+            var logCtx = $"Retrieving user #{userId} from application '{appName}'";
+
+            try
+            {
+                var users = await GetUsersAsyncInternal(appName, userId, null, null);
+                if (users.Length == 0)
+                {
+                    throw new SecUserNotFoundException(appName, userId.ToString(CultureInfo.InvariantCulture));
+                }
+                return users[0];
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(SecUser);
+            }
         }
 
         public async Task<SecUser> GetUserByLoginAsync(string appName, string userLogin)
@@ -278,11 +314,11 @@ namespace Finsa.Caravan.DataAccess.Core
 
             appName = appName?.ToLowerInvariant();
             userLogin = userLogin?.ToLowerInvariant();
-            var logCtx = $"Retrieving '{userLogin}' USER from '{appName}' APP";
+            var logCtx = $"Retrieving user '{userLogin}' from application '{appName}'";
 
             try
             {
-                var users = await GetUsersAsyncInternal(appName, userLogin, null);
+                var users = await GetUsersAsyncInternal(appName, null, userLogin, null);
                 if (users.Length == 0)
                 {
                     throw new SecUserNotFoundException(appName, userLogin);
@@ -304,11 +340,11 @@ namespace Finsa.Caravan.DataAccess.Core
 
             appName = appName?.ToLowerInvariant();
             userEmail = userEmail?.ToLowerInvariant();
-            var logCtx = $"Retrieving '{userEmail}' USER from '{appName}' APP";
+            var logCtx = $"Retrieving user '{userEmail}' from application '{appName}'";
 
             try
             {
-                var users = await GetUsersAsyncInternal(appName, null, userEmail);
+                var users = await GetUsersAsyncInternal(appName, null, null, userEmail);
                 if (users.Length == 0)
                 {
                     throw new SecUserNotFoundException(appName, userEmail);
@@ -331,14 +367,14 @@ namespace Finsa.Caravan.DataAccess.Core
 
             appName = appName?.ToLowerInvariant();
             newUser.Login = newUser.Login.ToLowerInvariant();
-            var logCtx = $"Adding new '{newUser.Login}' USER to '{appName}' APP";
+            var logCtx = $"Adding new user '{newUser.Login}' to application '{appName}'";
 
             try
             {
                 await AddUserAsyncInternal(appName, newUser);
                 Log.Warn(new LogMessage
                 {
-                    ShortMessage = $"Added new '{newUser.Login}' USER to '{appName}' APP",
+                    ShortMessage = $"Added new user '{newUser.Login}' to application '{appName}'",
                     Context = logCtx
                 });
                 return newUser.Id;
@@ -358,14 +394,14 @@ namespace Finsa.Caravan.DataAccess.Core
 
             appName = appName?.ToLowerInvariant();
             userLogin = userLogin?.ToLowerInvariant();
-            var logCtx = $"Removing '{userLogin}' USER from '{appName}' APP";
+            var logCtx = $"Removing user '{userLogin}' from application '{appName}'";
 
             try
             {
                 await RemoveUserAsyncInternal(appName, userLogin);
                 Log.Warn(new LogMessage
                 {
-                    ShortMessage = $"Removed '{userLogin}' USER from '{appName}' APP",
+                    ShortMessage = $"Removed user '{userLogin}' from application '{appName}'",
                     Context = logCtx
                 });
             }
@@ -385,7 +421,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
             appName = appName?.ToLowerInvariant();
             userLogin = userLogin?.ToLowerInvariant();
-            var logCtx = $"Updating '{userLogin}' USER in '{appName}' APP";
+            var logCtx = $"Updating user '{userLogin}' in application '{appName}'";
 
             try
             {
@@ -393,7 +429,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 await UpdateUserAsyncInternal(appName, userLogin, userUpdates);
                 Log.Warn(new LogMessage
                 {
-                    ShortMessage = $"Updated '{userLogin}' USER in '{appName}' APP",
+                    ShortMessage = $"Updated user '{userLogin}' in application '{appName}'",
                     Context = logCtx
                 });
             }
@@ -413,14 +449,14 @@ namespace Finsa.Caravan.DataAccess.Core
             appName = appName?.ToLowerInvariant();
             userLogin = userLogin?.ToLowerInvariant();
             groupName = groupName?.ToLowerInvariant();
-            var logCtx = $"Adding '{userLogin}' USER to '{groupName}' GROUP in '{appName}' APP";
+            var logCtx = $"Adding user '{userLogin}' to group '{groupName}' in application '{appName}'";
 
             try
             {
                 await AddUserToGroupAsyncInternal(appName, userLogin, groupName);
                 Log.Warn(new LogMessage
                 {
-                    ShortMessage = $"Added '{userLogin}' USER to '{groupName}' GROUP in '{appName}' APP",
+                    ShortMessage = $"Added user '{userLogin}' to group '{groupName}' in application '{appName}'",
                     Context = logCtx
                 });
             }
@@ -440,14 +476,14 @@ namespace Finsa.Caravan.DataAccess.Core
             appName = appName?.ToLowerInvariant();
             userLogin = userLogin?.ToLowerInvariant();
             groupName = groupName?.ToLowerInvariant();
-            var logCtx = $"Removing '{userLogin}' USER from '{groupName}' GROUP in '{appName}' APP";
+            var logCtx = $"Removing user '{userLogin}' from group '{groupName}' in application '{appName}'";
 
             try
             {
                 await RemoveUserFromGroupAsyncInternal(appName, userLogin, groupName);
                 Log.Warn(new LogMessage
                 {
-                    ShortMessage = $"Removed '{userLogin}' USER from '{groupName}' GROUP in '{appName}' APP",
+                    ShortMessage = $"Removed user '{userLogin}' from group '{groupName}' in application '{appName}'",
                     Context = logCtx
                 });
             }
@@ -476,6 +512,10 @@ namespace Finsa.Caravan.DataAccess.Core
         {
             throw new NotImplementedException();
         }
+
+        #endregion Users
+
+        #region Roles
 
         public Task<SecRole[]> GetRolesAsync(string appName)
         {
@@ -507,7 +547,7 @@ namespace Finsa.Caravan.DataAccess.Core
             throw new NotImplementedException();
         }
 
-        #endregion Users
+        #endregion
 
         #region Contexts
 
@@ -613,7 +653,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 {
                     groupName = groupName.ToLowerInvariant();
                 }
-                var entryId = await AddEntryAsyncInternal(appName.ToLowerInvariant(), secContext, secObject, userLogin, groupName,roleName);
+                var entryId = await AddEntryAsyncInternal(appName.ToLowerInvariant(), secContext, secObject, userLogin, groupName, roleName);
                 Log.Warn(() => new LogMessage
                 {
                     ShortMessage = $"Security entry for object '{secObject.Name}' in context '{secContext.Name}' has been added for '{userLogin ?? groupName}'",
@@ -671,7 +711,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         protected abstract Task AddAppAsyncInternal(SecApp app);
 
-        protected abstract Task<SecGroup[]> GetGroupsAsyncInternal(string appName, string groupName);
+        protected abstract Task<SecGroup[]> GetGroupsAsyncInternal(string appName, int? groupId, string groupName);
 
         protected abstract Task AddGroupAsyncInternal(string appName, SecGroup newGroup);
 
@@ -679,7 +719,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         protected abstract Task UpdateGroupAsyncInternal(string appName, string groupName, SecGroupUpdates groupUpdates);
 
-        protected abstract Task<SecUser[]> GetUsersAsyncInternal(string appName, string userLogin, string userEmail);
+        protected abstract Task<SecUser[]> GetUsersAsyncInternal(string appName, long? userId, string userLogin, string userEmail);
 
         protected abstract Task AddUserAsyncInternal(string appName, SecUser newUser);
 
