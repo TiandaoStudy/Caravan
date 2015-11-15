@@ -23,6 +23,7 @@ A short description of the package. If specified, this shows up in the middle pa
         <copyright>Copyright © Finsa S.p.A. 2014-2024</copyright>
         <dependencies>
             <dependency id="AutoMapper" version="[4.1.1, 5.0.0)" />
+            <dependency id="Finsa.CodeServices.Security" version="[3.0.6, 4.0.0)" />
             <dependency id="morelinq" version="[1.4.0, 2.0.0)" />
             <dependency id="NLog" version="[4.2.0, 5.0.0)" />
             <dependency id="NLog.Config" version="[4.2.0, 5.0.0)" />
