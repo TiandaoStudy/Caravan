@@ -1,8 +1,22 @@
-﻿using Finsa.Caravan.Common;
+﻿// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
+using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataAccess.Sql.Logging;
 using Finsa.Caravan.WebApi;
+using Finsa.Caravan.WebApi.Filters;
 using Finsa.Caravan.WebApi.Middlewares;
+using Finsa.Caravan.WebApi.Models;
 using Finsa.Caravan.WebService;
 using Finsa.CodeServices.Common.Portability;
 using Microsoft.Owin;
@@ -21,8 +35,6 @@ using System.Data.Entity.Infrastructure.Interception;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Finsa.Caravan.WebApi.Filters;
-using Finsa.Caravan.WebApi.Models;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -55,11 +67,7 @@ namespace Finsa.Caravan.WebService
             ConfigureAdminPages(app);
             ConfigureHelpPages(config);
             ConfigureFormatters(config);
-            AuthorizeForCaravanAttribute.AuthorizationGranted = (context, token, log) => Task.FromResult(new AuthorizationResult
-            {
-                // Liberi tutti, per ora...
-                Authorized = true
-            });
+            ConfigureFilters(config);
 
             // Inizializzazione gestione identità.
             IdentityConfig.Build(app);
@@ -74,6 +82,9 @@ namespace Finsa.Caravan.WebService
 
         private static void ConfigureAdminPages(IAppBuilder app)
         {
+            // Controlli di integrità.
+            RaiseArgumentNullException.IfIsNull(app, nameof(app));
+
             var root = PortableEnvironment.MapPath("~/Caravan/Administration");
             var fileSystem = new PhysicalFileSystem(root);
             var options = new StaticFileOptions
@@ -86,6 +97,9 @@ namespace Finsa.Caravan.WebService
 
         private static void ConfigureHelpPages(HttpConfiguration config)
         {
+            // Controlli di integrità.
+            RaiseArgumentNullException.IfIsNull(config, nameof(config));
+
             // REQUIRED TO ENABLE HELP PAGES :)
             config.MapHttpAttributeRoutes();
             config.EnableSwagger(c =>
@@ -100,13 +114,13 @@ namespace Finsa.Caravan.WebService
             });
         }
 
-        private static void ConfigureFormatters(HttpConfiguration configuration)
+        private static void ConfigureFormatters(HttpConfiguration config)
         {
             // Controlli di integrità.
-            Raise<ArgumentNullException>.IfIsNull(configuration);
+            RaiseArgumentNullException.IfIsNull(config, nameof(config));
 
             // Personalizzo le impostazioni del serializzatore JSON.
-            configuration.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
+            config.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 Formatting = Formatting.None,
@@ -116,8 +130,21 @@ namespace Finsa.Caravan.WebService
             };
 
             // Personalizzo le impostazioni del serializzatore XML.
-            var xml = configuration.Formatters.XmlFormatter;
+            var xml = config.Formatters.XmlFormatter;
             xml.Indent = false;
+        }
+
+        private static void ConfigureFilters(HttpConfiguration config)
+        {
+            // Controlli di integrità.
+            RaiseArgumentNullException.IfIsNull(config, nameof(config));
+
+            config.Filters.Add(new HttpExceptionFilterAttribute());
+            AuthorizeForCaravanAttribute.AuthorizationGranted = (context, token, log) => Task.FromResult(new AuthorizationResult
+            {
+                // Liberi tutti, per ora...
+                Authorized = CaravanWebServiceConfiguration.Instance.Security_EnableCaravanServices
+            });
         }
     }
 }

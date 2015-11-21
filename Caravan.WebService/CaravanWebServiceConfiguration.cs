@@ -55,6 +55,11 @@ namespace Finsa.Caravan.WebService
         #endregion Static instance
 
         /// <summary>
+        ///   Abilita i servizi di web di Caravan.
+        /// </summary>
+        public bool Security_EnableCaravanServices { get; set; } = false;
+
+        /// <summary>
         ///   Il percorso del certificato richiesto dal servizio di autorizzazione/autenticazione
         ///   per firmare i TOKEN emessi.
         /// </summary>

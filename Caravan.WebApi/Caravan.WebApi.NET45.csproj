@@ -159,6 +159,7 @@
     <Compile Include="Middlewares\HttpLoggingMiddleware.cs" />
     <Compile Include="CaravanWebServiceHelper.cs" />
     <Compile Include="Models\AuthorizationResult.cs" />
+    <Compile Include="Models\HttpExceptionResponse.cs" />
     <Compile Include="Models\Links\AlternateLink.cs" />
     <Compile Include="Models\Links\CollectionLink.cs" />
     <Compile Include="Models\Links\EditLink.cs" />

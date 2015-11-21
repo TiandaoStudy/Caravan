@@ -10,15 +10,16 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Common.Logging;
+using Finsa.Caravan.Common;
+using Finsa.Caravan.WebApi.Models;
+using PommaLabs.Thrower;
 using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
-using Common.Logging;
-using Finsa.Caravan.WebApi.Models;
-using PommaLabs.Thrower;
 
 namespace Finsa.Caravan.WebApi.Filters
 {
@@ -27,7 +28,7 @@ namespace Finsa.Caravan.WebApi.Filters
     /// </summary>
     public sealed class AuthorizeForCaravanAttribute : ActionFilterAttribute
     {
-        private static readonly ILog Log = LogManager.GetLogger<AuthorizeForCaravanAttribute>();
+        private static readonly ILog Log = CaravanServiceProvider.FetchLog<AuthorizeForCaravanAttribute>();
 
         /// <summary>
         ///   La funzione da modificare per gestire le autorizzazioni.
@@ -72,7 +73,7 @@ namespace Finsa.Caravan.WebApi.Filters
             Log.Warn(errorMessage);
             throw new HttpException(HttpStatusCode.Unauthorized, errorMessage, new HttpExceptionInfo
             {
-                ErrorCode = CaravanErrorCodes.E00000,
+                ErrorCode = CaravanErrorCodes.CVE00000,
                 UserMessage = authorizationResult.AuthorizationDeniedReason
             });
         }

@@ -10,22 +10,30 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-// ReSharper disable InconsistentNaming
-namespace Finsa.Caravan.WebApi
+using System.Net;
+
+namespace Finsa.Caravan.WebApi.Models
 {
     /// <summary>
-    ///   Tutti i possibili codici di errore emessi da Caravan.
+    ///   Modella la risposta di errore restituita dai servizi.
     /// </summary>
-    public enum CaravanErrorCodes
+    public sealed class HttpExceptionResponse
     {
         /// <summary>
-        ///   Accesso non autorizzato ai servizi web di Caravan.
+        ///   Codice di errore della response, replicato qui per facilità di lettura.
         /// </summary>
-        CVE00000,
+        public HttpStatusCode HttpStatusCode { get; set; }
 
         /// <summary>
-        ///   Errore interno al servizio non correttamente gestito.
+        ///   Il messaggio di errore destinato allo sviluppatore.
         /// </summary>
-        CVE99999,
+        public string Message { get; set; }
+
+        /// <summary>
+        ///   Il messaggio di errore destinato all'utente del servizio o dell'applicativo.
+        /// </summary>
+        public string UserMessage { get; set; }
+
+        public object ErrorCode { get; set; }
     }
 }

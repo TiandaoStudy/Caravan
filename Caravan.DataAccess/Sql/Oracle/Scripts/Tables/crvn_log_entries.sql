@@ -112,8 +112,8 @@ COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_9
 COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_9 
      IS 'Valore del parametro opzionale 9, ad esempio my_param_value';
 
-CREATE INDEX mydb.ix_crvn_log_date ON mydb.crvn_log_entries (capp_id, clog_date DESC);
-CREATE INDEX mydb.ix_crvn_log_type ON mydb.crvn_log_entries (capp_id, clos_type);
+CREATE INDEX mydb.ix_crvn_log_date ON mydb.crvn_log_entries (clog_date DESC, capp_id);
+CREATE INDEX mydb.ix_crvn_log_type ON mydb.crvn_log_entries (clos_type, capp_id);
 
 -- DROP da fare per la transizione da FLEX_LOG:
 --> pck_flex_log

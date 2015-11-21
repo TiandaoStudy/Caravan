@@ -16,6 +16,11 @@
             </summary>
             <value>The static configuration instance.</value>
         </member>
+        <member name="P:Finsa.Caravan.WebService.CaravanWebServiceConfiguration.Security_EnableCaravanServices">
+            <summary>
+              Abilita i servizi di web di Caravan.
+            </summary>
+        </member>
         <member name="P:Finsa.Caravan.WebService.CaravanWebServiceConfiguration.Identity_SigningCertificatePath">
             <summary>
               Il percorso del certificato richiesto dal servizio di autorizzazione/autenticazione
