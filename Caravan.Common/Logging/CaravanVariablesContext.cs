@@ -12,6 +12,7 @@
 
 using Common.Logging;
 using Finsa.CodeServices.Common;
+using Ninject;
 using PommaLabs.KVLite;
 using PommaLabs.Thrower;
 using System;
@@ -19,7 +20,6 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace Finsa.Caravan.Common.Logging
 {
@@ -32,23 +32,31 @@ namespace Finsa.Caravan.Common.Logging
         [ThreadStatic]
         private static CaravanVariablesContext _cachedThread;
 
-        public static CaravanVariablesContext GlobalVariables => _cachedGlobal ?? (_cachedGlobal = new CaravanVariablesContext(CaravanServiceProvider.MemoryCache, CaravanVariablesContextMode.Global));
+        public static CaravanVariablesContext GlobalVariables
+            => _cachedGlobal
+            ?? (_cachedGlobal = new CaravanVariablesContext(CaravanServiceProvider.MemoryCache, CaravanVariablesContextMode.Global, CaravanServiceProvider.NinjectKernel.Get<ICaravanVariablesContextIdentifier>()));
 
-        public static CaravanVariablesContext ThreadVariables => _cachedThread ?? (_cachedThread = new CaravanVariablesContext(CaravanServiceProvider.MemoryCache, CaravanVariablesContextMode.Thread));
+        public static CaravanVariablesContext ThreadVariables
+            => _cachedThread
+            ?? (_cachedThread = new CaravanVariablesContext(CaravanServiceProvider.MemoryCache, CaravanVariablesContextMode.Thread, CaravanServiceProvider.NinjectKernel.Get<ICaravanVariablesContextIdentifier>()));
 
         #endregion Static members
 
-        public CaravanVariablesContext(ICache cache, CaravanVariablesContextMode mode)
+        public CaravanVariablesContext(ICache cache, CaravanVariablesContextMode mode, ICaravanVariablesContextIdentifier identifier)
         {
             RaiseArgumentNullException.IfIsNull(cache, nameof(cache));
             RaiseArgumentException.IfNot(Enum.IsDefined(typeof(CaravanVariablesContextMode), mode), nameof(mode));
+            RaiseArgumentNullException.IfIsNull(identifier, nameof(identifier));
             Cache = cache;
             Mode = mode;
+            Identifier = identifier;
         }
 
         public ICache Cache { get; }
 
         public CaravanVariablesContextMode Mode { get; }
+
+        public ICaravanVariablesContextIdentifier Identifier { get; }
 
         #region IEnumerable members
 
@@ -100,16 +108,14 @@ namespace Finsa.Caravan.Common.Logging
         #region Private members
 
         private const string CachePartition = "Caravan.VariablesContexts";
-        private const string CacheKeyForGlobal = "global";
-        private const string CacheKeyPrefixForRequest = "request_";
-        private const string CacheKeyPrefixForThread = "thread_";
 
         private ConcurrentDictionary<string, GTuple2<long, object>> GetAndSetVariablesMap()
         {
             switch (Mode)
             {
                 case CaravanVariablesContextMode.Global:
-                    var maybeGlobalMap = Cache.Get<ConcurrentDictionary<string, GTuple2<long, object>>>(CachePartition, CacheKeyForGlobal);
+                    var cacheKeyForGlobal = Identifier.GlobalIdentity;
+                    var maybeGlobalMap = Cache.Get<ConcurrentDictionary<string, GTuple2<long, object>>>(CachePartition, cacheKeyForGlobal);
 
                     // If requested map exists, then return it.
                     if (maybeGlobalMap.HasValue)
@@ -120,11 +126,11 @@ namespace Finsa.Caravan.Common.Logging
                     // Otherwise, it must be added to the cache and then returned.
                     var newGlobalMap = new ConcurrentDictionary<string, GTuple2<long, object>>();
                     var globalInterval = CaravanCommonConfiguration.Instance.Logging_CaravanVariablesContext_Interval;
-                    Cache.AddSliding(CachePartition, CacheKeyForGlobal, newGlobalMap, globalInterval);
+                    Cache.AddSliding(CachePartition, cacheKeyForGlobal, newGlobalMap, globalInterval);
                     return newGlobalMap;
 
                 case CaravanVariablesContextMode.Thread:
-                    var cacheKeyForThread = GetThreadCacheKey();
+                    var cacheKeyForThread = Identifier.ThreadIdentity;
                     var maybeThreadMap = Cache.Get<ConcurrentDictionary<string, GTuple2<long, object>>>(CachePartition, cacheKeyForThread);
 
                     // If requested map exists, then return it.
@@ -142,31 +148,6 @@ namespace Finsa.Caravan.Common.Logging
                 default:
                     throw new Exception("Caravan variables context is inconsistent, found an invalid mode!");
             }
-        }
-
-        private static string GetThreadCacheKey()
-        {
-            // Prima cerco di capire se mi trovo in una request IIS. Se si, non importa più in quale
-            // thread io sia, perché IIS può spostare il flusso di esecuzione da un thread
-            // all'altro. Perciò, se mi trovo in una request, cerco di usare quella come riferimento
-            // per il flusso corrente.
-            if (HttpContext.Current != null)
-            {
-                try
-                {
-                    return CacheKeyPrefixForRequest + HttpContext.Current.Request.GetHashCode();
-                }
-                catch
-                {
-                    // Potrei finire qui durante l'Application_Start del Global.asax; infatti, lì il
-                    // contesto HTTP è valorizzato ma la request sembra ancora non accessibile.
-                    return CacheKeyPrefixForRequest + 0;
-                }
-            }
-
-            // Se non mi trovo in una request, allora uso il thread come riferimento per il flusso
-            // di lavoro.
-            return CacheKeyPrefixForThread + System.Threading.Thread.CurrentThread.Name;
         }
 
         #endregion Private members

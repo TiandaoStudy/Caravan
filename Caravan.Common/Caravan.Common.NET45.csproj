@@ -158,8 +158,10 @@
     <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />
     <Compile Include="Logging\CaravanLogTarget.cs" />
     <Compile Include="Logging\CaravanNoOpLogger.cs" />
+    <Compile Include="Logging\CaravanVariablesContextIdentifier.cs" />
     <Compile Include="Logging\CaravanVariablesContext.cs" />
     <Compile Include="Logging\ICaravanLogRepository.cs" />
+    <Compile Include="Logging\ICaravanVariablesContextIdentifier.cs" />
     <Compile Include="Logging\Workflows\CleanUpLogRepository.cs" />
     <Compile Include="Logging\Models\LogEntryQuery.cs" />
     <Compile Include="Security\CaravanRoleManager.cs" />

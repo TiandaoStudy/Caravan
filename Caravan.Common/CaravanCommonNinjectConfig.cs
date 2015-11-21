@@ -14,9 +14,7 @@ using Common.Logging;
 using Finsa.Caravan.Common.Core;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
-using Finsa.Caravan.Common.Security.Models;
 using Finsa.CodeServices.Clock;
-using Microsoft.AspNet.Identity;
 using Ninject.Modules;
 using PommaLabs.Thrower;
 using System;
@@ -57,10 +55,12 @@ namespace Finsa.Caravan.Common
         ///     indipendentemente dall'ambiente di esecuzione.
         ///   * <see cref="ICaravanRoleStore"/> via <see cref="CaravanRoleStore"/>,
         ///     indipendentemente dall'ambiente di esecuzione.
-        ///   * <see cref="ICaravanUserManagerFactory"/> via <see cref="CaravanUserManagerFactory"/>,
-        ///     indipendentemente dall'ambiente di esecuzione.
-        ///   * <see cref="ICaravanRoleManagerFactory"/> via <see cref="CaravanRoleManagerFactory"/>,
-        ///     indipendentemente dall'ambiente di esecuzione.
+        ///   * <see cref="ICaravanUserManagerFactory"/> via
+        ///     <see cref="CaravanUserManagerFactory"/>, indipendentemente dall'ambiente di esecuzione.
+        ///   * <see cref="ICaravanRoleManagerFactory"/> via
+        ///     <see cref="CaravanRoleManagerFactory"/>, indipendentemente dall'ambiente di esecuzione.
+        ///   * <see cref="ICaravanVariablesContextIdentifier"/> via
+        ///     <see cref="CaravanVariablesContextIdentifier"/>, indipendentemente dall'ambiente di esecuzione.
         /// </summary>
         public override void Load()
         {
@@ -85,6 +85,7 @@ namespace Finsa.Caravan.Common
             Bind<ICaravanRoleStore>().To<CaravanRoleStore>().InSingletonScope().WithConstructorArgument("appName", _appName);
             Bind<ICaravanUserManagerFactory>().To<CaravanUserManagerFactory>().InSingletonScope();
             Bind<ICaravanRoleManagerFactory>().To<CaravanRoleManagerFactory>().InSingletonScope();
+            Bind<ICaravanVariablesContextIdentifier>().To<CaravanVariablesContextIdentifier>().InSingletonScope();
         }
     }
 }
