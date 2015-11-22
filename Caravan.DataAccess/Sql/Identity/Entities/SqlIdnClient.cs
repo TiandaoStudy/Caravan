@@ -15,8 +15,10 @@
  */
 
 using Finsa.Caravan.DataAccess.Sql.Entities;
+using Finsa.Caravan.DataAccess.Sql.Security.Entities;
 using Finsa.CodeServices.Common;
 using IdentityServer3.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -27,11 +29,15 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
     /// <summary>
     ///   Riferimento interno per <see cref="IdentityServer3.EntityFramework.Entities.Client"/>.
     /// </summary>
+    [Serializable]
     public class SqlIdnClient : SqlTrackedEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public virtual int Id { get; set; }
+
+        public virtual int AppId { get; set; }
+        public virtual SqlSecApp App { get; set; }
 
         public virtual bool Enabled { get; set; }
 
@@ -152,6 +158,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
             ToTable("CRVN_IDN_CLIENTS", CaravanDataAccessConfiguration.Instance.SqlSchema);
 
             Property(x => x.Id).HasColumnName("CCLI_ID");
+            Property(x => x.AppId).HasColumnName("CAPP_ID");
             Property(x => x.Enabled).HasColumnName("CCLI_ENABLED");
             Property(x => x.ClientId).HasColumnName("CCLI_CLIENT_ID");
             Property(x => x.ClientName).HasColumnName("CCLI_CLIENT_NAME");
@@ -176,6 +183,12 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
             Property(x => x.AlwaysSendClientClaims).HasColumnName("CCLI_ALWAYS_SEND_CLIENT_CLAIMS");
             Property(x => x.PrefixClientClaims).HasColumnName("CCLI_PREFIX_CLIENT_CLAIMS");
             Property(x => x.AllowAccessToAllCustomGrantTypes).HasColumnName("CCLI_ALLOW_ACCESSALL_CST_GRTP");
+
+            // SqlSecUser(N) <-> SqlSecApp(1)
+            HasRequired(x => x.App)
+                .WithMany(x => x.Clients)
+                .HasForeignKey(x => x.AppId)
+                .WillCascadeOnDelete(true);
         }
     }
 }

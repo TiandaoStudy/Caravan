@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+using Finsa.Caravan.Common.Identity;
+using Finsa.Caravan.Common.Identity.Models;
 using Finsa.Caravan.DataAccess.Sql.Identity.Extensions;
 using IdentityServer3.Core.Services;
 using PommaLabs.Thrower;
@@ -22,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
-    internal sealed class SqlIdnClientStore : IClientStore
+    internal sealed class SqlIdnClientStore : ICaravanClientStore
     {
         private readonly SqlDbContext _context;
 
@@ -32,9 +34,15 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
             _context = context;
         }
 
-        public async Task<IdentityServer3.Core.Models.Client> FindClientByIdAsync(string clientId)
+        async Task<IdentityServer3.Core.Models.Client> IClientStore.FindClientByIdAsync(string clientId)
+        {
+            return await FindClientByIdAsync(clientId);
+        }
+
+        public async Task<IdnClient> FindClientByIdAsync(string clientId)
         {
             var client = await _context.IdnClients
+                .Include(x => x.App)
                 .Include(x => x.ClientSecrets)
                 .Include(x => x.RedirectUris)
                 .Include(x => x.PostLogoutRedirectUris)

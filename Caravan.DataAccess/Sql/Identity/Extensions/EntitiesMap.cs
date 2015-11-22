@@ -18,6 +18,7 @@ using AutoMapper;
 using Finsa.Caravan.DataAccess.Sql.Identity.Entities;
 using System.Linq;
 using System.Security.Claims;
+using Finsa.Caravan.Common.Identity.Models;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Extensions
 {
@@ -32,7 +33,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Extensions
 
             Mapper.CreateMap<SqlIdnClientSecret, IdentityServer3.Core.Models.Secret>(MemberList.Destination);
 
-            Mapper.CreateMap<SqlIdnClient, IdentityServer3.Core.Models.Client>(MemberList.Destination)
+            Mapper.CreateMap<SqlIdnClient, IdnClient>(MemberList.Destination)
                 .ForMember(x => x.UpdateAccessTokenClaimsOnRefresh, opt => opt.MapFrom(src => src.UpdateAccessTokenOnRefresh))
                 .ForMember(x => x.AllowAccessToAllCustomGrantTypes, opt => opt.MapFrom(src => src.AllowAccessToAllCustomGrantTypes))
                 .ForMember(x => x.AllowedCustomGrantTypes, opt => opt.MapFrom(src => src.AllowedCustomGrantTypes.Select(x => x.GrantType)))
@@ -44,16 +45,12 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Extensions
                 .ForMember(x => x.Claims, opt => opt.MapFrom(src => src.Claims.Select(x => new Claim(x.Type, x.Value))));
         }
 
-        public static IdentityServer3.Core.Models.Scope ToModel(this SqlIdnScope s)
-        {
-            if (s == null) return null;
-            return Mapper.Map<SqlIdnScope, IdentityServer3.Core.Models.Scope>(s);
-        }
+        public static IdentityServer3.Core.Models.Scope ToModel(this SqlIdnScope s) => s == null
+            ? null
+            : Mapper.Map<SqlIdnScope, IdentityServer3.Core.Models.Scope>(s);
 
-        public static IdentityServer3.Core.Models.Client ToModel(this SqlIdnClient s)
-        {
-            if (s == null) return null;
-            return Mapper.Map<SqlIdnClient, IdentityServer3.Core.Models.Client>(s);
-        }
+        public static IdnClient ToModel(this SqlIdnClient s) => s == null 
+            ? null 
+            : Mapper.Map<SqlIdnClient, IdnClient>(s);
     }
 }

@@ -79,6 +79,10 @@
       <HintPath>..\packages\Finsa.CodeServices.Serialization.3.0.7\lib\net45\Finsa.CodeServices.Serialization.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="IdentityServer3, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IdentityServer3.2.1.1\lib\net45\IdentityServer3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="LZ4, Version=1.0.9.93, Culture=neutral, PublicKeyToken=62e1b5ec1eec9bdd, processorArchitecture=MSIL">
       <HintPath>..\packages\lz4net.1.0.9.93\lib\net4-client\LZ4.dll</HintPath>
       <Private>True</Private>
@@ -101,6 +105,10 @@
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.2.0\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Polenter.SharpSerializer, Version=2.20.0.0, Culture=neutral, PublicKeyToken=8f4f20011571ee5f, processorArchitecture=MSIL">
@@ -153,6 +161,9 @@
     <Compile Include="Core\ErrorMessages.cs" />
     <Compile Include="Core\TaskExtensions.cs" />
     <Compile Include="DependencyHandling.cs" />
+    <Compile Include="Identity\CaravanUserService.cs" />
+    <Compile Include="Identity\ICaravanClientStore.cs" />
+    <Compile Include="Identity\Models\IdnClient.cs" />
     <Compile Include="Logging\Activities\AbstractLogActivity.cs" />
     <Compile Include="Logging\CaravanLogger.cs" />
     <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />

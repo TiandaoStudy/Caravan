@@ -3,6 +3,7 @@
 CREATE TABLE mydb.crvn_idn_clients
 (
      CCLI_ID                        NUMBER(10)                              NOT NULL
+   , CAPP_ID                        NUMBER(10)                              NOT NULL
    , CCLI_ENABLED                   NUMBER(1)       DEFAULT 1               NOT NULL
    , CCLI_CLIENT_ID                 NVARCHAR2(200)                          NOT NULL
    , CCLI_CLIENT_NAME               NVARCHAR2(200)                          NOT NULL
@@ -58,12 +59,15 @@ CREATE TABLE mydb.crvn_idn_clients
 
    , CONSTRAINT pk_crvn_idn_clients PRIMARY KEY (CCLI_ID) ENABLE
    , CONSTRAINT uk_crvn_idn_clients UNIQUE (CCLI_CLIENT_ID) ENABLE
+   , CONSTRAINT fk_crvnidnclients_crvnsecapps FOREIGN KEY (CAPP_ID) REFERENCES mydb.crvn_sec_apps (capp_id) ON DELETE CASCADE ENABLE
 );
 
 COMMENT ON TABLE mydb.crvn_idn_clients 
      IS 'Models an OpenID Connect or OAuth2 client';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ID 
      IS 'Auto-increment ID';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CAPP_ID 
+     IS 'Caravan application ID to which this client belongs';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ENABLED 
      IS 'Specifies if client is enabled (defaults to true)';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_CLIENT_ID 
