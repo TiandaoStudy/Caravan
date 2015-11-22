@@ -1,5 +1,6 @@
 ﻿using IdentityServer3.Core.Models;
 using System.Web.Http;
+using BrockAllen.IdentityReboot;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -24,5 +25,12 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <returns>L'hash SHA512 del secret dato.</returns>
         [Route("utils/sha512")]
         public string GetSha512(string secret) => secret.Sha512();
+
+#if DEBUG
+
+        [Route("utils/adaptivePwdHash")]
+        public string GetAdaptivePasswordHash(string password) => new AdaptivePasswordHasher().HashPassword(password);
+
+#endif
     }
 }

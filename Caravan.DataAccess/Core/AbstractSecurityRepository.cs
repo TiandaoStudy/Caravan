@@ -504,12 +504,14 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public Task<long> AddUserClaimAsync(string appName, string userLogin, SecClaim claim)
         {
-            throw new NotImplementedException();
+            // TODO
+            return Task.FromResult(0L);
         }
 
         public Task RemoveUserClaimAsync(string appName, string userLogin, string serializedClaim)
         {
-            throw new NotImplementedException();
+            // TODO
+            return Task.FromResult(0L);
         }
 
         #endregion Users

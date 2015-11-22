@@ -17,7 +17,7 @@
     <AssemblyName>Finsa.Caravan.WebService</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort>44300</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -50,6 +50,10 @@
     <DocumentationFile>App_Data\HelpPages\WebServiceHelp.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BrockAllen.IdentityReboot, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BrockAllen.IdentityReboot.2.0.0\lib\net45\BrockAllen.IdentityReboot.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CodeProject.ObjectPool, Version=1.9.0.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
       <HintPath>..\packages\CodeProject.ObjectPool.1.9.0\lib\net46\CodeProject.ObjectPool.dll</HintPath>
       <Private>True</Private>
@@ -508,7 +512,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>60965</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost/wsCaravan</IISUrl>
+          <IISUrl>http://localhost:60965/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

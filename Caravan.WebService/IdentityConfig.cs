@@ -11,14 +11,9 @@
 // the License.
 
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Security;
-using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess.Sql.Identity;
 using Finsa.CodeServices.Common.Portability;
-using IdentityServer3.AspNetIdentity;
 using IdentityServer3.Core.Configuration;
-using IdentityServer3.Core.Services;
-using Ninject;
 using Owin;
 using System.Security.Cryptography.X509Certificates;
 
@@ -45,7 +40,7 @@ namespace Finsa.Caravan.WebService
                 EnableWelcomePage = true,
 
                 // Gestione della sorgente dati per gli utenti.
-                Factory = ConfigureFactory(),
+                Factory = SqlIdnServiceFactory.Configure(),
             }));
         }
 
@@ -59,18 +54,6 @@ namespace Finsa.Caravan.WebService
             var mappedCertificatePath = PortableEnvironment.MapPath(certificatePath);
             var certificatePassword = CaravanWebServiceConfiguration.Instance.Identity_SigningCertificatePassword;
             return new X509Certificate2(mappedCertificatePath, certificatePassword);
-        }
-
-        /// <summary>
-        ///   Configura il generatore dei servizi usati dalla parte di autenticazione/autorizzazione.
-        /// </summary>
-        /// <returns>La factory per IdentityServer.</returns>
-        public static IdentityServerServiceFactory ConfigureFactory()
-        {
-            var factory = SqlIdnServiceFactory.Configure();
-            var caravanUserManager = CaravanServiceProvider.NinjectKernel.Get<CaravanUserManager>();
-            factory.UserService = new Registration<IUserService>(new AspNetIdentityUserService<SecUser, long>(caravanUserManager));
-            return factory;
         }
     }
 }

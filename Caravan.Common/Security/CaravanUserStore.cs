@@ -297,6 +297,12 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public Task<IList<Claim>> GetClaimsAsync(SecUser user)
         {
+            // TODO
+            if (user.Claims == null)
+            {
+                user.Claims = new SecClaim[0];
+            }
+
             IList<Claim> claims = new Claim[user.Claims.Length];
             for (var i = 0; i < claims.Count; ++i)
             {
