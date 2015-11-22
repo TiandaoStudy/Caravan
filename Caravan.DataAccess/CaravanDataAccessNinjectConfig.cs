@@ -26,15 +26,19 @@ namespace Finsa.Caravan.DataAccess
     public sealed class CaravanDataAccessNinjectConfig : NinjectModule
     {
         readonly DependencyHandling _dependencyHandling;
+        readonly CaravanDataSourceKind _dataSourceKind;
 
         /// <summary>
         ///   Inizializza il modulo.
         /// </summary>
         /// <param name="dependencyHandling">Modalità di gestione delle dipendenze.</param>
-        public CaravanDataAccessNinjectConfig(DependencyHandling dependencyHandling)
+        /// <param name="dataSourceKind">Il tipo della sorgente dati che verrà usato dalla componente di accesso ai dati.</param>
+        public CaravanDataAccessNinjectConfig(DependencyHandling dependencyHandling, CaravanDataSourceKind dataSourceKind)
         {
             RaiseArgumentException.IfNot(Enum.IsDefined(typeof(DependencyHandling), dependencyHandling), ErrorMessages.InvalidEnumValue, nameof(dependencyHandling));
+            RaiseArgumentException.IfNot(Enum.IsDefined(typeof(CaravanDataSourceKind), dataSourceKind), ErrorMessages.InvalidEnumValue, nameof(dataSourceKind));
             _dependencyHandling = dependencyHandling;
+            _dataSourceKind = dataSourceKind;
         }
 
         /// <summary>

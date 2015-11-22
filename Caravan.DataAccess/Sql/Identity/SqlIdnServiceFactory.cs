@@ -1,4 +1,18 @@
-﻿using Finsa.Caravan.Common;
+﻿// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
+using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Identity;
+using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.DataAccess.Sql.Identity.Services;
 using Finsa.Caravan.DataAccess.Sql.Identity.Stores;
 using Finsa.CodeServices.Clock;
@@ -20,6 +34,8 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity
         {
             var factory = new IdentityServerServiceFactory
             {
+                UserService = new Registration<IUserService, CaravanUserService>(),
+
                 // Operational stores
                 AuthorizationCodeStore = new Registration<IAuthorizationCodeStore, SqlIdnAuthorizationCodeStore>(),
                 TokenHandleStore = new Registration<ITokenHandleStore, SqlIdnTokenHandleStore>(),
@@ -39,6 +55,8 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity
             // Further services registrations...
             factory.Register(new Registration<SqlDbContext>(r => SqlDbContext.CreateUpdateContext()));
             factory.Register(new Registration<IClock>(r => CaravanServiceProvider.NinjectKernel.Get<IClock>()));
+            factory.Register(new Registration<ICaravanClientStore, SqlIdnClientStore>());
+            factory.Register(new Registration<ICaravanUserManagerFactory>(r => CaravanServiceProvider.NinjectKernel.Get<ICaravanUserManagerFactory>()));
 
             return factory;
         }
