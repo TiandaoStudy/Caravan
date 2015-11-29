@@ -33,15 +33,26 @@ namespace Finsa.Caravan.Common.Identity
     /// <summary>
     ///   Caravan implementation of IUserService with standard method implementations.
     /// </summary>
-    [CLSCompliant(false)]
     public class CaravanUserService : UserServiceBase
     {
-        public CaravanUserService(ICaravanUserManagerFactory userManagerFactory, ICaravanClientStore clientStore, Func<string, long> parseSubject = null)
+        /// <summary>
+        ///   </summary>
+        /// <param name="userManagerFactory">La gestione degli utenti.</param>
+        /// <param name="clientStore">Lo store dei client di OAuth2.</param>
+        /// <param name="allowedApps">
+        ///   Le APP di Caravan che possono sfrutturare questo servizio. Questo paramentro serve per
+        ///   limitare le applicazioni che possono utilizzare il servizio di autenticazione e di
+        ///   autorizzazione, al fine di aumentare la sicurezza complessiva del processo.
+        /// </param>
+        /// <param name="parseSubject">La funzione utilizzata per leggere il subject.</param>
+        public CaravanUserService(ICaravanUserManagerFactory userManagerFactory, ICaravanClientStore clientStore, HashSet<string> allowedApps, Func<string, long> parseSubject = null)
         {
             RaiseArgumentNullException.IfIsNull(userManagerFactory, nameof(userManagerFactory));
             RaiseArgumentNullException.IfIsNull(clientStore, nameof(clientStore));
+            RaiseArgumentNullException.IfIsNull(allowedApps, nameof(allowedApps));
             UserManagerFactory = userManagerFactory;
             ClientStore = clientStore;
+            AllowedApps = allowedApps;
             ConvertSubjectToKey = parseSubject ?? ParseLong;
             EnableSecurityStamp = true;
         }
@@ -60,6 +71,11 @@ namespace Finsa.Caravan.Common.Identity
 
         protected ICaravanClientStore ClientStore { get; }
 
+        /// <summary>
+        ///   Le applicazioni Caravan che possono effettuare il processo di autorizzazione e autenticazione.
+        /// </summary>
+        protected HashSet<string> AllowedApps { get; }
+
         protected Func<string, long> ConvertSubjectToKey { get; }
 
         /// <summary>
@@ -76,16 +92,14 @@ namespace Finsa.Caravan.Common.Identity
             var requestedClaimTypes = context.RequestedClaimTypes;
             var clientId = context.Client.ClientId;
 
-            var client = await ClientStore.FindClientByIdAsync(clientId);
-            RaiseArgumentException.If(client == null, "Invalid client identifier");
-
-            using (var userManager = await UserManagerFactory.CreateAsync(client.AppName))
+            var appName = await FindAppNameByClientIdAsync(clientId);
+            using (var userManager = await UserManagerFactory.CreateAsync(appName))
             {
                 var key = ConvertSubjectToKey(subject.GetSubjectId());
                 var user = await userManager.FindByIdAsync(key);
                 RaiseArgumentException.If(user == null, "Invalid subject identifier");
 
-                var claims = await GetClaimsFromAccount(user);
+                var claims = await GetClaimsFromAccount(userManager, user);
                 if (requestedClaimTypes != null && requestedClaimTypes.Any())
                 {
                     claims = claims.Where(x => requestedClaimTypes.Contains(x.Type));
@@ -95,7 +109,7 @@ namespace Finsa.Caravan.Common.Identity
             }
         }
 
-        protected virtual async Task<IEnumerable<Claim>> GetClaimsFromAccount(SecUser user)
+        protected virtual async Task<IEnumerable<Claim>> GetClaimsFromAccount(CaravanUserManager userManager, SecUser user)
         {
             var claims = new List<Claim>
             {
@@ -103,45 +117,42 @@ namespace Finsa.Caravan.Common.Identity
                 new Claim(Constants.ClaimTypes.PreferredUserName, user.UserName),
             };
 
-            using (var userManager = await UserManagerFactory.CreateAsync(user.AppName))
+            if (userManager.SupportsUserEmail)
             {
-                if (userManager.SupportsUserEmail)
+                var email = await userManager.GetEmailAsync(user.Id);
+                if (!string.IsNullOrWhiteSpace(email))
                 {
-                    var email = await userManager.GetEmailAsync(user.Id);
-                    if (!string.IsNullOrWhiteSpace(email))
-                    {
-                        claims.Add(new Claim(Constants.ClaimTypes.Email, email));
-                        var verified = await userManager.IsEmailConfirmedAsync(user.Id);
-                        claims.Add(new Claim(Constants.ClaimTypes.EmailVerified, verified ? "true" : "false"));
-                    }
+                    claims.Add(new Claim(Constants.ClaimTypes.Email, email));
+                    var verified = await userManager.IsEmailConfirmedAsync(user.Id);
+                    claims.Add(new Claim(Constants.ClaimTypes.EmailVerified, verified ? "true" : "false"));
                 }
-
-                if (userManager.SupportsUserPhoneNumber)
-                {
-                    var phone = await userManager.GetPhoneNumberAsync(user.Id);
-                    if (!string.IsNullOrWhiteSpace(phone))
-                    {
-                        claims.Add(new Claim(Constants.ClaimTypes.PhoneNumber, phone));
-                        var verified = await userManager.IsPhoneNumberConfirmedAsync(user.Id);
-                        claims.Add(new Claim(Constants.ClaimTypes.PhoneNumberVerified, verified ? "true" : "false"));
-                    }
-                }
-
-                if (userManager.SupportsUserClaim)
-                {
-                    claims.AddRange(await userManager.GetClaimsAsync(user.Id));
-                }
-
-                if (userManager.SupportsUserRole)
-                {
-                    var roleClaims =
-                        from role in await userManager.GetRolesAsync(user.Id)
-                        select new Claim(Constants.ClaimTypes.Role, role);
-                    claims.AddRange(roleClaims);
-                }
-
-                return claims;
             }
+
+            if (userManager.SupportsUserPhoneNumber)
+            {
+                var phone = await userManager.GetPhoneNumberAsync(user.Id);
+                if (!string.IsNullOrWhiteSpace(phone))
+                {
+                    claims.Add(new Claim(Constants.ClaimTypes.PhoneNumber, phone));
+                    var verified = await userManager.IsPhoneNumberConfirmedAsync(user.Id);
+                    claims.Add(new Claim(Constants.ClaimTypes.PhoneNumberVerified, verified ? "true" : "false"));
+                }
+            }
+
+            if (userManager.SupportsUserClaim)
+            {
+                claims.AddRange(await userManager.GetClaimsAsync(user.Id));
+            }
+
+            if (userManager.SupportsUserRole)
+            {
+                var roleClaims =
+                    from role in await userManager.GetRolesAsync(user.Id)
+                    select new Claim(Constants.ClaimTypes.Role, role);
+                claims.AddRange(roleClaims);
+            }
+
+            return claims;
         }
 
         /// <summary>
@@ -158,10 +169,8 @@ namespace Finsa.Caravan.Common.Identity
 
             context.AuthenticateResult = null;
 
-            var client = await ClientStore.FindClientByIdAsync(message.ClientId);
-            RaiseArgumentException.If(client == null, "Invalid client identifier");
-
-            using (var userManager = await UserManagerFactory.CreateAsync(client.AppName))
+            var appName = await FindAppNameByClientIdAsync(message.ClientId);
+            using (var userManager = await UserManagerFactory.CreateAsync(appName))
             {
                 if (userManager.SupportsUserPassword)
                 {
@@ -202,7 +211,7 @@ namespace Finsa.Caravan.Common.Identity
         protected virtual async Task<string> GetDisplayNameForAccountAsync(CaravanUserManager userManager, long userId)
         {
             var user = await userManager.FindByIdAsync(userId);
-            var claims = await GetClaimsFromAccount(user);
+            var claims = await GetClaimsFromAccount(userManager, user);
 
             Claim nameClaim = null;
             if (DisplayNameClaimType != null)
@@ -255,10 +264,8 @@ namespace Finsa.Caravan.Common.Identity
             var externalUser = context.ExternalIdentity;
             var message = context.SignInMessage;
 
-            var client = await ClientStore.FindClientByIdAsync(message.ClientId);
-            RaiseArgumentException.If(client == null, "Invalid client identifier");
-
-            using (var userManager = await UserManagerFactory.CreateAsync(client.AppName))
+            var appName = await FindAppNameByClientIdAsync(message.ClientId);
+            using (var userManager = await UserManagerFactory.CreateAsync(appName))
             {
                 var user = await userManager.FindAsync(new UserLoginInfo(externalUser.Provider, externalUser.ProviderId));
                 if (user == null)
@@ -430,10 +437,8 @@ namespace Finsa.Caravan.Common.Identity
             var id = subject.GetSubjectId();
             var key = ConvertSubjectToKey(id);
 
-            var client = await ClientStore.FindClientByIdAsync(context.Client.ClientId);
-            RaiseArgumentException.If(client == null, "Invalid client identifier");
-
-            using (var userManager = await UserManagerFactory.CreateAsync(client.AppName))
+            var appName = await FindAppNameByClientIdAsync(context.Client.ClientId);
+            using (var userManager = await UserManagerFactory.CreateAsync(appName))
             {
                 var user = await userManager.FindByIdAsync(key);
 
@@ -457,6 +462,16 @@ namespace Finsa.Caravan.Common.Identity
                     context.IsActive = true;
                 }
             }
+        }
+
+        private async Task<string> FindAppNameByClientIdAsync(string clientId)
+        {
+            var client = await ClientStore.FindClientByIdAsync(clientId);
+            RaiseArgumentException.If(client == null, "Invalid client identifier");
+
+            var appName = client.AppName;
+            RaiseInvalidOperationException.IfNot(AllowedApps.Contains(appName), $"Application {appName} has not been allowed");
+            return appName;
         }
 
         sealed class ClaimComparer : IEqualityComparer<Claim>

@@ -25,6 +25,12 @@ namespace Finsa.Caravan.Common.Security
         ICaravanSecurityRepository SecurityRepository { get; }
 
         /// <summary>
+        ///   Restituisce uno RoleManager specifico per l'applicativo Caravan corrente.
+        /// </summary>
+        /// <returns>Uno RoleManager specifico per l'applicativo Caravan corrente.</returns>
+        Task<CaravanRoleManager> CreateAsync();
+
+        /// <summary>
         ///   Restituisce uno RoleManager specifico per un dato applicativo Caravan.
         /// </summary>
         /// <param name="appName">Il nome dell'applicativo Caravan.</param>

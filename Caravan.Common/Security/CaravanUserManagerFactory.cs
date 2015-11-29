@@ -30,6 +30,8 @@ namespace Finsa.Caravan.Common.Security
 
         public ICaravanSecurityRepository SecurityRepository { get; }
 
+        public Task<CaravanUserManager> CreateAsync() => CreateAsync(CaravanCommonConfiguration.Instance.AppName);
+
         public async Task<CaravanUserManager> CreateAsync(string appName)
         {
             var userStore = new CaravanUserStore(appName, SecurityRepository);

@@ -57,6 +57,11 @@ namespace Finsa.Caravan.Common
 
         #endregion Static instance
 
+        #region Static configuration
+
+
+        #endregion
+
         /// <summary>
         ///   Il nome identificativo dell'applicazione Caravan, rigorosamente minuscolo.
         /// </summary>
