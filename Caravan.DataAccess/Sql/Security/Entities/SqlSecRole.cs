@@ -41,8 +41,14 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
         #endregion Relationships
     }
 
+    /// <summary>
+    ///   Configurazione della mappatura per <see cref="SqlSecRole"/>.
+    /// </summary>
     public sealed class SqlSecRoleTypeConfiguration : EntityTypeConfiguration<SqlSecRole>
     {
+        /// <summary>
+        ///   Configurazione della mappatura per <see cref="SqlSecRole"/>.
+        /// </summary>
         public SqlSecRoleTypeConfiguration()
         {
             ToTable("CRVN_SEC_ROLES", CaravanDataAccessConfiguration.Instance.SqlSchema);

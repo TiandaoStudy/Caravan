@@ -9,7 +9,7 @@ CREATE TABLE mydb.crvn_sec_roles
    , crol_notes       NVARCHAR2(1024) NOT NULL
    , CHECK (crol_name = lower(crol_name)) ENABLE
    , CONSTRAINT pk_crvn_sec_roles PRIMARY KEY (crol_id) ENABLE
-   , CONSTRAINT uk_crvn_sec_roles UNIQUE (crol_name, cgrp_id) ENABLE
+   , CONSTRAINT uk_crvn_sec_roles UNIQUE (cgrp_id, crol_name) ENABLE
    , CONSTRAINT fk_crvnsecroles_crvnsecgrps FOREIGN KEY (cgrp_id) REFERENCES mydb.crvn_sec_groups (cgrp_id) ON DELETE CASCADE ENABLE
 );
 

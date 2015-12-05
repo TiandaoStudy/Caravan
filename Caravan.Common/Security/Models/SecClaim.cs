@@ -24,16 +24,16 @@ namespace Finsa.Caravan.Common.Security.Models
         [DataMember(Order = 0)]
         public long Id { get; set; }
 
-        [DataMember(Order = 1)]
+        [DataMember(Order = 2)]
         public string UserLogin { get; set; }
 
-        [DataMember(Order = 1)]
+        [DataMember(Order = 3)]
         public string Hash { get; set; }
 
-        [DataMember(Order = 1)]
+        [DataMember(Order = 4)]
         public string Claim { get; set; }
 
-        [DataMember(Order = 6)]
+        [DataMember(Order = 5)]
         public SecUser User { get; set; }
 
         protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()

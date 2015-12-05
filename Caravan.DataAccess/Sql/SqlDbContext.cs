@@ -94,6 +94,8 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         public DbSet<SqlSecApp> SecApps { get; set; }
 
+        public DbSet<SqlSecClaim> SecClaims { get; set; }
+
         public DbSet<SqlSecContext> SecContexts { get; set; }
 
         public DbSet<SqlSecEntry> SecEntries { get; set; }
@@ -155,6 +157,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             #region Configurations - Security
 
             mb.Configurations.Add(new SqlSecAppTypeConfiguration());
+            mb.Configurations.Add(new SqlSecClaimTypeConfiguration());
             mb.Configurations.Add(new SqlSecContextTypeConfiguration());
             mb.Configurations.Add(new SqlSecEntryTypeConfiguration());
             mb.Configurations.Add(new SqlSecGroupTypeConfiguration());

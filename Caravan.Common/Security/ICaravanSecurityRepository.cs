@@ -211,7 +211,7 @@ namespace Finsa.Caravan.Common.Security
 
         Task<long> AddUserClaimAsync(string appName, string userLogin, SecClaim claim);
 
-        Task RemoveUserClaimAsync(string appName, string userLogin, string serializedClaim);
+        Task RemoveUserClaimAsync(string appName, string userLogin, string serializedClaimHash);
 
         #endregion Users
 

@@ -53,6 +53,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
         /// </summary>
         [Column("CUSR_HASHED_PWD", Order = 3)]
         [MaxLength(SqlDbContext.MediumLength)]
+        [DataType(DataType.Password)]
         public virtual string PasswordHash { get; set; }
 
         /// <summary>
@@ -80,6 +81,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
         /// </summary>
         [Column("CUSR_EMAIL", Order = 7)]
         [MaxLength(SqlDbContext.MediumLength)]
+        [DataType(DataType.EmailAddress)]
         public virtual string Email { get; set; }
 
         /// <summary>
@@ -93,6 +95,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
         /// </summary>
         [Column("CUSR_PHONE", Order = 9)]
         [MaxLength(SqlDbContext.MediumLength)]
+        [DataType(DataType.PhoneNumber)]
         public virtual string PhoneNumber { get; set; }
 
         /// <summary>
@@ -151,6 +154,11 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
         ///   Voci di sicurezza legate all'utente.
         /// </summary>
         public virtual ICollection<SqlSecEntry> SecEntries { get; set; }
+
+        /// <summary>
+        ///   I claim legati all'utente.
+        /// </summary>
+        public virtual ICollection<SqlSecClaim> Claims { get; set; }
 
         #endregion Relationships
     }

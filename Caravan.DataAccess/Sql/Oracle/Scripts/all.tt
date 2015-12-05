@@ -56,6 +56,9 @@
 -- Objects
 <#@ include file="Tables/crvn_sec_objects.sql" #>
 
+-- Claims
+<#@ include file="Tables/crvn_sec_claims.sql" #>
+
 -- Sec Entries
 <#@ include file="Tables/crvn_sec_entries.sql" #>
 

@@ -39,8 +39,14 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
         #endregion Relationships
     }
 
+    /// <summary>
+    ///   Configurazione della mappatura per <see cref="SqlSecObject"/>.
+    /// </summary>
     public sealed class SqlSecObjectTypeConfiguration : EntityTypeConfiguration<SqlSecObject>
     {
+        /// <summary>
+        ///   Configurazione della mappatura per <see cref="SqlSecObject"/>.
+        /// </summary>
         public SqlSecObjectTypeConfiguration()
         {
             ToTable("CRVN_SEC_OBJECTS", CaravanDataAccessConfiguration.Instance.SqlSchema);

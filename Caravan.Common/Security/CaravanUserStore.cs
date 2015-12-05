@@ -13,6 +13,7 @@
 using Finsa.Caravan.Common.Core;
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
+using Finsa.CodeServices.Security.Hashing;
 using Finsa.CodeServices.Serialization;
 using Microsoft.AspNet.Identity;
 using PommaLabs.Thrower;
@@ -270,6 +271,13 @@ namespace Finsa.Caravan.Common.Security
         private static readonly BinarySerializer BinarySerializer = new BinarySerializer();
 
         /// <summary>
+        ///   Hash MD5 per avere una snapshot dei claim degli utenti.
+        /// 
+        ///   Non viene passato al costruttore perché è importante che rimanga bloccato nel tempo.
+        /// </summary>
+        private static readonly MD5Hasher MD5Hasher = new MD5Hasher(new MD5HasherSettings());
+
+        /// <summary>
         ///   Returns the claims for the user with the issuer set.
         /// </summary>
         /// <param name="user"/>
@@ -302,6 +310,7 @@ namespace Finsa.Caravan.Common.Security
             var serializedClaim = BinarySerializer.SerializeToString(claim);
             return SecurityRepository.AddUserClaimAsync(AppName, user.Login, new SecClaim
             {
+                Hash = MD5Hasher.HashToString(serializedClaim),
                 Claim = serializedClaim
             });
         }
@@ -315,7 +324,8 @@ namespace Finsa.Caravan.Common.Security
         public Task RemoveClaimAsync(SecUser user, Claim claim)
         {
             var serializedClaim = BinarySerializer.SerializeToString(claim);
-            return SecurityRepository.RemoveUserClaimAsync(AppName, user.Login, serializedClaim);
+            var serializedClaimHash = MD5Hasher.HashToString(serializedClaim);
+            return SecurityRepository.RemoveUserClaimAsync(AppName, user.Login, serializedClaimHash);
         }
 
         #endregion IUserClaimStore members

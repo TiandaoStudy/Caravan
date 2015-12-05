@@ -79,7 +79,7 @@ COMMENT ON COLUMN mydb.crvn_sec_users.cusr_two_factor_auth_enabled
 
 CREATE SEQUENCE mydb.crvn_sec_users_id NOCACHE;
 
-CREATE OR REPLACE TRIGGER mydb.ti_crvn_sec_users_id
+CREATE OR REPLACE TRIGGER mydb.ti_crvn_sec_users
 BEFORE INSERT ON mydb.crvn_sec_users 
 FOR EACH ROW
 BEGIN
