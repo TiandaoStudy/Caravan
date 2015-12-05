@@ -19,6 +19,8 @@ namespace Finsa.Caravan.DataAccess.Core
     {
         public const string InvalidEnumValue = "Given enum value is not valid";
 
+        public const string NullClaim = "Caravan security claim cannot be null";
+
         public const string NullOrWhiteSpaceAppName = "Caravan application name cannot be null, empty or blank";
         public const string NullOrWhiteSpaceContextName = "Caravan context name cannot be null, empty or blank";
         public const string NullOrWhiteSpaceGroupName = "Caravan group name cannot be null, empty or blank";
@@ -26,6 +28,7 @@ namespace Finsa.Caravan.DataAccess.Core
         public const string NullOrWhiteSpaceRoleName = "Caravan role name cannot be null, empty or blank";
         public const string NullOrWhiteSpaceUserEmail = "Caravan user email cannot be null, empty or blank";
         public const string NullOrWhiteSpaceUserLogin = "Caravan user login cannot be null, empty or blank";
+        public const string NullOrWhiteSpaceClaimHash = "Caravan security claim hash cannot be null, empty or blank";
 
         public const string AbstractSecurityRepository_GroupNotFound = "Group has not been specified or it does not exist";
     }

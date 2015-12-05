@@ -497,16 +497,59 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public Task<long> AddUserClaimAsync(string appName, string userLogin, SecClaim claim)
+        public async Task<long> AddUserClaimAsync(string appName, string userLogin, SecClaim claim)
         {
-            // TODO
-            return Task.FromResult(0L);
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(userLogin), ErrorMessages.NullOrWhiteSpaceUserLogin, nameof(userLogin));
+            RaiseArgumentNullException.IfIsNull(claim, nameof(claim), ErrorMessages.NullClaim);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(claim.Hash), ErrorMessages.NullOrWhiteSpaceClaimHash, nameof(claim.Hash));
+
+            appName = appName?.ToLowerInvariant();
+            userLogin = userLogin?.ToLowerInvariant();
+            var logCtx = $"Adding claim '{claim.Hash}' to user '{userLogin}' of application '{appName}'";
+
+            try
+            {
+                await AddUserClaimAsyncInternal(appName, userLogin, claim);
+                Log.Warn(new LogMessage
+                {
+                    ShortMessage = $"Added claim '{claim.Hash}' to user '{userLogin}' of application '{appName}'",
+                    Context = logCtx
+                });
+                return claim.Id;
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(long);
+            }
         }
 
-        public Task RemoveUserClaimAsync(string appName, string userLogin, string serializedClaim)
+        public async Task RemoveUserClaimAsync(string appName, string userLogin, string serializedClaimHash)
         {
-            // TODO
-            return Task.FromResult(0L);
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(userLogin), ErrorMessages.NullOrWhiteSpaceUserLogin, nameof(userLogin));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(serializedClaimHash), ErrorMessages.NullOrWhiteSpaceClaimHash, nameof(serializedClaimHash));
+
+            appName = appName?.ToLowerInvariant();
+            userLogin = userLogin?.ToLowerInvariant();
+            var logCtx = $"Removing claim '{serializedClaimHash}' from user '{userLogin}' of application '{appName}'";
+
+            try
+            {
+                await RemoveUserClaimAsyncInternal(appName, userLogin, serializedClaimHash);
+                Log.Warn(new LogMessage
+                {
+                    ShortMessage = $"Removed claim '{serializedClaimHash}' from user '{userLogin}' of application '{appName}'",
+                    Context = logCtx
+                });
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+            }
         }
 
         #endregion Users
@@ -736,6 +779,10 @@ namespace Finsa.Caravan.DataAccess.Core
         protected abstract Task AddUserToRoleAsyncInternal(string appName, string userLogin, string groupName, string roleName);
 
         protected abstract Task RemoveUserFromRoleAsyncInternal(string appName, string userLogin, string groupName, string roleName);
+
+        protected abstract Task AddUserClaimAsyncInternal(string appName, string userLogin, SecClaim claim);
+
+        protected abstract Task RemoveUserClaimAsyncInternal(string appName, string userLogin, string serializedClaimHash);
 
         protected abstract Task<SecContext[]> GetContextsAsyncInternal(string appName);
 

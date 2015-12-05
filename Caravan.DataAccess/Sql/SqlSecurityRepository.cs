@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.DataAccess.Sql.Security.Entities;
+using System;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
@@ -163,6 +164,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
                 var q = ctx.SecUsers
                     .Include(u => u.App)
+                    .Include(u => u.Claims)
                     .Include("Roles.Group")
                     .Where(u => u.AppId == appId);
 
@@ -293,6 +295,40 @@ namespace Finsa.Caravan.DataAccess.Sql
                 // Le chiamate sopra mi assicurano che utente, gruppo e ruolo esistano.
                 await ctx.Entry(user).Collection(u => u.Roles).LoadAsync();
                 user.Roles.Remove(role);
+
+                await ctx.SaveChangesAsync();
+            }
+        }
+
+        protected override async Task AddUserClaimAsyncInternal(string appName, string userLogin, SecClaim claim)
+        {
+            using (var ctx = SqlDbContext.CreateReadContext())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
+
+                // Le chiamate sopra mi assicurano che utente e applicazione esistano.
+                ctx.SecClaims.Add(new SqlSecClaim
+                {
+                    UserId = user.Id,
+                    Hash = claim.Hash,
+                    Claim = claim.Claim
+                });
+
+                await ctx.SaveChangesAsync();
+            }
+        }
+
+        protected override async Task RemoveUserClaimAsyncInternal(string appName, string userLogin, string serializedClaimHash)
+        {
+            using (var ctx = SqlDbContext.CreateReadContext())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
+
+                // Le chiamate sopra mi assicurano che utente e applicazione esistano.
+                var claim = ctx.SecClaims.FirstOrDefault(c => c.UserId == user.Id && c.Hash == serializedClaimHash);
+                ctx.SecClaims.Remove(claim);
 
                 await ctx.SaveChangesAsync();
             }

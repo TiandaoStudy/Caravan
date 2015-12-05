@@ -633,6 +633,16 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
+        protected override Task AddUserClaimAsyncInternal(string appName, string userLogin, SecClaim claim)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task RemoveUserClaimAsyncInternal(string appName, string userLogin, string serializedClaimHash)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion Entries
     }
 }
