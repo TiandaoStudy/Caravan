@@ -338,7 +338,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public Task SetLockoutEndDateAsync(SecUser user, DateTimeOffset lockoutEnd) => SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
         {
-            LockoutEndDate = lockoutEnd.ToUniversalTime().DateTime
+            LockoutEndDate = lockoutEnd
         });
 
         /// <summary>
@@ -415,10 +415,7 @@ namespace Finsa.Caravan.Common.Security
         /// <param name="groupName"/>
         /// <param name="roleName"/>
         /// <returns/>
-        public Task AddToRoleAsync(SecUser user, string groupName, string roleName)
-        {
-            return SecurityRepository.AddUserToRoleAsync(AppName, user.Login, groupName, roleName);
-        }
+        public Task AddToRoleAsync(SecUser user, string groupName, string roleName) => SecurityRepository.AddUserToRoleAsync(AppName, user.Login, groupName, roleName);
 
         /// <summary>
         ///   Removes the role for the user.
@@ -439,10 +436,7 @@ namespace Finsa.Caravan.Common.Security
         /// <param name="groupName"/>
         /// <param name="roleName"/>
         /// <returns/>
-        public Task RemoveFromRoleAsync(SecUser user, string groupName, string roleName)
-        {
-            return SecurityRepository.RemoveUserFromRoleAsync(AppName, user.Login, groupName, roleName);
-        }
+        public Task RemoveFromRoleAsync(SecUser user, string groupName, string roleName) => SecurityRepository.RemoveUserFromRoleAsync(AppName, user.Login, groupName, roleName);
 
         /// <summary>
         ///   Returns the roles for this user.
@@ -472,10 +466,7 @@ namespace Finsa.Caravan.Common.Security
         /// <param name="groupName"/>
         /// <param name="roleName"/>
         /// <returns/>
-        public Task<bool> IsInRoleAsync(SecUser user, string groupName, string roleName)
-        {
-            return Task.FromResult(user.Roles.Any(r => r.GroupName == groupName && r.Name == roleName));
-        }
+        public Task<bool> IsInRoleAsync(SecUser user, string groupName, string roleName) => Task.FromResult(user.Roles.Any(r => r.GroupName == groupName && r.Name == roleName));
 
         #endregion IUserRoleStore members
 
@@ -522,50 +513,5 @@ namespace Finsa.Caravan.Common.Security
         public Task<bool> GetTwoFactorEnabledAsync(SecUser user) => Task.FromResult(user.TwoFactorAuthenticationEnabled);
 
         #endregion IUserTwoFactorStore members
-
-        #region IUserLoginStore members - NOT IMPLEMENTED!
-
-        /// <summary>
-        ///   Adds a user login with the specified provider and key.
-        /// </summary>
-        /// <param name="user"/>
-        /// <param name="login"/>
-        /// <returns/>
-        public Task AddLoginAsync(SecUser user, UserLoginInfo login)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        ///   Removes the user login with the specified combination if it exists.
-        /// </summary>
-        /// <param name="user"/>
-        /// <param name="login"/>
-        /// <returns/>
-        public Task RemoveLoginAsync(SecUser user, UserLoginInfo login)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        ///   Returns the linked accounts for this user.
-        /// </summary>
-        /// <param name="user"/>
-        /// <returns/>
-        public Task<IList<UserLoginInfo>> GetLoginsAsync(SecUser user)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        ///   Returns the user associated with this login.
-        /// </summary>
-        /// <returns/>
-        public Task<SecUser> FindAsync(UserLoginInfo login)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion IUserLoginStore members - NOT IMPLEMENTED!
     }
 }

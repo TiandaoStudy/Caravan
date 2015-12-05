@@ -15,6 +15,7 @@ CREATE TABLE mydb.crvn_sec_users
    , cusr_lockout_enabled           NUMBER(1)       DEFAULT 1 NOT NULL
    , cusr_lockout_end_date          DATE            NOT NULL
    , cusr_access_failed_count       NUMBER(3)       DEFAULT 0 NOT NULL
+   , cusr_two_factor_auth_enabled   NUMBER(1)       DEFAULT 0 NOT NULL
 
    -- INSERT tracking
    , TRCK_INSERT_DATE               DATE            NOT NULL
@@ -73,6 +74,8 @@ COMMENT ON COLUMN mydb.crvn_sec_users.cusr_lockout_end_date
      IS 'Indica la data di fine del blocco della login, valorizzare nel passato in fase di creazione utente';
 COMMENT ON COLUMN mydb.crvn_sec_users.cusr_access_failed_count 
      IS 'Il numero di login fallite per un certo utente';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_two_factor_auth_enabled 
+     IS 'Indica se un certo utente abbia abilitato la autenticazione a due fattori';
 
 CREATE SEQUENCE mydb.crvn_sec_users_id NOCACHE;
 
@@ -82,6 +85,24 @@ FOR EACH ROW
 BEGIN
   SELECT mydb.crvn_sec_users_id.nextval, lower(:new.cusr_login), mydb.pck_caravan_utils.f_get_sysdate_utc, mydb.pck_caravan_utils.f_get_sysdate_utc, mydb.pck_caravan_utils.f_get_sysuser, NULL, NULL
     INTO :new.cusr_id, :new.cusr_login, :new.cusr_lockout_end_date, :new.TRCK_INSERT_DATE, :new.TRCK_INSERT_DB_USER, :new.TRCK_UPDATE_DATE, :new.TRCK_UPDATE_DB_USER
+    FROM DUAL;
+END;
+/
+
+create or replace TRIGGER mydb.tu_crvn_sec_users
+BEFORE UPDATE ON mydb.crvn_sec_users 
+FOR EACH ROW
+BEGIN
+  IF UPDATING('TRCK_INSERT_DATE') 
+  OR UPDATING('TRCK_INSERT_DB_USER') 
+  OR UPDATING('TRCK_UPDATE_DATE') 
+  OR UPDATING('TRCK_UPDATE_DB_USER') 
+  THEN
+    mydb.pck_caravan_utils.sp_err_when_updating_trck_cols;
+  END IF;
+
+  SELECT mydb.pck_caravan_utils.f_get_sysdate_utc, mydb.pck_caravan_utils.f_get_sysuser
+    INTO :new.TRCK_UPDATE_DATE, :new.TRCK_UPDATE_DB_USER
     FROM DUAL;
 END;
 /

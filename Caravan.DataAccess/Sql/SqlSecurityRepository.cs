@@ -253,6 +253,8 @@ namespace Finsa.Caravan.DataAccess.Sql
                 userUpdates.SecurityStamp.Do(x => sqlUser.SecurityStamp = x);
                 userUpdates.LockoutEnabled.Do(x => sqlUser.LockoutEnabled = x);
                 userUpdates.LockoutEndDate.Do(x => sqlUser.LockoutEndDate = x.ToUniversalTime().DateTime);
+                userUpdates.AccessFailedCount.Do(x => sqlUser.AccessFailedCount = x);
+                userUpdates.TwoFactorAuthenticationEnabled.Do(x => sqlUser.TwoFactorAuthenticationEnabled = x);
 
                 await ctx.SaveChangesAsync();
             }

@@ -129,19 +129,40 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
         [Column("CUSR_ACCESS_FAILED_COUNT", Order = 14)]
         public virtual int AccessFailedCount { get; set; }
 
+        /// <summary>
+        ///   Indica se un certo utente abbia abilitato la autenticazione a due fattori.
+        /// </summary>
+        [Column("CUSR_TWO_FACTOR_AUTH_ENABLED", Order = 15)]
+        public virtual bool TwoFactorAuthenticationEnabled { get; set; }
+
         #region Relationships
 
+        /// <summary>
+        ///   Applicazione a cui un certo utente appartiene.
+        /// </summary>
         public virtual SqlSecApp App { get; set; }
 
+        /// <summary>
+        ///   Ruoli ricoperti dall'utente.
+        /// </summary>
         public virtual ICollection<SqlSecRole> Roles { get; set; }
 
+        /// <summary>
+        ///   Voci di sicurezza legate all'utente.
+        /// </summary>
         public virtual ICollection<SqlSecEntry> SecEntries { get; set; }
 
         #endregion Relationships
     }
 
+    /// <summary>
+    ///   Configurazione della mappatura per <see cref="SqlSecUser"/>.
+    /// </summary>
     public sealed class SqlSecUserTypeConfiguration : EntityTypeConfiguration<SqlSecUser>
     {
+        /// <summary>
+        ///   Configurazione della mappatura per <see cref="SqlSecUser"/>.
+        /// </summary>
         public SqlSecUserTypeConfiguration()
         {
             ToTable("CRVN_SEC_USERS", CaravanDataAccessConfiguration.Instance.SqlSchema);
