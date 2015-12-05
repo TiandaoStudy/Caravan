@@ -439,11 +439,6 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public async Task RemoveUserFromGroupAsync(string appName, string userLogin, string groupName)
-        {
-            
-        }
-
         public async Task AddUserToRoleAsync(string appName, string userLogin, string groupName, string roleName)
         {
             // Preconditions

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Dapper;
+using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Dapper;
-using Oracle.ManagedDataAccess.Client;
 
 namespace Finsa.Caravan.DataAccess.Sql.Oracle
 {
@@ -30,14 +30,14 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
         }
 
         /// <summary>
-        /// construct a dynamic parameter bag
+        ///   construct a dynamic parameter bag
         /// </summary>
         public OracleDynamicParameters()
         {
         }
 
         /// <summary>
-        /// construct a dynamic parameter bag
+        ///   construct a dynamic parameter bag
         /// </summary>
         /// <param name="template">can be an anonymous type or a DynamicParameters bag</param>
         public OracleDynamicParameters(object template)
@@ -46,8 +46,8 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
         }
 
         /// <summary>
-        /// Append a whole object full of params to the dynamic
-        /// EG: AddDynamicParams(new {A = 1, B = 2}) // will add property A and B to the dynamic
+        ///   Append a whole object full of params to the dynamic
+        ///   EG: AddDynamicParams(new {A = 1, B = 2}) // will add property A and B to the dynamic
         /// </summary>
         /// <param name="param"></param>
         public void AddDynamicParams(dynamic param)
@@ -95,7 +95,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
         }
 
         /// <summary>
-        /// Add a parameter to this dynamic parameter list
+        ///   Add a parameter to this dynamic parameter list
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
@@ -128,7 +128,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
         }
 
         /// <summary>
-        /// Add all the parameters needed to the command just before it executes
+        ///   Add all the parameters needed to the command just before it executes
         /// </summary>
         /// <param name="command">The raw command prior to execution</param>
         /// <param name="identity">Information about the query</param>
@@ -157,16 +157,16 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
             foreach (var param in _parameters.Values)
             {
                 string name = Clean(param.Name);
-                bool add = !((OracleCommand) command).Parameters.Contains(name);
+                bool add = !((OracleCommand)command).Parameters.Contains(name);
                 OracleParameter p;
                 if (add)
                 {
-                    p = ((OracleCommand) command).CreateParameter();
+                    p = ((OracleCommand)command).CreateParameter();
                     p.ParameterName = name;
                 }
                 else
                 {
-                    p = ((OracleCommand) command).Parameters[name];
+                    p = ((OracleCommand)command).Parameters[name];
                 }
                 var val = param.Value;
                 p.Value = val ?? DBNull.Value;
@@ -196,7 +196,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
         }
 
         /// <summary>
-        /// All the names of the param in the bag, use Get to yank them out
+        ///   All the names of the param in the bag, use Get to yank them out
         /// </summary>
         public IEnumerable<string> ParameterNames
         {
@@ -207,11 +207,13 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
         }
 
         /// <summary>
-        /// Get the value of a parameter
+        ///   Get the value of a parameter
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="name"></param>
-        /// <returns>The value, note DBNull.Value is not returned, instead the value is returned as null</returns>
+        /// <returns>
+        ///   The value, note DBNull.Value is not returned, instead the value is returned as null
+        /// </returns>
         public T Get<T>(string name)
         {
             var val = _parameters[Clean(name)].AttachedParam.Value;
@@ -223,7 +225,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
                 }
                 return default(T);
             }
-            return (T) val;
+            return (T)val;
         }
     }
 }

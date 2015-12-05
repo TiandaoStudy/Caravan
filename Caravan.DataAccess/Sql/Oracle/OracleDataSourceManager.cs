@@ -1,16 +1,13 @@
-using System.Data.Common;
-using System.Globalization;
 using Finsa.Caravan.DataAccess.Core;
 using Oracle.ManagedDataAccess.Client;
+using System.Data.Common;
+using System.Globalization;
 
 namespace Finsa.Caravan.DataAccess.Sql.Oracle
 {
     internal sealed class OracleDataSourceManager : AbstractDataSourceManager
     {
-        public override CaravanDataSourceKind DataSourceKind
-        {
-            get { return CaravanDataSourceKind.Oracle; }
-        }
+        public override CaravanDataSourceKind DataSourceKind { get; } = CaravanDataSourceKind.Oracle;
 
         public override string ElaborateConnectionString(string connectionString)
         {
