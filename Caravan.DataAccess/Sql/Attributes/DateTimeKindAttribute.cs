@@ -1,14 +1,16 @@
-﻿using System;
+﻿using PommaLabs.Thrower;
+using System;
 using System.Linq;
 using System.Reflection;
 
 namespace Finsa.Caravan.DataAccess.Sql.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class DateTimeKindAttribute : Attribute
+    public sealed class DateTimeKindAttribute : Attribute
     {
         public DateTimeKindAttribute(DateTimeKind kind)
         {
+            RaiseArgumentException.IfNot(Enum.IsDefined(typeof(DateTimeKind), kind));
             Kind = kind;
         }
 
@@ -33,8 +35,8 @@ namespace Finsa.Caravan.DataAccess.Sql.Attributes
                 }
 
                 var dt = property.PropertyType == typeof(DateTime?)
-                    ? (DateTime?) property.GetValue(entity)
-                    : (DateTime) property.GetValue(entity);
+                    ? (DateTime?)property.GetValue(entity)
+                    : (DateTime)property.GetValue(entity);
 
                 if (dt == null)
                 {

@@ -401,7 +401,6 @@
     <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_objects_id.sql" />
     <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_groups_id.sql" />
     <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_contexts_id.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_users_id.sql" />
     <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_apps_id.sql" />
     <Content Include="Sql\Oracle\Scripts\Triggers\crvn_log_entries_id.sql" />
     <Content Include="Sql\PostgreSql\Scripts\Schema.sql" />

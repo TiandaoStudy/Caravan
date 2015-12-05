@@ -242,11 +242,17 @@ namespace Finsa.Caravan.DataAccess.Sql
                     }
                     sqlUser.Login = x;
                 });
+                userUpdates.PasswordHash.Do(x => sqlUser.PasswordHash = x);
+                userUpdates.Active.Do(x => sqlUser.Active = x);
                 userUpdates.FirstName.Do(x => sqlUser.FirstName = x);
                 userUpdates.LastName.Do(x => sqlUser.LastName = x);
                 userUpdates.Email.Do(x => sqlUser.Email = x);
-                userUpdates.Active.Do(x => sqlUser.Active = x);
-                userUpdates.PasswordHash.Do(x => sqlUser.PasswordHash = x);
+                userUpdates.EmailConfirmed.Do(x => sqlUser.EmailConfirmed = x);
+                userUpdates.PhoneNumber.Do(x => sqlUser.PhoneNumber = x);
+                userUpdates.PhoneNumberConfirmed.Do(x => sqlUser.PhoneNumberConfirmed = x);
+                userUpdates.SecurityStamp.Do(x => sqlUser.SecurityStamp = x);
+                userUpdates.LockoutEnabled.Do(x => sqlUser.LockoutEnabled = x);
+                userUpdates.LockoutEndDate.Do(x => sqlUser.LockoutEndDate = x.ToUniversalTime().DateTime);
 
                 await ctx.SaveChangesAsync();
             }

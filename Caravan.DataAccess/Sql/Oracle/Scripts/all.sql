@@ -194,8 +194,8 @@ COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_9
 COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_9 
      IS 'Valore del parametro opzionale 9, ad esempio my_param_value';
 
-CREATE INDEX mydb.ix_crvn_log_date ON mydb.crvn_log_entries (capp_id, clog_date DESC);
-CREATE INDEX mydb.ix_crvn_log_type ON mydb.crvn_log_entries (capp_id, clos_type);
+CREATE INDEX mydb.ix_crvn_log_date ON mydb.crvn_log_entries (clog_date DESC, capp_id);
+CREATE INDEX mydb.ix_crvn_log_type ON mydb.crvn_log_entries (clos_type, capp_id);
 
 -- DROP da fare per la transizione da FLEX_LOG:
 --> pck_flex_log
@@ -224,6 +224,7 @@ END;
 CREATE TABLE mydb.crvn_idn_clients
 (
      CCLI_ID                        NUMBER(10)                              NOT NULL
+   , CAPP_ID                        NUMBER(10)                              NOT NULL
    , CCLI_ENABLED                   NUMBER(1)       DEFAULT 1               NOT NULL
    , CCLI_CLIENT_ID                 NVARCHAR2(200)                          NOT NULL
    , CCLI_CLIENT_NAME               NVARCHAR2(200)                          NOT NULL
@@ -279,12 +280,15 @@ CREATE TABLE mydb.crvn_idn_clients
 
    , CONSTRAINT pk_crvn_idn_clients PRIMARY KEY (CCLI_ID) ENABLE
    , CONSTRAINT uk_crvn_idn_clients UNIQUE (CCLI_CLIENT_ID) ENABLE
+   , CONSTRAINT fk_crvnidnclients_crvnsecapps FOREIGN KEY (CAPP_ID) REFERENCES mydb.crvn_sec_apps (capp_id) ON DELETE CASCADE ENABLE
 );
 
 COMMENT ON TABLE mydb.crvn_idn_clients 
      IS 'Models an OpenID Connect or OAuth2 client';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ID 
      IS 'Auto-increment ID';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CAPP_ID 
+     IS 'Caravan application ID to which this client belongs';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ENABLED 
      IS 'Specifies if client is enabled (defaults to true)';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_CLIENT_ID 
@@ -501,13 +505,43 @@ CREATE TABLE mydb.crvn_sec_users
    , cusr_first_name  NVARCHAR2(256)
    , cusr_last_name   NVARCHAR2(256)
    , cusr_email       NVARCHAR2(256)
+   , cusr_sec_stamp   NVARCHAR2(256)
    , CHECK (cusr_login = lower(cusr_login)) ENABLE
    , CONSTRAINT pk_crvn_sec_users PRIMARY KEY (cusr_id) ENABLE
    , CONSTRAINT uk_crvn_sec_users UNIQUE (capp_id, cusr_login) ENABLE
    , CONSTRAINT fk_crvnsecusers_crvnsecapps FOREIGN KEY (capp_id) REFERENCES mydb.crvn_sec_apps (capp_id) ON DELETE CASCADE ENABLE
 );
 
+COMMENT ON TABLE mydb.crvn_sec_users 
+     IS 'Tabella che censisce gli utenti delle applicazioni FINSA';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_id 
+     IS 'Identificativo riga, è una sequenza autoincrementale';
+COMMENT ON COLUMN mydb.crvn_sec_users.capp_id 
+     IS 'Identificativo della applicazione a cui un certo utente appartiene';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_login 
+     IS 'La sigla usata per effettuare la login';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_hashed_pwd 
+     IS 'Hash della password fissata per un certo utente';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_active 
+     IS 'Indica se un certo utente sia attivo o meno';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_first_name 
+     IS 'Nome di un certo utente';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_last_name 
+     IS 'Cognome di un certo utente';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_email 
+     IS 'Indirizzo e-mail di un certo utente';
+
 CREATE SEQUENCE mydb.crvn_sec_users_id NOCACHE;
+
+CREATE OR REPLACE TRIGGER mydb.ti_crvn_sec_users_id
+BEFORE INSERT ON mydb.crvn_sec_users 
+FOR EACH ROW
+BEGIN
+  SELECT mydb.crvn_sec_users_id.nextval, lower(:new.cusr_login)
+    INTO :new.cusr_id, :new.cusr_login
+    FROM DUAL;
+END;
+/
 
 -- Groups
 -- REPLACE 'mydb' WITH DB NAME
@@ -613,19 +647,6 @@ CREATE TABLE mydb.crvn_sec_entries
 );
 
 CREATE SEQUENCE mydb.crvn_sec_entries_id NOCACHE;
-
--- Triggers: Users Id
--- REPLACE 'mydb' WITH DB NAME
-
-CREATE OR REPLACE TRIGGER mydb.crvn_sec_users_id
-BEFORE INSERT ON mydb.crvn_sec_users 
-FOR EACH ROW
-BEGIN
-  SELECT mydb.crvn_sec_users_id.nextval
-    INTO :new.cusr_id
-    FROM DUAL;
-END;
-/
 
 -- Triggers: Groups Id
 -- REPLACE 'mydb' WITH DB NAME
