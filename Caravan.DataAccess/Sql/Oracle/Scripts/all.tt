@@ -20,9 +20,6 @@
 -- Identity: Clients
 <#@ include file="Tables/crvn_idn_clients.sql" #>
 
--- Identity: Clients ID trigger
-<#@ include file="Triggers/ti_crvn_idn_clients.sql" #>
-
 -- Identity: Scopes
 <#@ include file="Tables/crvn_idn_scopes.sql" #>
 

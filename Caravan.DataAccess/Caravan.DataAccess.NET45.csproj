@@ -328,10 +328,8 @@
     <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_cors_origins.sql" />
     <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_claims.sql" />
     <Content Include="Sql\Oracle\Scripts\Triggers\tu_crvn_idn_consents.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\tu_crvn_idn_clients.sql" />
     <Content Include="Sql\Oracle\Scripts\Triggers\tu_crvn_idn_scopes.sql" />
     <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_scopes.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_clients.sql" />
     <Content Include="Sql\Oracle\Scripts\Views\v_caravan_log_summary.sql" />
     <Content Include="Sql\Oracle\Scripts\Views\v_caravan_log.sql" />
     <Content Include="Sql\SqlServer\Scripts\Tables\crvn_log_entries.sql" />
