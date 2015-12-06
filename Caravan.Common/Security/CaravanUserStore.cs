@@ -84,8 +84,18 @@ namespace Finsa.Caravan.Common.Security
         public Task UpdateAsync(SecUser user) => SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
         {
             Login = user.UserName, // Lo UserName di Identity è la Login di Caravan.
+            Active = user.Active,
             FirstName = user.FirstName,
-            LastName = user.LastName
+            LastName = user.LastName,
+            Email = user.Email,
+            EmailConfirmed = user.EmailConfirmed,
+            PhoneNumber = user.PhoneNumber,
+            PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+            SecurityStamp = user.SecurityStamp,
+            LockoutEnabled = user.LockoutEnabled,
+            LockoutEndDate = user.LockoutEndDate,
+            AccessFailedCount = user.AccessFailedCount,
+            TwoFactorAuthenticationEnabled = user.TwoFactorAuthenticationEnabled
         });
 
         /// <summary>

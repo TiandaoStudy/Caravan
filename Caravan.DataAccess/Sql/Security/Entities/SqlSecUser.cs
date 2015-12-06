@@ -114,9 +114,11 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
         /// <summary>
         ///   Indica se ad un certo utente possa essere bloccata la login a fronte di un certo
         ///   numero di accessi falliti.
+        /// 
+        ///   Abilitato di default.
         /// </summary>
         [Column("CUSR_LOCKOUT_ENABLED", Order = 12)]
-        public virtual bool LockoutEnabled { get; set; }
+        public virtual bool LockoutEnabled { get; set; } = true;
 
         /// <summary>
         ///   Indica la data di fine del blocco della login, valorizzare nel passato in fase di

@@ -48,7 +48,7 @@ BEFORE INSERT ON mydb.crvn_sec_claims
 FOR EACH ROW
 BEGIN
   SELECT mydb.sq_crvn_sec_claims.nextval, mydb.pck_caravan_utils.f_get_sysdate_utc, mydb.pck_caravan_utils.f_get_sysuser, NULL, NULL
-    INTO :new.cusr_id, :new.TRCK_INSERT_DATE, :new.TRCK_INSERT_DB_USER, :new.TRCK_UPDATE_DATE, :new.TRCK_UPDATE_DB_USER
+    INTO :new.ccla_id, :new.TRCK_INSERT_DATE, :new.TRCK_INSERT_DB_USER, :new.TRCK_UPDATE_DATE, :new.TRCK_UPDATE_DB_USER
     FROM DUAL;
 END;
 /
