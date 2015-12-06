@@ -45,7 +45,7 @@ namespace Finsa.Caravan.Common.Identity
         ///   autorizzazione, al fine di aumentare la sicurezza complessiva del processo.
         /// </param>
         /// <param name="parseSubject">La funzione utilizzata per leggere il subject.</param>
-        public CaravanUserService(ICaravanUserManagerFactory userManagerFactory, ICaravanClientStore clientStore, HashSet<string> allowedApps, Func<string, long> parseSubject = null)
+        public CaravanUserService(ICaravanUserManagerFactory userManagerFactory, ICaravanClientStore clientStore, CaravanAllowedAppsCollection allowedApps, Func<string, long> parseSubject = null)
         {
             RaiseArgumentNullException.IfIsNull(userManagerFactory, nameof(userManagerFactory));
             RaiseArgumentNullException.IfIsNull(clientStore, nameof(clientStore));
@@ -74,7 +74,7 @@ namespace Finsa.Caravan.Common.Identity
         /// <summary>
         ///   Le applicazioni Caravan che possono effettuare il processo di autorizzazione e autenticazione.
         /// </summary>
-        protected HashSet<string> AllowedApps { get; }
+        protected CaravanAllowedAppsCollection AllowedApps { get; }
 
         protected Func<string, long> ConvertSubjectToKey { get; }
 

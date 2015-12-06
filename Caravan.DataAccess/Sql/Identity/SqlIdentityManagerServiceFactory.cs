@@ -32,8 +32,8 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity
         {
             IdentityManagerService = new Registration<IIdentityManagerService, SqlIdentityManagerService>();
 
-            Register(new Registration<CaravanUserManager>(x => CaravanServiceProvider.NinjectKernel.Get<ICaravanUserManagerFactory>().CreateAsync().Result));
-            Register(new Registration<CaravanRoleManager>(x => CaravanServiceProvider.NinjectKernel.Get<ICaravanRoleManagerFactory>().CreateAsync().Result));
+            Register(new Registration<CaravanUserManager>(CaravanServiceProvider.NinjectKernel.Get<ICaravanUserManagerFactory>().CreateAsync().Result));
+            Register(new Registration<CaravanRoleManager>(CaravanServiceProvider.NinjectKernel.Get<ICaravanRoleManagerFactory>().CreateAsync().Result));
 
             // Further services registrations...
             Register(new Registration<SqlDbContext>(r => SqlDbContext.CreateUpdateContext()));
