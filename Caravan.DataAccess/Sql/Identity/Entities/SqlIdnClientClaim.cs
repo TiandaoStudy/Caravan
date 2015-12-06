@@ -35,7 +35,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
         [Required]
         [StringLength(250)]
         public virtual string Value { get; set; }
-        
+
         public virtual int ClientId { get; set; }
 
         public virtual SqlIdnClient Client { get; set; }

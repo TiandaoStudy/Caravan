@@ -74,7 +74,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
         {
             var token = await Context.IdnTokens.FindAsync(key, TokenTypeString);
 
-            if (token == null || token.Expiry < Clock.UtcNow)
+            if (token == null || token.Expiry < Clock.UtcNowOffset)
             {
                 return null;
             }

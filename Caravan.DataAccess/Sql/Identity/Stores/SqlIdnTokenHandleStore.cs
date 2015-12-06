@@ -37,7 +37,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
                 SubjectId = value.SubjectId,
                 ClientId = value.ClientId,
                 JsonCode = ConvertToJson(value),
-                Expiry = Clock.UtcNow.AddSeconds(value.Lifetime),
+                Expiry = Clock.UtcNowOffset.AddSeconds(value.Lifetime),
                 TokenTypeString = TokenTypeString
             });
 

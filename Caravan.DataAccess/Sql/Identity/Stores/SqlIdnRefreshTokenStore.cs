@@ -46,7 +46,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
                 Context.IdnTokens.Add(token);
             }
 
-            token.Expiry = Clock.UtcNow.AddSeconds(value.LifeTime);
+            token.Expiry = value.CreationTime.AddSeconds(value.LifeTime);
             await Context.SaveChangesAsync();
         }
     }

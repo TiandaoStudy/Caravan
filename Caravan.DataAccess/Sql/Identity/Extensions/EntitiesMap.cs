@@ -27,11 +27,16 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Extensions
         static EntitiesMap()
         {
             Mapper.CreateMap<SqlIdnScope, IdentityServer3.Core.Models.Scope>(MemberList.Destination)
-                .ForMember(x => x.Claims, opts => opts.MapFrom(src => src.ScopeClaims.Select(x => x)));
+                .ForMember(x => x.Claims, opts => opts.MapFrom(src => src.ScopeClaims.Select(x => x)))
+                .ForMember(x => x.ScopeSecrets, opts => opts.MapFrom(src => src.ScopeSecrets.Select(x => x)));
 
             Mapper.CreateMap<SqlIdnScopeClaim, IdentityServer3.Core.Models.ScopeClaim>(MemberList.Destination);
 
-            Mapper.CreateMap<SqlIdnClientSecret, IdentityServer3.Core.Models.Secret>(MemberList.Destination);
+            Mapper.CreateMap<SqlIdnScopeSecret, IdentityServer3.Core.Models.Secret>(MemberList.Destination)
+                .ForMember(dest => dest.Type, opt => opt.Condition(srs => !srs.IsSourceValueNull));
+
+            Mapper.CreateMap<SqlIdnClientSecret, IdentityServer3.Core.Models.Secret>(MemberList.Destination)
+                .ForMember(dest => dest.Type, opt => opt.Condition(srs => !srs.IsSourceValueNull));
 
             Mapper.CreateMap<SqlIdnClient, IdnClient>(MemberList.Destination)
                 .ForMember(x => x.UpdateAccessTokenClaimsOnRefresh, opt => opt.MapFrom(src => src.UpdateAccessTokenOnRefresh))
