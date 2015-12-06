@@ -512,7 +512,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>60965</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:60965/</IISUrl>
+          <IISUrl>https://localhost/wsCaravan</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -94,7 +94,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
         ///   Numero di telefono di un certo utente.
         /// </summary>
         [Column("CUSR_PHONE", Order = 9)]
-        [MaxLength(SqlDbContext.MediumLength)]
+        [MaxLength(SqlDbContext.SmallLength)]
         [DataType(DataType.PhoneNumber)]
         public virtual string PhoneNumber { get; set; }
 

@@ -44,7 +44,7 @@ namespace Finsa.Caravan.WebService
                 Factory = new SqlIdentityServerServiceFactory()
             }));
 
-            app.Map("/identity/manager", idmgr => idmgr.UseIdentityManager(new IdentityManagerOptions
+            app.Map("/identityManager", idmgr => idmgr.UseIdentityManager(new IdentityManagerOptions
             {
                 // Gestione della sorgente dati per gli utenti.
                 Factory = new SqlIdentityManagerServiceFactory()

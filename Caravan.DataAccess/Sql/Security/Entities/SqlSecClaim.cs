@@ -48,7 +48,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
         /// <summary>
         ///   Il claim serializzato.
         /// </summary>
-        [Column("CGRP_DESCR", Order = 3)]
+        [Column("CCLA_CLAIM", Order = 3)]
         [DataType(DataType.Text)]
         public virtual string Claim { get; set; }
 
