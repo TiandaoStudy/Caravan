@@ -18,7 +18,6 @@ using Finsa.Caravan.Common.Security.Models;
 using Finsa.CodeServices.Common;
 using PommaLabs.Thrower;
 using System;
-using System.Globalization;
 using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Core
@@ -60,7 +59,7 @@ namespace Finsa.Caravan.DataAccess.Core
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
 
-            appName = appName?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
             var logCtx = $"Retrieving application '{appName}'";
 
             try
@@ -114,7 +113,7 @@ namespace Finsa.Caravan.DataAccess.Core
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
 
-            appName = appName?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
             var logCtx = $"Retrieving all groups from application '{appName}'";
 
             try
@@ -133,7 +132,7 @@ namespace Finsa.Caravan.DataAccess.Core
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
 
-            appName = appName?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
             var logCtx = $"Retrieving group #{groupId} from application '{appName}'";
 
             try
@@ -141,7 +140,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 var groups = await GetGroupsAsyncInternal(appName, groupId, null);
                 if (groups.Length == 0)
                 {
-                    throw new SecGroupNotFoundException(appName, groupId.ToString(CultureInfo.InvariantCulture));
+                    throw new SecGroupNotFoundException(appName, groupId);
                 }
                 return groups[0];
             }
@@ -158,8 +157,8 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
 
-            appName = appName?.ToLowerInvariant();
-            groupName = groupName?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
             var logCtx = $"Retrieving group '{groupName}' from application '{appName}'";
 
             try
@@ -185,7 +184,7 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentNullException.IfIsNull(newGroup, nameof(newGroup));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(newGroup.Name), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(newGroup.Name));
 
-            appName = appName?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
             newGroup.Name = newGroup.Name.ToLowerInvariant();
             var logCtx = $"Adding new group '{newGroup.Name}' to application '{appName}'";
 
@@ -212,8 +211,8 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
 
-            appName = appName?.ToLowerInvariant();
-            groupName = groupName?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
             var logCtx = $"Removing group '{groupName}' from application '{appName}'";
 
             try
@@ -239,8 +238,8 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentNullException.IfIsNull(groupUpdates, nameof(groupUpdates));
             RaiseArgumentException.If(groupUpdates.Name.HasValue && string.IsNullOrWhiteSpace(groupUpdates.Name.Value));
 
-            appName = appName?.ToLowerInvariant();
-            groupName = groupName?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
             var logCtx = $"Updating group '{groupName}' in application '{appName}'";
 
             try
@@ -268,7 +267,7 @@ namespace Finsa.Caravan.DataAccess.Core
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
 
-            appName = appName?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
             var logCtx = $"Retrieving all users from application '{appName}'";
 
             try
@@ -287,7 +286,7 @@ namespace Finsa.Caravan.DataAccess.Core
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
 
-            appName = appName?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
             var logCtx = $"Retrieving user #{userId} from application '{appName}'";
 
             try
@@ -295,7 +294,7 @@ namespace Finsa.Caravan.DataAccess.Core
                 var users = await GetUsersAsyncInternal(appName, userId, null, null);
                 if (users.Length == 0)
                 {
-                    throw new SecUserNotFoundException(appName, userId.ToString(CultureInfo.InvariantCulture));
+                    throw new SecUserNotFoundException(appName, userId);
                 }
                 return users[0];
             }
@@ -312,8 +311,8 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(userLogin), ErrorMessages.NullOrWhiteSpaceUserLogin, nameof(userLogin));
 
-            appName = appName?.ToLowerInvariant();
-            userLogin = userLogin?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
+            userLogin = userLogin.ToLowerInvariant();
             var logCtx = $"Retrieving user '{userLogin}' from application '{appName}'";
 
             try
@@ -338,8 +337,8 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(userEmail), ErrorMessages.NullOrWhiteSpaceUserEmail, nameof(userEmail));
 
-            appName = appName?.ToLowerInvariant();
-            userEmail = userEmail?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
+            userEmail = userEmail.ToLowerInvariant();
             var logCtx = $"Retrieving user '{userEmail}' from application '{appName}'";
 
             try
@@ -365,7 +364,7 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentNullException.IfIsNull(newUser, nameof(newUser));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(newUser.Login), ErrorMessages.NullOrWhiteSpaceUserLogin, nameof(newUser.Login));
 
-            appName = appName?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
             newUser.Login = newUser.Login.ToLowerInvariant();
             var logCtx = $"Adding new user '{newUser.Login}' to application '{appName}'";
 
@@ -392,8 +391,8 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(userLogin), ErrorMessages.NullOrWhiteSpaceUserLogin, nameof(userLogin));
 
-            appName = appName?.ToLowerInvariant();
-            userLogin = userLogin?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
+            userLogin = userLogin.ToLowerInvariant();
             var logCtx = $"Removing user '{userLogin}' from application '{appName}'";
 
             try
@@ -419,8 +418,8 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentNullException.IfIsNull(userUpdates, nameof(userUpdates));
             RaiseArgumentException.If(userUpdates.Login.HasValue && string.IsNullOrWhiteSpace(userUpdates.Login.Value), ErrorMessages.NullOrWhiteSpaceUserLogin);
 
-            appName = appName?.ToLowerInvariant();
-            userLogin = userLogin?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
+            userLogin = userLogin.ToLowerInvariant();
             var logCtx = $"Updating user '{userLogin}' in application '{appName}'";
 
             try
@@ -447,10 +446,10 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(roleName), ErrorMessages.NullOrWhiteSpaceRoleName, nameof(roleName));
 
-            appName = appName?.ToLowerInvariant();
-            userLogin = userLogin?.ToLowerInvariant();
-            groupName = groupName?.ToLowerInvariant();
-            roleName = roleName?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
+            userLogin = userLogin.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
+            roleName = roleName.ToLowerInvariant();
             var logCtx = $"Adding user '{userLogin}' to group '{groupName}' and role '{roleName}' in application '{appName}'";
 
             try
@@ -476,10 +475,10 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(roleName), ErrorMessages.NullOrWhiteSpaceRoleName, nameof(roleName));
 
-            appName = appName?.ToLowerInvariant();
-            userLogin = userLogin?.ToLowerInvariant();
-            groupName = groupName?.ToLowerInvariant();
-            roleName = roleName?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
+            userLogin = userLogin.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
+            roleName = roleName.ToLowerInvariant();
             var logCtx = $"Removing user '{userLogin}' from group '{groupName}' and role '{roleName}' in application '{appName}'";
 
             try
@@ -505,8 +504,8 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentNullException.IfIsNull(claim, nameof(claim), ErrorMessages.NullClaim);
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(claim.Hash), ErrorMessages.NullOrWhiteSpaceClaimHash, nameof(claim.Hash));
 
-            appName = appName?.ToLowerInvariant();
-            userLogin = userLogin?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
+            userLogin = userLogin.ToLowerInvariant();
             var logCtx = $"Adding claim '{claim.Hash}' to user '{userLogin}' of application '{appName}'";
 
             try
@@ -533,8 +532,8 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(userLogin), ErrorMessages.NullOrWhiteSpaceUserLogin, nameof(userLogin));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(serializedClaimHash), ErrorMessages.NullOrWhiteSpaceClaimHash, nameof(serializedClaimHash));
 
-            appName = appName?.ToLowerInvariant();
-            userLogin = userLogin?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
+            userLogin = userLogin.ToLowerInvariant();
             var logCtx = $"Removing claim '{serializedClaimHash}' from user '{userLogin}' of application '{appName}'";
 
             try
@@ -561,12 +560,12 @@ namespace Finsa.Caravan.DataAccess.Core
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
 
-            appName = appName?.ToLowerInvariant();
+            appName = appName.ToLowerInvariant();
             var logCtx = $"Retrieving all roles from application '{appName}'";
 
             try
             {
-                return default(SecRole[]); // await GetUsersAsyncInternal(appName, null, null, null);
+                return await GetRolesAsyncInternal(appName, null, null, null);
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
@@ -575,33 +574,79 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public Task<SecRole[]> GetRolesAsync(string appName, string groupName)
+        public async Task<SecRole[]> GetRolesAsync(string appName, string groupName)
         {
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
 
-            throw new NotImplementedException();
+            appName = appName.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
+            var logCtx = $"Retrieving all roles of group '{groupName}' from application '{appName}'";
+
+            try
+            {
+                return await GetRolesAsyncInternal(appName, groupName, null, null);
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(SecRole[]);
+            }
         }
 
-        public Task<SecRole> GetRoleByIdAsync(string appName, long roleId)
+        public async Task<SecRole> GetRoleByIdAsync(string appName, int roleId)
         {
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
 
-            throw new NotImplementedException();
+            appName = appName.ToLowerInvariant();
+            var logCtx = $"Retrieving role #{roleId} from application '{appName}'";
+
+            try
+            {
+                var roles = await GetRolesAsyncInternal(appName, null, null, roleId);
+                if (roles.Length == 0)
+                {
+                    throw new SecRoleNotFoundException(appName, roleId);
+                }
+                return roles[0];
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(SecRole);
+            }
         }
 
-        public Task<SecRole> GetRoleByNameAsync(string appName, string groupName, string roleName)
+        public async Task<SecRole> GetRoleByNameAsync(string appName, string groupName, string roleName)
         {
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
 
-            throw new NotImplementedException();
+            appName = appName.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
+            roleName = roleName.ToLowerInvariant();
+            var logCtx = $"Retrieving role '{roleName}' of group '{groupName}' from application '{appName}'";
+
+            try
+            {
+                var roles = await GetRolesAsyncInternal(appName, groupName, roleName, null);
+                if (roles.Length == 0)
+                {
+                    throw new SecRoleNotFoundException(appName, groupName, roleName);
+                }
+                return roles[0];
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(SecRole);
+            }
         }
 
-        public Task<int> AddRoleAsync(string appName, string groupName, SecRole newRole)
+        public async Task<int> AddRoleAsync(string appName, string groupName, SecRole newRole)
         {
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
@@ -609,20 +654,56 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentNullException.IfIsNull(newRole, nameof(newRole), ErrorMessages.NullRole);
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(newRole.Name), ErrorMessages.NullOrWhiteSpaceRoleName, nameof(newRole.Name));
 
-            throw new NotImplementedException();
+            appName = appName.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
+            newRole.Name = newRole.Name.ToLowerInvariant();
+            var logCtx = $"Adding new role '{newRole.Name}' to group '{groupName}' of application '{appName}'";
+
+            try
+            {
+                await AddRoleAsyncInternal(appName, groupName, newRole);
+                Log.Warn(new LogMessage
+                {
+                    ShortMessage = $"Added new role '{newRole.Name}' to group '{groupName}' of application '{appName}'",
+                    Context = logCtx
+                });
+                return newRole.Id;
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(int);
+            }
         }
 
-        public Task RemoveRoleAsync(string appName, string groupName, string roleName)
+        public async Task RemoveRoleAsync(string appName, string groupName, string roleName)
         {
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(roleName), ErrorMessages.NullOrWhiteSpaceRoleName, nameof(roleName));
 
-            throw new NotImplementedException();
+            appName = appName.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
+            roleName = roleName.ToLowerInvariant();
+            var logCtx = $"Removing role '{roleName}' from group '{groupName}' of application '{appName}'";
+
+            try
+            {
+                await RemoveRoleAsyncInternal(appName, groupName, roleName);
+                Log.Warn(new LogMessage
+                {
+                    ShortMessage = $"Removed role '{roleName}' from group '{groupName}' of application '{appName}'",
+                    Context = logCtx
+                });
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+            }
         }
 
-        public Task UpdateRoleAsync(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates)
+        public async Task UpdateRoleAsync(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates)
         {
             // Preconditions
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
@@ -631,7 +712,25 @@ namespace Finsa.Caravan.DataAccess.Core
             RaiseArgumentNullException.IfIsNull(roleUpdates, nameof(roleUpdates), ErrorMessages.NullRole);
             RaiseArgumentException.If(roleUpdates.Name.HasValue && string.IsNullOrWhiteSpace(roleUpdates.Name.Value), ErrorMessages.NullOrWhiteSpaceRoleName);
 
-            throw new NotImplementedException();
+            appName = appName.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
+            roleName = roleName.ToLowerInvariant();
+            var logCtx = $"Updating role '{roleName}' in group '{groupName}' of application '{appName}'";
+
+            try
+            {
+                roleUpdates.Name.Do(x => roleUpdates.Name = x.ToLowerInvariant());
+                await UpdateRoleAsyncInternal(appName, groupName, roleName, roleUpdates);
+                Log.Warn(new LogMessage
+                {
+                    ShortMessage = $"Updated role '{roleName}' in group '{groupName}' of application '{appName}'",
+                    Context = logCtx
+                });
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+            }
         }
 
         #endregion
@@ -821,6 +920,14 @@ namespace Finsa.Caravan.DataAccess.Core
         protected abstract Task AddUserClaimAsyncInternal(string appName, string userLogin, SecClaim claim);
 
         protected abstract Task RemoveUserClaimAsyncInternal(string appName, string userLogin, string serializedClaimHash);
+
+        protected abstract Task<SecRole[]> GetRolesAsyncInternal(string appName, string groupName, string roleName, int? roleId);
+
+        protected abstract Task AddRoleAsyncInternal(string appName, string groupName, SecRole newRole);
+
+        protected abstract Task RemoveRoleAsyncInternal(string appName, string groupName, string roleName);
+
+        protected abstract Task UpdateRoleAsyncInternal(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates);
 
         protected abstract Task<SecContext[]> GetContextsAsyncInternal(string appName);
 

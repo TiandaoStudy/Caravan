@@ -125,6 +125,7 @@ namespace Finsa.Caravan.DataAccess
         {
             // Mappings (SQL --> Models) for Security
             Mapper.CreateMap<SqlSecApp, SecApp>();
+            Mapper.CreateMap<SqlSecClaim, SecClaim>();
             Mapper.CreateMap<SqlSecContext, SecContext>();
             Mapper.CreateMap<SqlSecEntry, SecEntry>().AfterMap((se, e) =>
             {
@@ -132,7 +133,10 @@ namespace Finsa.Caravan.DataAccess
             });
             Mapper.CreateMap<SqlSecGroup, SecGroup>();
             Mapper.CreateMap<SqlSecObject, SecObject>();
-            Mapper.CreateMap<SqlSecRole, SecRole>();
+            Mapper.CreateMap<SqlSecRole, SecRole>().AfterMap((sr, r) =>
+            {
+                r.AppName = sr.Group.App.Name;
+            });
             Mapper.CreateMap<SqlSecUser, SecUser>().AfterMap((su, u) =>
             {
                 u.Groups = su.Roles

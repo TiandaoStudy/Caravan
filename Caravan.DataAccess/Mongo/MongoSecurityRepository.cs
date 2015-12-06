@@ -123,5 +123,25 @@ namespace Finsa.Caravan.DataAccess.Mongo
         {
             throw new NotImplementedException();
         }
+
+        protected override Task<SecRole[]> GetRolesAsyncInternal(string appName, string groupName, string roleName, int? roleId)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task AddRoleAsyncInternal(string appName, string groupName, SecRole newRole)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task RemoveRoleAsyncInternal(string appName, string groupName, string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task UpdateRoleAsyncInternal(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

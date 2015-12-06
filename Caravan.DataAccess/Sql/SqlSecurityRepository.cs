@@ -14,6 +14,8 @@ namespace Finsa.Caravan.DataAccess.Sql
 {
     internal sealed class SqlSecurityRepository : AbstractSecurityRepository<SqlSecurityRepository>
     {
+        private const string UnspecifiedString = "...";
+
         public SqlSecurityRepository(ICaravanLog log)
             : base(log)
         {
@@ -53,7 +55,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 var sqlApp = ctx.SecApps.Add(new SqlSecApp
                 {
                     Name = app.Name,
-                    Description = app.Description
+                    Description = app.Description ?? UnspecifiedString
                 });
 
                 await ctx.SaveChangesAsync();
@@ -106,8 +108,8 @@ namespace Finsa.Caravan.DataAccess.Sql
                 {
                     AppId = appId,
                     Name = newGroup.Name,
-                    Description = newGroup.Description ?? string.Empty,
-                    Notes = newGroup.Notes ?? string.Empty
+                    Description = newGroup.Description ?? UnspecifiedString,
+                    Notes = newGroup.Notes ?? UnspecifiedString
                 });
 
                 await ctx.SaveChangesAsync();
@@ -141,7 +143,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 {
                     if (sqlGroup.Name != x && await ctx.SecGroups.AnyAsync(g => g.AppId == sqlGroup.AppId && g.Name == x))
                     {
-                        throw new SecGroupExistingException(appName, groupName);
+                        throw new SecGroupExistingException(appName, x);
                     }
                     sqlGroup.Name = x;
                 });
@@ -240,7 +242,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 {
                     if (userLogin != x && await ctx.SecUsers.AnyAsync(u => u.AppId == sqlUser.AppId && u.Login == x))
                     {
-                        throw new SecUserExistingException(appName, userLogin);
+                        throw new SecUserExistingException(appName, x);
                     }
                     sqlUser.Login = x;
                 });
@@ -336,6 +338,104 @@ namespace Finsa.Caravan.DataAccess.Sql
         }
 
         #endregion Users
+
+        #region Roles
+
+        protected override async Task<SecRole[]> GetRolesAsyncInternal(string appName, string groupName, string roleName, int? roleId)
+        {
+            using (var ctx = SqlDbContext.CreateReadContext())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+
+                var q = ctx.SecRoles
+                    .Include(r => r.Group.App)
+                    .Where(r => r.Group.App.Id == appId);
+
+                if (groupName != null)
+                {
+                    var group = await GetGroupByNameAsync(ctx, appId, appName, groupName);
+                    q = q.Where(r => r.Id == group.Id);
+                }
+                if (roleName != null)
+                {
+                    q = q.Where(r => r.Name == roleName);
+                }
+                if (roleId != null)
+                {
+                    q = q.Where(r => r.Id == roleId);
+                }
+
+                return q.AsEnumerable()
+                    .Select(Mapper.Map<SecRole>)
+                    .ToArray();
+            }
+        }
+
+        protected override async Task AddRoleAsyncInternal(string appName, string groupName, SecRole newRole)
+        {
+            using (var ctx = SqlDbContext.CreateReadContext())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var group = await GetGroupByNameAsync(ctx, appId, appName, groupName);
+
+                if (await ctx.SecRoles.AnyAsync(r => r.GroupId == group.Id && r.Name == newRole.Name))
+                {
+                    throw new SecRoleExistingException(appName, groupName, newRole.Name);
+                }
+
+                var sqlRole = ctx.SecRoles.Add(new SqlSecRole
+                {
+                    GroupId = group.Id,
+                    Name = newRole.Name,
+                    Description = newRole.Description ?? UnspecifiedString,
+                    Notes = newRole.Notes ?? UnspecifiedString
+                });
+
+                await ctx.SaveChangesAsync();
+                newRole.Id = sqlRole.Id;
+            }
+        }
+
+        protected override async Task RemoveRoleAsyncInternal(string appName, string groupName, string roleName)
+        {
+            using (var ctx = SqlDbContext.CreateReadContext())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var group = await GetGroupByNameAsync(ctx, appId, appName, groupName);
+                var sqlRole = await GetRoleByNameAsync(ctx, appName, group.Id, groupName, roleName);
+
+                // La chiamata sopra mi assicura che il ruolo ci sia.
+                ctx.SecRoles.Remove(sqlRole);
+
+                await ctx.SaveChangesAsync();
+            }
+        }
+
+        protected override async Task UpdateRoleAsyncInternal(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates)
+        {
+            using (var ctx = SqlDbContext.CreateUpdateContext())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var group = await GetGroupByNameAsync(ctx, appId, appName, groupName);
+                var sqlRole = await GetRoleByNameAsync(ctx, appName, group.Id, groupName, roleName);
+
+                // La chiamata sopra mi assicura che il ruolo ci sia.
+                roleUpdates.Name.Do(async x =>
+                {
+                    if (sqlRole.Name != x && await ctx.SecRoles.AnyAsync(r => r.GroupId == group.Id && r.Name == x))
+                    {
+                        throw new SecRoleExistingException(appName, groupName, x);
+                    }
+                    sqlRole.Name = x;
+                });
+                roleUpdates.Description.Do(x => sqlRole.Description = x);
+                roleUpdates.Notes.Do(x => sqlRole.Notes = x);
+
+                await ctx.SaveChangesAsync();
+            }
+        }
+
+        #endregion Roles
 
         #region Contexts
 

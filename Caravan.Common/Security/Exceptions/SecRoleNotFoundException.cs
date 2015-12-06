@@ -26,6 +26,11 @@ namespace Finsa.Caravan.Common.Security.Exceptions
         {
         }
 
+        public SecRoleNotFoundException(string appName, int roleId)
+            : base($"Role #{roleId} not found inside application '{appName}'")
+        {
+        }
+
         protected SecRoleNotFoundException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

@@ -20,7 +20,7 @@ using System.Runtime.Serialization;
 namespace Finsa.Caravan.Common.Security.Models
 {
     [Serializable, DataContract]
-    public class SecGroup : EquatableObject<SecGroup>, IRole<int>
+    public class SecGroup : EquatableObject<SecGroup>
     {
         /// <summary>
         ///   Id of the group.

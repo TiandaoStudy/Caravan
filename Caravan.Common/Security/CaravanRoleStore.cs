@@ -70,38 +70,26 @@ namespace Finsa.Caravan.Common.Security
         /// </summary>
         /// <param name="role"/>
         /// <returns/>
-        public async Task CreateAsync(SecRole role)
-        {
-            var tuple = SecRole.FromIdentityRoleName(role);
-            await SecurityRepository.AddRoleAsync(AppName, tuple.Item1, role);
-        }
+        public Task CreateAsync(SecRole role) => SecurityRepository.AddRoleAsync(AppName, role.GroupName, role);
 
         /// <summary>
         ///   Updates a role.
         /// </summary>
         /// <param name="role"/>
         /// <returns/>
-        public async Task UpdateAsync(SecRole role)
+        public Task UpdateAsync(SecRole role) => SecurityRepository.UpdateRoleAsync(AppName, role.GroupName, role.Name, new SecRoleUpdates
         {
-            var tuple = SecRole.FromIdentityRoleName(role);
-            await SecurityRepository.UpdateRoleAsync(AppName, tuple.Item1, tuple.Item2, new SecRoleUpdates
-            {
-                Name = role.Name,
-                Description = role.Description,
-                Notes = role.Notes
-            });
-        }
+            Name = role.Name,
+            Description = role.Description,
+            Notes = role.Notes
+        });
 
         /// <summary>
         ///   Deletes a role.
         /// </summary>
         /// <param name="role"/>
         /// <returns/>
-        public async Task DeleteAsync(SecRole role)
-        {
-            var tuple = SecRole.FromIdentityRoleName(role);
-            await SecurityRepository.RemoveRoleAsync(AppName, tuple.Item1, tuple.Item2);
-        }
+        public Task DeleteAsync(SecRole role) => SecurityRepository.RemoveRoleAsync(AppName, role.GroupName, role.Name);
 
         /// <summary>
         ///   Finds a role by ID.
