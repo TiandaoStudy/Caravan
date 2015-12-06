@@ -556,43 +556,81 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Roles
 
-        public Task<SecRole[]> GetRolesAsync(string appName)
+        public async Task<SecRole[]> GetRolesAsync(string appName)
         {
-            throw new NotImplementedException();
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+
+            appName = appName?.ToLowerInvariant();
+            var logCtx = $"Retrieving all roles from application '{appName}'";
+
+            try
+            {
+                return default(SecRole[]); // await GetUsersAsyncInternal(appName, null, null, null);
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(SecRole[]);
+            }
         }
 
-        public Task<SecRole[]> GetRolesAsync(string appName, string roleName)
+        public Task<SecRole[]> GetRolesAsync(string appName, string groupName)
         {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+
             throw new NotImplementedException();
         }
 
         public Task<SecRole> GetRoleByIdAsync(string appName, long roleId)
         {
-            throw new NotImplementedException();
-        }
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
 
-        public Task<SecRole> GetRoleByNameAsync(string appName, string roleName)
-        {
             throw new NotImplementedException();
         }
 
         public Task<SecRole> GetRoleByNameAsync(string appName, string groupName, string roleName)
         {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+
             throw new NotImplementedException();
         }
 
         public Task<int> AddRoleAsync(string appName, string groupName, SecRole newRole)
         {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+            RaiseArgumentNullException.IfIsNull(newRole, nameof(newRole), ErrorMessages.NullRole);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(newRole.Name), ErrorMessages.NullOrWhiteSpaceRoleName, nameof(newRole.Name));
+
             throw new NotImplementedException();
         }
 
         public Task RemoveRoleAsync(string appName, string groupName, string roleName)
         {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(roleName), ErrorMessages.NullOrWhiteSpaceRoleName, nameof(roleName));
+
             throw new NotImplementedException();
         }
 
         public Task UpdateRoleAsync(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates)
         {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(roleName), ErrorMessages.NullOrWhiteSpaceRoleName, nameof(roleName));
+            RaiseArgumentNullException.IfIsNull(roleUpdates, nameof(roleUpdates), ErrorMessages.NullRole);
+            RaiseArgumentException.If(roleUpdates.Name.HasValue && string.IsNullOrWhiteSpace(roleUpdates.Name.Value), ErrorMessages.NullOrWhiteSpaceRoleName);
+
             throw new NotImplementedException();
         }
 

@@ -4,7 +4,6 @@ using Finsa.Caravan.DataAccess.Sql.Security.Entities;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Transactions;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {

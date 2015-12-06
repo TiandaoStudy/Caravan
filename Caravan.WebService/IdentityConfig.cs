@@ -13,6 +13,7 @@
 using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess.Sql.Identity;
 using Finsa.CodeServices.Common.Portability;
+using IdentityManager.Configuration;
 using IdentityServer3.Core.Configuration;
 using Owin;
 using System.Security.Cryptography.X509Certificates;
@@ -22,11 +23,11 @@ namespace Finsa.Caravan.WebService
     /// <summary>
     ///   Configurazione del servizio di autorizzazione/autenticazione.
     /// </summary>
-    public static class IdentityConfig
+    static class IdentityConfig
     {
         public static void Build(IAppBuilder app)
         {
-            app.Map("/identity", idsrvApp => idsrvApp.UseIdentityServer(new IdentityServerOptions
+            app.Map("/identity", idsrv => idsrv.UseIdentityServer(new IdentityServerOptions
             {
                 // Dettagli sul nome del servizio.
                 SiteName = CaravanCommonConfiguration.Instance.AppDescription,
@@ -40,7 +41,13 @@ namespace Finsa.Caravan.WebService
                 EnableWelcomePage = true,
 
                 // Gestione della sorgente dati per gli utenti.
-                Factory = SqlIdnServiceFactory.Configure(),
+                Factory = new SqlIdentityServerServiceFactory()
+            }));
+
+            app.Map("/identity/manager", idmgr => idmgr.UseIdentityManager(new IdentityManagerOptions
+            {
+                // Gestione della sorgente dati per gli utenti.
+                Factory = new SqlIdentityManagerServiceFactory()
             }));
         }
 

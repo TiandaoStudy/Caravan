@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
-    internal sealed class SqlIdnScopeStore : IScopeStore
+    public sealed class SqlIdnScopeStore : IScopeStore
     {
         private readonly SqlDbContext _context;
 

@@ -15,7 +15,6 @@ using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
 using Finsa.CodeServices.Security.Hashing;
 using Finsa.CodeServices.Serialization;
-using Microsoft.AspNet.Identity;
 using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;

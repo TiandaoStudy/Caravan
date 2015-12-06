@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
+using Finsa.CodeServices.Clock;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 using IdentityServer3.EntityFramework.Entities;
 using IdentityServer3.EntityFramework.Serialization;
 using Newtonsoft.Json;
 using PommaLabs.Thrower;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Finsa.CodeServices.Clock;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
-    internal abstract class AbstractSqlIdnTokenStore<T>
+    public abstract class AbstractSqlIdnTokenStore<T>
         where T : class
     {
         protected readonly SqlDbContext Context;

@@ -308,7 +308,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
 
                 // Le chiamate sopra mi assicurano che utente e applicazione esistano.
-                ctx.SecClaims.Add(new SqlSecClaim
+                var sqlClaim = ctx.SecClaims.Add(new SqlSecClaim
                 {
                     UserId = user.Id,
                     Hash = claim.Hash,
@@ -316,6 +316,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 });
 
                 await ctx.SaveChangesAsync();
+                claim.Id = sqlClaim.Id;
             }
         }
 

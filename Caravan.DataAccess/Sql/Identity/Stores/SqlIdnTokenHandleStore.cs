@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
-    internal sealed class SqlIdnTokenHandleStore : AbstractSqlIdnTokenStore<Token>, ITokenHandleStore
+    public sealed class SqlIdnTokenHandleStore : AbstractSqlIdnTokenStore<Token>, ITokenHandleStore
     {
         public SqlIdnTokenHandleStore(SqlDbContext context, IScopeStore scopeStore, IClientStore clientStore, IClock clock)
             : base(context, IdentityServer3.EntityFramework.Entities.TokenType.TokenHandle, scopeStore, clientStore, clock)

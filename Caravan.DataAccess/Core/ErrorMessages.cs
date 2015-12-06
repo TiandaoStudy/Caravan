@@ -20,6 +20,7 @@ namespace Finsa.Caravan.DataAccess.Core
         public const string InvalidEnumValue = "Given enum value is not valid";
 
         public const string NullClaim = "Caravan security claim cannot be null";
+        public const string NullRole = "Caravan security role cannot be null";
 
         public const string NullOrWhiteSpaceAppName = "Caravan application name cannot be null, empty or blank";
         public const string NullOrWhiteSpaceContextName = "Caravan context name cannot be null, empty or blank";

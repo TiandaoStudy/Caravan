@@ -23,11 +23,11 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Services
 {
-    public sealed class SqlIdnClientConfigurationCorsPolicyService : ICorsPolicyService
+    public sealed class SqlIdnCorsPolicyService : ICorsPolicyService
     {
         readonly SqlDbContext _context;
 
-        public SqlIdnClientConfigurationCorsPolicyService(SqlDbContext context)
+        public SqlIdnCorsPolicyService(SqlDbContext context)
         {
             RaiseArgumentNullException.IfIsNull(context);
             _context = context;

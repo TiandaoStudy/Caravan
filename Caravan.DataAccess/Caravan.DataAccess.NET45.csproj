@@ -106,6 +106,14 @@
       <HintPath>..\packages\Finsa.CodeServices.Serialization.3.0.7\lib\net45\Finsa.CodeServices.Serialization.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="IdentityManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IdentityManager.1.0.0-beta5-5\lib\net45\IdentityManager.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IdentityManager.AspNetIdentity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IdentityManager.AspNetIdentity.1.0.0-beta5-1\lib\net45\IdentityManager.AspNetIdentity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="IdentityServer3, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IdentityServer3.2.1.1\lib\net45\IdentityServer3.dll</HintPath>
       <Private>True</Private>
@@ -254,8 +262,9 @@
     <Compile Include="Sql\Identity\Entities\SqlIdnScopeClaim.cs" />
     <Compile Include="Sql\Identity\Entities\SqlIdnScope.cs" />
     <Compile Include="Sql\Identity\Entities\SqlIdnToken.cs" />
-    <Compile Include="Sql\Identity\Services\SqlIdnClientConfigurationCorsPolicyService.cs" />
-    <Compile Include="Sql\Identity\SqlIdnServiceFactory.cs" />
+    <Compile Include="Sql\Identity\Services\SqlIdnCorsPolicyService.cs" />
+    <Compile Include="Sql\Identity\SqlIdentityManagerServiceFactory.cs" />
+    <Compile Include="Sql\Identity\SqlIdentityServerServiceFactory.cs" />
     <Compile Include="Sql\Identity\Stores\AbstractSqlIdnTokenStore.cs" />
     <Compile Include="Sql\Identity\Stores\SqlIdnAuthorizationCodeStore.cs" />
     <Compile Include="Sql\Identity\Stores\SqlIdnClientStore.cs" />

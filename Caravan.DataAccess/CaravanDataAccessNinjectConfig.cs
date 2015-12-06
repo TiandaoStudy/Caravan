@@ -10,13 +10,15 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using System;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.DataAccess.Sql.Identity;
+using IdentityServer3.Core.Configuration;
 using Ninject.Modules;
 using PommaLabs.Thrower;
+using System;
 
 namespace Finsa.Caravan.DataAccess
 {
@@ -32,7 +34,9 @@ namespace Finsa.Caravan.DataAccess
         ///   Inizializza il modulo.
         /// </summary>
         /// <param name="dependencyHandling">Modalità di gestione delle dipendenze.</param>
-        /// <param name="dataSourceKind">Il tipo della sorgente dati che verrà usato dalla componente di accesso ai dati.</param>
+        /// <param name="dataSourceKind">
+        ///   Il tipo della sorgente dati che verrà usato dalla componente di accesso ai dati.
+        /// </param>
         public CaravanDataAccessNinjectConfig(DependencyHandling dependencyHandling, CaravanDataSourceKind dataSourceKind)
         {
             RaiseArgumentException.IfNot(Enum.IsDefined(typeof(DependencyHandling), dependencyHandling), ErrorMessages.InvalidEnumValue, nameof(dependencyHandling));
@@ -57,6 +61,7 @@ namespace Finsa.Caravan.DataAccess
                 case DependencyHandling.ProductionEnvironment:
                     Bind<ICaravanLogRepository>().ToMethod(ctx => CaravanDataSource.Logger).InSingletonScope();
                     Bind<ICaravanSecurityRepository>().ToMethod(ctx => CaravanDataSource.Security).InSingletonScope();
+                    LoadDependingOnDataSourceKind();
                     break;
 
                 case DependencyHandling.UnitTesting:
@@ -64,7 +69,22 @@ namespace Finsa.Caravan.DataAccess
                     Bind<ICaravanLogRepository>().ToMethod(ctx => CaravanDataSource.Logger).InSingletonScope();
                     Bind<ICaravanSecurityRepository>().ToMethod(ctx => CaravanDataSource.Security).InSingletonScope();
                     break;
-            }            
+            }
+        }
+
+        private void LoadDependingOnDataSourceKind()
+        {
+            // Gestione dell'autenticazione e dell'autorizzazione.
+            switch (_dataSourceKind)
+            {
+                case CaravanDataSourceKind.Oracle:
+                case CaravanDataSourceKind.MySql:
+                case CaravanDataSourceKind.PostgreSql:
+                case CaravanDataSourceKind.SqlServer:
+                case CaravanDataSourceKind.SqlServerCe:
+                    Bind<IdentityServerServiceFactory>().To<SqlIdentityServerServiceFactory>().InSingletonScope();
+                    break;
+            }
         }
     }
 }
