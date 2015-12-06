@@ -13,6 +13,8 @@ CREATE TABLE mydb.crvn_idn_clients
    , CCLI_ALLOW_REMEMBER_CONSENT    NUMBER(1)       DEFAULT 1               NOT NULL
    , CCLI_FLOW                      NVARCHAR2(100)  DEFAULT 'implicit'      NOT NULL
    , CCLI_ALLOW_CLIENT_CREDS_ONLY   NUMBER(1)       DEFAULT 0               NOT NULL
+   , CCLI_LOGOUT_URI                NVARCHAR2(2000)      
+   , CCLI_LOGOUT_SESSION_REQUIRED   NUMBER(1)       DEFAULT 1               NOT NULL
    , CCLI_ALLOW_ACCESSALL_SCOPES    NUMBER(1)       DEFAULT 0               NOT NULL
    , CCLI_IDENTITY_TOKEN_LIFETIME   NUMBER(10)      DEFAULT 300             NOT NULL
    , CCLI_ACCESS_TOKEN_LIFETIME     NUMBER(10)      DEFAULT 3600            NOT NULL
@@ -86,6 +88,10 @@ COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_FLOW
      IS 'Specifies allowed flow for client (either AuthorizationCode, Implicit, Hybrid, ResourceOwner, ClientCredentials or Custom). Defaults to Implicit';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_CLIENT_CREDS_ONLY 
      IS 'Indicates whether this client is allowed to request token using client credentials only. This is e.g. useful when you want a client to be able to use both a user-centric flow like implicit and additionally client credentials flow';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_LOGOUT_URI 
+     IS 'Specifies logout URI at client for HTTP based logout';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_LOGOUT_SESSION_REQUIRED 
+     IS 'Specifies is the user session ID should be sent to the LogoutUri. Defaults to true';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_ACCESSALL_SCOPES 
      IS 'Indicates whether the client has access to all scopes. Defaults to false. You can set the allowed scopes via the CRVN_IDN_CLI_SCOPES table';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_IDENTITY_TOKEN_LIFETIME 

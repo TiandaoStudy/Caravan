@@ -75,6 +75,16 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
         public virtual ICollection<SqlIdnClientRedirectUri> RedirectUris { get; set; }
         public virtual ICollection<SqlIdnClientPostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
 
+        /// <summary>
+        ///   Specifies logout URI at client for HTTP based logout.
+        /// </summary>
+        public virtual string LogoutUri { get; set; }
+
+        /// <summary>
+        ///   Specifies is the user's session ID should be sent to the LogoutUri. Defaults to true.
+        /// </summary>
+        public virtual bool LogoutSessionRequired { get; set; } = true;
+
         public virtual bool AllowAccessToAllScopes { get; set; }
         public virtual ICollection<SqlIdnClientScope> AllowedScopes { get; set; }
 
@@ -168,6 +178,8 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
             Property(x => x.AllowRememberConsent).HasColumnName("CCLI_ALLOW_REMEMBER_CONSENT");
             Property(x => x.FlowString).HasColumnName("CCLI_FLOW");
             Property(x => x.AllowClientCredentialsOnly).HasColumnName("CCLI_ALLOW_CLIENT_CREDS_ONLY");
+            Property(x => x.LogoutUri).HasColumnName("CCLI_LOGOUT_URI");
+            Property(x => x.LogoutSessionRequired).HasColumnName("CCLI_LOGOUT_SESSION_REQUIRED");
             Property(x => x.AllowAccessToAllScopes).HasColumnName("CCLI_ALLOW_ACCESSALL_SCOPES");
             Property(x => x.IdentityTokenLifetime).HasColumnName("CCLI_IDENTITY_TOKEN_LIFETIME");
             Property(x => x.AccessTokenLifetime).HasColumnName("CCLI_ACCESS_TOKEN_LIFETIME");
