@@ -38,6 +38,9 @@
 -- Identity: Client CORS origins ID trigger
 <#@ include file="Triggers/ti_crvn_idn_cli_cors_origins.sql" #>
 
+-- Identity: Scope secrets
+<#@ include file="Tables/crvn_idn_sco_secrets.sql" #>
+
 -- Users
 <#@ include file="Tables/crvn_sec_users.sql" #>
 

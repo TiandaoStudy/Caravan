@@ -316,6 +316,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Sql\Oracle\Scripts\Packages\pck_caravan_utils.sql" />
+    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_sco_secrets.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_tokens.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_sco_claims.sql" />
     <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_consents.sql" />

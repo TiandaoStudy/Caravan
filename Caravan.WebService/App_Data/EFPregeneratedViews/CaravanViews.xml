@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <views>
-  <mapping-views hash="a03d259491cca7b55d8d86e0c96d3f3466d1361701788d8285397dc3fcde3aa3" conceptual-container="SqlDbContext" store-container="CodeFirstDatabase">
+  <mapping-views hash="b3404a71bc08dbd8c207856d379c1580495da2bab5cea6f2fc22c8fda571e712" conceptual-container="SqlDbContext" store-container="CodeFirstDatabase">
     <view extent="CodeFirstDatabase.SqlIdnClientClaim"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnClientClaim
         [CodeFirstDatabaseSchema.SqlIdnClientClaim](T1.[SqlIdnClientClaim.CCLM_ID], T1.[SqlIdnClientClaim.CCLM_TYPE], T1.[SqlIdnClientClaim.CCLM_VALUE], T1.[SqlIdnClientClaim.CCLI_ID])
@@ -15,7 +15,7 @@
     ) AS T1]]></view>
     <view extent="CodeFirstDatabase.SqlIdnClient"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnClient
-        [CodeFirstDatabaseSchema.SqlIdnClient](T1.[SqlIdnClient.CCLI_ID], T1.[SqlIdnClient.CAPP_ID], T1.[SqlIdnClient.CCLI_ENABLED], T1.[SqlIdnClient.CCLI_CLIENT_ID], T1.[SqlIdnClient.CCLI_CLIENT_NAME], T1.[SqlIdnClient.CCLI_CLIENT_URI], T1.[SqlIdnClient.CCLI_LOGO_URI], T1.[SqlIdnClient.CCLI_REQUIRE_CONSENT], T1.[SqlIdnClient.CCLI_ALLOW_REMEMBER_CONSENT], T1.[SqlIdnClient.CCLI_FLOW], T1.[SqlIdnClient.CCLI_ALLOW_CLIENT_CREDS_ONLY], T1.[SqlIdnClient.CCLI_ALLOW_ACCESSALL_SCOPES], T1.[SqlIdnClient.CCLI_IDENTITY_TOKEN_LIFETIME], T1.[SqlIdnClient.CCLI_ACCESS_TOKEN_LIFETIME], T1.[SqlIdnClient.CCLI_AUTH_CODE_LIFETIME], T1.[SqlIdnClient.CCLI_ABS_REFR_TOKEN_LIFETIME], T1.[SqlIdnClient.CCLI_SLID_REFR_TOKEN_LIFETIME], T1.[SqlIdnClient.CCLI_REFRESH_TOKEN_USAGE], T1.[SqlIdnClient.CCLI_UPD_ACCESS_TOKEN_ON_REFR], T1.[SqlIdnClient.CCLI_REFRESH_TOKEN_EXPIRATION], T1.[SqlIdnClient.CCLI_ACCESS_TOKEN_TYPE], T1.[SqlIdnClient.CCLI_ENABLE_LOCAL_LOGIN], T1.[SqlIdnClient.CCLI_INCLUDE_JWT_ID], T1.[SqlIdnClient.CCLI_ALWAYS_SEND_CLIENT_CLAIMS], T1.[SqlIdnClient.CCLI_PREFIX_CLIENT_CLAIMS], T1.[SqlIdnClient.CCLI_ALLOW_ACCESSALL_CST_GRTP], T1.[SqlIdnClient.TRCK_INSERT_DATE], T1.[SqlIdnClient.TRCK_INSERT_DB_USER], T1.[SqlIdnClient.TRCK_INSERT_APP_USER], T1.[SqlIdnClient.TRCK_UPDATE_DATE], T1.[SqlIdnClient.TRCK_UPDATE_DB_USER], T1.[SqlIdnClient.TRCK_UPDATE_APP_USER])
+        [CodeFirstDatabaseSchema.SqlIdnClient](T1.[SqlIdnClient.CCLI_ID], T1.[SqlIdnClient.CAPP_ID], T1.[SqlIdnClient.CCLI_ENABLED], T1.[SqlIdnClient.CCLI_CLIENT_ID], T1.[SqlIdnClient.CCLI_CLIENT_NAME], T1.[SqlIdnClient.CCLI_CLIENT_URI], T1.[SqlIdnClient.CCLI_LOGO_URI], T1.[SqlIdnClient.CCLI_REQUIRE_CONSENT], T1.[SqlIdnClient.CCLI_ALLOW_REMEMBER_CONSENT], T1.[SqlIdnClient.CCLI_FLOW], T1.[SqlIdnClient.CCLI_ALLOW_CLIENT_CREDS_ONLY], T1.[SqlIdnClient.CCLI_LOGOUT_URI], T1.[SqlIdnClient.CCLI_LOGOUT_SESSION_REQUIRED], T1.[SqlIdnClient.CCLI_ALLOW_ACCESSALL_SCOPES], T1.[SqlIdnClient.CCLI_IDENTITY_TOKEN_LIFETIME], T1.[SqlIdnClient.CCLI_ACCESS_TOKEN_LIFETIME], T1.[SqlIdnClient.CCLI_AUTH_CODE_LIFETIME], T1.[SqlIdnClient.CCLI_ABS_REFR_TOKEN_LIFETIME], T1.[SqlIdnClient.CCLI_SLID_REFR_TOKEN_LIFETIME], T1.[SqlIdnClient.CCLI_REFRESH_TOKEN_USAGE], T1.[SqlIdnClient.CCLI_UPD_ACCESS_TOKEN_ON_REFR], T1.[SqlIdnClient.CCLI_REFRESH_TOKEN_EXPIRATION], T1.[SqlIdnClient.CCLI_ACCESS_TOKEN_TYPE], T1.[SqlIdnClient.CCLI_ENABLE_LOCAL_LOGIN], T1.[SqlIdnClient.CCLI_INCLUDE_JWT_ID], T1.[SqlIdnClient.CCLI_ALWAYS_SEND_CLIENT_CLAIMS], T1.[SqlIdnClient.CCLI_PREFIX_CLIENT_CLAIMS], T1.[SqlIdnClient.CCLI_ALLOW_ACCESSALL_CST_GRTP], T1.[SqlIdnClient.TRCK_INSERT_DATE], T1.[SqlIdnClient.TRCK_INSERT_DB_USER], T1.[SqlIdnClient.TRCK_INSERT_APP_USER], T1.[SqlIdnClient.TRCK_UPDATE_DATE], T1.[SqlIdnClient.TRCK_UPDATE_DB_USER], T1.[SqlIdnClient.TRCK_UPDATE_APP_USER])
     FROM (
         SELECT 
             T.Id AS [SqlIdnClient.CCLI_ID], 
@@ -29,6 +29,8 @@
             T.AllowRememberConsent AS [SqlIdnClient.CCLI_ALLOW_REMEMBER_CONSENT], 
             T.FlowString AS [SqlIdnClient.CCLI_FLOW], 
             T.AllowClientCredentialsOnly AS [SqlIdnClient.CCLI_ALLOW_CLIENT_CREDS_ONLY], 
+            T.LogoutUri AS [SqlIdnClient.CCLI_LOGOUT_URI], 
+            T.LogoutSessionRequired AS [SqlIdnClient.CCLI_LOGOUT_SESSION_REQUIRED], 
             T.AllowAccessToAllScopes AS [SqlIdnClient.CCLI_ALLOW_ACCESSALL_SCOPES], 
             T.IdentityTokenLifetime AS [SqlIdnClient.CCLI_IDENTITY_TOKEN_LIFETIME], 
             T.AccessTokenLifetime AS [SqlIdnClient.CCLI_ACCESS_TOKEN_LIFETIME], 
@@ -326,7 +328,7 @@
     ) AS T1]]></view>
     <view extent="SqlDbContext.IdnClients"><![CDATA[
     SELECT VALUE -- Constructing IdnClients
-        [Finsa.Caravan.DataAccess.Sql.SqlIdnClient](T1.SqlIdnClient_Id, T1.SqlIdnClient_AppId, T1.SqlIdnClient_Enabled, T1.SqlIdnClient_ClientId, T1.SqlIdnClient_ClientName, T1.SqlIdnClient_ClientUri, T1.SqlIdnClient_LogoUri, T1.SqlIdnClient_RequireConsent, T1.SqlIdnClient_AllowRememberConsent, T1.SqlIdnClient_FlowString, T1.SqlIdnClient_AllowClientCredentialsOnly, T1.SqlIdnClient_AllowAccessToAllScopes, T1.SqlIdnClient_IdentityTokenLifetime, T1.SqlIdnClient_AccessTokenLifetime, T1.SqlIdnClient_AuthorizationCodeLifetime, T1.SqlIdnClient_AbsoluteRefreshTokenLifetime, T1.SqlIdnClient_SlidingRefreshTokenLifetime, T1.SqlIdnClient_RefreshTokenUsageString, T1.SqlIdnClient_UpdateAccessTokenOnRefresh, T1.SqlIdnClient_RefreshTokenExpirationString, T1.SqlIdnClient_AccessTokenTypeString, T1.SqlIdnClient_EnableLocalLogin, T1.SqlIdnClient_IncludeJwtId, T1.SqlIdnClient_AlwaysSendClientClaims, T1.SqlIdnClient_PrefixClientClaims, T1.SqlIdnClient_AllowAccessToAllCustomGrantTypes, T1.SqlIdnClient_InsertDate, T1.SqlIdnClient_InsertDbUser, T1.SqlIdnClient_InsertAppUser, T1.SqlIdnClient_UpdateDate, T1.SqlIdnClient_UpdateDbUser, T1.SqlIdnClient_UpdateAppUser)
+        [Finsa.Caravan.DataAccess.Sql.SqlIdnClient](T1.SqlIdnClient_Id, T1.SqlIdnClient_AppId, T1.SqlIdnClient_Enabled, T1.SqlIdnClient_ClientId, T1.SqlIdnClient_ClientName, T1.SqlIdnClient_ClientUri, T1.SqlIdnClient_LogoUri, T1.SqlIdnClient_RequireConsent, T1.SqlIdnClient_AllowRememberConsent, T1.SqlIdnClient_FlowString, T1.SqlIdnClient_AllowClientCredentialsOnly, T1.SqlIdnClient_LogoutUri, T1.SqlIdnClient_LogoutSessionRequired, T1.SqlIdnClient_AllowAccessToAllScopes, T1.SqlIdnClient_IdentityTokenLifetime, T1.SqlIdnClient_AccessTokenLifetime, T1.SqlIdnClient_AuthorizationCodeLifetime, T1.SqlIdnClient_AbsoluteRefreshTokenLifetime, T1.SqlIdnClient_SlidingRefreshTokenLifetime, T1.SqlIdnClient_RefreshTokenUsageString, T1.SqlIdnClient_UpdateAccessTokenOnRefresh, T1.SqlIdnClient_RefreshTokenExpirationString, T1.SqlIdnClient_AccessTokenTypeString, T1.SqlIdnClient_EnableLocalLogin, T1.SqlIdnClient_IncludeJwtId, T1.SqlIdnClient_AlwaysSendClientClaims, T1.SqlIdnClient_PrefixClientClaims, T1.SqlIdnClient_AllowAccessToAllCustomGrantTypes, T1.SqlIdnClient_InsertDate, T1.SqlIdnClient_InsertDbUser, T1.SqlIdnClient_InsertAppUser, T1.SqlIdnClient_UpdateDate, T1.SqlIdnClient_UpdateDbUser, T1.SqlIdnClient_UpdateAppUser)
     FROM (
         SELECT 
             T.CCLI_ID AS SqlIdnClient_Id, 
@@ -340,6 +342,8 @@
             T.CCLI_ALLOW_REMEMBER_CONSENT AS SqlIdnClient_AllowRememberConsent, 
             T.CCLI_FLOW AS SqlIdnClient_FlowString, 
             T.CCLI_ALLOW_CLIENT_CREDS_ONLY AS SqlIdnClient_AllowClientCredentialsOnly, 
+            T.CCLI_LOGOUT_URI AS SqlIdnClient_LogoutUri, 
+            T.CCLI_LOGOUT_SESSION_REQUIRED AS SqlIdnClient_LogoutSessionRequired, 
             T.CCLI_ALLOW_ACCESSALL_SCOPES AS SqlIdnClient_AllowAccessToAllScopes, 
             T.CCLI_IDENTITY_TOKEN_LIFETIME AS SqlIdnClient_IdentityTokenLifetime, 
             T.CCLI_ACCESS_TOKEN_LIFETIME AS SqlIdnClient_AccessTokenLifetime, 
@@ -687,6 +691,20 @@
             True AS _from0
         FROM SqlDbContext.IdnScopes AS T
     ) AS T1]]></view>
+    <view extent="CodeFirstDatabase.SqlIdnScopeSecret"><![CDATA[
+    SELECT VALUE -- Constructing SqlIdnScopeSecret
+        [CodeFirstDatabaseSchema.SqlIdnScopeSecret](T1.[SqlIdnScopeSecret.CSSE_ID], T1.[SqlIdnScopeSecret.CSSE_DESCR], T1.[SqlIdnScopeSecret.CSSE_EXPIRATION], T1.[SqlIdnScopeSecret.CSSE_TYPE], T1.[SqlIdnScopeSecret.CSSE_VALUE], T1.[SqlIdnScopeSecret.CSCO_ID])
+    FROM (
+        SELECT 
+            T.Id AS [SqlIdnScopeSecret.CSSE_ID], 
+            T.Description AS [SqlIdnScopeSecret.CSSE_DESCR], 
+            T.Expiration AS [SqlIdnScopeSecret.CSSE_EXPIRATION], 
+            T.Type AS [SqlIdnScopeSecret.CSSE_TYPE], 
+            T.[Value] AS [SqlIdnScopeSecret.CSSE_VALUE], 
+            T.ScopeId AS [SqlIdnScopeSecret.CSCO_ID], 
+            True AS _from0
+        FROM SqlDbContext.IdnScopeSecrets AS T
+    ) AS T1]]></view>
     <view extent="SqlDbContext.IdnScopeClaims"><![CDATA[
     SELECT VALUE -- Constructing IdnScopeClaims
         [Finsa.Caravan.DataAccess.Sql.SqlIdnScopeClaim](T1.SqlIdnScopeClaim_Id, T1.SqlIdnScopeClaim_Name, T1.SqlIdnScopeClaim_Description, T1.SqlIdnScopeClaim_AlwaysIncludeInIdToken, T1.SqlIdnScopeClaim_ScopeId)
@@ -718,6 +736,20 @@
             T.CSCO_SHOW_IN_DISCOVERY_DOC AS SqlIdnScope_ShowInDiscoveryDocument, 
             True AS _from0
         FROM CodeFirstDatabase.SqlIdnScope AS T
+    ) AS T1]]></view>
+    <view extent="SqlDbContext.IdnScopeSecrets"><![CDATA[
+    SELECT VALUE -- Constructing IdnScopeSecrets
+        [Finsa.Caravan.DataAccess.Sql.SqlIdnScopeSecret](T1.SqlIdnScopeSecret_Id, T1.SqlIdnScopeSecret_Description, T1.SqlIdnScopeSecret_Expiration, T1.SqlIdnScopeSecret_Type, T1.SqlIdnScopeSecret_Value, T1.SqlIdnScopeSecret_ScopeId)
+    FROM (
+        SELECT 
+            T.CSSE_ID AS SqlIdnScopeSecret_Id, 
+            T.CSSE_DESCR AS SqlIdnScopeSecret_Description, 
+            T.CSSE_EXPIRATION AS SqlIdnScopeSecret_Expiration, 
+            T.CSSE_TYPE AS SqlIdnScopeSecret_Type, 
+            T.CSSE_VALUE AS SqlIdnScopeSecret_Value, 
+            T.CSCO_ID AS SqlIdnScopeSecret_ScopeId, 
+            True AS _from0
+        FROM CodeFirstDatabase.SqlIdnScopeSecret AS T
     ) AS T1]]></view>
     <view extent="CodeFirstDatabase.SqlIdnToken"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnToken
