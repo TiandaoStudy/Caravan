@@ -114,12 +114,12 @@
       <HintPath>..\packages\IdentityManager.AspNetIdentity.1.0.0-beta5-1\lib\net45\IdentityManager.AspNetIdentity.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IdentityServer3, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\IdentityServer3.2.1.1\lib\net45\IdentityServer3.dll</HintPath>
+    <Reference Include="IdentityServer3, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IdentityServer3.2.2.1\lib\net45\IdentityServer3.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IdentityServer3.EntityFramework, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\IdentityServer3.EntityFramework.2.0.0\lib\net45\IdentityServer3.EntityFramework.dll</HintPath>
+      <HintPath>..\packages\IdentityServer3.EntityFramework.2.2.0\lib\net45\IdentityServer3.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="InteractivePreGeneratedViews, Version=1.0.0.0, Culture=neutral, PublicKeyToken=46c4868af4307d2c, processorArchitecture=MSIL">
@@ -246,7 +246,9 @@
     <Compile Include="Core\ErrorMessages.cs" />
     <Compile Include="Rest\Models\RestRequest.cs" />
     <Compile Include="Rest\Models\RestResponse.cs" />
+    <Compile Include="Sql\Attributes\DateTimeOffsetAttribute.cs" />
     <Compile Include="Sql\Attributes\DateTimeKindAttribute.cs" />
+    <Compile Include="Sql\Identity\Entities\SqlIdnScopeSecret.cs" />
     <Compile Include="Sql\Identity\Extensions\EntitiesMap.cs" />
     <Compile Include="Sql\Identity\Extensions\ModelsMap.cs" />
     <Compile Include="Sql\Identity\Entities\SqlIdnClientSecret.cs" />

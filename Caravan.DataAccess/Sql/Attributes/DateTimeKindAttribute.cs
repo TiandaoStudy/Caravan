@@ -38,7 +38,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Attributes
                     ? (DateTime?)property.GetValue(entity)
                     : (DateTime)property.GetValue(entity);
 
-                if (dt == null)
+                if (!dt.HasValue)
                 {
                     continue;
                 }
