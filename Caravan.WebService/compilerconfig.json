@@ -7,5 +7,14 @@
             "renameLocals": false
         },
         "sourceMap": true
+    },
+    {
+        "outputFile": "Caravan/Administration/js/generated/_interceptors.es5.js",
+        "inputFile": "Caravan/Administration/js/generated/_interceptors.js",
+        "minify": {
+            "enabled": true,
+            "renameLocals": false
+        },
+        "sourceMap": true
     }
 ]

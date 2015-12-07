@@ -1,6 +1,7 @@
 {
-  "name": "myproject",
+  "name": "Caravan AdminUI",
   "dependencies": {
-    "angular": "~1.4.7"
+    "angular": "~1.4.7",
+    "oauth-ng": "~0.4.4"
   }
 }
