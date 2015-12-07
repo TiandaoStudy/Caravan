@@ -73,7 +73,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="IdentityServer3, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\IdentityServer3.2.2.1\lib\net45\IdentityServer3.dll</HintPath>
+      <HintPath>..\packages\IdentityServer3.2.2.2\lib\net45\IdentityServer3.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="LZ4, Version=1.0.9.93, Culture=neutral, PublicKeyToken=62e1b5ec1eec9bdd, processorArchitecture=MSIL">
@@ -165,6 +165,7 @@
     <Compile Include="DelegatingHandlers\LoggingDelegatingHandler.cs" />
     <Compile Include="Filters\HttpExceptionFilterAttribute.cs" />
     <Compile Include="Filters\AuthorizeForCaravanAttribute.cs" />
+    <Compile Include="Middlewares\HttpCompressionMiddleware.cs" />
     <Compile Include="Middlewares\HttpLoggingMiddleware.cs" />
     <Compile Include="CaravanWebServiceHelper.cs" />
     <Compile Include="Models\AuthorizationResult.cs" />

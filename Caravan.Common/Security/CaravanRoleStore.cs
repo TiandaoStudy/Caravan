@@ -70,7 +70,24 @@ namespace Finsa.Caravan.Common.Security
         /// </summary>
         /// <param name="role"/>
         /// <returns/>
-        public Task CreateAsync(SecRole role) => SecurityRepository.AddRoleAsync(AppName, role.GroupName, role);
+        public async Task CreateAsync(SecRole role)
+        {
+            try
+            {
+                // Verifico che esista il gruppo Caravan a cui apparterrà il ruolo.
+                await SecurityRepository.GetGroupByNameAsync(AppName, role.GroupName);
+            }
+            catch (SecGroupNotFoundException)
+            {
+                // Se no, lo creo.
+                await SecurityRepository.AddGroupAsync(AppName, new SecGroup
+                {
+                    Name = role.GroupName
+                });
+            }
+            // Dopodiché, sicuro che il gruppo ci sia, aggiungo anche il ruolo.
+            await SecurityRepository.AddRoleAsync(AppName, role.GroupName, role);
+        }
 
         /// <summary>
         ///   Updates a role.

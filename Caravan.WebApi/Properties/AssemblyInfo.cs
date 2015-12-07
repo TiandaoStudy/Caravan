@@ -31,6 +31,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.28.0")]
 
 // Attributes added to allow stronger development.
-[assembly: CLSCompliant(true)]
 [assembly: InternalsVisibleTo("Finsa.Caravan.WebService")]
 [assembly: InternalsVisibleTo("UnitTests.WebApi")]
