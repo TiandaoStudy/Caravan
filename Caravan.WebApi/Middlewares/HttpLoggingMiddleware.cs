@@ -40,9 +40,6 @@ namespace Finsa.Caravan.WebApi.Middlewares
     /// </summary>
     public sealed class HttpLoggingMiddleware : IDisposable
     {
-        const string BufferTag = "HttpLoggingMiddleware.ResponseStream";
-        const int MinBufferSize = 512;
-
         readonly ICaravanLog _log;
         AppFunc _next;
         bool _disposed;
@@ -148,7 +145,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
             }
 
             var responseStream = Stream.Null;
-            var responseBuffer = RecyclableMemoryStreamManager.Instance.GetStream(BufferTag, MinBufferSize);
+            var responseBuffer = RecyclableMemoryStreamManager.Instance.GetStream(Constants.ResponseBufferTag, Constants.MinResponseBufferSize);
 
             // Perform request
             if (!_disposed)
@@ -163,7 +160,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
                 try
                 {
                     // Run inner handlers
-                    await _next.Invoke(environment);
+                    await _next(environment);
                 }
                 catch (Exception ex) when (_log.Fatal(new LogMessage { Context = "Processing request", Exception = ex }))
                 {
@@ -230,7 +227,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
 
             if (bodyReader.Peek() != -1)
             {
-                // Append the body contents to the StringBuilder
+                // Append the body contents to the StringBuilder.
                 body = await bodyReader.ReadToEndAsync();
                 bodyStream.Seek(0, SeekOrigin.Begin);
             }

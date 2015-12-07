@@ -10,7 +10,10 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using Common.Logging;
+using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Logging.Models;
+using Finsa.Caravan.WebApi.Core;
+using Finsa.CodeServices.Common.IO.RecyclableMemoryStream;
 using Finsa.CodeServices.Compression;
 using Microsoft.Owin;
 using PommaLabs.Thrower;
@@ -34,22 +37,18 @@ namespace Finsa.Caravan.WebApi.Middlewares
         const string GZipEncoding = "gzip";
         const string DeflateEncoding = "deflate";
 
-        static readonly string[] GZipEncodingHeader = { GZipEncoding };
-        static readonly string[] DeflateEncodingHeader = { DeflateEncoding };
-
         static readonly GZipCompressor GZipCompressor = new GZipCompressor();
         static readonly DeflateCompressor DeflateCompressor = new DeflateCompressor();
 
-        readonly ILog _log;
+        readonly ICaravanLog _log;
         AppFunc _next;
         bool _disposed;
-        Stream _compressedBody;
 
         /// <summary>
         ///   Inizializza il componente usato per la compressione.
         /// </summary>
         /// <param name="log">Il log su cui scrivere eventuali messaggi.</param>
-        public HttpCompressionMiddleware(ILog log)
+        public HttpCompressionMiddleware(ICaravanLog log)
         {
             RaiseArgumentNullException.IfIsNull(log, nameof(log));
             _log = log;
@@ -69,51 +68,91 @@ namespace Finsa.Caravan.WebApi.Middlewares
         /// </summary>
         public void Dispose()
         {
-            if (_compressedBody != null)
-            {
-                _compressedBody.Dispose();
-            }
             _disposed = true;
         }
 
         public async Task Invoke(IDictionary<string, object> environment)
         {
-            if (!_disposed)
-            {
-                // Eseguo la request, come prima cosa.
-                await _next.Invoke(environment);
-            }
-
-            // Dopodiché, valuto se posso applicare un algoritmo di compressione.
             var owinContext = new OwinContext(environment);
+            var request = owinContext.Request;
+            var response = owinContext.Response;
+
+            // Valuto se posso applicare un algoritmo di compressione osservando gli header della
+            // richiesta HTTP (leggo l'header Accept-Encoding).
+            bool canGZip, canDeflate;
             var acceptEncoding = owinContext.Request.Headers.Get("Accept-Encoding");
 
-            if (acceptEncoding.Contains(GZipEncoding))
+            if (!(canGZip = acceptEncoding.Contains(GZipEncoding)) || !(canDeflate = acceptEncoding.Contains(DeflateEncoding)))
+            {
+                _log.Trace($"Client does not accept a compressed response - Accept-Enconding: {acceptEncoding}");
+                await _next(environment);
+                return;
+            }
+
+            if (canGZip)
             {
                 _log.Trace($"Client accepts GZIP enconding - Accept-Enconding: {acceptEncoding}");
-                var uncompressedBody = owinContext.Response.Body;
-
-                if (!_disposed)
-                {
-                    owinContext.Response.Headers.Add("Content-Encoding", GZipEncodingHeader);
-                    owinContext.Response.Body = _compressedBody = GZipCompressor.CreateCompressionStream(uncompressedBody);
-                }
             }
-            else if (acceptEncoding.Contains(DeflateEncoding))
+            if (canDeflate)
             {
                 _log.Trace($"Client accepts DEFLATE enconding - Accept-Enconding: {acceptEncoding}");
-                var uncompressedBody = owinContext.Response.Body;
-
-                if (!_disposed)
-                {
-                    owinContext.Response.Headers.Add("Content-Encoding", DeflateEncodingHeader);
-                    owinContext.Response.Body = _compressedBody = DeflateCompressor.CreateCompressionStream(uncompressedBody);
-                }
             }
-            else
+
+            // Replaces the response stream by a memory stream and keeps track of the real response stream.
+            var responseStream = response.Body;
+            response.Body = RecyclableMemoryStreamManager.Instance.GetStream(Constants.ResponseBufferTag, Constants.MinResponseBufferSize);
+
+            try
             {
-                // Nulla da fare, il client non accetta alcun tipo di compressione.
-                return;
+                await _next(environment);
+
+                // Verifies that the response stream is still a readable and seekable stream.
+                if (!response.Body.CanSeek || !response.Body.CanRead)
+                {
+                    throw new InvalidOperationException("The response stream has been replaced by an unreadable or unseekable stream");
+                }
+
+                // Determines if the response stream meets the length requirements to be compressed.
+                if (!_disposed && response.Body.Length >= Constants.MinResponseLengthForCompression)
+                {
+                    response.Headers["Content-Encoding"] = canGZip ? GZipEncoding : DeflateEncoding;
+
+                    // Opens a new buffer to determine the compressed response stream length.
+                    using (var tmpBuffer = RecyclableMemoryStreamManager.Instance.GetStream(Constants.ResponseBufferTag, Constants.MinResponseBufferSize))
+                    {
+                        // Opens a new GZip stream pointing to the buffer stream.
+                        using (var compressed = canGZip ? GZipCompressor.CreateCompressionStream(tmpBuffer) : DeflateCompressor.CreateCompressionStream(tmpBuffer))
+                        {
+                            // Rewinds the memory stream and copies it to the compressed stream.
+                            response.Body.Seek(0, SeekOrigin.Begin);
+                            await response.Body.CopyToAsync(compressed, Constants.ResponseChunkSize, request.CallCancelled);
+                        }
+
+                        // Rewinds the buffer stream and copies it to the real stream. See:
+                        // http://blogs.msdn.com/b/bclteam/archive/2006/05/10/592551.aspx to
+                        // understand why the buffer is only read after the compressed stream has
+                        // been disposed.
+                        tmpBuffer.Seek(0, SeekOrigin.Begin);
+                        response.ContentLength = tmpBuffer.Length;
+                        await tmpBuffer.CopyToAsync(responseStream, Constants.ResponseChunkSize, request.CallCancelled);
+                    }
+
+                    return;
+                }
+
+                // Rewinds the memory stream and copies it to the real response stream.
+                response.Body.Seek(0, SeekOrigin.Begin);
+                response.ContentLength = response.Body.Length;
+                await response.Body.CopyToAsync(responseStream, Constants.ResponseChunkSize, request.CallCancelled);
+            }
+            catch (Exception ex) when (_log.Fatal(new LogMessage { Context = "Compressing response", Exception = ex }))
+            {
+                // Eccezione rilanciata in automatico, la funzione di log ritorna sempre FALSE.
+            }
+            finally
+            {
+                // Restores the real stream in the environment dictionary.
+                response.Body = responseStream;
             }
         }
     }

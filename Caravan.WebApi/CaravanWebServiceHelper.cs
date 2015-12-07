@@ -10,10 +10,11 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using Common.Logging;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.WebApi.Middlewares;
 using Ninject;
+using Owin;
 using PommaLabs.KVLite;
 using PommaLabs.KVLite.Web.Http;
 using PommaLabs.Thrower;
@@ -29,19 +30,24 @@ namespace Finsa.Caravan.WebApi
         /// <summary>
         ///   Esegue alcune operazioni preliminari all'avvio dell'applicazione.
         /// </summary>
-        /// <param name="configuration">La configurazione HTTP.</param>
-        public static async void OnStart(HttpConfiguration configuration)
+        /// <param name="appBuilder">La configurazione di Owin.</param>
+        /// <param name="httpConfiguration">La configurazione HTTP.</param>
+        /// <param name="settings">Le impostazioni iniziali per il servizio.</param>
+        public static async void OnStart(IAppBuilder appBuilder, HttpConfiguration httpConfiguration, Settings settings)
         {
             // Controlli di integrità.
-            RaiseArgumentNullException.IfIsNull(configuration, nameof(configuration));
+            RaiseArgumentNullException.IfIsNull(httpConfiguration, nameof(httpConfiguration));
+
+            // Il kernel Ninject usato per recuperare le dipendenze.
+            var kernel = CaravanServiceProvider.NinjectKernel;
+            var log = CaravanServiceProvider.FetchLog<CaravanWebServiceHelper>();
 
             // Loggo l'avvio dell'applicazione.
-            var log = LogManager.GetLogger<CaravanWebServiceHelper>();
             log.Info($"Application {CaravanCommonConfiguration.Instance.AppDescription} started");
 
             // Run vacuum on the persistent cache. It should be put AFTER the connection string is
             // set, since that string it stored on the cache itself and we do not want conflicts, right?
-            var cache = CaravanServiceProvider.NinjectKernel.Get<ICache>();
+            var cache = kernel.Get<ICache>();
             var persistentCache = cache as PersistentCache;
             if (persistentCache != null)
             {
@@ -49,11 +55,46 @@ namespace Finsa.Caravan.WebApi
             }
 
             // Imposta KVLite come gestore della cache di output.
-            ApiOutputCache.RegisterAsCacheOutputProvider(configuration, cache);
+            log.Trace("Registering KVLite output cache");
+            ApiOutputCache.RegisterAsCacheOutputProvider(httpConfiguration, cache);
+
+            // Registra i componenti di middleware.
+            log.Trace("Registering Owin middlewares");
+            if (settings.EnableHttpCompressionMiddleware)
+            {
+                // Inserire la compressione PRIMA del log.
+                appBuilder.Use(kernel.Get<HttpCompressionMiddleware>());
+            }
+            if (settings.EnableHttpLoggingMiddleware)
+            {
+                // Inserire il log DOPO la compressione.
+                appBuilder.Use(kernel.Get<HttpLoggingMiddleware>());
+            }
 
             // Pulizia dei log più vecchi o che superano una certa soglia di quantità.
-            var logRepository = CaravanServiceProvider.NinjectKernel.Get<ICaravanLogRepository>();
+            log.Trace("Cleaning up older log entries");
+            var logRepository = kernel.Get<ICaravanLogRepository>();
             await logRepository.CleanUpEntriesAsync(CaravanCommonConfiguration.Instance.AppName);
+        }
+
+        /// <summary>
+        ///   Le impostazioni iniziali per il servizio.
+        /// </summary>
+        public sealed class Settings
+        {
+            /// <summary>
+            ///   Abilita il componente Owin che comprime le response.
+            /// 
+            ///   Abilitato di default.
+            /// </summary>
+            public bool EnableHttpCompressionMiddleware { get; set; } = true;
+
+            /// <summary>
+            ///   Abilita il componente Owin che registra le request e le response.
+            /// 
+            ///   Abilitato di default.
+            /// </summary>
+            public bool EnableHttpLoggingMiddleware { get; set; } = true;
         }
     }
 }

@@ -15,7 +15,6 @@ using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataAccess.Sql.Logging;
 using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebApi.Filters;
-using Finsa.Caravan.WebApi.Middlewares;
 using Finsa.Caravan.WebApi.Models;
 using Finsa.Caravan.WebService;
 using Finsa.CodeServices.Common.Portability;
@@ -56,9 +55,12 @@ namespace Finsa.Caravan.WebService
             var kernel = CreateKernel();
 
             // Inizializzatore per Caravan.
-            CaravanWebServiceHelper.OnStart(config);
+            CaravanWebServiceHelper.OnStart(app, config, new CaravanWebServiceHelper.Settings
+            {
+                EnableHttpCompressionMiddleware = true,
+                EnableHttpLoggingMiddleware = true
+            });
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
-            app.Use(kernel.Get<HttpLoggingMiddleware>());
 
             // Inizializzatore per Ninject.
             app.UseNinjectMiddleware(CreateKernel).UseNinjectWebApi(config);
