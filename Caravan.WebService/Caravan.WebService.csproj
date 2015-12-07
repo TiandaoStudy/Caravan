@@ -345,6 +345,14 @@
     <Content Include="Caravan\Administration\js\controllers\todoCtrl.js" />
     <Content Include="Caravan\Administration\js\directives\todoEscape.js" />
     <Content Include="Caravan\Administration\js\directives\todoFocus.js" />
+    <Content Include="Caravan\Administration\js\generated\_interceptors.es5.js">
+      <DependentUpon>_interceptors.js</DependentUpon>
+    </Content>
+    <Content Include="Caravan\Administration\js\generated\_interceptors.es5.min.js">
+      <DependentUpon>_interceptors.es5.js</DependentUpon>
+    </Content>
+    <Content Include="Caravan\Administration\js\generated\_interceptors.js" />
+    <Content Include="Caravan\Administration\js\interceptors\simpleAuthInterceptor.js" />
     <Content Include="Caravan\Administration\js\services\userService.js" />
     <Content Include="Caravan\Administration\js\services\logService.js" />
     <Content Include="Caravan\Administration\js\services\todoStorage.js" />
@@ -398,6 +406,9 @@
     <Content Include="Caravan\Administration\package.json" />
     <Content Include="Caravan\Administration\readme.md" />
     <Content Include="bower.json" />
+    <None Include=".bin\bower.cmd" />
+    <None Include=".bin\git.cmd" />
+    <None Include=".bin\node.cmd" />
     <None Include="bundleconfig.json" />
     <Content Include="Caravan\Administration\js\_angular.min.js.map">
       <DependentUpon>_angular.min.js</DependentUpon>
@@ -530,6 +541,11 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.1.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.1.1\build\Microsoft.Net.Compilers.props'))" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>cd $(ProjectDir)
+.bin\bower.cmd install --save --force-latest
+</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
