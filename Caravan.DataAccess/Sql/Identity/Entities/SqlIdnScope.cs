@@ -15,11 +15,11 @@
  */
 
 using Finsa.CodeServices.Common;
+using IdentityServer3.Core.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using IdentityServer3.Core.Models;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
 {
@@ -59,6 +59,8 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
         public virtual ICollection<SqlIdnScopeClaim> ScopeClaims { get; set; }
 
         public virtual bool IncludeAllClaimsForUser { get; set; }
+
+        public virtual ICollection<SqlIdnScopeSecret> ScopeSecrets { get; set; }
 
         [StringLength(200)]
         public virtual string ClaimsRule { get; set; }

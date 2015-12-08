@@ -29,7 +29,8 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Extensions
         {
             Mapper.CreateMap<Scope, SqlIdnScope>(MemberList.Source)
                 .ForSourceMember(x => x.Claims, opts => opts.Ignore())
-                .ForMember(x => x.ScopeClaims, opts => opts.MapFrom(src => src.Claims.Select(x => x)));
+                .ForMember(x => x.ScopeClaims, opts => opts.MapFrom(src => src.Claims.Select(x => x)))
+                .ForMember(x => x.ScopeSecrets, opts => opts.MapFrom(src => src.ScopeSecrets.Select(x => x)));
 
             Mapper.CreateMap<ScopeClaim, SqlIdnScopeClaim>(MemberList.Source);
 
@@ -54,6 +55,10 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Extensions
             if (s.Claims == null)
             {
                 s.Claims = new List<ScopeClaim>();
+            }
+            if (s.ScopeSecrets == null)
+            {
+                s.ScopeSecrets = new List<Secret>();
             }
 
             return Mapper.Map<Scope, SqlIdnScope>(s);

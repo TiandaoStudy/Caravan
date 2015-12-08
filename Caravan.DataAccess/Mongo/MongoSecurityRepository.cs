@@ -2,6 +2,7 @@
 using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess.Core;
 using System.Threading.Tasks;
+using System;
 
 namespace Finsa.Caravan.DataAccess.Mongo
 {
@@ -111,6 +112,36 @@ namespace Finsa.Caravan.DataAccess.Mongo
         protected override Task RemoveEntryAsyncInternal(string appName, string contextName, string objectName, string userLogin, string groupName, string roleName)
         {
             throw new System.NotImplementedException();
+        }
+
+        protected override Task AddUserClaimAsyncInternal(string appName, string userLogin, SecClaim claim)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task RemoveUserClaimAsyncInternal(string appName, string userLogin, string serializedClaimHash)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task<SecRole[]> GetRolesAsyncInternal(string appName, string groupName, string roleName, int? roleId)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task AddRoleAsyncInternal(string appName, string groupName, SecRole newRole)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task RemoveRoleAsyncInternal(string appName, string groupName, string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task UpdateRoleAsyncInternal(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates)
+        {
+            throw new NotImplementedException();
         }
     }
 }

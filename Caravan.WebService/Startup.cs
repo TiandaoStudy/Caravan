@@ -15,7 +15,6 @@ using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataAccess.Sql.Logging;
 using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebApi.Filters;
-using Finsa.Caravan.WebApi.Middlewares;
 using Finsa.Caravan.WebApi.Models;
 using Finsa.Caravan.WebService;
 using Finsa.CodeServices.Common.Portability;
@@ -32,6 +31,7 @@ using PommaLabs.Thrower;
 using Swashbuckle.Application;
 using System;
 using System.Data.Entity.Infrastructure.Interception;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -56,9 +56,12 @@ namespace Finsa.Caravan.WebService
             var kernel = CreateKernel();
 
             // Inizializzatore per Caravan.
-            CaravanWebServiceHelper.OnStart(config);
+            CaravanWebServiceHelper.OnStart(app, config, new CaravanWebServiceHelper.Settings
+            {
+                EnableHttpCompressionMiddleware = true,
+                EnableHttpLoggingMiddleware = true
+            });
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
-            app.Use(kernel.Get<HttpLoggingMiddleware>());
 
             // Inizializzatore per Ninject.
             app.UseNinjectMiddleware(CreateKernel).UseNinjectWebApi(config);
@@ -71,6 +74,8 @@ namespace Finsa.Caravan.WebService
 
             // Inizializzazione gestione identità.
             IdentityConfig.Build(app);
+            // RIMUOVERE APPENA POSSIBILE!!! Accetta certificati non validi...
+            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
         }
 
         private static IKernel CreateKernel() =>
@@ -107,6 +112,13 @@ namespace Finsa.Caravan.WebService
                 c.SingleApiVersion("v1", "wsCaravan");
                 c.IncludeXmlComments(PortableEnvironment.MapPath(@"~/App_Data/HelpPages/WebServiceHelp.xml"));
                 c.RootUrl(req => req.RequestUri.GetLeftPart(UriPartial.Authority) + req.GetRequestContext().VirtualPathRoot.TrimEnd('/'));
+
+                c.OAuth2("wsCaravan")
+                 .Description("boh")
+                 .Flow("implicit")
+                 .AuthorizationUrl("")
+                 .TokenUrl("")
+                 .Scopes(cfg => { });
             }).EnableSwaggerUi(c =>
             {
                 c.DocExpansion(DocExpansion.None);

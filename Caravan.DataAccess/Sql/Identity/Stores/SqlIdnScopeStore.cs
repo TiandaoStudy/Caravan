@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
-    internal sealed class SqlIdnScopeStore : IScopeStore
+    public sealed class SqlIdnScopeStore : IScopeStore
     {
         private readonly SqlDbContext _context;
 
@@ -38,7 +38,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
         public async Task<IEnumerable<IdentityServer3.Core.Models.Scope>> FindScopesAsync(IEnumerable<string> scopeNames)
         {
             var scopes =
-                from s in _context.IdnScopes.Include(x => x.ScopeClaims)
+                from s in _context.IdnScopes.Include(x => x.ScopeClaims).Include(x => x.ScopeSecrets)
                 select s;
 
             if (scopeNames != null && scopeNames.Any())
@@ -55,7 +55,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
         public async Task<IEnumerable<IdentityServer3.Core.Models.Scope>> GetScopesAsync(bool publicOnly = true)
         {
             var scopes =
-                from s in _context.IdnScopes.Include(s => s.ScopeClaims)
+                from s in _context.IdnScopes.Include(s => s.ScopeClaims).Include(x => x.ScopeSecrets)
                 select s;
 
             if (publicOnly)

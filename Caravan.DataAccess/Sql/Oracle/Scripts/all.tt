@@ -20,9 +20,6 @@
 -- Identity: Clients
 <#@ include file="Tables/crvn_idn_clients.sql" #>
 
--- Identity: Clients ID trigger
-<#@ include file="Triggers/ti_crvn_idn_clients.sql" #>
-
 -- Identity: Scopes
 <#@ include file="Tables/crvn_idn_scopes.sql" #>
 
@@ -40,6 +37,9 @@
 
 -- Identity: Client CORS origins ID trigger
 <#@ include file="Triggers/ti_crvn_idn_cli_cors_origins.sql" #>
+
+-- Identity: Scope secrets
+<#@ include file="Tables/crvn_idn_sco_secrets.sql" #>
 
 -- Users
 <#@ include file="Tables/crvn_sec_users.sql" #>
@@ -59,11 +59,11 @@
 -- Objects
 <#@ include file="Tables/crvn_sec_objects.sql" #>
 
+-- Claims
+<#@ include file="Tables/crvn_sec_claims.sql" #>
+
 -- Sec Entries
 <#@ include file="Tables/crvn_sec_entries.sql" #>
-
--- Triggers: Users Id
-<#@ include file="Triggers/crvn_sec_users_id.sql" #>
 
 -- Triggers: Groups Id
 <#@ include file="Triggers/crvn_sec_groups_id.sql" #>

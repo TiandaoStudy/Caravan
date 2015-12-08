@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
+using Finsa.Caravan.DataAccess.Sql.Attributes;
+using Finsa.CodeServices.Common;
 using IdentityServer3.EntityFramework.Entities;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Finsa.Caravan.DataAccess.Sql.Attributes;
-using Finsa.CodeServices.Common;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
 {
@@ -55,8 +55,8 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
         public virtual string JsonCode { get; set; }
 
         [Required]
-        [DateTimeKind(DateTimeKind.Utc)]
-        public virtual DateTime Expiry { get; set; }
+        [DateTimeOffset(Hours = 0)]
+        public virtual DateTimeOffset Expiry { get; set; }
     }
 
     /// <summary>

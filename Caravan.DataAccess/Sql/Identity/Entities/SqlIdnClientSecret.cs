@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
+using Finsa.Caravan.DataAccess.Sql.Attributes;
 using IdentityServer3.EntityFramework.Entities;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
-using Finsa.Caravan.DataAccess.Sql.Attributes;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
 {
@@ -40,8 +40,8 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
         [StringLength(2000)]
         public virtual string Description { get; set; }
 
-        [DateTimeKind(DateTimeKind.Utc)]
-        public virtual DateTime? Expiration { get; set; }
+        [DateTimeOffset(Hours = 0)]
+        public virtual DateTimeOffset? Expiration { get; set; }
 
         public virtual int ClientId { get; set; }
 

@@ -26,6 +26,11 @@ namespace Finsa.Caravan.Common.Security.Exceptions
         {
         }
 
+        public SecGroupNotFoundException(string appName, int groupId)
+            : base($"Group #{groupId} not found inside application '{appName}'")
+        {
+        }
+
         protected SecGroupNotFoundException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

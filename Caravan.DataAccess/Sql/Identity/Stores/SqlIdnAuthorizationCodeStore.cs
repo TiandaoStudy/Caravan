@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
-    internal sealed class SqlIdnAuthorizationCodeStore : AbstractSqlIdnTokenStore<AuthorizationCode>, IAuthorizationCodeStore
+    public sealed class SqlIdnAuthorizationCodeStore : AbstractSqlIdnTokenStore<AuthorizationCode>, IAuthorizationCodeStore
     {
         public SqlIdnAuthorizationCodeStore(SqlDbContext context, IScopeStore scopeStore, IClientStore clientStore, IClock clock)
             : base(context, TokenType.AuthorizationCode, scopeStore, clientStore, clock)
@@ -38,7 +38,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
                 SubjectId = value.SubjectId,
                 ClientId = value.ClientId,
                 JsonCode = ConvertToJson(value),
-                Expiry = Clock.UtcNow.AddSeconds(value.Client.AuthorizationCodeLifetime),
+                Expiry = Clock.UtcNowOffset.AddSeconds(value.Client.AuthorizationCodeLifetime),
                 TokenTypeString = TokenTypeString
             });
 

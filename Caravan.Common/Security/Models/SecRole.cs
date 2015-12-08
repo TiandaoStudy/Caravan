@@ -86,18 +86,6 @@ namespace Finsa.Caravan.Common.Security.Models
             return GTuple.Create<string>(split[0], split[1]);
         }
 
-        /// <summary>
-        ///   Decodifica gruppo e ruolo dalla stringa di ruolo ASP.NET.
-        /// </summary>
-        /// <param name="secRole">Oggetto contenente l'aggregazione di gruppo e ruolo.</param>
-        /// <returns>Una tupla con il nome del gruppo e il nome del ruolo.</returns>
-        public static GTuple2<string> FromIdentityRoleName(SecRole secRole)
-        {
-            RaiseArgumentNullException.IfIsNull(secRole, nameof(secRole));
-            var split = (secRole as IRole<int>).Name.Split('/');
-            return GTuple.Create<string>(split[0], split[1]);
-        }
-
         #endregion
 
         protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()

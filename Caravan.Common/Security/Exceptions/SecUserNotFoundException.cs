@@ -26,6 +26,11 @@ namespace Finsa.Caravan.Common.Security.Exceptions
         {
         }
 
+        public SecUserNotFoundException(string appName, long userId)
+            : base($"User #{userId} not found inside application '{appName}'")
+        {
+        }
+
         protected SecUserNotFoundException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

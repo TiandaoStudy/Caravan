@@ -10,20 +10,20 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.Caravan.WebApi.Filters;
 using Finsa.CodeServices.Common;
 using PommaLabs.KVLite;
 using PommaLabs.KVLite.Web.Http;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using Finsa.Caravan.WebApi.Filters;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
     /// <summary>
     ///   Exposes the KVLite cache controller and allows further customizations.
     /// </summary>
-    [RoutePrefix("cache"), AuthorizeForCaravan]
+    [RoutePrefix("cache"), OAuth2Authorize]
     public sealed class CacheController : AbstractCacheController
     {
         /// <summary>

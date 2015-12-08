@@ -72,8 +72,21 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public async Task CreateAsync(SecRole role)
         {
-            var tuple = SecRole.FromIdentityRoleName(role);
-            await SecurityRepository.AddRoleAsync(AppName, tuple.Item1, role);
+            try
+            {
+                // Verifico che esista il gruppo Caravan a cui apparterrà il ruolo.
+                await SecurityRepository.GetGroupByNameAsync(AppName, role.GroupName);
+            }
+            catch (SecGroupNotFoundException)
+            {
+                // Se no, lo creo.
+                await SecurityRepository.AddGroupAsync(AppName, new SecGroup
+                {
+                    Name = role.GroupName
+                });
+            }
+            // Dopodiché, sicuro che il gruppo ci sia, aggiungo anche il ruolo.
+            await SecurityRepository.AddRoleAsync(AppName, role.GroupName, role);
         }
 
         /// <summary>
@@ -81,27 +94,19 @@ namespace Finsa.Caravan.Common.Security
         /// </summary>
         /// <param name="role"/>
         /// <returns/>
-        public async Task UpdateAsync(SecRole role)
+        public Task UpdateAsync(SecRole role) => SecurityRepository.UpdateRoleAsync(AppName, role.GroupName, role.Name, new SecRoleUpdates
         {
-            var tuple = SecRole.FromIdentityRoleName(role);
-            await SecurityRepository.UpdateRoleAsync(AppName, tuple.Item1, tuple.Item2, new SecRoleUpdates
-            {
-                Name = role.Name,
-                Description = role.Description,
-                Notes = role.Notes
-            });
-        }
+            Name = role.Name,
+            Description = role.Description,
+            Notes = role.Notes
+        });
 
         /// <summary>
         ///   Deletes a role.
         /// </summary>
         /// <param name="role"/>
         /// <returns/>
-        public async Task DeleteAsync(SecRole role)
-        {
-            var tuple = SecRole.FromIdentityRoleName(role);
-            await SecurityRepository.RemoveRoleAsync(AppName, tuple.Item1, tuple.Item2);
-        }
+        public Task DeleteAsync(SecRole role) => SecurityRepository.RemoveRoleAsync(AppName, role.GroupName, role.Name);
 
         /// <summary>
         ///   Finds a role by ID.

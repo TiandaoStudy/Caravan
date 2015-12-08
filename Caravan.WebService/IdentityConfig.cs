@@ -11,8 +11,10 @@
 // the License.
 
 using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Identity;
 using Finsa.Caravan.DataAccess.Sql.Identity;
 using Finsa.CodeServices.Common.Portability;
+using IdentityManager.Configuration;
 using IdentityServer3.Core.Configuration;
 using Owin;
 using System.Security.Cryptography.X509Certificates;
@@ -22,15 +24,15 @@ namespace Finsa.Caravan.WebService
     /// <summary>
     ///   Configurazione del servizio di autorizzazione/autenticazione.
     /// </summary>
-    public static class IdentityConfig
+    static class IdentityConfig
     {
         public static void Build(IAppBuilder app)
         {
-            app.Map("/identity", idsrvApp => idsrvApp.UseIdentityServer(new IdentityServerOptions
+            app.Map("/identity", idsrv => idsrv.UseIdentityServer(new IdentityServerOptions
             {
                 // Dettagli sul nome del servizio.
                 SiteName = CaravanCommonConfiguration.Instance.AppDescription,
-                IssuerUri = "https://idsrv3/mixit",
+                IssuerUri = "https://wscaravan.finsa.it/identity",
 
                 // Gestione della sicurezza della comunicazione.
                 SigningCertificate = LoadCertificate(),
@@ -40,7 +42,13 @@ namespace Finsa.Caravan.WebService
                 EnableWelcomePage = true,
 
                 // Gestione della sorgente dati per gli utenti.
-                Factory = SqlIdnServiceFactory.Configure(),
+                Factory = LoadIdentityServerServiceFactory()
+            }));
+
+            app.Map("/identityManager", idmgr => idmgr.UseIdentityManager(new IdentityManagerOptions
+            {
+                // Gestione della sorgente dati per gli utenti.
+                Factory = new SqlIdentityManagerServiceFactory()
             }));
         }
 
@@ -54,6 +62,13 @@ namespace Finsa.Caravan.WebService
             var mappedCertificatePath = PortableEnvironment.MapPath(certificatePath);
             var certificatePassword = CaravanWebServiceConfiguration.Instance.Identity_SigningCertificatePassword;
             return new X509Certificate2(mappedCertificatePath, certificatePassword);
+        }
+
+        static IdentityServerServiceFactory LoadIdentityServerServiceFactory()
+        {
+            var factory = new SqlIdentityServerServiceFactory();
+            factory.Register(new IdentityServer3.Core.Configuration.Registration<CaravanAllowedAppsCollection>(new CaravanAllowedAppsCollection { AllowAll = true }));
+            return factory;
         }
     }
 }

@@ -4,7 +4,6 @@ using Finsa.Caravan.DataAccess.Sql.Security.Entities;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Transactions;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
@@ -94,6 +93,8 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         public DbSet<SqlSecApp> SecApps { get; set; }
 
+        public DbSet<SqlSecClaim> SecClaims { get; set; }
+
         public DbSet<SqlSecContext> SecContexts { get; set; }
 
         public DbSet<SqlSecEntry> SecEntries { get; set; }
@@ -134,6 +135,8 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         public DbSet<SqlIdnScopeClaim> IdnScopeClaims { get; set; }
 
+        public DbSet<SqlIdnScopeSecret> IdnScopeSecrets { get; set; }
+
         public DbSet<SqlIdnToken> IdnTokens { get; set; }
 
         #endregion DB Sets - Identity
@@ -155,6 +158,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             #region Configurations - Security
 
             mb.Configurations.Add(new SqlSecAppTypeConfiguration());
+            mb.Configurations.Add(new SqlSecClaimTypeConfiguration());
             mb.Configurations.Add(new SqlSecContextTypeConfiguration());
             mb.Configurations.Add(new SqlSecEntryTypeConfiguration());
             mb.Configurations.Add(new SqlSecGroupTypeConfiguration());
@@ -178,6 +182,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             mb.Configurations.Add(new SqlIdnConsentTypeConfiguration());
             mb.Configurations.Add(new SqlIdnScopeTypeConfiguration());
             mb.Configurations.Add(new SqlIdnScopeClaimTypeConfiguration());
+            mb.Configurations.Add(new SqlIdnScopeSecretTypeConfiguration());
             mb.Configurations.Add(new SqlIdnTokenTypeConfiguration());
 
             #endregion Configuration - Identity

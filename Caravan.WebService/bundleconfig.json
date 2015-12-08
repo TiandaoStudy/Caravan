@@ -11,6 +11,18 @@
         "minify": { "enabled": false },
         "sourceMap": true
     },
+
+    {
+        "outputFileName": "Caravan/Administration/js/generated/_interceptors.js",
+        "inputFiles": [
+            "Caravan/Administration/js/interceptors/simpleAuthInterceptor.js"
+        ],
+        "minify": {
+            "enabled": false,
+            "renameLocals": false
+        },
+        "sourceMap": true
+    },
     {
         "outputFileName": "Caravan/Administration/js/_angular.js",
         "inputFiles": [

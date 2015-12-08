@@ -1,4 +1,16 @@
-﻿using Finsa.Caravan.Common.Logging;
+﻿// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
+using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.WebApi.Core;
 using Finsa.CodeServices.Common;
@@ -24,17 +36,18 @@ namespace Finsa.Caravan.WebApi.Middlewares
     }
 
     /// <summary>
-    ///   Middleware that logs HTTP requests and responses
+    ///   Middleware that logs HTTP requests and responses.
     /// </summary>
     public sealed class HttpLoggingMiddleware : IDisposable
     {
-        const string BufferTag = "HttpLoggingMiddleware.ResponseStream";
-        const int MinBufferSize = 512;
-
         readonly ICaravanLog _log;
         AppFunc _next;
         bool _disposed;
 
+        /// <summary>
+        ///   Inizializza il componente usato per il logging.
+        /// </summary>
+        /// <param name="log">Il log su cui scrivere eventuali messaggi.</param>
         public HttpLoggingMiddleware(ICaravanLog log)
         {
             RaiseArgumentNullException.IfIsNull(log, nameof(log));
@@ -53,11 +66,18 @@ namespace Finsa.Caravan.WebApi.Middlewares
             PathString.FromUriComponent("/signalr")
         };
 
+        /// <summary>
+        ///   Inizializza il componente di Owin.
+        /// </summary>
+        /// <param name="next">Un riferimento al prossimo componente della pipeline.</param>
         public void Initialize(AppFunc next)
         {
             _next = next;
         }
 
+        /// <summary>
+        ///   Esegue la Dispose del componente.
+        /// </summary>
         public void Dispose()
         {
             _disposed = true;
@@ -125,7 +145,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
             }
 
             var responseStream = Stream.Null;
-            var responseBuffer = RecyclableMemoryStreamManager.Instance.GetStream(BufferTag, MinBufferSize);
+            var responseBuffer = RecyclableMemoryStreamManager.Instance.GetStream(Constants.ResponseBufferTag, Constants.MinResponseBufferSize);
 
             // Perform request
             if (!_disposed)
@@ -140,7 +160,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
                 try
                 {
                     // Run inner handlers
-                    await _next.Invoke(environment);
+                    await _next(environment);
                 }
                 catch (Exception ex) when (_log.Fatal(new LogMessage { Context = "Processing request", Exception = ex }))
                 {
@@ -207,7 +227,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
 
             if (bodyReader.Peek() != -1)
             {
-                // Append the body contents to the StringBuilder
+                // Append the body contents to the StringBuilder.
                 body = await bodyReader.ReadToEndAsync();
                 bodyStream.Seek(0, SeekOrigin.Begin);
             }

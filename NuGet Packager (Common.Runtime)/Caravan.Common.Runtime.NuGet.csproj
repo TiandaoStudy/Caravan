@@ -51,6 +51,7 @@
   <ItemGroup>
     <Content Include="content\NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="NuGetPackage.ps1" />
     <None Include="NuGetSetup.ps1" />

@@ -13,6 +13,8 @@ CREATE TABLE mydb.crvn_idn_clients
    , CCLI_ALLOW_REMEMBER_CONSENT    NUMBER(1)       DEFAULT 1               NOT NULL
    , CCLI_FLOW                      NVARCHAR2(100)  DEFAULT 'implicit'      NOT NULL
    , CCLI_ALLOW_CLIENT_CREDS_ONLY   NUMBER(1)       DEFAULT 0               NOT NULL
+   , CCLI_LOGOUT_URI                NVARCHAR2(2000)      
+   , CCLI_LOGOUT_SESSION_REQUIRED   NUMBER(1)       DEFAULT 1               NOT NULL
    , CCLI_ALLOW_ACCESSALL_SCOPES    NUMBER(1)       DEFAULT 0               NOT NULL
    , CCLI_IDENTITY_TOKEN_LIFETIME   NUMBER(10)      DEFAULT 300             NOT NULL
    , CCLI_ACCESS_TOKEN_LIFETIME     NUMBER(10)      DEFAULT 3600            NOT NULL
@@ -86,6 +88,10 @@ COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_FLOW
      IS 'Specifies allowed flow for client (either AuthorizationCode, Implicit, Hybrid, ResourceOwner, ClientCredentials or Custom). Defaults to Implicit';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_CLIENT_CREDS_ONLY 
      IS 'Indicates whether this client is allowed to request token using client credentials only. This is e.g. useful when you want a client to be able to use both a user-centric flow like implicit and additionally client credentials flow';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_LOGOUT_URI 
+     IS 'Specifies logout URI at client for HTTP based logout';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_LOGOUT_SESSION_REQUIRED 
+     IS 'Specifies is the user session ID should be sent to the LogoutUri. Defaults to true';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_ACCESSALL_SCOPES 
      IS 'Indicates whether the client has access to all scopes. Defaults to false. You can set the allowed scopes via the CRVN_IDN_CLI_SCOPES table';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_IDENTITY_TOKEN_LIFETIME 
@@ -118,3 +124,31 @@ COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_ACCESSALL_CST_GRTP
      IS 'Indicates whether the client has access to all custom grant types. Defaults to false. You can set the allowed custom grant types via the CRVN_IDN_CLI_CST_GRNT_TYPES table';
 
 CREATE SEQUENCE mydb.sq_crvn_idn_clients NOCACHE;
+
+CREATE OR REPLACE TRIGGER mydb.ti_crvn_idn_clients
+BEFORE INSERT ON mydb.crvn_idn_clients 
+FOR EACH ROW
+BEGIN
+  SELECT mydb.sq_crvn_idn_clients.nextval, mydb.pck_caravan_utils.f_get_sysdate_utc, mydb.pck_caravan_utils.f_get_sysuser, NULL, NULL
+    INTO :new.CCLI_ID, :new.TRCK_INSERT_DATE, :new.TRCK_INSERT_DB_USER, :new.TRCK_UPDATE_DATE, :new.TRCK_UPDATE_DB_USER
+    FROM DUAL;
+END;
+/
+
+create or replace TRIGGER mydb.tu_crvn_idn_clients
+BEFORE UPDATE ON mydb.crvn_idn_clients 
+FOR EACH ROW
+BEGIN
+  IF UPDATING('TRCK_INSERT_DATE') 
+  OR UPDATING('TRCK_INSERT_DB_USER') 
+  OR UPDATING('TRCK_UPDATE_DATE') 
+  OR UPDATING('TRCK_UPDATE_DB_USER') 
+  THEN
+    mydb.pck_caravan_utils.sp_err_when_updating_trck_cols;
+  END IF;
+
+  SELECT mydb.pck_caravan_utils.f_get_sysdate_utc, mydb.pck_caravan_utils.f_get_sysuser
+    INTO :new.TRCK_UPDATE_DATE, :new.TRCK_UPDATE_DB_USER
+    FROM DUAL;
+END;
+/

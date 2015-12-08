@@ -194,8 +194,8 @@ COMMENT ON COLUMN mydb.crvn_log_entries.clog_key_9
 COMMENT ON COLUMN mydb.crvn_log_entries.clog_value_9 
      IS 'Valore del parametro opzionale 9, ad esempio my_param_value';
 
-CREATE INDEX mydb.ix_crvn_log_date ON mydb.crvn_log_entries (capp_id, clog_date DESC);
-CREATE INDEX mydb.ix_crvn_log_type ON mydb.crvn_log_entries (capp_id, clos_type);
+CREATE INDEX mydb.ix_crvn_log_date ON mydb.crvn_log_entries (clog_date DESC, capp_id);
+CREATE INDEX mydb.ix_crvn_log_type ON mydb.crvn_log_entries (clos_type, capp_id);
 
 -- DROP da fare per la transizione da FLEX_LOG:
 --> pck_flex_log
@@ -224,6 +224,7 @@ END;
 CREATE TABLE mydb.crvn_idn_clients
 (
      CCLI_ID                        NUMBER(10)                              NOT NULL
+   , CAPP_ID                        NUMBER(10)                              NOT NULL
    , CCLI_ENABLED                   NUMBER(1)       DEFAULT 1               NOT NULL
    , CCLI_CLIENT_ID                 NVARCHAR2(200)                          NOT NULL
    , CCLI_CLIENT_NAME               NVARCHAR2(200)                          NOT NULL
@@ -233,6 +234,8 @@ CREATE TABLE mydb.crvn_idn_clients
    , CCLI_ALLOW_REMEMBER_CONSENT    NUMBER(1)       DEFAULT 1               NOT NULL
    , CCLI_FLOW                      NVARCHAR2(100)  DEFAULT 'implicit'      NOT NULL
    , CCLI_ALLOW_CLIENT_CREDS_ONLY   NUMBER(1)       DEFAULT 0               NOT NULL
+   , CCLI_LOGOUT_URI                NVARCHAR2(2000)      
+   , CCLI_LOGOUT_SESSION_REQUIRED   NUMBER(1)       DEFAULT 1               NOT NULL
    , CCLI_ALLOW_ACCESSALL_SCOPES    NUMBER(1)       DEFAULT 0               NOT NULL
    , CCLI_IDENTITY_TOKEN_LIFETIME   NUMBER(10)      DEFAULT 300             NOT NULL
    , CCLI_ACCESS_TOKEN_LIFETIME     NUMBER(10)      DEFAULT 3600            NOT NULL
@@ -279,12 +282,15 @@ CREATE TABLE mydb.crvn_idn_clients
 
    , CONSTRAINT pk_crvn_idn_clients PRIMARY KEY (CCLI_ID) ENABLE
    , CONSTRAINT uk_crvn_idn_clients UNIQUE (CCLI_CLIENT_ID) ENABLE
+   , CONSTRAINT fk_crvnidnclients_crvnsecapps FOREIGN KEY (CAPP_ID) REFERENCES mydb.crvn_sec_apps (capp_id) ON DELETE CASCADE ENABLE
 );
 
 COMMENT ON TABLE mydb.crvn_idn_clients 
      IS 'Models an OpenID Connect or OAuth2 client';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ID 
      IS 'Auto-increment ID';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CAPP_ID 
+     IS 'Caravan application ID to which this client belongs';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ENABLED 
      IS 'Specifies if client is enabled (defaults to true)';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_CLIENT_ID 
@@ -303,6 +309,10 @@ COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_FLOW
      IS 'Specifies allowed flow for client (either AuthorizationCode, Implicit, Hybrid, ResourceOwner, ClientCredentials or Custom). Defaults to Implicit';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_CLIENT_CREDS_ONLY 
      IS 'Indicates whether this client is allowed to request token using client credentials only. This is e.g. useful when you want a client to be able to use both a user-centric flow like implicit and additionally client credentials flow';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_LOGOUT_URI 
+     IS 'Specifies logout URI at client for HTTP based logout';
+COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_LOGOUT_SESSION_REQUIRED 
+     IS 'Specifies is the user session ID should be sent to the LogoutUri. Defaults to true';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_ACCESSALL_SCOPES 
      IS 'Indicates whether the client has access to all scopes. Defaults to false. You can set the allowed scopes via the CRVN_IDN_CLI_SCOPES table';
 COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_IDENTITY_TOKEN_LIFETIME 
@@ -336,15 +346,30 @@ COMMENT ON COLUMN mydb.crvn_idn_clients.CCLI_ALLOW_ACCESSALL_CST_GRTP
 
 CREATE SEQUENCE mydb.sq_crvn_idn_clients NOCACHE;
 
--- Identity: Clients ID trigger
--- REPLACE 'mydb' WITH DB NAME
-
 CREATE OR REPLACE TRIGGER mydb.ti_crvn_idn_clients
 BEFORE INSERT ON mydb.crvn_idn_clients 
 FOR EACH ROW
 BEGIN
   SELECT mydb.sq_crvn_idn_clients.nextval, mydb.pck_caravan_utils.f_get_sysdate_utc, mydb.pck_caravan_utils.f_get_sysuser, NULL, NULL
     INTO :new.CCLI_ID, :new.TRCK_INSERT_DATE, :new.TRCK_INSERT_DB_USER, :new.TRCK_UPDATE_DATE, :new.TRCK_UPDATE_DB_USER
+    FROM DUAL;
+END;
+/
+
+create or replace TRIGGER mydb.tu_crvn_idn_clients
+BEFORE UPDATE ON mydb.crvn_idn_clients 
+FOR EACH ROW
+BEGIN
+  IF UPDATING('TRCK_INSERT_DATE') 
+  OR UPDATING('TRCK_INSERT_DB_USER') 
+  OR UPDATING('TRCK_UPDATE_DATE') 
+  OR UPDATING('TRCK_UPDATE_DB_USER') 
+  THEN
+    mydb.pck_caravan_utils.sp_err_when_updating_trck_cols;
+  END IF;
+
+  SELECT mydb.pck_caravan_utils.f_get_sysdate_utc, mydb.pck_caravan_utils.f_get_sysuser
+    INTO :new.TRCK_UPDATE_DATE, :new.TRCK_UPDATE_DB_USER
     FROM DUAL;
 END;
 /
@@ -488,26 +513,146 @@ BEGIN
 END;
 /
 
+-- Identity: Scope secrets
+-- REPLACE 'mydb' WITH DB NAME
+
+CREATE TABLE mydb.crvn_idn_sco_secrets
+(
+     CSSE_ID                NUMBER(10)      NOT NULL
+   , CSCO_ID                NUMBER(10)      NOT NULL
+   , CSSE_VALUE             NVARCHAR2(250)  NOT NULL
+   , CSSE_TYPE              NVARCHAR2(250)  DEFAULT 'SharedSecret'
+   , CSSE_DESCR             NVARCHAR2(2000)      
+   , CSSE_EXPIRATION        DATE  
+
+   , CONSTRAINT pk_crvn_idn_sco_secrets PRIMARY KEY (CSSE_ID) ENABLE
+   , CONSTRAINT fk_crvnidnsco_secrets_scopes FOREIGN KEY (CSCO_ID) REFERENCES mydb.crvn_idn_scopes (CSCO_ID) ON DELETE CASCADE ENABLE
+);
+
+CREATE SEQUENCE mydb.sq_crvn_idn_sco_secrets NOCACHE;
+
+COMMENT ON COLUMN mydb.crvn_idn_sco_secrets.CSSE_VALUE 
+     IS 'Hash SHA256 o SHA512 codificato in Base64';
+
+CREATE OR REPLACE TRIGGER mydb.ti_crvn_idn_sco_secrets
+BEFORE INSERT ON mydb.crvn_idn_sco_secrets 
+FOR EACH ROW
+BEGIN
+  SELECT mydb.sq_crvn_idn_sco_secrets.nextval
+    INTO :new.CSSE_ID
+    FROM DUAL;
+END;
+/
+
 -- Users
 -- REPLACE 'mydb' WITH DB NAME
 
 CREATE TABLE mydb.crvn_sec_users
 (
-     cusr_id          NUMBER(19)      NOT NULL
-   , capp_id          NUMBER(10)      NOT NULL 
-   , cusr_login       NVARCHAR2(32)   NOT NULL
-   , cusr_hashed_pwd  NVARCHAR2(256)
-   , cusr_active      NUMBER(1)       NOT NULL
-   , cusr_first_name  NVARCHAR2(256)
-   , cusr_last_name   NVARCHAR2(256)
-   , cusr_email       NVARCHAR2(256)
+     cusr_id                        NUMBER(19)      NOT NULL
+   , capp_id                        NUMBER(10)      NOT NULL 
+   , cusr_login                     NVARCHAR2(32)   NOT NULL
+   , cusr_hashed_pwd                NVARCHAR2(256)
+   , cusr_active                    NUMBER(1)       DEFAULT 0 NOT NULL
+   , cusr_first_name                NVARCHAR2(256)
+   , cusr_last_name                 NVARCHAR2(256)
+   , cusr_email                     NVARCHAR2(256)
+   , cusr_email_confirmed           NUMBER(1)       DEFAULT 0 NOT NULL
+   , cusr_security_stamp            NVARCHAR2(256)
+   , cusr_lockout_enabled           NUMBER(1)       DEFAULT 1 NOT NULL
+   , cusr_lockout_end_date          DATE            NOT NULL
+   , cusr_access_failed_count       NUMBER(3)       DEFAULT 0 NOT NULL
+   , cusr_two_factor_auth_enabled   NUMBER(1)       DEFAULT 0 NOT NULL
+
+   -- INSERT tracking
+   , TRCK_INSERT_DATE               DATE            NOT NULL
+   , TRCK_INSERT_DB_USER            NVARCHAR2(32)   NOT NULL
+   , TRCK_INSERT_APP_USER           NVARCHAR2(32) 
+   
+   -- UPDATE tracking
+   , TRCK_UPDATE_DATE               DATE            
+   , TRCK_UPDATE_DB_USER            NVARCHAR2(32)   
+   , TRCK_UPDATE_APP_USER           NVARCHAR2(32) 
+
    , CHECK (cusr_login = lower(cusr_login)) ENABLE
+   
+   -- CHECKs for tracking
+   , CHECK (TRCK_INSERT_DB_USER = LOWER(TRCK_INSERT_DB_USER)) ENABLE
+   , CHECK (TRCK_INSERT_APP_USER = LOWER(TRCK_INSERT_APP_USER)) ENABLE
+   , CHECK (TRCK_UPDATE_DB_USER = LOWER(TRCK_UPDATE_DB_USER)) ENABLE
+   , CHECK (TRCK_UPDATE_APP_USER = LOWER(TRCK_UPDATE_APP_USER)) ENABLE
+   , CHECK ((TRCK_UPDATE_DATE IS NULL AND TRCK_UPDATE_DB_USER IS NULL) OR (TRCK_UPDATE_DATE IS NOT NULL AND TRCK_UPDATE_DB_USER IS NOT NULL)) ENABLE
+   , CHECK (TRCK_UPDATE_DATE IS NULL OR TRCK_UPDATE_DATE >= TRCK_INSERT_DATE) ENABLE
+
    , CONSTRAINT pk_crvn_sec_users PRIMARY KEY (cusr_id) ENABLE
    , CONSTRAINT uk_crvn_sec_users UNIQUE (capp_id, cusr_login) ENABLE
    , CONSTRAINT fk_crvnsecusers_crvnsecapps FOREIGN KEY (capp_id) REFERENCES mydb.crvn_sec_apps (capp_id) ON DELETE CASCADE ENABLE
 );
 
+COMMENT ON TABLE mydb.crvn_sec_users 
+     IS 'Tabella che censisce gli utenti delle applicazioni FINSA';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_id 
+     IS 'Identificativo riga, è una sequenza autoincrementale';
+COMMENT ON COLUMN mydb.crvn_sec_users.capp_id 
+     IS 'Identificativo della applicazione a cui un certo utente appartiene';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_login 
+     IS 'La sigla usata per effettuare la login';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_hashed_pwd 
+     IS 'Hash della password fissata per un certo utente';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_active 
+     IS 'Indica se un certo utente sia attivo o meno';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_first_name 
+     IS 'Nome di un certo utente';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_last_name 
+     IS 'Cognome di un certo utente';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_email 
+     IS 'Indirizzo e-mail di un certo utente';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_email_confirmed 
+     IS 'Indica se il dato indirizzo e-mail sia stato confermato';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_phone 
+     IS 'Numero di telefono di un certo utente';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_phone_confirmed 
+     IS 'Indica se il dato numero di telefono sia stato confermato';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_security_stamp 
+     IS 'Rappresenta una sintesi delle informazioni di accesso per un certo utente';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_lockout_enabled 
+     IS 'Indica se ad un certo utente possa essere bloccata la login a fronte di un certo numero di accessi falliti';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_lockout_end_date 
+     IS 'Indica la data di fine del blocco della login, valorizzare nel passato in fase di creazione utente';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_access_failed_count 
+     IS 'Il numero di login fallite per un certo utente';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_two_factor_auth_enabled 
+     IS 'Indica se un certo utente abbia abilitato la autenticazione a due fattori';
+
 CREATE SEQUENCE mydb.crvn_sec_users_id NOCACHE;
+
+CREATE OR REPLACE TRIGGER mydb.ti_crvn_sec_users
+BEFORE INSERT ON mydb.crvn_sec_users 
+FOR EACH ROW
+BEGIN
+  SELECT mydb.crvn_sec_users_id.nextval, lower(:new.cusr_login), mydb.pck_caravan_utils.f_get_sysdate_utc, mydb.pck_caravan_utils.f_get_sysdate_utc, mydb.pck_caravan_utils.f_get_sysuser, NULL, NULL
+    INTO :new.cusr_id, :new.cusr_login, :new.cusr_lockout_end_date, :new.TRCK_INSERT_DATE, :new.TRCK_INSERT_DB_USER, :new.TRCK_UPDATE_DATE, :new.TRCK_UPDATE_DB_USER
+    FROM DUAL;
+END;
+/
+
+create or replace TRIGGER mydb.tu_crvn_sec_users
+BEFORE UPDATE ON mydb.crvn_sec_users 
+FOR EACH ROW
+BEGIN
+  IF UPDATING('TRCK_INSERT_DATE') 
+  OR UPDATING('TRCK_INSERT_DB_USER') 
+  OR UPDATING('TRCK_UPDATE_DATE') 
+  OR UPDATING('TRCK_UPDATE_DB_USER') 
+  THEN
+    mydb.pck_caravan_utils.sp_err_when_updating_trck_cols;
+  END IF;
+
+  SELECT mydb.pck_caravan_utils.f_get_sysdate_utc, mydb.pck_caravan_utils.f_get_sysuser
+    INTO :new.TRCK_UPDATE_DATE, :new.TRCK_UPDATE_DB_USER
+    FROM DUAL;
+END;
+/
 
 -- Groups
 -- REPLACE 'mydb' WITH DB NAME
@@ -539,7 +684,7 @@ CREATE TABLE mydb.crvn_sec_roles
    , crol_notes       NVARCHAR2(1024) NOT NULL
    , CHECK (crol_name = lower(crol_name)) ENABLE
    , CONSTRAINT pk_crvn_sec_roles PRIMARY KEY (crol_id) ENABLE
-   , CONSTRAINT uk_crvn_sec_roles UNIQUE (crol_name, cgrp_id) ENABLE
+   , CONSTRAINT uk_crvn_sec_roles UNIQUE (cgrp_id, crol_name) ENABLE
    , CONSTRAINT fk_crvnsecroles_crvnsecgrps FOREIGN KEY (cgrp_id) REFERENCES mydb.crvn_sec_groups (cgrp_id) ON DELETE CASCADE ENABLE
 );
 
@@ -592,6 +737,80 @@ CREATE TABLE mydb.crvn_sec_objects
 
 CREATE SEQUENCE mydb.crvn_sec_objects_id NOCACHE;
 
+-- Claims
+-- REPLACE 'mydb' WITH DB NAME
+
+CREATE TABLE mydb.crvn_sec_claims
+(
+     ccla_id          NUMBER(19)      NOT NULL
+   , cusr_id          NUMBER(19)      NOT NULL 
+   , ccla_hash        NVARCHAR2(32)   NOT NULL
+   , ccla_claim       NCLOB           NOT NULL
+
+   -- INSERT tracking
+   , TRCK_INSERT_DATE               DATE            NOT NULL
+   , TRCK_INSERT_DB_USER            NVARCHAR2(32)   NOT NULL
+   , TRCK_INSERT_APP_USER           NVARCHAR2(32) 
+   
+   -- UPDATE tracking
+   , TRCK_UPDATE_DATE               DATE            
+   , TRCK_UPDATE_DB_USER            NVARCHAR2(32)   
+   , TRCK_UPDATE_APP_USER           NVARCHAR2(32) 
+   
+   -- CHECKs for tracking
+   , CHECK (TRCK_INSERT_DB_USER = LOWER(TRCK_INSERT_DB_USER)) ENABLE
+   , CHECK (TRCK_INSERT_APP_USER = LOWER(TRCK_INSERT_APP_USER)) ENABLE
+   , CHECK (TRCK_UPDATE_DB_USER = LOWER(TRCK_UPDATE_DB_USER)) ENABLE
+   , CHECK (TRCK_UPDATE_APP_USER = LOWER(TRCK_UPDATE_APP_USER)) ENABLE
+   , CHECK ((TRCK_UPDATE_DATE IS NULL AND TRCK_UPDATE_DB_USER IS NULL) OR (TRCK_UPDATE_DATE IS NOT NULL AND TRCK_UPDATE_DB_USER IS NOT NULL)) ENABLE
+   , CHECK (TRCK_UPDATE_DATE IS NULL OR TRCK_UPDATE_DATE >= TRCK_INSERT_DATE) ENABLE
+
+   , CONSTRAINT pk_crvn_sec_claims PRIMARY KEY (ccla_id) ENABLE
+   , CONSTRAINT uk_crvn_sec_claims UNIQUE (cusr_id, ccla_hash) ENABLE
+   , CONSTRAINT fk_crvnsecclm_crvnsecusr FOREIGN KEY (cusr_id) REFERENCES mydb.crvn_sec_users (cusr_id) ON DELETE CASCADE ENABLE
+);
+
+COMMENT ON TABLE mydb.crvn_sec_claims 
+     IS 'Tabella che censisce i claim degli utenti delle applicazioni FINSA';
+COMMENT ON COLUMN mydb.crvn_sec_claims.ccla_id 
+     IS 'Identificativo riga, è una sequenza autoincrementale';
+COMMENT ON COLUMN mydb.crvn_sec_claims.cusr_id 
+     IS 'Identificativo dello utente a cui un certo claim appartiene';
+COMMENT ON COLUMN mydb.crvn_sec_claims.ccla_hash 
+     IS 'Hash prodotto dopo la serializzazione del claim';
+COMMENT ON COLUMN mydb.crvn_sec_claims.ccla_claim 
+     IS 'Il claim serializzato';
+
+CREATE SEQUENCE mydb.sq_crvn_sec_claims NOCACHE;
+
+CREATE OR REPLACE TRIGGER mydb.ti_crvn_sec_claims
+BEFORE INSERT ON mydb.crvn_sec_claims 
+FOR EACH ROW
+BEGIN
+  SELECT mydb.sq_crvn_sec_claims.nextval, mydb.pck_caravan_utils.f_get_sysdate_utc, mydb.pck_caravan_utils.f_get_sysuser, NULL, NULL
+    INTO :new.ccla_id, :new.TRCK_INSERT_DATE, :new.TRCK_INSERT_DB_USER, :new.TRCK_UPDATE_DATE, :new.TRCK_UPDATE_DB_USER
+    FROM DUAL;
+END;
+/
+
+create or replace TRIGGER mydb.tu_crvn_sec_claims
+BEFORE UPDATE ON mydb.crvn_sec_claims 
+FOR EACH ROW
+BEGIN
+  IF UPDATING('TRCK_INSERT_DATE') 
+  OR UPDATING('TRCK_INSERT_DB_USER') 
+  OR UPDATING('TRCK_UPDATE_DATE') 
+  OR UPDATING('TRCK_UPDATE_DB_USER') 
+  THEN
+    mydb.pck_caravan_utils.sp_err_when_updating_trck_cols;
+  END IF;
+
+  SELECT mydb.pck_caravan_utils.f_get_sysdate_utc, mydb.pck_caravan_utils.f_get_sysuser
+    INTO :new.TRCK_UPDATE_DATE, :new.TRCK_UPDATE_DB_USER
+    FROM DUAL;
+END;
+/
+
 -- Sec Entries
 -- REPLACE 'mydb' WITH DB NAME
 
@@ -613,19 +832,6 @@ CREATE TABLE mydb.crvn_sec_entries
 );
 
 CREATE SEQUENCE mydb.crvn_sec_entries_id NOCACHE;
-
--- Triggers: Users Id
--- REPLACE 'mydb' WITH DB NAME
-
-CREATE OR REPLACE TRIGGER mydb.crvn_sec_users_id
-BEFORE INSERT ON mydb.crvn_sec_users 
-FOR EACH ROW
-BEGIN
-  SELECT mydb.crvn_sec_users_id.nextval
-    INTO :new.cusr_id
-    FROM DUAL;
-END;
-/
 
 -- Triggers: Groups Id
 -- REPLACE 'mydb' WITH DB NAME

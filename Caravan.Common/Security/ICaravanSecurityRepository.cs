@@ -211,7 +211,7 @@ namespace Finsa.Caravan.Common.Security
 
         Task<long> AddUserClaimAsync(string appName, string userLogin, SecClaim claim);
 
-        Task RemoveUserClaimAsync(string appName, string userLogin, string serializedClaim);
+        Task RemoveUserClaimAsync(string appName, string userLogin, string serializedClaimHash);
 
         #endregion Users
 
@@ -240,7 +240,7 @@ namespace Finsa.Caravan.Common.Security
         /// <exception cref="ArgumentException">
         ///   <paramref name="appName"/> or <paramref name="roleId"/> are null or empty.
         /// </exception>
-        Task<SecRole> GetRoleByIdAsync(string appName, long roleId);
+        Task<SecRole> GetRoleByIdAsync(string appName, int roleId);
 
         /// <summary>
         ///   </summary>

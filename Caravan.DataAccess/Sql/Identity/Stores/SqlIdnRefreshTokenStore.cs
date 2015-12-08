@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
-    internal sealed class SqlIdnRefreshTokenStore : AbstractSqlIdnTokenStore<RefreshToken>, IRefreshTokenStore
+    public sealed class SqlIdnRefreshTokenStore : AbstractSqlIdnTokenStore<RefreshToken>, IRefreshTokenStore
     {
         public SqlIdnRefreshTokenStore(SqlDbContext context, IScopeStore scopeStore, IClientStore clientStore, IClock clock)
             : base(context, TokenType.RefreshToken, scopeStore, clientStore, clock)
@@ -46,7 +46,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
                 Context.IdnTokens.Add(token);
             }
 
-            token.Expiry = Clock.UtcNow.AddSeconds(value.LifeTime);
+            token.Expiry = value.CreationTime.AddSeconds(value.LifeTime);
             await Context.SaveChangesAsync();
         }
     }
