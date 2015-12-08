@@ -31,6 +31,7 @@ using PommaLabs.Thrower;
 using Swashbuckle.Application;
 using System;
 using System.Data.Entity.Infrastructure.Interception;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -73,6 +74,8 @@ namespace Finsa.Caravan.WebService
 
             // Inizializzazione gestione identità.
             IdentityConfig.Build(app);
+            // RIMUOVERE APPENA POSSIBILE!!! Accetta certificati non validi...
+            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
         }
 
         private static IKernel CreateKernel() =>
@@ -109,6 +112,13 @@ namespace Finsa.Caravan.WebService
                 c.SingleApiVersion("v1", "wsCaravan");
                 c.IncludeXmlComments(PortableEnvironment.MapPath(@"~/App_Data/HelpPages/WebServiceHelp.xml"));
                 c.RootUrl(req => req.RequestUri.GetLeftPart(UriPartial.Authority) + req.GetRequestContext().VirtualPathRoot.TrimEnd('/'));
+
+                c.OAuth2("wsCaravan")
+                 .Description("boh")
+                 .Flow("implicit")
+                 .AuthorizationUrl("")
+                 .TokenUrl("")
+                 .Scopes(cfg => { });
             }).EnableSwaggerUi(c =>
             {
                 c.DocExpansion(DocExpansion.None);

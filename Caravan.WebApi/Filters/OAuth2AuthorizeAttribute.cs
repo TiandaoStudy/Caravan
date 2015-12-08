@@ -10,7 +10,12 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.Caravan.Common;
+using Finsa.Caravan.WebApi.Models.Identity;
+using Ninject;
+using RestSharp;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
@@ -25,6 +30,33 @@ namespace Finsa.Caravan.WebApi.Filters
         public override async void OnActionExecuting(HttpActionContext actionContext)
         {
             await OnActionExecutingAsync(actionContext, CancellationToken.None);
+        }
+
+        /// <summary>
+        ///   Occurs before the action method is invoked.
+        /// </summary>
+        /// <param name="actionContext">The action context.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public override async Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
+        {
+            var authorizationSettings = CaravanServiceProvider.NinjectKernel.Get<OAuth2AuthorizationSettings>();
+
+            var accessToken = actionContext.Request.Headers.Authorization?.Parameter;
+            if (string.IsNullOrWhiteSpace(accessToken))
+            {
+                return;
+            }
+
+            var restClient = new RestClient(authorizationSettings.AccessTokenValidationUrl);
+            var restRequest = new RestRequest(Method.POST);
+            restRequest.AddParameter(new Parameter
+            {
+                Name = "token",
+                Type = ParameterType.GetOrPost,
+                Value = accessToken
+            });
+
+            var restResponse = await restClient.ExecuteTaskAsync(restRequest);
         }
     }
 }

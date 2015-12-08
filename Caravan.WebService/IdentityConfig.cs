@@ -32,7 +32,7 @@ namespace Finsa.Caravan.WebService
             {
                 // Dettagli sul nome del servizio.
                 SiteName = CaravanCommonConfiguration.Instance.AppDescription,
-                IssuerUri = "https://idsrv3/mixit",
+                IssuerUri = "https://wscaravan.finsa.it/identity",
 
                 // Gestione della sicurezza della comunicazione.
                 SigningCertificate = LoadCertificate(),

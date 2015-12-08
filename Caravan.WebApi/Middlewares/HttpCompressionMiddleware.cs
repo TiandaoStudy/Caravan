@@ -93,7 +93,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
             {
                 _log.Trace($"Client accepts GZIP enconding - Accept-Enconding: {acceptEncoding}");
             }
-            if (canDeflate)
+            else
             {
                 _log.Trace($"Client accepts DEFLATE enconding - Accept-Enconding: {acceptEncoding}");
             }

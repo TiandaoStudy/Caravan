@@ -109,6 +109,10 @@
       <HintPath>..\packages\Thrower.2.0.3\lib\net45\PommaLabs.Thrower.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RestSharp, Version=100.0.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharpSigned.105.2.3\lib\net45\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Snappy.NET">
       <HintPath>..\packages\Snappy.NET.1.1.1.8\lib\net45\Snappy.NET.dll</HintPath>
     </Reference>
@@ -171,6 +175,7 @@
     <Compile Include="CaravanWebServiceHelper.cs" />
     <Compile Include="Models\AuthorizationResult.cs" />
     <Compile Include="Models\HttpExceptionResponse.cs" />
+    <Compile Include="Models\Identity\OAuth2AuthorizationSettings.cs" />
     <Compile Include="Models\Links\AlternateLink.cs" />
     <Compile Include="Models\Links\CollectionLink.cs" />
     <Compile Include="Models\Links\EditLink.cs" />
