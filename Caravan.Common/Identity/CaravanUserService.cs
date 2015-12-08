@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using Finsa.Caravan.Common.Identity.Models;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.Common.Security.Models;
 using IdentityServer3.Core.Extensions;
@@ -45,7 +46,7 @@ namespace Finsa.Caravan.Common.Identity
         ///   autorizzazione, al fine di aumentare la sicurezza complessiva del processo.
         /// </param>
         /// <param name="parseSubject">La funzione utilizzata per leggere il subject.</param>
-        public CaravanUserService(ICaravanUserManagerFactory userManagerFactory, ICaravanClientStore clientStore, CaravanAllowedAppsCollection allowedApps, Func<string, long> parseSubject = null)
+        public CaravanUserService(ICaravanUserManagerFactory userManagerFactory, ICaravanClientStore clientStore, CaravanAllowedAppsCollection allowedApps, Func<string, IdnUserKey> parseSubject = null)
         {
             RaiseArgumentNullException.IfIsNull(userManagerFactory, nameof(userManagerFactory));
             RaiseArgumentNullException.IfIsNull(clientStore, nameof(clientStore));
@@ -53,14 +54,8 @@ namespace Finsa.Caravan.Common.Identity
             UserManagerFactory = userManagerFactory;
             ClientStore = clientStore;
             AllowedApps = allowedApps;
-            ConvertSubjectToKey = parseSubject ?? ParseLong;
+            ConvertSubjectToKey = parseSubject ?? IdnUserKey.FromString;
             EnableSecurityStamp = true;
-        }
-
-        static long ParseLong(string sub)
-        {
-            long key;
-            return long.TryParse(sub, out key) ? key : 0;
         }
 
         public string DisplayNameClaimType { get; set; }
@@ -76,7 +71,7 @@ namespace Finsa.Caravan.Common.Identity
         /// </summary>
         protected CaravanAllowedAppsCollection AllowedApps { get; }
 
-        protected Func<string, long> ConvertSubjectToKey { get; }
+        protected Func<string, IdnUserKey> ConvertSubjectToKey { get; }
 
         /// <summary>
         ///   This method is called whenever claims about the user are requested (e.g. during token
@@ -95,8 +90,9 @@ namespace Finsa.Caravan.Common.Identity
             var appName = await FindAppNameByClientIdAsync(clientId);
             using (var userManager = await UserManagerFactory.CreateAsync(appName))
             {
-                var key = ConvertSubjectToKey(subject.GetSubjectId());
-                var user = await userManager.FindByIdAsync(key);
+                var idnUserKey = ConvertSubjectToKey(subject.GetSubjectId());
+                RaiseArgumentException.If(appName != idnUserKey.AppName, "Invalid application name");
+                var user = await userManager.FindByIdAsync(idnUserKey.UserId);
                 RaiseArgumentException.If(user == null, "Invalid subject identifier");
 
                 var claims = await GetClaimsFromAccount(userManager, user);
@@ -113,7 +109,7 @@ namespace Finsa.Caravan.Common.Identity
         {
             var claims = new List<Claim>
             {
-                new Claim(Constants.ClaimTypes.Subject, user.Id.ToString()),
+                new Claim(Constants.ClaimTypes.Subject, IdnUserKey.ToString(user.AppName, user.Id)),
                 new Claim(Constants.ClaimTypes.PreferredUserName, user.UserName),
             };
 
@@ -194,7 +190,7 @@ namespace Finsa.Caravan.Common.Identity
                             if (result == null)
                             {
                                 var claims = await GetClaimsForAuthenticateResult(userManager, user);
-                                result = new AuthenticateResult(user.Id.ToString(), await GetDisplayNameForAccountAsync(userManager, user.Id), claims);
+                                result = new AuthenticateResult(IdnUserKey.ToString(user.AppName, user.Id), await GetDisplayNameForAccountAsync(userManager, user.Id), claims);
                             }
 
                             context.AuthenticateResult = result;
@@ -435,12 +431,13 @@ namespace Finsa.Caravan.Common.Identity
             var subject = context.Subject;
 
             var id = subject.GetSubjectId();
-            var key = ConvertSubjectToKey(id);
+            var idnUserKey = ConvertSubjectToKey(id);
 
             var appName = await FindAppNameByClientIdAsync(context.Client.ClientId);
+            RaiseArgumentException.If(appName != idnUserKey.AppName, "Invalid application name");
             using (var userManager = await UserManagerFactory.CreateAsync(appName))
             {
-                var user = await userManager.FindByIdAsync(key);
+                var user = await userManager.FindByIdAsync(idnUserKey.UserId);
 
                 context.IsActive = false;
 
@@ -451,7 +448,7 @@ namespace Finsa.Caravan.Common.Identity
                         var securityStamp = subject.Claims.Where(x => x.Type == "security_stamp").Select(x => x.Value).SingleOrDefault();
                         if (securityStamp != null)
                         {
-                            var dbSecurityStamp = await userManager.GetSecurityStampAsync(key);
+                            var dbSecurityStamp = await userManager.GetSecurityStampAsync(idnUserKey.UserId);
                             if (dbSecurityStamp != securityStamp)
                             {
                                 return;

@@ -165,6 +165,7 @@
     <Compile Include="Identity\CaravanUserService.cs" />
     <Compile Include="Identity\ICaravanClientStore.cs" />
     <Compile Include="Identity\Models\IdnClient.cs" />
+    <Compile Include="Identity\Models\IdnUserKey.cs" />
     <Compile Include="Logging\Activities\AbstractLogActivity.cs" />
     <Compile Include="Logging\CaravanLogger.cs" />
     <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />
