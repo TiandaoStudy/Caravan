@@ -151,6 +151,9 @@ namespace Finsa.Caravan.WebApi.Middlewares
             }
             finally
             {
+                // Disposes the temporary memory stream.
+                response.Body.Dispose();
+
                 // Restores the real stream in the environment dictionary.
                 response.Body = responseStream;
             }
