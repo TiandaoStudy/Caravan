@@ -10,10 +10,10 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using System;
-using System.Threading.Tasks;
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
+using System;
+using System.Threading.Tasks;
 
 namespace Finsa.Caravan.Common.Security
 {

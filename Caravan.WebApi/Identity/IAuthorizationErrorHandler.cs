@@ -10,21 +10,21 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using System.Net.Http;
+using Finsa.Caravan.WebApi.Identity.Models;
+using System.Web.Http.Controllers;
 
 namespace Finsa.Caravan.WebApi.Identity
 {
     /// <summary>
-    ///   Recupera i token di OAuth2 dalle richieste HTTP.
+    ///   Gestisce gli errori avvenuti durante la validazione dell'accesso.
     /// </summary>
-    public interface ITokenExtractor
+    public interface IAuthorizationErrorHandler
     {
         /// <summary>
-        ///   Recupera l'access token dalla richiesta HTTP.
+        ///   Gestisce un errore avvenuto durante la validazione dell'accesso.
         /// </summary>
-        /// <param name="request">La richiesta HTTP.</param>
-        /// <param name="accessToken">L'access token, se presente.</param>
-        /// <returns>Vero se l'access token era presente, falso altrimenti.</returns>
-        bool ExtractAccessTokenFromRequest(HttpRequestMessage request, out string accessToken);
+        /// <param name="actionContext">L'azione per cui si stava validando l'accesso.</param>
+        /// <param name="errorContext">Il tipo di errore riscontrato.</param>
+        void HandleError(HttpActionContext actionContext, AuthorizationErrorContext errorContext);
     }
 }

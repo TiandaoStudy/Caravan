@@ -28,5 +28,15 @@ namespace Finsa.Caravan.Common.Security
             : base(roleStore)
         {
         }
+
+        /// <summary>
+        ///   L'identificativo dell'applicativo Caravan per cui il manager è stato istanziato.
+        /// </summary>
+        public long AppId => (Store as CaravanRoleStore).AppId;
+
+        /// <summary>
+        ///   Il nome dell'applicativo Caravan per cui il manager è stato istanziato.
+        /// </summary>
+        public string AppName => (Store as CaravanRoleStore).AppName;
     }
 }

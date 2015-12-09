@@ -40,6 +40,16 @@ namespace Finsa.Caravan.Common.Security
         }
 
         /// <summary>
+        ///   L'identificativo dell'applicativo Caravan per cui il manager è stato istanziato.
+        /// </summary>
+        public long AppId => (Store as CaravanUserStore).AppId;
+
+        /// <summary>
+        ///   Il nome dell'applicativo Caravan per cui il manager è stato istanziato.
+        /// </summary>
+        public string AppName => (Store as CaravanUserStore).AppName;
+
+        /// <summary>
         ///   Creates a user with no password.
         /// </summary>
         /// <param name="user"/>

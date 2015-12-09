@@ -34,6 +34,11 @@ namespace Finsa.Caravan.Common.Security
         IUserTwoFactorStore<SecUser, long>
     {
         /// <summary>
+        ///   L'identificativo dell'applicativo Caravan per cui lo store è stato istanziato.
+        /// </summary>
+        long AppId { get; }
+
+        /// <summary>
         ///   Il nome dell'applicativo Caravan per cui lo store è stato istanziato.
         /// </summary>
         string AppName { get; }

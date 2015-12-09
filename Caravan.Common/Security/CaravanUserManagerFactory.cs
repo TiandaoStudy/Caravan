@@ -34,8 +34,8 @@ namespace Finsa.Caravan.Common.Security
 
         public async Task<CaravanUserManager> CreateAsync(string appName)
         {
-            var userStore = new CaravanUserStore(appName, SecurityRepository);
             var app = await SecurityRepository.GetAppAsync(appName);
+            var userStore = new CaravanUserStore(app.Id, app.Name, SecurityRepository);
             var passwordHasherType = Type.GetType(app.PasswordHasher, true, true);
             var passwordHasher = Activator.CreateInstance(passwordHasherType) as IPasswordHasher;
             return new CaravanUserManager(userStore, passwordHasher);

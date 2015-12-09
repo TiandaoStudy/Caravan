@@ -33,15 +33,22 @@ namespace Finsa.Caravan.Common.Security
         /// <summary>
         ///   Inizializza lo store.
         /// </summary>
+        /// <param name="appId">Identificativo dell'applicativo Caravan.</param>
         /// <param name="appName">Nome dell'applicativo Caravan.</param>
         /// <param name="securityRepository">Il repository della sicurezza di Caravan.</param>
-        public CaravanUserStore(string appName, ICaravanSecurityRepository securityRepository)
+        public CaravanUserStore(long appId, string appName, ICaravanSecurityRepository securityRepository)
         {
             RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
             RaiseArgumentNullException.IfIsNull(securityRepository, nameof(securityRepository));
+            AppId = appId;
             AppName = appName;
             SecurityRepository = securityRepository;
         }
+
+        /// <summary>
+        ///   L'identificativo dell'applicativo Caravan per cui lo store è stato istanziato.
+        /// </summary>
+        public long AppId { get; }
 
         /// <summary>
         ///   Il nome dell'applicativo Caravan per cui lo store è stato istanziato.

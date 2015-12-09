@@ -12,6 +12,7 @@
 
 using Finsa.Caravan.Common;
 using Finsa.Caravan.WebApi.Identity;
+using Finsa.Caravan.WebApi.Identity.Models;
 using Finsa.Caravan.WebApi.Models.Identity;
 using Ninject;
 using RestSharp;
@@ -26,10 +27,16 @@ namespace Finsa.Caravan.WebApi.Filters
     public sealed class OAuth2AuthorizeAttribute : ActionFilterAttribute
     {
         /// <summary>
-        ///   Il tipo che implementa l'interfaccia <see cref="ITokenExtractor"/> da istanziare per
-        ///   recuperare i token dalle richieste HTTP.
+        ///   Il tipo che implementa l'interfaccia <see cref="IAccessTokenExtractor"/> da istanziare per
+        ///   recuperare gli access token dalle richieste HTTP.
         /// </summary>
-        public Type TokenExtractorType { get; set; } = typeof(BearerTokenExtractor);
+        public Type AccessTokenExtractorType { get; set; } = typeof(BearerAccessTokenExtractor);
+
+        /// <summary>
+        ///   Il tipo che implementa l'interfaccia <see cref="IAuthorizationErrorHandler"/> da istanziare per
+        ///   gestire eventuali errori riscontrati in fase di autorizzazione.
+        /// </summary>
+        public Type AuthorizationErrorHandlerType { get; set; } = typeof(IAuthorizationErrorHandler);
 
         /// <summary>
         ///   Occurs before the action method is invoked.
@@ -47,31 +54,45 @@ namespace Finsa.Caravan.WebApi.Filters
         /// <param name="cancellationToken">The cancellation token.</param>
         public override async Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
-            var authorizationSettings = CaravanServiceProvider.NinjectKernel.Get<OAuth2AuthorizationSettings>();
-
-            string accessToken;
-            var tokenExtractor = LoadTokenExtractor();
-            if (!tokenExtractor.ExtractAccessTokenFromRequest(actionContext.Request, out accessToken))
+            try
             {
-                return;
+                var authorizationSettings = CaravanServiceProvider.NinjectKernel.Get<OAuth2AuthorizationSettings>();
+
+                string accessToken;
+                var accessTokenExtractor = LoadAccessTokenExtractor();
+                if (!accessTokenExtractor.ExtractFromRequest(actionContext.Request, out accessToken))
+                {
+                    LoadAuthorizationErrorHandler().HandleError(actionContext, AuthorizationErrorContext.MissingAccessToken);
+                    return;
+                }
+
+                var restClient = new RestClient(authorizationSettings.AccessTokenValidationUrl);
+                var restRequest = new RestRequest(Method.POST);
+                restRequest.AddParameter(new Parameter
+                {
+                    Name = "token",
+                    Type = ParameterType.GetOrPost,
+                    Value = accessToken
+                });
+
+                var restResponse = await restClient.ExecuteTaskAsync(restRequest);
             }
-
-            var restClient = new RestClient(authorizationSettings.AccessTokenValidationUrl);
-            var restRequest = new RestRequest(Method.POST);
-            restRequest.AddParameter(new Parameter
+            catch (Exception ex)
             {
-                Name = "token",
-                Type = ParameterType.GetOrPost,
-                Value = accessToken
-            });
 
-            var restResponse = await restClient.ExecuteTaskAsync(restRequest);
+            }            
         }
 
         /// <summary>
         ///   Carica dinamicamente l'oggetto che si occupa dell'estrazione dei token.
         /// </summary>
         /// <returns>L'oggetto che si occupa dell'estrazione dei token.</returns>
-        ITokenExtractor LoadTokenExtractor() => Activator.CreateInstance(TokenExtractorType) as ITokenExtractor;
+        IAccessTokenExtractor LoadAccessTokenExtractor() => Activator.CreateInstance(AccessTokenExtractorType) as IAccessTokenExtractor;
+
+        /// <summary>
+        ///   Carica dinamicamente l'oggetto che si occupa della gestione degli errori.
+        /// </summary>
+        /// <returns>L'oggetto che si occupa della gestione degli errori.</returns>
+        IAuthorizationErrorHandler LoadAuthorizationErrorHandler() => Activator.CreateInstance(AuthorizationErrorHandlerType) as IAuthorizationErrorHandler;
     }
 }

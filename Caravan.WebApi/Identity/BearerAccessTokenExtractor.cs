@@ -15,9 +15,9 @@ using System.Net.Http;
 namespace Finsa.Caravan.WebApi.Identity
 {
     /// <summary>
-    ///   Estrattore che recupera il token dall'header Authorization.
+    ///   Estrattore che recupera l'access token dall'header Authorization.
     /// </summary>
-    public sealed class BearerTokenExtractor : ITokenExtractor
+    public sealed class BearerAccessTokenExtractor : IAccessTokenExtractor
     {
         /// <summary>
         ///   Recupera l'access token dalla richiesta HTTP.
@@ -25,7 +25,7 @@ namespace Finsa.Caravan.WebApi.Identity
         /// <param name="request">La richiesta HTTP.</param>
         /// <param name="accessToken">L'access token, se presente.</param>
         /// <returns>Vero se l'access token era presente, falso altrimenti.</returns>
-        public bool ExtractAccessTokenFromRequest(HttpRequestMessage request, out string accessToken)
+        public bool ExtractFromRequest(HttpRequestMessage request, out string accessToken)
         {
             accessToken = request.Headers.Authorization?.Parameter;
             return string.IsNullOrWhiteSpace(accessToken);

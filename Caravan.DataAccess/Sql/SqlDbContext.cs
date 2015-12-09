@@ -1,4 +1,5 @@
-﻿using Finsa.Caravan.DataAccess.Sql.Identity.Entities;
+﻿using Finsa.Caravan.DataAccess.Sql.FakeSql;
+using Finsa.Caravan.DataAccess.Sql.Identity.Entities;
 using Finsa.Caravan.DataAccess.Sql.Logging.Entities;
 using Finsa.Caravan.DataAccess.Sql.Security.Entities;
 using System.Data.Common;
@@ -79,6 +80,24 @@ namespace Finsa.Caravan.DataAccess.Sql
                 return CaravanDataSource.Manager.OpenConnection();
             }
             return CaravanDataSource.Manager.CreateConnection();
+        }
+
+        /// <summary>
+        ///   Da usare SOLO E SOLTANTO negli unit test, resetta la connessione di Effort.
+        /// </summary>
+        public static void Reset()
+        {
+            // A new connection is created and persisted for the whole test duration.
+            (CaravanDataSource.Manager as FakeSqlDataSourceManager).ResetConnection();
+
+            // The database is recreated, since it is in-memory and probably it does not exist.
+            using (var ctx = SqlDbContext.CreateUpdateContext())
+            {
+                ctx.Database.CreateIfNotExists();
+                Database.SetInitializer(new DropCreateDatabaseAlways<SqlDbContext>());
+                ctx.Database.Initialize(true);
+                Database.SetInitializer(new CreateDatabaseIfNotExists<SqlDbContext>());
+            }
         }
 
         #region DB Sets - Logging

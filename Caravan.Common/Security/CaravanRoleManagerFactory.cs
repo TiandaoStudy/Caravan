@@ -30,11 +30,11 @@ namespace Finsa.Caravan.Common.Security
 
         public Task<CaravanRoleManager> CreateAsync() => CreateAsync(CaravanCommonConfiguration.Instance.AppName);
 
-        public Task<CaravanRoleManager> CreateAsync(string appName)
+        public async Task<CaravanRoleManager> CreateAsync(string appName)
         {
-            var roleStore = new CaravanRoleStore(appName, SecurityRepository);
-            var roleManager = new CaravanRoleManager(roleStore);
-            return Task.FromResult(roleManager);
+            var app = await SecurityRepository.GetAppAsync(appName);
+            var roleStore = new CaravanRoleStore(app.Id, app.Name, SecurityRepository);
+            return new CaravanRoleManager(roleStore);
         }
     }
 }
