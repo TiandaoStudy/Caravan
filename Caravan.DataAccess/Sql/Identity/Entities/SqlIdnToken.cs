@@ -55,8 +55,8 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
         public virtual string JsonCode { get; set; }
 
         [Required]
-        [DateTimeOffset(Hours = 0)]
-        public virtual DateTimeOffset Expiry { get; set; }
+        [DateTimeKind(DateTimeKind.Utc)]
+        public virtual DateTime Expiry { get; set; }
     }
 
     /// <summary>

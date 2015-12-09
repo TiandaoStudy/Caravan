@@ -170,6 +170,8 @@
     <Compile Include="Filters\HttpExceptionFilterAttribute.cs" />
     <Compile Include="Filters\AuthorizeForCaravanAttribute.cs" />
     <Compile Include="Filters\OAuth2AuthorizeAttribute.cs" />
+    <Compile Include="Identity\BearerTokenExtractor.cs" />
+    <Compile Include="Identity\ITokenExtractor.cs" />
     <Compile Include="Middlewares\HttpCompressionMiddleware.cs" />
     <Compile Include="Middlewares\HttpLoggingMiddleware.cs" />
     <Compile Include="CaravanWebServiceHelper.cs" />
@@ -206,6 +208,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Identity\Models\" />
     <Folder Include="Models\Logging\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

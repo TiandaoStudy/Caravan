@@ -25,9 +25,9 @@ namespace Finsa.Caravan.DataAccess.Sql.Entities
     public abstract class SqlTrackedEntity
     {
         [Column("TRCK_INSERT_DATE")]
-        [DateTimeOffset(Hours = 0)]
+        [DateTimeKind(DateTimeKind.Utc)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public virtual DateTimeOffset InsertDate { get; set; }
+        public virtual DateTime InsertDate { get; set; }
 
         [Column("TRCK_INSERT_DB_USER")]
         [StringLength(SqlDbContext.SmallLength)]
@@ -39,9 +39,9 @@ namespace Finsa.Caravan.DataAccess.Sql.Entities
         public virtual string InsertAppUser { get; set; }
 
         [Column("TRCK_UPDATE_DATE")]
-        [DateTimeOffset(Hours = 0)]
+        [DateTimeKind(DateTimeKind.Utc)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public virtual DateTimeOffset? UpdateDate { get; set; }
+        public virtual DateTime? UpdateDate { get; set; }
 
         [Column("TRCK_UPDATE_DB_USER")]
         [StringLength(SqlDbContext.SmallLength)]

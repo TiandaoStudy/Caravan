@@ -125,8 +125,8 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
         ///   creazione utente.
         /// </summary>
         [Column("CUSR_LOCKOUT_END_DATE", Order = 13)]
-        [DateTimeOffset(Hours = 0)]
-        public virtual DateTimeOffset LockoutEndDate { get; set; }
+        [DateTimeKind(DateTimeKind.Utc)]
+        public virtual DateTime LockoutEndDate { get; set; }
 
         /// <summary>
         ///   Il numero di login fallite per un certo utente.

@@ -11,9 +11,11 @@
 // the License.
 
 using Finsa.Caravan.Common;
+using Finsa.Caravan.WebApi.Identity;
 using Finsa.Caravan.WebApi.Models.Identity;
 using Ninject;
 using RestSharp;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
@@ -23,6 +25,12 @@ namespace Finsa.Caravan.WebApi.Filters
 {
     public sealed class OAuth2AuthorizeAttribute : ActionFilterAttribute
     {
+        /// <summary>
+        ///   Il tipo che implementa l'interfaccia <see cref="ITokenExtractor"/> da istanziare per
+        ///   recuperare i token dalle richieste HTTP.
+        /// </summary>
+        public Type TokenExtractorType { get; set; } = typeof(BearerTokenExtractor);
+
         /// <summary>
         ///   Occurs before the action method is invoked.
         /// </summary>
@@ -41,8 +49,9 @@ namespace Finsa.Caravan.WebApi.Filters
         {
             var authorizationSettings = CaravanServiceProvider.NinjectKernel.Get<OAuth2AuthorizationSettings>();
 
-            var accessToken = actionContext.Request.Headers.Authorization?.Parameter;
-            if (string.IsNullOrWhiteSpace(accessToken))
+            string accessToken;
+            var tokenExtractor = LoadTokenExtractor();
+            if (!tokenExtractor.ExtractAccessTokenFromRequest(actionContext.Request, out accessToken))
             {
                 return;
             }
@@ -58,5 +67,11 @@ namespace Finsa.Caravan.WebApi.Filters
 
             var restResponse = await restClient.ExecuteTaskAsync(restRequest);
         }
+
+        /// <summary>
+        ///   Carica dinamicamente l'oggetto che si occupa dell'estrazione dei token.
+        /// </summary>
+        /// <returns>L'oggetto che si occupa dell'estrazione dei token.</returns>
+        ITokenExtractor LoadTokenExtractor() => Activator.CreateInstance(TokenExtractorType) as ITokenExtractor;
     }
 }

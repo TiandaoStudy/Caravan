@@ -32,8 +32,8 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
         [StringLength(2000)]
         public virtual string Description { get; set; }
 
-        [DateTimeOffset(Hours = 0)]
-        public virtual DateTimeOffset? Expiration { get; set; }
+        [DateTimeKind(DateTimeKind.Utc)]
+        public virtual DateTime? Expiration { get; set; }
 
         [StringLength(250)]
         public virtual string Type { get; set; }

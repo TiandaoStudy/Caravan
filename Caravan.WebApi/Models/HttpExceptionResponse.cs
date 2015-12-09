@@ -34,6 +34,9 @@ namespace Finsa.Caravan.WebApi.Models
         /// </summary>
         public string UserMessage { get; set; }
 
+        /// <summary>
+        ///   Un codice di errore gestito convenzionalmente dall'applicativo.
+        /// </summary>
         public object ErrorCode { get; set; }
     }
 }
