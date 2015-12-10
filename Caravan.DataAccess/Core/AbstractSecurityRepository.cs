@@ -18,6 +18,7 @@ using Finsa.Caravan.Common.Security.Models;
 using Finsa.CodeServices.Common;
 using PommaLabs.Thrower;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Core
@@ -906,6 +907,8 @@ namespace Finsa.Caravan.DataAccess.Core
         protected abstract Task UpdateGroupAsyncInternal(string appName, string groupName, SecGroupUpdates groupUpdates);
 
         protected abstract Task<SecUser[]> GetUsersAsyncInternal(string appName, long? userId, string userLogin, string userEmail);
+
+        protected abstract Task<IQueryable<SecUser>> QueryUsersAsyncInternal(string appName);
 
         protected abstract Task AddUserAsyncInternal(string appName, SecUser newUser);
 

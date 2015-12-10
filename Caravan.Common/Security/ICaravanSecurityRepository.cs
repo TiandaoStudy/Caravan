@@ -13,6 +13,7 @@
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Finsa.Caravan.Common.Security
@@ -112,6 +113,14 @@ namespace Finsa.Caravan.Common.Security
         ///   <paramref name="groupUpdates.Name"/> are null or empty.
         /// </exception>
         Task UpdateGroupAsync(string appName, string groupName, SecGroupUpdates groupUpdates);
+
+        /// <summary>
+        ///   Recupera tutti gli utenti che hanno un determinato gruppo.
+        /// </summary>
+        /// <param name="appName"></param>
+        /// <param name="groupName"></param>
+        /// <returns></returns>
+        Task<IQueryable<SecUser>> GetUsersInGroupAsync(string appName, string groupName);
 
         #endregion Groups
 
@@ -285,6 +294,15 @@ namespace Finsa.Caravan.Common.Security
         ///   <paramref name="roleUpdates.Name"/> are null or empty.
         /// </exception>
         Task UpdateRoleAsync(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates);
+
+        /// <summary>
+        ///   Recupera tutti gli utenti che hanno un determinato ruolo (e gruppo).
+        /// </summary>
+        /// <param name="appName"></param>
+        /// <param name="groupName"></param>
+        /// <param name="roleName"></param>
+        /// <returns></returns>
+        Task<IQueryable<SecUser>> GetUsersInRoleAsync(string appName, string groupName, string roleName);
 
         #endregion Roles
 

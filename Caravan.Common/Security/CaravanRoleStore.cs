@@ -190,7 +190,10 @@ namespace Finsa.Caravan.Common.Security
         /// <returns>Tutti gli utenti che appartengono ad un determinato ruolo e gruppo.</returns>
         public async Task<IQueryable<SecUser>> FindUsersInRoleAsync(string identityRoleName)
         {
-            throw new NotImplementedException();
+            var tuple = SecRole.FromIdentityRoleName(identityRoleName);
+            return (tuple.Item2 == AllRolesPlaceholder)
+                ? await SecurityRepository.GetUsersInGroup(AppName, tuple.Item1)
+                : await SecurityRepository.GetUsersInRole(AppName, tuple.Item1, tuple.Item2);
         }
 
         /// <summary>
@@ -206,7 +209,9 @@ namespace Finsa.Caravan.Common.Security
         /// <returns>Tutti gli utenti che appartengono ad un determinato ruolo e gruppo.</returns>
         public async Task<IQueryable<SecUser>> FindUsersInRoleAsync(string groupName, string roleName)
         {
-            throw new NotImplementedException();
+            return (roleName == AllRolesPlaceholder)
+                ? await SecurityRepository.GetUsersInGroup(AppName, groupName)
+                : await SecurityRepository.GetUsersInRole(AppName, groupName, roleName);
         }
 
         #endregion
