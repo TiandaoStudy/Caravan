@@ -79,7 +79,7 @@ namespace Finsa.Caravan.WebApi.Filters
             }
             catch (Exception ex)
             {
-
+                LoadAuthorizationErrorHandler().HandleError(actionContext, AuthorizationErrorContext.MissingAccessToken, ex);
             }            
         }
 

@@ -10,8 +10,11 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Common.Logging;
 using Finsa.Caravan.WebApi.Identity.Models;
+using Ninject;
 using PommaLabs.Thrower;
+using System;
 using System.Net;
 using System.Web.Http.Controllers;
 
@@ -23,6 +26,12 @@ namespace Finsa.Caravan.WebApi.Identity
     public sealed class SimpleAuthorizationErrorHandler : IAuthorizationErrorHandler
     {
         /// <summary>
+        ///   Istanza del log per questo filtro.
+        /// </summary>
+        [Inject]
+        public ILog Log { get; set; }
+
+        /// <summary>
         ///   Gestisce un errore avvenuto durante la validazione dell'accesso.
         /// </summary>
         /// <param name="actionContext">L'azione per cui si stava validando l'accesso.</param>
@@ -32,7 +41,29 @@ namespace Finsa.Caravan.WebApi.Identity
             var controllerName = actionContext.ActionDescriptor.ControllerDescriptor.ControllerName;
             var actionName = actionContext.ActionDescriptor.ActionName;
             var errorMessage = $"Access denied to {controllerName}.{actionName}. Reason: {errorContext}";
+            Log.Error(errorMessage);
             throw new HttpException(HttpStatusCode.Unauthorized, errorMessage, new HttpExceptionInfo
+            {
+                UserMessage = errorMessage,
+                ErrorCode = CaravanErrorCodes.CVE00000
+            });
+        }
+
+        /// <summary>
+        ///   Gestisce un errore avvenuto durante la validazione dell'accesso. Questa variante deve
+        ///   gestire anche una eventuale eccezione.
+        /// </summary>
+        /// <param name="actionContext">L'azione per cui si stava validando l'accesso.</param>
+        /// <param name="errorContext">Il tipo di errore riscontrato.</param>
+        /// <param name="exception">L'eccezione che è stata lanciata.</param>
+        public void HandleError(HttpActionContext actionContext, AuthorizationErrorContext errorContext, Exception exception)
+        {
+            var controllerName = actionContext.ActionDescriptor.ControllerDescriptor.ControllerName;
+            var actionName = actionContext.ActionDescriptor.ActionName;
+            exception = exception.GetBaseException();
+            var errorMessage = $"Access denied to {controllerName}.{actionName}. Reason: {errorContext}. Exception: {exception.Message}";
+            Log.Error(errorMessage, exception);
+            throw new HttpException(HttpStatusCode.Unauthorized, errorMessage, exception, new HttpExceptionInfo
             {
                 UserMessage = errorMessage,
                 ErrorCode = CaravanErrorCodes.CVE00000

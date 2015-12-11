@@ -11,6 +11,7 @@
 // the License.
 
 using Finsa.Caravan.WebApi.Identity.Models;
+using System;
 using System.Web.Http.Controllers;
 
 namespace Finsa.Caravan.WebApi.Identity
@@ -26,5 +27,14 @@ namespace Finsa.Caravan.WebApi.Identity
         /// <param name="actionContext">L'azione per cui si stava validando l'accesso.</param>
         /// <param name="errorContext">Il tipo di errore riscontrato.</param>
         void HandleError(HttpActionContext actionContext, AuthorizationErrorContext errorContext);
+
+        /// <summary>
+        ///   Gestisce un errore avvenuto durante la validazione dell'accesso. Questa variante deve
+        ///   gestire anche una eventuale eccezione.
+        /// </summary>
+        /// <param name="actionContext">L'azione per cui si stava validando l'accesso.</param>
+        /// <param name="errorContext">Il tipo di errore riscontrato.</param>
+        /// <param name="exception">L'eccezione che è stata lanciata.</param>
+        void HandleError(HttpActionContext actionContext, AuthorizationErrorContext errorContext, Exception exception);
     }
 }
