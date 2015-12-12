@@ -248,6 +248,7 @@
     <Compile Include="Rest\Models\RestResponse.cs" />
     <Compile Include="Sql\Attributes\DateTimeOffsetAttribute.cs" />
     <Compile Include="Sql\Attributes\DateTimeKindAttribute.cs" />
+    <Compile Include="Sql\CaravanSqlDataAccessNinjectConfig.cs" />
     <Compile Include="Sql\Identity\Entities\SqlIdnScopeSecret.cs" />
     <Compile Include="Sql\Identity\Extensions\EntitiesMap.cs" />
     <Compile Include="Sql\Identity\Extensions\ModelsMap.cs" />
@@ -276,6 +277,7 @@
     <Compile Include="Sql\Identity\Stores\SqlIdnTokenHandleStore.cs" />
     <Compile Include="Sql\Entities\SqlTrackedEntity.cs" />
     <Compile Include="Sql\Logging\SqlDbCommandLogger.cs" />
+    <Compile Include="Sql\Oracle\CaravanOracleDataAccessNinjectConfig.cs" />
     <Compile Include="Sql\Security\Entities\SqlSecClaim.cs" />
     <Compile Include="Sql\Security\Entities\SqlSecRole.cs" />
     <Compile Include="Core\AbstractDataSourceManager.cs" />

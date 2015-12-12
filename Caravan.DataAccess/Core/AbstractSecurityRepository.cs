@@ -20,6 +20,7 @@ using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
@@ -258,8 +259,200 @@ namespace Finsa.Caravan.DataAccess.Core
                 // Lascio emergere l'eccezione...
             }
         }
+        
+        public async Task<IQueryable<SecUser>> GetUsersInGroupAsync(string appName, string groupName)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion Groups
+
+        #region Roles
+
+        public async Task<SecRole[]> GetRolesAsync(string appName)
+        {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+
+            appName = appName.ToLowerInvariant();
+            var logCtx = $"Retrieving all roles from application '{appName}'";
+
+            try
+            {
+                return await GetRolesAsyncInternal(appName, null, null, null);
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(SecRole[]);
+            }
+        }
+
+        public async Task<SecRole[]> GetRolesAsync(string appName, string groupName)
+        {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+
+            appName = appName.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
+            var logCtx = $"Retrieving all roles of group '{groupName}' from application '{appName}'";
+
+            try
+            {
+                return await GetRolesAsyncInternal(appName, groupName, null, null);
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(SecRole[]);
+            }
+        }
+
+        public async Task<SecRole> GetRoleByIdAsync(string appName, int roleId)
+        {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+
+            appName = appName.ToLowerInvariant();
+            var logCtx = $"Retrieving role #{roleId} from application '{appName}'";
+
+            try
+            {
+                var roles = await GetRolesAsyncInternal(appName, null, null, roleId);
+                if (roles.Length == 0)
+                {
+                    throw new SecRoleNotFoundException(appName, roleId);
+                }
+                return roles[0];
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(SecRole);
+            }
+        }
+
+        public async Task<SecRole> GetRoleByNameAsync(string appName, string groupName, string roleName)
+        {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+
+            appName = appName.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
+            roleName = roleName.ToLowerInvariant();
+            var logCtx = $"Retrieving role '{roleName}' of group '{groupName}' from application '{appName}'";
+
+            try
+            {
+                var roles = await GetRolesAsyncInternal(appName, groupName, roleName, null);
+                if (roles.Length == 0)
+                {
+                    throw new SecRoleNotFoundException(appName, groupName, roleName);
+                }
+                return roles[0];
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(SecRole);
+            }
+        }
+
+        public async Task<int> AddRoleAsync(string appName, string groupName, SecRole newRole)
+        {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+            RaiseArgumentNullException.IfIsNull(newRole, nameof(newRole), ErrorMessages.NullRole);
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(newRole.Name), ErrorMessages.NullOrWhiteSpaceRoleName, nameof(newRole.Name));
+
+            appName = appName.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
+            newRole.Name = newRole.Name.ToLowerInvariant();
+            var logCtx = $"Adding new role '{newRole.Name}' to group '{groupName}' of application '{appName}'";
+
+            try
+            {
+                await AddRoleAsyncInternal(appName, groupName, newRole);
+                Log.Warn(new LogMessage
+                {
+                    ShortMessage = $"Added new role '{newRole.Name}' to group '{groupName}' of application '{appName}'",
+                    Context = logCtx
+                });
+                return newRole.Id;
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(int);
+            }
+        }
+
+        public async Task RemoveRoleAsync(string appName, string groupName, string roleName)
+        {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(roleName), ErrorMessages.NullOrWhiteSpaceRoleName, nameof(roleName));
+
+            appName = appName.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
+            roleName = roleName.ToLowerInvariant();
+            var logCtx = $"Removing role '{roleName}' from group '{groupName}' of application '{appName}'";
+
+            try
+            {
+                await RemoveRoleAsyncInternal(appName, groupName, roleName);
+                Log.Warn(new LogMessage
+                {
+                    ShortMessage = $"Removed role '{roleName}' from group '{groupName}' of application '{appName}'",
+                    Context = logCtx
+                });
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+            }
+        }
+
+        public async Task UpdateRoleAsync(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates)
+        {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(roleName), ErrorMessages.NullOrWhiteSpaceRoleName, nameof(roleName));
+            RaiseArgumentNullException.IfIsNull(roleUpdates, nameof(roleUpdates), ErrorMessages.NullRole);
+            RaiseArgumentException.If(roleUpdates.Name.HasValue && string.IsNullOrWhiteSpace(roleUpdates.Name.Value), ErrorMessages.NullOrWhiteSpaceRoleName);
+
+            appName = appName.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
+            roleName = roleName.ToLowerInvariant();
+            var logCtx = $"Updating role '{roleName}' in group '{groupName}' of application '{appName}'";
+
+            try
+            {
+                roleUpdates.Name.Do(x => roleUpdates.Name = x.ToLowerInvariant());
+                await UpdateRoleAsyncInternal(appName, groupName, roleName, roleUpdates);
+                Log.Warn(new LogMessage
+                {
+                    ShortMessage = $"Updated role '{roleName}' in group '{groupName}' of application '{appName}'",
+                    Context = logCtx
+                });
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+            }
+        }
+
+        public async Task<IQueryable<SecUser>> GetUsersInRoleAsync(string appName, string groupName, string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
 
         #region Users
 
@@ -554,188 +747,6 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #endregion Users
 
-        #region Roles
-
-        public async Task<SecRole[]> GetRolesAsync(string appName)
-        {
-            // Preconditions
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
-
-            appName = appName.ToLowerInvariant();
-            var logCtx = $"Retrieving all roles from application '{appName}'";
-
-            try
-            {
-                return await GetRolesAsyncInternal(appName, null, null, null);
-            }
-            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
-            {
-                // Lascio emergere l'eccezione...
-                return default(SecRole[]);
-            }
-        }
-
-        public async Task<SecRole[]> GetRolesAsync(string appName, string groupName)
-        {
-            // Preconditions
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
-
-            appName = appName.ToLowerInvariant();
-            groupName = groupName.ToLowerInvariant();
-            var logCtx = $"Retrieving all roles of group '{groupName}' from application '{appName}'";
-
-            try
-            {
-                return await GetRolesAsyncInternal(appName, groupName, null, null);
-            }
-            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
-            {
-                // Lascio emergere l'eccezione...
-                return default(SecRole[]);
-            }
-        }
-
-        public async Task<SecRole> GetRoleByIdAsync(string appName, int roleId)
-        {
-            // Preconditions
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
-
-            appName = appName.ToLowerInvariant();
-            var logCtx = $"Retrieving role #{roleId} from application '{appName}'";
-
-            try
-            {
-                var roles = await GetRolesAsyncInternal(appName, null, null, roleId);
-                if (roles.Length == 0)
-                {
-                    throw new SecRoleNotFoundException(appName, roleId);
-                }
-                return roles[0];
-            }
-            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
-            {
-                // Lascio emergere l'eccezione...
-                return default(SecRole);
-            }
-        }
-
-        public async Task<SecRole> GetRoleByNameAsync(string appName, string groupName, string roleName)
-        {
-            // Preconditions
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
-
-            appName = appName.ToLowerInvariant();
-            groupName = groupName.ToLowerInvariant();
-            roleName = roleName.ToLowerInvariant();
-            var logCtx = $"Retrieving role '{roleName}' of group '{groupName}' from application '{appName}'";
-
-            try
-            {
-                var roles = await GetRolesAsyncInternal(appName, groupName, roleName, null);
-                if (roles.Length == 0)
-                {
-                    throw new SecRoleNotFoundException(appName, groupName, roleName);
-                }
-                return roles[0];
-            }
-            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
-            {
-                // Lascio emergere l'eccezione...
-                return default(SecRole);
-            }
-        }
-
-        public async Task<int> AddRoleAsync(string appName, string groupName, SecRole newRole)
-        {
-            // Preconditions
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
-            RaiseArgumentNullException.IfIsNull(newRole, nameof(newRole), ErrorMessages.NullRole);
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(newRole.Name), ErrorMessages.NullOrWhiteSpaceRoleName, nameof(newRole.Name));
-
-            appName = appName.ToLowerInvariant();
-            groupName = groupName.ToLowerInvariant();
-            newRole.Name = newRole.Name.ToLowerInvariant();
-            var logCtx = $"Adding new role '{newRole.Name}' to group '{groupName}' of application '{appName}'";
-
-            try
-            {
-                await AddRoleAsyncInternal(appName, groupName, newRole);
-                Log.Warn(new LogMessage
-                {
-                    ShortMessage = $"Added new role '{newRole.Name}' to group '{groupName}' of application '{appName}'",
-                    Context = logCtx
-                });
-                return newRole.Id;
-            }
-            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
-            {
-                // Lascio emergere l'eccezione...
-                return default(int);
-            }
-        }
-
-        public async Task RemoveRoleAsync(string appName, string groupName, string roleName)
-        {
-            // Preconditions
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(roleName), ErrorMessages.NullOrWhiteSpaceRoleName, nameof(roleName));
-
-            appName = appName.ToLowerInvariant();
-            groupName = groupName.ToLowerInvariant();
-            roleName = roleName.ToLowerInvariant();
-            var logCtx = $"Removing role '{roleName}' from group '{groupName}' of application '{appName}'";
-
-            try
-            {
-                await RemoveRoleAsyncInternal(appName, groupName, roleName);
-                Log.Warn(new LogMessage
-                {
-                    ShortMessage = $"Removed role '{roleName}' from group '{groupName}' of application '{appName}'",
-                    Context = logCtx
-                });
-            }
-            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
-            {
-                // Lascio emergere l'eccezione...
-            }
-        }
-
-        public async Task UpdateRoleAsync(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates)
-        {
-            // Preconditions
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(roleName), ErrorMessages.NullOrWhiteSpaceRoleName, nameof(roleName));
-            RaiseArgumentNullException.IfIsNull(roleUpdates, nameof(roleUpdates), ErrorMessages.NullRole);
-            RaiseArgumentException.If(roleUpdates.Name.HasValue && string.IsNullOrWhiteSpace(roleUpdates.Name.Value), ErrorMessages.NullOrWhiteSpaceRoleName);
-
-            appName = appName.ToLowerInvariant();
-            groupName = groupName.ToLowerInvariant();
-            roleName = roleName.ToLowerInvariant();
-            var logCtx = $"Updating role '{roleName}' in group '{groupName}' of application '{appName}'";
-
-            try
-            {
-                roleUpdates.Name.Do(x => roleUpdates.Name = x.ToLowerInvariant());
-                await UpdateRoleAsyncInternal(appName, groupName, roleName, roleUpdates);
-                Log.Warn(new LogMessage
-                {
-                    ShortMessage = $"Updated role '{roleName}' in group '{groupName}' of application '{appName}'",
-                    Context = logCtx
-                });
-            }
-            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
-            {
-                // Lascio emergere l'eccezione...
-            }
-        }
-
-        #endregion
-
         #region Contexts
 
         public Task<SecContext[]> GetContextsAsync(string appName)
@@ -906,6 +917,8 @@ namespace Finsa.Caravan.DataAccess.Core
 
         protected abstract Task UpdateGroupAsyncInternal(string appName, string groupName, SecGroupUpdates groupUpdates);
 
+        protected abstract Task<IQueryable<SecUser>> GetUsersInGroupAsyncInternal(string appName, string groupName);
+
         protected abstract Task<SecUser[]> GetUsersAsyncInternal(string appName, long? userId, string userLogin, string userEmail);
 
         protected abstract Task<IQueryable<SecUser>> QueryUsersAsyncInternal(string appName);
@@ -931,6 +944,8 @@ namespace Finsa.Caravan.DataAccess.Core
         protected abstract Task RemoveRoleAsyncInternal(string appName, string groupName, string roleName);
 
         protected abstract Task UpdateRoleAsyncInternal(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates);
+
+        protected abstract Task<IQueryable<SecUser>> GetUsersInRoleAsyncInternal(string appName, string groupName, string roleName);
 
         protected abstract Task<SecContext[]> GetContextsAsyncInternal(string appName);
 

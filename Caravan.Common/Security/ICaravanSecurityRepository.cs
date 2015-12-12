@@ -13,7 +13,7 @@
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Finsa.Caravan.Common.Security

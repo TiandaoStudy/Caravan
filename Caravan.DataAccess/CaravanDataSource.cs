@@ -1,4 +1,6 @@
-﻿using Finsa.Caravan.Common;
+﻿
+
+using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.DataAccess.Mongo;
@@ -45,8 +47,6 @@ namespace Finsa.Caravan.DataAccess
         #region Public Properties - Instances
 
         public static CaravanDataSourceKind DataSourceKind { get; set; }
-
-        public static ICaravanDataSourceManager Manager { get; private set; }
 
         public static ICaravanLogRepository Logger { get; private set; }
 

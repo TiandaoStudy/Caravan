@@ -14,7 +14,15 @@ using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.DataAccess.Mongo;
+using Finsa.Caravan.DataAccess.Rest;
+using Finsa.Caravan.DataAccess.Sql.FakeSql;
 using Finsa.Caravan.DataAccess.Sql.Identity;
+using Finsa.Caravan.DataAccess.Sql.MySql;
+using Finsa.Caravan.DataAccess.Sql.Oracle;
+using Finsa.Caravan.DataAccess.Sql.PostgreSql;
+using Finsa.Caravan.DataAccess.Sql.SqlServer;
+using Finsa.Caravan.DataAccess.Sql.SqlServerCe;
 using IdentityServer3.Core.Configuration;
 using Ninject.Modules;
 using PommaLabs.Thrower;
@@ -25,11 +33,8 @@ namespace Finsa.Caravan.DataAccess
     /// <summary>
     ///   Dipendenze di Caravan.DataAccess.
     /// </summary>
-    public sealed class CaravanDataAccessNinjectConfig : NinjectModule
+    public abstract class CaravanDataAccessNinjectConfig : NinjectModule
     {
-        readonly DependencyHandling _dependencyHandling;
-        readonly CaravanDataSourceKind _dataSourceKind;
-
         /// <summary>
         ///   Inizializza il modulo.
         /// </summary>
@@ -37,13 +42,23 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="dataSourceKind">
         ///   Il tipo della sorgente dati che verrà usato dalla componente di accesso ai dati.
         /// </param>
-        public CaravanDataAccessNinjectConfig(DependencyHandling dependencyHandling, CaravanDataSourceKind dataSourceKind)
+        protected CaravanDataAccessNinjectConfig(DependencyHandling dependencyHandling, CaravanDataSourceKind dataSourceKind)
         {
             RaiseArgumentException.IfNot(Enum.IsDefined(typeof(DependencyHandling), dependencyHandling), ErrorMessages.InvalidEnumValue, nameof(dependencyHandling));
             RaiseArgumentException.IfNot(Enum.IsDefined(typeof(CaravanDataSourceKind), dataSourceKind), ErrorMessages.InvalidEnumValue, nameof(dataSourceKind));
-            _dependencyHandling = dependencyHandling;
-            _dataSourceKind = dataSourceKind;
+            DependencyHandling = dependencyHandling;
+            DataSourceKind = dataSourceKind;
         }
+
+        /// <summary>
+        ///   La modalità di gestione delle dipendenze.
+        /// </summary>
+        protected DependencyHandling DependencyHandling { get; }
+
+        /// <summary>
+        ///   La tipologia di accesso alla sorgente dati di Caravan.
+        /// </summary>
+        protected CaravanDataSourceKind DataSourceKind { get; }
 
         /// <summary>
         ///   Configura i servizi di Caravan.DataAccess. In questo momento esse sono:
@@ -53,7 +68,7 @@ namespace Finsa.Caravan.DataAccess
         /// </summary>
         public override void Load()
         {
-            switch (_dependencyHandling)
+            switch (DependencyHandling)
             {
                 case DependencyHandling.Default:
                 case DependencyHandling.DevelopmentEnvironment:
@@ -74,8 +89,47 @@ namespace Finsa.Caravan.DataAccess
 
         private void LoadDependingOnDataSourceKind()
         {
+            // Gestione dell'accesso ai dati - parte 1.
+            switch (DataSourceKind)
+            {
+                case CaravanDataSourceKind.FakeSql:
+                    Bind<ICaravanDataSourceManager>().To<FakeSqlDataSourceManager>();
+                    break;
+
+                case CaravanDataSourceKind.MongoDb:
+                    Bind<ICaravanDataSourceManager>().To<MongoDataSourceManager>();
+                    Logger = CaravanServiceProvider.NinjectKernel.Get<MongoLogRepository>();
+                    Security = CaravanServiceProvider.NinjectKernel.Get<MongoSecurityRepository>();
+                    break;
+
+                case CaravanDataSourceKind.MySql:
+                    Manager = new MySqlDataSourceManager();
+                    break;
+
+                case CaravanDataSourceKind.Oracle:
+                    Manager = new OracleDataSourceManager();
+                    break;
+
+                case CaravanDataSourceKind.PostgreSql:
+                    Manager = new PostgreSqlDataSourceManager();
+                    break;
+
+                case CaravanDataSourceKind.Rest:
+                    Logger = CaravanServiceProvider.NinjectKernel.Get<RestLogRepository>();
+                    Security = CaravanServiceProvider.NinjectKernel.Get<RestSecurityRepository>();
+                    break;
+
+                case CaravanDataSourceKind.SqlServer:
+                    Manager = new SqlServerDataSourceManager();
+                    break;
+
+                case CaravanDataSourceKind.SqlServerCe:
+                    Manager = new SqlServerCeDataSourceManager();
+                    break;
+            }
+
             // Gestione dell'autenticazione e dell'autorizzazione.
-            switch (_dataSourceKind)
+            switch (DataSourceKind)
             {
                 case CaravanDataSourceKind.Oracle:
                 case CaravanDataSourceKind.MySql:

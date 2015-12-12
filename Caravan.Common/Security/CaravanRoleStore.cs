@@ -192,8 +192,8 @@ namespace Finsa.Caravan.Common.Security
         {
             var tuple = SecRole.FromIdentityRoleName(identityRoleName);
             return (tuple.Item2 == AllRolesPlaceholder)
-                ? await SecurityRepository.GetUsersInGroup(AppName, tuple.Item1)
-                : await SecurityRepository.GetUsersInRole(AppName, tuple.Item1, tuple.Item2);
+                ? await SecurityRepository.GetUsersInGroupAsync(AppName, tuple.Item1)
+                : await SecurityRepository.GetUsersInRoleAsync(AppName, tuple.Item1, tuple.Item2);
         }
 
         /// <summary>
@@ -210,8 +210,8 @@ namespace Finsa.Caravan.Common.Security
         public async Task<IQueryable<SecUser>> FindUsersInRoleAsync(string groupName, string roleName)
         {
             return (roleName == AllRolesPlaceholder)
-                ? await SecurityRepository.GetUsersInGroup(AppName, groupName)
-                : await SecurityRepository.GetUsersInRole(AppName, groupName, roleName);
+                ? await SecurityRepository.GetUsersInGroupAsync(AppName, groupName)
+                : await SecurityRepository.GetUsersInRoleAsync(AppName, groupName, roleName);
         }
 
         #endregion

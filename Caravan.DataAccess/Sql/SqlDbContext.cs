@@ -44,8 +44,8 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
         }
 
-        public SqlDbContext()
-            : base(GetConnection(), true)
+        public SqlDbContext(ICaravanDataSourceManager dataSourceManager)
+            : base(GetConnection(dataSourceManager), true)
         {
             // Disabilito SEMPRE il lazy loading, è troppo pericoloso!
             Configuration.LazyLoadingEnabled = false;
@@ -72,14 +72,14 @@ namespace Finsa.Caravan.DataAccess.Sql
             return ctx;
         }
 
-        private static DbConnection GetConnection()
+        private static DbConnection GetConnection(ICaravanDataSourceManager dataSourceManager)
         {
-            if (CaravanDataSource.Manager.DataSourceKind == CaravanDataSourceKind.FakeSql)
+            if (dataSourceManager.DataSourceKind == CaravanDataSourceKind.FakeSql)
             {
                 // Needed, otherwise Unit Tests fail.
-                return CaravanDataSource.Manager.OpenConnection();
+                return dataSourceManager.OpenConnection();
             }
-            return CaravanDataSource.Manager.CreateConnection();
+            return dataSourceManager.CreateConnection();
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             (CaravanDataSource.Manager as FakeSqlDataSourceManager).ResetConnection();
 
             // The database is recreated, since it is in-memory and probably it does not exist.
-            using (var ctx = SqlDbContext.CreateUpdateContext())
+            using (var ctx = CreateUpdateContext())
             {
                 ctx.Database.CreateIfNotExists();
                 Database.SetInitializer(new DropCreateDatabaseAlways<SqlDbContext>());
