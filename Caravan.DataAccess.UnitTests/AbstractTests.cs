@@ -33,6 +33,8 @@ namespace Finsa.Caravan.DataAccess.UnitTests
 
         static AbstractTests()
         {
+            Effort.Provider.EffortProviderConfiguration.RegisterProvider();
+
             CaravanServiceProvider.NinjectKernel = new StandardKernel(
                 new CaravanCommonNinjectConfig(DependencyHandling.UnitTesting, "caravan"),
                 new CaravanEffortDataAccessNinjectConfig(DependencyHandling.UnitTesting)
