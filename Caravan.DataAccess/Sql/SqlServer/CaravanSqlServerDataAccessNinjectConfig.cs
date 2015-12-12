@@ -12,27 +12,27 @@
 
 using Finsa.Caravan.Common;
 
-namespace Finsa.Caravan.DataAccess.Sql.Oracle
+namespace Finsa.Caravan.DataAccess.Sql.SqlServer
 {
     /// <summary>
-    ///   Dipendenze necessarie per il driver Oracle.
+    ///   Dipendenze necessarie per il driver SqlServer.
     /// </summary>
-    public sealed class CaravanOracleDataAccessNinjectConfig : CaravanSqlDataAccessNinjectConfig
+    public sealed class CaravanSqlServerDataAccessNinjectConfig : CaravanSqlDataAccessNinjectConfig
     {
         /// <summary>
         ///   Inizializza il modulo.
         /// </summary>
         /// <param name="dependencyHandling">Modalità di gestione delle dipendenze.</param>
-        public CaravanOracleDataAccessNinjectConfig(DependencyHandling dependencyHandling)
-            : base(dependencyHandling, CaravanDataSourceKind.Oracle)
+        public CaravanSqlServerDataAccessNinjectConfig(DependencyHandling dependencyHandling)
+            : base(dependencyHandling, CaravanDataSourceKind.SqlServer)
         {
         }
 
         /// <summary>
-        ///   Configura i servizi di Caravan.DataAccess per l'accesso a Oracle. In questo momento
+        ///   Configura i servizi di Caravan.DataAccess per l'accesso a SqlServer. In questo momento
         ///   essi sono configurati nel seguente modo:
         /// 
-        ///   * <see cref="ICaravanDataSourceManager"/> via <see cref="OracleDataSourceManager"/>.
+        ///   * <see cref="ICaravanDataSourceManager"/> via <see cref="SqlServerDataSourceManager"/>.
         /// </summary>
         public override void Load()
         {
@@ -42,7 +42,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
                 case DependencyHandling.DevelopmentEnvironment:
                 case DependencyHandling.TestEnvironment:
                 case DependencyHandling.ProductionEnvironment:
-                    Bind<ICaravanDataSourceManager>().To<OracleDataSourceManager>().InSingletonScope();
+                    Bind<ICaravanDataSourceManager>().To<SqlServerDataSourceManager>().InSingletonScope();
                     break;
 
                 case DependencyHandling.UnitTesting:

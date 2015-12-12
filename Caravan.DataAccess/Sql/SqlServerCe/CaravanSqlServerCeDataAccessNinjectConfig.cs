@@ -12,27 +12,27 @@
 
 using Finsa.Caravan.Common;
 
-namespace Finsa.Caravan.DataAccess.Sql.Oracle
+namespace Finsa.Caravan.DataAccess.Sql.SqlServerCe
 {
     /// <summary>
-    ///   Dipendenze necessarie per il driver Oracle.
+    ///   Dipendenze necessarie per il driver SqlServerCe.
     /// </summary>
-    public sealed class CaravanOracleDataAccessNinjectConfig : CaravanSqlDataAccessNinjectConfig
+    public sealed class CaravanSqlServerCeDataAccessNinjectConfig : CaravanSqlDataAccessNinjectConfig
     {
         /// <summary>
         ///   Inizializza il modulo.
         /// </summary>
         /// <param name="dependencyHandling">Modalità di gestione delle dipendenze.</param>
-        public CaravanOracleDataAccessNinjectConfig(DependencyHandling dependencyHandling)
-            : base(dependencyHandling, CaravanDataSourceKind.Oracle)
+        public CaravanSqlServerCeDataAccessNinjectConfig(DependencyHandling dependencyHandling)
+            : base(dependencyHandling, CaravanDataSourceKind.SqlServerCe)
         {
         }
 
         /// <summary>
-        ///   Configura i servizi di Caravan.DataAccess per l'accesso a Oracle. In questo momento
+        ///   Configura i servizi di Caravan.DataAccess per l'accesso a SqlServerCe. In questo momento
         ///   essi sono configurati nel seguente modo:
         /// 
-        ///   * <see cref="ICaravanDataSourceManager"/> via <see cref="OracleDataSourceManager"/>.
+        ///   * <see cref="ICaravanDataSourceManager"/> via <see cref="SqlServerCeDataSourceManager"/>.
         /// </summary>
         public override void Load()
         {
@@ -42,7 +42,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
                 case DependencyHandling.DevelopmentEnvironment:
                 case DependencyHandling.TestEnvironment:
                 case DependencyHandling.ProductionEnvironment:
-                    Bind<ICaravanDataSourceManager>().To<OracleDataSourceManager>().InSingletonScope();
+                    Bind<ICaravanDataSourceManager>().To<SqlServerCeDataSourceManager>().InSingletonScope();
                     break;
 
                 case DependencyHandling.UnitTesting:

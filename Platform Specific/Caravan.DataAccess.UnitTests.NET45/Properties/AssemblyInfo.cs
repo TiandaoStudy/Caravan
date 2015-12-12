@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FLEX.Common.UnitTests")]
+[assembly: AssemblyTitle("Caravan.DataAccess.UnitTests.NET45")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("FLEX.Common.UnitTests")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2014")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Caravan.DataAccess.UnitTests.NET45")]
+[assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f2776ba0-dbee-4b35-b5ae-ca7f05d4a68d")]
+[assembly: Guid("afff7ae2-a871-45c0-99b3-94b6d0880f03")]
 
 // Version information for an assembly consists of the following four values:
 //

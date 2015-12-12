@@ -59,7 +59,7 @@ namespace Finsa.Caravan.DataAccess
         public CaravanDataAccessConfiguration()
         {
             ConnectionString = string.Empty;
-            DataSourceKind = CaravanDataSourceKind.FakeSql;
+            DataSourceKind = CaravanDataSourceKind.Effort;
 
             // SQL
             SqlSchema = "mydb";

@@ -1,7 +1,8 @@
-﻿using Finsa.Caravan.DataAccess.Sql.FakeSql;
+﻿using Finsa.Caravan.DataAccess.Sql.Effort;
 using Finsa.Caravan.DataAccess.Sql.Identity.Entities;
 using Finsa.Caravan.DataAccess.Sql.Logging.Entities;
 using Finsa.Caravan.DataAccess.Sql.Security.Entities;
+using PommaLabs.Thrower;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
@@ -64,7 +65,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         public static SqlDbContext CreateUpdateContext()
         {
-            var ctx = new SqlDbContext();
+            var ctx = new SqlDbContext(CaravanDataSource.Manager);
 
             // Provo a inizializzare il DB.
             ctx.Database.Initialize(false);
@@ -74,7 +75,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         private static DbConnection GetConnection(ICaravanDataSourceManager dataSourceManager)
         {
-            if (dataSourceManager.DataSourceKind == CaravanDataSourceKind.FakeSql)
+            if (dataSourceManager.DataSourceKind == CaravanDataSourceKind.Effort)
             {
                 // Needed, otherwise Unit Tests fail.
                 return dataSourceManager.OpenConnection();
@@ -87,8 +88,11 @@ namespace Finsa.Caravan.DataAccess.Sql
         /// </summary>
         public static void Reset()
         {
+            var dataSourceManager = CaravanDataSource.Manager as EffortDataSourceManager;
+            RaiseInvalidOperationException.If(dataSourceManager == null, "Only mock contexts can be reset");
+
             // A new connection is created and persisted for the whole test duration.
-            (CaravanDataSource.Manager as FakeSqlDataSourceManager).ResetConnection();
+            dataSourceManager.ResetConnection();
 
             // The database is recreated, since it is in-memory and probably it does not exist.
             using (var ctx = CreateUpdateContext())

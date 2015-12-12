@@ -1,12 +1,12 @@
-﻿using System.Diagnostics;
-using System.Linq;
-using Finsa.Caravan.DataAccess.Mongo.Models;
+﻿using Finsa.Caravan.DataAccess.Mongo.Models;
 using Finsa.Caravan.DataAccess.Mongo.Models.Logging;
 using Finsa.Caravan.DataAccess.Mongo.Models.Security;
-using Finsa.CodeServices.Serialization;
 using Finsa.CodeServices.Security.Hashing;
+using Finsa.CodeServices.Serialization;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Finsa.Caravan.DataAccess.Mongo
 {

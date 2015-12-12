@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Security.Models;
+using Finsa.Caravan.DataAccess;
+using Ninject;
+using PommaLabs.KVLite;
+using System;
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.Web;
-using Finsa.Caravan.Common;
-using Finsa.Caravan.DataAccess;
-using PommaLabs.KVLite;
-using Finsa.Caravan.Common.Security.Models;
-using Finsa.Caravan.Common.Logging;
 
 namespace Finsa.Caravan.WebForms
 {
@@ -17,7 +18,7 @@ namespace Finsa.Caravan.WebForms
         public static void Application_Start(object sender, EventArgs args, string connectionString)
         {
             // Sets the default connection string.
-            CaravanDataSource.Manager.ConnectionString = connectionString;
+            CaravanServiceProvider.NinjectKernel.Get<ICaravanDataSourceManager>().ConnectionString = connectionString;
 
             // After setting the connection string, we can use the logger.
             Log.Info("Application started");

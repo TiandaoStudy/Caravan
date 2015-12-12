@@ -166,6 +166,10 @@
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.3.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NMemory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
       <HintPath>..\packages\NMemory.1.1.2\lib\net45\NMemory.dll</HintPath>
       <Private>True</Private>
@@ -244,6 +248,8 @@
     <Compile Include="CaravanDataAccessNinjectConfig.cs" />
     <Compile Include="CaravanDataSourceKind.cs" />
     <Compile Include="Core\ErrorMessages.cs" />
+    <Compile Include="Mongo\CaravanMongoDataAccessNinjectConfig.cs" />
+    <Compile Include="Rest\CaravanMongoDataAccessNinjectConfig.cs" />
     <Compile Include="Rest\Models\RestRequest.cs" />
     <Compile Include="Rest\Models\RestResponse.cs" />
     <Compile Include="Sql\Attributes\DateTimeOffsetAttribute.cs" />
@@ -277,7 +283,9 @@
     <Compile Include="Sql\Identity\Stores\SqlIdnTokenHandleStore.cs" />
     <Compile Include="Sql\Entities\SqlTrackedEntity.cs" />
     <Compile Include="Sql\Logging\SqlDbCommandLogger.cs" />
+    <Compile Include="Sql\MySql\CaravanMySqlDataAccessNinjectConfig.cs" />
     <Compile Include="Sql\Oracle\CaravanOracleDataAccessNinjectConfig.cs" />
+    <Compile Include="Sql\PostgreSql\CaravanPostgreSqlDataAccessNinjectConfig.cs" />
     <Compile Include="Sql\Security\Entities\SqlSecClaim.cs" />
     <Compile Include="Sql\Security\Entities\SqlSecRole.cs" />
     <Compile Include="Core\AbstractDataSourceManager.cs" />
@@ -312,8 +320,10 @@
     <Compile Include="Sql\Oracle\OracleDataSourceManager.cs" />
     <Compile Include="Rest\RestLogRepository.cs" />
     <Compile Include="Rest\RestSecurityRepository.cs" />
+    <Compile Include="Sql\SqlServerCe\CaravanSqlServerCeDataAccessNinjectConfig.cs" />
     <Compile Include="Sql\SqlServerCe\SqlServerCeDataSourceManager.cs" />
     <Compile Include="Sql\SqlDbContext.cs" />
+    <Compile Include="Sql\SqlServer\CaravanSqlServerDataAccessNinjectConfig.cs" />
     <Compile Include="Sql\SqlServer\SqlServerDataSourceManager.cs" />
   </ItemGroup>
   <ItemGroup>

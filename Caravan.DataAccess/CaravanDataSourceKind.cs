@@ -25,6 +25,6 @@ namespace Finsa.Caravan.DataAccess
         SqlServerCe = 4,
         MongoDb = 5,
         MySql = 6,
-        FakeSql = 7
+        Effort = 7
     }
 }

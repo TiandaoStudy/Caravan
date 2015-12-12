@@ -1,13 +1,14 @@
-﻿using Finsa.Caravan.DataAccess.Core;
-using RestSharp;
-using System;
-using System.Net;
-using System.Threading.Tasks;
-using Finsa.Caravan.Common.Logging;
+﻿using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Exceptions;
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
+using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Rest.Models;
+using RestSharp;
+using System;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Rest
 {
@@ -47,17 +48,15 @@ namespace Finsa.Caravan.DataAccess.Rest
         //        var client = new RestClient("http://localhost/Caravan.RestService/security");
         //        var request = new RestRequest("{appName}", Method.POST);
 
-        //        request.AddUrlSegment("appName", appName);
-        //        request.AddJsonBody(new RestRequest<object> { Auth = "AA", Body = new object() });
+        // request.AddUrlSegment("appName", appName); request.AddJsonBody(new RestRequest<object> {
+        // Auth = "AA", Body = new object() });
 
-        //        var response = await client.ExecuteTaskAsync<Models.RestResponse<SecApp>>(request);
+        // var response = await client.ExecuteTaskAsync<Models.RestResponse<SecApp>>(request);
 
-        //        if (response.ErrorException != null)
-        //        {
-        //            if (response.ErrorMessage == SecAppNotFoundException.TheMessage)
-        //                throw new SecAppNotFoundException(response.ErrorMessage);//verificare messaggio di output
-        //            throw new Exception(response.ErrorMessage);
-        //        }
+        // if (response.ErrorException != null) { if (response.ErrorMessage ==
+        // SecAppNotFoundException.TheMessage) throw new
+        // SecAppNotFoundException(response.ErrorMessage);//verificare messaggio di output throw new
+        // Exception(response.ErrorMessage); }
 
         //        return response.Data.Body;
         //    }
@@ -78,10 +77,10 @@ namespace Finsa.Caravan.DataAccess.Rest
                 {
                     Auth = "AA",
                     Body = new SecApp
-                       {
-                           Description = app.Description,
-                           Name = app.Name,
-                       }
+                    {
+                        Description = app.Description,
+                        Name = app.Name,
+                    }
                 });
 
                 var response = await client.ExecuteTaskAsync<Models.RestResponse<SecApp>>(request);
@@ -150,10 +149,10 @@ namespace Finsa.Caravan.DataAccess.Rest
                 {
                     Auth = "AA",
                     Body = new SecGroup
-                       {
-                           Description = newGroup.Description,
-                           Name = newGroup.Name
-                       }
+                    {
+                        Description = newGroup.Description,
+                        Name = newGroup.Name
+                    }
                 });
 
                 var response = await client.ExecuteTaskAsync<Models.RestResponse<SecGroup>>(request);
@@ -289,13 +288,13 @@ namespace Finsa.Caravan.DataAccess.Rest
                 {
                     Auth = "AA",
                     Body = new SecUser
-                       {
-                           FirstName = newUser.FirstName,
-                           LastName = newUser.LastName,
-                           Email = newUser.Email,
-                           Login = newUser.Login,
-                           Active = newUser.Active
-                       }
+                    {
+                        FirstName = newUser.FirstName,
+                        LastName = newUser.LastName,
+                        Email = newUser.Email,
+                        Login = newUser.Login,
+                        Active = newUser.Active
+                    }
                 });
                 var response = await client.ExecuteTaskAsync<Models.RestResponse<SecUser>>(request);
 
@@ -659,6 +658,21 @@ namespace Finsa.Caravan.DataAccess.Rest
         }
 
         protected override Task UpdateRoleAsyncInternal(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task<IQueryable<SecUser>> GetUsersInGroupAsyncInternal(string appName, string groupName)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task<IQueryable<SecUser>> QueryUsersAsyncInternal(string appName)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task<IQueryable<SecUser>> GetUsersInRoleAsyncInternal(string appName, string groupName, string roleName)
         {
             throw new NotImplementedException();
         }

@@ -1,21 +1,18 @@
-﻿using System.Data.Common;
-using Finsa.Caravan.DataAccess.Core;
+﻿using Finsa.Caravan.DataAccess.Core;
+using System.Data.Common;
 
-namespace Finsa.Caravan.DataAccess.Sql.FakeSql
+namespace Finsa.Caravan.DataAccess.Sql.Effort
 {
-    internal sealed class FakeSqlDataSourceManager : AbstractDataSourceManager
+    internal sealed class EffortDataSourceManager : AbstractDataSourceManager
     {
         private DbConnection _connection;
 
-        public FakeSqlDataSourceManager()
+        public EffortDataSourceManager()
         {
             ResetConnection();
         }
 
-        public override CaravanDataSourceKind DataSourceKind
-        {
-            get { return CaravanDataSourceKind.FakeSql; }
-        }
+        public override CaravanDataSourceKind DataSourceKind { get; } = CaravanDataSourceKind.Effort;
 
         public override string ElaborateConnectionString(string connectionString)
         {
@@ -33,7 +30,7 @@ namespace Finsa.Caravan.DataAccess.Sql.FakeSql
         public void ResetConnection()
         {
             // Connection should be persisted, otherwise the DB may be lost.
-            _connection = Effort.DbConnectionFactory.CreatePersistent("caravan");
+            _connection = global::Effort.DbConnectionFactory.CreatePersistent("caravan");
         }
     }
 }

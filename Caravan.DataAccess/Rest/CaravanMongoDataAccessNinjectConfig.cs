@@ -11,17 +11,16 @@
 // the License.
 
 using Finsa.Caravan.Common;
-using Finsa.Caravan.DataAccess.Core;
-using Ninject.Modules;
-using PommaLabs.Thrower;
-using System;
+using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Security;
+using Ninject.Web.Common;
 
-namespace Finsa.Caravan.DataAccess
+namespace Finsa.Caravan.DataAccess.Rest
 {
     /// <summary>
-    ///   Dipendenze di Caravan.DataAccess.
+    ///   Dipendenze condivise da tutti i driver Rest.
     /// </summary>
-    public abstract class CaravanDataAccessNinjectConfig : NinjectModule
+    public abstract class CaravanRestDataAccessNinjectConfig : CaravanDataAccessNinjectConfig
     {
         /// <summary>
         ///   Inizializza il modulo.
@@ -30,43 +29,37 @@ namespace Finsa.Caravan.DataAccess
         /// <param name="dataSourceKind">
         ///   Il tipo della sorgente dati che verrà usato dalla componente di accesso ai dati.
         /// </param>
-        protected CaravanDataAccessNinjectConfig(DependencyHandling dependencyHandling, CaravanDataSourceKind dataSourceKind)
+        protected CaravanRestDataAccessNinjectConfig(DependencyHandling dependencyHandling, CaravanDataSourceKind dataSourceKind)
+            : base(dependencyHandling, dataSourceKind)
         {
-            RaiseArgumentException.IfNot(Enum.IsDefined(typeof(DependencyHandling), dependencyHandling), ErrorMessages.InvalidEnumValue, nameof(dependencyHandling));
-            RaiseArgumentException.IfNot(Enum.IsDefined(typeof(CaravanDataSourceKind), dataSourceKind), ErrorMessages.InvalidEnumValue, nameof(dataSourceKind));
-            DependencyHandling = dependencyHandling;
-            DataSourceKind = dataSourceKind;
         }
 
         /// <summary>
-        ///   La modalità di gestione delle dipendenze.
-        /// </summary>
-        protected DependencyHandling DependencyHandling { get; }
-
-        /// <summary>
-        ///   La tipologia di accesso alla sorgente dati di Caravan.
-        /// </summary>
-        protected CaravanDataSourceKind DataSourceKind { get; }
-
-        /// <summary>
-        ///   Configura i servizi di Caravan.DataAccess. In questo momento essi sono configurati nel
-        ///   seguente modo:
+        ///   Configura i servizi di Caravan.DataAccess per il driver Rest. In questo momento essi
+        ///   sono configurati nel seguente modo:
         /// 
-        ///   * Nulla, per ora.
+        ///   * <see cref="ICaravanLogRepository"/> via <see cref="RestLogRepository"/>.
+        ///   * <see cref="ICaravanSecurityRepository"/> via <see cref="RestSecurityRepository"/>.
         /// </summary>
         public override void Load()
         {
+            // Carica le dipendenze dei moduli precedenti.
+            base.Load();
+
             switch (DependencyHandling)
             {
                 case DependencyHandling.Default:
                 case DependencyHandling.DevelopmentEnvironment:
                 case DependencyHandling.TestEnvironment:
                 case DependencyHandling.ProductionEnvironment:
-                    // Nulla, per ora.
+                    // Gestione dei repository base di Caravan.
+                    Bind<ICaravanLogRepository>().To<RestLogRepository>().InRequestScope();
+                    Bind<ICaravanSecurityRepository>().To<RestSecurityRepository>().InRequestScope();
+
                     break;
 
                 case DependencyHandling.UnitTesting:
-                    // Nulla, per ora.
+                    // Valgono le dipendenze definite nel modulo base.
                     break;
             }
         }
