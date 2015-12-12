@@ -11,6 +11,8 @@
 // the License.
 
 using Finsa.Caravan.Common;
+using Finsa.Caravan.DataAccess.Core;
+using System;
 
 namespace Finsa.Caravan.DataAccess.Sql.SqlServer
 {
@@ -46,8 +48,7 @@ namespace Finsa.Caravan.DataAccess.Sql.SqlServer
                     break;
 
                 case DependencyHandling.UnitTesting:
-                    // Valgono le dipendenze definite nel modulo base.
-                    break;
+                    throw new InvalidOperationException(ErrorMessages.Drivers_DriverNotForUnitTesting);
             }
 
             // Carica le dipendenze dei moduli precedenti.

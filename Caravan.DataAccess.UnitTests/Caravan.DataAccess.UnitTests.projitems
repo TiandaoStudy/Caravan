@@ -9,5 +9,6 @@
     <Import_RootNamespace>Caravan.DataAccess.UnitTests</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AbstractTests.cs" />
   </ItemGroup>
 </Project>

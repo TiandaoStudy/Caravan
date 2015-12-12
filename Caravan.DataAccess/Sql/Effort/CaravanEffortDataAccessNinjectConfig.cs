@@ -11,6 +11,8 @@
 // the License.
 
 using Finsa.Caravan.Common;
+using Finsa.Caravan.DataAccess.Core;
+using System;
 
 namespace Finsa.Caravan.DataAccess.Sql.Effort
 {
@@ -42,11 +44,10 @@ namespace Finsa.Caravan.DataAccess.Sql.Effort
                 case DependencyHandling.DevelopmentEnvironment:
                 case DependencyHandling.TestEnvironment:
                 case DependencyHandling.ProductionEnvironment:
-                    Bind<ICaravanDataSourceManager>().To<EffortDataSourceManager>().InSingletonScope();
-                    break;
+                    throw new InvalidOperationException(ErrorMessages.Drivers_DriverNotForCommonUsage);
 
                 case DependencyHandling.UnitTesting:
-                    // Valgono le dipendenze definite nel modulo base.
+                    Bind<ICaravanDataSourceManager>().To<EffortDataSourceManager>().InSingletonScope();
                     break;
             }
 

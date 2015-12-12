@@ -255,6 +255,7 @@
     <Compile Include="Sql\Attributes\DateTimeOffsetAttribute.cs" />
     <Compile Include="Sql\Attributes\DateTimeKindAttribute.cs" />
     <Compile Include="Sql\CaravanSqlDataAccessNinjectConfig.cs" />
+    <Compile Include="Sql\Effort\CaravanEffortDataAccessNinjectConfig.cs" />
     <Compile Include="Sql\Identity\Entities\SqlIdnScopeSecret.cs" />
     <Compile Include="Sql\Identity\Extensions\EntitiesMap.cs" />
     <Compile Include="Sql\Identity\Extensions\ModelsMap.cs" />
@@ -300,7 +301,7 @@
     <Compile Include="Mongo\MongoLogRepository.cs" />
     <Compile Include="Mongo\MongoSecurityRepository.cs" />
     <Compile Include="Mongo\MongoUtilities.cs" />
-    <Compile Include="Sql\FakeSql\FakeSqlDataSourceManager.cs" />
+    <Compile Include="Sql\Effort\EffortDataSourceManager.cs" />
     <Compile Include="Sql\Logging\Entities\SqlLogEntry.cs" />
     <Compile Include="Sql\Logging\Entities\SqlLogSetting.cs" />
     <Compile Include="Sql\Security\Entities\SqlSecApp.cs" />

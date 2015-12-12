@@ -10,10 +10,12 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.Caravan.Common;
+using Finsa.Caravan.DataAccess.Sql.Effort;
 using Ninject;
 using NUnit.Framework;
 
-namespace Finsa.Caravan.Common.UnitTests
+namespace Finsa.Caravan.DataAccess.UnitTests
 {
     [TestFixture]
     abstract class AbstractTests
@@ -28,7 +30,8 @@ namespace Finsa.Caravan.Common.UnitTests
         static AbstractTests()
         {
             CaravanServiceProvider.NinjectKernel = new StandardKernel(
-                new CaravanCommonNinjectConfig(DependencyHandling.UnitTesting, "caravan")
+                new CaravanCommonNinjectConfig(DependencyHandling.UnitTesting, "caravan"),
+                new CaravanEffortDataAccessNinjectConfig(DependencyHandling.UnitTesting)
             );
         }
     }

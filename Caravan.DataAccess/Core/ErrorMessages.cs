@@ -32,5 +32,8 @@ namespace Finsa.Caravan.DataAccess.Core
         public const string NullOrWhiteSpaceClaimHash = "Caravan security claim hash cannot be null, empty or blank";
 
         public const string AbstractSecurityRepository_GroupNotFound = "Group has not been specified or it does not exist";
+
+        public const string Drivers_DriverNotForUnitTesting = "This driver cannot be used for unit testing. Please use Sql.Effort";
+        public const string Drivers_DriverNotForCommonUsage = "This driver should be used only for unit testing";
     }
 }
