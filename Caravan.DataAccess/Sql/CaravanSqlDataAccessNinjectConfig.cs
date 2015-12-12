@@ -46,6 +46,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         /// 
         ///   * <see cref="ICaravanLogRepository"/> via <see cref="SqlLogRepository"/>.
         ///   * <see cref="ICaravanSecurityRepository"/> via <see cref="SqlSecurityRepository"/>.
+        ///   * <see cref="IdentityServerServiceFactory"/> via <see cref="SqlIdentityServerServiceFactory"/>.
         /// </summary>
         public override void Load()
         {
@@ -58,16 +59,13 @@ namespace Finsa.Caravan.DataAccess.Sql
                 case DependencyHandling.DevelopmentEnvironment:
                 case DependencyHandling.TestEnvironment:
                 case DependencyHandling.ProductionEnvironment:
+                case DependencyHandling.UnitTesting:
                     // Gestione dei repository base di Caravan.
                     Bind<ICaravanLogRepository>().To<SqlLogRepository>().InRequestScope();
                     Bind<ICaravanSecurityRepository>().To<SqlSecurityRepository>().InRequestScope();
 
                     // Gestione dell'autenticazione e dell'autorizzazione.
                     Bind<IdentityServerServiceFactory>().To<SqlIdentityServerServiceFactory>().InSingletonScope();
-                    break;
-
-                case DependencyHandling.UnitTesting:
-                    // Valgono le dipendenze definite nel modulo base.
                     break;
             }
         }

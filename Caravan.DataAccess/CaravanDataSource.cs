@@ -13,6 +13,7 @@
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
+using Finsa.Caravan.DataAccess.Sql;
 using Ninject;
 
 namespace Finsa.Caravan.DataAccess
@@ -21,12 +22,17 @@ namespace Finsa.Caravan.DataAccess
     ///   Punto di accesso ai dati - logger, security, ecc ecc.
     /// </summary>
     /// <remarks>Mantenuta (momentaneamente) per retrocompatibilità interna a Caravan.</remarks>
-    internal static class CaravanDataSource
+    public static class CaravanDataSource
     {
-        public static ICaravanDataSourceManager Manager => CaravanServiceProvider.NinjectKernel.Get<ICaravanDataSourceManager>();
+        internal static ICaravanDataSourceManager Manager => CaravanServiceProvider.NinjectKernel.Get<ICaravanDataSourceManager>();
 
-        public static ICaravanLogRepository Logger => CaravanServiceProvider.NinjectKernel.Get<ICaravanLogRepository>();
+        internal static ICaravanLogRepository Logger => CaravanServiceProvider.NinjectKernel.Get<ICaravanLogRepository>();
 
-        public static ICaravanSecurityRepository Security => CaravanServiceProvider.NinjectKernel.Get<ICaravanSecurityRepository>();
+        internal static ICaravanSecurityRepository Security => CaravanServiceProvider.NinjectKernel.Get<ICaravanSecurityRepository>();
+
+        /// <summary>
+        ///   Usato negli unit test per resettare rapidamente la base dati di Caravan.
+        /// </summary>
+        public static void Reset() => SqlDbContext.Reset();
     }
 }

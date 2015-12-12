@@ -11,6 +11,7 @@
 // the License.
 
 using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.DataAccess.Sql.Effort;
 using Ninject;
 using NUnit.Framework;
@@ -18,14 +19,17 @@ using NUnit.Framework;
 namespace Finsa.Caravan.DataAccess.UnitTests
 {
     [TestFixture]
-    abstract class AbstractTests
+    internal abstract class AbstractTests
     {
         protected const string EmptyString = "";
         protected const string ShortString = "BOOM BABY";
         protected const string MediumString = "Reality continues to ruin my life.";
-        protected const string LongString = @"If a man does not keep pace with his companions, perhaps it is because 
-                                              he hears a different drummer. Let him step to the music which he hears, 
+
+        protected const string LongString = @"If a man does not keep pace with his companions, perhaps it is because
+                                              he hears a different drummer. Let him step to the music which he hears,
                                               however measured or far away.";
+
+        protected ICaravanSecurityRepository SecurityRepository;
 
         static AbstractTests()
         {
@@ -33,6 +37,16 @@ namespace Finsa.Caravan.DataAccess.UnitTests
                 new CaravanCommonNinjectConfig(DependencyHandling.UnitTesting, "caravan"),
                 new CaravanEffortDataAccessNinjectConfig(DependencyHandling.UnitTesting)
             );
+        }
+
+        [SetUp]
+        public virtual void SetUp()
+        {
+            // Pulizia della sorgente dati.
+            CaravanDataSource.Reset();
+
+            // Ricarico le dipendenze necessarie.
+            SecurityRepository = CaravanServiceProvider.NinjectKernel.Get<ICaravanSecurityRepository>();
         }
     }
 }
