@@ -92,6 +92,10 @@ namespace Finsa.Caravan.UnitTests.DataAccess.Security
             {
                 Name = TestGroupName1
             });
+            await SecurityRepository.AddRoleAsync(TestAppName, TestGroupName1, new SecRole
+            {
+                Name = TestRoleName1
+            });
             await SecurityRepository.AddUserAsync(TestAppName, new SecUser
             {
                 Login = TestUserLogin1
