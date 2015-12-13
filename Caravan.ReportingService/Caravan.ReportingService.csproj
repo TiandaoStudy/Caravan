@@ -258,7 +258,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Caravan.Common\Caravan.Common.NET45.csproj">
+    <ProjectReference Include="..\Platform Specific\Caravan.Common.NET45\Caravan.Common.NET45.csproj">
       <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>
       <Name>Caravan.Common.NET45</Name>
     </ProjectReference>

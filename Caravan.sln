@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Coding Standards", "Coding 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataAccess.Dapper", "Sample.DataAccess.Dapper\Sample.DataAccess.Dapper.csproj", "{9F1BAA6D-7E1E-43CC-94CE-0B0AF04C753F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Common.NET45", "Caravan.Common\Caravan.Common.NET45.csproj", "{11904ED0-33D2-4005-8766-B1E393A32EA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Common.NET45", "Platform Specific\Caravan.Common.NET45\Caravan.Common.NET45.csproj", "{11904ED0-33D2-4005-8766-B1E393A32EA7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{816548D1-F582-4AC1-B4F3-E3997F2B4C14}"
 EndProject
@@ -50,9 +50,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{349512
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess.NET45", "Caravan.DataAccess\Caravan.DataAccess.NET45.csproj", "{418B2D91-D53E-49BF-98FC-66DA9490DC37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess.NET45", "Platform Specific\Caravan.DataAccess.NET45\Caravan.DataAccess.NET45.csproj", "{418B2D91-D53E-49BF-98FC-66DA9490DC37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebApi.NET45", "Caravan.WebApi\Caravan.WebApi.NET45.csproj", "{27D82597-28B1-4441-8C42-0A220C38C4D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebApi.NET45", "Platform Specific\Caravan.WebApi.NET45\Caravan.WebApi.NET45.csproj", "{27D82597-28B1-4441-8C42-0A220C38C4D8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External Libraries", "External Libraries", "{EEB0F070-8283-4D00-8129-64D81E908DCE}"
 	ProjectSection(SolutionItems) = preProject
@@ -74,7 +74,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Common.Runtime.NuGe
 		{BBCDDB1C-8127-4623-B40B-5109DE5A63EF} = {BBCDDB1C-8127-4623-B40B-5109DE5A63EF}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Common.NuGet", "NuGet Packager (Common)\Caravan.Common.NuGet.csproj", "{BBCDDB1C-8127-4623-B40B-5109DE5A63EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Common.NuGet", "NuGet Packagers\Caravan.NuGet.Common\Caravan.Common.NuGet.csproj", "{BBCDDB1C-8127-4623-B40B-5109DE5A63EF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{11904ED0-33D2-4005-8766-B1E393A32EA7} = {11904ED0-33D2-4005-8766-B1E393A32EA7}
 	EndProjectSection
@@ -134,22 +134,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{969B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform Specific", "Platform Specific", "{BB09DBC9-9EBA-40DA-99AD-E04207609135}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess.SqlServer.NuGet", "NuGet Packagers\Caravan.DataAccess.SqlServer.NuGet\Caravan.DataAccess.SqlServer.NuGet.csproj", "{C4F15F53-0FF6-4512-8C6D-BBFE2148B228}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess.SqlServer.NuGet", "NuGet Packagers\Caravan.NuGet.DataAccess.SqlServer\Caravan.DataAccess.SqlServer.NuGet.csproj", "{C4F15F53-0FF6-4512-8C6D-BBFE2148B228}"
 	ProjectSection(ProjectDependencies) = postProject
 		{90139BED-46DA-455A-8C62-D59EFA4BFCCF} = {90139BED-46DA-455A-8C62-D59EFA4BFCCF}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebApi.Runtime.NuGet", "NuGet Packagers\Caravan.WebApi.Runtime.NuGet\Caravan.WebApi.Runtime.NuGet.csproj", "{27ECD842-1D24-455F-A239-5BC127CAC559}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebApi.Runtime.NuGet", "NuGet Packagers\Caravan.NuGet.WebApi.Runtime\Caravan.WebApi.Runtime.NuGet.csproj", "{27ECD842-1D24-455F-A239-5BC127CAC559}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EE783385-E6CC-4F01-BCCC-DAB9C6DBDE55} = {EE783385-E6CC-4F01-BCCC-DAB9C6DBDE55}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess.Effort.NuGet", "NuGet Packagers\Caravan.DataAccess.Effort.NuGet\Caravan.DataAccess.Effort.NuGet.csproj", "{D6409413-0B11-4CB1-ACBE-6B52ECA39F04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess.Effort.NuGet", "NuGet Packagers\Caravan.NuGet.DataAccess.Effort\Caravan.DataAccess.Effort.NuGet.csproj", "{D6409413-0B11-4CB1-ACBE-6B52ECA39F04}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BD471427-A76A-4764-94C1-08C8C3BC1379} = {BD471427-A76A-4764-94C1-08C8C3BC1379}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.UnitTests.NET45", "Platform Specific\Caravan.DataAccess.UnitTests.NET45\Caravan.UnitTests.NET45.csproj", "{AFFF7AE2-A871-45C0-99B3-94B6D0880F03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.UnitTests.NET45", "Platform Specific\Caravan.UnitTests.NET45\Caravan.UnitTests.NET45.csproj", "{AFFF7AE2-A871-45C0-99B3-94B6D0880F03}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Caravan.UnitTests", "Caravan.UnitTests\Caravan.UnitTests.shproj", "{BBEB8BC7-C59C-4C00-8168-91FB09144C5B}"
 EndProject
@@ -281,11 +281,14 @@ Global
 		{B3C22B2A-06D3-454F-BF86-0CCE7C744AE4} = {969B30CD-CABB-491A-BE03-BD794E1D308F}
 		{C79157DB-09C9-401F-B4BD-4D6A193790D0} = {BF4277FD-24C4-45AC-B871-98E1FEEDC623}
 		{9F1BAA6D-7E1E-43CC-94CE-0B0AF04C753F} = {969B30CD-CABB-491A-BE03-BD794E1D308F}
+		{11904ED0-33D2-4005-8766-B1E393A32EA7} = {BB09DBC9-9EBA-40DA-99AD-E04207609135}
 		{816548D1-F582-4AC1-B4F3-E3997F2B4C14} = {BF4277FD-24C4-45AC-B871-98E1FEEDC623}
 		{BA4644BC-0508-43EE-BF18-CA5725108E59} = {816548D1-F582-4AC1-B4F3-E3997F2B4C14}
 		{404C846A-E6C5-41ED-84E7-476EA90CF12C} = {816548D1-F582-4AC1-B4F3-E3997F2B4C14}
 		{2BAED882-BB9A-41E8-9DC6-07823A9BC60F} = {BF4277FD-24C4-45AC-B871-98E1FEEDC623}
 		{D2B116DB-FC08-49C0-B409-375C74CA3BA4} = {2BAED882-BB9A-41E8-9DC6-07823A9BC60F}
+		{418B2D91-D53E-49BF-98FC-66DA9490DC37} = {BB09DBC9-9EBA-40DA-99AD-E04207609135}
+		{27D82597-28B1-4441-8C42-0A220C38C4D8} = {BB09DBC9-9EBA-40DA-99AD-E04207609135}
 		{E396B46C-8975-4804-8C42-A44285FE8759} = {BF4277FD-24C4-45AC-B871-98E1FEEDC623}
 		{1CEF0D42-66BA-44E0-865E-50DC4905FB39} = {E396B46C-8975-4804-8C42-A44285FE8759}
 		{B41960F5-4A94-4AFA-8AF6-9B368787D846} = {DB5EDFEB-02C9-48BC-8984-3E3C86CC58CF}
