@@ -23,6 +23,11 @@ namespace Finsa.Caravan.DataAccess.Mongo
         {
         }
 
+        public override void Dispose()
+        {
+            // Nulla da fare, per ora...
+        }
+
         //protected override LogResult DoLogRaw(LogLevel logLevel, string appName, string userLogin, string codeUnit, string function, string shortMessage, string longMessage, string context, IList<KeyValuePair<string, string>> args)
         //{
         //    var app = MongoUtilities.GetSecAppCollection().AsQueryable().First(a => a.Name == appName);

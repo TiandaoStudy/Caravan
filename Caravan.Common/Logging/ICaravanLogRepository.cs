@@ -23,7 +23,7 @@ namespace Finsa.Caravan.Common.Logging
     /// <summary>
     ///   Handles logging and log settings.
     /// </summary>
-    public interface ICaravanLogRepository
+    public interface ICaravanLogRepository : IDisposable
     {
         #region Entries
 

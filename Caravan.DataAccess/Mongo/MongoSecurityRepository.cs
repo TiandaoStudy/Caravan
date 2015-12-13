@@ -14,6 +14,11 @@ namespace Finsa.Caravan.DataAccess.Mongo
         {
         }
 
+        public override void Dispose()
+        {
+            // Nulla da fare, per ora...
+        }
+
         protected override Task<SecApp[]> GetAppsAsyncInternal(string appName)
         {
             throw new System.NotImplementedException();
@@ -145,7 +150,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
             throw new NotImplementedException();
         }
 
-        protected override Task<IQueryable<SecUser>> GetUsersInGroupAsyncInternal(string appName, string groupName)
+        protected override Task<IQueryable<SecUser>> QueryUsersInGroupAsyncInternal(string appName, string groupName)
         {
             throw new NotImplementedException();
         }
@@ -155,7 +160,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
             throw new NotImplementedException();
         }
 
-        protected override Task<IQueryable<SecUser>> GetUsersInRoleAsyncInternal(string appName, string groupName, string roleName)
+        protected override Task<IQueryable<SecUser>> QueryUserInRoleAsyncInternal(string appName, string groupName, string roleName)
         {
             throw new NotImplementedException();
         }

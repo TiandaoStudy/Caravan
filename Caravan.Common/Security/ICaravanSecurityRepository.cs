@@ -21,7 +21,7 @@ namespace Finsa.Caravan.Common.Security
     /// <summary>
     ///   Il repository tramite cui accedere alla parte di sicurezza di Caravan.
     /// </summary>
-    public interface ICaravanSecurityRepository
+    public interface ICaravanSecurityRepository : IDisposable
     {
         SecApp CurrentApp { get; }
 
@@ -120,7 +120,7 @@ namespace Finsa.Caravan.Common.Security
         /// <param name="appName"></param>
         /// <param name="groupName"></param>
         /// <returns></returns>
-        Task<IQueryable<SecUser>> GetUsersInGroupAsync(string appName, string groupName);
+        Task<IQueryable<SecUser>> QueryUsersInGroupAsync(string appName, string groupName);
 
         #endregion Groups
 
@@ -202,7 +202,7 @@ namespace Finsa.Caravan.Common.Security
         /// <param name="groupName"></param>
         /// <param name="roleName"></param>
         /// <returns></returns>
-        Task<IQueryable<SecUser>> GetUsersInRoleAsync(string appName, string groupName, string roleName);
+        Task<IQueryable<SecUser>> QueryUsersInRoleAsync(string appName, string groupName, string roleName);
 
         #endregion Roles
 

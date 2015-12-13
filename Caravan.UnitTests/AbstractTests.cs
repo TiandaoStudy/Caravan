@@ -12,11 +12,12 @@
 
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Security;
+using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataAccess.Sql.Effort;
 using Ninject;
 using NUnit.Framework;
 
-namespace Finsa.Caravan.DataAccess.UnitTests
+namespace Finsa.Caravan.UnitTests
 {
     [TestFixture]
     internal abstract class AbstractTests
@@ -49,6 +50,14 @@ namespace Finsa.Caravan.DataAccess.UnitTests
 
             // Ricarico le dipendenze necessarie.
             SecurityRepository = CaravanServiceProvider.NinjectKernel.Get<ICaravanSecurityRepository>();
+        }
+
+        [TearDown]
+        public virtual void TearDown()
+        {
+            // Faccio pulizia all'interno delle dipendenze.
+            SecurityRepository?.Dispose();
+            SecurityRepository = null;
         }
     }
 }

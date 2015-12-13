@@ -4,9 +4,24 @@ using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.DataAccess.Core;
+
+// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
 using Finsa.Caravan.DataAccess.Sql.Logging.Entities;
 using Finsa.Caravan.DataAccess.Sql.Security.Entities;
+using Finsa.CodeServices.Clock;
 using Finsa.CodeServices.Common;
+using PommaLabs.Thrower;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -14,109 +29,119 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
-    sealed class SqlLogRepository : AbstractLogRepository<SqlLogRepository>
+    internal sealed class SqlLogRepository : AbstractLogRepository<SqlLogRepository>
     {
         #region Constants
 
-        const int MaxArgumentCount = 10;
+        private const int MaxArgumentCount = 10;
 
         #endregion Constants
 
-        public SqlLogRepository(ICaravanLog log)
+        private readonly SqlDbContext _dbContext;
+        private readonly IClock _clock;
+        private bool _disposed;
+
+        public SqlLogRepository(ICaravanLog log, SqlDbContext dbContext, IClock clock)
             : base(log)
         {
+            RaiseArgumentNullException.IfIsNull(dbContext, nameof(dbContext));
+            RaiseArgumentNullException.IfIsNull(clock, nameof(clock));
+            _dbContext = dbContext;
+            _clock = clock;
+        }
+
+        public override void Dispose()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            // Chiusura SqlDbContext - Uso Elvis perché potrebbe essere nullo.
+            _dbContext?.Dispose();
+            _disposed = true;
         }
 
         protected override async Task AddEntryAsyncInternal(string appName, LogEntry logEntry)
         {
-            // Creo un contesto di lettura perché non eseguo alcuna UPDATE.
-            using (var ctx = SqlDbContext.CreateReadContext())
-            {
-                var settings = await GetAndSetCachedSettingsAsync(appName, ctx);
+            var settings = await GetAndSetCachedSettingsAsync(appName, _dbContext);
 
+            var sqlLogSettingId = ToSqlLogSettingId(logEntry.LogLevel);
+            var sqlLogSetting = settings[sqlLogSettingId];
+
+            if (sqlLogSetting.Enabled)
+            {
+                _dbContext.LogEntries.Add(ToSqlLogEntry(logEntry, sqlLogSetting));
+            }
+
+            await _dbContext.SaveChangesAsync();
+        }
+
+        protected override async Task AddEntriesAsyncInternal(string appName, IEnumerable<LogEntry> logEntries)
+        {
+            var settings = await GetAndSetCachedSettingsAsync(appName, _dbContext);
+
+            foreach (var logEntry in logEntries)
+            {
                 var sqlLogSettingId = ToSqlLogSettingId(logEntry.LogLevel);
                 var sqlLogSetting = settings[sqlLogSettingId];
 
                 if (sqlLogSetting.Enabled)
                 {
-                    ctx.LogEntries.Add(ToSqlLogEntry(logEntry, sqlLogSetting));
+                    _dbContext.LogEntries.Add(ToSqlLogEntry(logEntry, sqlLogSetting));
                 }
-
-                await ctx.SaveChangesAsync();
             }
-        }
 
-        protected override async Task AddEntriesAsyncInternal(string appName, IEnumerable<LogEntry> logEntries)
-        {
-            // Creo un contesto di lettura perché non eseguo alcuna UPDATE.
-            using (var ctx = SqlDbContext.CreateReadContext())
-            {
-                var settings = await GetAndSetCachedSettingsAsync(appName, ctx);
-
-                foreach (var logEntry in logEntries)
-                {
-                    var sqlLogSettingId = ToSqlLogSettingId(logEntry.LogLevel);
-                    var sqlLogSetting = settings[sqlLogSettingId];
-
-                    if (sqlLogSetting.Enabled)
-                    {
-                        ctx.LogEntries.Add(ToSqlLogEntry(logEntry, sqlLogSetting));
-                    }
-                }
-
-                await ctx.SaveChangesAsync();
-            }
+            await _dbContext.SaveChangesAsync();
         }
 
         protected override async Task CleanUpEntriesAsyncInternal(string appName)
         {
-            using (var ctx = SqlDbContext.CreateReadContext())
-            {
-                // Log deletion might take a long time...
-                ctx.Database.CommandTimeout = 300;
+            // Log deletion might take a long time...
+            _dbContext.Database.CommandTimeout = 300;
 
-                var utcNow = CaravanServiceProvider.Clock.UtcNow;
+            var utcNow = _clock.UtcNow;
 
-                var appIds = ((appName == null) ? ctx.SecApps : ctx.SecApps.Where(a => a.Name == appName)).Select(a => a.Id);
+            var appIds = ((appName == null) ? _dbContext.SecApps : _dbContext.SecApps.Where(a => a.Name == appName)).Select(a => a.Id);
 
-                // We delete logs older than "settings.Days".
+            // We delete logs older than "settings.Days".
 
-                var oldLogs = from e in ctx.LogEntries
+            var oldLogs = from e in _dbContext.LogEntries
+                          where appIds.Contains(e.AppId)
+                          from s in _dbContext.LogSettings
+                          where s.AppId == e.AppId && s.LogLevel == e.LogLevel
+                          where DbFunctions.DiffDays(utcNow, e.Date) > s.Days
+                          select e;
+
+            _dbContext.LogEntries.RemoveRange(oldLogs);
+            await _dbContext.SaveChangesAsync();
+
+            // We delete enough entries to preserve the upper limit.
+
+            var logSettings = from e in _dbContext.LogEntries
                               where appIds.Contains(e.AppId)
-                              from s in ctx.LogSettings
+                              from s in _dbContext.LogSettings
                               where s.AppId == e.AppId && s.LogLevel == e.LogLevel
-                              where DbFunctions.DiffDays(utcNow, e.Date) > s.Days
-                              select e;
+                              select new { Entry = e, Setting = s };
 
-                ctx.LogEntries.RemoveRange(oldLogs);
+            var logCounts = from es in logSettings
+                            group es by new { es.Setting.AppId, es.Setting.LogLevel } into g
+                            where (g.Count() - g.FirstOrDefault().Setting.MaxEntries) > 0
+                            select new { g.Key.AppId, g.Key.LogLevel, Keep = g.FirstOrDefault().Setting.MaxEntries };
 
-                // We delete enough entries to preserve the upper limit.
+            var logCountsArray = await logCounts.ToArrayAsync();
+            foreach (var lc in logCountsArray)
+            {
+                var tooManyLogEntries = from e in _dbContext.LogEntries
+                                        where e.AppId == lc.AppId && e.LogLevel == lc.LogLevel
+                                        orderby e.Date descending
+                                        select e;
 
-                var logSettings = from e in ctx.LogEntries
-                                  where appIds.Contains(e.AppId)
-                                  from s in ctx.LogSettings
-                                  where s.AppId == e.AppId && s.LogLevel == e.LogLevel
-                                  select new { Entry = e, Setting = s };
-
-                var logCounts = from es in logSettings
-                                group es by new { es.Setting.AppId, es.Setting.LogLevel } into g
-                                where (g.Count() - g.FirstOrDefault().Setting.MaxEntries) > 0
-                                select new { g.Key.AppId, g.Key.LogLevel, Keep = g.FirstOrDefault().Setting.MaxEntries };
-
-                var logCountsArray = await logCounts.ToArrayAsync();
-                foreach (var lc in logCountsArray)
-                {
-                    var tooManyLogEntries = from e in ctx.LogEntries
-                                            where e.AppId == lc.AppId && e.LogLevel == lc.LogLevel
-                                            orderby e.Date descending
-                                            select e;
-
-                    ctx.LogEntries.RemoveRange(tooManyLogEntries.Skip(lc.Keep));
-                }
-
-                // Applico definitivamente i cambiamenti ed esco dalla procedura.
-                await ctx.SaveChangesAsync();
+                _dbContext.LogEntries.RemoveRange(tooManyLogEntries.Skip(lc.Keep));
             }
+
+            // Applico definitivamente i cambiamenti ed esco dalla procedura.
+            await _dbContext.SaveChangesAsync();
         }
 
         protected override IList<LogEntry> GetEntriesInternal(string appName, LogLevel? logLevel)
@@ -364,7 +389,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         #region Private members
 
-        const string CachePartition = "Caravan.SqlLogSettings";
+        private const string CachePartition = "Caravan.SqlLogSettings";
 
         private static async Task<Dictionary<string, SqlLogSetting>> GetAndSetCachedSettingsAsync(string appName, SqlDbContext ctx)
         {

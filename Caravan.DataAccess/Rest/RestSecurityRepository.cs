@@ -19,6 +19,11 @@ namespace Finsa.Caravan.DataAccess.Rest
         {
         }
 
+        public override void Dispose()
+        {
+            // Nulla da fare, per ora...
+        }
+
         protected override async Task<SecApp[]> GetAppsAsyncInternal(string appName)
         {
             try
@@ -662,7 +667,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             throw new NotImplementedException();
         }
 
-        protected override Task<IQueryable<SecUser>> GetUsersInGroupAsyncInternal(string appName, string groupName)
+        protected override Task<IQueryable<SecUser>> QueryUsersInGroupAsyncInternal(string appName, string groupName)
         {
             throw new NotImplementedException();
         }
@@ -672,7 +677,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             throw new NotImplementedException();
         }
 
-        protected override Task<IQueryable<SecUser>> GetUsersInRoleAsyncInternal(string appName, string groupName, string roleName)
+        protected override Task<IQueryable<SecUser>> QueryUserInRoleAsyncInternal(string appName, string groupName, string roleName)
         {
             throw new NotImplementedException();
         }

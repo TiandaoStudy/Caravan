@@ -40,19 +40,24 @@ namespace Finsa.Caravan.Common.Security
         }
 
         /// <summary>
+        ///   Lo store dei ruoli personalizzato per Caravan.
+        /// </summary>
+        public ICaravanUserStore CaravanStore => Store as ICaravanUserStore;
+
+        /// <summary>
         ///   L'identificativo dell'applicativo Caravan per cui il manager è stato istanziato.
         /// </summary>
-        public long AppId => (Store as CaravanUserStore).AppId;
+        public long AppId => CaravanStore.AppId;
 
         /// <summary>
         ///   Il nome dell'applicativo Caravan per cui il manager è stato istanziato.
         /// </summary>
-        public string AppName => (Store as CaravanUserStore).AppName;
+        public string AppName => CaravanStore.AppName;
 
         /// <summary>
         ///   Creates a user with no password.
         /// </summary>
-        /// <param name="user"/>
+        /// <param name="user">L'utente che deve essere creato.</param>
         /// <returns/>
         public override async Task<IdentityResult> CreateAsync(SecUser user)
         {
@@ -199,6 +204,6 @@ namespace Finsa.Caravan.Common.Security
 
         private static string NewSecurityStamp() => Guid.NewGuid().ToString();
 
-        #endregion
+        #endregion Security stamp handling
     }
 }

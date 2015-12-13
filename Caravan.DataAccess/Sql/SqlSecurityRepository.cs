@@ -1,22 +1,37 @@
-﻿using AutoMapper;
+﻿// Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License. You may obtain a copy of the License at:
+// 
+// "http://www.apache.org/licenses/LICENSE-2.0"
+// 
+// Unless required by applicable law or agreed to in writing, software distributed under the License
+// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+// or implied. See the License for the specific language governing permissions and limitations under
+// the License.
+
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.DataAccess.Sql.Security.Entities;
 using Finsa.CodeServices.Common;
+using PommaLabs.Thrower;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Finsa.Caravan.Common.Logging;
-using Finsa.Caravan.DataAccess.Sql.Security.Entities;
-using System;
-using AutoMapper.QueryableExtensions;
-using PommaLabs.Thrower;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
-    internal sealed class SqlSecurityRepository : AbstractSecurityRepository<SqlSecurityRepository>, IDisposable
+    internal sealed class SqlSecurityRepository : AbstractSecurityRepository<SqlSecurityRepository>
     {
+        #region Constants
+
         private const string UnspecifiedString = "...";
+
+        #endregion Constants
 
         private readonly SqlDbContext _dbContext;
         private bool _disposed;
@@ -28,12 +43,13 @@ namespace Finsa.Caravan.DataAccess.Sql
             _dbContext = dbContext;
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             if (_disposed)
             {
                 return;
-            }            
+            }
+
             // Chiusura SqlDbContext - Uso Elvis perché potrebbe essere nullo.
             _dbContext?.Dispose();
             _disposed = true;
@@ -164,7 +180,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
         }
 
-        protected override async Task<IQueryable<SecUser>> GetUsersInGroupAsyncInternal(string appName, string groupName)
+        protected override async Task<IQueryable<SecUser>> QueryUsersInGroupAsyncInternal(string appName, string groupName)
         {
             var appId = await GetAppIdByNameAsync(_dbContext, appName);
             var sqlGroup = await GetGroupByNameAsync(_dbContext, appId, appName, groupName);
@@ -274,7 +290,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
         }
 
-        protected override async Task<IQueryable<SecUser>> GetUsersInRoleAsyncInternal(string appName, string groupName, string roleName)
+        protected override async Task<IQueryable<SecUser>> QueryUserInRoleAsyncInternal(string appName, string groupName, string roleName)
         {
             var appId = await GetAppIdByNameAsync(_dbContext, appName);
             var group = await GetGroupByNameAsync(_dbContext, appId, appName, groupName);
@@ -321,7 +337,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                     .ToArray();
             }
         }
-        
+
         protected override async Task<IQueryable<SecUser>> QueryUsersAsyncInternal(string appName)
         {
             var appId = await GetAppIdByNameAsync(_dbContext, appName);
@@ -337,7 +353,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             using (var ctx = SqlDbContext.CreateReadContext())
             {
                 var appId = await GetAppIdByNameAsync(ctx, appName);
-                
+
                 if (await ctx.SecUsers.AnyAsync(u => u.AppId == appId && u.Login == newUser.Login))
                 {
                     throw new SecUserExistingException(appName, newUser.Login);
@@ -619,7 +635,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 if (groupName != null)
                 {
                     var sqlGroup = await GetGroupByNameAsync(ctx, appId, appName, groupName);
-                    
+
                     if (roleName != null)
                     {
                         var sqlRole = await GetRoleByNameAsync(ctx, appName, sqlGroup.Id, groupName, roleName);

@@ -7,8 +7,8 @@
     <ProjectGuid>{AFFF7AE2-A871-45C0-99B3-94B6D0880F03}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Caravan.DataAccess.UnitTests.NET45</RootNamespace>
-    <AssemblyName>Caravan.DataAccess.UnitTests.NET45</AssemblyName>
+    <RootNamespace>Finsa.Caravan.UnitTests</RootNamespace>
+    <AssemblyName>Finsa.Caravan.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -25,7 +25,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -129,10 +129,6 @@
       <Project>{418b2d91-d53e-49bf-98fc-66da9490dc37}</Project>
       <Name>Caravan.DataAccess.NET45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Caravan.Common.UnitTests.NET45\Caravan.Common.UnitTests.NET45.csproj">
-      <Project>{eb3941e0-51f5-4939-90c7-e1cd38b1ec96}</Project>
-      <Name>Caravan.Common.UnitTests.NET45</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -141,7 +137,7 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <Import Project="..\..\Caravan.DataAccess.UnitTests\Caravan.DataAccess.UnitTests.projitems" Label="Shared" />
+  <Import Project="..\..\Caravan.UnitTests\Caravan.UnitTests.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

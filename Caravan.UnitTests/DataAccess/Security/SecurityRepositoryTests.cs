@@ -15,12 +15,16 @@ using NUnit.Framework;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Finsa.Caravan.DataAccess.UnitTests.Security
+namespace Finsa.Caravan.UnitTests.DataAccess.Security
 {
     internal sealed class SecurityRepositoryTests : AbstractTests
     {
-        private const string TestAppName = "mytest";
-        private const string TestAppDescription = "My TEST";
+        private const string TestAppName = "my-test-app";
+        private const string TestAppDescription = "My TEST App";
+
+        private const string TestGroupName1 = "group1";
+
+        private const string TestRoleName1 = "role1";
 
         [SetUp]
         public override void SetUp()
@@ -56,6 +60,50 @@ namespace Finsa.Caravan.DataAccess.UnitTests.Security
         }
 
         #endregion Apps
+
+        #region Groups
+
+        [Test]
+        public async Task QueryUsersInGroup_ShouldWorkIfThereAreNoUsers()
+        {
+            await SecurityRepository.AddAppAsync(new SecApp
+            {
+                Name = TestAppName
+            });
+            await SecurityRepository.AddGroupAsync(TestAppName, new SecGroup
+            {
+                Name = TestGroupName1
+            });
+
+            var users = await SecurityRepository.QueryUsersInGroupAsync(TestAppName, TestGroupName1);
+            Assert.That(users.Count(), Is.EqualTo(0));
+        }
+
+        #endregion
+
+        #region Roles
+
+        [Test]
+        public async Task QueryUsersInRole_ShouldWorkIfThereAreNoUsers()
+        {
+            await SecurityRepository.AddAppAsync(new SecApp
+            {
+                Name = TestAppName
+            });
+            await SecurityRepository.AddGroupAsync(TestAppName, new SecGroup
+            {
+                Name = TestGroupName1
+            });
+            await SecurityRepository.AddRoleAsync(TestAppName, TestGroupName1, new SecRole
+            {
+                Name = TestRoleName1
+            });
+
+            var users = await SecurityRepository.QueryUsersInRoleAsync(TestAppName, TestGroupName1, TestRoleName1);
+            Assert.That(users.Count(), Is.EqualTo(0));
+        }
+
+        #endregion
 
         #region Users
 

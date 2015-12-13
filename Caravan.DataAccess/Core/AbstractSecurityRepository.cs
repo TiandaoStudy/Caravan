@@ -260,7 +260,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
         
-        public async Task<IQueryable<SecUser>> GetUsersInGroupAsync(string appName, string groupName)
+        public async Task<IQueryable<SecUser>> QueryUsersInGroupAsync(string appName, string groupName)
         {
             throw new NotImplementedException();
         }
@@ -447,7 +447,7 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
-        public async Task<IQueryable<SecUser>> GetUsersInRoleAsync(string appName, string groupName, string roleName)
+        public async Task<IQueryable<SecUser>> QueryUsersInRoleAsync(string appName, string groupName, string roleName)
         {
             throw new NotImplementedException();
         }
@@ -924,6 +924,8 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Abstract Methods
 
+        public abstract void Dispose();
+
         protected abstract Task<SecApp[]> GetAppsAsyncInternal(string appName);
 
         protected abstract Task AddAppAsyncInternal(SecApp app);
@@ -936,7 +938,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         protected abstract Task UpdateGroupAsyncInternal(string appName, string groupName, SecGroupUpdates groupUpdates);
 
-        protected abstract Task<IQueryable<SecUser>> GetUsersInGroupAsyncInternal(string appName, string groupName);
+        protected abstract Task<IQueryable<SecUser>> QueryUsersInGroupAsyncInternal(string appName, string groupName);
 
         protected abstract Task<SecUser[]> GetUsersAsyncInternal(string appName, long? userId, string userLogin, string userEmail);
 
@@ -964,7 +966,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         protected abstract Task UpdateRoleAsyncInternal(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates);
 
-        protected abstract Task<IQueryable<SecUser>> GetUsersInRoleAsyncInternal(string appName, string groupName, string roleName);
+        protected abstract Task<IQueryable<SecUser>> QueryUserInRoleAsyncInternal(string appName, string groupName, string roleName);
 
         protected abstract Task<SecContext[]> GetContextsAsyncInternal(string appName);
 

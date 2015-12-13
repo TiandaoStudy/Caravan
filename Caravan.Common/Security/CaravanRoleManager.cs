@@ -12,6 +12,8 @@
 
 using Finsa.Caravan.Common.Security.Models;
 using Microsoft.AspNet.Identity;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Finsa.Caravan.Common.Security
 {
@@ -30,13 +32,50 @@ namespace Finsa.Caravan.Common.Security
         }
 
         /// <summary>
+        ///   Lo store dei ruoli personalizzato per Caravan.
+        /// </summary>
+        public ICaravanRoleStore CaravanStore => Store as CaravanRoleStore;
+
+        /// <summary>
         ///   L'identificativo dell'applicativo Caravan per cui il manager è stato istanziato.
         /// </summary>
-        public long AppId => (Store as CaravanRoleStore).AppId;
+        public long AppId => CaravanStore.AppId;
 
         /// <summary>
         ///   Il nome dell'applicativo Caravan per cui il manager è stato istanziato.
         /// </summary>
-        public string AppName => (Store as CaravanRoleStore).AppName;
+        public string AppName => CaravanStore.AppName;
+
+        /// <summary>
+        ///   Stringa da usare come segnaposto quando si vogliono indicare tutti i ruoli.
+        /// </summary>
+        public string AllRolesPlaceholder => CaravanStore.AllRolesPlaceholder;
+
+        /// <summary>
+        ///   Trova tutti gli utenti che hanno un determinato ruolo e gruppo.
+        /// 
+        ///   Se al posto del ruolo si inserisce <see cref="AllRolesPlaceholder"/>, vengono
+        ///   restituiti tutti gli utenti che appartengono al gruppo, indipendentemente dal ruolo svolto.
+        /// </summary>
+        /// <param name="identityRoleName">
+        ///   Il nome del ruolo su identity, composto nel formato "gruppo/ruolo". Se si passa come
+        ///   parametro "gruppo/ <see cref="AllRolesPlaceholder"/>", verranno presi tutti gli utenti
+        ///   che appartengono al gruppo dato.
+        /// </param>
+        /// <returns>Tutti gli utenti che appartengono ad un determinato ruolo e gruppo.</returns>
+        public Task<IQueryable<SecUser>> FindUsersInRoleAsync(string identityRoleName) => CaravanStore.FindUsersInRoleAsync(identityRoleName);
+
+        /// <summary>
+        ///   Trova tutti gli utenti che hanno un determinato ruolo e gruppo.
+        /// 
+        ///   Se al posto del ruolo si inserisce <see cref="AllRolesPlaceholder"/>, vengono
+        ///   restituiti tutti gli utenti che appartengono al gruppo, indipendentemente dal ruolo svolto.
+        /// </summary>
+        /// <param name="groupName">Il nome del gruppo su Caravan.</param>
+        /// <param name="roleName">
+        ///   Il nome del ruolo su Caravan, oppure <see cref="AllRolesPlaceholder"/> per prenderli tutti.
+        /// </param>
+        /// <returns>Tutti gli utenti che appartengono ad un determinato ruolo e gruppo.</returns>
+        public Task<IQueryable<SecUser>> FindUsersInRoleAsync(string groupName, string roleName) => CaravanStore.FindUsersInRoleAsync(groupName, roleName);
     }
 }

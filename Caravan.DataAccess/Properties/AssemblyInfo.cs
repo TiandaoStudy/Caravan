@@ -39,4 +39,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.28.0")]
 
 // Attributes added to allow legacy development.
+[assembly: InternalsVisibleTo("Finsa.Caravan.UnitTests")]
 [assembly: InternalsVisibleTo("Finsa.Caravan.WebForms")]

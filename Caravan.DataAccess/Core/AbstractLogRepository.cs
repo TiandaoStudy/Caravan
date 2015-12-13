@@ -33,6 +33,8 @@ namespace Finsa.Caravan.DataAccess.Core
 
         protected ICaravanLog Log { get; }
 
+        public abstract void Dispose();
+
         protected abstract Task AddEntryAsyncInternal(string appName, LogEntry logEntry);
 
         protected abstract Task AddEntriesAsyncInternal(string appName, IEnumerable<LogEntry> logEntries);

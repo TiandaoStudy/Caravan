@@ -19,6 +19,11 @@ namespace Finsa.Caravan.DataAccess.Rest
         {
         }
 
+        public override void Dispose()
+        {
+            // Nulla da fare, per ora...
+        }
+
         protected override IList<LogEntry> GetEntriesInternal(string appName, LogLevel? logLevel)
         {
             var client = new RestClient("http://localhost/Caravan.RestService/security");

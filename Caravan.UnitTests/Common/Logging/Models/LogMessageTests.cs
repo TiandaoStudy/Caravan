@@ -15,7 +15,7 @@ using NUnit.Framework;
 using System;
 using System.Runtime.Serialization;
 
-namespace Finsa.Caravan.Common.UnitTests.Logging.Models
+namespace Finsa.Caravan.UnitTests.Common.Logging.Models
 {
     internal sealed class LogMessageTests : AbstractTests
     {
