@@ -91,12 +91,16 @@
     <Message Text="SUCCESS: Published package." Condition=" '$(Configuration)|$(Platform)|$(ExitCode)' == 'Release|AnyCPU|0' " Importance="High" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>rm *.nupkg
-rm *.nupkg.bak
+    <PreBuildEvent>del "$(ProjectDir)*.nupkg"
+del "$(ProjectDir)*.nupkg.bak"
 
-if not exist "$(SolutionDir)NuGet Packager (Common)/lib/net45" mkdir "$(SolutionDir)NuGet Packager (Common)/lib/net45"
-copy "$(SolutionDir)Caravan.Common\bin\Release\Finsa.Caravan.Common.dll" "$(SolutionDir)NuGet Packager (Common)/lib/net45"
-copy "$(SolutionDir)Caravan.Common\bin\Release\Finsa.Caravan.Common.pdb" "$(SolutionDir)NuGet Packager (Common)/lib/net45"
-copy "$(SolutionDir)Caravan.Common\bin\Release\Finsa.Caravan.Common.xml" "$(SolutionDir)NuGet Packager (Common)/lib/net45"</PreBuildEvent>
+if not exist "$(ProjectDir)lib\net45" mkdir "$(ProjectDir)lib\net45"
+copy "$(SolutionDir)Platform Specific\Caravan.Common.NET45\bin\Release\Finsa.Caravan.Common.dll" "$(ProjectDir)lib\net45"
+copy "$(SolutionDir)Platform Specific\Caravan.Common.NET45\bin\Release\Finsa.Caravan.Common.pdb" "$(ProjectDir)lib\net45"
+copy "$(SolutionDir)Platform Specific\Caravan.Common.NET45\bin\Release\Finsa.Caravan.Common.xml" "$(ProjectDir)lib\net45"</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
