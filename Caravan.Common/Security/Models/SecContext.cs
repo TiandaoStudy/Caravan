@@ -34,7 +34,7 @@ namespace Finsa.Caravan.Common.Security.Models
         public string Description { get; set; }
 
         [DataMember(Order = 4)]
-        public SecObject[] Objects { get; set; }
+        public IEnumerable<SecObject> Objects { get; set; }
 
         protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()
         {

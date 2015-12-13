@@ -35,13 +35,13 @@ namespace Finsa.Caravan.Common.Security.Models
         public string PasswordHasher { get; set; }
 
         [DataMember(Order = 4)]
-        public SecGroup[] Groups { get; set; }
+        public IEnumerable<SecGroup> Groups { get; set; }
 
         [DataMember(Order = 5)]
-        public SecContext[] Contexts { get; set; }
+        public IEnumerable<SecContext> Contexts { get; set; }
 
         [DataMember(Order = 6)]
-        public LogSetting[] LogSettings { get; set; }
+        public IEnumerable<LogSetting> LogSettings { get; set; }
 
         protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()
         {
