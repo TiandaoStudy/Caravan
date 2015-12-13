@@ -194,7 +194,9 @@ namespace Finsa.Caravan.DataAccess
                 Array.Resize(ref array, index);
                 l.Arguments = array;
             });
-            Mapper.CreateMap<SqlLogSetting, LogSetting>();
+            Mapper.CreateMap<SqlLogSetting, LogSetting>()
+                .ForMember(dest => dest.LogLevel, opts => opts.Ignore())
+                .ForMember(dest => dest.LogLevelString, opts => opts.MapFrom(src => src.LogLevel));
         }
 
         #endregion OnStart

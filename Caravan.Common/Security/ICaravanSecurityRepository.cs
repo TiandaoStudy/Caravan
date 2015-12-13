@@ -124,6 +124,88 @@ namespace Finsa.Caravan.Common.Security
 
         #endregion Groups
 
+        #region Roles
+
+        /// <summary>
+        ///   </summary>
+        /// <param name="appName"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
+        Task<SecRole[]> GetRolesAsync(string appName);
+
+        /// <summary>
+        ///   </summary>
+        /// <param name="appName"></param>
+        /// <param name="groupName"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
+        Task<SecRole[]> GetRolesAsync(string appName, string groupName);
+
+        /// <summary>
+        ///   </summary>
+        /// <param name="appName"></param>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="appName"/> or <paramref name="roleId"/> are null or empty.
+        /// </exception>
+        Task<SecRole> GetRoleByIdAsync(string appName, int roleId);
+
+        /// <summary>
+        ///   </summary>
+        /// <param name="appName"></param>
+        /// <param name="groupName"></param>
+        /// <param name="roleName"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="appName"/> or <paramref name="roleName"/> are null or empty.
+        /// </exception>
+        Task<SecRole> GetRoleByNameAsync(string appName, string groupName, string roleName);
+
+        /// <summary>
+        ///   </summary>
+        /// <param name="appName"></param>
+        /// <param name="groupName"></param>
+        /// <param name="newRole"></param>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="appName"/> or <paramref name="newRole.Name"/> are null or empty.
+        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="newRole"/> is null.</exception>
+        Task<int> AddRoleAsync(string appName, string groupName, SecRole newRole);
+
+        /// <summary>
+        ///   </summary>
+        /// <param name="appName"></param>
+        /// <param name="groupName"></param>
+        /// <param name="roleName"></param>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="appName"/> or <paramref name="roleName"/> are null or empty.
+        /// </exception>
+        Task RemoveRoleAsync(string appName, string groupName, string roleName);
+
+        /// <summary>
+        ///   </summary>
+        /// <param name="appName"></param>
+        /// <param name="groupName"></param>
+        /// <param name="roleName"></param>
+        /// <param name="roleUpdates"></param>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="appName"/>, <paramref name="roleName"/> or
+        ///   <paramref name="roleUpdates.Name"/> are null or empty.
+        /// </exception>
+        Task UpdateRoleAsync(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates);
+
+        /// <summary>
+        ///   Recupera tutti gli utenti che hanno un determinato ruolo (e gruppo).
+        /// </summary>
+        /// <param name="appName"></param>
+        /// <param name="groupName"></param>
+        /// <param name="roleName"></param>
+        /// <returns></returns>
+        Task<IQueryable<SecUser>> GetUsersInRoleAsync(string appName, string groupName, string roleName);
+
+        #endregion Roles
+
         #region Users
 
         /// <summary>
@@ -132,6 +214,8 @@ namespace Finsa.Caravan.Common.Security
         /// <param name="appName"></param>
         /// <returns></returns>
         Task<SecUser[]> GetUsersAsync(string appName);
+
+        Task<IQueryable<SecUser>> QueryUsersAsync(string appName);
 
         /// <summary>
         ///   Recupera un utente cercandolo per ID.
@@ -223,88 +307,6 @@ namespace Finsa.Caravan.Common.Security
         Task RemoveUserClaimAsync(string appName, string userLogin, string serializedClaimHash);
 
         #endregion Users
-
-        #region Roles
-
-        /// <summary>
-        ///   </summary>
-        /// <param name="appName"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
-        Task<SecRole[]> GetRolesAsync(string appName);
-
-        /// <summary>
-        ///   </summary>
-        /// <param name="appName"></param>
-        /// <param name="groupName"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"><paramref name="appName"/> is null or empty.</exception>
-        Task<SecRole[]> GetRolesAsync(string appName, string groupName);
-
-        /// <summary>
-        ///   </summary>
-        /// <param name="appName"></param>
-        /// <param name="roleId"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="appName"/> or <paramref name="roleId"/> are null or empty.
-        /// </exception>
-        Task<SecRole> GetRoleByIdAsync(string appName, int roleId);
-
-        /// <summary>
-        ///   </summary>
-        /// <param name="appName"></param>
-        /// <param name="groupName"></param>
-        /// <param name="roleName"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="appName"/> or <paramref name="roleName"/> are null or empty.
-        /// </exception>
-        Task<SecRole> GetRoleByNameAsync(string appName, string groupName, string roleName);
-
-        /// <summary>
-        ///   </summary>
-        /// <param name="appName"></param>
-        /// <param name="groupName"></param>
-        /// <param name="newRole"></param>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="appName"/> or <paramref name="newRole.Name"/> are null or empty.
-        /// </exception>
-        /// <exception cref="ArgumentNullException"><paramref name="newRole"/> is null.</exception>
-        Task<int> AddRoleAsync(string appName, string groupName, SecRole newRole);
-
-        /// <summary>
-        ///   </summary>
-        /// <param name="appName"></param>
-        /// <param name="groupName"></param>
-        /// <param name="roleName"></param>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="appName"/> or <paramref name="roleName"/> are null or empty.
-        /// </exception>
-        Task RemoveRoleAsync(string appName, string groupName, string roleName);
-
-        /// <summary>
-        ///   </summary>
-        /// <param name="appName"></param>
-        /// <param name="groupName"></param>
-        /// <param name="roleName"></param>
-        /// <param name="roleUpdates"></param>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="appName"/>, <paramref name="roleName"/> or
-        ///   <paramref name="roleUpdates.Name"/> are null or empty.
-        /// </exception>
-        Task UpdateRoleAsync(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates);
-
-        /// <summary>
-        ///   Recupera tutti gli utenti che hanno un determinato ruolo (e gruppo).
-        /// </summary>
-        /// <param name="appName"></param>
-        /// <param name="groupName"></param>
-        /// <param name="roleName"></param>
-        /// <returns></returns>
-        Task<IQueryable<SecUser>> GetUsersInRoleAsync(string appName, string groupName, string roleName);
-
-        #endregion Roles
 
         #region Contexts
 

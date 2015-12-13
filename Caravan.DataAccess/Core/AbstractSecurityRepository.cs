@@ -475,6 +475,25 @@ namespace Finsa.Caravan.DataAccess.Core
             }
         }
 
+        public async Task<IQueryable<SecUser>> QueryUsersAsync(string appName)
+        {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+
+            appName = appName.ToLowerInvariant();
+            var logCtx = $"Querying all users of application '{appName}'";
+
+            try
+            {
+                return await QueryUsersAsyncInternal(appName);
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(IQueryable<SecUser>);
+            }
+        }
+
         public async Task<SecUser> GetUserByIdAsync(string appName, long userId)
         {
             // Preconditions

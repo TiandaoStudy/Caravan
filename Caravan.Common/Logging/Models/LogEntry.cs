@@ -34,6 +34,12 @@ namespace Finsa.Caravan.Common.Logging.Models
         [DataMember(Order = 2), JsonConverter(typeof(StringEnumConverter))]
         public LogLevel LogLevel { get; set; }
 
+        [IgnoreDataMember]
+        internal string LogLevelString
+        {
+            set { LogLevel = (LogLevel) Enum.Parse(typeof(LogLevel), value); }
+        }
+
         [DataMember(Order = 3)]
         public DateTime Date { get; set; }
 

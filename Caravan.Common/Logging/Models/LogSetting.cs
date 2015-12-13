@@ -30,6 +30,13 @@ namespace Finsa.Caravan.Common.Logging.Models
         [DataMember(Order = 1), JsonConverter(typeof(StringEnumConverter))]
         public LogLevel LogLevel { get; set; }
 
+        [IgnoreDataMember]
+        internal string LogLevelString
+        {
+            get { return LogLevel.ToString().ToLowerInvariant(); }
+            set { LogLevel = (LogLevel) Enum.Parse(typeof(LogLevel), value, true); }
+        }
+
         [DataMember(Order = 2)]
         public bool Enabled { get; set; }
 

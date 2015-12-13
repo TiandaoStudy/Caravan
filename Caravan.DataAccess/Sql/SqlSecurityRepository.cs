@@ -41,44 +41,36 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         #region Apps
 
-        protected override Task<SecApp[]> GetAppsAsyncInternal(string appName)
+        protected override async Task<SecApp[]> GetAppsAsyncInternal(string appName)
         {
-            using (var ctx = SqlDbContext.CreateReadContext())
+            var q = _dbContext.SecApps
+                .Include(a => a.Groups)
+                .Include("Contexts.Objects")
+                .Include(a => a.LogSettings);
+
+            if (appName != null)
             {
-                var q = ctx.SecApps
-                    .Include(a => a.Groups)
-                    .Include("Contexts.Objects")
-                    .Include(a => a.LogSettings);
-
-                if (appName != null)
-                {
-                    q = q.Where(a => a.Name == appName);
-                }
-
-                return Task.FromResult(q.AsEnumerable()
-                    .Select(Mapper.Map<SecApp>)
-                    .ToArray());
+                q = q.Where(a => a.Name == appName);
             }
+
+            return await q.ProjectTo<SecApp>().ToArrayAsync();
         }
 
         protected override async Task AddAppAsyncInternal(SecApp app)
         {
-            using (var ctx = SqlDbContext.CreateReadContext())
+            if (await _dbContext.SecApps.AnyAsync(a => a.Name == app.Name))
             {
-                if (await ctx.SecApps.AnyAsync(a => a.Name == app.Name))
-                {
-                    throw new SecAppExistingException(app.Name);
-                }
-
-                var sqlApp = ctx.SecApps.Add(new SqlSecApp
-                {
-                    Name = app.Name,
-                    Description = app.Description ?? UnspecifiedString
-                });
-
-                await ctx.SaveChangesAsync();
-                app.Id = sqlApp.Id;
+                throw new SecAppExistingException(app.Name);
             }
+
+            var sqlApp = _dbContext.SecApps.Add(new SqlSecApp
+            {
+                Name = app.Name,
+                Description = app.Description ?? UnspecifiedString
+            });
+
+            await _dbContext.SaveChangesAsync();
+            app.Id = sqlApp.Id;
         }
 
         #endregion Apps
