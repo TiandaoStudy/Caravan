@@ -80,9 +80,12 @@
     <Message Text="SUCCESS: Published package." Condition=" '$(Configuration)|$(Platform)|$(ExitCode)' == 'Release|AnyCPU|0' " Importance="High" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>copy "$(SolutionDir)Caravan.WebService\Controllers\CacheController.cs" "$(SolutionDir)NuGet Packagers/Caravan.WebApi.Runtime.NuGet/content/Controllers/Caravan/CacheController.cs"
-copy "$(SolutionDir)Caravan.WebService\Controllers\HelpController.cs" "$(SolutionDir)NuGet Packagers/Caravan.WebApi.Runtime.NuGet/content/Controllers/Caravan/HelpController.cs"
-copy "$(SolutionDir)Caravan.WebService\Controllers\LoggerController.cs" "$(SolutionDir)NuGet Packagers/Caravan.WebApi.Runtime.NuGet/content/Controllers/Caravan/LoggerController.cs"
-copy "$(SolutionDir)Caravan.WebService\Controllers\SecurityController.cs" "$(SolutionDir)NuGet Packagers/Caravan.WebApi.Runtime.NuGet/content/Controllers/Caravan/SecurityController.cs"</PreBuildEvent>
+    <PreBuildEvent>del "$(ProjectDir)*.nupkg"
+del "$(ProjectDir)*.nupkg.bak"
+
+copy "$(SolutionDir)Caravan.WebService\Controllers\CacheController.cs" "$(ProjectDir)content/Controllers/Caravan/CacheController.cs"
+copy "$(SolutionDir)Caravan.WebService\Controllers\HelpController.cs" "$(ProjectDir)content/Controllers/Caravan/HelpController.cs"
+copy "$(SolutionDir)Caravan.WebService\Controllers\LoggerController.cs" "$(ProjectDir)content/Controllers/Caravan/LoggerController.cs"
+copy "$(SolutionDir)Caravan.WebService\Controllers\SecurityController.cs" "$(ProjectDir)content/Controllers/Caravan/SecurityController.cs"</PreBuildEvent>
   </PropertyGroup>
 </Project>

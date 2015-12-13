@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BD471427-A76A-4764-94C1-08C8C3BC1379}</ProjectGuid>
+    <ProjectGuid>{EE783385-E6CC-4F01-BCCC-DAB9C6DBDE55}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NuGetPackager.DataAccess</RootNamespace>
-    <AssemblyName>NuGetPackager.DataAccess</AssemblyName>
+    <RootNamespace>NuGetPackager.WebApi</RootNamespace>
+    <AssemblyName>NuGet Packager %28WebApi%29</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -81,9 +81,12 @@
     <Message Text="SUCCESS: Published package." Condition=" '$(Configuration)|$(Platform)|$(ExitCode)' == 'Release|AnyCPU|0' " Importance="High" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>if not exist "$(SolutionDir)NuGet Packager (DataAccess)/lib/net45" mkdir "$(SolutionDir)NuGet Packager (DataAccess)/lib/net45"
-copy "$(SolutionDir)Caravan.DataAccess\bin\Release\Finsa.Caravan.DataAccess.dll" "$(SolutionDir)NuGet Packager (DataAccess)/lib/net45"
-copy "$(SolutionDir)Caravan.DataAccess\bin\Release\Finsa.Caravan.DataAccess.pdb" "$(SolutionDir)NuGet Packager (DataAccess)/lib/net45"
-copy "$(SolutionDir)Caravan.DataAccess\bin\Release\Finsa.Caravan.DataAccess.xml" "$(SolutionDir)NuGet Packager (DataAccess)/lib/net45"</PreBuildEvent>
+    <PreBuildEvent>del "$(ProjectDir)*.nupkg"
+del "$(ProjectDir)*.nupkg.bak"
+
+if not exist "$(ProjectDir)lib\net45" mkdir "$(ProjectDir)lib\net45"
+copy "$(SolutionDir)Platform Specific\Caravan.WebApi.NET45\bin\Release\Finsa.Caravan.WebApi.dll" "$(ProjectDir)lib\net45"
+copy "$(SolutionDir)Platform Specific\Caravan.WebApi.NET45\bin\Release\Finsa.Caravan.WebApi.pdb" "$(ProjectDir)lib\net45"
+copy "$(SolutionDir)Platform Specific\Caravan.WebApi.NET45\bin\Release\Finsa.Caravan.WebApi.xml" "$(ProjectDir)lib\net45"</PreBuildEvent>
   </PropertyGroup>
 </Project>

@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{EE783385-E6CC-4F01-BCCC-DAB9C6DBDE55}</ProjectGuid>
+    <ProjectGuid>{0451BAEF-DF2E-4B98-8644-94EE9415E389}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NuGetPackager.WebApi</RootNamespace>
-    <AssemblyName>NuGet Packager %28WebApi%29</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <RootNamespace>NuGet_Packager__Helpers_</RootNamespace>
+    <AssemblyName>NuGet Packager %28Helpers%29</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -49,6 +49,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="content\NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="NuGetPackage.ps1" />
     <None Include="NuGetSetup.ps1" />
     <None Include="NuGet.exe" />
@@ -58,7 +62,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="lib\net45\" />
+    <Folder Include="lib\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -81,9 +85,10 @@
     <Message Text="SUCCESS: Published package." Condition=" '$(Configuration)|$(Platform)|$(ExitCode)' == 'Release|AnyCPU|0' " Importance="High" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>if not exist "$(SolutionDir)NuGet Packager (WebApi)/lib/net45" mkdir "$(SolutionDir)NuGet Packager (WebApi)/lib/net45"
-copy "$(SolutionDir)Caravan.WebApi\bin\Release\Finsa.Caravan.WebApi.dll" "$(SolutionDir)NuGet Packager (WebApi)/lib/net45"
-copy "$(SolutionDir)Caravan.WebApi\bin\Release\Finsa.Caravan.WebApi.pdb" "$(SolutionDir)NuGet Packager (WebApi)/lib/net45"
-copy "$(SolutionDir)Caravan.WebApi\bin\Release\Finsa.Caravan.WebApi.xml" "$(SolutionDir)NuGet Packager (WebApi)/lib/net45"</PreBuildEvent>
+    <PreBuildEvent>del "$(ProjectDir)*.nupkg"
+del "$(ProjectDir)*.nupkg.bak"
+
+if not exist "$(ProjectDir)content" mkdir "$(ProjectDir)content"
+copy "$(SolutionDir)Platform Specific\Caravan.Common.NET45\NLog.config" "$(ProjectDir)content"</PreBuildEvent>
   </PropertyGroup>
 </Project>

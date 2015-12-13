@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{ED816343-F97D-402B-8828-EF8E94BC2DF9}</ProjectGuid>
+    <ProjectGuid>{BD471427-A76A-4764-94C1-08C8C3BC1379}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NuGet_Packager__DataAccess.Oracle_</RootNamespace>
-    <AssemblyName>NuGet Packager %28DataAccess.Oracle%29</AssemblyName>
+    <RootNamespace>NuGetPackager.DataAccess</RootNamespace>
+    <AssemblyName>NuGetPackager.DataAccess</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -53,10 +53,12 @@
     <None Include="NuGetSetup.ps1" />
     <None Include="NuGet.exe" />
     <None Include="NuGet.config" />
-    <None Include="Package.nuspec" />
+    <None Include="Package.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="lib\" />
+    <Folder Include="lib\net45\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -78,4 +80,13 @@
     <Message Text="SUCCESS: Created package." Condition=" '$(Configuration)|$(Platform)|$(ExitCode)' == 'Debug|AnyCPU|0' " Importance="High" />
     <Message Text="SUCCESS: Published package." Condition=" '$(Configuration)|$(Platform)|$(ExitCode)' == 'Release|AnyCPU|0' " Importance="High" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>del "$(ProjectDir)*.nupkg"
+del "$(ProjectDir)*.nupkg.bak"
+
+if not exist "$(ProjectDir)lib\net45" mkdir "$(ProjectDir)lib\net45"
+copy "$(SolutionDir)Platform Specific\Caravan.DataAccess.NET45\bin\Release\Finsa.Caravan.DataAccess.dll" "$(ProjectDir)lib\net45"
+copy "$(SolutionDir)Platform Specific\Caravan.DataAccess.NET45\bin\Release\Finsa.Caravan.DataAccess.pdb" "$(ProjectDir)lib\net45"
+copy "$(SolutionDir)Platform Specific\Caravan.DataAccess.NET45\bin\Release\Finsa.Caravan.DataAccess.xml" "$(ProjectDir)lib\net45"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

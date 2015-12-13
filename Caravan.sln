@@ -69,7 +69,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests (DataAccess)", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebService", "Caravan.WebService\Caravan.WebService.csproj", "{A5199477-2670-4E28-A49A-E19E089CF85D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.Common.Runtime", "NuGet Packager (Common.Runtime)\Caravan.NuGet.Common.Runtime.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.Common.Runtime", "NuGet Packagers\Caravan.NuGet.Common.Runtime\Caravan.NuGet.Common.Runtime.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BBCDDB1C-8127-4623-B40B-5109DE5A63EF} = {BBCDDB1C-8127-4623-B40B-5109DE5A63EF}
 	EndProjectSection
@@ -79,32 +79,32 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.Common", "NuG
 		{11904ED0-33D2-4005-8766-B1E393A32EA7} = {11904ED0-33D2-4005-8766-B1E393A32EA7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.DataAccess", "NuGet Packager (DataAccess)\Caravan.NuGet.DataAccess.csproj", "{BD471427-A76A-4764-94C1-08C8C3BC1379}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.DataAccess", "NuGet Packagers\Caravan.NuGet.DataAccess\Caravan.NuGet.DataAccess.csproj", "{BD471427-A76A-4764-94C1-08C8C3BC1379}"
 	ProjectSection(ProjectDependencies) = postProject
 		{418B2D91-D53E-49BF-98FC-66DA9490DC37} = {418B2D91-D53E-49BF-98FC-66DA9490DC37}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.DataAccess.Oracle", "NuGet Packager (DataAccess.Oracle)\Caravan.NuGet.DataAccess.Oracle.csproj", "{ED816343-F97D-402B-8828-EF8E94BC2DF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.DataAccess.Oracle", "NuGet Packagers\Caravan.NuGet.DataAccess.Oracle\Caravan.NuGet.DataAccess.Oracle.csproj", "{ED816343-F97D-402B-8828-EF8E94BC2DF9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BD471427-A76A-4764-94C1-08C8C3BC1379} = {BD471427-A76A-4764-94C1-08C8C3BC1379}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.DataAccess.MySql", "NuGet Packager (DataAccess.MySql)\Caravan.NuGet.DataAccess.MySql.csproj", "{9490808C-9492-407D-B907-34B57585CDFF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.DataAccess.MySql", "NuGet Packagers\Caravan.NuGet.DataAccess.MySql\Caravan.NuGet.DataAccess.MySql.csproj", "{9490808C-9492-407D-B907-34B57585CDFF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BD471427-A76A-4764-94C1-08C8C3BC1379} = {BD471427-A76A-4764-94C1-08C8C3BC1379}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.DataAccess.PostgreSql", "NuGet Packager (DataAccess.PostgreSql)\Caravan.NuGet.DataAccess.PostgreSql.csproj", "{8E6F11D8-6A0C-4138-9EBC-2070FCD2911C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.DataAccess.PostgreSql", "NuGet Packagers\Caravan.NuGet.DataAccess.PostgreSql\Caravan.NuGet.DataAccess.PostgreSql.csproj", "{8E6F11D8-6A0C-4138-9EBC-2070FCD2911C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BD471427-A76A-4764-94C1-08C8C3BC1379} = {BD471427-A76A-4764-94C1-08C8C3BC1379}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.DataAccess.Rest", "NuGet Packager (DataAccess.Rest)\Caravan.NuGet.DataAccess.Rest.csproj", "{2B8EE989-1204-4F5A-95D1-29BC64C14AE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.DataAccess.Rest", "NuGet Packagers\Caravan.NuGet.DataAccess.Rest\Caravan.NuGet.DataAccess.Rest.csproj", "{2B8EE989-1204-4F5A-95D1-29BC64C14AE7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{90139BED-46DA-455A-8C62-D59EFA4BFCCF} = {90139BED-46DA-455A-8C62-D59EFA4BFCCF}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.WebApi", "NuGet Packager (WebApi)\Caravan.NuGet.WebApi.csproj", "{EE783385-E6CC-4F01-BCCC-DAB9C6DBDE55}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.WebApi", "NuGet Packagers\Caravan.NuGet.WebApi\Caravan.NuGet.WebApi.csproj", "{EE783385-E6CC-4F01-BCCC-DAB9C6DBDE55}"
 	ProjectSection(ProjectDependencies) = postProject
 		{27D82597-28B1-4441-8C42-0A220C38C4D8} = {27D82597-28B1-4441-8C42-0A220C38C4D8}
 	EndProjectSection
@@ -116,7 +116,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.WebForms", "N
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet Packagers", "NuGet Packagers", "{45D0B279-E785-43E6-86DF-0CCB02B91F6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.DataAccess.Runtime", "NuGet Packager (DataAccess.Runtime)\Caravan.NuGet.DataAccess.Runtime.csproj", "{90139BED-46DA-455A-8C62-D59EFA4BFCCF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.NuGet.DataAccess.Runtime", "NuGet Packagers\Caravan.NuGet.DataAccess.Runtime\Caravan.NuGet.DataAccess.Runtime.csproj", "{90139BED-46DA-455A-8C62-D59EFA4BFCCF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BD471427-A76A-4764-94C1-08C8C3BC1379} = {BD471427-A76A-4764-94C1-08C8C3BC1379}
 	EndProjectSection

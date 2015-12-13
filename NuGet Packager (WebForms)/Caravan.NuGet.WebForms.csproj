@@ -108,7 +108,10 @@
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>:: FONTS
+    <PreBuildEvent>del "$(ProjectDir)*.nupkg"
+del "$(ProjectDir)*.nupkg.bak"
+
+:: FONTS
 RD /S /Q "$(SolutionDir)NuGet Packager (WebForms)\content\FLEX\Fonts"
 MD "$(SolutionDir)NuGet Packager (WebForms)\content\FLEX\Fonts"
 copy "$(SolutionDir)Caravan.WebForms\FLEX\Fonts\*.*" "$(SolutionDir)NuGet Packager (WebForms)\content\FLEX\Fonts"

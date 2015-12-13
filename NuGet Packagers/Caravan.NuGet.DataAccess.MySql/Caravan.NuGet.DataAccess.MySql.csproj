@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0451BAEF-DF2E-4B98-8644-94EE9415E389}</ProjectGuid>
+    <ProjectGuid>{9490808C-9492-407D-B907-34B57585CDFF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NuGet_Packager__Helpers_</RootNamespace>
-    <AssemblyName>NuGet Packager %28Helpers%29</AssemblyName>
+    <RootNamespace>NuGet_Packager__DataAccess.MySql_</RootNamespace>
+    <AssemblyName>NuGet Packager %28DataAccess.MySql%29</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -49,10 +49,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="content\NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="NuGetPackage.ps1" />
     <None Include="NuGetSetup.ps1" />
     <None Include="NuGet.exe" />
@@ -85,7 +81,7 @@
     <Message Text="SUCCESS: Published package." Condition=" '$(Configuration)|$(Platform)|$(ExitCode)' == 'Release|AnyCPU|0' " Importance="High" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>if not exist "$(SolutionDir)NuGet Packager (Common.Runtime)/content" mkdir "$(SolutionDir)NuGet Packager (Common.Runtime)/content"
-copy "$(SolutionDir)Caravan.Common\NLog.config" "$(SolutionDir)NuGet Packager (Common.Runtime)/content"</PreBuildEvent>
+    <PreBuildEvent>del "$(ProjectDir)*.nupkg"
+del "$(ProjectDir)*.nupkg.bak"</PreBuildEvent>
   </PropertyGroup>
 </Project>
