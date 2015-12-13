@@ -476,7 +476,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
-                return await QueryUserInRoleAsyncInternal(appName, groupName, roleName);
+                return await QueryUsersInRoleAsyncInternal(appName, groupName, roleName);
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
@@ -999,7 +999,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         protected abstract Task UpdateRoleAsyncInternal(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates);
 
-        protected abstract Task<IQueryable<SecUser>> QueryUserInRoleAsyncInternal(string appName, string groupName, string roleName);
+        protected abstract Task<IQueryable<SecUser>> QueryUsersInRoleAsyncInternal(string appName, string groupName, string roleName);
 
         protected abstract Task<SecContext[]> GetContextsAsyncInternal(string appName);
 

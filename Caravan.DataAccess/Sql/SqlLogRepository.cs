@@ -57,8 +57,9 @@ namespace Finsa.Caravan.DataAccess.Sql
                 return;
             }
 
-            // Chiusura SqlDbContext - Uso Elvis perché potrebbe essere nullo.
-            _dbContext?.Dispose();
+            // NOTA BENE: Non chiudo il contesto perché mi viene passato al costruttore, farà la Dispose chi me lo passa.
+            //_dbContext?.Dispose();
+
             _disposed = true;
         }
 

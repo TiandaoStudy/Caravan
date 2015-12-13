@@ -50,8 +50,9 @@ namespace Finsa.Caravan.DataAccess.Sql
                 return;
             }
 
-            // Chiusura SqlDbContext - Uso Elvis perché potrebbe essere nullo.
-            _dbContext?.Dispose();
+            // NOTA BENE: Non chiudo il contesto perché mi viene passato al costruttore, farà la Dispose chi me lo passa.
+            //_dbContext?.Dispose();
+
             _disposed = true;
         }
 
@@ -290,7 +291,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
         }
 
-        protected override async Task<IQueryable<SecUser>> QueryUserInRoleAsyncInternal(string appName, string groupName, string roleName)
+        protected override async Task<IQueryable<SecUser>> QueryUsersInRoleAsyncInternal(string appName, string groupName, string roleName)
         {
             var appId = await GetAppIdByNameAsync(_dbContext, appName);
             var group = await GetGroupByNameAsync(_dbContext, appId, appName, groupName);
@@ -299,7 +300,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             // La chiamata sopra mi assicura che il ruolo ci sia.
             return _dbContext.SecUsers
                 .Where(u => u.AppId == appId)
-                .Where(u => u.Roles.Contains(sqlRole))
+                .Where(u => u.Roles.Any(r => r.Id == sqlRole.Id))
                 .ProjectTo<SecUser>();
         }
 

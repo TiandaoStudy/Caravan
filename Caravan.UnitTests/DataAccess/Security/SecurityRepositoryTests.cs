@@ -26,6 +26,8 @@ namespace Finsa.Caravan.UnitTests.DataAccess.Security
 
         private const string TestRoleName1 = "role1";
 
+        private const string TestUserLogin1 = "user1";
+
         [SetUp]
         public override void SetUp()
         {
@@ -79,6 +81,30 @@ namespace Finsa.Caravan.UnitTests.DataAccess.Security
             Assert.That(users.Count(), Is.EqualTo(0));
         }
 
+        [Test]
+        public async Task QueryUsersInGroup_ShouldReturnUsersInRole()
+        {
+            await SecurityRepository.AddAppAsync(new SecApp
+            {
+                Name = TestAppName
+            });
+            await SecurityRepository.AddGroupAsync(TestAppName, new SecGroup
+            {
+                Name = TestGroupName1
+            });
+            await SecurityRepository.AddUserAsync(TestAppName, new SecUser
+            {
+                Login = TestUserLogin1
+            });
+            await SecurityRepository.AddUserToRoleAsync(TestAppName, TestUserLogin1, TestGroupName1, TestRoleName1);
+
+            var users = await SecurityRepository.QueryUsersInGroupAsync(TestAppName, TestGroupName1);
+            Assert.That(users.Count(), Is.EqualTo(1));
+
+            var user = users.First();
+            Assert.That(user.Login, Is.EqualTo(TestUserLogin1));
+        }
+
         #endregion
 
         #region Roles
@@ -101,6 +127,34 @@ namespace Finsa.Caravan.UnitTests.DataAccess.Security
 
             var users = await SecurityRepository.QueryUsersInRoleAsync(TestAppName, TestGroupName1, TestRoleName1);
             Assert.That(users.Count(), Is.EqualTo(0));
+        }
+
+        [Test]
+        public async Task QueryUsersInRole_ShouldReturnUsersInRole()
+        {
+            await SecurityRepository.AddAppAsync(new SecApp
+            {
+                Name = TestAppName
+            });
+            await SecurityRepository.AddGroupAsync(TestAppName, new SecGroup
+            {
+                Name = TestGroupName1
+            });
+            await SecurityRepository.AddRoleAsync(TestAppName, TestGroupName1, new SecRole
+            {
+                Name = TestRoleName1
+            });
+            await SecurityRepository.AddUserAsync(TestAppName, new SecUser
+            {
+                Login = TestUserLogin1
+            });
+            await SecurityRepository.AddUserToRoleAsync(TestAppName, TestUserLogin1, TestGroupName1, TestRoleName1);
+
+            var users = await SecurityRepository.QueryUsersInRoleAsync(TestAppName, TestGroupName1, TestRoleName1);
+            Assert.That(users.Count(), Is.EqualTo(1));
+
+            var user = users.First();
+            Assert.That(user.Login, Is.EqualTo(TestUserLogin1));
         }
 
         #endregion

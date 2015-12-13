@@ -677,7 +677,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             throw new NotImplementedException();
         }
 
-        protected override Task<IQueryable<SecUser>> QueryUserInRoleAsyncInternal(string appName, string groupName, string roleName)
+        protected override Task<IQueryable<SecUser>> QueryUsersInRoleAsyncInternal(string appName, string groupName, string roleName)
         {
             throw new NotImplementedException();
         }
