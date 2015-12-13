@@ -87,12 +87,12 @@ namespace Finsa.Caravan.WebApi.Filters
         ///   Carica dinamicamente l'oggetto che si occupa dell'estrazione dei token.
         /// </summary>
         /// <returns>L'oggetto che si occupa dell'estrazione dei token.</returns>
-        IAccessTokenExtractor LoadAccessTokenExtractor() => Activator.CreateInstance(AccessTokenExtractorType) as IAccessTokenExtractor;
+        IAccessTokenExtractor LoadAccessTokenExtractor() => CaravanServiceProvider.NinjectKernel.Get(AccessTokenExtractorType) as IAccessTokenExtractor;
 
         /// <summary>
         ///   Carica dinamicamente l'oggetto che si occupa della gestione degli errori.
         /// </summary>
         /// <returns>L'oggetto che si occupa della gestione degli errori.</returns>
-        IAuthorizationErrorHandler LoadAuthorizationErrorHandler() => Activator.CreateInstance(AuthorizationErrorHandlerType) as IAuthorizationErrorHandler;
+        IAuthorizationErrorHandler LoadAuthorizationErrorHandler() => CaravanServiceProvider.NinjectKernel.Get(AuthorizationErrorHandlerType) as IAuthorizationErrorHandler;
     }
 }

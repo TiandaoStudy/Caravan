@@ -74,13 +74,13 @@ namespace Finsa.Caravan.Common.Security.Models
         public bool TwoFactorAuthenticationEnabled { get; set; }
 
         [DataMember(Order = 15)]
-        public SecGroup[] Groups { get; set; }
+        public IEnumerable<SecGroup> Groups { get; set; }
 
         [DataMember(Order = 16)]
-        public SecRole[] Roles { get; set; }
+        public IEnumerable<SecRole> Roles { get; set; }
 
         [DataMember(Order = 17)]
-        public SecClaim[] Claims { get; set; }
+        public IEnumerable<SecClaim> Claims { get; set; }
 
         #region IUser members
 

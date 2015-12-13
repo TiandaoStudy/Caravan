@@ -33,9 +33,6 @@ namespace Finsa.Caravan.Common.Security.Models
         [DataMember(Order = 4)]
         public string Claim { get; set; }
 
-        [DataMember(Order = 5)]
-        public SecUser User { get; set; }
-
         protected override IEnumerable<KeyValuePair<string, string>> GetFormattingMembers()
         {
             yield return KeyValuePair.Create(nameof(Id), Id.ToString(CultureInfo.InvariantCulture));

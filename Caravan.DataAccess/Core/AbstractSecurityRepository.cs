@@ -18,9 +18,8 @@ using Finsa.Caravan.Common.Security.Models;
 using Finsa.CodeServices.Common;
 using PommaLabs.Thrower;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
@@ -259,10 +258,26 @@ namespace Finsa.Caravan.DataAccess.Core
                 // Lascio emergere l'eccezione...
             }
         }
-        
+
         public async Task<IQueryable<SecUser>> QueryUsersInGroupAsync(string appName, string groupName)
         {
-            throw new NotImplementedException();
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+
+            appName = appName.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
+            var logCtx = $"Querying users of group '{groupName}' from application '{appName}'";
+
+            try
+            {
+                return await QueryUsersInGroupAsyncInternal(appName, groupName);
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(IQueryable<SecUser>);
+            }
         }
 
         #endregion Groups
@@ -449,10 +464,28 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public async Task<IQueryable<SecUser>> QueryUsersInRoleAsync(string appName, string groupName, string roleName)
         {
-            throw new NotImplementedException();
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(groupName), ErrorMessages.NullOrWhiteSpaceGroupName, nameof(groupName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(roleName), ErrorMessages.NullOrWhiteSpaceRoleName, nameof(roleName));
+
+            appName = appName.ToLowerInvariant();
+            groupName = groupName.ToLowerInvariant();
+            roleName = roleName.ToLowerInvariant();
+            var logCtx = $"Querying users of role '{roleName}' from group '{groupName}' of application '{appName}'";
+
+            try
+            {
+                return await QueryUserInRoleAsyncInternal(appName, groupName, roleName);
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(IQueryable<SecUser>);
+            }
         }
 
-        #endregion
+        #endregion Roles
 
         #region Users
 

@@ -11,6 +11,7 @@
 // the License.
 
 using Microsoft.AspNet.Identity;
+using Ninject;
 using PommaLabs.Thrower;
 using System;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace Finsa.Caravan.Common.Security
             var app = await SecurityRepository.GetAppAsync(appName);
             var userStore = new CaravanUserStore(app.Id, app.Name, SecurityRepository);
             var passwordHasherType = Type.GetType(app.PasswordHasher, true, true);
-            var passwordHasher = Activator.CreateInstance(passwordHasherType) as IPasswordHasher;
+            var passwordHasher = CaravanServiceProvider.NinjectKernel.Get(passwordHasherType) as IPasswordHasher;
             return new CaravanUserManager(userStore, passwordHasher);
         }
     }

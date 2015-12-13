@@ -306,11 +306,11 @@ namespace Finsa.Caravan.Common.Security
                 user.Claims = new SecClaim[0];
             }
 
-            IList<Claim> claims = new Claim[user.Claims.Length];
-            for (var i = 0; i < claims.Count; ++i)
+            IList<Claim> claims = new List<Claim>();
+            foreach (var userClaim in user.Claims)
             {
-                var serializedClaim = user.Claims[i].Claim;
-                claims[i] = BinarySerializer.DeserializeFromString<Claim>(serializedClaim);
+                var serializedClaim = userClaim.Claim;
+                claims.Add(BinarySerializer.DeserializeFromString<Claim>(serializedClaim));
             }
             return Task.FromResult(claims);
         }
