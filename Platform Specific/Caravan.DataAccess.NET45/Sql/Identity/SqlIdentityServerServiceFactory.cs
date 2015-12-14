@@ -10,15 +10,12 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Identity;
 using Finsa.Caravan.Common.Security;
-using Finsa.Caravan.DataAccess.Sql.Identity.Services;
-using Finsa.Caravan.DataAccess.Sql.Identity.Stores;
+using Finsa.Caravan.DataAccess.Core;
 using Finsa.CodeServices.Clock;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Services;
-using Ninject;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity
 {
@@ -32,28 +29,28 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity
         /// </summary>
         public SqlIdentityServerServiceFactory()
         {
-            UserService = new Registration<IUserService, CaravanUserService>();
+            UserService = new IdentityServerNinjectRegistration<IUserService>();
 
             // Operational stores
-            AuthorizationCodeStore = new Registration<IAuthorizationCodeStore, SqlIdnAuthorizationCodeStore>();
-            TokenHandleStore = new Registration<ITokenHandleStore, SqlIdnTokenHandleStore>();
-            ConsentStore = new Registration<IConsentStore, SqlIdnConsentStore>();
-            RefreshTokenStore = new Registration<IRefreshTokenStore, SqlIdnRefreshTokenStore>();
+            AuthorizationCodeStore = new IdentityServerNinjectRegistration<IAuthorizationCodeStore>();
+            TokenHandleStore = new IdentityServerNinjectRegistration<ITokenHandleStore>();
+            ConsentStore = new IdentityServerNinjectRegistration<IConsentStore>();
+            RefreshTokenStore = new IdentityServerNinjectRegistration<IRefreshTokenStore>();
 
             // Client configuration
-            ClientStore = new Registration<IClientStore, SqlIdnClientStore>();
+            ClientStore = new IdentityServerNinjectRegistration<IClientStore>();
 
             // Scope configuration
-            ScopeStore = new Registration<IScopeStore, SqlIdnScopeStore>();
+            ScopeStore = new IdentityServerNinjectRegistration<IScopeStore>();
 
             // CORS handling
-            CorsPolicyService = new Registration<ICorsPolicyService, SqlIdnCorsPolicyService>();
+            CorsPolicyService = new IdentityServerNinjectRegistration<ICorsPolicyService>();
 
             // Further services registrations...
-            Register(new Registration<SqlDbContext>(r => CaravanServiceProvider.NinjectKernel.Get<SqlDbContext>()));
-            Register(new Registration<ICaravanClientStore, SqlIdnClientStore>());
-            Register(new Registration<IClock>(r => CaravanServiceProvider.NinjectKernel.Get<IClock>()));
-            Register(new Registration<ICaravanUserManagerFactory>(r => CaravanServiceProvider.NinjectKernel.Get<ICaravanUserManagerFactory>()));
+            Register(new IdentityServerNinjectRegistration<SqlDbContext>());
+            Register(new IdentityServerNinjectRegistration<ICaravanClientStore>());
+            Register(new IdentityServerNinjectRegistration<IClock>());
+            Register(new IdentityServerNinjectRegistration<ICaravanUserManagerFactory>());
         }
     }
 }

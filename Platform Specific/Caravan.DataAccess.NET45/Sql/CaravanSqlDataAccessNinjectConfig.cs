@@ -11,11 +11,17 @@
 // the License.
 
 using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Identity;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.DataAccess.Sql.Identity;
+using Finsa.Caravan.DataAccess.Sql.Identity.Services;
+using Finsa.Caravan.DataAccess.Sql.Identity.Stores;
 using Finsa.CodeServices.Common.Portability;
+using IdentityManager;
+using IdentityManager.Configuration;
 using IdentityServer3.Core.Configuration;
+using IdentityServer3.Core.Services;
 using InteractivePreGeneratedViews;
 using Ninject;
 using Ninject.Web.Common;
@@ -70,6 +76,16 @@ namespace Finsa.Caravan.DataAccess.Sql
 
                     // Gestione dell'autenticazione e dell'autorizzazione.
                     Bind<IdentityServerServiceFactory>().To<SqlIdentityServerServiceFactory>().InSingletonScope();
+                    Bind<IdentityManagerServiceFactory>().To<SqlIdentityManagerServiceFactory>().InSingletonScope();
+                    Bind<IIdentityManagerService>().To<SqlIdentityManagerService>().InRequestScope();
+                    Bind<IAuthorizationCodeStore>().To<SqlIdnAuthorizationCodeStore>().InRequestScope();
+                    Bind<ITokenHandleStore>().To<SqlIdnTokenHandleStore>().InRequestScope();
+                    Bind<IConsentStore>().To<SqlIdnConsentStore>().InRequestScope();
+                    Bind<IRefreshTokenStore>().To<SqlIdnRefreshTokenStore>().InRequestScope();
+                    Bind<IClientStore, ICaravanClientStore>().To<SqlIdnClientStore>().InRequestScope();
+                    Bind<IScopeStore>().To<SqlIdnScopeStore>().InRequestScope();
+                    Bind<IScopeStore>().To<SqlIdnScopeStore>().InRequestScope();
+                    Bind<ICorsPolicyService>().To<SqlIdnCorsPolicyService>().InRequestScope();
                     break;
             }
         }

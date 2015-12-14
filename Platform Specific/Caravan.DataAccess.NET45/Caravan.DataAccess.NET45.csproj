@@ -248,6 +248,7 @@
     <Compile Include="CaravanDataAccessNinjectConfig.cs" />
     <Compile Include="CaravanDataSourceKind.cs" />
     <Compile Include="Core\ErrorMessages.cs" />
+    <Compile Include="Core\IdentityNinjectRegistrations.cs" />
     <Compile Include="Mongo\CaravanMongoDataAccessNinjectConfig.cs" />
     <Compile Include="Rest\CaravanMongoDataAccessNinjectConfig.cs" />
     <Compile Include="Rest\Models\RestRequest.cs" />

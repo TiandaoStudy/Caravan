@@ -19,7 +19,7 @@ using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.WebApi.Models;
 using PommaLabs.Thrower;
 using System;
-using System.Net.Http;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 
@@ -74,7 +74,18 @@ namespace Finsa.Caravan.WebApi.Identity
                 }
 
                 var user = await _securityRepository.GetUserByIdAsync(idnUserKey.AppName, idnUserKey.UserId);
-                return await ValidateRequestAsync(actionContext, userClaims, user);
+                AuthorizationResult authorizationResult = await ValidateRequestAsync(actionContext, userClaims, user);
+
+                if (authorizationResult.Authorized)
+                {
+                    authorizationResult.User = new IdnUser
+                    {
+                        Login = user.Login,
+                        Roles = user.Roles.Select(r => SecRole.ToIdentityRoleName(r.GroupName, r.Name)).ToArray()
+                    };
+                }
+
+                return authorizationResult;
             }
             catch (SecAppNotFoundException aex)
             {

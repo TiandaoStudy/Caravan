@@ -19,8 +19,10 @@ using Ninject;
 using RestSharp;
 using System;
 using System.Net;
+using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
@@ -106,6 +108,11 @@ namespace Finsa.Caravan.WebApi.Filters
                         await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidRequest, reason);
                     }
                 }
+
+                var identity = new GenericIdentity(authorizationResult.User.Login);
+                var principal = new GenericPrincipal(identity, authorizationResult.User.Roles);
+                Thread.CurrentPrincipal = principal;
+                HttpContext.Current.User = principal;
             }
             catch (Exception ex)
             {

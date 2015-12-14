@@ -10,13 +10,12 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.Common.Security.Models;
+using Finsa.Caravan.DataAccess.Core;
 using IdentityManager;
 using IdentityManager.AspNetIdentity;
 using IdentityManager.Configuration;
-using Ninject;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity
 {
@@ -30,21 +29,20 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity
         /// </summary>
         public SqlIdentityManagerServiceFactory()
         {
-            IdentityManagerService = new Registration<IIdentityManagerService, SqlIdentityManagerService>();
-
-            Register(new Registration<CaravanUserManager>(r => CaravanServiceProvider.NinjectKernel.Get<ICaravanUserManagerFactory>().CreateAsync().Result));
-            Register(new Registration<CaravanRoleManager>(r => CaravanServiceProvider.NinjectKernel.Get<ICaravanRoleManagerFactory>().CreateAsync().Result));
+            IdentityManagerService = new IdentityManagerNinjectRegistration<IIdentityManagerService>();
 
             // Further services registrations...
-            Register(new Registration<SqlDbContext>(r => CaravanServiceProvider.NinjectKernel.Get<SqlDbContext>()));
+            Register(new IdentityManagerNinjectRegistration<CaravanUserManager>());
+            Register(new IdentityManagerNinjectRegistration<CaravanRoleManager>());
+            Register(new IdentityManagerNinjectRegistration<SqlDbContext>());
         }
+    }
 
-        private sealed class SqlIdentityManagerService : AspNetIdentityManagerService<SecUser, long, SecRole, int>
+    internal sealed class SqlIdentityManagerService : AspNetIdentityManagerService<SecUser, long, SecRole, int>
+    {
+        public SqlIdentityManagerService(CaravanUserManager userManager, CaravanRoleManager roleManager)
+            : base(userManager, roleManager)
         {
-            public SqlIdentityManagerService(CaravanUserManager userManager, CaravanRoleManager roleManager)
-                : base(userManager, roleManager)
-            {
-            }
         }
     }
 }
