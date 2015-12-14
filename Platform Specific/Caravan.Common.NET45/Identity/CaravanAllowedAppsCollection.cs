@@ -39,7 +39,7 @@ namespace Finsa.Caravan.Common.Identity
             {
                 return;
             }
-            _allowedApps.Add(item);
+            _allowedApps.Add(item.ToLowerInvariant());
         }
 
         public void Clear()
@@ -57,7 +57,7 @@ namespace Finsa.Caravan.Common.Identity
             {
                 return true;
             }
-            return _allowedApps.Contains(item);
+            return _allowedApps.Contains(item.ToLowerInvariant());
         }
 
         public void CopyTo(string[] array, int arrayIndex)
@@ -88,7 +88,7 @@ namespace Finsa.Caravan.Common.Identity
             {
                 return false;
             }
-            return _allowedApps.Remove(item);
+            return _allowedApps.Remove(item.ToLowerInvariant());
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

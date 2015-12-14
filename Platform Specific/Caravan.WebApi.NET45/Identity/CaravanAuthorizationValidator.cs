@@ -11,6 +11,8 @@
 // the License.
 
 using Common.Logging;
+using Finsa.Caravan.Common.Identity;
+using Finsa.Caravan.Common.Identity.Models;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
@@ -31,18 +33,22 @@ namespace Finsa.Caravan.WebApi.Identity
     {
         readonly ILog _log;
         readonly ICaravanSecurityRepository _securityRepository;
+        readonly CaravanAllowedAppsCollection _allowedApps;
 
         /// <summary>
         ///   Gestisce le dipendenze del modulo.
         /// </summary>
         /// <param name="log">Il log su cui annotare eventuali messaggi.</param>
         /// <param name="securityRepository">Il repository con cui gestire gli utenti.</param>
-        public CaravanAuthorizationValidator(ILog log, ICaravanSecurityRepository securityRepository)
+        /// <param name="allowedApps">Le applicazioni Caravan che possono usufruire del servizio.</param>
+        public CaravanAuthorizationValidator(ILog log, ICaravanSecurityRepository securityRepository, CaravanAllowedAppsCollection allowedApps)
         {
             RaiseArgumentNullException.IfIsNull(log, nameof(log));
             RaiseArgumentNullException.IfIsNull(securityRepository, nameof(securityRepository));
+            RaiseArgumentNullException.IfIsNull(allowedApps, nameof(allowedApps));
             _log = log;
             _securityRepository = securityRepository;
+            _allowedApps = allowedApps;
         }
 
         /// <summary>
@@ -56,7 +62,19 @@ namespace Finsa.Caravan.WebApi.Identity
         {
             try
             {
-                return await ValidateRequestAsync(actionContext, userClaims, null);
+                IdnUserKey idnUserKey = IdnUserKey.FromString(userClaims.sub);
+
+                if (!_allowedApps.Contains(idnUserKey.AppName))
+                {
+                    return new AuthorizationResult
+                    {
+                        Authorized = false,
+                        AuthorizationDeniedReason = $"Application '{idnUserKey.AppName}' has not been allowed"
+                    };
+                }
+
+                var user = await _securityRepository.GetUserByIdAsync(idnUserKey.AppName, idnUserKey.UserId);
+                return await ValidateRequestAsync(actionContext, userClaims, user);
             }
             catch (SecAppNotFoundException aex)
             {
