@@ -50,10 +50,10 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity
             CorsPolicyService = new Registration<ICorsPolicyService, SqlIdnCorsPolicyService>();
 
             // Further services registrations...
-            Register(new Registration<SqlDbContext>(r => SqlDbContext.CreateUpdateContext()));
+            Register(new Registration<SqlDbContext>(r => CaravanServiceProvider.NinjectKernel.Get<SqlDbContext>()));
             Register(new Registration<ICaravanClientStore, SqlIdnClientStore>());
-            Register(new Registration<IClock>(CaravanServiceProvider.NinjectKernel.Get<IClock>()));
-            Register(new Registration<ICaravanUserManagerFactory>(CaravanServiceProvider.NinjectKernel.Get<ICaravanUserManagerFactory>()));
+            Register(new Registration<IClock>(r => CaravanServiceProvider.NinjectKernel.Get<IClock>()));
+            Register(new Registration<ICaravanUserManagerFactory>(r => CaravanServiceProvider.NinjectKernel.Get<ICaravanUserManagerFactory>()));
         }
     }
 }

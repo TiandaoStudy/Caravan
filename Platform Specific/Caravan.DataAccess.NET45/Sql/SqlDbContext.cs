@@ -52,6 +52,11 @@ namespace Finsa.Caravan.DataAccess.Sql
             Configuration.LazyLoadingEnabled = false;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+        }
+
         public static SqlDbContext CreateReadContext()
         {
             // Il DB è già inizializzato dalla chiamata sottostante.

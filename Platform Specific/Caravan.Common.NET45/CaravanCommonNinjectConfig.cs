@@ -16,6 +16,7 @@ using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
 using Finsa.CodeServices.Clock;
 using Ninject.Modules;
+using Ninject.Web.Common;
 using PommaLabs.Thrower;
 using System;
 
@@ -81,10 +82,10 @@ namespace Finsa.Caravan.Common
             }
 
             // Bind indipendenti dall'ambiente di esecuzione:
-            Bind<ICaravanUserStore>().To<CaravanUserStore>().InSingletonScope().WithConstructorArgument("appName", _appName);
-            Bind<ICaravanRoleStore>().To<CaravanRoleStore>().InSingletonScope().WithConstructorArgument("appName", _appName);
-            Bind<ICaravanUserManagerFactory>().To<CaravanUserManagerFactory>().InSingletonScope();
-            Bind<ICaravanRoleManagerFactory>().To<CaravanRoleManagerFactory>().InSingletonScope();
+            Bind<ICaravanUserStore>().To<CaravanUserStore>().InRequestScope().WithConstructorArgument("appName", _appName);
+            Bind<ICaravanRoleStore>().To<CaravanRoleStore>().InRequestScope().WithConstructorArgument("appName", _appName);
+            Bind<ICaravanUserManagerFactory>().To<CaravanUserManagerFactory>().InRequestScope();
+            Bind<ICaravanRoleManagerFactory>().To<CaravanRoleManagerFactory>().InRequestScope();
             Bind<ICaravanVariablesContextIdentifier>().To<CaravanVariablesContextIdentifier>().InSingletonScope();
         }
     }

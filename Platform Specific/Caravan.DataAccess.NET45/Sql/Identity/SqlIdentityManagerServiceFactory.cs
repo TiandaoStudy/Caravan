@@ -32,11 +32,11 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity
         {
             IdentityManagerService = new Registration<IIdentityManagerService, SqlIdentityManagerService>();
 
-            Register(new Registration<CaravanUserManager>(CaravanServiceProvider.NinjectKernel.Get<ICaravanUserManagerFactory>().CreateAsync().Result));
-            Register(new Registration<CaravanRoleManager>(CaravanServiceProvider.NinjectKernel.Get<ICaravanRoleManagerFactory>().CreateAsync().Result));
+            Register(new Registration<CaravanUserManager>(r => CaravanServiceProvider.NinjectKernel.Get<ICaravanUserManagerFactory>().CreateAsync().Result));
+            Register(new Registration<CaravanRoleManager>(r => CaravanServiceProvider.NinjectKernel.Get<ICaravanRoleManagerFactory>().CreateAsync().Result));
 
             // Further services registrations...
-            Register(new Registration<SqlDbContext>(r => SqlDbContext.CreateUpdateContext()));
+            Register(new Registration<SqlDbContext>(r => CaravanServiceProvider.NinjectKernel.Get<SqlDbContext>()));
         }
 
         private sealed class SqlIdentityManagerService : AspNetIdentityManagerService<SecUser, long, SecRole, int>
