@@ -62,7 +62,7 @@ namespace Finsa.Caravan.WebApi.Identity
         {
             try
             {
-                IdnUserKey idnUserKey = IdnUserKey.FromString(userClaims.sub);
+                IdnUserKey idnUserKey = IdnUserKey.FromString(userClaims["sub"]);
 
                 if (!_allowedApps.Contains(idnUserKey.AppName))
                 {
