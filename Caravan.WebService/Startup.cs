@@ -55,11 +55,11 @@ namespace Finsa.Caravan.WebService
             var kernel = CreateKernel();
 
             // Inizializzatore per Caravan.
-            Task.Run(async () => await CaravanWebServiceHelper.OnStartAsync(app, config, new CaravanWebServiceHelper.Settings
+            CaravanWebServiceHelper.OnStartAsync(app, config, new CaravanWebServiceHelper.Settings
             {
                 EnableHttpCompressionMiddleware = true,
                 EnableHttpLoggingMiddleware = true
-            }));
+            }).Wait();
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
 
             // Inizializzatore per Ninject.

@@ -62,7 +62,7 @@ namespace Finsa.Caravan.WebApi.Identity
         {
             try
             {
-                IdnUserKey idnUserKey = IdnUserKey.FromString(userClaims["sub"]);
+                SecUserKey idnUserKey = SecUserKey.FromString(userClaims["sub"]);
 
                 if (!_allowedApps.Contains(idnUserKey.AppName))
                 {
@@ -73,16 +73,12 @@ namespace Finsa.Caravan.WebApi.Identity
                     };
                 }
 
-                var user = await _securityRepository.GetUserByIdAsync(idnUserKey.AppName, idnUserKey.UserId);
+                var user = await _securityRepository.GetUserByLoginAsync(idnUserKey.AppName, idnUserKey.UserLogin);
                 AuthorizationResult authorizationResult = await ValidateRequestAsync(actionContext, userClaims, user);
 
                 if (authorizationResult.Authorized)
                 {
-                    authorizationResult.User = new IdnUser
-                    {
-                        Login = user.Login,
-                        Roles = user.Roles.Select(r => SecRole.ToIdentityRoleName(r.GroupName, r.Name)).ToArray()
-                    };
+                    authorizationResult.User = user;
                 }
 
                 return authorizationResult;

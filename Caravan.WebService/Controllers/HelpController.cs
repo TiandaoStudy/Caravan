@@ -10,6 +10,8 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.Caravan.Common.Identity.Models;
+using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.WebApi.Filters;
 using System.Diagnostics;
 using System.Reflection;
@@ -52,6 +54,6 @@ namespace Finsa.Caravan.WebService.Controllers
         ///   Returns the authorized user info.
         /// </summary>
         [Route("help/userinfo"), OAuth2Authorize]
-        public IPrincipal GetUserInfo() => User;
+        public SecUser GetUserInfo() => (User as IdnPrincipal).User;
     }
 }

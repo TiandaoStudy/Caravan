@@ -11,6 +11,7 @@
 // the License.
 
 using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Identity.Models;
 using Finsa.Caravan.WebApi.Identity;
 using Finsa.Caravan.WebApi.Identity.Models;
 using Finsa.Caravan.WebApi.Models;
@@ -126,9 +127,8 @@ namespace Finsa.Caravan.WebApi.Filters
                         await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidRequest, reason);
                     }
                 }
-
-                var identity = new GenericIdentity(authorizationResult.User.Login);
-                var principal = new GenericPrincipal(identity, authorizationResult.User.Roles);
+                
+                var principal = new IdnPrincipal(authorizationResult.User);
                 Thread.CurrentPrincipal = principal;
                 HttpContext.Current.User = principal;
             }

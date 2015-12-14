@@ -10,21 +10,26 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.Caravan.Common.Security.Models;
+using PommaLabs.Thrower;
+using System.Linq;
+using System.Security.Principal;
+
 namespace Finsa.Caravan.Common.Identity.Models
 {
-    /// <summary>
-    ///   Sintesi delle informazioni di identità dell'utente.
-    /// </summary>
-    public sealed class IdnUser
+    public sealed class IdnPrincipal : IPrincipal
     {
-        /// <summary>
-        ///   La login dell'utente.
-        /// </summary>
-        public string Login { get; set; }
+        public IdnPrincipal(SecUser user)
+        {
+            RaiseArgumentNullException.IfIsNull(user, nameof(user));
+            User = user;
+            Identity = new IdnIdentity(user.AppName, user.Login);
+        }
 
-        /// <summary>
-        ///   I ruoli ricoperti dall'utente.
-        /// </summary>
-        public string[] Roles { get; set; }
+        public SecUser User { get; }
+
+        public IIdentity Identity { get; }
+
+        public bool IsInRole(string role) => User.Roles.Any(r => role == SecRole.ToIdentityRoleName(r.GroupName, r.Name));
     }
 }
