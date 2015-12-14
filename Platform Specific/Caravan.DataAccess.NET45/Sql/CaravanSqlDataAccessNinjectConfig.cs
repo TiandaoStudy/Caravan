@@ -76,23 +76,23 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         private void ConfigureEFPregeneratedViews()
         {
-            // Configura la generazione automatica delle viste per EF.
-            using (var ctx = Kernel.Get<SqlDbContext>())
-            {
-                // Per prima cosa, recupero la cartella di destinazione e mi assicuro che
-                // esista. Se non esiste, la creo, altrimenti avrei un errore alla prima query.
-                var pregenViewsPath = CaravanDataAccessConfiguration.Instance.Drivers_Sql_EFPregeneratedViews_Path;
-                var mappedPregenViewsPath = PortableEnvironment.MapPath(pregenViewsPath);
-                if (!Directory.Exists(mappedPregenViewsPath))
-                {
-                    Directory.CreateDirectory(mappedPregenViewsPath);
-                }
+            // Configura la generazione automatica delle viste per EF. Non fare dispose del contesto
+            // sottostante, potrebbe essere quello dedicato alla request in corso.
+            var dbContext = Kernel.Get<SqlDbContext>();
 
-                // Quindi, calcolo il nome del file di destinazione e applico il nuovo meccanismo.
-                var caravanPregenViewsFileName = CaravanDataAccessConfiguration.Instance.Drivers_Sql_EFPregeneratedViews_CaravanViewsFileName;
-                var caravanPregenViews = Path.Combine(mappedPregenViewsPath, caravanPregenViewsFileName);
-                InteractiveViews.SetViewCacheFactory(ctx, new FileViewCacheFactory(caravanPregenViews));
+            // Per prima cosa, recupero la cartella di destinazione e mi assicuro che esista. Se non
+            // esiste, la creo, altrimenti avrei un errore alla prima query.
+            var pregenViewsPath = CaravanDataAccessConfiguration.Instance.Drivers_Sql_EFPregeneratedViews_Path;
+            var mappedPregenViewsPath = PortableEnvironment.MapPath(pregenViewsPath);
+            if (!Directory.Exists(mappedPregenViewsPath))
+            {
+                Directory.CreateDirectory(mappedPregenViewsPath);
             }
+
+            // Quindi, calcolo il nome del file di destinazione e applico il nuovo meccanismo.
+            var caravanPregenViewsFileName = CaravanDataAccessConfiguration.Instance.Drivers_Sql_EFPregeneratedViews_CaravanViewsFileName;
+            var caravanPregenViews = Path.Combine(mappedPregenViewsPath, caravanPregenViewsFileName);
+            InteractiveViews.SetViewCacheFactory(dbContext, new FileViewCacheFactory(caravanPregenViews));
         }
     }
 }
