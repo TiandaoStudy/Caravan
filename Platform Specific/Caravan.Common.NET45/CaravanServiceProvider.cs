@@ -43,7 +43,6 @@ namespace Finsa.Caravan.Common
 
                 // Quindi, aggiorno anche le varie dipendenze.
                 Clock = value.Get<IClock>();
-                LogRepository = value.Get<ICaravanLogRepository>();
                 MemoryCache = MemoryCache.DefaultInstance;
             }
         }
@@ -60,11 +59,6 @@ namespace Finsa.Caravan.Common
         ///   rigorosamente, e semplicemente, su file, per evitare ulteriori errori.
         /// </summary>
         public static ILog EmergencyLog { get; } = LogManager.GetLogger("CaravanEmergencyLog");
-
-        /// <summary>
-        ///   Il repository dei log su cui andare a persistere i messaggi.
-        /// </summary>
-        public static ICaravanLogRepository LogRepository { get; private set; }
 
         /// <summary>
         ///   La cache in memoria usata da alcuni punti critici di Caravan.

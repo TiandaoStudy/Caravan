@@ -60,6 +60,10 @@ namespace Finsa.Caravan.DataAccess.Sql
                 case DependencyHandling.TestEnvironment:
                 case DependencyHandling.ProductionEnvironment:
                 case DependencyHandling.UnitTesting:
+                    // Gestione del DbContext per EF.
+                    Bind<SqlDbContext>().ToMethod(ctx => SqlDbContext.Create(ctx.Kernel.Get<ICaravanDataSourceManager>())).InRequestScope();
+                    ConfigureEFPregeneratedViews();
+
                     // Gestione dei repository base di Caravan.
                     Bind<ICaravanLogRepository>().To<SqlLogRepository>().InRequestScope();
                     Bind<ICaravanSecurityRepository>().To<SqlSecurityRepository>().InRequestScope();

@@ -1,10 +1,3 @@
-using AutoMapper;
-using Common.Logging;
-using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Logging;
-using Finsa.Caravan.Common.Logging.Models;
-using Finsa.Caravan.DataAccess.Core;
-
 // Copyright 2015-2025 Finsa S.p.A. <finsa@finsa.it>
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -17,6 +10,12 @@ using Finsa.Caravan.DataAccess.Core;
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using AutoMapper;
+using Common.Logging;
+using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Logging.Models;
+using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Sql.Logging.Entities;
 using Finsa.Caravan.DataAccess.Sql.Security.Entities;
 using Finsa.CodeServices.Clock;

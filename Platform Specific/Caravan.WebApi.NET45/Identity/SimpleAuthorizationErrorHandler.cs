@@ -51,6 +51,26 @@ namespace Finsa.Caravan.WebApi.Identity
 
         /// <summary>
         ///   Gestisce un errore avvenuto durante la validazione dell'accesso. Questa variante deve
+        ///   gestire anche un eventuale oggetto riportante ulteriori informazioni sull'errore.
+        /// </summary>
+        /// <param name="actionContext">L'azione per cui si stava validando l'accesso.</param>
+        /// <param name="errorContext">Il tipo di errore riscontrato.</param>
+        /// <param name="payload">Un oggetto contenente ulteriori informazioni.</param>
+        public void HandleError(HttpActionContext actionContext, AuthorizationErrorContext errorContext, object payload)
+        {
+            var controllerName = actionContext.ActionDescriptor.ControllerDescriptor.ControllerName;
+            var actionName = actionContext.ActionDescriptor.ActionName;
+            var errorMessage = $"Access denied to {controllerName}.{actionName}. Reason: {errorContext}. Payload: {payload.ToString()}";
+            Log.Error(errorMessage);
+            throw new HttpException(HttpStatusCode.Unauthorized, errorMessage, new HttpExceptionInfo
+            {
+                UserMessage = errorMessage,
+                ErrorCode = CaravanErrorCodes.CVE00000
+            });
+        }
+
+        /// <summary>
+        ///   Gestisce un errore avvenuto durante la validazione dell'accesso. Questa variante deve
         ///   gestire anche una eventuale eccezione.
         /// </summary>
         /// <param name="actionContext">L'azione per cui si stava validando l'accesso.</param>

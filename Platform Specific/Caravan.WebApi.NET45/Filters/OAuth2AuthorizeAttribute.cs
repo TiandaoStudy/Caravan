@@ -17,6 +17,7 @@ using Finsa.Caravan.WebApi.Models.Identity;
 using Ninject;
 using RestSharp;
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
@@ -24,8 +25,17 @@ using System.Web.Http.Filters;
 
 namespace Finsa.Caravan.WebApi.Filters
 {
+    /// <summary>
+    ///   Gestisce l'autorizzazione comunicando con un server OAuth2.
+    /// </summary>
     public sealed class OAuth2AuthorizeAttribute : ActionFilterAttribute
     {
+        /// <summary>
+        ///   Le impostazioni legate al server di OAuth2. Iniettate in automatico da Ninject.
+        /// </summary>
+        [Inject]
+        public OAuth2AuthorizationSettings AuthorizationSettings { get; set; }
+
         /// <summary>
         ///   Il tipo che implementa l'interfaccia <see cref="IAccessTokenExtractor"/> da istanziare per
         ///   recuperare gli access token dalle richieste HTTP.
@@ -56,8 +66,6 @@ namespace Finsa.Caravan.WebApi.Filters
         {
             try
             {
-                var authorizationSettings = CaravanServiceProvider.NinjectKernel.Get<OAuth2AuthorizationSettings>();
-
                 string accessToken;
                 var accessTokenExtractor = LoadAccessTokenExtractor();
                 if (!accessTokenExtractor.ExtractFromRequest(actionContext.Request, out accessToken))
@@ -66,7 +74,7 @@ namespace Finsa.Caravan.WebApi.Filters
                     return;
                 }
 
-                var restClient = new RestClient(authorizationSettings.AccessTokenValidationUrl);
+                var restClient = new RestClient(AuthorizationSettings.AccessTokenValidationUrl);
                 var restRequest = new RestRequest(Method.POST);
                 restRequest.AddParameter(new Parameter
                 {
@@ -75,7 +83,14 @@ namespace Finsa.Caravan.WebApi.Filters
                     Value = accessToken
                 });
 
-                var restResponse = await restClient.ExecuteTaskAsync(restRequest);
+                var restResponse = await restClient.ExecuteTaskAsync<dynamic>(restRequest);
+
+                if (restResponse.StatusCode != HttpStatusCode.OK)
+                {
+                    var payload = $"[StatusCode: {restResponse.StatusCode}, Content: '{restResponse.Content}']";
+                    LoadAuthorizationErrorHandler().HandleError(actionContext, AuthorizationErrorContext.MissingAccessToken, payload);
+                    return;
+                }
             }
             catch (Exception ex)
             {

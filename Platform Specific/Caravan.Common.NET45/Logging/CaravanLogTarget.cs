@@ -12,6 +12,7 @@
 
 using AutoMapper;
 using Finsa.Caravan.Common.Logging.Models;
+using Ninject;
 using NLog;
 using NLog.Common;
 using NLog.Config;
@@ -33,6 +34,19 @@ namespace Finsa.Caravan.Common.Logging
         private static readonly SimpleLayout DefaultUserLogin = new SimpleLayout("${identity:name=true:lowercase=true}");
         private static readonly SimpleLayout DefaultCodeUnit = new SimpleLayout("${callsite:className=true:methodName=false:lowercase=true}");
         private static readonly SimpleLayout DefaultFunction = new SimpleLayout("${callsite:className=false:methodName=true:lowercase=true}");
+
+        private ICaravanLogRepository _cachedLogRepository;
+        private ICaravanLogRepository LogRepository
+        {
+            get
+            {
+                if (_cachedLogRepository == null)
+                {
+                    _cachedLogRepository = CaravanServiceProvider.NinjectKernel.Get<ICaravanLogRepository>();
+                }
+                return _cachedLogRepository;
+            }
+        }
 
         /// <summary>
         ///   Il layout da applicare per mostrare l'utente loggato che ha prodotto il messaggio.
@@ -66,7 +80,7 @@ namespace Finsa.Caravan.Common.Logging
             try
             {
                 var logEntry = ToLogEntry(logEvent);
-                var result = await CaravanServiceProvider.LogRepository.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, logEntry);
+                var result = await LogRepository.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, logEntry);
 
                 if (!result.Succeeded)
                 {
@@ -89,7 +103,7 @@ namespace Finsa.Caravan.Common.Logging
             try
             {
                 var logEntry = ToLogEntry(logEvent.LogEvent);
-                var result = await CaravanServiceProvider.LogRepository.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, logEntry);
+                var result = await LogRepository.AddEntryAsync(CaravanCommonConfiguration.Instance.AppName, logEntry);
 
                 if (!result.Succeeded)
                 {
@@ -114,7 +128,7 @@ namespace Finsa.Caravan.Common.Logging
             try
             {
                 var logEntries = logEvents.Select(le => ToLogEntry(le.LogEvent));
-                var result = await CaravanServiceProvider.LogRepository.AddEntriesAsync(CaravanCommonConfiguration.Instance.AppName, logEntries);
+                var result = await LogRepository.AddEntriesAsync(CaravanCommonConfiguration.Instance.AppName, logEntries);
 
                 if (!result.Succeeded)
                 {

@@ -63,6 +63,16 @@ namespace Finsa.Caravan.DataAccess.Sql
             return ctx;
         }
 
+        public static SqlDbContext Create(ICaravanDataSourceManager dataSourceManager)
+        {
+            var ctx = new SqlDbContext(dataSourceManager);
+
+            // Provo a inizializzare il DB.
+            ctx.Database.Initialize(false);
+
+            return ctx;
+        }
+
         public static SqlDbContext CreateUpdateContext()
         {
             var ctx = new SqlDbContext(CaravanDataSource.Manager);
