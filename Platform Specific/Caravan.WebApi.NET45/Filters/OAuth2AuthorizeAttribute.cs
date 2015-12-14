@@ -13,6 +13,7 @@
 using Finsa.Caravan.Common;
 using Finsa.Caravan.WebApi.Identity;
 using Finsa.Caravan.WebApi.Identity.Models;
+using Finsa.Caravan.WebApi.Models;
 using Finsa.Caravan.WebApi.Models.Identity;
 using Ninject;
 using RestSharp;
@@ -37,25 +38,24 @@ namespace Finsa.Caravan.WebApi.Filters
         public OAuth2AuthorizationSettings AuthorizationSettings { get; set; }
 
         /// <summary>
-        ///   Il tipo che implementa l'interfaccia <see cref="IAccessTokenExtractor"/> da istanziare per
-        ///   recuperare gli access token dalle richieste HTTP.
+        ///   L'oggetto che implementa l'interfaccia <see cref="IAccessTokenExtractor"/> da usare
+        ///   per recuperare gli access token dalle richieste HTTP. Iniettato in automatico da Ninject.
         /// </summary>
-        public Type AccessTokenExtractorType { get; set; } = typeof(BearerAccessTokenExtractor);
+        [Inject]
+        public IAccessTokenExtractor AccessTokenExtractor { get; set; }
 
         /// <summary>
-        ///   Il tipo che implementa l'interfaccia <see cref="IAuthorizationErrorHandler"/> da istanziare per
-        ///   gestire eventuali errori riscontrati in fase di autorizzazione.
+        ///   L'oggetto che implementa l'interfaccia <see cref="IAuthorizationErrorHandler"/> da
+        ///   usare per gestire eventuali errori riscontrati in fase di autorizzazione. Iniettato in
+        ///   automatico da Ninject.
         /// </summary>
-        public Type AuthorizationErrorHandlerType { get; set; } = typeof(IAuthorizationErrorHandler);
+        [Inject]
+        public IAuthorizationErrorHandler AuthorizationErrorHandler { get; set; }
 
         /// <summary>
-        ///   Occurs before the action method is invoked.
+        ///   Il tipo che valida in modo definito l'autorizzazione alla richiesta HTTP.
         /// </summary>
-        /// <param name="actionContext">The action context.</param>
-        public override async void OnActionExecuting(HttpActionContext actionContext)
-        {
-            await OnActionExecutingAsync(actionContext, CancellationToken.None);
-        }
+        public Type AuthorizationValidatorType { get; set; } = typeof(CaravanAuthorizationValidator);
 
         /// <summary>
         ///   Occurs before the action method is invoked.
@@ -67,10 +67,10 @@ namespace Finsa.Caravan.WebApi.Filters
             try
             {
                 string accessToken;
-                var accessTokenExtractor = LoadAccessTokenExtractor();
-                if (!accessTokenExtractor.ExtractFromRequest(actionContext.Request, out accessToken))
+                if (!await AccessTokenExtractor.ExtractFromRequestAsync(actionContext.Request, out accessToken))
                 {
-                    LoadAuthorizationErrorHandler().HandleError(actionContext, AuthorizationErrorContext.MissingAccessToken);
+                    var message = $"{AccessTokenExtractor.GetType().Name} could not extract access token from HTTP request";
+                    await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.MissingAccessToken, message);
                     return;
                 }
 
@@ -84,30 +84,33 @@ namespace Finsa.Caravan.WebApi.Filters
                 });
 
                 var restResponse = await restClient.ExecuteTaskAsync<dynamic>(restRequest);
-
                 if (restResponse.StatusCode != HttpStatusCode.OK)
                 {
                     var payload = $"[StatusCode: {restResponse.StatusCode}, Content: '{restResponse.Content}']";
-                    LoadAuthorizationErrorHandler().HandleError(actionContext, AuthorizationErrorContext.MissingAccessToken, payload);
+                    await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidAccessToken, payload);
                     return;
+                }
+
+                var authorizationValidator = CaravanServiceProvider.NinjectKernel.Get(AuthorizationValidatorType) as IAuthorizationValidator;
+                AuthorizationResult authorizationResult = await authorizationValidator.ValidateRequestAsync(actionContext, restResponse.Data);
+                if (!authorizationResult.Authorized)
+                {
+                    var exception = authorizationResult.AuthorizationDeniedException;
+                    if (exception != null)
+                    {
+                        await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidRequest, exception);
+                    }
+                    else
+                    {
+                        var reason = authorizationResult.AuthorizationDeniedReason;
+                        await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidRequest, reason);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                LoadAuthorizationErrorHandler().HandleError(actionContext, AuthorizationErrorContext.MissingAccessToken, ex);
-            }            
+                await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.MissingAccessToken, ex);
+            }
         }
-
-        /// <summary>
-        ///   Carica dinamicamente l'oggetto che si occupa dell'estrazione dei token.
-        /// </summary>
-        /// <returns>L'oggetto che si occupa dell'estrazione dei token.</returns>
-        IAccessTokenExtractor LoadAccessTokenExtractor() => CaravanServiceProvider.NinjectKernel.Get(AccessTokenExtractorType) as IAccessTokenExtractor;
-
-        /// <summary>
-        ///   Carica dinamicamente l'oggetto che si occupa della gestione degli errori.
-        /// </summary>
-        /// <returns>L'oggetto che si occupa della gestione degli errori.</returns>
-        IAuthorizationErrorHandler LoadAuthorizationErrorHandler() => CaravanServiceProvider.NinjectKernel.Get(AuthorizationErrorHandlerType) as IAuthorizationErrorHandler;
     }
 }

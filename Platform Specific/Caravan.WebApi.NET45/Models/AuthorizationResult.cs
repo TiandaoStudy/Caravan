@@ -10,6 +10,8 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using System;
+
 namespace Finsa.Caravan.WebApi.Models
 {
     /// <summary>
@@ -26,5 +28,10 @@ namespace Finsa.Caravan.WebApi.Models
         ///   Se la richiesta non è stata autorizzata, questo campo può contenere la motivazione del rifiuto.
         /// </summary>
         public string AuthorizationDeniedReason { get; set; }
+
+        /// <summary>
+        ///   Se la richiesta non è stata autorizzata, questo campo può contenere la motivazione estesa del rifiuto.
+        /// </summary>
+        public Exception AuthorizationDeniedException { get; set; }
     }
 }

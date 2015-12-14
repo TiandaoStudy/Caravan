@@ -21,5 +21,15 @@ namespace Finsa.Caravan.WebApi.Identity.Models
         ///   L'access token non è presente nella richiesta HTTP.
         /// </summary>
         MissingAccessToken,
+
+        /// <summary>
+        ///   L'access token presente nella richiesta HTTP non è valido per qualche motivo.
+        /// </summary>
+        InvalidAccessToken,
+
+        /// <summary>
+        ///   La richiesta HTTP è stata reputata non valida per un qualche motivo.
+        /// </summary>
+        InvalidRequest
     }
 }

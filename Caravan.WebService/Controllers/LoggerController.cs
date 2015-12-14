@@ -149,7 +149,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">Application name</param>
         /// <param name="logEntry">The log to add</param>
         [Route("{appName}/entries")]
-        public async void PostLog(string appName, [FromBody] LogEntry logEntry)
+        public async Task PostLog(string appName, [FromBody] LogEntry logEntry)
         {
             await _logRepository.AddEntryAsync(appName, logEntry);
         }
@@ -161,7 +161,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
         /// <param name="logEntry">The log to add</param>
         [Route("{appName}/entries/{logLevel}")]
-        public async void PostLog(string appName, LogLevel logLevel, [FromBody] LogEntry logEntry)
+        public async Task PostLog(string appName, LogLevel logLevel, [FromBody] LogEntry logEntry)
         {
             logEntry.LogLevel = logLevel;
             await _logRepository.AddEntryAsync(appName, logEntry);

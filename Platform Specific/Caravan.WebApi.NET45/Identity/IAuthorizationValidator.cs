@@ -10,22 +10,24 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using System.Net.Http;
+using Finsa.Caravan.WebApi.Models;
 using System.Threading.Tasks;
+using System.Web.Http.Controllers;
 
 namespace Finsa.Caravan.WebApi.Identity
 {
     /// <summary>
-    ///   Recupera l'access token di OAuth2 dalle richieste HTTP.
+    ///   Gestisce la conferma finale se un utente possa o meno accedere a un dato servizio.
     /// </summary>
-    public interface IAccessTokenExtractor
+    interface IAuthorizationValidator
     {
         /// <summary>
-        ///   Recupera l'access token dalla richiesta HTTP.
+        ///   Valida definitivamente l'accesso da parte di un dato utente. Se ritorna vero, l'utente
+        ///   può accedere al servizio; se ritorna falso, l'utente non può accedere ed eventuali indicazioni
         /// </summary>
-        /// <param name="request">La richiesta HTTP.</param>
-        /// <param name="accessToken">L'access token, se presente.</param>
-        /// <returns>Vero se l'access token era presente, falso altrimenti.</returns>
-        Task<bool> ExtractFromRequestAsync(HttpRequestMessage request, out string accessToken);
+        /// <param name="actionContext">Il contesto HTTP da validare.</param>
+        /// <param name="userClaims">I claim restituiti dal servizio che gestisce l'identità.</param>
+        /// <returns>Vero se l'utente è stato autorizzato, falso altrimenti.</returns>
+        Task<AuthorizationResult> ValidateRequestAsync(HttpActionContext actionContext, dynamic userClaims);
     }
 }

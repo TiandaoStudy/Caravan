@@ -47,15 +47,6 @@ namespace Finsa.Caravan.WebApi.Filters
         ///   Raises the exception event.
         /// </summary>
         /// <param name="actionExecutedContext">The context for the action.</param>
-        public override sealed async void OnException(HttpActionExecutedContext actionExecutedContext)
-        {
-            await OnExceptionAsync(actionExecutedContext, CancellationToken.None);
-        }
-
-        /// <summary>
-        ///   Raises the exception event.
-        /// </summary>
-        /// <param name="actionExecutedContext">The context for the action.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         public override Task OnExceptionAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
         {

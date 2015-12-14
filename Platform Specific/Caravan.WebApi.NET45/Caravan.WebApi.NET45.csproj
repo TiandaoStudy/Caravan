@@ -164,6 +164,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CaravanWebApiNinjectConfig.cs" />
     <Compile Include="CaravanErrorCodes.cs" />
     <Compile Include="Core\Constants.cs" />
     <Compile Include="DelegatingHandlers\LoggingDelegatingHandler.cs" />
@@ -171,8 +172,10 @@
     <Compile Include="Filters\AuthorizeForCaravanAttribute.cs" />
     <Compile Include="Filters\OAuth2AuthorizeAttribute.cs" />
     <Compile Include="Identity\BearerAccessTokenExtractor.cs" />
+    <Compile Include="Identity\CaravanAuthorizationValidator.cs" />
     <Compile Include="Identity\IAccessTokenExtractor.cs" />
     <Compile Include="Identity\IAuthorizationErrorHandler.cs" />
+    <Compile Include="Identity\IAuthorizationValidator.cs" />
     <Compile Include="Identity\Models\AuthorizationErrorContext.cs" />
     <Compile Include="Identity\SimpleAuthorizationErrorHandler.cs" />
     <Compile Include="Middlewares\HttpCompressionMiddleware.cs" />

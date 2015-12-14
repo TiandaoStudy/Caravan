@@ -11,6 +11,7 @@
 // the License.
 
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Finsa.Caravan.WebApi.Identity
 {
@@ -25,10 +26,10 @@ namespace Finsa.Caravan.WebApi.Identity
         /// <param name="request">La richiesta HTTP.</param>
         /// <param name="accessToken">L'access token, se presente.</param>
         /// <returns>Vero se l'access token era presente, falso altrimenti.</returns>
-        public bool ExtractFromRequest(HttpRequestMessage request, out string accessToken)
+        public Task<bool> ExtractFromRequestAsync(HttpRequestMessage request, out string accessToken)
         {
             accessToken = request.Headers.Authorization?.Parameter;
-            return string.IsNullOrWhiteSpace(accessToken);
+            return Task.FromResult(!string.IsNullOrWhiteSpace(accessToken));
         }
     }
 }

@@ -50,15 +50,6 @@ namespace Finsa.Caravan.WebApi.Filters
         ///   Occurs before the action method is invoked.
         /// </summary>
         /// <param name="actionContext">The action context.</param>
-        public override async void OnActionExecuting(HttpActionContext actionContext)
-        {
-            await OnActionExecutingAsync(actionContext, CancellationToken.None);
-        }
-
-        /// <summary>
-        ///   Occurs before the action method is invoked.
-        /// </summary>
-        /// <param name="actionContext">The action context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         public override async Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {

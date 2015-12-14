@@ -12,6 +12,7 @@
 
 using Finsa.Caravan.WebApi.Identity.Models;
 using System;
+using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 
 namespace Finsa.Caravan.WebApi.Identity
@@ -22,20 +23,13 @@ namespace Finsa.Caravan.WebApi.Identity
     public interface IAuthorizationErrorHandler
     {
         /// <summary>
-        ///   Gestisce un errore avvenuto durante la validazione dell'accesso.
-        /// </summary>
-        /// <param name="actionContext">L'azione per cui si stava validando l'accesso.</param>
-        /// <param name="errorContext">Il tipo di errore riscontrato.</param>
-        void HandleError(HttpActionContext actionContext, AuthorizationErrorContext errorContext);
-
-        /// <summary>
         ///   Gestisce un errore avvenuto durante la validazione dell'accesso. Questa variante deve
         ///   gestire anche un eventuale oggetto riportante ulteriori informazioni sull'errore.
         /// </summary>
         /// <param name="actionContext">L'azione per cui si stava validando l'accesso.</param>
         /// <param name="errorContext">Il tipo di errore riscontrato.</param>
-        /// <param name="payload">Un oggetto contenente ulteriori informazioni.</param>
-        void HandleError(HttpActionContext actionContext, AuthorizationErrorContext errorContext, object payload);
+        /// <param name="message">Un messaggio contenente ulteriori informazioni.</param>
+        Task HandleErrorAsync(HttpActionContext actionContext, AuthorizationErrorContext errorContext, string message);
 
         /// <summary>
         ///   Gestisce un errore avvenuto durante la validazione dell'accesso. Questa variante deve
@@ -44,6 +38,6 @@ namespace Finsa.Caravan.WebApi.Identity
         /// <param name="actionContext">L'azione per cui si stava validando l'accesso.</param>
         /// <param name="errorContext">Il tipo di errore riscontrato.</param>
         /// <param name="exception">L'eccezione che è stata lanciata.</param>
-        void HandleError(HttpActionContext actionContext, AuthorizationErrorContext errorContext, Exception exception);
+        Task HandleErrorAsync(HttpActionContext actionContext, AuthorizationErrorContext errorContext, Exception exception);
     }
 }
