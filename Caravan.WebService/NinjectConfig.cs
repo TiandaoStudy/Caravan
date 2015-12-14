@@ -32,8 +32,7 @@ namespace Finsa.Caravan.WebService
 
             Bind<OAuth2AuthorizationSettings>().ToConstant(new OAuth2AuthorizationSettings
             {
-                AccessTokenValidationUrl = "https://localhost/wsCaravan/identity/connect/accesstokenvalidation"
-                
+                AccessTokenValidationUrl = "https://localhost/wsCaravan/identity/connect/accesstokenvalidation"                
             });
 
             Bind<CaravanAllowedAppsCollection>().ToConstant(new CaravanAllowedAppsCollection { AllowAll = true });

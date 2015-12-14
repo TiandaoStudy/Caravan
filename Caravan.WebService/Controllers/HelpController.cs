@@ -10,8 +10,10 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.Caravan.WebApi.Filters;
 using System.Diagnostics;
 using System.Reflection;
+using System.Security.Principal;
 using System.Web.Http;
 
 namespace Finsa.Caravan.WebService.Controllers
@@ -38,12 +40,18 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <summary>
         ///   Returns the web service version written in the main assembly.
         /// </summary>
-        [Route("version")]
+        [Route("help/version")]
         public string GetVersion()
         {
             var assembly = Assembly.GetExecutingAssembly();
             var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             return fvi.FileVersion;
         }
+
+        /// <summary>
+        ///   Returns the authorized user info.
+        /// </summary>
+        [Route("help/userinfo"), OAuth2Authorize]
+        public IPrincipal GetUserInfo() => User;
     }
 }

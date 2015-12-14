@@ -31,7 +31,6 @@ using PommaLabs.Thrower;
 using Swashbuckle.Application;
 using System;
 using System.Data.Entity.Infrastructure.Interception;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -74,8 +73,6 @@ namespace Finsa.Caravan.WebService
 
             // Inizializzazione gestione identità.
             IdentityConfig.Build(app);
-            // RIMUOVERE APPENA POSSIBILE!!! Accetta certificati non validi...
-            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
         }
 
         private static IKernel CreateKernel() =>

@@ -65,7 +65,7 @@ namespace Finsa.Caravan.Common.Security
         /// <summary>
         ///   IQueryable users.
         /// </summary>
-        public IQueryable<SecUser> Users => SecurityRepository.GetUsersAsync(AppName).Result.AsQueryable();
+        public IQueryable<SecUser> Users => SecurityRepository.QueryUsersAsync(AppName).Result;
 
         /// <summary>
         ///   Performs application-defined tasks associated with freeing, releasing, or resetting

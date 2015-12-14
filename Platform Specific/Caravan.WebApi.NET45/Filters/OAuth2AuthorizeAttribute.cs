@@ -86,10 +86,28 @@ namespace Finsa.Caravan.WebApi.Filters
                 });
 
                 var restResponse = await restClient.ExecuteTaskAsync<dynamic>(restRequest);
+                if (restResponse.ResponseStatus == ResponseStatus.Aborted)
+                {
+                    var message = $"Access token validation request was aborted";
+                    await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidAccessToken, message);
+                    return;
+                }
+                if (restResponse.ResponseStatus == ResponseStatus.TimedOut)
+                {
+                    var message = $"Access token validation request timed out";
+                    await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidAccessToken, message);
+                    return;
+                }
+                if (restResponse.ErrorException != null)
+                {
+                    var message = restResponse.ErrorException.Message;
+                    await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidAccessToken, restResponse.ErrorException);
+                    return;
+                }
                 if (restResponse.StatusCode != HttpStatusCode.OK)
                 {
-                    var payload = $"[StatusCode: {restResponse.StatusCode}, Content: '{restResponse.Content}']";
-                    await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidAccessToken, payload);
+                    var message = $"[StatusCode: {restResponse.StatusCode}, Content: '{restResponse.Content}']";
+                    await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidAccessToken, message);
                     return;
                 }
 
@@ -114,7 +132,7 @@ namespace Finsa.Caravan.WebApi.Filters
                 Thread.CurrentPrincipal = principal;
                 HttpContext.Current.User = principal;
             }
-            catch (Exception ex)
+            catch (Exception ex) when (!(ex is HttpException))
             {
                 await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.MissingAccessToken, ex);
             }

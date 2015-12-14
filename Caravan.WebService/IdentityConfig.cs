@@ -16,6 +16,7 @@ using Finsa.CodeServices.Common.Portability;
 using IdentityManager.Configuration;
 using IdentityServer3.Core.Configuration;
 using Owin;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Finsa.Caravan.WebService
@@ -27,6 +28,9 @@ namespace Finsa.Caravan.WebService
     {
         public static void Build(IAppBuilder app)
         {
+            // RIMUOVERE APPENA POSSIBILE!!! Accetta certificati non validi...
+            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+
             app.Map("/identity", idsrv => idsrv.UseIdentityServer(new IdentityServerOptions
             {
                 // Dettagli sul nome del servizio.
