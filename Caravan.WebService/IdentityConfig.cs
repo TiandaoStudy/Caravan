@@ -11,7 +11,6 @@
 // the License.
 
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Identity;
 using Finsa.Caravan.DataAccess.Sql.Identity;
 using Finsa.CodeServices.Common.Portability;
 using IdentityManager.Configuration;
@@ -42,7 +41,7 @@ namespace Finsa.Caravan.WebService
                 EnableWelcomePage = true,
 
                 // Gestione della sorgente dati per gli utenti.
-                Factory = LoadIdentityServerServiceFactory()
+                Factory = new SqlIdentityServerServiceFactory()
             }));
 
             app.Map("/identityManager", idmgr => idmgr.UseIdentityManager(new IdentityManagerOptions
@@ -62,13 +61,6 @@ namespace Finsa.Caravan.WebService
             var mappedCertificatePath = PortableEnvironment.MapPath(certificatePath);
             var certificatePassword = CaravanWebServiceConfiguration.Instance.Identity_SigningCertificatePassword;
             return new X509Certificate2(mappedCertificatePath, certificatePassword);
-        }
-
-        static IdentityServerServiceFactory LoadIdentityServerServiceFactory()
-        {
-            var factory = new SqlIdentityServerServiceFactory();
-            factory.Register(new IdentityServer3.Core.Configuration.Registration<CaravanAllowedAppsCollection>(new CaravanAllowedAppsCollection { AllowAll = true }));
-            return factory;
         }
     }
 }

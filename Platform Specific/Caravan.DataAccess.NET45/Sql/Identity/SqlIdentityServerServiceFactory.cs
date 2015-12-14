@@ -51,6 +51,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity
             Register(new IdentityServerNinjectRegistration<ICaravanClientStore>());
             Register(new IdentityServerNinjectRegistration<IClock>());
             Register(new IdentityServerNinjectRegistration<ICaravanUserManagerFactory>());
+            Register(new IdentityServerNinjectRegistration<CaravanAllowedAppsCollection>());
         }
     }
 }

@@ -84,7 +84,6 @@ namespace Finsa.Caravan.DataAccess.Sql
                     Bind<IRefreshTokenStore>().To<SqlIdnRefreshTokenStore>().InRequestScope();
                     Bind<IClientStore, ICaravanClientStore>().To<SqlIdnClientStore>().InRequestScope();
                     Bind<IScopeStore>().To<SqlIdnScopeStore>().InRequestScope();
-                    Bind<IScopeStore>().To<SqlIdnScopeStore>().InRequestScope();
                     Bind<ICorsPolicyService>().To<SqlIdnCorsPolicyService>().InRequestScope();
                     break;
             }
