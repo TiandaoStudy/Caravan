@@ -137,14 +137,16 @@ namespace Finsa.Caravan.DataAccess
             {
                 r.AppName = sr.Group.App.Name;
             });
-            Mapper.CreateMap<SqlSecUser, SecUser>().AfterMap((su, u) =>
-            {
-                u.Groups = su.Roles
-                    .Select(r => r.Group)
-                    .Distinct()
-                    .Select(Mapper.Map<SecGroup>)
-                    .ToArray();
-            });
+            Mapper.CreateMap<SqlSecUser, SecUser>()
+                .ForMember(dest => dest.UserName, opts => opts.Ignore())
+                .AfterMap((su, u) =>
+                {
+                    u.Groups = su.Roles
+                        .Select(r => r.Group)
+                        .Distinct()
+                        .Select(Mapper.Map<SecGroup>)
+                        .ToArray();
+                });
 
             // Mappings (SQL --> Models) for Logging
             Mapper.CreateMap<SqlLogEntry, LogEntry>().AfterMap((sl, l) =>

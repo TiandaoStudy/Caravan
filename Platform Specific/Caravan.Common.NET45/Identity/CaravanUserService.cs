@@ -112,7 +112,7 @@ namespace Finsa.Caravan.Common.Identity
             var claims = new List<Claim>
             {
                 new Claim(Constants.ClaimTypes.Subject, SecUserKey.ToString(user.AppName, user.Login)),
-                new Claim(Constants.ClaimTypes.PreferredUserName, user.UserName),
+                new Claim(Constants.ClaimTypes.PreferredUserName, user.Login),
             };
 
             if (userManager.SupportsUserEmail)
@@ -220,7 +220,7 @@ namespace Finsa.Caravan.Common.Identity
             if (nameClaim == null) nameClaim = claims.FirstOrDefault(x => x.Type == ClaimTypes.Name);
             if (nameClaim != null) return nameClaim.Value;
 
-            return user.UserName;
+            return user.Login;
         }
 
         protected virtual async Task<SecUser> FindUserAsync(CaravanUserManager userManager, string userName)
@@ -308,7 +308,7 @@ namespace Finsa.Caravan.Common.Identity
 
         protected virtual Task<SecUser> InstantiateNewUserFromExternalProviderAsync(string provider, string providerId, IEnumerable<Claim> claims)
         {
-            var user = new SecUser { UserName = Guid.NewGuid().ToString("N") };
+            var user = new SecUser { Login = Guid.NewGuid().ToString("N") };
             return Task.FromResult(user);
         }
 

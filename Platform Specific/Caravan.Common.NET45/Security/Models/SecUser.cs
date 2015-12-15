@@ -87,6 +87,7 @@ namespace Finsa.Caravan.Common.Security.Models
         /// <summary>
         ///   Unique username.
         /// </summary>
+        [IgnoreDataMember]
         public string UserName
         {
             get { return Login; }
@@ -102,7 +103,7 @@ namespace Finsa.Caravan.Common.Security.Models
             yield return KeyValuePair.Create(nameof(Id), Id.ToString(CultureInfo.InvariantCulture));
             yield return KeyValuePair.Create(nameof(Login), Login);
             yield return KeyValuePair.Create(nameof(AppName), AppName);
-            yield return KeyValuePair.Create(nameof(UserName), UserName);
+            yield return KeyValuePair.Create(nameof(IUser.UserName), FirstName + " " + LastName);
         }
 
         protected override IEnumerable<object> GetIdentifyingMembers()
