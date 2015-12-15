@@ -13,7 +13,7 @@
 using Finsa.Caravan.Common;
 using Ninject;
 
-namespace Finsa.Caravan.DataAccess.Core
+namespace Finsa.Caravan.WebApi.Core
 {
     sealed class IdentityServerNinjectRegistration<T> : IdentityServer3.Core.Configuration.Registration<T>
         where T : class

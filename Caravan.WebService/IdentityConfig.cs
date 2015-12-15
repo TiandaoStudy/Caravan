@@ -11,10 +11,10 @@
 // the License.
 
 using Finsa.Caravan.Common;
-using Finsa.Caravan.DataAccess.Sql.Identity;
 using Finsa.CodeServices.Common.Portability;
 using IdentityManager.Configuration;
 using IdentityServer3.Core.Configuration;
+using Ninject;
 using Owin;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
@@ -45,13 +45,13 @@ namespace Finsa.Caravan.WebService
                 EnableWelcomePage = true,
 
                 // Gestione della sorgente dati per gli utenti.
-                Factory = new SqlIdentityServerServiceFactory()
+                Factory = CaravanServiceProvider.NinjectKernel.Get<IdentityServerServiceFactory>()
             }));
 
             app.Map("/identityManager", idmgr => idmgr.UseIdentityManager(new IdentityManagerOptions
             {
                 // Gestione della sorgente dati per gli utenti.
-                Factory = new SqlIdentityManagerServiceFactory()
+                Factory = CaravanServiceProvider.NinjectKernel.Get<IdentityManagerServiceFactory>()
             }));
         }
 

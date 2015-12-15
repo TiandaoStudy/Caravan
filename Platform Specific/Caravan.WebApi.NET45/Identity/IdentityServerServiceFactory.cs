@@ -10,24 +10,20 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using Finsa.Caravan.Common.Identity;
-using Finsa.Caravan.Common.Security;
-using Finsa.Caravan.DataAccess.Core;
-using Finsa.CodeServices.Clock;
-using IdentityServer3.Core.Configuration;
+using Finsa.Caravan.WebApi.Core;
 using IdentityServer3.Core.Services;
 
-namespace Finsa.Caravan.DataAccess.Sql.Identity
+namespace Finsa.Caravan.WebApi.Identity
 {
     /// <summary>
     ///   Configura IdentityServer in modo da usare il driver SQL per l'accesso ai dati.
     /// </summary>
-    public sealed class SqlIdentityServerServiceFactory : IdentityServerServiceFactory
+    public sealed class IdentityServerServiceFactory : IdentityServer3.Core.Configuration.IdentityServerServiceFactory
     {
         /// <summary>
         ///   Configura IdentityServer in modo da usare il driver SQL per l'accesso ai dati.
         /// </summary>
-        public SqlIdentityServerServiceFactory()
+        public IdentityServerServiceFactory()
         {
             UserService = new IdentityServerNinjectRegistration<IUserService>();
 
@@ -45,13 +41,6 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity
 
             // CORS handling
             CorsPolicyService = new IdentityServerNinjectRegistration<ICorsPolicyService>();
-
-            // Further services registrations...
-            Register(new IdentityServerNinjectRegistration<SqlDbContext>());
-            Register(new IdentityServerNinjectRegistration<ICaravanClientStore>());
-            Register(new IdentityServerNinjectRegistration<IClock>());
-            Register(new IdentityServerNinjectRegistration<ICaravanUserManagerFactory>());
-            Register(new IdentityServerNinjectRegistration<CaravanAllowedAppsCollection>());
         }
     }
 }

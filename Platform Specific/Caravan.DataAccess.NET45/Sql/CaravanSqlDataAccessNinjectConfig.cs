@@ -18,8 +18,6 @@ using Finsa.Caravan.DataAccess.Sql.Identity;
 using Finsa.Caravan.DataAccess.Sql.Identity.Services;
 using Finsa.Caravan.DataAccess.Sql.Identity.Stores;
 using Finsa.CodeServices.Common.Portability;
-using IdentityManager;
-using IdentityManager.Configuration;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Services;
 using InteractivePreGeneratedViews;
@@ -52,7 +50,6 @@ namespace Finsa.Caravan.DataAccess.Sql
         /// 
         ///   * <see cref="ICaravanLogRepository"/> via <see cref="SqlLogRepository"/>.
         ///   * <see cref="ICaravanSecurityRepository"/> via <see cref="SqlSecurityRepository"/>.
-        ///   * <see cref="IdentityServerServiceFactory"/> via <see cref="SqlIdentityServerServiceFactory"/>.
         /// </summary>
         public override void Load()
         {
@@ -75,9 +72,6 @@ namespace Finsa.Caravan.DataAccess.Sql
                     Bind<ICaravanSecurityRepository>().To<SqlSecurityRepository>().InRequestScope();
 
                     // Gestione dell'autenticazione e dell'autorizzazione.
-                    Bind<IdentityServerServiceFactory>().To<SqlIdentityServerServiceFactory>().InSingletonScope();
-                    Bind<IdentityManagerServiceFactory>().To<SqlIdentityManagerServiceFactory>().InSingletonScope();
-                    Bind<IIdentityManagerService>().To<SqlIdentityManagerService>().InRequestScope();
                     Bind<IAuthorizationCodeStore>().To<SqlIdnAuthorizationCodeStore>().InRequestScope();
                     Bind<ITokenHandleStore>().To<SqlIdnTokenHandleStore>().InRequestScope();
                     Bind<IConsentStore>().To<SqlIdnConsentStore>().InRequestScope();
