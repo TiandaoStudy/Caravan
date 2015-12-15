@@ -50,6 +50,7 @@ namespace Finsa.Caravan.Common.Security.Models
         /// <summary>
         ///   Name of the role.
         /// </summary>
+        [IgnoreDataMember]
         string IRole<int>.Name
         {
             get { return ToIdentityRoleName(GroupName, Name); }

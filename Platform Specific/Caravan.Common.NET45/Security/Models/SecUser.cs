@@ -34,52 +34,52 @@ namespace Finsa.Caravan.Common.Security.Models
         [DataMember(Order = 2)]
         public string Login { get; set; }
 
-        [DataMember(Order = 3)]
+        [IgnoreDataMember]
         public string PasswordHash { get; set; }
 
-        [DataMember(Order = 4)]
+        [DataMember(Order = 3)]
         public bool Active { get; set; }
 
-        [DataMember(Order = 5)]
+        [DataMember(Order = 4)]
         public string FirstName { get; set; }
 
-        [DataMember(Order = 6)]
+        [DataMember(Order = 5)]
         public string LastName { get; set; }
 
-        [DataMember(Order = 7)]
+        [DataMember(Order = 6)]
         public string Email { get; set; }
 
-        [DataMember(Order = 8)]
+        [DataMember(Order = 7)]
         public bool EmailConfirmed { get; set; }
 
-        [DataMember(Order = 9)]
+        [DataMember(Order = 8)]
         public string PhoneNumber { get; set; }
 
-        [DataMember(Order = 10)]
+        [DataMember(Order = 9)]
         public bool PhoneNumberConfirmed { get; set; }
 
-        [DataMember(Order = 11)]
+        [DataMember(Order = 10)]
         public int AccessFailedCount { get; set; }
 
-        [DataMember(Order = 12)]
+        [DataMember(Order = 11)]
         public bool LockoutEnabled { get; set; }
 
-        [DataMember(Order = 13)]
+        [DataMember(Order = 12)]
         public DateTime LockoutEndDate { get; set; }
 
         [IgnoreDataMember]
         public string SecurityStamp { get; set; }
 
-        [DataMember(Order = 14)]
+        [DataMember(Order = 13)]
         public bool TwoFactorAuthenticationEnabled { get; set; }
 
-        [DataMember(Order = 15)]
+        [DataMember(Order = 14)]
         public IEnumerable<SecGroup> Groups { get; set; }
 
-        [DataMember(Order = 16)]
+        [DataMember(Order = 15)]
         public IEnumerable<SecRole> Roles { get; set; }
 
-        [DataMember(Order = 17)]
+        [DataMember(Order = 16)]
         public IEnumerable<SecClaim> Claims { get; set; }
 
         #region IUser members
@@ -87,6 +87,7 @@ namespace Finsa.Caravan.Common.Security.Models
         /// <summary>
         ///   Unique username.
         /// </summary>
+        [IgnoreDataMember]
         public string UserName
         {
             get { return Login; }
@@ -102,7 +103,7 @@ namespace Finsa.Caravan.Common.Security.Models
             yield return KeyValuePair.Create(nameof(Id), Id.ToString(CultureInfo.InvariantCulture));
             yield return KeyValuePair.Create(nameof(Login), Login);
             yield return KeyValuePair.Create(nameof(AppName), AppName);
-            yield return KeyValuePair.Create(nameof(UserName), UserName);
+            yield return KeyValuePair.Create(nameof(IUser.UserName), FirstName + " " + LastName);
         }
 
         protected override IEnumerable<object> GetIdentifyingMembers()

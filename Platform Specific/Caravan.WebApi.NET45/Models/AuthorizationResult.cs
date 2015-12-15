@@ -10,7 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using Finsa.Caravan.Common.Identity.Models;
+using Finsa.Caravan.Common.Security.Models;
 using System;
 
 namespace Finsa.Caravan.WebApi.Models
@@ -31,13 +31,14 @@ namespace Finsa.Caravan.WebApi.Models
         public string AuthorizationDeniedReason { get; set; }
 
         /// <summary>
-        ///   Se la richiesta non è stata autorizzata, questo campo può contenere la motivazione estesa del rifiuto.
+        ///   Se la richiesta non è stata autorizzata, questo campo può contenere la motivazione
+        ///   estesa del rifiuto.
         /// </summary>
         public Exception AuthorizationDeniedException { get; set; }
 
         /// <summary>
         ///   L'utente che è stato autorizzato all'accesso all'applicativo.
         /// </summary>
-        public IdnUser User { get; set; }
+        public SecUser User { get; set; }
     }
 }

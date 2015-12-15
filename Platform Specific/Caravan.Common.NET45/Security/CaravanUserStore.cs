@@ -90,7 +90,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public Task UpdateAsync(SecUser user) => SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
         {
-            Login = user.UserName, // Lo UserName di Identity è la Login di Caravan.
+            Login = user.Login, // Lo UserName di Identity è la Login di Caravan.
             Active = user.Active,
             FirstName = user.FirstName,
             LastName = user.LastName,

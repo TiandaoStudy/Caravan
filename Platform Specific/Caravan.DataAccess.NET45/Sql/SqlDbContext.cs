@@ -57,30 +57,9 @@ namespace Finsa.Caravan.DataAccess.Sql
             base.Dispose(disposing);
         }
 
-        public static SqlDbContext CreateReadContext()
-        {
-            // Il DB è già inizializzato dalla chiamata sottostante.
-            var ctx = CreateUpdateContext();
-
-            // Disabilito i proxy, dato che per un contesto di lettura (NON UPDATE) non hanno alcuna utilità.
-            ctx.Configuration.ProxyCreationEnabled = false;
-
-            return ctx;
-        }
-
-        public static SqlDbContext Create(ICaravanDataSourceManager dataSourceManager)
+        internal static SqlDbContext Create(ICaravanDataSourceManager dataSourceManager)
         {
             var ctx = new SqlDbContext(dataSourceManager);
-
-            // Provo a inizializzare il DB.
-            ctx.Database.Initialize(false);
-
-            return ctx;
-        }
-
-        public static SqlDbContext CreateUpdateContext()
-        {
-            var ctx = new SqlDbContext(CaravanDataSource.Manager);
 
             // Provo a inizializzare il DB.
             ctx.Database.Initialize(false);
@@ -110,7 +89,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             dataSourceManager.ResetConnection();
 
             // The database is recreated, since it is in-memory and probably it does not exist.
-            using (var ctx = CreateUpdateContext())
+            using (var ctx = Create(dataSourceManager))
             {
                 ctx.Database.CreateIfNotExists();
                 Database.SetInitializer(new DropCreateDatabaseAlways<SqlDbContext>());

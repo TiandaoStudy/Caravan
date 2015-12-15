@@ -31,7 +31,6 @@ using PommaLabs.Thrower;
 using Swashbuckle.Application;
 using System;
 using System.Data.Entity.Infrastructure.Interception;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -56,11 +55,11 @@ namespace Finsa.Caravan.WebService
             var kernel = CreateKernel();
 
             // Inizializzatore per Caravan.
-            Task.Run(async () => await CaravanWebServiceHelper.OnStartAsync(app, config, new CaravanWebServiceHelper.Settings
+            CaravanWebServiceHelper.OnStartAsync(app, config, new CaravanWebServiceHelper.Settings
             {
                 EnableHttpCompressionMiddleware = true,
                 EnableHttpLoggingMiddleware = true
-            }));
+            }).Wait();
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
 
             // Inizializzatore per Ninject.
@@ -74,8 +73,6 @@ namespace Finsa.Caravan.WebService
 
             // Inizializzazione gestione identità.
             IdentityConfig.Build(app);
-            // RIMUOVERE APPENA POSSIBILE!!! Accetta certificati non validi...
-            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
         }
 
         private static IKernel CreateKernel() =>

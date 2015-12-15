@@ -166,11 +166,12 @@
     <Compile Include="Core\TaskExtensions.cs" />
     <Compile Include="DependencyHandling.cs" />
     <Compile Include="Identity\CaravanAllowedAppsCollection.cs" />
+    <Compile Include="Identity\Models\IdnIdentity.cs" />
+    <Compile Include="Identity\Models\IdnPrincipal.cs" />
     <Compile Include="Identity\CaravanUserService.cs" />
     <Compile Include="Identity\ICaravanClientStore.cs" />
     <Compile Include="Identity\Models\IdnClient.cs" />
-    <Compile Include="Identity\Models\IdnUser.cs" />
-    <Compile Include="Identity\Models\IdnUserKey.cs" />
+    <Compile Include="Security\Models\SecUserKey.cs" />
     <Compile Include="Logging\Activities\AbstractLogActivity.cs" />
     <Compile Include="Logging\CaravanLogger.cs" />
     <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />

@@ -157,6 +157,11 @@
               Returns the web service version written in the main assembly.
             </summary>
         </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.GetUserInfo">
+            <summary>
+              Returns the authorized user info.
+            </summary>
+        </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.IdentityController">
             <summary>
               Servizi di utilità per la parte di gestione dell'identità.

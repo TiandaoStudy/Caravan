@@ -53,7 +53,7 @@ namespace Finsa.Caravan.Common.Identity
             UserManagerFactory = userManagerFactory;
             ClientStore = clientStore;
             AllowedApps = allowedApps;
-            ConvertSubjectToKey = IdnUserKey.FromString;
+            ConvertSubjectToKey = SecUserKey.FromString;
             EnableSecurityStamp = true;
         }
 
@@ -73,7 +73,7 @@ namespace Finsa.Caravan.Common.Identity
         /// <summary>
         ///   La funzione utilizzata per leggere il subject.
         /// </summary>
-        protected Func<string, IdnUserKey> ConvertSubjectToKey { get; }
+        protected Func<string, SecUserKey> ConvertSubjectToKey { get; }
 
         /// <summary>
         ///   This method is called whenever claims about the user are requested (e.g. during token
@@ -94,7 +94,7 @@ namespace Finsa.Caravan.Common.Identity
             {
                 var idnUserKey = ConvertSubjectToKey(subject.GetSubjectId());
                 RaiseArgumentException.If(appName != idnUserKey.AppName, "Invalid application name");
-                var user = await userManager.FindByIdAsync(idnUserKey.UserId);
+                var user = await userManager.FindByNameAsync(idnUserKey.UserLogin);
                 RaiseArgumentException.If(user == null, "Invalid subject identifier");
 
                 var claims = await GetClaimsFromAccount(userManager, user);
@@ -111,8 +111,8 @@ namespace Finsa.Caravan.Common.Identity
         {
             var claims = new List<Claim>
             {
-                new Claim(Constants.ClaimTypes.Subject, IdnUserKey.ToString(user.AppName, user.Id)),
-                new Claim(Constants.ClaimTypes.PreferredUserName, user.UserName),
+                new Claim(Constants.ClaimTypes.Subject, SecUserKey.ToString(user.AppName, user.Login)),
+                new Claim(Constants.ClaimTypes.PreferredUserName, user.Login),
             };
 
             if (userManager.SupportsUserEmail)
@@ -192,7 +192,7 @@ namespace Finsa.Caravan.Common.Identity
                             if (result == null)
                             {
                                 var claims = await GetClaimsForAuthenticateResult(userManager, user);
-                                result = new AuthenticateResult(IdnUserKey.ToString(user.AppName, user.Id), await GetDisplayNameForAccountAsync(userManager, user.Id), claims);
+                                result = new AuthenticateResult(SecUserKey.ToString(user.AppName, user.Login), await GetDisplayNameForAccountAsync(userManager, user.Id), claims);
                             }
 
                             context.AuthenticateResult = result;
@@ -220,7 +220,7 @@ namespace Finsa.Caravan.Common.Identity
             if (nameClaim == null) nameClaim = claims.FirstOrDefault(x => x.Type == ClaimTypes.Name);
             if (nameClaim != null) return nameClaim.Value;
 
-            return user.UserName;
+            return user.Login;
         }
 
         protected virtual async Task<SecUser> FindUserAsync(CaravanUserManager userManager, string userName)
@@ -308,7 +308,7 @@ namespace Finsa.Caravan.Common.Identity
 
         protected virtual Task<SecUser> InstantiateNewUserFromExternalProviderAsync(string provider, string providerId, IEnumerable<Claim> claims)
         {
-            var user = new SecUser { UserName = Guid.NewGuid().ToString("N") };
+            var user = new SecUser { Login = Guid.NewGuid().ToString("N") };
             return Task.FromResult(user);
         }
 
@@ -439,7 +439,7 @@ namespace Finsa.Caravan.Common.Identity
             RaiseArgumentException.If(appName != idnUserKey.AppName, "Invalid application name");
             using (var userManager = await UserManagerFactory.CreateAsync(appName))
             {
-                var user = await userManager.FindByIdAsync(idnUserKey.UserId);
+                var user = await userManager.FindByNameAsync(idnUserKey.UserLogin);
 
                 context.IsActive = false;
 
@@ -450,7 +450,7 @@ namespace Finsa.Caravan.Common.Identity
                         var securityStamp = subject.Claims.Where(x => x.Type == "security_stamp").Select(x => x.Value).SingleOrDefault();
                         if (securityStamp != null)
                         {
-                            var dbSecurityStamp = await userManager.GetSecurityStampAsync(idnUserKey.UserId);
+                            var dbSecurityStamp = await userManager.GetSecurityStampAsync(user.Id);
                             if (dbSecurityStamp != securityStamp)
                             {
                                 return;
