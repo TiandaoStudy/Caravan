@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<package>
+    <metadata>
+        <id>Finsa.Caravan.DataAccess</id>
+        <version>1.29.0</version>
+        <title>Finsa.Caravan.DataAccess</title>
+        <authors>Finsa S.p.A.</authors>
+        <owners>Finsa S.p.A.</owners>
+        <description>
+A long description of the package. This shows up in the right pane of the Add Package Dialog as well as in the Package Manager Console when listing packages using the Get-Package command.
+        </description>
+        <releaseNotes>
+        </releaseNotes>
+        <summary>
+A short description of the package. If specified, this shows up in the middle pane of the Add Package Dialog. If not specified, a truncated version of the description is used instead.
+        </summary>
+        <language>en-US</language>
+        <projectUrl>https://bitbucket.org/finsaspa/caravan/overview</projectUrl>
+        <iconUrl>http://www.finsa.it/public/projects/caravan/logo-128.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
+        <copyright>Copyright © Finsa S.p.A. 2014-2024</copyright>
+        <dependencies>
+            <dependency id="Finsa.Caravan.Common" version="1.29.0" />
+            <!--<dependency id="IdentityManager" version="1.0.0-beta5-5" />-->
+            <dependency id="Westwind.Utilities.Configuration" version="[2.25]" />
+        </dependencies>
+        <references></references>
+        <frameworkAssemblies></frameworkAssemblies>
+        <tags>finsa caravan data access</tags>
+    </metadata>
+    <files>
+        <file src="lib\" target="lib" />
+    </files>
+</package>

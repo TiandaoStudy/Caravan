@@ -11,8 +11,8 @@
 // the License.
 
 using Finsa.Caravan.Common;
-using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.DataAccess.Sql.Logging;
+using Finsa.Caravan.DataAccess.Sql.Oracle;
 using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebApi.Filters;
 using Finsa.Caravan.WebApi.Models;
@@ -56,11 +56,11 @@ namespace Finsa.Caravan.WebService
             var kernel = CreateKernel();
 
             // Inizializzatore per Caravan.
-            CaravanWebServiceHelper.OnStart(app, config, new CaravanWebServiceHelper.Settings
+            Task.Run(async () => await CaravanWebServiceHelper.OnStartAsync(app, config, new CaravanWebServiceHelper.Settings
             {
                 EnableHttpCompressionMiddleware = true,
                 EnableHttpLoggingMiddleware = true
-            });
+            }));
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
 
             // Inizializzatore per Ninject.
@@ -83,7 +83,8 @@ namespace Finsa.Caravan.WebService
             (CaravanServiceProvider.NinjectKernel = new StandardKernel(
                 new NinjectConfig(),
                 new CaravanCommonNinjectConfig(DependencyHandling.Default, "wsCaravan"),
-                new CaravanDataAccessNinjectConfig(DependencyHandling.Default, CaravanDataAccessConfiguration.Instance.DataSourceKind)));
+                new CaravanOracleDataAccessNinjectConfig(DependencyHandling.Default),
+                new CaravanWebApiNinjectConfig(DependencyHandling.Default)));
 
         private static void ConfigureAdminPages(IAppBuilder app)
         {

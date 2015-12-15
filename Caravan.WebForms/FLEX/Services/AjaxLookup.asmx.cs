@@ -1,4 +1,15 @@
-﻿using System;
+﻿using Dapper;
+using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.WebForms.Properties;
+using Finsa.CodeServices.Common.Collections;
+using Finsa.CodeServices.Common.Text;
+using FLEX.Web.XmlSettings.AjaxLookup;
+using Ninject;
+using PommaLabs.KVLite;
+using PommaLabs.Thrower;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,16 +19,6 @@ using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Xml;
-using Dapper;
-using Finsa.Caravan.DataAccess;
-using Finsa.Caravan.WebForms.Properties;
-using PommaLabs.Thrower;
-using Finsa.CodeServices.Common.Collections;
-using Finsa.CodeServices.Common.Text;
-using FLEX.Web.XmlSettings.AjaxLookup;
-using PommaLabs.KVLite;
-using Finsa.Caravan.Common.Logging;
-using Finsa.Caravan.Common;
 
 // ReSharper disable CheckNamespace This is the correct namespace, despite the file physical position.
 
@@ -61,7 +62,7 @@ namespace FLEX.Web.Services
         {
             var lookupData = LoadAjaxLookupData(xmlLookup, lookupBy);
             var lookupQuery = ProcessQuery(lookupData, userQuery, queryFilter);
-            var resultData = CaravanDataSource.Manager.OpenConnection().Query(lookupQuery).ToList();
+            var resultData = CaravanServiceProvider.NinjectKernel.Get<ICaravanDataSourceManager>().OpenConnection().Query(lookupQuery).ToList();
             if (resultData.Count == 0)
             {
                 return new List<Result>();

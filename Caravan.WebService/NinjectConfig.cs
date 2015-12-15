@@ -10,6 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.Caravan.Common.Identity;
 using Finsa.Caravan.WebApi.Models.Identity;
 using Finsa.CodeServices.Compression;
 using Finsa.CodeServices.Security.PasswordHashing;
@@ -34,6 +35,8 @@ namespace Finsa.Caravan.WebService
                 AccessTokenValidationUrl = "https://localhost/wsCaravan/identity/connect/accesstokenvalidation"
                 
             });
+
+            Bind<CaravanAllowedAppsCollection>().ToConstant(new CaravanAllowedAppsCollection { AllowAll = true });
         }
     }
 }
