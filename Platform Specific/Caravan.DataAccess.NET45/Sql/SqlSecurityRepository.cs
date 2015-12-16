@@ -85,7 +85,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             {
                 Name = app.Name,
                 Description = app.Description ?? UnspecifiedString,
-                PasswordHasher = app.PasswordHasher ?? typeof(AdaptivePasswordHasher).FullName
+                PasswordHasher = app.PasswordHasher ?? typeof(AdaptivePasswordHasher).AssemblyQualifiedName
             });
 
             await _dbContext.SaveChangesAsync();
