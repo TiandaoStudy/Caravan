@@ -36,7 +36,7 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.31.0")]
-[assembly: AssemblyFileVersion("1.31.0")]
+[assembly: AssemblyVersion("1.32.0")]
+[assembly: AssemblyFileVersion("1.32.0")]
 
 [assembly: InternalsVisibleTo("UnitTests.WebForms")]

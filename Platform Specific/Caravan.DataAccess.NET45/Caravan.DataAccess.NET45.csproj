@@ -51,6 +51,10 @@
       <HintPath>..\..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="BrockAllen.IdentityReboot, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BrockAllen.IdentityReboot.2.0.0\lib\net45\BrockAllen.IdentityReboot.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CodeFirstStoreFunctions, Version=0.1.0.0, Culture=neutral, PublicKeyToken=46c4868af4307d2c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.CodeFirstStoreFunctions.1.0.0\lib\net45\CodeFirstStoreFunctions.dll</HintPath>
       <Private>True</Private>

@@ -66,7 +66,7 @@ namespace Finsa.Caravan.WebApi.Identity
             exception = exception.GetBaseException();
             var errorMessage = $"Access denied to {controllerName}.{actionName}. Reason: {errorContext}. Exception: {exception.Message}";
             Log.Error(errorMessage, exception);
-            throw new HttpException(HttpStatusCode.Unauthorized, errorMessage, exception, new HttpExceptionInfo
+            throw new HttpException(HttpStatusCode.Unauthorized, errorMessage, new HttpExceptionInfo
             {
                 UserMessage = errorMessage,
                 ErrorCode = CaravanErrorCodes.CVE00000
