@@ -13,7 +13,9 @@
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Core;
 using Finsa.Caravan.WebApi.Identity;
+using IdentityManager;
 using Ninject.Modules;
+using Ninject.Web.Common;
 using PommaLabs.Thrower;
 using System;
 
@@ -52,6 +54,10 @@ namespace Finsa.Caravan.WebApi
                 case DependencyHandling.DevelopmentEnvironment:
                 case DependencyHandling.TestEnvironment:
                 case DependencyHandling.ProductionEnvironment:
+                    // Necessarie per la GUI della gestione utenti e per OAuth2. Non richieste per gli unit test.
+                    Bind<IdentityServer3.Core.Configuration.IdentityServerServiceFactory>().To<IdentityServerServiceFactory>().InSingletonScope();
+                    Bind<IdentityManager.Configuration.IdentityManagerServiceFactory>().To<IdentityManagerServiceFactory>().InSingletonScope();
+                    Bind<IIdentityManagerService>().To<IdentityManagerService>().InRequestScope();
                     break;
 
                 case DependencyHandling.UnitTesting:

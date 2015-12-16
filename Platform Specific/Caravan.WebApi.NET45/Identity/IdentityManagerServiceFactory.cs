@@ -12,35 +12,29 @@
 
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.Common.Security.Models;
-using Finsa.Caravan.DataAccess.Core;
+using Finsa.Caravan.WebApi.Core;
 using IdentityManager;
 using IdentityManager.AspNetIdentity;
-using IdentityManager.Configuration;
 
-namespace Finsa.Caravan.DataAccess.Sql.Identity
+namespace Finsa.Caravan.WebApi.Identity
 {
     /// <summary>
     ///   Configura IdentityManager in modo da usare il driver SQL per l'accesso ai dati.
     /// </summary>
-    public sealed class SqlIdentityManagerServiceFactory : IdentityManagerServiceFactory
+    public sealed class IdentityManagerServiceFactory : IdentityManager.Configuration.IdentityManagerServiceFactory
     {
         /// <summary>
         ///   Configura IdentityManager in modo da usare il driver SQL per l'accesso ai dati.
         /// </summary>
-        public SqlIdentityManagerServiceFactory()
+        public IdentityManagerServiceFactory()
         {
             IdentityManagerService = new IdentityManagerNinjectRegistration<IIdentityManagerService>();
-
-            // Further services registrations...
-            Register(new IdentityManagerNinjectRegistration<CaravanUserManager>());
-            Register(new IdentityManagerNinjectRegistration<CaravanRoleManager>());
-            Register(new IdentityManagerNinjectRegistration<SqlDbContext>());
         }
     }
 
-    internal sealed class SqlIdentityManagerService : AspNetIdentityManagerService<SecUser, long, SecRole, int>
+    internal sealed class IdentityManagerService : AspNetIdentityManagerService<SecUser, long, SecRole, int>
     {
-        public SqlIdentityManagerService(CaravanUserManager userManager, CaravanRoleManager roleManager)
+        public IdentityManagerService(CaravanUserManager userManager, CaravanRoleManager roleManager)
             : base(userManager, roleManager)
         {
         }
