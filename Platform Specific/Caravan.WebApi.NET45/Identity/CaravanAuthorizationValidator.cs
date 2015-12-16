@@ -19,7 +19,6 @@ using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.WebApi.Models;
 using PommaLabs.Thrower;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 
@@ -31,10 +30,6 @@ namespace Finsa.Caravan.WebApi.Identity
     /// </summary>
     public class CaravanAuthorizationValidator : IAuthorizationValidator
     {
-        readonly ILog _log;
-        readonly ICaravanSecurityRepository _securityRepository;
-        readonly CaravanAllowedAppsCollection _allowedApps;
-
         /// <summary>
         ///   Gestisce le dipendenze del modulo.
         /// </summary>
@@ -46,10 +41,25 @@ namespace Finsa.Caravan.WebApi.Identity
             RaiseArgumentNullException.IfIsNull(log, nameof(log));
             RaiseArgumentNullException.IfIsNull(securityRepository, nameof(securityRepository));
             RaiseArgumentNullException.IfIsNull(allowedApps, nameof(allowedApps));
-            _log = log;
-            _securityRepository = securityRepository;
-            _allowedApps = allowedApps;
+            Log = log;
+            SecurityRepository = securityRepository;
+            AllowedApps = allowedApps;
         }
+
+        /// <summary>
+        ///   Il log a disposizione del validatore.
+        /// </summary>
+        protected ILog Log { get; }
+
+        /// <summary>
+        ///   Il repository della sicurezza di Caravan.
+        /// </summary>
+        protected ICaravanSecurityRepository SecurityRepository { get; }
+
+        /// <summary>
+        ///   Le applicazioni che possono usufruire del servizio di autorizzazione.
+        /// </summary>
+        protected CaravanAllowedAppsCollection AllowedApps { get; }
 
         /// <summary>
         ///   Valida definitivamente l'accesso da parte di un dato utente. Se ritorna vero, l'utente
@@ -64,7 +74,7 @@ namespace Finsa.Caravan.WebApi.Identity
             {
                 SecUserKey idnUserKey = SecUserKey.FromString(userClaims["sub"]);
 
-                if (!_allowedApps.Contains(idnUserKey.AppName))
+                if (!AllowedApps.Contains(idnUserKey.AppName))
                 {
                     return new AuthorizationResult
                     {
@@ -73,7 +83,7 @@ namespace Finsa.Caravan.WebApi.Identity
                     };
                 }
 
-                var user = await _securityRepository.GetUserByLoginAsync(idnUserKey.AppName, idnUserKey.UserLogin);
+                var user = await SecurityRepository.GetUserByLoginAsync(idnUserKey.AppName, idnUserKey.UserLogin);
                 AuthorizationResult authorizationResult = await ValidateRequestAsync(actionContext, userClaims, user);
 
                 if (authorizationResult.Authorized)
@@ -85,7 +95,7 @@ namespace Finsa.Caravan.WebApi.Identity
             }
             catch (SecAppNotFoundException aex)
             {
-                _log.Warn(aex.Message);
+                Log.Warn(aex.Message);
                 return new AuthorizationResult
                 {
                     Authorized = false,
@@ -94,7 +104,7 @@ namespace Finsa.Caravan.WebApi.Identity
             }
             catch (SecUserNotFoundException uex)
             {
-                _log.Warn(uex.Message);
+                Log.Warn(uex.Message);
                 return new AuthorizationResult
                 {
                     Authorized = false,
@@ -103,7 +113,7 @@ namespace Finsa.Caravan.WebApi.Identity
             }
             catch (Exception ex)
             {
-                _log.Error(ex.Message);
+                Log.Error(ex.Message);
                 return new AuthorizationResult
                 {
                     Authorized = false,
@@ -117,7 +127,7 @@ namespace Finsa.Caravan.WebApi.Identity
         ///   Valida definitivamente l'accesso da parte di un dato utente. Se ritorna vero, l'utente
         ///   può accedere al servizio; se ritorna falso, l'utente non può accedere ed eventuali indicazioni
         /// </summary>
-        /// <param name="request">La richiesta HTTP da validare.</param>
+        /// <param name="actionContext">La richiesta HTTP da validare.</param>
         /// <param name="userClaims">I claim restituiti dal servizio che gestisce l'identità.</param>
         /// <param name="user">L'utente caricato da Caravan.</param>
         /// <returns>Vero se l'utente è stato autorizzato, falso altrimenti.</returns>

@@ -12,6 +12,7 @@
 
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using BrockAllen.IdentityReboot;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
@@ -83,7 +84,8 @@ namespace Finsa.Caravan.DataAccess.Sql
             var sqlApp = _dbContext.SecApps.Add(new SqlSecApp
             {
                 Name = app.Name,
-                Description = app.Description ?? UnspecifiedString
+                Description = app.Description ?? UnspecifiedString,
+                PasswordHasher = app.PasswordHasher ?? typeof(AdaptivePasswordHasher).FullName
             });
 
             await _dbContext.SaveChangesAsync();
