@@ -71,6 +71,12 @@ namespace Finsa.Caravan.WebApi.Middlewares
             _disposed = true;
         }
 
+        /// <summary>
+        ///   Applica una rapida compressione alla risposta HTTP se il client ha specificato
+        ///   esplicitamente che è in grado di accettare risposte compresse.
+        /// </summary>
+        /// <param name="environment">Il contesto di Owin.</param>
+        /// <returns>Task per proseguire nella catena di middleware.</returns>
         public async Task Invoke(IDictionary<string, object> environment)
         {
             var owinContext = new OwinContext(environment);
@@ -82,6 +88,16 @@ namespace Finsa.Caravan.WebApi.Middlewares
             bool canGZip, canDeflate;
             var acceptEncoding = owinContext.Request.Headers.Get("Accept-Encoding");
 
+            // Se l'header non è presente, allora NON devo applicare alcuna compressione.
+            if (string.IsNullOrWhiteSpace(acceptEncoding))
+            {
+                _log.Trace($"Client has not specified the Accept-Enconding header - No compression will be applied");
+                await _next(environment);
+                return;
+            }
+
+            // Se GZIP o DEFLATE non sono tra gli algoritmi accettati, allora NON devo applicare
+            // alcuna compressione.
             if (!(canGZip = acceptEncoding.Contains(GZipEncoding)) || !(canDeflate = acceptEncoding.Contains(DeflateEncoding)))
             {
                 _log.Trace($"Client does not accept a compressed response - Accept-Enconding: {acceptEncoding}");

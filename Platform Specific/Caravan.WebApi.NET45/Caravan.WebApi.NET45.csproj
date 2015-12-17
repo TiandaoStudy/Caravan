@@ -176,43 +176,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CaravanWebApiNinjectConfig.cs" />
-    <Compile Include="CaravanErrorCodes.cs" />
-    <Compile Include="Core\Constants.cs" />
-    <Compile Include="Core\IdentityNinjectRegistrations.cs" />
-    <Compile Include="DelegatingHandlers\LoggingDelegatingHandler.cs" />
-    <Compile Include="Filters\HttpExceptionFilterAttribute.cs" />
-    <Compile Include="Filters\AuthorizeForCaravanAttribute.cs" />
-    <Compile Include="Filters\OAuth2AuthorizeAttribute.cs" />
-    <Compile Include="Identity\BearerAccessTokenExtractor.cs" />
-    <Compile Include="Identity\CaravanAuthorizationValidator.cs" />
-    <Compile Include="Identity\IAccessTokenExtractor.cs" />
-    <Compile Include="Identity\IAuthorizationErrorHandler.cs" />
-    <Compile Include="Identity\IAuthorizationValidator.cs" />
-    <Compile Include="Identity\Models\AuthorizationErrorContext.cs" />
-    <Compile Include="Identity\SimpleAuthorizationErrorHandler.cs" />
-    <Compile Include="Identity\IdentityManagerServiceFactory.cs" />
-    <Compile Include="Identity\IdentityServerServiceFactory.cs" />
-    <Compile Include="Middlewares\HttpCompressionMiddleware.cs" />
-    <Compile Include="Middlewares\HttpLoggingMiddleware.cs" />
-    <Compile Include="CaravanWebServiceHelper.cs" />
-    <Compile Include="Models\AuthorizationResult.cs" />
-    <Compile Include="Models\HttpExceptionResponse.cs" />
-    <Compile Include="Models\Identity\OAuth2AuthorizationSettings.cs" />
-    <Compile Include="Models\Links\AlternateLink.cs" />
-    <Compile Include="Models\Links\CollectionLink.cs" />
-    <Compile Include="Models\Links\EditLink.cs" />
-    <Compile Include="Models\Links\EditMediaLink.cs" />
-    <Compile Include="Models\Links\FirstLink.cs" />
-    <Compile Include="Models\Links\LastLink.cs" />
-    <Compile Include="Models\Links\Link.cs" />
-    <Compile Include="Models\Links\LinkCollection.cs" />
-    <Compile Include="Models\Links\LinkedObject.cs" />
-    <Compile Include="Models\Links\NextLink.cs" />
-    <Compile Include="Models\Links\PreviousLink.cs" />
-    <Compile Include="Models\Links\RelatedLink.cs" />
-    <Compile Include="Models\Links\SelfLink.cs" />
-    <Compile Include="Models\Security\LinkedSecApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -227,10 +190,8 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\Logging\" />
-  </ItemGroup>
+  <ItemGroup />
+  <Import Project="..\..\Caravan.WebApi\Caravan.WebApi.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

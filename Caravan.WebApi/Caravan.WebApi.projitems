@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>84926063-76b2-44d0-9609-255fd2a9e963</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Finsa.Caravan.WebApi</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Controllers\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Logging\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)CaravanErrorCodes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CaravanWebApiNinjectConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CaravanWebServiceHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\IdentityNinjectRegistrations.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DelegatingHandlers\LoggingDelegatingHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Filters\AuthorizeForCaravanAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Filters\HttpExceptionFilterAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Filters\OAuth2AuthorizeAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\BearerAccessTokenExtractor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\CaravanAuthorizationValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\IAccessTokenExtractor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\IAuthorizationErrorHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\IAuthorizationValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\IdentityManagerServiceFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\IdentityServerServiceFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\Models\AuthorizationErrorContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\SimpleAuthorizationErrorHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Middlewares\HttpCompressionMiddleware.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Middlewares\HttpLoggingMiddleware.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AuthorizationResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\HttpExceptionResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Identity\OAuth2AuthorizationSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Links\AlternateLink.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Links\CollectionLink.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Links\EditLink.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Links\EditMediaLink.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Links\FirstLink.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Links\LastLink.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Links\Link.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Links\LinkCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Links\LinkedObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Links\NextLink.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Links\PreviousLink.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Links\RelatedLink.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Links\SelfLink.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Security\LinkedSecApp.cs" />
+  </ItemGroup>
+</Project>
