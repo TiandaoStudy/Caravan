@@ -100,7 +100,7 @@ namespace Finsa.Caravan.Common.Security
             PhoneNumberConfirmed = user.PhoneNumberConfirmed,
             SecurityStamp = user.SecurityStamp,
             LockoutEnabled = user.LockoutEnabled,
-            LockoutEndDate = new DateTimeOffset(user.LockoutEndDate),
+            LockoutEndDate = user.LockoutEndDate,
             AccessFailedCount = user.AccessFailedCount,
             TwoFactorAuthenticationEnabled = user.TwoFactorAuthenticationEnabled
         });
@@ -364,7 +364,7 @@ namespace Finsa.Caravan.Common.Security
         /// <returns/>
         public Task SetLockoutEndDateAsync(SecUser user, DateTimeOffset lockoutEnd) => SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
         {
-            LockoutEndDate = lockoutEnd
+            LockoutEndDate = lockoutEnd.DateTime
         });
 
         /// <summary>

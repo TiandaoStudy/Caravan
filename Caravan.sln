@@ -155,6 +155,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Caravan.UnitTests", "Carava
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Caravan.WebApi", "Caravan.WebApi\Caravan.WebApi.shproj", "{84926063-76B2-44D0-9609-255FD2A9E963}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Worker", "Caravan.Worker\Caravan.Worker.csproj", "{81EA6D91-48EE-41C2-A23A-460E5CC0A19A}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Caravan.UnitTests\Caravan.UnitTests.projitems*{afff7ae2-a871-45c0-99b3-94b6d0880f03}*SharedItemsImports = 4
@@ -277,6 +279,12 @@ Global
 		{AFFF7AE2-A871-45C0-99B3-94B6D0880F03}.Publish|Any CPU.Build.0 = Release|Any CPU
 		{AFFF7AE2-A871-45C0-99B3-94B6D0880F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFFF7AE2-A871-45C0-99B3-94B6D0880F03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81EA6D91-48EE-41C2-A23A-460E5CC0A19A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81EA6D91-48EE-41C2-A23A-460E5CC0A19A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81EA6D91-48EE-41C2-A23A-460E5CC0A19A}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{81EA6D91-48EE-41C2-A23A-460E5CC0A19A}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{81EA6D91-48EE-41C2-A23A-460E5CC0A19A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81EA6D91-48EE-41C2-A23A-460E5CC0A19A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

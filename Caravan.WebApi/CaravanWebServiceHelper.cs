@@ -75,7 +75,7 @@ namespace Finsa.Caravan.WebApi
             // Pulizia dei log più vecchi o che superano una certa soglia di quantità.
             log.Trace("Cleaning up older log entries");
             var logRepository = kernel.Get<ICaravanLogRepository>();
-            await logRepository.CleanUpEntriesAsync(CaravanCommonConfiguration.Instance.AppName);
+            Task.Run(() => logRepository.CleanUpEntriesAsync(CaravanCommonConfiguration.Instance.AppName));
         }
 
         /// <summary>

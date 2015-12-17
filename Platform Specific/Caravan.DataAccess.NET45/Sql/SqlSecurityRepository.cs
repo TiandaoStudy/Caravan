@@ -383,7 +383,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 userUpdates.PhoneNumberConfirmed.Do(x => sqlUser.PhoneNumberConfirmed = x);
                 userUpdates.SecurityStamp.Do(x => sqlUser.SecurityStamp = x);
                 userUpdates.LockoutEnabled.Do(x => sqlUser.LockoutEnabled = x);
-                userUpdates.LockoutEndDate.Do(x => sqlUser.LockoutEndDate = x.DateTime.ToUniversalTime());
+                userUpdates.LockoutEndDate.Do(x => sqlUser.LockoutEndDate = x.ToUniversalTime());
                 userUpdates.AccessFailedCount.Do(x => sqlUser.AccessFailedCount = x);
                 userUpdates.TwoFactorAuthenticationEnabled.Do(x => sqlUser.TwoFactorAuthenticationEnabled = x);
 
