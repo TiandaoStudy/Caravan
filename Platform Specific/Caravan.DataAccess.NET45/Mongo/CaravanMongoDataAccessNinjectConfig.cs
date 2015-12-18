@@ -13,7 +13,6 @@
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
-using Ninject.Web.Common;
 
 namespace Finsa.Caravan.DataAccess.Mongo
 {
@@ -56,8 +55,8 @@ namespace Finsa.Caravan.DataAccess.Mongo
                     Bind<ICaravanDataSourceManager>().To<MongoDataSourceManager>().InSingletonScope();
 
                     // Gestione dei repository base di Caravan.
-                    Bind<ICaravanLogRepository>().To<MongoLogRepository>().InRequestScope();
-                    Bind<ICaravanSecurityRepository>().To<MongoSecurityRepository>().InRequestScope();
+                    Bind<ICaravanLogRepository>().To<MongoLogRepository>().InRequestScopeIfRunningOnAspNet();
+                    Bind<ICaravanSecurityRepository>().To<MongoSecurityRepository>().InRequestScopeIfRunningOnAspNet();
 
                     break;
 

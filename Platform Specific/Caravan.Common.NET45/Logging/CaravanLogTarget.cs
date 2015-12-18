@@ -31,7 +31,7 @@ namespace Finsa.Caravan.Common.Logging
     [Target("CaravanLog")]
     public sealed class CaravanLogTarget : Target
     {
-        private static readonly SimpleLayout DefaultUserLogin = new SimpleLayout("${identity:name=true:lowercase=true}");
+        private static readonly SimpleLayout DefaultUserLogin = new SimpleLayout("${identity:authType=false:name=true:isAuthenticated=false:lowercase=true}");
         private static readonly SimpleLayout DefaultCodeUnit = new SimpleLayout("${callsite:className=true:methodName=false:lowercase=true}");
         private static readonly SimpleLayout DefaultFunction = new SimpleLayout("${callsite:className=false:methodName=true:lowercase=true}");
 

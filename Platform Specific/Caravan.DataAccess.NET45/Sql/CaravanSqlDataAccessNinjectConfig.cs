@@ -14,15 +14,12 @@ using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Identity;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
-using Finsa.Caravan.DataAccess.Sql.Identity;
 using Finsa.Caravan.DataAccess.Sql.Identity.Services;
 using Finsa.Caravan.DataAccess.Sql.Identity.Stores;
 using Finsa.CodeServices.Common.Portability;
-using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Services;
 using InteractivePreGeneratedViews;
 using Ninject;
-using Ninject.Web.Common;
 using System.IO;
 
 namespace Finsa.Caravan.DataAccess.Sql
@@ -64,21 +61,28 @@ namespace Finsa.Caravan.DataAccess.Sql
                 case DependencyHandling.ProductionEnvironment:
                 case DependencyHandling.UnitTesting:
                     // Gestione del DbContext per EF.
-                    Bind<SqlDbContext>().ToMethod(ctx => SqlDbContext.Create(ctx.Kernel.Get<ICaravanDataSourceManager>())).InRequestScope();
+                    if (PortableEnvironment.AppIsRunningOnAspNet)
+                    {
+                        Bind<SqlDbContext>().ToMethod(ctx => SqlDbContext.Create(ctx.Kernel.Get<ICaravanDataSourceManager>())).InRequestScopeIfRunningOnAspNet();
+                    }
+                    else
+                    {
+                        Bind<SqlDbContext>().ToMethod(ctx => SqlDbContext.Create(ctx.Kernel.Get<ICaravanDataSourceManager>()));
+                    }
                     ConfigureEFPregeneratedViews();
 
                     // Gestione dei repository base di Caravan.
-                    Bind<ICaravanLogRepository>().To<SqlLogRepository>().InRequestScope();
-                    Bind<ICaravanSecurityRepository>().To<SqlSecurityRepository>().InRequestScope();
+                    Bind<ICaravanLogRepository>().To<SqlLogRepository>().InRequestScopeIfRunningOnAspNet();
+                    Bind<ICaravanSecurityRepository>().To<SqlSecurityRepository>().InRequestScopeIfRunningOnAspNet();
 
                     // Gestione dell'autenticazione e dell'autorizzazione.
-                    Bind<IAuthorizationCodeStore>().To<SqlIdnAuthorizationCodeStore>().InRequestScope();
-                    Bind<ITokenHandleStore>().To<SqlIdnTokenHandleStore>().InRequestScope();
-                    Bind<IConsentStore>().To<SqlIdnConsentStore>().InRequestScope();
-                    Bind<IRefreshTokenStore>().To<SqlIdnRefreshTokenStore>().InRequestScope();
-                    Bind<IClientStore, ICaravanClientStore>().To<SqlIdnClientStore>().InRequestScope();
-                    Bind<IScopeStore>().To<SqlIdnScopeStore>().InRequestScope();
-                    Bind<ICorsPolicyService>().To<SqlIdnCorsPolicyService>().InRequestScope();
+                    Bind<IAuthorizationCodeStore>().To<SqlIdnAuthorizationCodeStore>().InRequestScopeIfRunningOnAspNet();
+                    Bind<ITokenHandleStore>().To<SqlIdnTokenHandleStore>().InRequestScopeIfRunningOnAspNet();
+                    Bind<IConsentStore>().To<SqlIdnConsentStore>().InRequestScopeIfRunningOnAspNet();
+                    Bind<IRefreshTokenStore>().To<SqlIdnRefreshTokenStore>().InRequestScopeIfRunningOnAspNet();
+                    Bind<IClientStore, ICaravanClientStore>().To<SqlIdnClientStore>().InRequestScopeIfRunningOnAspNet();
+                    Bind<IScopeStore>().To<SqlIdnScopeStore>().InRequestScopeIfRunningOnAspNet();
+                    Bind<ICorsPolicyService>().To<SqlIdnCorsPolicyService>().InRequestScopeIfRunningOnAspNet();
                     break;
             }
         }

@@ -13,7 +13,6 @@
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
-using Ninject.Web.Common;
 
 namespace Finsa.Caravan.DataAccess.Rest
 {
@@ -53,8 +52,8 @@ namespace Finsa.Caravan.DataAccess.Rest
                 case DependencyHandling.TestEnvironment:
                 case DependencyHandling.ProductionEnvironment:
                     // Gestione dei repository base di Caravan.
-                    Bind<ICaravanLogRepository>().To<RestLogRepository>().InRequestScope();
-                    Bind<ICaravanSecurityRepository>().To<RestSecurityRepository>().InRequestScope();
+                    Bind<ICaravanLogRepository>().To<RestLogRepository>().InRequestScopeIfRunningOnAspNet();
+                    Bind<ICaravanSecurityRepository>().To<RestSecurityRepository>().InRequestScopeIfRunningOnAspNet();
 
                     break;
 
