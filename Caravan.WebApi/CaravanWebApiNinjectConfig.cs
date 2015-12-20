@@ -56,7 +56,7 @@ namespace Finsa.Caravan.WebApi
                     // Necessarie per la GUI della gestione utenti e per OAuth2. Non richieste per gli unit test.
                     Bind<IdentityServer3.Core.Configuration.IdentityServerServiceFactory>().To<IdentityServerServiceFactory>().InSingletonScope();
                     Bind<IdentityManager.Configuration.IdentityManagerServiceFactory>().To<IdentityManagerServiceFactory>().InSingletonScope();
-                    Bind<IIdentityManagerService>().To<IdentityManagerService>().InRequestScopeIfRunningOnAspNet();
+                    Bind<IIdentityManagerService>().To<IdentityManagerService>().InRequestOrThreadScope();
                     break;
 
                 case DependencyHandling.UnitTesting:

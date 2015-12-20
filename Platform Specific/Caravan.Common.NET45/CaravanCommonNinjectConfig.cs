@@ -85,14 +85,14 @@ namespace Finsa.Caravan.Common
             }
 
             // Bind indipendenti dall'ambiente di esecuzione:
-            Bind<ICaravanUserStore>().To<CaravanUserStore>().InRequestScopeIfRunningOnAspNet().WithConstructorArgument("appName", _appName);
-            Bind<ICaravanRoleStore>().To<CaravanRoleStore>().InRequestScopeIfRunningOnAspNet().WithConstructorArgument("appName", _appName);
+            Bind<ICaravanUserStore>().To<CaravanUserStore>().InRequestOrThreadScope().WithConstructorArgument("appName", _appName);
+            Bind<ICaravanRoleStore>().To<CaravanRoleStore>().InRequestOrThreadScope().WithConstructorArgument("appName", _appName);
 
-            Bind<ICaravanUserManagerFactory>().To<CaravanUserManagerFactory>().InRequestScopeIfRunningOnAspNet();
-            Bind<ICaravanRoleManagerFactory>().To<CaravanRoleManagerFactory>().InRequestScopeIfRunningOnAspNet();
+            Bind<ICaravanUserManagerFactory>().To<CaravanUserManagerFactory>().InRequestOrThreadScope();
+            Bind<ICaravanRoleManagerFactory>().To<CaravanRoleManagerFactory>().InRequestOrThreadScope();
 
-            Bind<CaravanUserManager>().ToMethod(ctx => ctx.Kernel.Get<ICaravanUserManagerFactory>().CreateAsync().Result).InRequestScopeIfRunningOnAspNet();
-            Bind<CaravanRoleManager>().ToMethod(ctx => ctx.Kernel.Get<ICaravanRoleManagerFactory>().CreateAsync().Result).InRequestScopeIfRunningOnAspNet();
+            Bind<CaravanUserManager>().ToMethod(ctx => ctx.Kernel.Get<ICaravanUserManagerFactory>().CreateAsync().Result).InRequestOrThreadScope();
+            Bind<CaravanRoleManager>().ToMethod(ctx => ctx.Kernel.Get<ICaravanRoleManagerFactory>().CreateAsync().Result).InRequestOrThreadScope();
 
             Bind<ICaravanVariablesContextIdentifier>().To<CaravanVariablesContextIdentifier>().InSingletonScope();
 

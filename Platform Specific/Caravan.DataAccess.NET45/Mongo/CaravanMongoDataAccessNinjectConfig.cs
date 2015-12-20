@@ -55,8 +55,8 @@ namespace Finsa.Caravan.DataAccess.Mongo
                     Bind<ICaravanDataSourceManager>().To<MongoDataSourceManager>().InSingletonScope();
 
                     // Gestione dei repository base di Caravan.
-                    Bind<ICaravanLogRepository>().To<MongoLogRepository>().InRequestScopeIfRunningOnAspNet();
-                    Bind<ICaravanSecurityRepository>().To<MongoSecurityRepository>().InRequestScopeIfRunningOnAspNet();
+                    Bind<ICaravanLogRepository>().To<MongoLogRepository>().InRequestOrThreadScope();
+                    Bind<ICaravanSecurityRepository>().To<MongoSecurityRepository>().InRequestOrThreadScope();
 
                     break;
 

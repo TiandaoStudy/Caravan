@@ -17,9 +17,11 @@ using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.DataAccess.Sql.Identity.Services;
 using Finsa.Caravan.DataAccess.Sql.Identity.Stores;
 using Finsa.CodeServices.Common.Portability;
+using Finsa.CodeServices.DataAccess.Sql;
 using IdentityServer3.Core.Services;
 using InteractivePreGeneratedViews;
 using Ninject;
+using System.Data.Entity.Infrastructure;
 using System.IO;
 
 namespace Finsa.Caravan.DataAccess.Sql
@@ -61,51 +63,46 @@ namespace Finsa.Caravan.DataAccess.Sql
                 case DependencyHandling.ProductionEnvironment:
                 case DependencyHandling.UnitTesting:
                     // Gestione del DbContext per EF.
-                    if (PortableEnvironment.AppIsRunningOnAspNet)
-                    {
-                        Bind<SqlDbContext>().ToMethod(ctx => SqlDbContext.Create(ctx.Kernel.Get<ICaravanDataSourceManager>())).InRequestScopeIfRunningOnAspNet();
-                    }
-                    else
-                    {
-                        Bind<SqlDbContext>().ToMethod(ctx => SqlDbContext.Create(ctx.Kernel.Get<ICaravanDataSourceManager>()));
-                    }
+                    Bind<DbContextConfiguration<SqlDbContext>>().ToConstant(new DbContextConfiguration<SqlDbContext> { LazyLoadingEnabled = false });
+                    Bind<IDbContextFactory<SqlDbContext>>().To<ConfigurableDbContextFactory<SqlDbContext>>();
+                    Bind<IConfigurableDbContextFactory<SqlDbContext>>().To<ConfigurableDbContextFactory<SqlDbContext>>();
                     ConfigureEFPregeneratedViews();
 
                     // Gestione dei repository base di Caravan.
-                    Bind<ICaravanLogRepository>().To<SqlLogRepository>().InRequestScopeIfRunningOnAspNet();
-                    Bind<ICaravanSecurityRepository>().To<SqlSecurityRepository>().InRequestScopeIfRunningOnAspNet();
+                    Bind<ICaravanLogRepository>().To<SqlLogRepository>().InRequestOrThreadScope();
+                    Bind<ICaravanSecurityRepository>().To<SqlSecurityRepository>().InRequestOrThreadScope();
 
                     // Gestione dell'autenticazione e dell'autorizzazione.
-                    Bind<IAuthorizationCodeStore>().To<SqlIdnAuthorizationCodeStore>().InRequestScopeIfRunningOnAspNet();
-                    Bind<ITokenHandleStore>().To<SqlIdnTokenHandleStore>().InRequestScopeIfRunningOnAspNet();
-                    Bind<IConsentStore>().To<SqlIdnConsentStore>().InRequestScopeIfRunningOnAspNet();
-                    Bind<IRefreshTokenStore>().To<SqlIdnRefreshTokenStore>().InRequestScopeIfRunningOnAspNet();
-                    Bind<IClientStore, ICaravanClientStore>().To<SqlIdnClientStore>().InRequestScopeIfRunningOnAspNet();
-                    Bind<IScopeStore>().To<SqlIdnScopeStore>().InRequestScopeIfRunningOnAspNet();
-                    Bind<ICorsPolicyService>().To<SqlIdnCorsPolicyService>().InRequestScopeIfRunningOnAspNet();
+                    Bind<IAuthorizationCodeStore>().To<SqlIdnAuthorizationCodeStore>().InRequestOrThreadScope();
+                    Bind<ITokenHandleStore>().To<SqlIdnTokenHandleStore>().InRequestOrThreadScope();
+                    Bind<IConsentStore>().To<SqlIdnConsentStore>().InRequestOrThreadScope();
+                    Bind<IRefreshTokenStore>().To<SqlIdnRefreshTokenStore>().InRequestOrThreadScope();
+                    Bind<IClientStore, ICaravanClientStore>().To<SqlIdnClientStore>().InRequestOrThreadScope();
+                    Bind<IScopeStore>().To<SqlIdnScopeStore>().InRequestOrThreadScope();
+                    Bind<ICorsPolicyService>().To<SqlIdnCorsPolicyService>().InRequestOrThreadScope();
                     break;
             }
         }
 
         private void ConfigureEFPregeneratedViews()
         {
-            // Configura la generazione automatica delle viste per EF. Non fare dispose del contesto
-            // sottostante, potrebbe essere quello dedicato alla request in corso.
-            var dbContext = Kernel.Get<SqlDbContext>();
-
-            // Per prima cosa, recupero la cartella di destinazione e mi assicuro che esista. Se non
-            // esiste, la creo, altrimenti avrei un errore alla prima query.
-            var pregenViewsPath = CaravanDataAccessConfiguration.Instance.Drivers_Sql_EFPregeneratedViews_Path;
-            var mappedPregenViewsPath = PortableEnvironment.MapPath(pregenViewsPath);
-            if (!Directory.Exists(mappedPregenViewsPath))
+            // Configura la generazione automatica delle viste per EF.
+            using (var dbContext = Kernel.Get<IDbContextFactory<SqlDbContext>>().Create())
             {
-                Directory.CreateDirectory(mappedPregenViewsPath);
-            }
+                // Per prima cosa, recupero la cartella di destinazione e mi assicuro che esista. Se non
+                // esiste, la creo, altrimenti avrei un errore alla prima query.
+                var pregenViewsPath = CaravanDataAccessConfiguration.Instance.Drivers_Sql_EFPregeneratedViews_Path;
+                var mappedPregenViewsPath = PortableEnvironment.MapPath(pregenViewsPath);
+                if (!Directory.Exists(mappedPregenViewsPath))
+                {
+                    Directory.CreateDirectory(mappedPregenViewsPath);
+                }
 
-            // Quindi, calcolo il nome del file di destinazione e applico il nuovo meccanismo.
-            var caravanPregenViewsFileName = CaravanDataAccessConfiguration.Instance.Drivers_Sql_EFPregeneratedViews_CaravanViewsFileName;
-            var caravanPregenViews = Path.Combine(mappedPregenViewsPath, caravanPregenViewsFileName);
-            InteractiveViews.SetViewCacheFactory(dbContext, new FileViewCacheFactory(caravanPregenViews));
+                // Quindi, calcolo il nome del file di destinazione e applico il nuovo meccanismo.
+                var caravanPregenViewsFileName = CaravanDataAccessConfiguration.Instance.Drivers_Sql_EFPregeneratedViews_CaravanViewsFileName;
+                var caravanPregenViews = Path.Combine(mappedPregenViewsPath, caravanPregenViewsFileName);
+                InteractiveViews.SetViewCacheFactory(dbContext, new FileViewCacheFactory(caravanPregenViews));
+            }
         }
     }
 }

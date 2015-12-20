@@ -48,6 +48,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Platform Specific\Caravan.Common.NET45\Caravan.Common.NET45.csproj">
+      <Project>{11904ed0-33d2-4005-8766-b1e393a32ea7}</Project>
+      <Name>Caravan.Common.NET45</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

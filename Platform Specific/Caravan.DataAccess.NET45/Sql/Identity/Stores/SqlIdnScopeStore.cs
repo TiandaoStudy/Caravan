@@ -20,6 +20,7 @@ using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,46 +28,52 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
     public sealed class SqlIdnScopeStore : IScopeStore
     {
-        private readonly SqlDbContext _context;
+        private readonly IDbContextFactory<SqlDbContext> _dbContextFactory;
 
-        public SqlIdnScopeStore(SqlDbContext context)
+        public SqlIdnScopeStore(IDbContextFactory<SqlDbContext> dbContextFactory)
         {
-            Raise<ArgumentNullException>.IfIsNull(context, nameof(context));
-            _context = context;
+            RaiseArgumentNullException.IfIsNull(dbContextFactory, nameof(dbContextFactory));
+            _dbContextFactory = dbContextFactory;
         }
 
         public async Task<IEnumerable<IdentityServer3.Core.Models.Scope>> FindScopesAsync(IEnumerable<string> scopeNames)
         {
-            var scopes =
-                from s in _context.IdnScopes.Include(x => x.ScopeClaims).Include(x => x.ScopeSecrets)
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var scopes =
+                from s in ctx.IdnScopes.Include(x => x.ScopeClaims).Include(x => x.ScopeSecrets)
                 select s;
 
-            if (scopeNames != null && scopeNames.Any())
-            {
-                scopes = from s in scopes
-                         where scopeNames.Contains(s.Name)
-                         select s;
-            }
+                if (scopeNames != null && scopeNames.Any())
+                {
+                    scopes = from s in scopes
+                             where scopeNames.Contains(s.Name)
+                             select s;
+                }
 
-            var list = await scopes.ToListAsync();
-            return list.Select(x => x.ToModel());
+                var list = await scopes.ToListAsync();
+                return list.Select(x => x.ToModel());
+            }
         }
 
         public async Task<IEnumerable<IdentityServer3.Core.Models.Scope>> GetScopesAsync(bool publicOnly = true)
         {
-            var scopes =
-                from s in _context.IdnScopes.Include(s => s.ScopeClaims).Include(x => x.ScopeSecrets)
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var scopes =
+                from s in ctx.IdnScopes.Include(s => s.ScopeClaims).Include(x => x.ScopeSecrets)
                 select s;
 
-            if (publicOnly)
-            {
-                scopes = from s in scopes
-                         where s.ShowInDiscoveryDocument
-                         select s;
-            }
+                if (publicOnly)
+                {
+                    scopes = from s in scopes
+                             where s.ShowInDiscoveryDocument
+                             select s;
+                }
 
-            var list = await scopes.ToListAsync();
-            return list.Select(x => x.ToModel());
+                var list = await scopes.ToListAsync();
+                return list.Select(x => x.ToModel());
+            }
         }
     }
 }

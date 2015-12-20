@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Finsa.Caravan.Common.Logging.Workflows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace Caravan.Worker
     {
         static void Main(string[] args)
         {
+            CleanUpLogRepository.Invoke(null);
         }
     }
 }

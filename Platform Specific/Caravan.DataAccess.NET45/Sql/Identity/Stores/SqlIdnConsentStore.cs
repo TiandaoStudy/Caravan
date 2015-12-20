@@ -20,6 +20,7 @@ using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,76 +28,88 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
     public sealed class SqlIdnConsentStore : IConsentStore
     {
-        private readonly SqlDbContext _context;
+        private readonly IDbContextFactory<SqlDbContext> _dbContextFactory;
 
-        public SqlIdnConsentStore(SqlDbContext context)
+        public SqlIdnConsentStore(IDbContextFactory<SqlDbContext> dbContextFactory)
         {
-            Raise<ArgumentNullException>.IfIsNull(context, nameof(context));
-            _context = context;
+            RaiseArgumentNullException.IfIsNull(dbContextFactory, nameof(dbContextFactory));
+            _dbContextFactory = dbContextFactory;
         }
 
         public async Task<IdentityServer3.Core.Models.Consent> LoadAsync(string subject, string client)
         {
-            var found = await _context.IdnConsents.FindAsync(subject, client);
-            if (found == null)
+            using (var ctx = _dbContextFactory.Create())
             {
-                return null;
+                var found = await ctx.IdnConsents.FindAsync(subject, client);
+                if (found == null)
+                {
+                    return null;
+                }
+
+                var result = new IdentityServer3.Core.Models.Consent
+                {
+                    Subject = found.Subject,
+                    ClientId = found.ClientId,
+                    Scopes = ParseScopes(found.Scopes)
+                };
+
+                return result;
             }
-
-            var result = new IdentityServer3.Core.Models.Consent
-            {
-                Subject = found.Subject,
-                ClientId = found.ClientId,
-                Scopes = ParseScopes(found.Scopes)
-            };
-
-            return result;
         }
 
         public async Task UpdateAsync(IdentityServer3.Core.Models.Consent consent)
         {
-            var item = await _context.IdnConsents.FindAsync(consent.Subject, consent.ClientId);
-
-            if (item == null)
+            using (var ctx = _dbContextFactory.Create())
             {
-                item = new SqlIdnConsent
+                var item = await ctx.IdnConsents.FindAsync(consent.Subject, consent.ClientId);
+
+                if (item == null)
                 {
-                    Subject = consent.Subject,
-                    ClientId = consent.ClientId
-                };
-                _context.IdnConsents.Add(item);
+                    item = new SqlIdnConsent
+                    {
+                        Subject = consent.Subject,
+                        ClientId = consent.ClientId
+                    };
+                    ctx.IdnConsents.Add(item);
+                }
+
+                if (consent.Scopes == null || !consent.Scopes.Any())
+                {
+                    ctx.IdnConsents.Remove(item);
+                }
+
+                item.Scopes = StringifyScopes(consent.Scopes);
+
+                await ctx.SaveChangesAsync();
             }
-
-            if (consent.Scopes == null || !consent.Scopes.Any())
-            {
-                _context.IdnConsents.Remove(item);
-            }
-
-            item.Scopes = StringifyScopes(consent.Scopes);
-
-            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<IdentityServer3.Core.Models.Consent>> LoadAllAsync(string subject)
         {
-            var found = await _context.IdnConsents.Where(x => x.Subject == subject).ToArrayAsync();
-
-            return found.Select(x => new IdentityServer3.Core.Models.Consent
+            using (var ctx = _dbContextFactory.Create())
             {
-                Subject = x.Subject,
-                ClientId = x.ClientId,
-                Scopes = ParseScopes(x.Scopes)
-            }).ToArray();
+                var found = await ctx.IdnConsents.Where(x => x.Subject == subject).ToArrayAsync();
+
+                return found.Select(x => new IdentityServer3.Core.Models.Consent
+                {
+                    Subject = x.Subject,
+                    ClientId = x.ClientId,
+                    Scopes = ParseScopes(x.Scopes)
+                }).ToArray();
+            }
         }
 
         public async Task RevokeAsync(string subject, string client)
         {
-            var found = await _context.IdnConsents.FindAsync(subject, client);
-
-            if (found != null)
+            using (var ctx = _dbContextFactory.Create())
             {
-                _context.IdnConsents.Remove(found);
-                await _context.SaveChangesAsync();
+                var found = await ctx.IdnConsents.FindAsync(subject, client);
+
+                if (found != null)
+                {
+                    ctx.IdnConsents.Remove(found);
+                    await ctx.SaveChangesAsync();
+                }
             }
         }
 

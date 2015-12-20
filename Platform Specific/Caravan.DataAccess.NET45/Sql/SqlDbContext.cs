@@ -57,26 +57,10 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
         }
 
-        public SqlDbContext(ICaravanDataSourceManager dataSourceManager)
-            : base(GetConnection(dataSourceManager), true)
+        public SqlDbContext()
+            : base(GetConnection(CaravanDataSource.Manager), true)
         {
-            // Disabilito SEMPRE il lazy loading, è troppo pericoloso!
-            Configuration.LazyLoadingEnabled = false;
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-        }
-
-        internal static SqlDbContext Create(ICaravanDataSourceManager dataSourceManager)
-        {
-            var ctx = new SqlDbContext(dataSourceManager);
-
-            // Provo a inizializzare il DB.
-            ctx.Database.Initialize(false);
-
-            return ctx;
+            // Il lazy loading viene disabilitato dalla classe che si occupa di generare i contesti.
         }
 
         private static DbConnection GetConnection(ICaravanDataSourceManager dataSourceManager)
@@ -101,7 +85,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             dataSourceManager.ResetConnection();
 
             // The database is recreated, since it is in-memory and probably it does not exist.
-            using (var ctx = Create(dataSourceManager))
+            using (var ctx = new SqlDbContext())
             {
                 ctx.Database.CreateIfNotExists();
                 Database.SetInitializer(new DropCreateDatabaseAlways<SqlDbContext>());

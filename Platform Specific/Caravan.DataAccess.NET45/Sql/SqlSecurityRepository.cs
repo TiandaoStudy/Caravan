@@ -21,6 +21,7 @@ using Finsa.Caravan.DataAccess.Sql.Security.Entities;
 using Finsa.CodeServices.Common;
 using PommaLabs.Thrower;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,15 +34,17 @@ namespace Finsa.Caravan.DataAccess.Sql
         private const string UnspecifiedString = "...";
 
         #endregion Constants
-
-        private readonly SqlDbContext _dbContext;
+        
+        private readonly IDbContextFactory<SqlDbContext> _dbContextFactory;
+        private readonly SqlDbContext _queryableDbContext;
         private bool _disposed;
 
-        public SqlSecurityRepository(ICaravanLog log, SqlDbContext dbContext)
+        public SqlSecurityRepository(ICaravanLog log, IDbContextFactory<SqlDbContext> dbContextFactory)
             : base(log)
         {
-            RaiseArgumentNullException.IfIsNull(dbContext, nameof(dbContext));
-            _dbContext = dbContext;
+            RaiseArgumentNullException.IfIsNull(dbContextFactory, nameof(dbContextFactory));
+            _dbContextFactory = dbContextFactory;
+            _queryableDbContext = dbContextFactory.Create();
         }
 
         public override void Dispose()
@@ -51,8 +54,8 @@ namespace Finsa.Caravan.DataAccess.Sql
                 return;
             }
 
-            // NOTA BENE: Non chiudo il contesto perché mi viene passato al costruttore, farà la Dispose chi me lo passa.
-            //_dbContext?.Dispose();
+            // NOTA BENE: Mi devo occupare del contesto usato per spedire in giro i vari IQueryable.
+            _queryableDbContext?.Dispose();
 
             _disposed = true;
         }
@@ -61,35 +64,41 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override async Task<SecApp[]> GetAppsAsyncInternal(string appName)
         {
-            var q = _dbContext.SecApps
-                .Include(a => a.Groups)
-                .Include("Contexts.Objects")
-                .Include(a => a.LogSettings);
-
-            if (appName != null)
+            using (var ctx = _dbContextFactory.Create())
             {
-                q = q.Where(a => a.Name == appName);
-            }
+                var q = ctx.SecApps
+                    .Include(a => a.Groups)
+                    .Include("Contexts.Objects")
+                    .Include(a => a.LogSettings);
 
-            return await q.ProjectTo<SecApp>().ToArrayAsync();
+                if (appName != null)
+                {
+                    q = q.Where(a => a.Name == appName);
+                }
+
+                return await q.ProjectTo<SecApp>().ToArrayAsync();
+            }            
         }
 
         protected override async Task AddAppAsyncInternal(SecApp app)
         {
-            if (await _dbContext.SecApps.AnyAsync(a => a.Name == app.Name))
+            using (var ctx = _dbContextFactory.Create())
             {
-                throw new SecAppExistingException(app.Name);
+                if (await ctx.SecApps.AnyAsync(a => a.Name == app.Name))
+                {
+                    throw new SecAppExistingException(app.Name);
+                }
+
+                var sqlApp = ctx.SecApps.Add(new SqlSecApp
+                {
+                    Name = app.Name,
+                    Description = app.Description ?? UnspecifiedString,
+                    PasswordHasher = app.PasswordHasher ?? typeof(AdaptivePasswordHasher).AssemblyQualifiedName
+                });
+
+                await ctx.SaveChangesAsync();
+                app.Id = sqlApp.Id;
             }
-
-            var sqlApp = _dbContext.SecApps.Add(new SqlSecApp
-            {
-                Name = app.Name,
-                Description = app.Description ?? UnspecifiedString,
-                PasswordHasher = app.PasswordHasher ?? typeof(AdaptivePasswordHasher).AssemblyQualifiedName
-            });
-
-            await _dbContext.SaveChangesAsync();
-            app.Id = sqlApp.Id;
         }
 
         #endregion Apps
@@ -98,9 +107,11 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override async Task<SecGroup[]> GetGroupsAsyncInternal(string appName, int? groupId, string groupName)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
 
-                var q = _dbContext.SecGroups
+                var q = ctx.SecGroups
                     .Include(g => g.App)
                     .Include(g => g.Roles)
                     .Where(g => g.App.Id == appId);
@@ -117,18 +128,21 @@ namespace Finsa.Caravan.DataAccess.Sql
                 return q.AsEnumerable()
                     .Select(Mapper.Map<SecGroup>)
                     .ToArray();
+            }
         }
 
         protected override async Task AddGroupAsyncInternal(string appName, SecGroup newGroup)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
 
-                if (await _dbContext.SecGroups.AnyAsync(g => g.AppId == appId && g.Name == newGroup.Name))
+                if (await ctx.SecGroups.AnyAsync(g => g.AppId == appId && g.Name == newGroup.Name))
                 {
                     throw new SecGroupExistingException(appName, newGroup.Name);
                 }
 
-                var sqlGroup = _dbContext.SecGroups.Add(new SqlSecGroup
+                var sqlGroup = ctx.SecGroups.Add(new SqlSecGroup
                 {
                     AppId = appId,
                     Name = newGroup.Name,
@@ -136,30 +150,36 @@ namespace Finsa.Caravan.DataAccess.Sql
                     Notes = newGroup.Notes ?? UnspecifiedString
                 });
 
-                await _dbContext.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
                 newGroup.Id = sqlGroup.Id;
+            }
         }
 
         protected override async Task RemoveGroupAsyncInternal(string appName, string groupName)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
-                var sqlGroup = await GetGroupByNameAsync(_dbContext, appId, appName, groupName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var sqlGroup = await GetGroupByNameAsync(ctx, appId, appName, groupName);
 
-            // La chiamata sopra mi assicura che il gruppo ci sia.
-            _dbContext.SecGroups.Remove(sqlGroup);
+                // La chiamata sopra mi assicura che il gruppo ci sia.
+                ctx.SecGroups.Remove(sqlGroup);
 
-                await _dbContext.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
+            }
         }
 
         protected override async Task UpdateGroupAsyncInternal(string appName, string groupName, SecGroupUpdates groupUpdates)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
-                var sqlGroup = await GetGroupByNameAsync(_dbContext, appId, appName, groupName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var sqlGroup = await GetGroupByNameAsync(ctx, appId, appName, groupName);
 
                 // La chiamata sopra mi assicura che il gruppo ci sia.
                 groupUpdates.Name.Do(async x =>
                 {
-                    if (sqlGroup.Name != x && await _dbContext.SecGroups.AnyAsync(g => g.AppId == sqlGroup.AppId && g.Name == x))
+                    if (sqlGroup.Name != x && await ctx.SecGroups.AnyAsync(g => g.AppId == sqlGroup.AppId && g.Name == x))
                     {
                         throw new SecGroupExistingException(appName, x);
                     }
@@ -168,16 +188,17 @@ namespace Finsa.Caravan.DataAccess.Sql
                 groupUpdates.Description.Do(x => sqlGroup.Description = x);
                 groupUpdates.Notes.Do(x => sqlGroup.Notes = x);
 
-                await _dbContext.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
+            }
         }
 
         protected override async Task<IQueryable<SecUser>> QueryUsersInGroupAsyncInternal(string appName, string groupName)
         {
-            var appId = await GetAppIdByNameAsync(_dbContext, appName);
-            var sqlGroup = await GetGroupByNameAsync(_dbContext, appId, appName, groupName);
+            var appId = await GetAppIdByNameAsync(_queryableDbContext, appName);
+            var sqlGroup = await GetGroupByNameAsync(_queryableDbContext, appId, appName, groupName);
 
             // La chiamata sopra mi assicura che il ruolo ci sia.
-            return _dbContext.SecUsers
+            return _queryableDbContext.SecUsers
                 .Where(u => u.AppId == appId)
                 .Where(u => u.Roles.Any(r => r.GroupId == sqlGroup.Id))
                 .ProjectTo<SecUser>();
@@ -189,15 +210,17 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override async Task<SecRole[]> GetRolesAsyncInternal(string appName, string groupName, string roleName, int? roleId)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
 
-                var q = _dbContext.SecRoles
+                var q = ctx.SecRoles
                     .Include(r => r.Group.App)
                     .Where(r => r.Group.App.Id == appId);
 
                 if (groupName != null)
                 {
-                    var group = await GetGroupByNameAsync(_dbContext, appId, appName, groupName);
+                    var group = await GetGroupByNameAsync(ctx, appId, appName, groupName);
                     q = q.Where(r => r.Id == group.Id);
                 }
                 if (roleName != null)
@@ -212,19 +235,22 @@ namespace Finsa.Caravan.DataAccess.Sql
                 return q.AsEnumerable()
                     .Select(Mapper.Map<SecRole>)
                     .ToArray();
+            }
         }
 
         protected override async Task AddRoleAsyncInternal(string appName, string groupName, SecRole newRole)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
-                var group = await GetGroupByNameAsync(_dbContext, appId, appName, groupName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var group = await GetGroupByNameAsync(ctx, appId, appName, groupName);
 
-                if (await _dbContext.SecRoles.AnyAsync(r => r.GroupId == group.Id && r.Name == newRole.Name))
+                if (await ctx.SecRoles.AnyAsync(r => r.GroupId == group.Id && r.Name == newRole.Name))
                 {
                     throw new SecRoleExistingException(appName, groupName, newRole.Name);
                 }
 
-                var sqlRole = _dbContext.SecRoles.Add(new SqlSecRole
+                var sqlRole = ctx.SecRoles.Add(new SqlSecRole
                 {
                     GroupId = group.Id,
                     Name = newRole.Name,
@@ -232,32 +258,38 @@ namespace Finsa.Caravan.DataAccess.Sql
                     Notes = newRole.Notes ?? UnspecifiedString
                 });
 
-                await _dbContext.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
                 newRole.Id = sqlRole.Id;
+            }
         }
 
         protected override async Task RemoveRoleAsyncInternal(string appName, string groupName, string roleName)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
-                var group = await GetGroupByNameAsync(_dbContext, appId, appName, groupName);
-                var sqlRole = await GetRoleByNameAsync(_dbContext, appName, group.Id, groupName, roleName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var group = await GetGroupByNameAsync(ctx, appId, appName, groupName);
+                var sqlRole = await GetRoleByNameAsync(ctx, appName, group.Id, groupName, roleName);
 
-            // La chiamata sopra mi assicura che il ruolo ci sia.
-            _dbContext.SecRoles.Remove(sqlRole);
+                // La chiamata sopra mi assicura che il ruolo ci sia.
+                ctx.SecRoles.Remove(sqlRole);
 
-                await _dbContext.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
+            }
         }
 
         protected override async Task UpdateRoleAsyncInternal(string appName, string groupName, string roleName, SecRoleUpdates roleUpdates)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
-                var group = await GetGroupByNameAsync(_dbContext, appId, appName, groupName);
-                var sqlRole = await GetRoleByNameAsync(_dbContext, appName, group.Id, groupName, roleName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var group = await GetGroupByNameAsync(ctx, appId, appName, groupName);
+                var sqlRole = await GetRoleByNameAsync(ctx, appName, group.Id, groupName, roleName);
 
                 // La chiamata sopra mi assicura che il ruolo ci sia.
                 roleUpdates.Name.Do(async x =>
                 {
-                    if (sqlRole.Name != x && await _dbContext.SecRoles.AnyAsync(r => r.GroupId == group.Id && r.Name == x))
+                    if (sqlRole.Name != x && await ctx.SecRoles.AnyAsync(r => r.GroupId == group.Id && r.Name == x))
                     {
                         throw new SecRoleExistingException(appName, groupName, x);
                     }
@@ -266,17 +298,18 @@ namespace Finsa.Caravan.DataAccess.Sql
                 roleUpdates.Description.Do(x => sqlRole.Description = x);
                 roleUpdates.Notes.Do(x => sqlRole.Notes = x);
 
-                await _dbContext.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
+            }
         }
 
         protected override async Task<IQueryable<SecUser>> QueryUsersInRoleAsyncInternal(string appName, string groupName, string roleName)
         {
-            var appId = await GetAppIdByNameAsync(_dbContext, appName);
-            var group = await GetGroupByNameAsync(_dbContext, appId, appName, groupName);
-            var sqlRole = await GetRoleByNameAsync(_dbContext, appName, group.Id, groupName, roleName);
+            var appId = await GetAppIdByNameAsync(_queryableDbContext, appName);
+            var group = await GetGroupByNameAsync(_queryableDbContext, appId, appName, groupName);
+            var sqlRole = await GetRoleByNameAsync(_queryableDbContext, appName, group.Id, groupName, roleName);
 
             // La chiamata sopra mi assicura che il ruolo ci sia.
-            return _dbContext.SecUsers
+            return _queryableDbContext.SecUsers
                 .Where(u => u.AppId == appId)
                 .Where(u => u.Roles.Any(r => r.Id == sqlRole.Id))
                 .ProjectTo<SecUser>();
@@ -288,9 +321,11 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override async Task<SecUser[]> GetUsersAsyncInternal(string appName, long? userId, string userLogin, string userEmail)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
 
-                var q = _dbContext.SecUsers
+                var q = ctx.SecUsers
                     .Include(u => u.App)
                     .Include(u => u.Claims)
                     .Include("Roles.Group")
@@ -312,28 +347,31 @@ namespace Finsa.Caravan.DataAccess.Sql
                 return q.AsEnumerable()
                     .Select(Mapper.Map<SecUser>)
                     .ToArray();
+            }
         }
 
         protected override async Task<IQueryable<SecUser>> QueryUsersAsyncInternal(string appName)
         {
-            var appId = await GetAppIdByNameAsync(_dbContext, appName);
+            var appId = await GetAppIdByNameAsync(_queryableDbContext, appName);
 
             // La chiamata sopra mi assicura che il ruolo ci sia.
-            return _dbContext.SecUsers
+            return _queryableDbContext.SecUsers
                 .Where(u => u.AppId == appId)
                 .ProjectTo<SecUser>();
         }
 
         protected override async Task AddUserAsyncInternal(string appName, SecUser newUser)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
 
-                if (await _dbContext.SecUsers.AnyAsync(u => u.AppId == appId && u.Login == newUser.Login))
+                if (await ctx.SecUsers.AnyAsync(u => u.AppId == appId && u.Login == newUser.Login))
                 {
                     throw new SecUserExistingException(appName, newUser.Login);
                 }
 
-                var sqlUser = _dbContext.SecUsers.Add(new SqlSecUser
+                var sqlUser = ctx.SecUsers.Add(new SqlSecUser
                 {
                     AppId = appId,
                     Active = newUser.Active,
@@ -344,30 +382,36 @@ namespace Finsa.Caravan.DataAccess.Sql
                     Login = newUser.Login
                 });
 
-                await _dbContext.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
                 newUser.Id = sqlUser.Id;
+            }
         }
 
         protected override async Task RemoveUserAsyncInternal(string appName, string userLogin)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
-                var sqlUser = await GetUserByLoginAsync(_dbContext, appId, appName, userLogin);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var sqlUser = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
 
-            // La chiamata sopra mi assicura che l'utente ci sia.
-            _dbContext.SecUsers.Remove(sqlUser);
+                // La chiamata sopra mi assicura che l'utente ci sia.
+                ctx.SecUsers.Remove(sqlUser);
 
-                await _dbContext.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
+            }
         }
 
         protected override async Task UpdateUserAsyncInternal(string appName, string userLogin, SecUserUpdates userUpdates)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
-                var sqlUser = await GetUserByLoginAsync(_dbContext, appId, appName, userLogin);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var sqlUser = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
 
                 // La chiamata sopra mi assicura che l'utente ci sia.
                 userUpdates.Login.Do(async x =>
                 {
-                    if (userLogin != x && await _dbContext.SecUsers.AnyAsync(u => u.AppId == sqlUser.AppId && u.Login == x))
+                    if (userLogin != x && await ctx.SecUsers.AnyAsync(u => u.AppId == sqlUser.AppId && u.Login == x))
                     {
                         throw new SecUserExistingException(appName, x);
                     }
@@ -387,68 +431,81 @@ namespace Finsa.Caravan.DataAccess.Sql
                 userUpdates.AccessFailedCount.Do(x => sqlUser.AccessFailedCount = x);
                 userUpdates.TwoFactorAuthenticationEnabled.Do(x => sqlUser.TwoFactorAuthenticationEnabled = x);
 
-                await _dbContext.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
+            }
         }
 
         protected override async Task AddUserToRoleAsyncInternal(string appName, string userLogin, string groupName, string roleName)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
-                var user = await GetUserByLoginAsync(_dbContext, appId, appName, userLogin);
-                var group = await GetGroupByNameAsync(_dbContext, appId, appName, groupName);
-                var role = await GetRoleByNameAsync(_dbContext, appName, group.Id, groupName, roleName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
+                var group = await GetGroupByNameAsync(ctx, appId, appName, groupName);
+                var role = await GetRoleByNameAsync(ctx, appName, group.Id, groupName, roleName);
 
                 // Le chiamate sopra mi assicurano che utente, gruppo e ruolo esistano.
-                await _dbContext.Entry(user).Collection(u => u.Roles).LoadAsync();
+                await ctx.Entry(user).Collection(u => u.Roles).LoadAsync();
                 if (user.Roles.Any(r => r.Id == role.Id))
                 {
                     throw new SecUserExistingException(appName, groupName, roleName, userLogin);
                 }
                 user.Roles.Add(role);
 
-                await _dbContext.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
+            }
         }
 
         protected override async Task RemoveUserFromRoleAsyncInternal(string appName, string userLogin, string groupName, string roleName)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
-                var user = await GetUserByLoginAsync(_dbContext, appId, appName, userLogin);
-                var group = await GetGroupByNameAsync(_dbContext, appId, appName, groupName);
-                var role = await GetRoleByNameAsync(_dbContext, appName, group.Id, groupName, roleName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
+                var group = await GetGroupByNameAsync(ctx, appId, appName, groupName);
+                var role = await GetRoleByNameAsync(ctx, appName, group.Id, groupName, roleName);
 
                 // Le chiamate sopra mi assicurano che utente, gruppo e ruolo esistano.
-                await _dbContext.Entry(user).Collection(u => u.Roles).LoadAsync();
+                await ctx.Entry(user).Collection(u => u.Roles).LoadAsync();
                 user.Roles.Remove(role);
 
-                await _dbContext.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
+            }
         }
 
         protected override async Task AddUserClaimAsyncInternal(string appName, string userLogin, SecClaim claim)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
-                var user = await GetUserByLoginAsync(_dbContext, appId, appName, userLogin);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
 
                 // Le chiamate sopra mi assicurano che utente e applicazione esistano.
-                var sqlClaim = _dbContext.SecClaims.Add(new SqlSecClaim
+                var sqlClaim = ctx.SecClaims.Add(new SqlSecClaim
                 {
                     UserId = user.Id,
                     Hash = claim.Hash,
                     Claim = claim.Claim
                 });
 
-                await _dbContext.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
                 claim.Id = sqlClaim.Id;
+            }
         }
 
         protected override async Task RemoveUserClaimAsyncInternal(string appName, string userLogin, string serializedClaimHash)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
-                var user = await GetUserByLoginAsync(_dbContext, appId, appName, userLogin);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
 
                 // Le chiamate sopra mi assicurano che utente e applicazione esistano.
-                var claim = _dbContext.SecClaims.FirstOrDefault(c => c.UserId == user.Id && c.Hash == serializedClaimHash);
-            _dbContext.SecClaims.Remove(claim);
+                var claim = ctx.SecClaims.FirstOrDefault(c => c.UserId == user.Id && c.Hash == serializedClaimHash);
+                ctx.SecClaims.Remove(claim);
 
-                await _dbContext.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
+            }
         }
 
         #endregion Users
@@ -457,15 +514,18 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override async Task<SecContext[]> GetContextsAsyncInternal(string appName)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
 
-                var q = _dbContext.SecContexts
+                var q = ctx.SecContexts
                     .Include(c => c.Objects)
                     .Where(c => c.App.Id == appId);
 
                 return q.AsEnumerable()
                     .Select(Mapper.Map<SecContext>)
                     .ToArray();
+            }
         }
 
         #endregion Contexts
@@ -474,9 +534,11 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override async Task<SecObject[]> GetObjectsAsyncInternal(string appName, string contextName)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
 
-                var q = _dbContext.SecObjects
+                var q = ctx.SecObjects
                     .Include(o => o.SecEntries)
                     .Where(o => o.Context.AppId == appId);
 
@@ -488,6 +550,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 return q.AsEnumerable()
                     .Select(Mapper.Map<SecObject>)
                     .ToArray();
+            }
         }
 
         #endregion Objects
@@ -496,9 +559,11 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         protected override async Task<SecEntry[]> GetEntriesAsyncInternal(string appName, string contextName, string objectName, string userLogin)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
 
-                var q = _dbContext.SecEntries
+                var q = ctx.SecEntries
                     .Include(e => e.Object.Context)
                     .Include(e => e.User)
                     .Include(e => e.Group)
@@ -514,7 +579,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 }
                 if (userLogin != null)
                 {
-                    var user = await GetUserByLoginAsync(_dbContext, appId, appName, userLogin);
+                    var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
                     var groupIds = user.Roles.Select(r => r.GroupId).Distinct().ToArray();
                     q = q.Where(e => e.UserId == user.Id || groupIds.Contains(e.Group.Id));
                 }
@@ -522,39 +587,42 @@ namespace Finsa.Caravan.DataAccess.Sql
                 return q.AsEnumerable()
                     .Select(Mapper.Map<SecEntry>)
                     .ToArray();
+            }
         }
 
         protected override async Task<long> AddEntryAsyncInternal(string appName, SecContext secContext, SecObject secObject, string userLogin, string groupName, string roleName)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
 
-                var dbContext = await _dbContext.SecContexts.FirstOrDefaultAsync(c => c.AppId == appId && c.Name == secContext.Name);
+                var dbContext = await ctx.SecContexts.FirstOrDefaultAsync(c => c.AppId == appId && c.Name == secContext.Name);
                 if (dbContext == null)
                 {
-                    dbContext = _dbContext.SecContexts.Add(new SqlSecContext
+                    dbContext = ctx.SecContexts.Add(new SqlSecContext
                     {
                         AppId = appId,
                         Name = secContext.Name,
                         Description = secContext.Description
                     });
-                    await _dbContext.SaveChangesAsync(); // Required, we need the generated context ID.
+                    await ctx.SaveChangesAsync(); // Required, we need the generated context ID.
                 }
                 else
                 {
                     dbContext.Description = secContext.Description;
                 }
 
-                var dbObject = await _dbContext.SecObjects.FirstOrDefaultAsync(o => o.Context.AppId == appId && o.ContextId == dbContext.Id && o.Name == secObject.Name);
+                var dbObject = await ctx.SecObjects.FirstOrDefaultAsync(o => o.Context.AppId == appId && o.ContextId == dbContext.Id && o.Name == secObject.Name);
                 if (dbObject == null)
                 {
-                    dbObject = _dbContext.SecObjects.Add(new SqlSecObject
+                    dbObject = ctx.SecObjects.Add(new SqlSecObject
                     {
                         ContextId = dbContext.Id,
                         Name = secObject.Name,
                         Description = secObject.Description,
                         Type = secObject.Type
                     });
-                    await _dbContext.SaveChangesAsync(); // Required, we need the generated context ID.
+                    await ctx.SaveChangesAsync(); // Required, we need the generated context ID.
                 }
                 else
                 {
@@ -562,14 +630,14 @@ namespace Finsa.Caravan.DataAccess.Sql
                     dbObject.Type = secObject.Type;
                 }
 
-                var q = _dbContext.SecEntries
+                var q = ctx.SecEntries
                     .Where(e => e.Object.Context.AppId == appId)
                     .Where(e => e.Object.ContextId == dbContext.Id && e.ObjectId == dbObject.Id);
 
                 long? userId = null;
                 if (userLogin != null)
                 {
-                    var sqlUser = await GetUserByLoginAsync(_dbContext, appId, appName, userLogin);
+                    var sqlUser = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
                     userId = sqlUser.Id;
                     q = q.Where(e => e.UserId == userId);
                 }
@@ -578,11 +646,11 @@ namespace Finsa.Caravan.DataAccess.Sql
                 int? roleId = null;
                 if (groupName != null)
                 {
-                    var sqlGroup = await GetGroupByNameAsync(_dbContext, appId, appName, groupName);
+                    var sqlGroup = await GetGroupByNameAsync(ctx, appId, appName, groupName);
 
                     if (roleName != null)
                     {
-                        var sqlRole = await GetRoleByNameAsync(_dbContext, appName, sqlGroup.Id, groupName, roleName);
+                        var sqlRole = await GetRoleByNameAsync(ctx, appName, sqlGroup.Id, groupName, roleName);
                         roleId = sqlRole.Id;
                         q = q.Where(e => e.RoleId == roleId);
                     }
@@ -598,7 +666,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                     throw new SecEntryExistingException(appName, userLogin, groupName, roleName, dbContext.Name, dbObject.Name);
                 }
 
-                var secEntry = _dbContext.SecEntries.Add(new SqlSecEntry
+                var secEntry = ctx.SecEntries.Add(new SqlSecEntry
                 {
                     UserId = userId,
                     GroupId = groupId,
@@ -606,16 +674,19 @@ namespace Finsa.Caravan.DataAccess.Sql
                     ObjectId = dbObject.Id
                 });
 
-                await _dbContext.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
                 return secEntry.Id;
+            }
         }
 
         protected override async Task RemoveEntryAsyncInternal(string appName, string contextName, string objectName, string userLogin, string groupName, string roleName)
         {
-                var appId = await GetAppIdByNameAsync(_dbContext, appName);
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
                 //var entry = ctx.SecEntries.FirstOrDefault(e => e.AppId == appId && e.Context.Name == contextName && e.Object.Name == objectName && (e.User == null || e.User.Login == userLogin) && (e.Group == null || e.Group.Name == groupName));
 
-                var q = _dbContext.SecEntries
+                var q = ctx.SecEntries
                     .Include(e => e.Object)
                     .Include(e => e.User)
                     .Include(e => e.Group)
@@ -623,15 +694,16 @@ namespace Finsa.Caravan.DataAccess.Sql
 
                 if (userLogin != null)
                 {
-                    var user = await GetUserByLoginAsync(_dbContext, appId, appName, userLogin);
+                    var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
                     var groupIds = user.Roles.Select(r => r.GroupId).Distinct().ToArray();
                     q = q.Where(e => e.UserId == user.Id || groupIds.Contains(e.Group.Id));
                 }
                 if (q != null)
                 {
-                _dbContext.SecEntries.Remove(q.First());
+                    ctx.SecEntries.Remove(q.First());
                 }
-                await _dbContext.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
+            }
         }
 
         #endregion Entries

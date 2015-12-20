@@ -20,18 +20,19 @@ using Finsa.Caravan.DataAccess.Sql.Identity.Extensions;
 using IdentityServer3.Core.Services;
 using PommaLabs.Thrower;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
     public sealed class SqlIdnClientStore : ICaravanClientStore
     {
-        private readonly SqlDbContext _context;
+        private readonly IDbContextFactory<SqlDbContext> _dbContextFactory;
 
-        public SqlIdnClientStore(SqlDbContext context)
+        public SqlIdnClientStore(IDbContextFactory<SqlDbContext> dbContextFactory)
         {
-            RaiseArgumentNullException.IfIsNull(context, nameof(context));
-            _context = context;
+            RaiseArgumentNullException.IfIsNull(dbContextFactory, nameof(dbContextFactory));
+            _dbContextFactory = dbContextFactory;
         }
 
         async Task<IdentityServer3.Core.Models.Client> IClientStore.FindClientByIdAsync(string clientId)
@@ -41,7 +42,9 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 
         public async Task<IdnClient> FindClientByIdAsync(string clientId)
         {
-            var client = await _context.IdnClients
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var client = await ctx.IdnClients
                 .Include(x => x.App)
                 .Include(x => x.ClientSecrets)
                 .Include(x => x.RedirectUris)
@@ -53,7 +56,8 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
                 .Include(x => x.AllowedCorsOrigins)
                 .SingleOrDefaultAsync(x => x.ClientId == clientId);
 
-            return client.ToModel();
+                return client.ToModel();
+            }
         }
     }
 }

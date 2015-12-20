@@ -19,30 +19,34 @@ using Finsa.CodeServices.Clock;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 using IdentityServer3.EntityFramework.Entities;
+using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
     public sealed class SqlIdnAuthorizationCodeStore : AbstractSqlIdnTokenStore<AuthorizationCode>, IAuthorizationCodeStore
     {
-        public SqlIdnAuthorizationCodeStore(SqlDbContext context, IScopeStore scopeStore, IClientStore clientStore, IClock clock)
-            : base(context, TokenType.AuthorizationCode, scopeStore, clientStore, clock)
+        public SqlIdnAuthorizationCodeStore(IDbContextFactory<SqlDbContext> dbContextFactory, IScopeStore scopeStore, IClientStore clientStore, IClock clock)
+            : base(dbContextFactory, TokenType.AuthorizationCode, scopeStore, clientStore, clock)
         {
         }
 
         public override async Task StoreAsync(string key, AuthorizationCode value)
         {
-            Context.IdnTokens.Add(new SqlIdnToken
+            using (var ctx = DbContextFactory.Create())
             {
-                Key = key,
-                SubjectId = value.SubjectId,
-                ClientId = value.ClientId,
-                JsonCode = ConvertToJson(value),
-                Expiry = Clock.UtcNow.AddSeconds(value.Client.AuthorizationCodeLifetime),
-                TokenTypeString = TokenTypeString
-            });
+                ctx.IdnTokens.Add(new SqlIdnToken
+                {
+                    Key = key,
+                    SubjectId = value.SubjectId,
+                    ClientId = value.ClientId,
+                    JsonCode = ConvertToJson(value),
+                    Expiry = Clock.UtcNow.AddSeconds(value.Client.AuthorizationCodeLifetime),
+                    TokenTypeString = TokenTypeString
+                });
 
-            await Context.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
+            }
         }
     }
 }

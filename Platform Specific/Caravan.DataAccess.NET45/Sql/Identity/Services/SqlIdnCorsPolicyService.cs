@@ -18,6 +18,7 @@ using IdentityServer3.Core.Services;
 using PommaLabs.Thrower;
 using System;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,28 +26,31 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Services
 {
     public sealed class SqlIdnCorsPolicyService : ICorsPolicyService
     {
-        readonly SqlDbContext _context;
+        private readonly IDbContextFactory<SqlDbContext> _dbContextFactory;
 
-        public SqlIdnCorsPolicyService(SqlDbContext context)
+        public SqlIdnCorsPolicyService(IDbContextFactory<SqlDbContext> dbContextFactory)
         {
-            RaiseArgumentNullException.IfIsNull(context);
-            _context = context;
+            RaiseArgumentNullException.IfIsNull(dbContextFactory, nameof(dbContextFactory));
+            _dbContextFactory = dbContextFactory;
         }
 
         public async Task<bool> IsOriginAllowedAsync(string origin)
         {
-            var query =
-                from client in _context.IdnClients
-                from allowed in client.AllowedCorsOrigins
-                select allowed.Origin;
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var query =
+                    from client in ctx.IdnClients
+                    from allowed in client.AllowedCorsOrigins
+                    select allowed.Origin;
 
-            var urls = await query.ToArrayAsync();
+                var urls = await query.ToArrayAsync();
 
-            var origins = urls.Select(GetOrigin).Where(x => x != null).Distinct();
+                var origins = urls.Select(GetOrigin).Where(x => x != null).Distinct();
 
-            var result = origins.Contains(origin, StringComparer.OrdinalIgnoreCase);
+                var result = origins.Contains(origin, StringComparer.OrdinalIgnoreCase);
 
-            return result;
+                return result;
+            }                
         }
 
         private static string GetOrigin(string url)

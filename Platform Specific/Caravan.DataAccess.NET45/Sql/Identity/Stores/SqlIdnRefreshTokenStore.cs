@@ -19,35 +19,39 @@ using Finsa.CodeServices.Clock;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 using IdentityServer3.EntityFramework.Entities;
+using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
     public sealed class SqlIdnRefreshTokenStore : AbstractSqlIdnTokenStore<RefreshToken>, IRefreshTokenStore
     {
-        public SqlIdnRefreshTokenStore(SqlDbContext context, IScopeStore scopeStore, IClientStore clientStore, IClock clock)
-            : base(context, TokenType.RefreshToken, scopeStore, clientStore, clock)
+        public SqlIdnRefreshTokenStore(IDbContextFactory<SqlDbContext> dbContextFactory, IScopeStore scopeStore, IClientStore clientStore, IClock clock)
+            : base(dbContextFactory, TokenType.RefreshToken, scopeStore, clientStore, clock)
         {
         }
 
         public override async Task StoreAsync(string key, RefreshToken value)
         {
-            var token = await Context.IdnTokens.FindAsync(key, TokenTypeString);
-            if (token == null)
+            using (var ctx = DbContextFactory.Create())
             {
-                token = new SqlIdnToken
+                var token = await ctx.IdnTokens.FindAsync(key, TokenTypeString);
+                if (token == null)
                 {
-                    Key = key,
-                    SubjectId = value.SubjectId,
-                    ClientId = value.ClientId,
-                    JsonCode = ConvertToJson(value),
-                    TokenTypeString = TokenTypeString
-                };
-                Context.IdnTokens.Add(token);
-            }
+                    token = new SqlIdnToken
+                    {
+                        Key = key,
+                        SubjectId = value.SubjectId,
+                        ClientId = value.ClientId,
+                        JsonCode = ConvertToJson(value),
+                        TokenTypeString = TokenTypeString
+                    };
+                    ctx.IdnTokens.Add(token);
+                }
 
-            token.Expiry = value.CreationTime.AddSeconds(value.LifeTime).DateTime.ToUniversalTime();
-            await Context.SaveChangesAsync();
+                token.Expiry = value.CreationTime.AddSeconds(value.LifeTime).DateTime.ToUniversalTime();
+                await ctx.SaveChangesAsync();
+            }
         }
     }
 }

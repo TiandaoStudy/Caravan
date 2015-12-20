@@ -23,6 +23,7 @@ using Finsa.CodeServices.Common;
 using PommaLabs.Thrower;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -36,16 +37,18 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         #endregion Constants
 
-        private readonly SqlDbContext _dbContext;
+        private readonly IDbContextFactory<SqlDbContext> _dbContextFactory;
+        private readonly SqlDbContext _queryableDbContext;
         private readonly IClock _clock;
         private bool _disposed;
 
-        public SqlLogRepository(ICaravanLog log, SqlDbContext dbContext, IClock clock)
+        public SqlLogRepository(ICaravanLog log, IDbContextFactory<SqlDbContext> dbContextFactory, IClock clock)
             : base(log)
         {
-            RaiseArgumentNullException.IfIsNull(dbContext, nameof(dbContext));
+            RaiseArgumentNullException.IfIsNull(dbContextFactory, nameof(dbContextFactory));
             RaiseArgumentNullException.IfIsNull(clock, nameof(clock));
-            _dbContext = dbContext;
+            _dbContextFactory = dbContextFactory;
+            _queryableDbContext = dbContextFactory.Create();
             _clock = clock;
         }
 
@@ -56,311 +59,344 @@ namespace Finsa.Caravan.DataAccess.Sql
                 return;
             }
 
-            // NOTA BENE: Non chiudo il contesto perché mi viene passato al costruttore, farà la Dispose chi me lo passa.
-            //_dbContext?.Dispose();
+            // NOTA BENE: Mi devo occupare del contesto usato per spedire in giro i vari IQueryable.
+            _queryableDbContext?.Dispose();
 
             _disposed = true;
         }
 
         protected override async Task AddEntryAsyncInternal(string appName, LogEntry logEntry)
         {
-            var settings = await GetAndSetCachedSettingsAsync(appName, _dbContext);
-
-            var sqlLogSettingId = ToSqlLogSettingId(logEntry.LogLevel);
-            var sqlLogSetting = settings[sqlLogSettingId];
-
-            if (sqlLogSetting.Enabled)
+            using (var ctx = _dbContextFactory.Create())
             {
-                _dbContext.LogEntries.Add(ToSqlLogEntry(logEntry, sqlLogSetting));
-            }
+                var settings = await GetAndSetCachedSettingsAsync(appName, ctx);
 
-            await _dbContext.SaveChangesAsync();
-        }
-
-        protected override async Task AddEntriesAsyncInternal(string appName, IEnumerable<LogEntry> logEntries)
-        {
-            var settings = await GetAndSetCachedSettingsAsync(appName, _dbContext);
-
-            foreach (var logEntry in logEntries)
-            {
                 var sqlLogSettingId = ToSqlLogSettingId(logEntry.LogLevel);
                 var sqlLogSetting = settings[sqlLogSettingId];
 
                 if (sqlLogSetting.Enabled)
                 {
-                    _dbContext.LogEntries.Add(ToSqlLogEntry(logEntry, sqlLogSetting));
+                    ctx.LogEntries.Add(ToSqlLogEntry(logEntry, sqlLogSetting));
                 }
-            }
 
-            await _dbContext.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
+            }
+        }
+
+        protected override async Task AddEntriesAsyncInternal(string appName, IEnumerable<LogEntry> logEntries)
+        {
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var settings = await GetAndSetCachedSettingsAsync(appName, ctx);
+
+                foreach (var logEntry in logEntries)
+                {
+                    var sqlLogSettingId = ToSqlLogSettingId(logEntry.LogLevel);
+                    var sqlLogSetting = settings[sqlLogSettingId];
+
+                    if (sqlLogSetting.Enabled)
+                    {
+                        ctx.LogEntries.Add(ToSqlLogEntry(logEntry, sqlLogSetting));
+                    }
+                }
+
+                await ctx.SaveChangesAsync();
+            }
         }
 
         protected override async Task CleanUpEntriesAsyncInternal(string appName)
         {
-            // Log deletion might take a long time...
-            _dbContext.Database.CommandTimeout = 300;
-
-            var utcNow = _clock.UtcNow;
-
-            var appIds = ((appName == null) ? _dbContext.SecApps : _dbContext.SecApps.Where(a => a.Name == appName)).Select(a => a.Id);
-
-            // We delete logs older than "settings.Days".
-
-            var oldLogs = from e in _dbContext.LogEntries
-                          where appIds.Contains(e.AppId)
-                          from s in _dbContext.LogSettings
-                          where s.AppId == e.AppId && s.LogLevel == e.LogLevel
-                          where DbFunctions.DiffDays(utcNow, e.Date) > s.Days
-                          select e;
-
-            _dbContext.LogEntries.RemoveRange(oldLogs);
-            await _dbContext.SaveChangesAsync();
-
-            // We delete enough entries to preserve the upper limit.
-
-            var logSettings = from e in _dbContext.LogEntries
-                              where appIds.Contains(e.AppId)
-                              from s in _dbContext.LogSettings
-                              where s.AppId == e.AppId && s.LogLevel == e.LogLevel
-                              select new { Entry = e, Setting = s };
-
-            var logCounts = from es in logSettings
-                            group es by new { es.Setting.AppId, es.Setting.LogLevel } into g
-                            where (g.Count() - g.FirstOrDefault().Setting.MaxEntries) > 0
-                            select new { g.Key.AppId, g.Key.LogLevel, Keep = g.FirstOrDefault().Setting.MaxEntries };
-
-            var logCountsArray = await logCounts.ToArrayAsync();
-            foreach (var lc in logCountsArray)
+            using (var ctx = _dbContextFactory.Create())
             {
-                var tooManyLogEntries = from e in _dbContext.LogEntries
-                                        where e.AppId == lc.AppId && e.LogLevel == lc.LogLevel
-                                        orderby e.Date descending
-                                        select e;
+                // Log deletion might take a long time...
+                ctx.Database.CommandTimeout = 300;
 
-                _dbContext.LogEntries.RemoveRange(tooManyLogEntries.Skip(lc.Keep));
+                var utcNow = _clock.UtcNow;
+
+                var appIds = ((appName == null) ? ctx.SecApps : ctx.SecApps.Where(a => a.Name == appName)).Select(a => a.Id);
+
+                // We delete logs older than "settings.Days".
+
+                var oldLogs = from e in ctx.LogEntries
+                              where appIds.Contains(e.AppId)
+                              from s in ctx.LogSettings
+                              where s.AppId == e.AppId && s.LogLevel == e.LogLevel
+                              where DbFunctions.DiffDays(utcNow, e.Date) > s.Days
+                              select e;
+
+                ctx.LogEntries.RemoveRange(oldLogs);
+                await ctx.SaveChangesAsync();
+
+                // We delete enough entries to preserve the upper limit.
+
+                var logSettings = from e in ctx.LogEntries
+                                  where appIds.Contains(e.AppId)
+                                  from s in ctx.LogSettings
+                                  where s.AppId == e.AppId && s.LogLevel == e.LogLevel
+                                  select new { Entry = e, Setting = s };
+
+                var logCounts = from es in logSettings
+                                group es by new { es.Setting.AppId, es.Setting.LogLevel } into g
+                                where (g.Count() - g.FirstOrDefault().Setting.MaxEntries) > 0
+                                select new { g.Key.AppId, g.Key.LogLevel, Keep = g.FirstOrDefault().Setting.MaxEntries };
+
+                var logCountsArray = await logCounts.ToArrayAsync();
+                foreach (var lc in logCountsArray)
+                {
+                    var tooManyLogEntries = from e in ctx.LogEntries
+                                            where e.AppId == lc.AppId && e.LogLevel == lc.LogLevel
+                                            orderby e.Date descending
+                                            select e;
+
+                    ctx.LogEntries.RemoveRange(tooManyLogEntries.Skip(lc.Keep));
+                }
+
+                // Applico definitivamente i cambiamenti ed esco dalla procedura.
+                await ctx.SaveChangesAsync();
             }
-
-            // Applico definitivamente i cambiamenti ed esco dalla procedura.
-            await _dbContext.SaveChangesAsync();
         }
 
         protected override IList<LogEntry> GetEntriesInternal(string appName, LogLevel? logLevel)
         {
-            var q = _dbContext.LogEntries.Include(s => s.App);
-            if (appName != null)
+            using (var ctx = _dbContextFactory.Create())
             {
-                q = q.Where(s => s.App.Name == appName);
+                var q = ctx.LogEntries.Include(s => s.App);
+                if (appName != null)
+                {
+                    q = q.Where(s => s.App.Name == appName);
+                }
+                if (logLevel != null)
+                {
+                    var logLevelString = logLevel.ToString().ToLower();
+                    q = q.Where(s => s.LogLevel == logLevelString);
+                }
+                return q.OrderByDescending(s => s.Id)
+                    .ThenByDescending(s => s.Date)
+                    .AsEnumerable()
+                    .Select(Mapper.Map<LogEntry>)
+                    .ToArray();
             }
-            if (logLevel != null)
-            {
-                var logLevelString = logLevel.ToString().ToLower();
-                q = q.Where(s => s.LogLevel == logLevelString);
-            }
-            return q.OrderByDescending(s => s.Id)
-                .ThenByDescending(s => s.Date)
-                .AsEnumerable()
-                .Select(Mapper.Map<LogEntry>)
-                .ToArray();
         }
 
         protected override IList<LogEntry> QueryEntriesInternal(LogEntryQuery logEntryQuery)
         {
-            var q = _dbContext.LogEntries.Include(s => s.App);
-
-            if (logEntryQuery.AppNames != null && logEntryQuery.AppNames.Count > 0)
+            using (var ctx = _dbContextFactory.Create())
             {
-                q = q.Where(e => logEntryQuery.AppNames.Contains(e.App.Name));
+                var q = ctx.LogEntries.Include(s => s.App);
+
+                if (logEntryQuery.AppNames != null && logEntryQuery.AppNames.Count > 0)
+                {
+                    q = q.Where(e => logEntryQuery.AppNames.Contains(e.App.Name));
+                }
+
+                if (logEntryQuery.LogLevels != null && logEntryQuery.LogLevels.Count > 0)
+                {
+                    var logLevelStrings = logEntryQuery.LogLevels.Select(ll => ll.ToString().ToLower()).ToArray();
+                    q = q.Where(e => logLevelStrings.Contains(e.LogLevel));
+                }
+
+                logEntryQuery.FromDate.Do(x => q = q.Where(e => DbFunctions.DiffDays(e.Date, x) <= 0));
+                logEntryQuery.ToDate.Do(x => q = q.Where(e => DbFunctions.DiffDays(e.Date, x) >= 0));
+                logEntryQuery.UserLoginLike.Do(x => q = q.Where(e => e.UserLogin.Contains(x)));
+                logEntryQuery.CodeUnitLike.Do(x => q = q.Where(e => e.CodeUnit.Contains(x)));
+                logEntryQuery.FunctionLike.Do(x => q = q.Where(e => e.Function.Contains(x)));
+                logEntryQuery.ShortMessageLike.Do(x => q = q.Where(e => e.ShortMessage.Contains(x)));
+                logEntryQuery.LongMessageLike.Do(x => q = q.Where(e => e.LongMessage.Contains(x)));
+                logEntryQuery.ContextLike.Do(x => q = q.Where(e => e.Context.Contains(x)));
+
+                // Ordinamento delle voci del log.
+                q = q.OrderByDescending(e => e.Date).ThenByDescending(e => e.Id);
+
+                // Reale esecuzione della query.
+                var result = !logEntryQuery.TruncateLongMessage ? q.AsEnumerable() : q.Select(e => new
+                {
+                    AppName = e.App.Name,
+                    e.Id,
+                    e.LogLevel,
+                    e.Date,
+                    e.UserLogin,
+                    e.CodeUnit,
+                    e.Function,
+                    e.ShortMessage,
+                    LongMessage = e.LongMessage.Substring(0, logEntryQuery.MaxTruncatedLongMessageLength),
+                    e.Context,
+                    e.Key0,
+                    e.Value0,
+                    e.Key1,
+                    e.Value1,
+                    e.Key2,
+                    e.Value2,
+                    e.Key3,
+                    e.Value3,
+                    e.Key4,
+                    e.Value4,
+                    e.Key5,
+                    e.Value5,
+                    e.Key6,
+                    e.Value6,
+                    e.Key7,
+                    e.Value7,
+                    e.Key8,
+                    e.Value8,
+                    e.Key9,
+                    e.Value9,
+                }).AsEnumerable().Select(e => new SqlLogEntry
+                {
+                    App = new SqlSecApp { Name = e.AppName },
+                    Id = e.Id,
+                    LogLevel = e.LogLevel,
+                    Date = e.Date,
+                    UserLogin = e.UserLogin,
+                    CodeUnit = e.CodeUnit,
+                    Function = e.Function,
+                    ShortMessage = e.ShortMessage,
+                    LongMessage = e.LongMessage,
+                    Context = e.Context,
+                    Key0 = e.Key0,
+                    Value0 = e.Value0,
+                    Key1 = e.Key1,
+                    Value1 = e.Value1,
+                    Key2 = e.Key2,
+                    Value2 = e.Value2,
+                    Key3 = e.Key3,
+                    Value3 = e.Value3,
+                    Key4 = e.Key4,
+                    Value4 = e.Value4,
+                    Key5 = e.Key5,
+                    Value5 = e.Value5,
+                    Key6 = e.Key6,
+                    Value6 = e.Value6,
+                    Key7 = e.Key7,
+                    Value7 = e.Value7,
+                    Key8 = e.Key8,
+                    Value8 = e.Value8,
+                    Key9 = e.Key9,
+                    Value9 = e.Value9,
+                });
+
+                return result.Select(Mapper.Map<LogEntry>).ToArray();
             }
-
-            if (logEntryQuery.LogLevels != null && logEntryQuery.LogLevels.Count > 0)
-            {
-                var logLevelStrings = logEntryQuery.LogLevels.Select(ll => ll.ToString().ToLower()).ToArray();
-                q = q.Where(e => logLevelStrings.Contains(e.LogLevel));
-            }
-
-            logEntryQuery.FromDate.Do(x => q = q.Where(e => DbFunctions.DiffDays(e.Date, x) <= 0));
-            logEntryQuery.ToDate.Do(x => q = q.Where(e => DbFunctions.DiffDays(e.Date, x) >= 0));
-            logEntryQuery.UserLoginLike.Do(x => q = q.Where(e => e.UserLogin.Contains(x)));
-            logEntryQuery.CodeUnitLike.Do(x => q = q.Where(e => e.CodeUnit.Contains(x)));
-            logEntryQuery.FunctionLike.Do(x => q = q.Where(e => e.Function.Contains(x)));
-            logEntryQuery.ShortMessageLike.Do(x => q = q.Where(e => e.ShortMessage.Contains(x)));
-            logEntryQuery.LongMessageLike.Do(x => q = q.Where(e => e.LongMessage.Contains(x)));
-            logEntryQuery.ContextLike.Do(x => q = q.Where(e => e.Context.Contains(x)));
-
-            // Ordinamento delle voci del log.
-            q = q.OrderByDescending(e => e.Date).ThenByDescending(e => e.Id);
-
-            // Reale esecuzione della query.
-            var result = !logEntryQuery.TruncateLongMessage ? q.AsEnumerable() : q.Select(e => new
-            {
-                AppName = e.App.Name,
-                e.Id,
-                e.LogLevel,
-                e.Date,
-                e.UserLogin,
-                e.CodeUnit,
-                e.Function,
-                e.ShortMessage,
-                LongMessage = e.LongMessage.Substring(0, logEntryQuery.MaxTruncatedLongMessageLength),
-                e.Context,
-                e.Key0,
-                e.Value0,
-                e.Key1,
-                e.Value1,
-                e.Key2,
-                e.Value2,
-                e.Key3,
-                e.Value3,
-                e.Key4,
-                e.Value4,
-                e.Key5,
-                e.Value5,
-                e.Key6,
-                e.Value6,
-                e.Key7,
-                e.Value7,
-                e.Key8,
-                e.Value8,
-                e.Key9,
-                e.Value9,
-            }).AsEnumerable().Select(e => new SqlLogEntry
-            {
-                App = new SqlSecApp { Name = e.AppName },
-                Id = e.Id,
-                LogLevel = e.LogLevel,
-                Date = e.Date,
-                UserLogin = e.UserLogin,
-                CodeUnit = e.CodeUnit,
-                Function = e.Function,
-                ShortMessage = e.ShortMessage,
-                LongMessage = e.LongMessage,
-                Context = e.Context,
-                Key0 = e.Key0,
-                Value0 = e.Value0,
-                Key1 = e.Key1,
-                Value1 = e.Value1,
-                Key2 = e.Key2,
-                Value2 = e.Value2,
-                Key3 = e.Key3,
-                Value3 = e.Value3,
-                Key4 = e.Key4,
-                Value4 = e.Value4,
-                Key5 = e.Key5,
-                Value5 = e.Value5,
-                Key6 = e.Key6,
-                Value6 = e.Value6,
-                Key7 = e.Key7,
-                Value7 = e.Value7,
-                Key8 = e.Key8,
-                Value8 = e.Value8,
-                Key9 = e.Key9,
-                Value9 = e.Value9,
-            });
-
-            return result.Select(Mapper.Map<LogEntry>).ToArray();
         }
 
         protected override Option<LogEntry> GetEntryInternal(string appName, long logId)
         {
-            return _dbContext.LogEntries
-                .Include(s => s.App)
-                .Where(e => e.App.Name == appName)
-                .Where(e => e.Id == logId)
-                .Select(Mapper.Map<LogEntry>)
-                .FirstAsOption();
+            using (var ctx = _dbContextFactory.Create())
+            {
+                return ctx.LogEntries
+                    .Include(s => s.App)
+                    .Where(e => e.App.Name == appName)
+                    .Where(e => e.Id == logId)
+                    .Select(Mapper.Map<LogEntry>)
+                    .FirstAsOption();
+            }
         }
 
         protected override bool DoRemoveEntry(string appName, int logId)
         {
-            var deleted = false;
-            var log = _dbContext.LogEntries.FirstOrDefault(l => l.App.Name == appName && l.Id == logId);
-            if (log != null)
+            using (var ctx = _dbContextFactory.Create())
             {
-                _dbContext.LogEntries.Remove(log);
-                deleted = true;
-                _dbContext.SaveChanges();
+                var deleted = false;
+                var log = ctx.LogEntries.FirstOrDefault(l => l.App.Name == appName && l.Id == logId);
+                if (log != null)
+                {
+                    ctx.LogEntries.Remove(log);
+                    deleted = true;
+                    ctx.SaveChanges();
+                }
+                return deleted;
             }
-            return deleted;
         }
 
         protected override IList<LogSetting> GetSettingsInternal(string appName, LogLevel? logLevel)
         {
-            var q = _dbContext.LogSettings.Include(s => s.App);
-            if (appName != null)
+            using (var ctx = _dbContextFactory.Create())
             {
-                q = q.Where(s => s.App.Name == appName);
+                var q = ctx.LogSettings.Include(s => s.App);
+                if (appName != null)
+                {
+                    q = q.Where(s => s.App.Name == appName);
+                }
+                if (logLevel != null)
+                {
+                    var logLevelString = logLevel.ToString().ToLower();
+                    q = q.Where(s => s.LogLevel == logLevelString);
+                }
+                return q.OrderBy(s => s.App.Name)
+                    .ThenBy(s => s.LogLevel)
+                    .AsEnumerable()
+                    .Select(Mapper.Map<LogSetting>)
+                    .ToArray();
             }
-            if (logLevel != null)
-            {
-                var logLevelString = logLevel.ToString().ToLower();
-                q = q.Where(s => s.LogLevel == logLevelString);
-            }
-            return q.OrderBy(s => s.App.Name)
-                .ThenBy(s => s.LogLevel)
-                .AsEnumerable()
-                .Select(Mapper.Map<LogSetting>)
-                .ToArray();
         }
 
         protected override bool DoAddSetting(string appName, LogLevel logLevel, LogSetting setting)
         {
-            var added = false;
-            var appId = _dbContext.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
-            var typeId = logLevel.ToString().ToLower();
-
-            if (!_dbContext.LogSettings.Any(s => s.AppId == appId && s.LogLevel == typeId))
+            using (var ctx = _dbContextFactory.Create())
             {
-                var newSetting = new SqlLogSetting
+                var added = false;
+                var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
+                var typeId = logLevel.ToString().ToLower();
+
+                if (!ctx.LogSettings.Any(s => s.AppId == appId && s.LogLevel == typeId))
                 {
-                    AppId = appId,
-                    Days = setting.Days,
-                    Enabled = setting.Enabled,
-                    MaxEntries = setting.MaxEntries,
-                    LogLevel = typeId
-                };
+                    var newSetting = new SqlLogSetting
+                    {
+                        AppId = appId,
+                        Days = setting.Days,
+                        Enabled = setting.Enabled,
+                        MaxEntries = setting.MaxEntries,
+                        LogLevel = typeId
+                    };
 
-                _dbContext.LogSettings.Add(newSetting);
-                added = true;
+                    ctx.LogSettings.Add(newSetting);
+                    added = true;
+                }
+
+                ctx.SaveChanges();
+                return added;
             }
-
-            _dbContext.SaveChanges();
-            return added;
         }
 
         protected override bool DoRemoveSetting(string appName, LogLevel logLevel)
         {
-            var deleted = false;
-            var appId = _dbContext.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
-            var typeId = logLevel.ToString().ToLower();
-            var settings = _dbContext.LogSettings.FirstOrDefault(a => a.AppId == appId && a.LogLevel == typeId);
-
-            if (settings != null)
+            using (var ctx = _dbContextFactory.Create())
             {
-                _dbContext.LogSettings.Remove(settings);
-                deleted = true;
-                _dbContext.SaveChanges();
+                var deleted = false;
+                var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
+                var typeId = logLevel.ToString().ToLower();
+                var settings = ctx.LogSettings.FirstOrDefault(a => a.AppId == appId && a.LogLevel == typeId);
+
+                if (settings != null)
+                {
+                    ctx.LogSettings.Remove(settings);
+                    deleted = true;
+                    ctx.SaveChanges();
+                }
+                return deleted;
             }
-            return deleted;
         }
 
         protected override bool DoUpdateSetting(string appName, LogLevel logLevel, LogSetting setting)
         {
-            var update = false;
-            var appId = _dbContext.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
-            var typeId = logLevel.ToString().ToLower();
-
-            var settingToUpdate = _dbContext.LogSettings.First(s => s.AppId == appId && s.LogLevel == typeId);
-
-            if (settingToUpdate != null)
+            using (var ctx = _dbContextFactory.Create())
             {
-                settingToUpdate.Days = setting.Days;
-                settingToUpdate.Enabled = setting.Enabled;
-                settingToUpdate.MaxEntries = setting.MaxEntries;
-                update = true;
-            }
+                var update = false;
+                var appId = ctx.SecApps.Where(a => a.Name == appName.ToLower()).Select(a => a.Id).First();
+                var typeId = logLevel.ToString().ToLower();
 
-            _dbContext.SaveChanges();
-            return update;
+                var settingToUpdate = ctx.LogSettings.First(s => s.AppId == appId && s.LogLevel == typeId);
+
+                if (settingToUpdate != null)
+                {
+                    settingToUpdate.Days = setting.Days;
+                    settingToUpdate.Enabled = setting.Enabled;
+                    settingToUpdate.MaxEntries = setting.MaxEntries;
+                    update = true;
+                }
+
+                ctx.SaveChanges();
+                return update;
+            }
         }
 
         #region Private members

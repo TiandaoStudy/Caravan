@@ -76,20 +76,22 @@ namespace Finsa.Caravan.Common
         public static ICaravanLog FetchLog<T>() => LogManager.GetLogger<T>() as ICaravanLog;
 
         /// <summary>
-        ///   Se il binding viene eseguito su ASP.NET, allora usa lo scope della richiesta HTTP. Altrimenti, usa quello di default (transient).
+        ///   Se il binding viene eseguito su ASP.NET, allora usa lo scope della richiesta HTTP.
+        ///   Altrimenti, usa quello del thread.
         /// </summary>
         /// <typeparam name="T">Il tipo del binding.</typeparam>
         /// <param name="syntax">Il binding.</param>
         /// <returns>Il binding arricchito con le informazioni legate allo scope.</returns>
-        public static IBindingNamedWithOrOnSyntax<T> InRequestScopeIfRunningOnAspNet<T>(this IBindingInSyntax<T> syntax)
+        public static IBindingNamedWithOrOnSyntax<T> InRequestOrThreadScope<T>(this IBindingInSyntax<T> syntax)
         {
             if (PortableEnvironment.AppIsRunningOnAspNet)
             {
-                // Se viene richiesta su ASP.NET, indica che la dipendenza può essere una per tutta la request.
+                // Se viene richiesta su ASP.NET, indica che la dipendenza può essere una per tutta
+                // la request.
                 return syntax.InRequestScope();
             }
-            // Altrimenti, la risorsa viene ricreata ad ogni necessità.
-            return syntax.InTransientScope();
+            // Altrimenti, la risorsa viene legata al ciclo di vita del thread.
+            return syntax.InThreadScope();
         }
     }
 }

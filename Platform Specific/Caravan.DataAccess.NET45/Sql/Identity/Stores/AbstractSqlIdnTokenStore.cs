@@ -23,6 +23,7 @@ using Newtonsoft.Json;
 using PommaLabs.Thrower;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,19 +32,19 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
     public abstract class AbstractSqlIdnTokenStore<T>
         where T : class
     {
-        protected readonly SqlDbContext Context;
+        protected readonly IDbContextFactory<SqlDbContext> DbContextFactory;
         protected readonly string TokenTypeString;
         protected readonly IScopeStore ScopeStore;
         protected readonly IClientStore ClientStore;
         protected readonly IClock Clock;
 
-        protected AbstractSqlIdnTokenStore(SqlDbContext context, TokenType tokenType, IScopeStore scopeStore, IClientStore clientStore, IClock clock)
+        protected AbstractSqlIdnTokenStore(IDbContextFactory<SqlDbContext> dbContextFactory, TokenType tokenType, IScopeStore scopeStore, IClientStore clientStore, IClock clock)
         {
-            RaiseArgumentNullException.IfIsNull(context, nameof(context));
+            RaiseArgumentNullException.IfIsNull(dbContextFactory, nameof(dbContextFactory));
             RaiseArgumentNullException.IfIsNull(scopeStore, nameof(scopeStore));
             RaiseArgumentNullException.IfIsNull(clientStore, nameof(clientStore));
             RaiseArgumentNullException.IfIsNull(clock, nameof(clock));
-            Context = context;
+            DbContextFactory = dbContextFactory;
             TokenTypeString = tokenType.ToString().ToLowerInvariant();
             ScopeStore = scopeStore;
             ClientStore = clientStore;
@@ -72,45 +73,57 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 
         public async Task<T> GetAsync(string key)
         {
-            var token = await Context.IdnTokens.FindAsync(key, TokenTypeString);
-
-            if (token == null || token.Expiry < Clock.UtcNowOffset)
+            using (var ctx = DbContextFactory.Create())
             {
-                return null;
-            }
+                var token = await ctx.IdnTokens.FindAsync(key, TokenTypeString);
 
-            return ConvertFromJson(token.JsonCode);
+                if (token == null || token.Expiry < Clock.UtcNowOffset)
+                {
+                    return null;
+                }
+
+                return ConvertFromJson(token.JsonCode);
+            }                
         }
 
         public async Task RemoveAsync(string key)
         {
-            var token = await Context.IdnTokens.FindAsync(key, TokenTypeString);
-
-            if (token != null)
+            using (var ctx = DbContextFactory.Create())
             {
-                Context.IdnTokens.Remove(token);
-                await Context.SaveChangesAsync();
+                var token = await ctx.IdnTokens.FindAsync(key, TokenTypeString);
+
+                if (token != null)
+                {
+                    ctx.IdnTokens.Remove(token);
+                    await ctx.SaveChangesAsync();
+                }
             }
         }
 
         public async Task<IEnumerable<ITokenMetadata>> GetAllAsync(string subject)
         {
-            var tokens = await Context.IdnTokens.Where(x =>
+            using (var ctx = DbContextFactory.Create())
+            {
+                var tokens = await ctx.IdnTokens.Where(x =>
                 x.SubjectId == subject &&
                 x.TokenTypeString == TokenTypeString).ToArrayAsync();
 
-            var results = tokens.Select(x => ConvertFromJson(x.JsonCode)).ToArray();
-            return results.Cast<ITokenMetadata>();
+                var results = tokens.Select(x => ConvertFromJson(x.JsonCode)).ToArray();
+                return results.Cast<ITokenMetadata>();
+            }
         }
 
         public async Task RevokeAsync(string subject, string client)
         {
-            Context.IdnTokens.RemoveRange(Context.IdnTokens.Where(x =>
+            using (var ctx = DbContextFactory.Create())
+            {
+                ctx.IdnTokens.RemoveRange(ctx.IdnTokens.Where(x =>
                 x.SubjectId == subject &&
                 x.ClientId == client &&
                 x.TokenTypeString == TokenTypeString));
 
-            await Context.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
+            }
         }
 
         public abstract Task StoreAsync(string key, T value);

@@ -52,8 +52,8 @@ namespace Finsa.Caravan.DataAccess.Rest
                 case DependencyHandling.TestEnvironment:
                 case DependencyHandling.ProductionEnvironment:
                     // Gestione dei repository base di Caravan.
-                    Bind<ICaravanLogRepository>().To<RestLogRepository>().InRequestScopeIfRunningOnAspNet();
-                    Bind<ICaravanSecurityRepository>().To<RestSecurityRepository>().InRequestScopeIfRunningOnAspNet();
+                    Bind<ICaravanLogRepository>().To<RestLogRepository>().InRequestOrThreadScope();
+                    Bind<ICaravanSecurityRepository>().To<RestSecurityRepository>().InRequestOrThreadScope();
 
                     break;
 
