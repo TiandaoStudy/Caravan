@@ -96,7 +96,7 @@ namespace Finsa.Caravan.Common
 
             Bind<ICaravanVariablesContextIdentifier>().To<CaravanVariablesContextIdentifier>().InSingletonScope();
 
-            Bind<IUserService>().To<CaravanUserService>();
+            Bind<IUserService>().To<CaravanUserService>().InRequestOrThreadScope();
         }
     }
 }

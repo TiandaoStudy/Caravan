@@ -64,8 +64,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 case DependencyHandling.UnitTesting:
                     // Gestione del DbContext per EF.
                     Bind<DbContextConfiguration<SqlDbContext>>().ToConstant(new DbContextConfiguration<SqlDbContext> { LazyLoadingEnabled = false });
-                    Bind<IDbContextFactory<SqlDbContext>>().To<ConfigurableDbContextFactory<SqlDbContext>>();
-                    Bind<IConfigurableDbContextFactory<SqlDbContext>>().To<ConfigurableDbContextFactory<SqlDbContext>>();
+                    Bind<IDbContextFactory<SqlDbContext>, IConfigurableDbContextFactory <SqlDbContext>>().To<ConfigurableDbContextFactory<SqlDbContext>>();
                     ConfigureEFPregeneratedViews();
 
                     // Gestione dei repository base di Caravan.
