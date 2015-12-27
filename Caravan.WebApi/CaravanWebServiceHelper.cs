@@ -16,7 +16,7 @@ using Finsa.Caravan.WebApi.Middlewares;
 using Ninject;
 using Owin;
 using PommaLabs.KVLite;
-using PommaLabs.KVLite.Web.Http;
+using PommaLabs.KVLite.WebApi;
 using PommaLabs.Thrower;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -34,7 +34,7 @@ namespace Finsa.Caravan.WebApi
         /// <param name="appBuilder">La configurazione di Owin.</param>
         /// <param name="httpConfiguration">La configurazione HTTP.</param>
         /// <param name="settings">Le impostazioni iniziali per il servizio.</param>
-        public static async Task OnStartAsync(IAppBuilder appBuilder, HttpConfiguration httpConfiguration, Settings settings)
+        public static void OnStart(IAppBuilder appBuilder, HttpConfiguration httpConfiguration, Settings settings)
         {
             // Controlli di integrità.
             RaiseArgumentNullException.IfIsNull(httpConfiguration, nameof(httpConfiguration));
@@ -52,7 +52,7 @@ namespace Finsa.Caravan.WebApi
             var persistentCache = cache as PersistentCache;
             if (persistentCache != null)
             {
-                await persistentCache.VacuumAsync();
+                persistentCache.Vacuum();
             }
 
             // Imposta KVLite come gestore della cache di output.

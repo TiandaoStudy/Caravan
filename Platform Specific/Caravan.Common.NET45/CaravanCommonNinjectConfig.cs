@@ -16,10 +16,13 @@ using Finsa.Caravan.Common.Identity;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
 using Finsa.CodeServices.Clock;
+using Finsa.CodeServices.Compression;
+using Finsa.CodeServices.Serialization;
 using IdentityServer3.Core.Services;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Common;
+using PommaLabs.KVLite;
 using PommaLabs.Thrower;
 using System;
 
@@ -83,6 +86,11 @@ namespace Finsa.Caravan.Common
                     Bind<ILog, ICaravanLog>().To<CaravanNoOpLogger>().InSingletonScope();
                     break;
             }
+
+            // Gestione della cache.
+            Bind<ICache>().To<VolatileCache>().InSingletonScope().WithConstructorArgument("settings", VolatileCacheSettings.Default);
+            Bind<ICompressor>().To<SnappyCompressor>().InSingletonScope();
+            Bind<ISerializer>().To<JsonSerializer>().WithConstructorArgument("settings", new JsonSerializerSettings());
 
             // Bind indipendenti dall'ambiente di esecuzione:
             Bind<ICaravanUserStore>().To<CaravanUserStore>().InRequestOrThreadScope().WithConstructorArgument("appName", _appName);

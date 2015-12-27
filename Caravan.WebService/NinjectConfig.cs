@@ -12,12 +12,7 @@
 
 using Finsa.Caravan.Common.Identity;
 using Finsa.Caravan.WebApi.Models.Identity;
-using Finsa.CodeServices.Compression;
-using Finsa.CodeServices.Security.PasswordHashing;
-using Finsa.CodeServices.Serialization;
-using Microsoft.AspNet.Identity;
 using Ninject.Modules;
-using PommaLabs.KVLite;
 
 namespace Finsa.Caravan.WebService
 {
@@ -25,17 +20,15 @@ namespace Finsa.Caravan.WebService
     {
         public override void Load()
         {
-            Bind<ICache>().To<PersistentCache>().InSingletonScope().WithConstructorArgument("settings", PersistentCacheSettings.Default);
-            Bind<ICompressor>().To<LZ4Compressor>().InSingletonScope();
-            Bind<IPasswordHasher>().To<NoOpPasswordHasher>().InSingletonScope();
-            Bind<ISerializer>().To<JsonSerializer>().WithConstructorArgument("settings", new JsonSerializerSettings());
-
             Bind<OAuth2AuthorizationSettings>().ToConstant(new OAuth2AuthorizationSettings
             {
-                AccessTokenValidationUrl = "https://localhost/wsCaravan/identity/connect/accesstokenvalidation"                
+                AccessTokenValidationUrl = "https://localhost/wsCaravan/identity/connect/accesstokenvalidation"
             });
 
-            Bind<CaravanAllowedAppsCollection>().ToConstant(new CaravanAllowedAppsCollection { AllowAll = true });
+            Bind<CaravanAllowedAppsCollection>().ToConstant(new CaravanAllowedAppsCollection
+            {
+                AllowAll = true
+            });
         }
     }
 }
