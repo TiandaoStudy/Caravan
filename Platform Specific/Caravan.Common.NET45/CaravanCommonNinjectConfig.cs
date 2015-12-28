@@ -88,9 +88,7 @@ namespace Finsa.Caravan.Common
             }
 
             // Gestione della cache.
-            Bind<ICache>().To<VolatileCache>().InSingletonScope().WithConstructorArgument("settings", VolatileCacheSettings.Default);
-            Bind<ICompressor>().To<SnappyCompressor>().InSingletonScope();
-            Bind<ISerializer>().To<JsonSerializer>().WithConstructorArgument("settings", new JsonSerializerSettings());
+            Bind<ICache>().ToConstant(VolatileCache.DefaultInstance);
 
             // Bind indipendenti dall'ambiente di esecuzione:
             Bind<ICaravanUserStore>().To<CaravanUserStore>().InRequestOrThreadScope().WithConstructorArgument("appName", _appName);

@@ -12,6 +12,7 @@
 
 using Finsa.Caravan.Common.Identity;
 using Finsa.Caravan.WebApi.Models.Identity;
+using Finsa.CodeServices.Serialization;
 using Ninject.Modules;
 
 namespace Finsa.Caravan.WebService
@@ -20,6 +21,8 @@ namespace Finsa.Caravan.WebService
     {
         public override void Load()
         {
+            Bind<ISerializer>().To<JsonSerializer>().WithConstructorArgument("settings", new JsonSerializerSettings());
+
             Bind<OAuth2AuthorizationSettings>().ToConstant(new OAuth2AuthorizationSettings
             {
                 AccessTokenValidationUrl = "https://localhost/wsCaravan/identity/connect/accesstokenvalidation"
