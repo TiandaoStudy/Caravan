@@ -16,6 +16,8 @@ using Finsa.Caravan.Common.Identity;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
 using Finsa.CodeServices.Clock;
+using Finsa.CodeServices.Compression;
+using Finsa.CodeServices.Serialization;
 using IdentityServer3.Core.Services;
 using Ninject;
 using Ninject.Modules;
@@ -85,7 +87,10 @@ namespace Finsa.Caravan.Common
             }
 
             // Gestione della cache.
-            Bind<ICache>().ToMethod(ctx => VolatileCache.DefaultInstance).InSingletonScope();
+            Bind<VolatileCacheSettings>().ToConstant(new VolatileCacheSettings());
+            Bind<ICompressor>().ToConstant<ICompressor>(null).WhenInjectedInto<VolatileCache>();
+            Bind<ISerializer>().ToConstant<ISerializer>(null).WhenInjectedInto<VolatileCache>();
+            Bind<ICache>().To<VolatileCache>().InSingletonScope();
 
             // Bind indipendenti dall'ambiente di esecuzione:
             Bind<ICaravanUserStore>().To<CaravanUserStore>().InRequestOrThreadScope().WithConstructorArgument("appName", _appName);
