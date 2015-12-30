@@ -99,6 +99,9 @@ namespace Finsa.Caravan.DataAccess.Sql
             }).InSingletonScope();
             Bind<IDbContextFactory<SqlDbContext>, IConfigurableDbContextFactory<SqlDbContext>>().To<ConfigurableDbContextFactory<SqlDbContext>>();
             ConfigureEFPregeneratedViews();
+
+            // Gestione della cache per EF.
+            EntityFramework.Locator.Current.Register<EntityFramework.Caching.ICacheProvider>(() => kernelCopy.Get<CacheProvider>());
         }
 
         private void ConfigureEFPregeneratedViews()
