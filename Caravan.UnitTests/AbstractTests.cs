@@ -49,13 +49,15 @@ namespace Finsa.Caravan.UnitTests
             CaravanDataSource.Reset();
 
             // Ricarico le dipendenze necessarie.
-            SecurityRepository = CaravanServiceProvider.NinjectKernel.Get<ICaravanSecurityRepository>();
+            var kernel = CaravanServiceProvider.NinjectKernel;
+            SecurityRepository = kernel.Get<ICaravanSecurityRepository>();
         }
 
         [TearDown]
         public virtual void TearDown()
         {
             // Faccio pulizia all'interno delle dipendenze.
+            SecurityRepository?.Dispose();
             SecurityRepository = null;
         }
     }

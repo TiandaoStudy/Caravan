@@ -60,17 +60,6 @@ namespace Finsa.Caravan.DataAccess.Sql
                 case DependencyHandling.DevelopmentEnvironment:
                 case DependencyHandling.TestEnvironment:
                 case DependencyHandling.ProductionEnvironment:
-                case DependencyHandling.UnitTesting:
-                    // Gestione del DbContext per EF.
-                    var kernelCopy = Kernel; // <-- Usata per evitare il bind del modulo con la lambda qui sotto.
-                    Bind<DbContextConfiguration<SqlDbContext>>().ToConstant(new DbContextConfiguration<SqlDbContext>
-                    {
-                        ContextCreator = () => kernelCopy.Get<SqlDbContext>(),
-                        LazyLoadingEnabled = false
-                    }).InSingletonScope();
-                    Bind<IDbContextFactory<SqlDbContext>, IConfigurableDbContextFactory<SqlDbContext>>().To<ConfigurableDbContextFactory<SqlDbContext>>();
-                    ConfigureEFPregeneratedViews();
-
                     // Gestione dei repository base di Caravan.
                     Bind<ICaravanLogRepository>().To<SqlLogRepository>().InRequestOrThreadScope();
                     Bind<ICaravanSecurityRepository>().To<SqlSecurityRepository>().InRequestOrThreadScope();
@@ -84,7 +73,32 @@ namespace Finsa.Caravan.DataAccess.Sql
                     Bind<IScopeStore>().To<SqlIdnScopeStore>().InRequestOrThreadScope();
                     Bind<ICorsPolicyService>().To<SqlIdnCorsPolicyService>().InRequestOrThreadScope();
                     break;
+
+                case DependencyHandling.UnitTesting:
+                    // Gestione dei repository base di Caravan.
+                    Bind<ICaravanLogRepository>().To<SqlLogRepository>();
+                    Bind<ICaravanSecurityRepository>().To<SqlSecurityRepository>();
+
+                    // Gestione dell'autenticazione e dell'autorizzazione.
+                    Bind<IAuthorizationCodeStore>().To<SqlIdnAuthorizationCodeStore>();
+                    Bind<ITokenHandleStore>().To<SqlIdnTokenHandleStore>();
+                    Bind<IConsentStore>().To<SqlIdnConsentStore>();
+                    Bind<IRefreshTokenStore>().To<SqlIdnRefreshTokenStore>();
+                    Bind<IClientStore, ICaravanClientStore>().To<SqlIdnClientStore>();
+                    Bind<IScopeStore>().To<SqlIdnScopeStore>();
+                    Bind<ICorsPolicyService>().To<SqlIdnCorsPolicyService>();
+                    break;
             }
+
+            // Gestione del DbContext per EF.
+            var kernelCopy = Kernel; // <-- Usata per evitare il bind del modulo con la lambda qui sotto.
+            Bind<DbContextConfiguration<SqlDbContext>>().ToConstant(new DbContextConfiguration<SqlDbContext>
+            {
+                ContextCreator = () => kernelCopy.Get<SqlDbContext>(),
+                LazyLoadingEnabled = false
+            }).InSingletonScope();
+            Bind<IDbContextFactory<SqlDbContext>, IConfigurableDbContextFactory<SqlDbContext>>().To<ConfigurableDbContextFactory<SqlDbContext>>();
+            ConfigureEFPregeneratedViews();
         }
 
         private void ConfigureEFPregeneratedViews()
