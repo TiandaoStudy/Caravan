@@ -16,12 +16,9 @@ using Finsa.Caravan.Common.Identity;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
 using Finsa.CodeServices.Clock;
-using Finsa.CodeServices.Compression;
-using Finsa.CodeServices.Serialization;
 using IdentityServer3.Core.Services;
 using Ninject;
 using Ninject.Modules;
-using Ninject.Web.Common;
 using PommaLabs.KVLite;
 using PommaLabs.Thrower;
 using System;
@@ -54,20 +51,20 @@ namespace Finsa.Caravan.Common
         /// 
         ///   * <see cref="IClock"/> via <see cref="SystemClock"/>, oppure <see cref="MockClock"/>
         ///     per gli unit test.
-        ///   * <see cref="ILog"/> via Caravan LOG configurabile con NLog, oppure
-        ///     <see cref="CaravanNoOpLogger"/> per gli unit test.
-        ///   * <see cref="ICaravanLog"/> via Caravan LOG configurabile con NLog, oppure
-        ///     <see cref="CaravanNoOpLogger"/> per gli unit test.
+        ///   * <see cref="ILog"/> via Caravan LOG configurabile con NLog, oppure <see
+        ///     cref="CaravanNoOpLogger"/> per gli unit test.
+        ///   * <see cref="ICaravanLog"/> via Caravan LOG configurabile con NLog, oppure <see
+        ///     cref="CaravanNoOpLogger"/> per gli unit test.
         ///   * <see cref="ICaravanUserStore"/> via <see cref="CaravanUserStore"/>,
         ///     indipendentemente dall'ambiente di esecuzione.
         ///   * <see cref="ICaravanRoleStore"/> via <see cref="CaravanRoleStore"/>,
         ///     indipendentemente dall'ambiente di esecuzione.
-        ///   * <see cref="ICaravanUserManagerFactory"/> via
-        ///     <see cref="CaravanUserManagerFactory"/>, indipendentemente dall'ambiente di esecuzione.
-        ///   * <see cref="ICaravanRoleManagerFactory"/> via
-        ///     <see cref="CaravanRoleManagerFactory"/>, indipendentemente dall'ambiente di esecuzione.
-        ///   * <see cref="ICaravanVariablesContextIdentifier"/> via
-        ///     <see cref="CaravanVariablesContextIdentifier"/>, indipendentemente dall'ambiente di esecuzione.
+        ///   * <see cref="ICaravanUserManagerFactory"/> via <see
+        ///     cref="CaravanUserManagerFactory"/>, indipendentemente dall'ambiente di esecuzione.
+        ///   * <see cref="ICaravanRoleManagerFactory"/> via <see
+        ///     cref="CaravanRoleManagerFactory"/>, indipendentemente dall'ambiente di esecuzione.
+        ///   * <see cref="ICaravanVariablesContextIdentifier"/> via <see
+        ///     cref="CaravanVariablesContextIdentifier"/>, indipendentemente dall'ambiente di esecuzione.
         /// </summary>
         public override void Load()
         {

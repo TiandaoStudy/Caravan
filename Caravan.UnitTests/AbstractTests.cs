@@ -56,7 +56,6 @@ namespace Finsa.Caravan.UnitTests
         public virtual void TearDown()
         {
             // Faccio pulizia all'interno delle dipendenze.
-            SecurityRepository?.Dispose();
             SecurityRepository = null;
         }
     }
