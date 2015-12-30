@@ -57,8 +57,8 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
         }
 
-        public SqlDbContext()
-            : base(GetConnection(CaravanDataSource.Manager), true)
+        public SqlDbContext(ICaravanDataSourceManager dataSourceManager)
+            : base(GetConnection(dataSourceManager), true)
         {
             // Il lazy loading viene disabilitato dalla classe che si occupa di generare i contesti.
         }
@@ -85,7 +85,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             dataSourceManager.ResetConnection();
 
             // The database is recreated, since it is in-memory and probably it does not exist.
-            using (var ctx = new SqlDbContext())
+            using (var ctx = new SqlDbContext(dataSourceManager))
             {
                 ctx.Database.CreateIfNotExists();
                 Database.SetInitializer(new DropCreateDatabaseAlways<SqlDbContext>());

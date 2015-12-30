@@ -88,7 +88,7 @@ namespace Finsa.Caravan.Common
             }
 
             // Gestione della cache.
-            Bind<ICache>().ToConstant(VolatileCache.DefaultInstance);
+            Bind<ICache>().ToMethod(ctx => VolatileCache.DefaultInstance).InSingletonScope();
 
             // Bind indipendenti dall'ambiente di esecuzione:
             Bind<ICaravanUserStore>().To<CaravanUserStore>().InRequestOrThreadScope().WithConstructorArgument("appName", _appName);

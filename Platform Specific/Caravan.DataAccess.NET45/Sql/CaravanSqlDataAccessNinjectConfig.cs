@@ -62,9 +62,10 @@ namespace Finsa.Caravan.DataAccess.Sql
                 case DependencyHandling.ProductionEnvironment:
                 case DependencyHandling.UnitTesting:
                     // Gestione del DbContext per EF.
+                    var kernelCopy = Kernel; // <-- Usata per evitare il bind del modulo con la lambda qui sotto.
                     Bind<DbContextConfiguration<SqlDbContext>>().ToConstant(new DbContextConfiguration<SqlDbContext>
                     {
-                        ContextCreator = () => Kernel.Get<SqlDbContext>(),
+                        ContextCreator = () => kernelCopy.Get<SqlDbContext>(),
                         LazyLoadingEnabled = false
                     }).InSingletonScope();
                     Bind<IDbContextFactory<SqlDbContext>, IConfigurableDbContextFactory<SqlDbContext>>().To<ConfigurableDbContextFactory<SqlDbContext>>();
