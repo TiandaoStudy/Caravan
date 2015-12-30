@@ -17,7 +17,6 @@ using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.DataAccess.Sql.Identity.Services;
 using Finsa.Caravan.DataAccess.Sql.Identity.Stores;
 using Finsa.CodeServices.Common.Portability;
-using Finsa.CodeServices.DataAccess.Sql;
 using IdentityServer3.Core.Services;
 using InteractivePreGeneratedViews;
 using Ninject;
@@ -63,8 +62,12 @@ namespace Finsa.Caravan.DataAccess.Sql
                 case DependencyHandling.ProductionEnvironment:
                 case DependencyHandling.UnitTesting:
                     // Gestione del DbContext per EF.
-                    Bind<DbContextConfiguration<SqlDbContext>>().ToConstant(new DbContextConfiguration<SqlDbContext> { LazyLoadingEnabled = false });
-                    Bind<IDbContextFactory<SqlDbContext>, IConfigurableDbContextFactory <SqlDbContext>>().To<ConfigurableDbContextFactory<SqlDbContext>>();
+                    Bind<DbContextConfiguration<SqlDbContext>>().ToConstant(new DbContextConfiguration<SqlDbContext>
+                    {
+                        ContextCreator = () => Kernel.Get<SqlDbContext>(),
+                        LazyLoadingEnabled = false
+                    }).InSingletonScope();
+                    Bind<IDbContextFactory<SqlDbContext>, IConfigurableDbContextFactory<SqlDbContext>>().To<ConfigurableDbContextFactory<SqlDbContext>>();
                     ConfigureEFPregeneratedViews();
 
                     // Gestione dei repository base di Caravan.

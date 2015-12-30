@@ -261,7 +261,10 @@
     <Compile Include="Sql\Attributes\DateTimeOffsetAttribute.cs" />
     <Compile Include="Sql\Attributes\DateTimeKindAttribute.cs" />
     <Compile Include="Sql\CaravanSqlDataAccessNinjectConfig.cs" />
+    <Compile Include="Sql\ConfigurableDbContextFactory.cs" />
+    <Compile Include="Sql\DbContextConfiguration.cs" />
     <Compile Include="Sql\Effort\CaravanEffortDataAccessNinjectConfig.cs" />
+    <Compile Include="Sql\IConfigurableDbContextFactory.cs" />
     <Compile Include="Sql\Identity\Entities\SqlIdnScopeSecret.cs" />
     <Compile Include="Sql\Identity\Extensions\EntitiesMap.cs" />
     <Compile Include="Sql\Identity\Extensions\ModelsMap.cs" />
