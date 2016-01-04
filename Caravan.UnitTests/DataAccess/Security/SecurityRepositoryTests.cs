@@ -19,14 +19,9 @@ namespace Finsa.Caravan.UnitTests.DataAccess.Security
 {
     internal sealed class SecurityRepositoryTests : AbstractTests
     {
-        private const string TestAppName = "my-test-app";
-        private const string TestAppDescription = "My TEST App";
-
         private const string TestGroupName1 = "group1";
 
         private const string TestRoleName1 = "role1";
-
-        private const string TestUserLogin1 = "user1";
 
         [SetUp]
         public override void SetUp()

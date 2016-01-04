@@ -25,12 +25,16 @@ namespace Finsa.Caravan.UnitTests
         protected const string EmptyString = "";
         protected const string ShortString = "BOOM BABY";
         protected const string MediumString = "Reality continues to ruin my life.";
-
         protected const string LongString = @"If a man does not keep pace with his companions, perhaps it is because
                                               he hears a different drummer. Let him step to the music which he hears,
                                               however measured or far away.";
 
+        protected const string TestAppName = "my-test-app";
+        protected const string TestAppDescription = "My TEST App";
+        protected const string TestUserLogin1 = "user1";
+
         protected ICaravanSecurityRepository SecurityRepository;
+        protected ICaravanUserManagerFactory UserManagerFactory;
 
         static AbstractTests()
         {
@@ -51,12 +55,14 @@ namespace Finsa.Caravan.UnitTests
             // Ricarico le dipendenze necessarie.
             var kernel = CaravanServiceProvider.NinjectKernel;
             SecurityRepository = kernel.Get<ICaravanSecurityRepository>();
+            UserManagerFactory = kernel.Get<ICaravanUserManagerFactory>();
         }
 
         [TearDown]
         public virtual void TearDown()
         {
             // Faccio pulizia all'interno delle dipendenze.
+            UserManagerFactory = null;
             SecurityRepository?.Dispose();
             SecurityRepository = null;
         }
