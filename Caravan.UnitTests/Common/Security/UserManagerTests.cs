@@ -39,5 +39,47 @@ namespace Finsa.Caravan.UnitTests.Common.Security
                 Assert.That(result.Errors.Count(), Is.EqualTo(1));
             }
         }
+
+        [Test]
+        public async Task CreateAsync_ValidEmail()
+        {
+            var appId = await SecurityRepository.AddAppAsync(new SecApp
+            {
+                Name = TestAppName,
+                Description = TestAppDescription
+            });
+
+            using (var userManager = await UserManagerFactory.CreateAsync(TestAppName))
+            {
+                var result = await userManager.CreateAsync(new SecUser
+                {
+                    Login = TestUserLogin1,
+                    Email = "a@b.c"
+                });
+
+                Assert.That(result.Errors.Count(), Is.EqualTo(0));
+            }
+        }
+
+        [Test]
+        public async Task CreateAsync_NullEmail()
+        {
+            var appId = await SecurityRepository.AddAppAsync(new SecApp
+            {
+                Name = TestAppName,
+                Description = TestAppDescription
+            });
+
+            using (var userManager = await UserManagerFactory.CreateAsync(TestAppName))
+            {
+                var result = await userManager.CreateAsync(new SecUser
+                {
+                    Login = TestUserLogin1,
+                    Email = null
+                });
+
+                Assert.That(result.Errors.Count(), Is.EqualTo(0));
+            }
+        }
     }
 }
