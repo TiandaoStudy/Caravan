@@ -57,7 +57,7 @@ namespace Finsa.Caravan.WebApi
 
             // Imposta KVLite come gestore della cache di output.
             log.Trace("Registering KVLite output cache");
-            ApiOutputCache.RegisterAsCacheOutputProvider(httpConfiguration, cache);
+            OutputCacheProvider.Register(httpConfiguration, () => kernel.Get<ICache>());
 
             // Registra i componenti di middleware.
             log.Trace("Registering Owin middlewares");

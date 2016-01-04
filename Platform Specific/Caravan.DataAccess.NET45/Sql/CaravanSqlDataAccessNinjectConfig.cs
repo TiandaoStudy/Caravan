@@ -20,6 +20,8 @@ using Finsa.CodeServices.Common.Portability;
 using IdentityServer3.Core.Services;
 using InteractivePreGeneratedViews;
 using Ninject;
+using PommaLabs.KVLite;
+using PommaLabs.KVLite.EntityFramework;
 using System.Data.Entity.Infrastructure;
 using System.IO;
 
@@ -101,7 +103,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             ConfigureEFPregeneratedViews();
 
             // Gestione della cache per EF.
-            EntityFramework.Locator.Current.Register<EntityFramework.Caching.ICacheProvider>(() => kernelCopy.Get<CacheProvider>());
+            QueryCacheProvider.Register(() => kernelCopy.Get<ICache>());
         }
 
         private void ConfigureEFPregeneratedViews()
