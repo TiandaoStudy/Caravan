@@ -203,12 +203,12 @@
       <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PommaLabs.KVLite, Version=5.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\PommaLabs.KVLite.Core.5.0.1\lib\net45\PommaLabs.KVLite.dll</HintPath>
+    <Reference Include="PommaLabs.KVLite, Version=5.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PommaLabs.KVLite.Core.5.0.2\lib\net45\PommaLabs.KVLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PommaLabs.KVLite.EntityFramework, Version=5.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\PommaLabs.KVLite.EntityFramework.5.0.1\lib\net45\PommaLabs.KVLite.EntityFramework.dll</HintPath>
+    <Reference Include="PommaLabs.KVLite.EntityFramework, Version=5.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PommaLabs.KVLite.EntityFramework.5.0.2\lib\net45\PommaLabs.KVLite.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PommaLabs.Thrower, Version=2.1.1.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
