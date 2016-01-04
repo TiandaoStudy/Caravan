@@ -169,6 +169,8 @@
     <Compile Include="Identity\CaravanUserService.cs" />
     <Compile Include="Identity\ICaravanClientStore.cs" />
     <Compile Include="Identity\Models\IdnClient.cs" />
+    <Compile Include="Security\CaravanSecurityValidator.cs" />
+    <Compile Include="Security\ICaravanSecurityValidator.cs" />
     <Compile Include="Security\Models\SecUserKey.cs" />
     <Compile Include="Logging\Activities\AbstractLogActivity.cs" />
     <Compile Include="Logging\CaravanLogger.cs" />
@@ -224,6 +226,7 @@
     <Compile Include="Security\Models\SecSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CaravanServiceProvider.cs" />
+    <Compile Include="Security\Models\SecValidationResult.cs" />
     <Compile Include="WebForms\ISearchControl.cs" />
     <Compile Include="WebForms\SearchCriteria.cs" />
   </ItemGroup>

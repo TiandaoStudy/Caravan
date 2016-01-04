@@ -13,6 +13,7 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using BrockAllen.IdentityReboot;
+using Finsa.Caravan.Common.Identity.Models;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
@@ -375,11 +376,20 @@ namespace Finsa.Caravan.DataAccess.Sql
                 {
                     AppId = appId,
                     Active = newUser.Active,
-                    Email = newUser.Email,
+                    Login = newUser.Login,
+                    PasswordHash = newUser.PasswordHash,
                     FirstName = newUser.FirstName,
                     LastName = newUser.LastName,
-                    PasswordHash = newUser.PasswordHash,
-                    Login = newUser.Login
+                    Email = newUser.Email,
+                    EmailConfirmed = newUser.EmailConfirmed,
+                    PhoneNumber = newUser.PhoneNumber,
+                    PhoneNumberConfirmed = newUser.PhoneNumberConfirmed,
+                    AccessFailedCount = newUser.AccessFailedCount,
+                    LockoutEnabled = newUser.LockoutEnabled,
+                    LockoutEndDate = newUser.LockoutEndDate,
+                    SecurityStamp = newUser.SecurityStamp,
+                    TwoFactorAuthenticationEnabled = newUser.TwoFactorAuthenticationEnabled,
+                    InsertAppUser = IdnPrincipal.Current?.Identity.Name
                 });
 
                 await ctx.SaveChangesAsync();
@@ -430,6 +440,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 userUpdates.LockoutEndDate.Do(x => sqlUser.LockoutEndDate = x.ToUniversalTime());
                 userUpdates.AccessFailedCount.Do(x => sqlUser.AccessFailedCount = x);
                 userUpdates.TwoFactorAuthenticationEnabled.Do(x => sqlUser.TwoFactorAuthenticationEnabled = x);
+                sqlUser.UpdateAppUser = IdnPrincipal.Current?.Identity.Name;
 
                 await ctx.SaveChangesAsync();
             }
