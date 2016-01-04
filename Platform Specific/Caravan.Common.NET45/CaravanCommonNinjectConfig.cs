@@ -91,6 +91,8 @@ namespace Finsa.Caravan.Common
             Bind<ICache>().ToMethod(ctx => new VolatileCache(ctx.Kernel.Get<VolatileCacheSettings>(), ctx.Kernel.Get<IClock>())).InSingletonScope();
 
             // Bind indipendenti dall'ambiente di esecuzione:
+            Bind<ICaravanSecurityValidator>().To<CaravanSecurityValidator>().InSingletonScope();
+
             Bind<ICaravanUserStore>().To<CaravanUserStore>().InRequestOrThreadScope().WithConstructorArgument("appName", _appName);
             Bind<ICaravanRoleStore>().To<CaravanRoleStore>().InRequestOrThreadScope().WithConstructorArgument("appName", _appName);
 

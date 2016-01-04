@@ -1,5 +1,6 @@
 ﻿using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Exceptions;
+using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess.Core;
@@ -14,8 +15,8 @@ namespace Finsa.Caravan.DataAccess.Rest
 {
     internal sealed class RestSecurityRepository : AbstractSecurityRepository<RestSecurityRepository>
     {
-        public RestSecurityRepository(ICaravanLog log)
-            : base(log)
+        public RestSecurityRepository(ICaravanLog log, ICaravanSecurityValidator validator)
+            : base(log, validator)
         {
         }
 

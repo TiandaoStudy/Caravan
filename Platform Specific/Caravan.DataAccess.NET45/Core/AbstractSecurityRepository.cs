@@ -26,17 +26,20 @@ namespace Finsa.Caravan.DataAccess.Core
     internal abstract class AbstractSecurityRepository<TSec> : ICaravanSecurityRepository
         where TSec : AbstractSecurityRepository<TSec>
     {
-        protected AbstractSecurityRepository(ICaravanLog log)
+        protected AbstractSecurityRepository(ICaravanLog log, ICaravanSecurityValidator validator)
         {
             RaiseArgumentNullException.IfIsNull(log, nameof(log));
+            RaiseArgumentNullException.IfIsNull(validator, nameof(validator));
             Log = log;
+            Validator = validator;
         }
 
-        public SecApp CurrentApp { get; private set; }
-
-        public SecUser CurrentUser { get; private set; }
-
         protected ICaravanLog Log { get; }
+
+        /// <summary>
+        ///   L'oggetto usato per la validazione di indirizzi email, numeri di telefono e altro.
+        /// </summary>
+        public ICaravanSecurityValidator Validator { get; }
 
         #region Apps
 
@@ -616,6 +619,12 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
+                var userValidationResult = await Validator.ValidateUserAsync(newUser);
+                if (!userValidationResult.Succeeded)
+                {
+                    throw new SecUserNotValidException(appName, newUser.Login, userValidationResult.Errors);
+                }
+
                 await AddUserAsyncInternal(appName, newUser);
                 Log.Warn(new LogMessage
                 {
@@ -670,6 +679,12 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
+                var userValidationResult = await Validator.ValidateUserAsync(userUpdates);
+                if (!userValidationResult.Succeeded)
+                {
+                    throw new SecUserNotValidException(appName, userLogin, userValidationResult.Errors);
+                }
+
                 userUpdates.Login.Do(x => userUpdates.Login = x.ToLowerInvariant());
                 await UpdateUserAsyncInternal(appName, userLogin, userUpdates);
                 Log.Warn(new LogMessage

@@ -253,13 +253,10 @@ namespace Finsa.Caravan.Common.Security
         /// <param name="user"/>
         /// <param name="passwordHash"/>
         /// <returns/>
-        public Task SetPasswordHashAsync(SecUser user, string passwordHash)
+        public Task SetPasswordHashAsync(SecUser user, string passwordHash) => SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
         {
-            return SecurityRepository.UpdateUserAsync(AppName, user.Login, new SecUserUpdates
-            {
-                PasswordHash = passwordHash
-            });
-        }
+            PasswordHash = passwordHash
+        });
 
         /// <summary>
         ///   Gets the user password hash.

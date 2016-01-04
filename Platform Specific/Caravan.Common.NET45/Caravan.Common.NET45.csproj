@@ -170,6 +170,7 @@
     <Compile Include="Identity\ICaravanClientStore.cs" />
     <Compile Include="Identity\Models\IdnClient.cs" />
     <Compile Include="Security\CaravanSecurityValidator.cs" />
+    <Compile Include="Security\Exceptions\SecUserNotValidException.cs" />
     <Compile Include="Security\ICaravanSecurityValidator.cs" />
     <Compile Include="Security\Models\SecUserKey.cs" />
     <Compile Include="Logging\Activities\AbstractLogActivity.cs" />

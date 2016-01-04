@@ -23,9 +23,10 @@ namespace Finsa.Caravan.Common.Security
     /// </summary>
     public interface ICaravanSecurityRepository : IDisposable
     {
-        SecApp CurrentApp { get; }
-
-        SecUser CurrentUser { get; }
+        /// <summary>
+        ///   L'oggetto usato per la validazione di indirizzi email, numeri di telefono e altro.
+        /// </summary>
+        ICaravanSecurityValidator Validator { get; }
 
         #region Apps
 

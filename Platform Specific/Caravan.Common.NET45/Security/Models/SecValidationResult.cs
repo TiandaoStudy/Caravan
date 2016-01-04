@@ -10,6 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.CodeServices.Common;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -47,6 +48,17 @@ namespace Finsa.Caravan.Common.Security.Models
         /// </summary>
         [DataMember(Order = 1)]
         public IList<string> Errors { get; private set; }
+
+        /// <summary>
+        ///   Genera un risultato negativo con l'errore indicato.
+        /// </summary>
+        /// <param name="error">L'errore rinvenuto.</param>
+        /// <returns>Un risultato negativo con l'errore indicato.</returns>
+        public static SecValidationResult Failure(string error) => new SecValidationResult
+        {
+            Succeeded = false,
+            Errors = GTuple.Create(error)
+        };
 
         /// <summary>
         ///   Genera un risultato negativo con gli errori indicati.

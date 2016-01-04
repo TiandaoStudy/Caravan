@@ -15,6 +15,7 @@ using AutoMapper.QueryableExtensions;
 using BrockAllen.IdentityReboot;
 using Finsa.Caravan.Common.Identity.Models;
 using Finsa.Caravan.Common.Logging;
+using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess.Core;
@@ -40,8 +41,8 @@ namespace Finsa.Caravan.DataAccess.Sql
         private readonly SqlDbContext _queryableDbContext;
         private bool _disposed;
 
-        public SqlSecurityRepository(ICaravanLog log, IDbContextFactory<SqlDbContext> dbContextFactory)
-            : base(log)
+        public SqlSecurityRepository(ICaravanLog log, ICaravanSecurityValidator validator, IDbContextFactory<SqlDbContext> dbContextFactory)
+            : base(log, validator)
         {
             RaiseArgumentNullException.IfIsNull(dbContextFactory, nameof(dbContextFactory));
             _dbContextFactory = dbContextFactory;

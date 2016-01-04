@@ -11,6 +11,7 @@
 // the License.
 
 using Finsa.Caravan.Common.Core;
+using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
 using Microsoft.AspNet.Identity;
 using PommaLabs.Thrower;
@@ -71,7 +72,14 @@ namespace Finsa.Caravan.Common.Security
             {
                 await CaravanUserStore.SetLockoutEnabledAsync(user, true).WithCurrentCulture();
             }
-            await Store.CreateAsync(user).WithCurrentCulture();
+            try
+            {
+                await Store.CreateAsync(user).WithCurrentCulture();
+            }
+            catch (SecUserNotValidException unv)
+            {
+                return new IdentityResult(unv.Errors);
+            }
             await UpdateSecurityStampInternal(user).WithCurrentCulture();
             return IdentityResult.Success;
         }
@@ -90,12 +98,37 @@ namespace Finsa.Caravan.Common.Security
             {
                 return pwdResult;
             }
-            var createResult = await CreateAsync(user);
+            IdentityResult createResult;
+            try
+            {
+                createResult = await CreateAsync(user);
+            }
+            catch (SecUserNotValidException unv)
+            {
+                return new IdentityResult(unv.Errors);
+            }
             if (!createResult.Succeeded)
             {
                 return createResult;
             }
             return await UpdatePassword(CaravanUserStore, user, password);
+        }
+
+        /// <summary>
+        ///   Updates a user.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public override async Task<IdentityResult> UpdateAsync(SecUser user)
+        {
+            try
+            {
+                return await base.UpdateAsync(user);
+            }
+            catch (SecUserNotValidException unv)
+            {
+                return new IdentityResult(unv.Errors);
+            }
         }
 
         #region Role management

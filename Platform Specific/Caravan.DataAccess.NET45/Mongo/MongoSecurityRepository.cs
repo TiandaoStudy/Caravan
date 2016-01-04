@@ -4,13 +4,14 @@ using Finsa.Caravan.DataAccess.Core;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using Finsa.Caravan.Common.Security;
 
 namespace Finsa.Caravan.DataAccess.Mongo
 {
     internal sealed class MongoSecurityRepository : AbstractSecurityRepository<MongoSecurityRepository>
     {
-        public MongoSecurityRepository(ICaravanLog log)
-            : base(log)
+        public MongoSecurityRepository(ICaravanLog log, ICaravanSecurityValidator validator)
+            : base(log, validator)
         {
         }
 

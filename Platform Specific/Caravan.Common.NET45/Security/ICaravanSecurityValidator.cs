@@ -10,6 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.Caravan.Common.Security.Models;
 using System.Threading.Tasks;
 
 namespace Finsa.Caravan.Common.Security
@@ -19,8 +20,32 @@ namespace Finsa.Caravan.Common.Security
     /// </summary>
     public interface ICaravanSecurityValidator
     {
-        Task ValidateEmailAsync(string email);
+        /// <summary>
+        ///   Valida parte delle proprietà dell'utente passato come parametro, utilizzando i metodi definiti da questa interfaccia.
+        /// </summary>
+        /// <param name="user">L'utente da validare.</param>
+        /// <returns>Il risultato della validazione.</returns>
+        Task<SecValidationResult> ValidateUserAsync(SecUser user);
 
-        Task ValidatePhoneNumberAsync(string phoneNumber);
+        /// <summary>
+        ///   Valida parte delle proprietà dell'utente passato come parametro, utilizzando i metodi definiti da questa interfaccia.
+        /// </summary>
+        /// <param name="userUpdates">L'utente da validare.</param>
+        /// <returns>Il risultato della validazione.</returns>
+        Task<SecValidationResult> ValidateUserAsync(SecUserUpdates userUpdates);
+
+        /// <summary>
+        ///   Valida l'indirizzo email passato come parametro.
+        /// </summary>
+        /// <param name="email">L'indirizzo email da validare.</param>
+        /// <returns>Il risultato della validazione.</returns>
+        Task<SecValidationResult> ValidateEmailAsync(string email);
+
+        /// <summary>
+        ///   Valida il numero di telefono passato come parametro.
+        /// </summary>
+        /// <param name="phoneNumber">Il numero di telefono da validare.</param>
+        /// <returns>Il risultato della validazione.</returns>
+        Task<SecValidationResult> ValidatePhoneNumberAsync(string phoneNumber);
     }
 }
