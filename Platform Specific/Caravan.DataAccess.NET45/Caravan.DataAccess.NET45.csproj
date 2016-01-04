@@ -322,6 +322,7 @@
     <Compile Include="CaravanDataSource.cs" />
     <Compile Include="ICaravanDataSourceManager.cs" />
     <Compile Include="Sql\PostgreSql\PostgreSqlDataSourceManager.cs" />
+    <Compile Include="Sql\UnitTestableDbContext.cs" />
     <Compile Include="Sql\SqlSecurityRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sql\SqlLogRepository.cs" />

@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
-    public sealed class SqlIdnAuthorizationCodeStore : AbstractSqlIdnTokenStore<AuthorizationCode>, IAuthorizationCodeStore
+    internal sealed class SqlIdnAuthorizationCodeStore : AbstractSqlIdnTokenStore<AuthorizationCode>, IAuthorizationCodeStore
     {
         public SqlIdnAuthorizationCodeStore(IDbContextFactory<SqlDbContext> dbContextFactory, IScopeStore scopeStore, IClientStore clientStore, IClock clock)
             : base(dbContextFactory, TokenType.AuthorizationCode, scopeStore, clientStore, clock)

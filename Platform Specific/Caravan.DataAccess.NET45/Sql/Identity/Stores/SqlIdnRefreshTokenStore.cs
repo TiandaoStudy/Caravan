@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
-    public sealed class SqlIdnRefreshTokenStore : AbstractSqlIdnTokenStore<RefreshToken>, IRefreshTokenStore
+    internal sealed class SqlIdnRefreshTokenStore : AbstractSqlIdnTokenStore<RefreshToken>, IRefreshTokenStore
     {
         public SqlIdnRefreshTokenStore(IDbContextFactory<SqlDbContext> dbContextFactory, IScopeStore scopeStore, IClientStore clientStore, IClock clock)
             : base(dbContextFactory, TokenType.RefreshToken, scopeStore, clientStore, clock)

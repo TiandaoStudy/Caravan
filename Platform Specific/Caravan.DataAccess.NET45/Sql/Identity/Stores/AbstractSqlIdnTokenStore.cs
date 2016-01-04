@@ -29,7 +29,7 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
 {
-    public abstract class AbstractSqlIdnTokenStore<T>
+    internal abstract class AbstractSqlIdnTokenStore<T>
         where T : class
     {
         protected readonly IDbContextFactory<SqlDbContext> DbContextFactory;

@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Services
 {
-    public sealed class SqlIdnCorsPolicyService : ICorsPolicyService
+    internal sealed class SqlIdnCorsPolicyService : ICorsPolicyService
     {
         private readonly IDbContextFactory<SqlDbContext> _dbContextFactory;
 
