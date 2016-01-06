@@ -11,7 +11,9 @@
 // the License.
 
 using PommaLabs.Thrower;
+using System.Data.Common;
 using System.Data.Entity;
+using System.Reflection;
 
 namespace Finsa.Caravan.DataAccess.Sql.Effort
 {
@@ -21,12 +23,30 @@ namespace Finsa.Caravan.DataAccess.Sql.Effort
     /// </summary>
     /// <typeparam name="TContext">Il contesto oggetto dei test.</typeparam>
     public sealed class EffortDbContextFactory<TContext> : ConfigurableDbContextFactory<TContext>, IUnitTestableDbContextFactory<TContext>
-        where TContext : UnitTestableDbContext<TContext>, new()
+        where TContext : UnitTestableDbContext<TContext>
     {
         /// <summary>
-        ///   Il gestore della connessione verso Effort.
+        ///   Usato per creare i contesti per i test.
         /// </summary>
-        internal static EffortDataSourceManager Manager { get; } = new EffortDataSourceManager();
+        private static readonly ConstructorInfo ContextCreator = typeof(TContext).GetConstructor(new[] { typeof(DbConnection) });
+
+        /// <summary>
+        ///   Usato per gestire la stringa di connessione al DB in memoria.
+        /// </summary>
+        private readonly EffortDataSourceManager _dataSourceManager;
+
+        /// <summary>
+        ///   Istanzia la factory partendo dal gestore dato.
+        /// </summary>
+        /// <param name="dataSourceManager">
+        ///   Il gestore della connessione, la classe si aspetta che sia quello di Effort.
+        /// </param>
+        public EffortDbContextFactory(ICaravanDataSourceManager dataSourceManager)
+        {
+            var effortDataSourceManager = dataSourceManager as EffortDataSourceManager;
+            RaiseArgumentNullException.IfIsNull(dataSourceManager, nameof(dataSourceManager));
+            _dataSourceManager = effortDataSourceManager;
+        }
 
         /// <summary>
         ///   Da usare SOLO E SOLTANTO negli unit test, resetta la connessione di Effort.
@@ -34,7 +54,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Effort
         public void Reset()
         {
             // A new connection is created and persisted for the whole test duration.
-            Manager.ResetConnection();
+            _dataSourceManager.ResetConnection();
 
             // The database is recreated, since it is in-memory and probably it does not exist.
             using (var ctx = Create())
@@ -52,7 +72,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Effort
         /// <returns>An instance of <typeparamref name="TContext"/>.</returns>
         public override TContext Create()
         {
-            var dbContext = new TContext();
+            var dbContext = ContextCreator.Invoke(new object[] { _dataSourceManager.OpenConnection() }) as TContext;
             CopyConfiguration(DefaultConfiguration, dbContext.Configuration);
             return dbContext;
         }
@@ -65,7 +85,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Effort
         public override TContext Create(DbContextConfiguration<TContext> customConfiguration)
         {
             RaiseArgumentNullException.IfIsNull(customConfiguration, nameof(customConfiguration));
-            var dbContext = new TContext();
+            var dbContext = ContextCreator.Invoke(new object[] { _dataSourceManager.OpenConnection() }) as TContext;
             CopyConfiguration(customConfiguration, dbContext.Configuration);
             return dbContext;
         }

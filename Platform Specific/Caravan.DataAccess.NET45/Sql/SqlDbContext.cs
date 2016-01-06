@@ -51,25 +51,16 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
         }
 
-        public SqlDbContext()
+        public SqlDbContext(DbConnection dbConnection)
+            : base(dbConnection)
         {
             // Il lazy loading viene disabilitato dalla classe che si occupa di generare i contesti.
         }
 
         public SqlDbContext(ICaravanDataSourceManager dataSourceManager)
-            : base(GetConnection(dataSourceManager))
+            : base(dataSourceManager.CreateConnection())
         {
             // Il lazy loading viene disabilitato dalla classe che si occupa di generare i contesti.
-        }
-
-        private static DbConnection GetConnection(ICaravanDataSourceManager dataSourceManager)
-        {
-            if (dataSourceManager.DataSourceKind == CaravanDataSourceKind.Effort)
-            {
-                // Needed, otherwise Unit Tests fail.
-                return dataSourceManager.OpenConnection();
-            }
-            return dataSourceManager.CreateConnection();
         }
     }
 }

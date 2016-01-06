@@ -11,7 +11,6 @@
 // the License.
 
 using EntityFramework.Triggers;
-using Finsa.Caravan.DataAccess.Sql.Effort;
 using Finsa.Caravan.DataAccess.Sql.Identity.Entities;
 using Finsa.Caravan.DataAccess.Sql.Logging.Entities;
 using Finsa.Caravan.DataAccess.Sql.Security.Entities;
@@ -25,19 +24,8 @@ namespace Finsa.Caravan.DataAccess.Sql
     ///   Contesto DB da usare come base per i contesti degli applicativi.
     /// </summary>
     public abstract class UnitTestableDbContext<TContext> : DbContextWithTriggers
-        where TContext : UnitTestableDbContext<TContext>, new()
+        where TContext : UnitTestableDbContext<TContext>
     {
-        /// <summary>
-        ///   Costruisce il contesto di base per gli applicativi Caravan nella modalità specifica
-        ///   per gli unit test. NON usare mai in ambiente di produzione.
-        /// </summary>
-        public UnitTestableDbContext()
-            : base(EffortDbContextFactory<TContext>.Manager.OpenConnection(), true)
-        {
-            // NOTA BENE 1: Effort richiede una connessione aperta. NOTA BENE 2: Il lazy loading
-            // viene disabilitato dalla classe che si occupa di generare i contesti.
-        }
-
         /// <summary>
         ///   Costruisce il contesto di base per gli applicativi Caravan.
         /// </summary>

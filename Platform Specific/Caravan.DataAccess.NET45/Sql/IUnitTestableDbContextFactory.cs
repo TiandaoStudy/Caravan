@@ -17,7 +17,7 @@ namespace Finsa.Caravan.DataAccess.Sql
     /// </summary>
     /// <typeparam name="TContext">Il tipo di contesto da testare.</typeparam>
     public interface IUnitTestableDbContextFactory<TContext> : IConfigurableDbContextFactory<TContext>
-        where TContext : UnitTestableDbContext<TContext>, new()
+        where TContext : UnitTestableDbContext<TContext>
     {
         /// <summary>
         ///   Riporta allo stato iniziale tutto ciò che è legato al database. Questo metodo va
