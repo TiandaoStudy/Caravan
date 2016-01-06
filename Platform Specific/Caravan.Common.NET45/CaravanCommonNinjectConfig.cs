@@ -16,8 +16,6 @@ using Finsa.Caravan.Common.Identity;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
 using Finsa.CodeServices.Clock;
-using Finsa.CodeServices.Compression;
-using Finsa.CodeServices.Serialization;
 using IdentityServer3.Core.Services;
 using Ninject;
 using Ninject.Modules;
@@ -78,11 +76,18 @@ namespace Finsa.Caravan.Common
                 case DependencyHandling.ProductionEnvironment:
                     Bind<IClock>().To<SystemClock>().InSingletonScope();
                     Bind<ILog, ICaravanLog>().ToMethod(ctx => LogManager.GetLogger(ctx.Request?.Target?.Member?.ReflectedType ?? typeof(CaravanServiceProvider)) as ICaravanLog);
+
+                    Bind<ICaravanUserManagerFactory>().To<CaravanUserManagerFactory>().InRequestOrThreadScope();
+                    Bind<ICaravanRoleManagerFactory>().To<CaravanRoleManagerFactory>().InRequestOrThreadScope();
                     break;
 
                 case DependencyHandling.UnitTesting:
                     Bind<IClock>().To<MockClock>().InSingletonScope();
                     Bind<ILog, ICaravanLog>().To<CaravanNoOpLogger>().InSingletonScope();
+
+                    // I test effettuano una dispose manuale.
+                    Bind<ICaravanUserManagerFactory>().To<CaravanUserManagerFactory>();
+                    Bind<ICaravanRoleManagerFactory>().To<CaravanRoleManagerFactory>();
                     break;
             }
 
@@ -95,9 +100,6 @@ namespace Finsa.Caravan.Common
 
             Bind<ICaravanUserStore>().To<CaravanUserStore>().InRequestOrThreadScope().WithConstructorArgument("appName", _appName);
             Bind<ICaravanRoleStore>().To<CaravanRoleStore>().InRequestOrThreadScope().WithConstructorArgument("appName", _appName);
-
-            Bind<ICaravanUserManagerFactory>().To<CaravanUserManagerFactory>().InRequestOrThreadScope();
-            Bind<ICaravanRoleManagerFactory>().To<CaravanRoleManagerFactory>().InRequestOrThreadScope();
 
             Bind<CaravanUserManager>().ToMethod(ctx => ctx.Kernel.Get<ICaravanUserManagerFactory>().CreateAsync().Result).InRequestOrThreadScope();
             Bind<CaravanRoleManager>().ToMethod(ctx => ctx.Kernel.Get<ICaravanRoleManagerFactory>().CreateAsync().Result).InRequestOrThreadScope();

@@ -10,36 +10,30 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using Finsa.Caravan.DataAccess.Core;
 using System.Data.Common;
 
 namespace Finsa.Caravan.DataAccess.Sql.Effort
 {
-    internal sealed class EffortDataSourceManager : AbstractDataSourceManager
+    internal static class EffortDataSourceManager
     {
-        private DbConnection _connection;
+        private static DbConnection _connection;
 
-        public EffortDataSourceManager()
+        static EffortDataSourceManager()
         {
             ResetConnection();
         }
 
-        public override CaravanDataSourceKind DataSourceKind { get; } = CaravanDataSourceKind.Effort;
-
-        public override string ElaborateConnectionString(string connectionString)
+        public static DbConnection OpenConnection()
         {
-            // Nothing to do with the connection string.
-            return connectionString;
-        }
-
-        public override DbConnection CreateConnection()
-        {
-            // Close connection, since someone might have left it open.
-            _connection.Close();
+            // Open connection, since someone might have left it closed.
+            if (_connection.State == System.Data.ConnectionState.Closed)
+            {
+                _connection.Open();
+            }
             return _connection;
         }
 
-        public void ResetConnection()
+        public static void ResetConnection()
         {
             // Connection should be persisted, otherwise the DB may be lost.
             _connection = global::Effort.DbConnectionFactory.CreatePersistent("caravan");

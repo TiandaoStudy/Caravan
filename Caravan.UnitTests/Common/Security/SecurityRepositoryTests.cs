@@ -15,7 +15,7 @@ using NUnit.Framework;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Finsa.Caravan.UnitTests.DataAccess.Security
+namespace Finsa.Caravan.UnitTests.Common.Security
 {
     internal sealed class SecurityRepositoryTests : AbstractTests
     {

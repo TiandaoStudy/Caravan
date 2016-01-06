@@ -10,6 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using System;
 using System.Threading.Tasks;
 
 namespace Finsa.Caravan.Common.Security
@@ -17,7 +18,7 @@ namespace Finsa.Caravan.Common.Security
     /// <summary>
     ///   Gestisce la creazione di UserManager specifici per un dato applicativo Caravan.
     /// </summary>
-    public interface ICaravanUserManagerFactory
+    public interface ICaravanUserManagerFactory : IDisposable
     {
         /// <summary>
         ///   Il repository della sicurezza di Caravan.

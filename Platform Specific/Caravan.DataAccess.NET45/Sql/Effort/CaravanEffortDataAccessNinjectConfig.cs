@@ -48,8 +48,6 @@ namespace Finsa.Caravan.DataAccess.Sql.Effort
                     throw new InvalidOperationException(ErrorMessages.Drivers_DriverNotForCommonUsage);
 
                 case DependencyHandling.UnitTesting:
-                    Bind<ICaravanDataSourceManager>().To<EffortDataSourceManager>().InSingletonScope();
-
                     // Gestione del DbContext per EF.
                     Bind<DbContextConfiguration<SqlDbContext>>().ToConstant(new DbContextConfiguration<SqlDbContext>
                     {

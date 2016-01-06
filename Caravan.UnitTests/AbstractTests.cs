@@ -12,8 +12,9 @@
 
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Security;
-using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.DataAccess.Sql;
 using Finsa.Caravan.DataAccess.Sql.Effort;
+using Finsa.Caravan.UnitTests.DataAccess.Sql;
 using Ninject;
 using NUnit.Framework;
 
@@ -33,6 +34,7 @@ namespace Finsa.Caravan.UnitTests
         protected const string TestAppDescription = "My TEST App";
         protected const string TestUserLogin1 = "user1";
 
+        protected IUnitTestableDbContextFactory<MyDbContext> MyDbContextFactory;
         protected ICaravanSecurityRepository SecurityRepository;
         protected ICaravanUserManagerFactory UserManagerFactory;
 
@@ -42,18 +44,20 @@ namespace Finsa.Caravan.UnitTests
 
             CaravanServiceProvider.NinjectKernel = new StandardKernel(
                 new CaravanCommonNinjectConfig(DependencyHandling.UnitTesting, "caravan"),
-                new CaravanEffortDataAccessNinjectConfig(DependencyHandling.UnitTesting)
+                new CaravanEffortDataAccessNinjectConfig(DependencyHandling.UnitTesting),
+                new NinjectConfig()
             );
         }
 
         [SetUp]
         public virtual void SetUp()
         {
-            // Pulizia della sorgente dati.
-            CaravanDataSource.Reset();
+            // Pulizia della sorgente dati - Per costruzione, si dovrebbe svuotare anche la sorgente dati di Caravan (per ora solo su SQL).
+            var kernel = CaravanServiceProvider.NinjectKernel;
+            MyDbContextFactory = kernel.Get<IUnitTestableDbContextFactory<MyDbContext>>();
+            MyDbContextFactory.Reset();
 
             // Ricarico le dipendenze necessarie.
-            var kernel = CaravanServiceProvider.NinjectKernel;
             SecurityRepository = kernel.Get<ICaravanSecurityRepository>();
             UserManagerFactory = kernel.Get<ICaravanUserManagerFactory>();
         }
@@ -62,9 +66,13 @@ namespace Finsa.Caravan.UnitTests
         public virtual void TearDown()
         {
             // Faccio pulizia all'interno delle dipendenze.
+            UserManagerFactory?.Dispose();
             UserManagerFactory = null;
             SecurityRepository?.Dispose();
             SecurityRepository = null;
+
+            // Non ho Dispose da fare...
+            MyDbContextFactory = null;
         }
     }
 }
