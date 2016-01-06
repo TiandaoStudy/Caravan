@@ -51,6 +51,11 @@ namespace Finsa.Caravan.DataAccess.Sql
             }
         }
 
+        public SqlDbContext()
+        {
+            // Il lazy loading viene disabilitato dalla classe che si occupa di generare i contesti.
+        }
+
         public SqlDbContext(ICaravanDataSourceManager dataSourceManager)
             : base(GetConnection(dataSourceManager))
         {

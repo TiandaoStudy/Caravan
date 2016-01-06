@@ -15,7 +15,6 @@ using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.DataAccess.Sql;
 using Ninject;
-using System.Data.Entity.Infrastructure;
 
 namespace Finsa.Caravan.DataAccess
 {
@@ -34,6 +33,6 @@ namespace Finsa.Caravan.DataAccess
         /// <summary>
         ///   Usato negli unit test per resettare rapidamente la base dati di Caravan.
         /// </summary>
-        public static void Reset() => SqlDbContext.Reset(CaravanServiceProvider.NinjectKernel.Get<IDbContextFactory<SqlDbContext>>());
+        public static void Reset() => CaravanServiceProvider.NinjectKernel.Get<IUnitTestableDbContextFactory<SqlDbContext>>().Reset();
     }
 }

@@ -264,6 +264,7 @@
     <Compile Include="Sql\ConfigurableDbContextFactory.cs" />
     <Compile Include="Sql\DbContextConfiguration.cs" />
     <Compile Include="Sql\Effort\CaravanEffortDataAccessNinjectConfig.cs" />
+    <Compile Include="Sql\Effort\EffortDbContextFactory.cs" />
     <Compile Include="Sql\IConfigurableDbContextFactory.cs" />
     <Compile Include="Sql\Identity\Entities\SqlIdnScopeSecret.cs" />
     <Compile Include="Sql\Identity\Extensions\EntitiesMap.cs" />
@@ -290,6 +291,7 @@
     <Compile Include="Sql\Identity\Stores\SqlIdnScopeStore.cs" />
     <Compile Include="Sql\Identity\Stores\SqlIdnTokenHandleStore.cs" />
     <Compile Include="Sql\Entities\SqlTrackedEntity.cs" />
+    <Compile Include="Sql\IUnitTestableDbContextFactory.cs" />
     <Compile Include="Sql\Logging\SqlDbCommandLogger.cs" />
     <Compile Include="Sql\MySql\CaravanMySqlDataAccessNinjectConfig.cs" />
     <Compile Include="Sql\Oracle\CaravanOracleDataAccessNinjectConfig.cs" />

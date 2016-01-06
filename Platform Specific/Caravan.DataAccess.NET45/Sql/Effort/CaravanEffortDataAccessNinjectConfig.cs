@@ -13,6 +13,7 @@
 using Finsa.Caravan.Common;
 using Finsa.Caravan.DataAccess.Core;
 using System;
+using System.Data.Entity.Infrastructure;
 
 namespace Finsa.Caravan.DataAccess.Sql.Effort
 {
@@ -48,6 +49,18 @@ namespace Finsa.Caravan.DataAccess.Sql.Effort
 
                 case DependencyHandling.UnitTesting:
                     Bind<ICaravanDataSourceManager>().To<EffortDataSourceManager>().InSingletonScope();
+
+                    // Gestione del DbContext per EF.
+                    Bind<DbContextConfiguration<SqlDbContext>>().ToConstant(new DbContextConfiguration<SqlDbContext>
+                    {
+                        ContextCreator = null, // Non viene usato nei test.
+                        LazyLoadingEnabled = false
+                    }).InSingletonScope();
+                    Bind<IDbContextFactory<SqlDbContext>, 
+                         IConfigurableDbContextFactory<SqlDbContext>, 
+                         IUnitTestableDbContextFactory<SqlDbContext>>()
+                        .To<EffortDbContextFactory<SqlDbContext>>()
+                        .InSingletonScope();
                     break;
             }
 

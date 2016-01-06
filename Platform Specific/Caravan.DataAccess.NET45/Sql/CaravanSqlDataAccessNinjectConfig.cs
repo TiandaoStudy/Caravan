@@ -56,6 +56,9 @@ namespace Finsa.Caravan.DataAccess.Sql
             // Carica le dipendenze dei moduli precedenti.
             base.Load();
 
+            // Usata per evitare il bind del modulo con eventuali lambda sottostanti.
+            var kernelCopy = Kernel;
+
             switch (DependencyHandling)
             {
                 case DependencyHandling.Default:
@@ -74,6 +77,15 @@ namespace Finsa.Caravan.DataAccess.Sql
                     Bind<IClientStore, ICaravanClientStore>().To<SqlIdnClientStore>().InRequestOrThreadScope();
                     Bind<IScopeStore>().To<SqlIdnScopeStore>().InRequestOrThreadScope();
                     Bind<ICorsPolicyService>().To<SqlIdnCorsPolicyService>().InRequestOrThreadScope();
+
+                    // Gestione del DbContext per EF.
+                    Bind<DbContextConfiguration<SqlDbContext>>().ToConstant(new DbContextConfiguration<SqlDbContext>
+                    {
+                        ContextCreator = () => kernelCopy.Get<SqlDbContext>(),
+                        LazyLoadingEnabled = false
+                    }).InSingletonScope();
+                    Bind<IDbContextFactory<SqlDbContext>, IConfigurableDbContextFactory<SqlDbContext>>().To<ConfigurableDbContextFactory<SqlDbContext>>().InSingletonScope();
+                    ConfigureEFPregeneratedViews();
                     break;
 
                 case DependencyHandling.UnitTesting:
@@ -89,18 +101,11 @@ namespace Finsa.Caravan.DataAccess.Sql
                     Bind<IClientStore, ICaravanClientStore>().To<SqlIdnClientStore>();
                     Bind<IScopeStore>().To<SqlIdnScopeStore>();
                     Bind<ICorsPolicyService>().To<SqlIdnCorsPolicyService>();
+
+                    // Il contesto di EF viene gestito in modo specifico da Effort. Pertanto, la sua
+                    // costruzione è delegata al modulo Ninject dedicato a Effort.
                     break;
             }
-
-            // Gestione del DbContext per EF.
-            var kernelCopy = Kernel; // <-- Usata per evitare il bind del modulo con la lambda qui sotto.
-            Bind<DbContextConfiguration<SqlDbContext>>().ToConstant(new DbContextConfiguration<SqlDbContext>
-            {
-                ContextCreator = () => kernelCopy.Get<SqlDbContext>(),
-                LazyLoadingEnabled = false
-            }).InSingletonScope();
-            Bind<IDbContextFactory<SqlDbContext>, IConfigurableDbContextFactory<SqlDbContext>>().To<ConfigurableDbContextFactory<SqlDbContext>>();
-            ConfigureEFPregeneratedViews();
 
             // Gestione della cache per EF.
             QueryCacheProvider.Register(() => kernelCopy.Get<ICache>());
@@ -111,8 +116,8 @@ namespace Finsa.Caravan.DataAccess.Sql
             // Configura la generazione automatica delle viste per EF.
             using (var dbContext = Kernel.Get<IDbContextFactory<SqlDbContext>>().Create())
             {
-                // Per prima cosa, recupero la cartella di destinazione e mi assicuro che esista. Se non
-                // esiste, la creo, altrimenti avrei un errore alla prima query.
+                // Per prima cosa, recupero la cartella di destinazione e mi assicuro che esista. Se
+                // non esiste, la creo, altrimenti avrei un errore alla prima query.
                 var pregenViewsPath = CaravanDataAccessConfiguration.Instance.Drivers_Sql_EFPregeneratedViews_Path;
                 var mappedPregenViewsPath = PortableEnvironment.MapPath(pregenViewsPath);
                 if (!Directory.Exists(mappedPregenViewsPath))

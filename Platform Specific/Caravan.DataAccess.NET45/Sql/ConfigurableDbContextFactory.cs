@@ -74,7 +74,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         /// </summary>
         /// <param name="source">Source configuration.</param>
         /// <param name="target">Target configuration.</param>
-        private static void CopyConfiguration(DbContextConfiguration<TContext> source, System.Data.Entity.Infrastructure.DbContextConfiguration target)
+        protected static void CopyConfiguration(DbContextConfiguration<TContext> source, System.Data.Entity.Infrastructure.DbContextConfiguration target)
         {
             target.AutoDetectChangesEnabled = source.AutoDetectChangesEnabled;
             target.EnsureTransactionsForFunctionsAndCommands = source.EnsureTransactionsForFunctionsAndCommands;
