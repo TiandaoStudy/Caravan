@@ -200,6 +200,7 @@ namespace Finsa.Caravan.DataAccess.Core
                     ShortMessage = $"Added new group '{newGroup.Name}' to application '{appName}'",
                     Context = logCtx
                 });
+                newGroup.AppName = appName;
                 return newGroup.Id;
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
@@ -399,6 +400,8 @@ namespace Finsa.Caravan.DataAccess.Core
                     ShortMessage = $"Added new role '{newRole.Name}' to group '{groupName}' of application '{appName}'",
                     Context = logCtx
                 });
+                newRole.AppName = appName;
+                newRole.GroupName = groupName;
                 return newRole.Id;
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
@@ -631,6 +634,7 @@ namespace Finsa.Caravan.DataAccess.Core
                     ShortMessage = $"Added new user '{newUser.Login}' to application '{appName}'",
                     Context = logCtx
                 });
+                newUser.AppName = appName;
                 return newUser.Id;
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))

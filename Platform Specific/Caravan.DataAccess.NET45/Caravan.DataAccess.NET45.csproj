@@ -250,170 +250,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CaravanDataAccessConfiguration.cs" />
-    <Compile Include="CaravanDataAccessNinjectConfig.cs" />
-    <Compile Include="CaravanDataSourceKind.cs" />
-    <Compile Include="Core\ErrorMessages.cs" />
-    <Compile Include="Mongo\CaravanMongoDataAccessNinjectConfig.cs" />
-    <Compile Include="Rest\CaravanMongoDataAccessNinjectConfig.cs" />
-    <Compile Include="Rest\Models\RestRequest.cs" />
-    <Compile Include="Rest\Models\RestResponse.cs" />
-    <Compile Include="Sql\Attributes\DateTimeOffsetAttribute.cs" />
-    <Compile Include="Sql\Attributes\DateTimeKindAttribute.cs" />
-    <Compile Include="Sql\CaravanSqlDataAccessNinjectConfig.cs" />
-    <Compile Include="Sql\ConfigurableDbContextFactory.cs" />
-    <Compile Include="Sql\DbContextConfiguration.cs" />
-    <Compile Include="Sql\Effort\CaravanEffortDataAccessNinjectConfig.cs" />
-    <Compile Include="Sql\Effort\EffortDbContextFactory.cs" />
-    <Compile Include="Sql\IConfigurableDbContextFactory.cs" />
-    <Compile Include="Sql\Identity\Entities\SqlIdnScopeSecret.cs" />
-    <Compile Include="Sql\Identity\Extensions\EntitiesMap.cs" />
-    <Compile Include="Sql\Identity\Extensions\ModelsMap.cs" />
-    <Compile Include="Sql\Identity\Entities\SqlIdnClientSecret.cs" />
-    <Compile Include="Sql\Identity\Entities\SqlIdnClientScope.cs" />
-    <Compile Include="Sql\Identity\Entities\SqlIdnClientRedirectUri.cs" />
-    <Compile Include="Sql\Identity\Entities\SqlIdnClientPostLogoutRedirectUri.cs" />
-    <Compile Include="Sql\Identity\Entities\SqlIdnClientIdPRestriction.cs" />
-    <Compile Include="Sql\Identity\Entities\SqlIdnClientCustomGrantType.cs" />
-    <Compile Include="Sql\Identity\Entities\SqlIdnClientCorsOrigin.cs" />
-    <Compile Include="Sql\Identity\Entities\SqlIdnClientClaim.cs" />
-    <Compile Include="Sql\Identity\Entities\SqlIdnClient.cs" />
-    <Compile Include="Sql\Identity\Entities\SqlIdnConsent.cs" />
-    <Compile Include="Sql\Identity\Entities\SqlIdnScopeClaim.cs" />
-    <Compile Include="Sql\Identity\Entities\SqlIdnScope.cs" />
-    <Compile Include="Sql\Identity\Entities\SqlIdnToken.cs" />
-    <Compile Include="Sql\Identity\Services\SqlIdnCorsPolicyService.cs" />
-    <Compile Include="Sql\Identity\Stores\AbstractSqlIdnTokenStore.cs" />
-    <Compile Include="Sql\Identity\Stores\SqlIdnAuthorizationCodeStore.cs" />
-    <Compile Include="Sql\Identity\Stores\SqlIdnClientStore.cs" />
-    <Compile Include="Sql\Identity\Stores\SqlIdnConsentStore.cs" />
-    <Compile Include="Sql\Identity\Stores\SqlIdnRefreshTokenStore.cs" />
-    <Compile Include="Sql\Identity\Stores\SqlIdnScopeStore.cs" />
-    <Compile Include="Sql\Identity\Stores\SqlIdnTokenHandleStore.cs" />
-    <Compile Include="Sql\Entities\SqlTrackedEntity.cs" />
-    <Compile Include="Sql\IUnitTestableDbContextFactory.cs" />
-    <Compile Include="Sql\Logging\SqlDbCommandLogger.cs" />
-    <Compile Include="Sql\MySql\CaravanMySqlDataAccessNinjectConfig.cs" />
-    <Compile Include="Sql\Oracle\CaravanOracleDataAccessNinjectConfig.cs" />
-    <Compile Include="Sql\PostgreSql\CaravanPostgreSqlDataAccessNinjectConfig.cs" />
-    <Compile Include="Sql\Security\Entities\SqlSecClaim.cs" />
-    <Compile Include="Sql\Security\Entities\SqlSecRole.cs" />
-    <Compile Include="Core\AbstractDataSourceManager.cs" />
-    <Compile Include="Core\AbstractLogRepository.cs" />
-    <Compile Include="Core\AbstractSecurityRepository.cs" />
-    <Compile Include="Mongo\Models\Logging\MongoLogEntry.cs" />
-    <Compile Include="Mongo\Models\Logging\MongoLogSettings.cs" />
-    <Compile Include="Mongo\Models\MongoDocument.cs" />
-    <Compile Include="Mongo\Models\MongoSequence.cs" />
-    <Compile Include="Mongo\Models\Security\MongoSecApp.cs" />
-    <Compile Include="Mongo\MongoDataSourceManager.cs" />
-    <Compile Include="Mongo\MongoLogRepository.cs" />
-    <Compile Include="Mongo\MongoSecurityRepository.cs" />
-    <Compile Include="Mongo\MongoUtilities.cs" />
-    <Compile Include="Sql\Effort\EffortDataSourceManager.cs" />
-    <Compile Include="Sql\Logging\Entities\SqlLogEntry.cs" />
-    <Compile Include="Sql\Logging\Entities\SqlLogSetting.cs" />
-    <Compile Include="Sql\Security\Entities\SqlSecApp.cs" />
-    <Compile Include="Sql\Security\Entities\SqlSecContext.cs" />
-    <Compile Include="Sql\Security\Entities\SqlSecEntry.cs" />
-    <Compile Include="Sql\Security\Entities\SqlSecGroup.cs" />
-    <Compile Include="Sql\Security\Entities\SqlSecObject.cs" />
-    <Compile Include="Sql\Security\Entities\SqlSecUser.cs" />
-    <Compile Include="Sql\MySql\MySqlDataSourceManager.cs" />
-    <Compile Include="Sql\Oracle\OracleDynamicParameters.cs" />
-    <Compile Include="CaravanDataSource.cs" />
-    <Compile Include="ICaravanDataSourceManager.cs" />
-    <Compile Include="Sql\PostgreSql\PostgreSqlDataSourceManager.cs" />
-    <Compile Include="Sql\UnitTestableDbContext.cs" />
-    <Compile Include="Sql\SqlSecurityRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sql\SqlLogRepository.cs" />
-    <Compile Include="Sql\Oracle\OracleDataSourceManager.cs" />
-    <Compile Include="Rest\RestLogRepository.cs" />
-    <Compile Include="Rest\RestSecurityRepository.cs" />
-    <Compile Include="Sql\SqlServerCe\CaravanSqlServerCeDataAccessNinjectConfig.cs" />
-    <Compile Include="Sql\SqlServerCe\SqlServerCeDataSourceManager.cs" />
-    <Compile Include="Sql\SqlDbContext.cs" />
-    <Compile Include="Sql\SqlServer\CaravanSqlServerDataAccessNinjectConfig.cs" />
-    <Compile Include="Sql\SqlServer\SqlServerDataSourceManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Sql\Oracle\Scripts\Packages\pck_caravan_utils.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_sco_secrets.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_tokens.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_sco_claims.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_consents.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_cli_secrets.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_cli_scopes.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_cli_rdrct_uris.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_cli_pstlgtrdr_uris.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_cli_idpr_restrs.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_cli_cst_grnt_types.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_cli_cors_origins.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_cli_claims.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_scopes.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_idn_clients.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_claims.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_sco_claims.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_consents.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_secrets.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_scopes.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_rdrct_uris.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_pstlgtrdr_uris.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_idpr_restrs.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_cst_grnt_types.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_cors_origins.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_claims.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\tu_crvn_idn_consents.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\tu_crvn_idn_scopes.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\ti_crvn_idn_scopes.sql" />
-    <Content Include="Sql\Oracle\Scripts\Views\v_caravan_log_summary.sql" />
-    <Content Include="Sql\Oracle\Scripts\Views\v_caravan_log.sql" />
-    <Content Include="Sql\SqlServer\Scripts\Tables\crvn_log_entries.sql" />
-    <Content Include="Sql\SqlServer\Scripts\Tables\crvn_log_settings.sql" />
-    <Content Include="Sql\SqlServer\Scripts\Tables\crvn_sec_apps.sql" />
     <None Include="app.config">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Sql\MySql\Scripts\all.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>all.sql</LastGenOutput>
-    </None>
-    <None Include="Sql\Oracle\Scripts\all.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>all.sql</LastGenOutput>
     </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="README.md" />
-    <Content Include="Sql\MySql\Scripts\all.sql">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>all.tt</DependentUpon>
-    </Content>
-    <Content Include="Sql\MySql\Scripts\grants.sql" />
-    <Content Include="Sql\MySql\Scripts\Tables\crvn_log_entries.sql" />
-    <Content Include="Sql\MySql\Scripts\Tables\crvn_log_settings.sql" />
-    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_apps.sql" />
-    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_contexts.sql" />
-    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_entries.sql" />
-    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_groups.sql" />
-    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_objects.sql" />
-    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_roles.sql" />
-    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_users.sql" />
-    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_user_groups.sql" />
-    <Content Include="Sql\MySql\Scripts\Tables\crvn_sec_user_roles.sql" />
-    <Content Include="Sql\Oracle\Scripts\all.sql">
-      <DependentUpon>all.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Content>
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_roles.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_user_roles.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_roles_id.sql" />
-    <Content Include="Sql\SqlServerCe\Scripts\Schema.sql" />
-    <None Include="Sql\SqlServer\Scripts\Tables.sqlce" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Caravan.Common.NET45\Caravan.Common.NET45.csproj">
@@ -421,29 +266,11 @@
       <Name>Caravan.Common.NET45</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Sql\Oracle\Scripts\grants.sql" />
-    <Content Include="Sql\Oracle\Scripts\Packages\pck_caravan_log.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_log_entries.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_groups.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_log_settings.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_users.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_objects.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_apps.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_contexts.sql" />
-    <Content Include="Sql\Oracle\Scripts\Tables\crvn_sec_entries.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_entries_id.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_objects_id.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_groups_id.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_contexts_id.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\crvn_sec_apps_id.sql" />
-    <Content Include="Sql\Oracle\Scripts\Triggers\crvn_log_entries_id.sql" />
-    <Content Include="Sql\PostgreSql\Scripts\Schema.sql" />
-  </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <Import Project="..\..\Caravan.DataAccess\Caravan.DataAccess.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
