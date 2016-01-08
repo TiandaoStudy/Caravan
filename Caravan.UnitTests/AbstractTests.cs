@@ -17,6 +17,7 @@ using Finsa.Caravan.DataAccess.Sql.Effort;
 using Finsa.Caravan.UnitTests.DataAccess.Sql;
 using Ninject;
 using NUnit.Framework;
+using PommaLabs.KVLite;
 
 namespace Finsa.Caravan.UnitTests
 {
@@ -26,6 +27,7 @@ namespace Finsa.Caravan.UnitTests
         protected const string EmptyString = "";
         protected const string ShortString = "BOOM BABY";
         protected const string MediumString = "Reality continues to ruin my life.";
+
         protected const string LongString = @"If a man does not keep pace with his companions, perhaps it is because
                                               he hears a different drummer. Let him step to the music which he hears,
                                               however measured or far away.";
@@ -34,6 +36,7 @@ namespace Finsa.Caravan.UnitTests
         protected const string TestAppDescription = "My TEST App";
         protected const string TestUserLogin1 = "user1";
 
+        protected ICache Cache;
         protected IUnitTestableDbContextFactory<MyDbContext> MyDbContextFactory;
         protected ICaravanSecurityRepository SecurityRepository;
         protected ICaravanUserManagerFactory UserManagerFactory;
@@ -52,12 +55,14 @@ namespace Finsa.Caravan.UnitTests
         [SetUp]
         public virtual void SetUp()
         {
-            // Pulizia della sorgente dati - Per costruzione, si dovrebbe svuotare anche la sorgente dati di Caravan (per ora solo su SQL).
+            // Pulizia della sorgente dati - Per costruzione, si dovrebbe svuotare anche la sorgente
+            // dati di Caravan (per ora solo su SQL, in futuro si vedrà).
             var kernel = CaravanServiceProvider.NinjectKernel;
             MyDbContextFactory = kernel.Get<IUnitTestableDbContextFactory<MyDbContext>>();
             MyDbContextFactory.Reset();
 
             // Ricarico le dipendenze necessarie.
+            Cache = kernel.Get<ICache>();
             SecurityRepository = kernel.Get<ICaravanSecurityRepository>();
             UserManagerFactory = kernel.Get<ICaravanUserManagerFactory>();
         }
@@ -65,6 +70,10 @@ namespace Finsa.Caravan.UnitTests
         [TearDown]
         public virtual void TearDown()
         {
+            // Pulizia della cache di KVLite.
+            Cache.Clear();
+            Cache = null;
+
             // Faccio pulizia all'interno delle dipendenze.
             UserManagerFactory?.Dispose();
             UserManagerFactory = null;
