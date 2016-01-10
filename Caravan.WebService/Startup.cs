@@ -132,7 +132,6 @@ namespace Finsa.Caravan.WebService
             // Personalizzo le impostazioni del serializzatore JSON.
             config.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
             {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 Formatting = Formatting.None,
                 NullValueHandling = NullValueHandling.Ignore,
                 PreserveReferencesHandling = PreserveReferencesHandling.None,
