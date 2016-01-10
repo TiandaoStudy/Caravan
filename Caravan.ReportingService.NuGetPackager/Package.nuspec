@@ -3,7 +3,7 @@
 <package>
     <metadata>
         <id>Finsa.Caravan.ReportingService</id>
-        <version>1.35.0</version>
+        <version>1.36.0</version>
         <title>Finsa.Caravan.ReportingService</title>
         <authors>Finsa S.p.A.</authors>
         <owners>Finsa S.p.A.</owners>
@@ -25,8 +25,8 @@ A short description of the package. If specified, this shows up in the middle pa
             <dependency id="AspNet.ScriptManager.bootstrap" version="3.3.6" />
             <dependency id="AspNet.ScriptManager.jQuery" version="2.2.0" />
             <dependency id="bootstrap" version="3.3.6" />
-            <dependency id="Finsa.Caravan.Common.Runtime" version="1.35.0"/>
-            <dependency id="Finsa.Caravan.DataAccess.Runtime" version="1.35.0"/>
+            <dependency id="Finsa.Caravan.Common.Runtime" version="1.36.0"/>
+            <dependency id="Finsa.Caravan.DataAccess.Runtime" version="1.36.0"/>
             <dependency id="FontAwesome" version="4.4.0" />
             <dependency id="HTML5.HTML5Shiv" version="3.7.2" />
             <dependency id="jQuery" version="2.2.0" />
