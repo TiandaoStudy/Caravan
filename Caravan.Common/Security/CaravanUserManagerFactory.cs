@@ -10,6 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.CodeServices.MailSender;
 using Microsoft.AspNet.Identity;
 using Ninject;
 using PommaLabs.Thrower;
@@ -39,7 +40,8 @@ namespace Finsa.Caravan.Common.Security
             var userStore = new CaravanUserStore(app.Id, app.Name, SecurityRepository);
             var passwordHasherType = Type.GetType(app.PasswordHasher, true, true);
             var passwordHasher = CaravanServiceProvider.NinjectKernel.Get(passwordHasherType) as IPasswordHasher;
-            return new CaravanUserManager(userStore, passwordHasher);
+            var mailSender = CaravanServiceProvider.NinjectKernel.Get<IMailSender>();
+            return new CaravanUserManager(userStore, passwordHasher, mailSender);
         }
 
         #region IDisposable Support

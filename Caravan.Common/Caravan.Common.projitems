@@ -83,6 +83,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecUserKey.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecUserUpdates.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecValidationResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Services\CaravanEmailService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebForms\ISearchControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebForms\SearchCriteria.cs" />
   </ItemGroup>

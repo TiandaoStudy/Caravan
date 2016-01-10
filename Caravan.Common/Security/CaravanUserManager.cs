@@ -13,6 +13,8 @@
 using Finsa.Caravan.Common.Core;
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
+using Finsa.Caravan.Common.Security.Services;
+using Finsa.CodeServices.MailSender;
 using Microsoft.AspNet.Identity;
 using PommaLabs.Thrower;
 using System;
@@ -32,12 +34,15 @@ namespace Finsa.Caravan.Common.Security
         ///   Inizializza il gestore personalizzato.
         /// </summary>
         /// <param name="userStore">Lo store per gli utenti.</param>
-        /// <param name="passwordHasher"></param>
-        public CaravanUserManager(ICaravanUserStore userStore, IPasswordHasher passwordHasher)
+        /// <param name="passwordHasher">L'oggetto che si occupa dell'hash delle password.</param>
+        /// <param name="mailSender">L'oggetto che si occupa dell'invio delle email.</param>
+        public CaravanUserManager(ICaravanUserStore userStore, IPasswordHasher passwordHasher, IMailSender mailSender)
             : base(userStore)
         {
             RaiseArgumentNullException.IfIsNull(passwordHasher, nameof(passwordHasher));
+            RaiseArgumentNullException.IfIsNull(mailSender, nameof(mailSender));
             PasswordHasher = passwordHasher;
+            EmailService = new CaravanEmailService(mailSender);
         }
 
         /// <summary>

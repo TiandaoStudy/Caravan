@@ -16,6 +16,7 @@ using Finsa.Caravan.Common.Identity;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
 using Finsa.CodeServices.Clock;
+using Finsa.CodeServices.MailSender;
 using IdentityServer3.Core.Services;
 using Ninject;
 using Ninject.Modules;
@@ -79,6 +80,9 @@ namespace Finsa.Caravan.Common
 
                     Bind<ICaravanUserManagerFactory>().To<CaravanUserManagerFactory>().InRequestOrThreadScope();
                     Bind<ICaravanRoleManagerFactory>().To<CaravanRoleManagerFactory>().InRequestOrThreadScope();
+
+                    // Gestione invio mail.
+                    Bind<IMailSender>().To<MockMailSender>().InSingletonScope();
                     break;
 
                 case DependencyHandling.UnitTesting:
@@ -88,6 +92,9 @@ namespace Finsa.Caravan.Common
                     // I test effettuano una dispose manuale.
                     Bind<ICaravanUserManagerFactory>().To<CaravanUserManagerFactory>();
                     Bind<ICaravanRoleManagerFactory>().To<CaravanRoleManagerFactory>();
+
+                    // Gestione invio mail.
+                    Bind<IMailSender>().To<MockMailSender>().InSingletonScope();
                     break;
             }
 

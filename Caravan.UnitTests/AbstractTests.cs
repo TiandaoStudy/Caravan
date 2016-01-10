@@ -15,6 +15,7 @@ using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.DataAccess.Sql;
 using Finsa.Caravan.DataAccess.Sql.Effort;
 using Finsa.Caravan.UnitTests.DataAccess.Sql;
+using Finsa.CodeServices.MailSender;
 using Ninject;
 using NUnit.Framework;
 using PommaLabs.KVLite;
@@ -37,6 +38,7 @@ namespace Finsa.Caravan.UnitTests
         protected const string TestUserLogin1 = "user1";
 
         protected ICache Cache;
+        protected MockMailSender MailSender;
         protected IUnitTestableDbContextFactory<MyDbContext> MyDbContextFactory;
         protected ICaravanSecurityRepository SecurityRepository;
         protected ICaravanUserManagerFactory UserManagerFactory;
@@ -63,6 +65,7 @@ namespace Finsa.Caravan.UnitTests
 
             // Ricarico le dipendenze necessarie.
             Cache = kernel.Get<ICache>();
+            MailSender = kernel.Get<IMailSender>() as MockMailSender;
             SecurityRepository = kernel.Get<ICaravanSecurityRepository>();
             UserManagerFactory = kernel.Get<ICaravanUserManagerFactory>();
         }
@@ -81,6 +84,7 @@ namespace Finsa.Caravan.UnitTests
             SecurityRepository = null;
 
             // Non ho Dispose da fare...
+            MailSender.Reset();
             MyDbContextFactory = null;
         }
     }
