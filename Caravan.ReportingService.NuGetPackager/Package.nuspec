@@ -23,13 +23,13 @@ A short description of the package. If specified, this shows up in the middle pa
         <copyright>Copyright © Finsa S.p.A. 2014-2024</copyright>
         <dependencies>
             <dependency id="AspNet.ScriptManager.bootstrap" version="3.3.6" />
-            <dependency id="AspNet.ScriptManager.jQuery" version="2.1.4" />
+            <dependency id="AspNet.ScriptManager.jQuery" version="2.2.0" />
             <dependency id="bootstrap" version="3.3.6" />
             <dependency id="Finsa.Caravan.Common.Runtime" version="1.35.0"/>
             <dependency id="Finsa.Caravan.DataAccess.Runtime" version="1.35.0"/>
             <dependency id="FontAwesome" version="4.4.0" />
             <dependency id="HTML5.HTML5Shiv" version="3.7.2" />
-            <dependency id="jQuery" version="2.1.4" />
+            <dependency id="jQuery" version="2.2.0" />
             <dependency id="Microsoft.AspNet.FriendlyUrls" version="1.0.2" />
             <dependency id="Microsoft.AspNet.ScriptManager.MSAjax" version="5.0.0" />
             <dependency id="Microsoft.AspNet.ScriptManager.WebForms" version="5.0.0" />
