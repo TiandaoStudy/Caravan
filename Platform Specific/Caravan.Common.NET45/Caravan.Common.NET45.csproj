@@ -152,80 +152,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessModeling\StateMachine.cs" />
-    <Compile Include="BusinessModeling\Workflow.cs" />
-    <Compile Include="CaravanCommonConfiguration.cs" />
-    <Compile Include="CaravanCommonNinjectConfig.cs" />
-    <Compile Include="Core\ErrorMessages.cs" />
-    <Compile Include="Core\TaskExtensions.cs" />
-    <Compile Include="DependencyHandling.cs" />
-    <Compile Include="Identity\CaravanAllowedAppsCollection.cs" />
-    <Compile Include="Identity\Models\IdnIdentity.cs" />
-    <Compile Include="Identity\Models\IdnPrincipal.cs" />
-    <Compile Include="Identity\CaravanUserService.cs" />
-    <Compile Include="Identity\ICaravanClientStore.cs" />
-    <Compile Include="Identity\Models\IdnClient.cs" />
-    <Compile Include="Security\CaravanSecurityValidator.cs" />
-    <Compile Include="Security\Exceptions\SecUserNotValidException.cs" />
-    <Compile Include="Security\ICaravanSecurityValidator.cs" />
-    <Compile Include="Security\Models\SecUserKey.cs" />
-    <Compile Include="Logging\Activities\AbstractLogActivity.cs" />
-    <Compile Include="Logging\CaravanLogger.cs" />
-    <Compile Include="Logging\CaravanLoggerFactoryAdapter.cs" />
-    <Compile Include="Logging\CaravanLogTarget.cs" />
-    <Compile Include="Logging\CaravanNoOpLogger.cs" />
-    <Compile Include="Logging\CaravanVariablesContextIdentifier.cs" />
-    <Compile Include="Logging\CaravanVariablesContext.cs" />
-    <Compile Include="Logging\ICaravanLogRepository.cs" />
-    <Compile Include="Logging\ICaravanVariablesContextIdentifier.cs" />
-    <Compile Include="Logging\Workflows\CleanUpLogRepository.cs" />
-    <Compile Include="Logging\Models\LogEntryQuery.cs" />
-    <Compile Include="Security\CaravanRoleManager.cs" />
-    <Compile Include="Security\CaravanRoleManagerFactory.cs" />
-    <Compile Include="Security\CaravanUserManagerFactory.cs" />
-    <Compile Include="Security\Exceptions\SecEntryExistingException.cs" />
-    <Compile Include="Security\Exceptions\SecRoleExistingException.cs" />
-    <Compile Include="Security\Exceptions\SecRoleNotFoundException.cs" />
-    <Compile Include="Security\ICaravanRoleManagerFactory.cs" />
-    <Compile Include="Security\ICaravanUserManagerFactory.cs" />
-    <Compile Include="Security\ICaravanUserStore.cs" />
-    <Compile Include="Security\ICaravanRoleStore.cs" />
-    <Compile Include="Security\Models\SecClaim.cs" />
-    <Compile Include="Security\Models\SecRoleUpdates.cs" />
-    <Compile Include="Security\Models\SecGroupUpdates.cs" />
-    <Compile Include="Security\Models\SecUserUpdates.cs" />
-    <Compile Include="Security\CaravanRoleStore.cs" />
-    <Compile Include="Security\CaravanUserManager.cs" />
-    <Compile Include="Security\CaravanUserStore.cs" />
-    <Compile Include="Security\ICaravanSecurityRepository.cs" />
-    <Compile Include="Logging\ICaravanLog.cs" />
-    <Compile Include="Logging\Models\LogMessage.cs" />
-    <Compile Include="Security\Exceptions\SecAppExistingException.cs" />
-    <Compile Include="Security\Exceptions\SecAppNotFoundException.cs" />
-    <Compile Include="Logging\Exceptions\LogEntryExistingException.cs" />
-    <Compile Include="Security\Exceptions\SecGroupExistingException.cs" />
-    <Compile Include="Security\Exceptions\SecGroupNotFoundException.cs" />
-    <Compile Include="Logging\Exceptions\LogEntryNotFoundException.cs" />
-    <Compile Include="Logging\Exceptions\LogSettingExistingException.cs" />
-    <Compile Include="Logging\Exceptions\LogSettingNotFoundException.cs" />
-    <Compile Include="Security\Exceptions\SecUserExistingException.cs" />
-    <Compile Include="Security\Exceptions\SecUserNotFoundException.cs" />
-    <Compile Include="Logging\Models\LogEntry.cs" />
-    <Compile Include="Logging\Models\LogResult.cs" />
-    <Compile Include="Logging\Models\LogSetting.cs" />
-    <Compile Include="Security\Models\SecApp.cs" />
-    <Compile Include="Security\Models\SecContext.cs" />
-    <Compile Include="Security\Models\SecEntry.cs" />
-    <Compile Include="Security\Models\SecRole.cs" />
-    <Compile Include="Security\Models\SecGroup.cs" />
-    <Compile Include="Security\Models\SecObject.cs" />
-    <Compile Include="Security\Models\SecUser.cs" />
-    <Compile Include="Security\Models\SecSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CaravanServiceProvider.cs" />
-    <Compile Include="Security\Models\SecValidationResult.cs" />
-    <Compile Include="WebForms\ISearchControl.cs" />
-    <Compile Include="WebForms\SearchCriteria.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -244,9 +171,8 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Security\Activities\" />
-  </ItemGroup>
+  <ItemGroup />
+  <Import Project="..\..\Caravan.Common\Caravan.Common.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
