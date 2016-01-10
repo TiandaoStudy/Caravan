@@ -133,6 +133,14 @@ publish/
 # NuGet Packages Directory
 ## TODO: If you have NuGet Package Restore enabled, uncomment the next line
 packages/
+*NuGet*/lib/
+*NuGet*/*.nupkg
+*NuGet*/*.nupkg.bak
+NuGet Packagers/*NuGet*/lib/
+NuGet Packagers/*NuGet*/*.nupkg
+NuGet Packagers/*NuGet*/*.nupkg.bak
+
+# Bower Packages Directory
 */bower_components/
 
 # Windows Azure Build Output
