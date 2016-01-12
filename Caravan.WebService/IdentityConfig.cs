@@ -24,7 +24,7 @@ namespace Finsa.Caravan.WebService
     /// <summary>
     ///   Configurazione del servizio di autorizzazione/autenticazione.
     /// </summary>
-    static class IdentityConfig
+    internal static class IdentityConfig
     {
         public static void Build(IAppBuilder app)
         {
@@ -38,8 +38,10 @@ namespace Finsa.Caravan.WebService
                 IssuerUri = "https://wscaravan.finsa.it/identity",
 
                 // Gestione della sicurezza della comunicazione.
+                // ATTENZIONE: Il servizio di Caravan è pensato per scopi interni di sviluppo, le
+                //             impostazioni riportate di seguito vanno rivalutate in produzione.
                 SigningCertificate = LoadCertificate(),
-                RequireSsl = true,
+                RequireSsl = false,
 
                 // Gestione estetica del servizio.
                 EnableWelcomePage = true,
@@ -59,7 +61,7 @@ namespace Finsa.Caravan.WebService
         ///   Carica il certificato necessario per firmare i TOKEN.
         /// </summary>
         /// <returns>Il certificato necessario per firmare i TOKEN.</returns>
-        static X509Certificate2 LoadCertificate()
+        private static X509Certificate2 LoadCertificate()
         {
             var certificatePath = CaravanWebServiceConfiguration.Instance.Identity_SigningCertificatePath;
             var mappedCertificatePath = PortableEnvironment.MapPath(certificatePath);
