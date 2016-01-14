@@ -1,13 +1,11 @@
-Credenziali database di test: DBOTest, DBOTest
+# Caravan Web Framework #
 
-Mappa versioni:
+## Introduzione ##
 
-* *.0 --> Finsa.Caravan.Common
-* *.1 --> Finsa.Caravan.WebForms
-* *.2 --> Finsa.Caravan.DataAccess
-* *.3 --> Finsa.Caravan.WebForms.CodeEditor
-* *.4 --> Finsa.Caravan.Helpers
+## Librerie ##
 
-Avviare Mongo:
+### Caravan.Common ###
 
-mongod.exe --dbpath "C:\Program Files\MongoDB 2.6 Standard\data"
+### Caravan.DataAccess ###
+
+## Riconoscimenti ##
