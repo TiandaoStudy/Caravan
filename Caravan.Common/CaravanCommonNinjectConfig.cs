@@ -82,7 +82,7 @@ namespace Finsa.Caravan.Common
                     Bind<ICaravanRoleManagerFactory>().To<CaravanRoleManagerFactory>().InRequestOrThreadScope();
 
                     // Gestione invio mail.
-                    Bind<IMailSender>().To<MockMailSender>().InSingletonScope();
+                    Bind<IMailSender>().To<SmtpMailSender>().InSingletonScope();
                     break;
 
                 case DependencyHandling.UnitTesting:
