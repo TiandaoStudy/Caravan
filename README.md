@@ -1,4 +1,4 @@
-# ![](https://googledrive.com/host/0B8v0ikF4z2BiR29YQmxfSlE1Sms/Progetti/Caravan/logo-32.png "Caravan Logo") Caravan Web Framework #
+# ![](https://googledrive.com/host/0B8v0ikF4z2BiR29YQmxfSlE1Sms/Progetti/Caravan/logo-64.png "Caravan Logo") Caravan Web Framework #
 
 ## Introduzione ##
 
