@@ -13,6 +13,7 @@
 using AutoMapper;
 using Common.Logging;
 using Finsa.CodeServices.Common.Portability;
+using PommaLabs.KVLite;
 using System;
 using Westwind.Utilities.Configuration;
 
@@ -73,12 +74,12 @@ namespace Finsa.Caravan.Common
         public string AppDescription { get; set; } = "My WOW! Caravan App";
 
         /// <summary>
-        ///   L'intervallo dopo il quale le variabili di log memorizzate nel contesto in memoria di
-        ///   Caravan vengono automaticamente cancellate.
+        ///   L'intervallo dopo il quale le variabili inserite da
+        ///   Caravan dentro la cache di tipo <see cref="ICache"/> vengono automaticamente cancellate.
         /// 
         ///   L'intervallo di default è di 30 minuti.
         /// </summary>
-        public TimeSpan Logging_CaravanVariablesContext_Interval { get; set; } = TimeSpan.FromMinutes(30);
+        public TimeSpan CacheLifetime { get; set; } = TimeSpan.FromMinutes(30);
 
         #region OnStart
 

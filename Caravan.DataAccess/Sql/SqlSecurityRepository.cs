@@ -13,6 +13,8 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using BrockAllen.IdentityReboot;
+using EntityFramework.Extensions;
+using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Identity.Models;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
@@ -724,17 +726,20 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         private static async Task<int> GetAppIdByNameAsync(SqlDbContext ctx, string appName)
         {
-            var appId = await ctx.SecApps
-                .Where(a => a.Name == appName)
-                .Select(a => (int?) a.Id)
-                .FirstOrDefaultAsync();
-
-            if (appId == null)
+            var cacheLifetime = CaravanCommonConfiguration.Instance.CacheLifetime;
+            using (ctx.AsCaching())
             {
-                throw new SecAppNotFoundException(appName);
-            }
+                var appId = (await ctx.SecApps
+                    .Where(a => a.Name == appName)
+                    .FromTimedCacheFirstOrDefaultAsync(cacheLifetime))?.Id;
 
-            return appId.Value;
+                if (appId == null)
+                {
+                    throw new SecAppNotFoundException(appName);
+                }
+
+                return appId.Value;
+            }
         }
 
         private static async Task<SqlSecGroup> GetGroupByNameAsync(SqlDbContext ctx, int appId, string appName, string groupName)
