@@ -50,11 +50,19 @@ namespace Finsa.Caravan.WebService
                 Factory = CaravanServiceProvider.NinjectKernel.Get<IdentityServerServiceFactory>()
             }));
 
-            app.Map("/identityManager", idmgr => idmgr.UseIdentityManager(new IdentityManagerOptions
+            app.Map("/identityManager", idmgr =>
             {
-                // Gestione della sorgente dati per gli utenti.
-                Factory = CaravanServiceProvider.NinjectKernel.Get<IdentityManagerServiceFactory>()
-            }));
+                var options = new IdentityManagerOptions
+                {
+                    // Gestione della sorgente dati per gli utenti.
+                    Factory = CaravanServiceProvider.NinjectKernel.Get<IdentityManagerServiceFactory>()
+                };
+
+                // Gestione della sicurezza della comunicazione.
+                options.SecurityConfiguration.RequireSsl = false;
+
+                idmgr.UseIdentityManager(options);
+            });
         }
 
         /// <summary>

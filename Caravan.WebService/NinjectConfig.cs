@@ -12,6 +12,8 @@
 
 using Finsa.Caravan.Common.Identity;
 using Finsa.Caravan.WebApi.Models.Identity;
+using Finsa.CodeServices.MailSender;
+using Finsa.CodeServices.MailSender.Templating;
 using Finsa.CodeServices.Serialization;
 using Ninject.Modules;
 
@@ -21,16 +23,26 @@ namespace Finsa.Caravan.WebService
     {
         public override void Load()
         {
-            Bind<ISerializer>().To<JsonSerializer>().WithConstructorArgument("settings", new JsonSerializerSettings());
+            Bind<CaravanAllowedAppsCollection>().ToConstant(new CaravanAllowedAppsCollection
+            {
+                AllowAll = true
+            }).InSingletonScope();
+
+            Bind<IMailTemplatesManager>().ToConstant(new LocalMailTemplatesManager("???"))
+                .InSingletonScope();
+
+            Bind<ISerializer>().To<JsonSerializer>()
+                .InSingletonScope()
+                .WithConstructorArgument("settings", new JsonSerializerSettings());
 
             Bind<OAuth2AuthorizationSettings>().ToConstant(new OAuth2AuthorizationSettings
             {
                 AccessTokenValidationUrl = "https://localhost/wsCaravan/identity/connect/accesstokenvalidation"
-            });
+            }).InSingletonScope();
 
-            Bind<CaravanAllowedAppsCollection>().ToConstant(new CaravanAllowedAppsCollection
+            Bind<SmtpClientParameters>().ToConstant(new SmtpClientParameters
             {
-                AllowAll = true
+                Host = "mail.finsa.it"
             });
         }
     }
