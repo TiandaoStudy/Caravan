@@ -19,7 +19,7 @@ namespace Finsa.Caravan.WebApi.Identity
     /// <summary>
     ///   Gestisce la conferma finale se un utente possa o meno accedere a un dato servizio.
     /// </summary>
-    interface IAuthorizationValidator
+    public interface IAuthorizationValidator
     {
         /// <summary>
         ///   Valida definitivamente l'accesso da parte di un dato utente. Se ritorna vero, l'utente
