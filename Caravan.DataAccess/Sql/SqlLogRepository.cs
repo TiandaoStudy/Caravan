@@ -108,6 +108,10 @@ namespace Finsa.Caravan.DataAccess.Sql
         {
             using (var ctx = _dbContextFactory.Create())
             {
+                // Process variables and constants.
+                const int pageSize = 1000;
+                bool shouldRemove;
+
                 // Log deletion might take a long time...
                 ctx.Database.CommandTimeout = 300;
 
@@ -116,16 +120,28 @@ namespace Finsa.Caravan.DataAccess.Sql
                 var appIds = ((appName == null) ? ctx.SecApps : ctx.SecApps.Where(a => a.Name == appName)).Select(a => a.Id);
 
                 // We delete logs older than "settings.Days".
+                shouldRemove = true;
+                while (shouldRemove)
+                {
+                    using (var tmpCtx = _dbContextFactory.Create())
+                    {
+                        var oldLogs = (from e in tmpCtx.LogEntries
+                                       where appIds.Contains(e.AppId)
+                                       from s in tmpCtx.LogSettings
+                                       where s.AppId == e.AppId && s.LogLevel == e.LogLevel
+                                       where DbFunctions.DiffDays(utcNow, e.Date) > s.Days
+                                       select e).Take(pageSize).ToArray();
 
-                var oldLogs = from e in ctx.LogEntries
-                              where appIds.Contains(e.AppId)
-                              from s in ctx.LogSettings
-                              where s.AppId == e.AppId && s.LogLevel == e.LogLevel
-                              where DbFunctions.DiffDays(utcNow, e.Date) > s.Days
-                              select e;
+                        tmpCtx.LogEntries.RemoveRange(oldLogs);
+                        await tmpCtx.SaveChangesAsync();
 
-                ctx.LogEntries.RemoveRange(oldLogs);
-                await ctx.SaveChangesAsync();
+                        if (oldLogs.Length < pageSize)
+                        {
+                            shouldRemove = false;
+                            continue;
+                        }
+                    }
+                }                
 
                 // We delete enough entries to preserve the upper limit.
 
