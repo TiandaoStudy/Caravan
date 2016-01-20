@@ -117,7 +117,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
                 var utcNow = _clock.UtcNow;
 
-                var appIds = ((appName == null) ? ctx.SecApps : ctx.SecApps.Where(a => a.Name == appName)).Select(a => a.Id);
+                var appIds = ((appName == null) ? ctx.SecApps : ctx.SecApps.Where(a => a.Name == appName)).Select(a => a.Id).ToArray();
 
                 // We delete logs older than "settings.Days".
                 shouldRemove = true;
@@ -159,16 +159,27 @@ namespace Finsa.Caravan.DataAccess.Sql
                 var logCountsArray = await logCounts.ToArrayAsync();
                 foreach (var lc in logCountsArray)
                 {
-                    var tooManyLogEntries = from e in ctx.LogEntries
-                                            where e.AppId == lc.AppId && e.LogLevel == lc.LogLevel
-                                            orderby e.Date descending
-                                            select e;
+                    shouldRemove = true;
+                    while (shouldRemove)
+                    {
+                        using (var tmpCtx = _dbContextFactory.Create())
+                        {
+                            var tooManyLogEntries = (from e in tmpCtx.LogEntries
+                                                     where e.AppId == lc.AppId && e.LogLevel == lc.LogLevel
+                                                     orderby e.Date descending
+                                                     select e).Skip(lc.Keep).Take(pageSize).ToArray();
 
-                    ctx.LogEntries.RemoveRange(tooManyLogEntries.Skip(lc.Keep));
+                            tmpCtx.LogEntries.RemoveRange(tooManyLogEntries);
+                            await tmpCtx.SaveChangesAsync();
+
+                            if (tooManyLogEntries.Length < pageSize)
+                            {
+                                shouldRemove = false;
+                                continue;
+                            }
+                        }
+                    }
                 }
-
-                // Applico definitivamente i cambiamenti ed esco dalla procedura.
-                await ctx.SaveChangesAsync();
             }
         }
 

@@ -196,9 +196,19 @@
               Writes a silly message into the log.
             </summary>
         </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.PostCleanUp">
+            <summary>
+              Completely cleans up the log repository.
+            </summary>
+        </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetPing(System.String)">
             <summary>
               Writes a silly message into the log.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.PostCleanUp(System.String)">
+            <summary>
+              Completely cleans up the log repository for given application.
             </summary>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.LoggerController.GetEntries(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">

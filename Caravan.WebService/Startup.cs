@@ -73,6 +73,12 @@ namespace Finsa.Caravan.WebService
 
             // Inizializzazione gestione identità.
             IdentityConfig.Build(app);
+
+            // Sblocco protezione servizi - NON portare in produzione.
+            AuthorizeForCaravanAttribute.AuthorizationGranted = (actionContext, cancellationToken, log) =>
+            {
+                return Task.FromResult(new AuthorizationResult { Authorized = true });
+            };
         }
 
         private static IKernel CreateKernel() =>

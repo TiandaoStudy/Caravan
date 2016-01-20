@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Finsa.Caravan.WebApi.Filters;
+using System.Web.Hosting;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
@@ -73,6 +74,15 @@ namespace Finsa.Caravan.WebService.Controllers
         }
 
         /// <summary>
+        ///   Completely cleans up the log repository.
+        /// </summary>
+        [Route("cleanup")]
+        public void PostCleanUp()
+        {
+            HostingEnvironment.QueueBackgroundWorkItem(ct => _logRepository.CleanUpEntriesAsync());
+        }
+
+        /// <summary>
         ///   Writes a silly message into the log.
         /// </summary>
         [Route("{appName}/ping")]
@@ -89,6 +99,15 @@ namespace Finsa.Caravan.WebService.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, result.Exception);
+        }
+
+        /// <summary>
+        ///   Completely cleans up the log repository for given application.
+        /// </summary>
+        [Route("{appName}/cleanup")]
+        public void PostCleanUp(string appName)
+        {
+            HostingEnvironment.QueueBackgroundWorkItem(ct => _logRepository.CleanUpEntriesAsync(appName));
         }
 
         /// <summary>
