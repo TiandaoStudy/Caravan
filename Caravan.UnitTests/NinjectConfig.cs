@@ -13,6 +13,7 @@
 using Finsa.Caravan.DataAccess.Sql;
 using Finsa.Caravan.DataAccess.Sql.Effort;
 using Finsa.Caravan.UnitTests.DataAccess.Sql;
+using Finsa.CodeServices.MailSender.Templating;
 using System.Data.Entity.Infrastructure;
 
 namespace Finsa.Caravan.UnitTests
@@ -21,7 +22,13 @@ namespace Finsa.Caravan.UnitTests
     {
         public override void Load()
         {
-            Bind<IDbContextFactory<MyDbContext>, IConfigurableDbContextFactory<MyDbContext>, IUnitTestableDbContextFactory<MyDbContext>>().To<EffortDbContextFactory<MyDbContext>>().InSingletonScope();
+            Bind<IDbContextFactory<MyDbContext>, IConfigurableDbContextFactory<MyDbContext>, IUnitTestableDbContextFactory<MyDbContext>>()
+                .To<EffortDbContextFactory<MyDbContext>>()
+                .InSingletonScope();
+
+            Bind<IMailTemplatesManager>()
+                .ToConstant(new LocalMailTemplatesManager("???"))
+                .InSingletonScope();
         }
     }
 }
