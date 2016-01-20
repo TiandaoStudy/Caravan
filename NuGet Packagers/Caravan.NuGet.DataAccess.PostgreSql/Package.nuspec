@@ -3,7 +3,7 @@
 <package>
     <metadata>
         <id>Finsa.Caravan.DataAccess.PostgreSql</id>
-        <version>1.36.0</version>
+        <version>1.37.0</version>
         <title>Finsa.Caravan.DataAccess.PostgreSql</title>
         <authors>Finsa S.p.A.</authors>
         <owners>Finsa S.p.A.</owners>
@@ -27,7 +27,7 @@ A short description of the package. If specified, this shows up in the middle pa
             <dependency id="EntityFramework" version="[6.1.3, 7.0.0)" />
             <dependency id="EntityFramework.CodeFirstStoreFunctions" version="[1.0.0, 2.0.0)" />
             <dependency id="EntityFramework.Triggers" version="[5.4.0, 6.0.0)" />
-            <dependency id="Finsa.Caravan.DataAccess.Runtime" version="1.36.0" />
+            <dependency id="Finsa.Caravan.DataAccess.Runtime" version="1.37.0" />
             <dependency id="IdentityServer3.EntityFramework" version="[2.2.0, 3.0.0)" />
             <dependency id="Npgsql" version="[2.2.7, 3.0.0)" />
             <dependency id="Npgsql.EntityFramework" version="[2.2.7, 3.0.0)" />
