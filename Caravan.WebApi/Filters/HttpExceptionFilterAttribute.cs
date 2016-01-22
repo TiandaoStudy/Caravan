@@ -12,7 +12,7 @@
 
 using Common.Logging;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.WebApi.Models;
+using Finsa.Caravan.WebApi.Filters.Models;
 using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;

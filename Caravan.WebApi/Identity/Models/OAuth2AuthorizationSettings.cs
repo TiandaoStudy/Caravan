@@ -13,25 +13,18 @@
 using System;
 using System.Runtime.Serialization;
 
-// ReSharper disable InconsistentNaming
-namespace Finsa.Caravan.WebApi
+namespace Finsa.Caravan.WebApi.Identity.Models
 {
     /// <summary>
-    ///   Tutti i possibili codici di errore emessi da Caravan.
+    ///   Impostazioni per l'interazione con OAuth2.
     /// </summary>
-    [Serializable, DataContract(Name = "CaravanErrorCode")]
-    public enum CaravanErrorCodes
+    [Serializable, DataContract]
+    public sealed class OAuth2AuthorizationSettings
     {
         /// <summary>
-        ///   Accesso non autorizzato ai servizi web di Caravan.
+        ///   L'indirizzo del servizio OAuth2 dedicato alla validazione dei token.
         /// </summary>
-        [EnumMember]
-        CVE00000,
-
-        /// <summary>
-        ///   Errore interno al servizio non correttamente gestito.
-        /// </summary>
-        [EnumMember]
-        CVE99999,
+        [DataMember]
+        public string AccessTokenValidationUrl { get; set; }
     }
 }

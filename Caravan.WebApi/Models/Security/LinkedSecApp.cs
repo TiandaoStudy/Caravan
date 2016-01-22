@@ -1,11 +1,11 @@
-﻿using System;
-using System.Runtime.Serialization;
-using System.Web.Http.Routing;
-using AutoMapper;
-using Newtonsoft.Json;
+﻿using AutoMapper;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.WebApi.Models.Links;
+using Newtonsoft.Json;
+using System;
+using System.Runtime.Serialization;
+using System.Web.Http.Routing;
 
 namespace Finsa.Caravan.WebApi.Models.Security
 {

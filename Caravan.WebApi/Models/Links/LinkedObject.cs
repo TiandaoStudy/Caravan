@@ -10,9 +10,9 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Newtonsoft.Json;
 using System;
 using System.Runtime.Serialization;
-using Newtonsoft.Json;
 
 namespace Finsa.Caravan.WebApi.Models.Links
 {

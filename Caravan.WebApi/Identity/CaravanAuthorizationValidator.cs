@@ -16,7 +16,7 @@ using Finsa.Caravan.Common.Identity.Models;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
-using Finsa.Caravan.WebApi.Models;
+using Finsa.Caravan.WebApi.Identity.Models;
 using PommaLabs.Thrower;
 using System;
 using System.Threading.Tasks;

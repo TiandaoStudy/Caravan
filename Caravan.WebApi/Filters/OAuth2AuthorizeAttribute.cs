@@ -11,11 +11,8 @@
 // the License.
 
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Identity.Models;
 using Finsa.Caravan.WebApi.Identity;
 using Finsa.Caravan.WebApi.Identity.Models;
-using Finsa.Caravan.WebApi.Models;
-using Finsa.Caravan.WebApi.Models.Identity;
 using Ninject;
 using RestSharp;
 using System;
@@ -126,7 +123,7 @@ namespace Finsa.Caravan.WebApi.Filters
                         await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidRequest, reason);
                     }
                 }
-                
+
                 Thread.CurrentPrincipal = authorizationResult.Principal;
                 HttpContext.Current.User = authorizationResult.Principal;
             }

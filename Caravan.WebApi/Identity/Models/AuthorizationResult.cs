@@ -12,31 +12,37 @@
 
 using System;
 using System.Runtime.Serialization;
+using System.Security.Principal;
 
 namespace Finsa.Caravan.WebApi.Identity.Models
 {
     /// <summary>
-    ///   I tipi di errore riscontrabili durante la validazione dell'accesso.
+    ///   Rappresenta il risultato di un'operazione di autorizzazione.
     /// </summary>
-    [Serializable, DataContract(Name = nameof(AuthorizationErrorContext))]
-    public enum AuthorizationErrorContext
+    [Serializable, DataContract]
+    public struct AuthorizationResult
     {
         /// <summary>
-        ///   L'access token non è presente nella richiesta HTTP.
+        ///   Indica se la richiesta di autorizzazione sia andata a buon fine o meno.
         /// </summary>
-        [EnumMember]
-        MissingAccessToken,
+        [DataMember]
+        public bool Authorized { get; set; }
 
         /// <summary>
-        ///   L'access token presente nella richiesta HTTP non è valido per qualche motivo.
+        ///   Se la richiesta non è stata autorizzata, questo campo può contenere la motivazione del rifiuto.
         /// </summary>
-        [EnumMember]
-        InvalidAccessToken,
+        [DataMember]
+        public string AuthorizationDeniedReason { get; set; }
 
         /// <summary>
-        ///   La richiesta HTTP è stata reputata non valida per un qualche motivo.
+        ///   Se la richiesta non è stata autorizzata, questo campo può contenere la motivazione
+        ///   estesa del rifiuto.
         /// </summary>
-        [EnumMember]
-        InvalidRequest
+        public Exception AuthorizationDeniedException { get; set; }
+
+        /// <summary>
+        ///   L'utente che è stato autorizzato all'accesso all'applicativo.
+        /// </summary>
+        public IPrincipal Principal { get; set; }
     }
 }

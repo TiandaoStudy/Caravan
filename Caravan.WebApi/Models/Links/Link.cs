@@ -10,12 +10,12 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
 using Finsa.CodeServices.Common;
 using Newtonsoft.Json;
 using PommaLabs.Thrower;
+using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Finsa.Caravan.WebApi.Models.Links
 {

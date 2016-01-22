@@ -11,34 +11,39 @@
 // the License.
 
 using System;
-using System.Security.Principal;
+using System.Net;
+using System.Runtime.Serialization;
 
-namespace Finsa.Caravan.WebApi.Models
+namespace Finsa.Caravan.WebApi.Filters.Models
 {
     /// <summary>
-    ///   Rappresenta il risultato di un'operazione di autorizzazione.
+    ///   Modella la risposta di errore restituita dai servizi.
     /// </summary>
-    public struct AuthorizationResult
+    [Serializable, DataContract]
+    public sealed class HttpExceptionResponse
     {
         /// <summary>
-        ///   Indica se la richiesta di autorizzazione sia andata a buon fine o meno.
+        ///   Codice di errore della response, replicato qui per facilità di lettura.
         /// </summary>
-        public bool Authorized { get; set; }
+        [DataMember]
+        public HttpStatusCode HttpStatusCode { get; set; }
 
         /// <summary>
-        ///   Se la richiesta non è stata autorizzata, questo campo può contenere la motivazione del rifiuto.
+        ///   Il messaggio di errore destinato allo sviluppatore.
         /// </summary>
-        public string AuthorizationDeniedReason { get; set; }
+        [DataMember]
+        public string Message { get; set; }
 
         /// <summary>
-        ///   Se la richiesta non è stata autorizzata, questo campo può contenere la motivazione
-        ///   estesa del rifiuto.
+        ///   Il messaggio di errore destinato all'utente del servizio o dell'applicativo.
         /// </summary>
-        public Exception AuthorizationDeniedException { get; set; }
+        [DataMember]
+        public string UserMessage { get; set; }
 
         /// <summary>
-        ///   L'utente che è stato autorizzato all'accesso all'applicativo.
+        ///   Un codice di errore gestito convenzionalmente dall'applicativo.
         /// </summary>
-        public IPrincipal Principal { get; set; }
+        [DataMember]
+        public object ErrorCode { get; set; }
     }
 }

@@ -10,7 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controllers\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Models\Logging\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CaravanErrorCodes.cs" />
@@ -21,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DelegatingHandlers\LoggingDelegatingHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Filters\AuthorizeForCaravanAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Filters\HttpExceptionFilterAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Filters\Models\HttpExceptionResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Filters\OAuth2AuthorizeAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Identity\BearerAccessTokenExtractor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Identity\CaravanAuthorizationValidator.cs" />
@@ -30,12 +30,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Identity\IdentityManagerServiceFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Identity\IdentityServerServiceFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Identity\Models\AuthorizationErrorContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\Models\AuthorizationResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\Models\OAuth2AuthorizationSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Identity\SimpleAuthorizationErrorHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middlewares\HttpCompressionMiddleware.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middlewares\HttpLoggingMiddleware.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\AuthorizationResult.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\HttpExceptionResponse.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Identity\OAuth2AuthorizationSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Links\AlternateLink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Links\CollectionLink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Links\EditLink.cs" />

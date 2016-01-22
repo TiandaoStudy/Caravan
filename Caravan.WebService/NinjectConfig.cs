@@ -11,7 +11,7 @@
 // the License.
 
 using Finsa.Caravan.Common.Identity;
-using Finsa.Caravan.WebApi.Models.Identity;
+using Finsa.Caravan.WebApi.Identity.Models;
 using Finsa.CodeServices.MailSender;
 using Finsa.CodeServices.MailSender.Templating;
 using Finsa.CodeServices.Serialization;

@@ -10,7 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using Finsa.Caravan.WebApi.Models;
+using Finsa.Caravan.WebApi.Identity.Models;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 

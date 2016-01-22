@@ -1,15 +1,15 @@
 ﻿using Common.Logging;
+using Finsa.Caravan.Common.Logging.Models;
+using Finsa.Caravan.WebApi.Core;
 using Finsa.CodeServices.Common;
-using PommaLabs.Thrower;
 using Microsoft.Owin;
+using PommaLabs.Thrower;
 using System;
 using System.Net.Http;
 using System.ServiceModel.Channels;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using Finsa.Caravan.Common.Logging.Models;
-using Finsa.Caravan.WebApi.Core;
 
 namespace Finsa.Caravan.WebApi.DelegatingHandlers
 {
@@ -95,8 +95,8 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
                             }
                         });
 
-                        // Aggiungo l'ID della request agli header della response, in modo che sia più
-                        // facile il rintracciamento dei log su Caravan.
+                        // Aggiungo l'ID della request agli header della response, in modo che sia
+                        // più facile il rintracciamento dei log su Caravan.
                         response.Headers.Add(Constants.RequestIdHeader, requestId);
                     }
                     catch (Exception ex)
@@ -135,7 +135,7 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
             // Web-hosting
             if (request.Properties.ContainsKey(HttpContext))
             {
-                var ctx = (HttpContextWrapper) request.Properties[HttpContext];
+                var ctx = (HttpContextWrapper)request.Properties[HttpContext];
                 if (ctx != null)
                 {
                     return ctx.Request.UserHostAddress;
@@ -145,7 +145,7 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
             // Self-hosting
             if (request.Properties.ContainsKey(RemoteEndpointMessage))
             {
-                var remoteEndpoint = (RemoteEndpointMessageProperty) request.Properties[RemoteEndpointMessage];
+                var remoteEndpoint = (RemoteEndpointMessageProperty)request.Properties[RemoteEndpointMessage];
                 if (remoteEndpoint != null)
                 {
                     return remoteEndpoint.Address;
@@ -155,7 +155,7 @@ namespace Finsa.Caravan.WebApi.DelegatingHandlers
             // Self-hosting using Owin
             if (request.Properties.ContainsKey(OwinContext))
             {
-                var owinContext = (OwinContext) request.Properties[OwinContext];
+                var owinContext = (OwinContext)request.Properties[OwinContext];
                 if (owinContext != null)
                 {
                     return owinContext.Request.RemoteIpAddress;

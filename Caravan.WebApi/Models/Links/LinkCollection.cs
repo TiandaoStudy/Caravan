@@ -10,11 +10,11 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.CodeServices.Common.Collections;
+using PommaLabs.Thrower;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Finsa.CodeServices.Common.Collections;
-using PommaLabs.Thrower;
 
 namespace Finsa.Caravan.WebApi.Models.Links
 {
