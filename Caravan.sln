@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.WebUI.WebForms", "Sample.WebUI.WebForms\Sample.WebUI.WebForms.csproj", "{B3C22B2A-06D3-454F-BF86-0CCE7C744AE4}"
 EndProject
@@ -153,10 +153,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.UnitTests.NET45", "
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Caravan.UnitTests", "Caravan.UnitTests\Caravan.UnitTests.shproj", "{BBEB8BC7-C59C-4C00-8168-91FB09144C5B}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Caravan.WebApi", "Caravan.WebApi\Caravan.WebApi.shproj", "{84926063-76B2-44D0-9609-255FD2A9E963}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Worker", "Caravan.Worker\Caravan.Worker.csproj", "{81EA6D91-48EE-41C2-A23A-460E5CC0A19A}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Caravan.DataAccess", "Caravan.DataAccess\Caravan.DataAccess.shproj", "{11EAC664-01E9-424E-9EC5-8FA8F39B20E9}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Caravan.Common", "Caravan.Common\Caravan.Common.shproj", "{3195FC07-6980-44E9-BD7F-9663FCFF7A7B}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Caravan.Common\Caravan.Common.projitems*{11904ed0-33d2-4005-8766-b1e393a32ea7}*SharedItemsImports = 4
 		Caravan.UnitTests\Caravan.UnitTests.projitems*{afff7ae2-a871-45c0-99b3-94b6d0880f03}*SharedItemsImports = 4
+		Caravan.DataAccess\Caravan.DataAccess.projitems*{11eac664-01e9-424e-9ec5-8fa8f39b20e9}*SharedItemsImports = 13
+		Caravan.Common\Caravan.Common.projitems*{3195fc07-6980-44e9-bd7f-9663fcff7a7b}*SharedItemsImports = 13
+		Caravan.WebApi\Caravan.WebApi.projitems*{84926063-76b2-44d0-9609-255fd2a9e963}*SharedItemsImports = 13
 		Caravan.UnitTests\Caravan.UnitTests.projitems*{bbeb8bc7-c59c-4c00-8168-91fb09144c5b}*SharedItemsImports = 13
+		Caravan.DataAccess\Caravan.DataAccess.projitems*{418b2d91-d53e-49bf-98fc-66da9490dc37}*SharedItemsImports = 4
+		Caravan.WebApi\Caravan.WebApi.projitems*{27d82597-28b1-4441-8c42-0a220c38c4d8}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -273,6 +287,12 @@ Global
 		{AFFF7AE2-A871-45C0-99B3-94B6D0880F03}.Publish|Any CPU.Build.0 = Release|Any CPU
 		{AFFF7AE2-A871-45C0-99B3-94B6D0880F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFFF7AE2-A871-45C0-99B3-94B6D0880F03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81EA6D91-48EE-41C2-A23A-460E5CC0A19A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81EA6D91-48EE-41C2-A23A-460E5CC0A19A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81EA6D91-48EE-41C2-A23A-460E5CC0A19A}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{81EA6D91-48EE-41C2-A23A-460E5CC0A19A}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{81EA6D91-48EE-41C2-A23A-460E5CC0A19A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81EA6D91-48EE-41C2-A23A-460E5CC0A19A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,10 +12,13 @@
 
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Security;
-using Finsa.Caravan.DataAccess;
+using Finsa.Caravan.DataAccess.Sql;
 using Finsa.Caravan.DataAccess.Sql.Effort;
+using Finsa.Caravan.UnitTests.DataAccess.Sql;
+using Finsa.CodeServices.MailSender;
 using Ninject;
 using NUnit.Framework;
+using PommaLabs.KVLite;
 
 namespace Finsa.Caravan.UnitTests
 {
@@ -30,7 +33,15 @@ namespace Finsa.Caravan.UnitTests
                                               he hears a different drummer. Let him step to the music which he hears,
                                               however measured or far away.";
 
+        protected const string TestAppName = "my-test-app";
+        protected const string TestAppDescription = "My TEST App";
+        protected const string TestUserLogin1 = "user1";
+
+        protected ICache Cache;
+        protected MockMailSender MailSender;
+        protected IUnitTestableDbContextFactory<MyDbContext> MyDbContextFactory;
         protected ICaravanSecurityRepository SecurityRepository;
+        protected ICaravanUserManagerFactory UserManagerFactory;
 
         static AbstractTests()
         {
@@ -38,26 +49,43 @@ namespace Finsa.Caravan.UnitTests
 
             CaravanServiceProvider.NinjectKernel = new StandardKernel(
                 new CaravanCommonNinjectConfig(DependencyHandling.UnitTesting, "caravan"),
-                new CaravanEffortDataAccessNinjectConfig(DependencyHandling.UnitTesting)
+                new CaravanEffortDataAccessNinjectConfig(DependencyHandling.UnitTesting),
+                new NinjectConfig()
             );
         }
 
         [SetUp]
         public virtual void SetUp()
         {
-            // Pulizia della sorgente dati.
-            CaravanDataSource.Reset();
+            // Pulizia della sorgente dati - Per costruzione, si dovrebbe svuotare anche la sorgente
+            // dati di Caravan (per ora solo su SQL, in futuro si vedrà).
+            var kernel = CaravanServiceProvider.NinjectKernel;
+            MyDbContextFactory = kernel.Get<IUnitTestableDbContextFactory<MyDbContext>>();
+            MyDbContextFactory.Reset();
 
             // Ricarico le dipendenze necessarie.
-            SecurityRepository = CaravanServiceProvider.NinjectKernel.Get<ICaravanSecurityRepository>();
+            Cache = kernel.Get<ICache>();
+            MailSender = kernel.Get<IMailSender>() as MockMailSender;
+            SecurityRepository = kernel.Get<ICaravanSecurityRepository>();
+            UserManagerFactory = kernel.Get<ICaravanUserManagerFactory>();
         }
 
         [TearDown]
         public virtual void TearDown()
         {
+            // Pulizia della cache di KVLite.
+            Cache.Clear();
+            Cache = null;
+
             // Faccio pulizia all'interno delle dipendenze.
+            UserManagerFactory?.Dispose();
+            UserManagerFactory = null;
             SecurityRepository?.Dispose();
             SecurityRepository = null;
+
+            // Non ho Dispose da fare...
+            MailSender.Reset();
+            MyDbContextFactory = null;
         }
     }
 }

@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>11eac664-01e9-424e-9ec5-8fa8f39b20e9</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Caravan.DataAccess</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)README.md" />
+    <None Include="$(MSBuildThisFileDirectory)Sql\MySql\Scripts\all.tt">
+      <LastGenOutput>all.sql</LastGenOutput>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\all.tt">
+      <LastGenOutput>all.sql</LastGenOutput>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Sql\SqlServer\Scripts\Tables.sqlce" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)CaravanDataAccessConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CaravanDataAccessNinjectConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CaravanDataSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CaravanDataSourceKind.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractDataSourceManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractLogRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractSecurityRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\ErrorMessages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ICaravanDataSourceManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Mongo\CaravanMongoDataAccessNinjectConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Mongo\Models\Logging\MongoLogEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Mongo\Models\Logging\MongoLogSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Mongo\Models\MongoDocument.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Mongo\Models\MongoSequence.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Mongo\Models\Security\MongoSecApp.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Mongo\MongoDataSourceManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Mongo\MongoLogRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Mongo\MongoSecurityRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Mongo\MongoUtilities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\CaravanMongoDataAccessNinjectConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Models\RestRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Models\RestResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\RestLogRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\RestSecurityRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Attributes\DateTimeKindAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Attributes\DateTimeOffsetAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\CaravanSqlDataAccessNinjectConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\ConfigurableDbContextFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\DbContextConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Effort\CaravanEffortDataAccessNinjectConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Effort\EffortDataSourceManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Effort\EffortDbContextFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Entities\SqlTrackedEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\IConfigurableDbContextFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Entities\SqlIdnClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Entities\SqlIdnClientClaim.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Entities\SqlIdnClientCorsOrigin.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Entities\SqlIdnClientCustomGrantType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Entities\SqlIdnClientIdPRestriction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Entities\SqlIdnClientPostLogoutRedirectUri.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Entities\SqlIdnClientRedirectUri.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Entities\SqlIdnClientScope.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Entities\SqlIdnClientSecret.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Entities\SqlIdnConsent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Entities\SqlIdnScope.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Entities\SqlIdnScopeClaim.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Entities\SqlIdnScopeSecret.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Entities\SqlIdnToken.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Extensions\EntitiesMap.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Extensions\ModelsMap.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Services\SqlIdnCorsPolicyService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Stores\AbstractSqlIdnTokenStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Stores\SqlIdnAuthorizationCodeStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Stores\SqlIdnClientStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Stores\SqlIdnConsentStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Stores\SqlIdnRefreshTokenStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Stores\SqlIdnScopeStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Identity\Stores\SqlIdnTokenHandleStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\IUnitTestableDbContextFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Logging\Entities\SqlLogEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Logging\Entities\SqlLogSetting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Logging\SqlDbCommandLogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\MySql\CaravanMySqlDataAccessNinjectConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\MySql\MySqlDataSourceManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Oracle\CaravanOracleDataAccessNinjectConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Oracle\OracleDataSourceManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Oracle\OracleDynamicParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\PostgreSql\CaravanPostgreSqlDataAccessNinjectConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\PostgreSql\PostgreSqlDataSourceManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Security\Entities\SqlSecApp.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Security\Entities\SqlSecClaim.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Security\Entities\SqlSecContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Security\Entities\SqlSecEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Security\Entities\SqlSecGroup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Security\Entities\SqlSecObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Security\Entities\SqlSecRole.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\Security\Entities\SqlSecUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\SqlDbContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\SqlLogRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\SqlSecurityRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\SqlServerCe\CaravanSqlServerCeDataAccessNinjectConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\SqlServerCe\SqlServerCeDataSourceManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\SqlServer\CaravanSqlServerDataAccessNinjectConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\SqlServer\SqlServerDataSourceManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sql\UnitTestableDbContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Sql\MySql\Scripts\all.sql">
+      <DependentUpon>all.tt</DependentUpon>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)Sql\MySql\Scripts\grants.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\MySql\Scripts\Tables\crvn_log_entries.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\MySql\Scripts\Tables\crvn_log_settings.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\MySql\Scripts\Tables\crvn_sec_apps.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\MySql\Scripts\Tables\crvn_sec_contexts.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\MySql\Scripts\Tables\crvn_sec_entries.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\MySql\Scripts\Tables\crvn_sec_groups.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\MySql\Scripts\Tables\crvn_sec_objects.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\MySql\Scripts\Tables\crvn_sec_roles.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\MySql\Scripts\Tables\crvn_sec_users.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\MySql\Scripts\Tables\crvn_sec_user_groups.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\MySql\Scripts\Tables\crvn_sec_user_roles.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\all.sql">
+      <DependentUpon>all.tt</DependentUpon>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\grants.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Packages\pck_caravan_log.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Packages\pck_caravan_utils.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_idn_clients.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_idn_cli_claims.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_idn_cli_cors_origins.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_idn_cli_cst_grnt_types.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_idn_cli_idpr_restrs.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_idn_cli_pstlgtrdr_uris.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_idn_cli_rdrct_uris.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_idn_cli_scopes.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_idn_cli_secrets.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_idn_consents.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_idn_scopes.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_idn_sco_claims.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_idn_sco_secrets.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_idn_tokens.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_log_entries.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_log_settings.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_sec_apps.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_sec_claims.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_sec_contexts.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_sec_entries.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_sec_groups.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_sec_objects.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_sec_roles.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_sec_users.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Tables\crvn_sec_user_roles.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\crvn_log_entries_id.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\crvn_sec_apps_id.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\crvn_sec_contexts_id.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\crvn_sec_entries_id.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\crvn_sec_groups_id.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\crvn_sec_objects_id.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\crvn_sec_roles_id.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_claims.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_cors_origins.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_cst_grnt_types.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_idpr_restrs.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_pstlgtrdr_uris.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_rdrct_uris.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_scopes.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\ti_crvn_idn_cli_secrets.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\ti_crvn_idn_consents.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\ti_crvn_idn_scopes.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\ti_crvn_idn_sco_claims.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\tu_crvn_idn_consents.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Triggers\tu_crvn_idn_scopes.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Views\v_caravan_log.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\Oracle\Scripts\Views\v_caravan_log_summary.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\PostgreSql\Scripts\Schema.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\SqlServerCe\Scripts\Schema.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\SqlServer\Scripts\Tables\crvn_log_entries.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\SqlServer\Scripts\Tables\crvn_log_settings.sql" />
+    <Content Include="$(MSBuildThisFileDirectory)Sql\SqlServer\Scripts\Tables\crvn_sec_apps.sql" />
+  </ItemGroup>
+</Project>

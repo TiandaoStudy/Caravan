@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>3195fc07-6980-44e9-bd7f-9663fcff7a7b</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Finsa.Caravan.Common</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Security\Activities\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BusinessModeling\StateMachine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BusinessModeling\Workflow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CaravanCommonConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CaravanCommonNinjectConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CaravanServiceProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\ErrorMessages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\TaskExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DependencyHandling.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\CaravanAllowedAppsCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\CaravanUserService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\ICaravanClientStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\Models\IdnClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\Models\IdnIdentity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\Models\IdnPrincipal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\Activities\AbstractLogActivity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\CaravanLogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\CaravanLoggerFactoryAdapter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\CaravanLogTarget.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\CaravanNoOpLogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\CaravanVariablesContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\CaravanVariablesContextIdentifier.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\Exceptions\LogEntryExistingException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\Exceptions\LogEntryNotFoundException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\Exceptions\LogSettingExistingException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\Exceptions\LogSettingNotFoundException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\ICaravanLog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\ICaravanLogRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\ICaravanVariablesContextIdentifier.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\Models\LogEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\Models\LogEntryQuery.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\Models\LogMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\Models\LogResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\Models\LogSetting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\Workflows\CleanUpLogRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\CaravanRoleManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\CaravanRoleManagerFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\CaravanRoleStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\CaravanSecurityValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\CaravanUserManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\CaravanUserManagerFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\CaravanUserStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Exceptions\SecAppExistingException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Exceptions\SecAppNotFoundException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Exceptions\SecEntryExistingException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Exceptions\SecGroupExistingException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Exceptions\SecGroupNotFoundException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Exceptions\SecRoleExistingException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Exceptions\SecRoleNotFoundException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Exceptions\SecUserExistingException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Exceptions\SecUserNotFoundException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Exceptions\SecUserNotValidException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\ICaravanRoleManagerFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\ICaravanRoleStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\ICaravanSecurityRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\ICaravanSecurityValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\ICaravanUserManagerFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\ICaravanUserStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecApp.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecClaim.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecGroup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecGroupUpdates.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecRole.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecRoleUpdates.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecSession.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecUserKey.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecUserUpdates.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Models\SecValidationResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Services\CaravanEmailService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebForms\ISearchControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebForms\SearchCriteria.cs" />
+  </ItemGroup>
+</Project>

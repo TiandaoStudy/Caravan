@@ -11,6 +11,9 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AbstractTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Logging\Models\LogMessageTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DataAccess\Security\SecurityRepositoryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Security\SecurityRepositoryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Security\UserManagerTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataAccess\Sql\MyDbContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NinjectConfig.cs" />
   </ItemGroup>
 </Project>

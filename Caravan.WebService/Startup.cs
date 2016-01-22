@@ -15,14 +15,13 @@ using Finsa.Caravan.DataAccess.Sql.Logging;
 using Finsa.Caravan.DataAccess.Sql.Oracle;
 using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebApi.Filters;
-using Finsa.Caravan.WebApi.Models;
+using Finsa.Caravan.WebApi.Identity.Models;
 using Finsa.Caravan.WebService;
 using Finsa.CodeServices.Common.Portability;
 using Microsoft.Owin;
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
@@ -55,11 +54,11 @@ namespace Finsa.Caravan.WebService
             var kernel = CreateKernel();
 
             // Inizializzatore per Caravan.
-            CaravanWebServiceHelper.OnStartAsync(app, config, new CaravanWebServiceHelper.Settings
+            CaravanWebServiceHelper.OnStart(app, config, new CaravanWebServiceHelper.Settings
             {
                 EnableHttpCompressionMiddleware = true,
                 EnableHttpLoggingMiddleware = true
-            }).Wait();
+            });
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
 
             // Inizializzatore per Ninject.
@@ -73,6 +72,12 @@ namespace Finsa.Caravan.WebService
 
             // Inizializzazione gestione identità.
             IdentityConfig.Build(app);
+
+            // Sblocco protezione servizi - NON portare in produzione.
+            AuthorizeForCaravanAttribute.AuthorizationGranted = (actionContext, cancellationToken, log) =>
+            {
+                return Task.FromResult(new AuthorizationResult { Authorized = true });
+            };
         }
 
         private static IKernel CreateKernel() =>
@@ -132,7 +137,6 @@ namespace Finsa.Caravan.WebService
             // Personalizzo le impostazioni del serializzatore JSON.
             config.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
             {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 Formatting = Formatting.None,
                 NullValueHandling = NullValueHandling.Ignore,
                 PreserveReferencesHandling = PreserveReferencesHandling.None,

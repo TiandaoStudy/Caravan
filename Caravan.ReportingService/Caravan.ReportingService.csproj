@@ -50,16 +50,16 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AspNet.ScriptManager.bootstrap, Version=3.3.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AspNet.ScriptManager.bootstrap.3.3.5\lib\net45\AspNet.ScriptManager.bootstrap.dll</HintPath>
+    <Reference Include="AspNet.ScriptManager.bootstrap, Version=3.3.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AspNet.ScriptManager.bootstrap.3.3.6\lib\net45\AspNet.ScriptManager.bootstrap.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AspNet.ScriptManager.jQuery, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AspNet.ScriptManager.jQuery.2.1.4\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
+    <Reference Include="AspNet.ScriptManager.jQuery, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.2.2.0\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Common, Version=3.0.7.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
-      <HintPath>..\packages\Finsa.CodeServices.Common.3.0.7\lib\net45\Finsa.CodeServices.Common.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Common, Version=4.0.7.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Finsa.CodeServices.Common.4.0.7\lib\net45\Finsa.CodeServices.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.FriendlyUrls, Version=1.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -91,12 +91,12 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PommaLabs.Thrower, Version=2.0.3.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thrower.2.0.3\lib\net45\PommaLabs.Thrower.dll</HintPath>
+    <Reference Include="PommaLabs.Thrower, Version=2.1.4.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thrower.2.1.4\lib\net45\PommaLabs.Thrower.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
@@ -157,19 +157,20 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="packages.config" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Reports\Report.Master" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
-    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Reports\Sample\Sample.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -177,9 +178,10 @@
     <Content Include="Scripts\html5shiv-printshiv.min.js" />
     <Content Include="Scripts\html5shiv.js" />
     <Content Include="Scripts\html5shiv.min.js" />
-    <Content Include="Scripts\jquery-2.1.4.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.map" />
+    <None Include="Scripts\jquery-2.2.0.intellisense.js" />
+    <Content Include="Scripts\jquery-2.2.0.js" />
+    <Content Include="Scripts\jquery-2.2.0.min.js" />
+    <Content Include="Scripts\jquery-2.2.0.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -13,7 +13,7 @@
 using Finsa.Caravan.WebApi.Filters;
 using Finsa.CodeServices.Common;
 using PommaLabs.KVLite;
-using PommaLabs.KVLite.Web.Http;
+using PommaLabs.KVLite.WebApi;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;

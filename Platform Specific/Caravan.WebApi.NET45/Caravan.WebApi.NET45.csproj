@@ -49,23 +49,28 @@
       <HintPath>..\..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Crc32C.NET">
-      <HintPath>..\..\packages\Crc32C.NET.1.0.5.0\lib\net20\Crc32C.NET.dll</HintPath>
-    </Reference>
-    <Reference Include="Finsa.CodeServices.Clock, Version=3.0.6.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Finsa.CodeServices.Clock.3.0.6\lib\net45\Finsa.CodeServices.Clock.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Clock, Version=4.0.2.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Finsa.CodeServices.Clock.4.0.2\lib\net45\Finsa.CodeServices.Clock.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Common, Version=3.0.7.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Finsa.CodeServices.Common.3.0.7\lib\net45\Finsa.CodeServices.Common.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Common, Version=4.0.7.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Finsa.CodeServices.Common.4.0.7\lib\net45\Finsa.CodeServices.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Compression, Version=3.0.7.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Finsa.CodeServices.Compression.3.0.7\lib\net45\Finsa.CodeServices.Compression.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Compression, Version=4.0.2.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Finsa.CodeServices.Compression.4.0.2\lib\net45\Finsa.CodeServices.Compression.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Serialization, Version=3.0.7.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Finsa.CodeServices.Serialization.3.0.7\lib\net45\Finsa.CodeServices.Serialization.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Serialization, Version=4.0.4.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Finsa.CodeServices.Serialization.4.0.4\lib\net45\Finsa.CodeServices.Serialization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Finsa.CodeServices.Serialization.Json, Version=4.0.4.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Finsa.CodeServices.Serialization.Json.4.0.4\lib\net45\Finsa.CodeServices.Serialization.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Finsa.CodeServices.Serialization.Yaml, Version=4.0.2.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Finsa.CodeServices.Serialization.Yaml.4.0.2\lib\net45\Finsa.CodeServices.Serialization.Yaml.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IdentityManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -77,15 +82,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="IdentityModel.Net45, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\IdentityModel.1.2.1\lib\net45\IdentityModel.Net45.dll</HintPath>
+      <HintPath>..\..\packages\IdentityModel.1.3.1\lib\net45\IdentityModel.Net45.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IdentityServer3, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\IdentityServer3.2.2.3\lib\net45\IdentityServer3.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="LZ4, Version=1.0.9.93, Culture=neutral, PublicKeyToken=62e1b5ec1eec9bdd, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\lz4net.1.0.9.93\lib\net4-client\LZ4.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
@@ -94,39 +95,32 @@
     <Reference Include="Microsoft.Owin">
       <HintPath>..\..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Ninject.Web.Common.3.2.3.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Owin">
       <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Polenter.SharpSerializer, Version=2.20.0.0, Culture=neutral, PublicKeyToken=8f4f20011571ee5f, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SharpSerializer.2.20\lib\net20\Polenter.SharpSerializer.dll</HintPath>
+    <Reference Include="PommaLabs.KVLite, Version=5.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PommaLabs.KVLite.Core.5.0.4\lib\net45\PommaLabs.KVLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PommaLabs.KVLite, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\PommaLabs.KVLite.Core.4.5.0\lib\net45\PommaLabs.KVLite.dll</HintPath>
+    <Reference Include="PommaLabs.KVLite.WebApi, Version=5.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PommaLabs.KVLite.WebApi.5.0.4\lib\net45\PommaLabs.KVLite.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PommaLabs.Thrower, Version=2.0.3.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Thrower.2.0.3\lib\net45\PommaLabs.Thrower.dll</HintPath>
+    <Reference Include="PommaLabs.Thrower, Version=2.1.4.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Thrower.2.1.4\lib\net45\PommaLabs.Thrower.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp, Version=100.0.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>..\..\packages\RestSharpSigned.105.2.3\lib\net45\RestSharp.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Snappy.NET">
-      <HintPath>..\..\packages\Snappy.NET.1.1.1.8\lib\net45\Snappy.NET.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -176,43 +170,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CaravanWebApiNinjectConfig.cs" />
-    <Compile Include="CaravanErrorCodes.cs" />
-    <Compile Include="Core\Constants.cs" />
-    <Compile Include="Core\IdentityNinjectRegistrations.cs" />
-    <Compile Include="DelegatingHandlers\LoggingDelegatingHandler.cs" />
-    <Compile Include="Filters\HttpExceptionFilterAttribute.cs" />
-    <Compile Include="Filters\AuthorizeForCaravanAttribute.cs" />
-    <Compile Include="Filters\OAuth2AuthorizeAttribute.cs" />
-    <Compile Include="Identity\BearerAccessTokenExtractor.cs" />
-    <Compile Include="Identity\CaravanAuthorizationValidator.cs" />
-    <Compile Include="Identity\IAccessTokenExtractor.cs" />
-    <Compile Include="Identity\IAuthorizationErrorHandler.cs" />
-    <Compile Include="Identity\IAuthorizationValidator.cs" />
-    <Compile Include="Identity\Models\AuthorizationErrorContext.cs" />
-    <Compile Include="Identity\SimpleAuthorizationErrorHandler.cs" />
-    <Compile Include="Identity\IdentityManagerServiceFactory.cs" />
-    <Compile Include="Identity\IdentityServerServiceFactory.cs" />
-    <Compile Include="Middlewares\HttpCompressionMiddleware.cs" />
-    <Compile Include="Middlewares\HttpLoggingMiddleware.cs" />
-    <Compile Include="CaravanWebServiceHelper.cs" />
-    <Compile Include="Models\AuthorizationResult.cs" />
-    <Compile Include="Models\HttpExceptionResponse.cs" />
-    <Compile Include="Models\Identity\OAuth2AuthorizationSettings.cs" />
-    <Compile Include="Models\Links\AlternateLink.cs" />
-    <Compile Include="Models\Links\CollectionLink.cs" />
-    <Compile Include="Models\Links\EditLink.cs" />
-    <Compile Include="Models\Links\EditMediaLink.cs" />
-    <Compile Include="Models\Links\FirstLink.cs" />
-    <Compile Include="Models\Links\LastLink.cs" />
-    <Compile Include="Models\Links\Link.cs" />
-    <Compile Include="Models\Links\LinkCollection.cs" />
-    <Compile Include="Models\Links\LinkedObject.cs" />
-    <Compile Include="Models\Links\NextLink.cs" />
-    <Compile Include="Models\Links\PreviousLink.cs" />
-    <Compile Include="Models\Links\RelatedLink.cs" />
-    <Compile Include="Models\Links\SelfLink.cs" />
-    <Compile Include="Models\Security\LinkedSecApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -227,10 +184,8 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\Logging\" />
-  </ItemGroup>
+  <ItemGroup />
+  <Import Project="..\..\Caravan.WebApi\Caravan.WebApi.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
