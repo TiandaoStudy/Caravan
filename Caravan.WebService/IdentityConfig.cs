@@ -31,24 +31,34 @@ namespace Finsa.Caravan.WebService
             // RIMUOVERE APPENA POSSIBILE!!! Accetta certificati non validi...
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
-            app.Map("/identity", idsrv => idsrv.UseIdentityServer(new IdentityServerOptions
+            app.Map("/identity", idsrv =>
             {
-                // Dettagli sul nome del servizio.
-                SiteName = CaravanCommonConfiguration.Instance.AppDescription,
-                IssuerUri = "https://wscaravan.finsa.it/identity",
+                var options = new IdentityServerOptions
+                {
+                    // Dettagli sul nome del servizio.
+                    SiteName = CaravanCommonConfiguration.Instance.AppDescription,
+                    IssuerUri = "https://wscaravan.finsa.it/identity",
 
-                // Gestione della sicurezza della comunicazione.
-                // ATTENZIONE: Il servizio di Caravan è pensato per scopi interni di sviluppo, le
-                //             impostazioni riportate di seguito vanno rivalutate in produzione.
-                SigningCertificate = LoadCertificate(),
-                RequireSsl = false,
+                    // Gestione della sicurezza della comunicazione.
+                    // ATTENZIONE: Il servizio di Caravan è pensato per scopi interni di sviluppo, le
+                    //             impostazioni riportate di seguito vanno rivalutate in produzione.
+                    SigningCertificate = LoadCertificate(),
+                    RequireSsl = false,
 
-                // Gestione estetica del servizio.
-                EnableWelcomePage = true,
+                    // Gestione estetica del servizio.
+                    EnableWelcomePage = true,
 
-                // Gestione della sorgente dati per gli utenti.
-                Factory = CaravanServiceProvider.NinjectKernel.Get<IdentityServerServiceFactory>()
-            }));
+                    // Gestione della sorgente dati per gli utenti.
+                    Factory = CaravanServiceProvider.NinjectKernel.Get<IdentityServerServiceFactory>()
+                };
+
+                // Personalizzazione della parte di autenticazione.
+                options.AuthenticationOptions.EnablePostSignOutAutoRedirect = true;
+                options.AuthenticationOptions.RememberLastUsername = true;
+                options.CspOptions.ImgSrc = "* data:";
+
+                idsrv.UseIdentityServer(options);
+            });
 
             app.Map("/identityManager", idmgr =>
             {
