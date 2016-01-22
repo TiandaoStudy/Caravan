@@ -125,17 +125,18 @@ namespace Finsa.Caravan.DataAccess.Sql
                 {
                     using (var tmpCtx = _dbContextFactory.Create())
                     {
-                        var oldLogs = (from e in tmpCtx.LogEntries
-                                       where appIds.Contains(e.AppId)
-                                       from s in tmpCtx.LogSettings
-                                       where s.AppId == e.AppId && s.LogLevel == e.LogLevel
-                                       where DbFunctions.DiffDays(utcNow, e.Date) > s.Days
-                                       select e).Take(pageSize).ToArray();
-
-                        tmpCtx.LogEntries.RemoveRange(oldLogs);
+                        var oldLogs = from e in tmpCtx.LogEntries
+                                      where appIds.Contains(e.AppId)
+                                      from s in tmpCtx.LogSettings
+                                      where s.AppId == e.AppId && s.LogLevel == e.LogLevel
+                                      where DbFunctions.DiffDays(e.Date, utcNow) > s.Days
+                                      select e;
+                        
+                        var pagedOldLogs = oldLogs.Take(pageSize).ToArray();                        
+                        tmpCtx.LogEntries.RemoveRange(pagedOldLogs);
                         await tmpCtx.SaveChangesAsync();
 
-                        if (oldLogs.Length < pageSize)
+                        if (pagedOldLogs.Length < pageSize)
                         {
                             shouldRemove = false;
                             continue;
