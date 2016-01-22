@@ -127,9 +127,8 @@ namespace Finsa.Caravan.WebApi.Filters
                     }
                 }
                 
-                var principal = new IdnPrincipal(authorizationResult.User);
-                Thread.CurrentPrincipal = principal;
-                HttpContext.Current.User = principal;
+                Thread.CurrentPrincipal = authorizationResult.Principal;
+                HttpContext.Current.User = authorizationResult.Principal;
             }
             catch (Exception ex) when (!(ex is HttpException))
             {

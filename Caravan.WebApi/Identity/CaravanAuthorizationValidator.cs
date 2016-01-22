@@ -88,7 +88,7 @@ namespace Finsa.Caravan.WebApi.Identity
 
                 if (authorizationResult.Authorized)
                 {
-                    authorizationResult.User = user;
+                    authorizationResult.Principal = new IdnPrincipal(user);
                 }
 
                 return authorizationResult;

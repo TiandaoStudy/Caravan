@@ -10,8 +10,8 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using Finsa.Caravan.Common.Security.Models;
 using System;
+using System.Security.Principal;
 
 namespace Finsa.Caravan.WebApi.Models
 {
@@ -39,6 +39,6 @@ namespace Finsa.Caravan.WebApi.Models
         /// <summary>
         ///   L'utente che è stato autorizzato all'accesso all'applicativo.
         /// </summary>
-        public SecUser User { get; set; }
+        public IPrincipal Principal { get; set; }
     }
 }
