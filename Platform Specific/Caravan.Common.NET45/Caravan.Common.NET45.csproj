@@ -80,8 +80,8 @@
       <HintPath>..\..\packages\Finsa.CodeServices.MailSender.4.1.0\lib\net45\Finsa.CodeServices.MailSender.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Security, Version=4.0.9.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Finsa.CodeServices.Security.4.0.9\lib\net45\Finsa.CodeServices.Security.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Security, Version=4.1.0.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Finsa.CodeServices.Security.4.1.0\lib\net45\Finsa.CodeServices.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Finsa.CodeServices.Serialization, Version=4.1.0.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
