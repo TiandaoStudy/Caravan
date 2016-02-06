@@ -4,7 +4,7 @@ using PommaLabs.KVLite;
 using System;
 using System.Linq;
 using Finsa.CodeServices.Common.Collections;
-using PommaLabs.KVLite.Web;
+using PommaLabs.KVLite.WebForms;
 
 // ReSharper disable CheckNamespace This is the correct namespace, despite the file physical position.
 
