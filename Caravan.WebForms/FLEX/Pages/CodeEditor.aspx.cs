@@ -110,7 +110,7 @@ namespace FLEX.Web.Pages
 
                 // Indico nel log che qualcuno ha modificato il file
                 var logMsg = string.Format("File {0} has been changed by {1}", Path.GetFileName(filesPath[nameFiles]), HttpContext.Current.User.Identity.Name);
-                var diff = new DiffMatchPatch();
+                var diff = new diff_match_patch();
                 var diffList = diff.diff_main(oldFile, newFile);
                 _log.Warn(new LogMessage
                 {
