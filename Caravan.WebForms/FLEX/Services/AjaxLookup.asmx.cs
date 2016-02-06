@@ -4,7 +4,6 @@ using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebForms.Properties;
 using Finsa.CodeServices.Common.Collections;
-using Finsa.CodeServices.Common.Text;
 using FLEX.Web.XmlSettings.AjaxLookup;
 using Ninject;
 using PommaLabs.KVLite;
@@ -15,6 +14,7 @@ using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
@@ -127,8 +127,7 @@ namespace FLEX.Web.Services
             // userQuery parameter.
             userQuery = userQuery.Replace("'", "''");
             // Then, we take the XML file and we replace all inputs inside it.
-            return new FastReplacer(TokenStart, TokenEnd)
-               .Append(lookupData.LookupQuery)
+            return new StringBuilder(lookupData.LookupQuery)
                .Replace(UserQueryToken, userQuery)
                .Replace(QueryFilterToken, queryFilter)
                .Replace(ResultCountToken, DefaultResultCount)
