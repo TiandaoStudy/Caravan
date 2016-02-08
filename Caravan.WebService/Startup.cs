@@ -76,7 +76,7 @@ namespace Finsa.Caravan.WebService
             // Sblocco protezione servizi - NON portare in produzione.
             AuthorizeForCaravanAttribute.AuthorizationGranted = (actionContext, cancellationToken, log) =>
             {
-                return Task.FromResult(new AuthorizationResult { Authorized = true });
+                return Task.FromResult(new AuthorizationResult<bool> { Authorized = true });
             };
         }
 
@@ -154,7 +154,7 @@ namespace Finsa.Caravan.WebService
             RaiseArgumentNullException.IfIsNull(config, nameof(config));
 
             config.Filters.Add(new HttpExceptionFilterAttribute());
-            AuthorizeForCaravanAttribute.AuthorizationGranted = (context, token, log) => Task.FromResult(new AuthorizationResult
+            AuthorizeForCaravanAttribute.AuthorizationGranted = (context, token, log) => Task.FromResult(new AuthorizationResult<bool>
             {
                 // Liberi tutti, per ora...
                 Authorized = CaravanWebServiceConfiguration.Instance.Security_EnableCaravanServices

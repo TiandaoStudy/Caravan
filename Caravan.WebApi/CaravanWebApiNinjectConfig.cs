@@ -66,6 +66,7 @@ namespace Finsa.Caravan.WebApi
 
             // Bind indipendenti dall'ambiente di esecuzione:
             Bind<IAccessTokenExtractor>().To<BearerAccessTokenExtractor>().InSingletonScope();
+            Bind<IAccessTokenValidator>().To<IdentityAccessTokenValidator>().InSingletonScope();
             Bind<IAuthorizationErrorHandler>().To<SimpleAuthorizationErrorHandler>().InSingletonScope();
         }
     }

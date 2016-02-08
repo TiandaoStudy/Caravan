@@ -10,6 +10,9 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Common.Logging;
+using Finsa.Caravan.WebApi.Identity.Models;
+using PommaLabs.Thrower;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -20,6 +23,29 @@ namespace Finsa.Caravan.WebApi.Identity
     /// </summary>
     public sealed class BearerAccessTokenExtractor : IAccessTokenExtractor
     {
+        /// <summary>
+        ///   Inietta la dipendenze necessarie.
+        /// </summary>
+        /// <param name="authorizationSettings">Le impostazioni legate al server di OAuth2.</param>
+        /// <param name="log">Istanza del log per questo filtro.</param>
+        public BearerAccessTokenExtractor(OAuth2AuthorizationSettings authorizationSettings, ILog log)
+        {
+            RaiseArgumentNullException.IfIsNull(authorizationSettings, nameof(authorizationSettings));
+            RaiseArgumentNullException.IfIsNull(log, nameof(log));
+            AuthorizationSettings = authorizationSettings;
+            Log = log;
+        }
+
+        /// <summary>
+        ///   Le impostazioni legate al server di OAuth2.
+        /// </summary>
+        public OAuth2AuthorizationSettings AuthorizationSettings { get; }
+
+        /// <summary>
+        ///   Istanza del log per questo filtro.
+        /// </summary>
+        public ILog Log { get; }
+
         /// <summary>
         ///   Recupera l'access token dalla richiesta HTTP.
         /// </summary>

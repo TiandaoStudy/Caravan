@@ -12,33 +12,36 @@
 
 using Common.Logging;
 using Finsa.Caravan.WebApi.Identity.Models;
-using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 
 namespace Finsa.Caravan.WebApi.Identity
 {
     /// <summary>
-    ///   Gestisce la conferma finale se un utente possa o meno accedere a un dato servizio.
+    ///   Valida l'access token di OAuth2 con una richiesta verso l'apposito servizio.
     /// </summary>
-    public interface IAuthorizationValidator
+    public interface IAccessTokenValidator
     {
+        /// <summary>
+        ///   Le impostazioni legate al server di OAuth2.
+        /// </summary>
+        OAuth2AuthorizationSettings AuthorizationSettings { get; }
+
         /// <summary>
         ///   Istanza del log per questo filtro.
         /// </summary>
         ILog Log { get; }
 
         /// <summary>
-        ///   Valida definitivamente l'accesso da parte di un dato utente. Se ritorna vero, l'utente
-        ///   può accedere al servizio; se ritorna falso, l'utente non può accedere ed eventuali indicazioni
+        ///   Inoltra l'access token al server di OAuth2 al fine di validarlo.
         /// </summary>
-        /// <param name="actionContext">Il contesto HTTP da validare.</param>
-        /// <param name="userClaims">I claim restituiti dal servizio che gestisce l'identità.</param>
+        /// <param name="actionContext">La richiesta HTTP.</param>
+        /// <param name="accessToken">L'access token da validare.</param>
         /// <returns>
-        ///   Vero se l'utente è stato autorizzato, falso altrimenti. Il campo
-        ///   <see cref="AuthorizationResult{TPayload}.Payload"/> deve essere valorizzato con il
-        ///   principal legato all'utente, se autorizzato.
+        ///   Vero se il token è stato validato, falso altrimenti. Il campo
+        ///   <see cref="AuthorizationResult{TPayload}.Payload"/> deve essere valorizzato con le
+        ///   informazioni sull'utente, se ricevute.
         /// </returns>
-        Task<AuthorizationResult<IPrincipal>> ValidateRequestAsync(HttpActionContext actionContext, dynamic userClaims);
+        Task<AuthorizationResult<dynamic>> ValidateAccessTokenAsync(HttpActionContext actionContext, string accessToken);
     }
 }

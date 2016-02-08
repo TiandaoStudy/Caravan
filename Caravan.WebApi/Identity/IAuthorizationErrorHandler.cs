@@ -10,6 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Common.Logging;
 using Finsa.Caravan.WebApi.Identity.Models;
 using System;
 using System.Threading.Tasks;
@@ -22,6 +23,11 @@ namespace Finsa.Caravan.WebApi.Identity
     /// </summary>
     public interface IAuthorizationErrorHandler
     {
+        /// <summary>
+        ///   Istanza del log per questo filtro.
+        /// </summary>
+        ILog Log { get; }
+
         /// <summary>
         ///   Gestisce un errore avvenuto durante la validazione dell'accesso. Questa variante deve
         ///   gestire anche un eventuale oggetto riportante ulteriori informazioni sull'errore.

@@ -33,13 +33,13 @@ namespace Finsa.Caravan.WebApi.Filters
         /// <summary>
         ///   La funzione da modificare per gestire le autorizzazioni.
         /// </summary>
-        public static Func<HttpActionContext, CancellationToken, ILog, Task<AuthorizationResult>> AuthorizationGranted { get; set; } = (actionContext, cancellationToken, log) =>
+        public static Func<HttpActionContext, CancellationToken, ILog, Task<AuthorizationResult<bool>>> AuthorizationGranted { get; set; } = (actionContext, cancellationToken, log) =>
         {
             const string className = nameof(AuthorizeForCaravanAttribute);
             const string propName = nameof(AuthorizationGranted);
             var errorMessage = $"Caravan actions are disabled by default, you can enabled them by changing {className}.{propName}";
             log.Warn(errorMessage);
-            return Task.FromResult(new AuthorizationResult
+            return Task.FromResult(new AuthorizationResult<bool>
             {
                 Authorized = false,
                 AuthorizationDeniedReason = errorMessage

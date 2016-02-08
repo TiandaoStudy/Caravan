@@ -19,6 +19,7 @@ using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.WebApi.Identity.Models;
 using PommaLabs.Thrower;
 using System;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 
@@ -49,7 +50,7 @@ namespace Finsa.Caravan.WebApi.Identity
         /// <summary>
         ///   Il log a disposizione del validatore.
         /// </summary>
-        protected ILog Log { get; }
+        public ILog Log { get; }
 
         /// <summary>
         ///   Il repository della sicurezza di Caravan.
@@ -68,7 +69,7 @@ namespace Finsa.Caravan.WebApi.Identity
         /// <param name="actionContext">Il contesto HTTP da validare.</param>
         /// <param name="userClaims">I claim restituiti dal servizio che gestisce l'identità.</param>
         /// <returns>Vero se l'utente è stato autorizzato, falso altrimenti.</returns>
-        public async Task<AuthorizationResult> ValidateRequestAsync(HttpActionContext actionContext, dynamic userClaims)
+        public async Task<AuthorizationResult<IPrincipal>> ValidateRequestAsync(HttpActionContext actionContext, dynamic userClaims)
         {
             try
             {
@@ -76,7 +77,7 @@ namespace Finsa.Caravan.WebApi.Identity
 
                 if (!AllowedApps.Contains(idnUserKey.AppName))
                 {
-                    return new AuthorizationResult
+                    return new AuthorizationResult<IPrincipal>
                     {
                         Authorized = false,
                         AuthorizationDeniedReason = $"Application '{idnUserKey.AppName}' has not been allowed"
@@ -84,11 +85,11 @@ namespace Finsa.Caravan.WebApi.Identity
                 }
 
                 var user = await SecurityRepository.GetUserByLoginAsync(idnUserKey.AppName, idnUserKey.UserLogin);
-                AuthorizationResult authorizationResult = await ValidateRequestAsync(actionContext, userClaims, user);
+                AuthorizationResult<IPrincipal> authorizationResult = await ValidateRequestAsync(actionContext, userClaims, user);
 
                 if (authorizationResult.Authorized)
                 {
-                    authorizationResult.Principal = new IdnPrincipal(user);
+                    authorizationResult.Payload = new IdnPrincipal(user);
                 }
 
                 return authorizationResult;
@@ -96,7 +97,7 @@ namespace Finsa.Caravan.WebApi.Identity
             catch (SecAppNotFoundException aex)
             {
                 Log.Warn(aex.Message);
-                return new AuthorizationResult
+                return new AuthorizationResult<IPrincipal>
                 {
                     Authorized = false,
                     AuthorizationDeniedReason = aex.Message
@@ -105,7 +106,7 @@ namespace Finsa.Caravan.WebApi.Identity
             catch (SecUserNotFoundException uex)
             {
                 Log.Warn(uex.Message);
-                return new AuthorizationResult
+                return new AuthorizationResult<IPrincipal>
                 {
                     Authorized = false,
                     AuthorizationDeniedReason = uex.Message
@@ -114,7 +115,7 @@ namespace Finsa.Caravan.WebApi.Identity
             catch (Exception ex)
             {
                 Log.Error(ex.Message);
-                return new AuthorizationResult
+                return new AuthorizationResult<IPrincipal>
                 {
                     Authorized = false,
                     AuthorizationDeniedReason = ex.Message,
@@ -131,7 +132,7 @@ namespace Finsa.Caravan.WebApi.Identity
         /// <param name="userClaims">I claim restituiti dal servizio che gestisce l'identità.</param>
         /// <param name="user">L'utente caricato da Caravan.</param>
         /// <returns>Vero se l'utente è stato autorizzato, falso altrimenti.</returns>
-        protected virtual Task<AuthorizationResult> ValidateRequestAsync(HttpActionContext actionContext, dynamic userClaims, SecUser user) => Task.FromResult(new AuthorizationResult
+        protected virtual Task<AuthorizationResult<IPrincipal>> ValidateRequestAsync(HttpActionContext actionContext, dynamic userClaims, SecUser user) => Task.FromResult(new AuthorizationResult<IPrincipal>
         {
             Authorized = true
         });

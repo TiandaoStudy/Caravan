@@ -12,7 +12,6 @@
 
 using System;
 using System.Runtime.Serialization;
-using System.Security.Principal;
 
 namespace Finsa.Caravan.WebApi.Identity.Models
 {
@@ -20,7 +19,7 @@ namespace Finsa.Caravan.WebApi.Identity.Models
     ///   Rappresenta il risultato di un'operazione di autorizzazione.
     /// </summary>
     [Serializable, DataContract]
-    public struct AuthorizationResult
+    public struct AuthorizationResult<TPayload>
     {
         /// <summary>
         ///   Indica se la richiesta di autorizzazione sia andata a buon fine o meno.
@@ -41,8 +40,8 @@ namespace Finsa.Caravan.WebApi.Identity.Models
         public Exception AuthorizationDeniedException { get; set; }
 
         /// <summary>
-        ///   L'utente che è stato autorizzato all'accesso all'applicativo.
+        ///   Un oggetto allegato all'esito della validazione.
         /// </summary>
-        public IPrincipal Principal { get; set; }
+        public TPayload Payload { get; set; }
     }
 }
