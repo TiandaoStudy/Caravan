@@ -12,7 +12,6 @@
 
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using BrockAllen.IdentityReboot;
 using EntityFramework.Extensions;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Identity.Models;
@@ -23,6 +22,7 @@ using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Sql.Security.Entities;
 using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Security.PasswordHashing;
 using PommaLabs.Thrower;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -38,7 +38,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         private const string UnspecifiedString = "...";
 
         #endregion Constants
-        
+
         private readonly IDbContextFactory<SqlDbContext> _dbContextFactory;
         private readonly SqlDbContext _queryableDbContext;
         private bool _disposed;
@@ -81,7 +81,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 }
 
                 return await q.ProjectTo<SecApp>().ToArrayAsync();
-            }            
+            }
         }
 
         protected override async Task AddAppAsyncInternal(SecApp app)
@@ -97,7 +97,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 {
                     Name = app.Name,
                     Description = app.Description ?? UnspecifiedString,
-                    PasswordHasher = app.PasswordHasher ?? typeof(AdaptivePasswordHasher).AssemblyQualifiedName
+                    PasswordHasher = app.PasswordHasher ?? typeof(AdaptivePBKDF2PasswordHasher).AssemblyQualifiedName
                 });
 
                 await ctx.SaveChangesAsync();
