@@ -24,8 +24,8 @@ A short description of the package. If specified, this shows up in the middle pa
         <dependencies>
             <dependency id="Finsa.Caravan.Common.Runtime" version="1.41.0" />
             <dependency id="Finsa.Caravan.WebApi" version="1.41.0" />
-            <dependency id="Microsoft.Owin" version="[3.0.1, 4.0.0)" />
-            <dependency id="Swashbuckle.Core" version="[5.2.2, 6.0.0)" />
+            <dependency id="Microsoft.Owin" version="3.0.1" />
+            <dependency id="Swashbuckle.Core" version="5.3.1" />
         </dependencies>
         <references></references>
         <tags>finsa caravan web api runtime</tags>
