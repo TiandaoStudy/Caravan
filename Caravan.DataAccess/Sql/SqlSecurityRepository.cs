@@ -27,6 +27,7 @@ using PommaLabs.Thrower;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql
@@ -202,7 +203,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             var sqlGroup = await GetGroupByNameAsync(_queryableDbContext, appId, appName, groupName);
 
             // La chiamata sopra mi assicura che il ruolo ci sia.
-            return _queryableDbContext.SecUsers
+            return _queryableDbContext.SecUsersWithRoles
                 .Where(u => u.AppId == appId)
                 .Where(u => u.Roles.Any(r => r.GroupId == sqlGroup.Id))
                 .ProjectTo<SecUser>();
@@ -313,7 +314,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             var sqlRole = await GetRoleByNameAsync(_queryableDbContext, appName, group.Id, groupName, roleName);
 
             // La chiamata sopra mi assicura che il ruolo ci sia.
-            return _queryableDbContext.SecUsers
+            return _queryableDbContext.SecUsersWithRoles
                 .Where(u => u.AppId == appId)
                 .Where(u => u.Roles.Any(r => r.Id == sqlRole.Id))
                 .ProjectTo<SecUser>();
@@ -359,7 +360,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             var appId = await GetAppIdByNameAsync(_queryableDbContext, appName);
 
             // La chiamata sopra mi assicura che il ruolo ci sia.
-            return _queryableDbContext.SecUsers
+            return _queryableDbContext.SecUsersWithRoles
                 .Where(u => u.AppId == appId)
                 .ProjectTo<SecUser>();
         }
@@ -392,7 +393,9 @@ namespace Finsa.Caravan.DataAccess.Sql
                     LockoutEndDate = newUser.LockoutEndDate,
                     SecurityStamp = newUser.SecurityStamp,
                     TwoFactorAuthenticationEnabled = newUser.TwoFactorAuthenticationEnabled,
-                    InsertAppUser = IdnPrincipal.Current?.Identity.Name
+                    AvatarFile = newUser.AvatarFile,
+                    AvatarFileExtension = newUser.AvatarFileExtension,
+                    InsertAppUser = Thread.CurrentPrincipal?.Identity.Name
                 });
 
                 await ctx.SaveChangesAsync();
@@ -443,7 +446,9 @@ namespace Finsa.Caravan.DataAccess.Sql
                 userUpdates.LockoutEndDate.Do(x => sqlUser.LockoutEndDate = x.ToUniversalTime());
                 userUpdates.AccessFailedCount.Do(x => sqlUser.AccessFailedCount = x);
                 userUpdates.TwoFactorAuthenticationEnabled.Do(x => sqlUser.TwoFactorAuthenticationEnabled = x);
-                sqlUser.UpdateAppUser = IdnPrincipal.Current?.Identity.Name;
+                userUpdates.AvatarFile.Do(x => sqlUser.AvatarFile = x);
+                userUpdates.AvatarFileExtension.Do(x => sqlUser.AvatarFileExtension = x);
+                sqlUser.UpdateAppUser = Thread.CurrentPrincipal?.Identity.Name;
 
                 await ctx.SaveChangesAsync();
             }

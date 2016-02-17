@@ -140,6 +140,22 @@ namespace Finsa.Caravan.DataAccess.Sql.Security.Entities
         [Column("CUSR_TWO_FACTOR_AUTH_ENABLED", Order = 15)]
         public virtual bool TwoFactorAuthenticationEnabled { get; set; }
 
+        /// <summary>
+        ///   Il file contenente l'immagine corrispondente all'utente. Può non essere specificato.
+        /// </summary>
+        [Column("CUSR_AVATAR_FILE", Order = 16)]
+        public virtual byte[] AvatarFile { get; set; }
+
+        /// <summary>
+        ///   L'estensione del file contenente l'immagine corrispondente all'utente. Può non essere
+        ///   specificata se il file <see cref="AvatarFile"/> non è presente; altrimenti, entrambi
+        ///   sono presenti.
+        ///   
+        ///   La stringa è comprensiva del punto iniziale (es: ".jpg").
+        /// </summary>
+        [Column("CUSR_AVATAR_FILE_EXT", Order = 17)]
+        public virtual string AvatarFileExtension { get; set; }
+
         #region Relationships
 
         /// <summary>

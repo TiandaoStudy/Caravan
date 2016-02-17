@@ -9,9 +9,6 @@
     <Import_RootNamespace>Finsa.Caravan.Common</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Security\Activities\" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BusinessModeling\StateMachine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BusinessModeling\Workflow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CaravanCommonConfiguration.cs" />
@@ -86,5 +83,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Security\Services\CaravanEmailService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebForms\ISearchControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebForms\SearchCriteria.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Core\Resources\mr-happy.png" />
   </ItemGroup>
 </Project>

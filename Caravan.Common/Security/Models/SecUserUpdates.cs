@@ -64,5 +64,21 @@ namespace Finsa.Caravan.Common.Security.Models
 
         [DataMember(Order = 12)]
         public Option<bool> TwoFactorAuthenticationEnabled { get; set; }
+
+        /// <summary>
+        ///   Il file contenente l'immagine corrispondente all'utente. Può non essere specificato.
+        /// </summary>
+        [DataMember(Order = 13)]
+        public Option<byte[]> AvatarFile { get; set; }
+
+        /// <summary>
+        ///   L'estensione del file contenente l'immagine corrispondente all'utente. Può non essere
+        ///   specificata se il file <see cref="AvatarFile"/> non è presente; altrimenti, entrambi
+        ///   sono presenti.
+        ///   
+        ///   La stringa è comprensiva del punto iniziale (es: ".jpg").
+        /// </summary>
+        [DataMember(Order = 14)]
+        public Option<string> AvatarFileExtension { get; set; }
     }
 }
