@@ -142,24 +142,71 @@
         </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.HelpController">
             <summary>
-              The HELP controller.
+              Il controller di "help" contiene metodi utili per avere informazioni sul servizio stesso e
+              sugli utenti collegati.
             </summary>
-            <remarks>Adjust routing prefix according to your own needs.</remarks>
-            <remarks>Questo servizio dovrebbe essere esposto pubblicamente.</remarks>
+            <remarks>
+              Il percorso del servizio può essere modificato a proprio piacimento.
+            
+              Questo servizio dovrebbe essere esposto pubblicamente, senza particolari autenticazioni.
+            </remarks>
+        </member>
+        <member name="F:Finsa.Caravan.WebService.Controllers.HelpController._dataSourceManager">
+            <summary>
+              Il gestore della sorgente dati di Caravan.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.#ctor(Finsa.Caravan.DataAccess.ICaravanDataSourceManager)">
+            <summary>
+              Inietta le dipendenze richieste dal controller.
+            </summary>
+            <param name="dataSourceManager">Il gestore della sorgente dati di Caravan.</param>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.Get">
             <summary>
-              Redirects to Swagger help pages.
+              Effettua la redirezione alle pagine di "help" di SwaggerUI.
             </summary>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.GetVersion">
+        <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.GetServiceInfo">
             <summary>
-              Returns the web service version written in the main assembly.
+              Restituisce informazioni sul servizio, come la sorgente dati e la versione.
             </summary>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.GetUserInfo">
             <summary>
-              Returns the authorized user info.
+              Restituisce informazioni sull'utente correntemente autenticato.
+            </summary>
+        </member>
+        <member name="T:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO">
+            <summary>
+              Rappresenta una descrizione sintetica delle informazioni sul servizio.
+            </summary>
+        </member>
+        <member name="P:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO.Version">
+            <summary>
+              La versione del servizio, letta direttamente dall'assembly .NET del servizio stesso.
+            </summary>
+        </member>
+        <member name="P:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO.HostName">
+            <summary>
+              Il nome di rete del server su cui è ospitato il servizio.
+            </summary>
+        </member>
+        <member name="P:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO.Bitness">
+            <summary>
+              L'architettura (x86 oppure x64) del processo che esegue il servizio.
+            </summary>
+        </member>
+        <member name="P:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO.DataSourceName">
+            <summary>
+              Il nome della sorgente dati a cui è collegato Caravan e che, presumibilmente, è
+              condivisa con l'applicativo.
+            </summary>
+        </member>
+        <member name="P:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO.DataSourceKind">
+            <summary>
+              Il tipo della sorgente dati a cui è collegato Caravan e che, presumibilmente, è
+              condivisa con l'applicativo.
             </summary>
         </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.IdentityController">

@@ -31,6 +31,11 @@ namespace Finsa.Caravan.DataAccess
         CaravanDataSourceKind DataSourceKind { get; }
 
         /// <summary>
+        ///   Il nome della sorgente dati a cui è collegato Caravan.
+        /// </summary>
+        string DataSourceName { get; }
+
+        /// <summary>
         ///   Processa la stringa di connessione aggiungendo flag potenzialmente utili.
         /// </summary>
         /// <param name="connectionString">La stringa di connessione di processare.</param>

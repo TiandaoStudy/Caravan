@@ -24,6 +24,17 @@ namespace Finsa.Caravan.DataAccess.Core
 
         public abstract CaravanDataSourceKind DataSourceKind { get; }
 
+        public string DataSourceName
+        {
+            get
+            {
+                using (var connection = OpenConnection())
+                {
+                    return connection.Database;
+                }
+            }
+        }
+
         public abstract string ElaborateConnectionString(string connectionString);
 
         public DbConnection OpenConnection()

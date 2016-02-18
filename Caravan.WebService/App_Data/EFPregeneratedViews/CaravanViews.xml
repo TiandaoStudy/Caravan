@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <views>
-  <mapping-views hash="51468e19b52147bc3d227d5b9af9cfa9cce6529027c56b099efb870864d21c0c" conceptual-container="SqlDbContext" store-container="CodeFirstDatabase">
+  <mapping-views hash="5f8516fab5f216d3a6f9d17a52c71c510a2a724ea654f23fbc284145dfb9f7e4" conceptual-container="SqlDbContext" store-container="CodeFirstDatabase">
     <view extent="CodeFirstDatabase.SqlIdnClientClaim"><![CDATA[
     SELECT VALUE -- Constructing SqlIdnClientClaim
         [CodeFirstDatabaseSchema.SqlIdnClientClaim](T1.[SqlIdnClientClaim.CCLM_ID], T1.[SqlIdnClientClaim.CCLM_TYPE], T1.[SqlIdnClientClaim.CCLM_VALUE], T1.[SqlIdnClientClaim.CCLI_ID])
@@ -166,7 +166,7 @@
     ) AS T1]]></view>
     <view extent="CodeFirstDatabase.SqlSecUser"><![CDATA[
     SELECT VALUE -- Constructing SqlSecUser
-        [CodeFirstDatabaseSchema.SqlSecUser](T1.[SqlSecUser.CUSR_ID], T1.[SqlSecUser.CAPP_ID], T1.[SqlSecUser.CUSR_LOGIN], T1.[SqlSecUser.CUSR_HASHED_PWD], T1.[SqlSecUser.CUSR_ACTIVE], T1.[SqlSecUser.CUSR_FIRST_NAME], T1.[SqlSecUser.CUSR_LAST_NAME], T1.[SqlSecUser.CUSR_EMAIL], T1.[SqlSecUser.CUSR_EMAIL_CONFIRMED], T1.[SqlSecUser.CUSR_PHONE], T1.[SqlSecUser.CUSR_PHONE_CONFIRMED], T1.[SqlSecUser.CUSR_SECURITY_STAMP], T1.[SqlSecUser.CUSR_LOCKOUT_ENABLED], T1.[SqlSecUser.CUSR_LOCKOUT_END_DATE], T1.[SqlSecUser.CUSR_ACCESS_FAILED_COUNT], T1.[SqlSecUser.CUSR_TWO_FACTOR_AUTH_ENABLED], T1.[SqlSecUser.TRCK_INSERT_DATE], T1.[SqlSecUser.TRCK_INSERT_DB_USER], T1.[SqlSecUser.TRCK_INSERT_APP_USER], T1.[SqlSecUser.TRCK_UPDATE_DATE], T1.[SqlSecUser.TRCK_UPDATE_DB_USER], T1.[SqlSecUser.TRCK_UPDATE_APP_USER])
+        [CodeFirstDatabaseSchema.SqlSecUser](T1.[SqlSecUser.CUSR_ID], T1.[SqlSecUser.CAPP_ID], T1.[SqlSecUser.CUSR_LOGIN], T1.[SqlSecUser.CUSR_HASHED_PWD], T1.[SqlSecUser.CUSR_ACTIVE], T1.[SqlSecUser.CUSR_FIRST_NAME], T1.[SqlSecUser.CUSR_LAST_NAME], T1.[SqlSecUser.CUSR_EMAIL], T1.[SqlSecUser.CUSR_EMAIL_CONFIRMED], T1.[SqlSecUser.CUSR_PHONE], T1.[SqlSecUser.CUSR_PHONE_CONFIRMED], T1.[SqlSecUser.CUSR_SECURITY_STAMP], T1.[SqlSecUser.CUSR_LOCKOUT_ENABLED], T1.[SqlSecUser.CUSR_LOCKOUT_END_DATE], T1.[SqlSecUser.CUSR_ACCESS_FAILED_COUNT], T1.[SqlSecUser.CUSR_TWO_FACTOR_AUTH_ENABLED], T1.[SqlSecUser.CUSR_AVATAR_FILE], T1.[SqlSecUser.CUSR_AVATAR_FILE_EXT], T1.[SqlSecUser.TRCK_INSERT_DATE], T1.[SqlSecUser.TRCK_INSERT_DB_USER], T1.[SqlSecUser.TRCK_INSERT_APP_USER], T1.[SqlSecUser.TRCK_UPDATE_DATE], T1.[SqlSecUser.TRCK_UPDATE_DB_USER], T1.[SqlSecUser.TRCK_UPDATE_APP_USER])
     FROM (
         SELECT 
             T.Id AS [SqlSecUser.CUSR_ID], 
@@ -185,6 +185,8 @@
             T.LockoutEndDate AS [SqlSecUser.CUSR_LOCKOUT_END_DATE], 
             T.AccessFailedCount AS [SqlSecUser.CUSR_ACCESS_FAILED_COUNT], 
             T.TwoFactorAuthenticationEnabled AS [SqlSecUser.CUSR_TWO_FACTOR_AUTH_ENABLED], 
+            T.AvatarFile AS [SqlSecUser.CUSR_AVATAR_FILE], 
+            T.AvatarFileExtension AS [SqlSecUser.CUSR_AVATAR_FILE_EXT], 
             T.InsertDate AS [SqlSecUser.TRCK_INSERT_DATE], 
             T.InsertDbUser AS [SqlSecUser.TRCK_INSERT_DB_USER], 
             T.InsertAppUser AS [SqlSecUser.TRCK_INSERT_APP_USER], 
@@ -479,7 +481,7 @@
     ) AS T1]]></view>
     <view extent="SqlDbContext.SecUsers"><![CDATA[
     SELECT VALUE -- Constructing SecUsers
-        [Finsa.Caravan.DataAccess.Sql.SqlSecUser](T1.SqlSecUser_Id, T1.SqlSecUser_AppId, T1.SqlSecUser_Login, T1.SqlSecUser_PasswordHash, T1.SqlSecUser_Active, T1.SqlSecUser_FirstName, T1.SqlSecUser_LastName, T1.SqlSecUser_Email, T1.SqlSecUser_EmailConfirmed, T1.SqlSecUser_PhoneNumber, T1.SqlSecUser_PhoneNumberConfirmed, T1.SqlSecUser_SecurityStamp, T1.SqlSecUser_LockoutEnabled, T1.SqlSecUser_LockoutEndDate, T1.SqlSecUser_AccessFailedCount, T1.SqlSecUser_TwoFactorAuthenticationEnabled, T1.SqlSecUser_InsertDate, T1.SqlSecUser_InsertDbUser, T1.SqlSecUser_InsertAppUser, T1.SqlSecUser_UpdateDate, T1.SqlSecUser_UpdateDbUser, T1.SqlSecUser_UpdateAppUser)
+        [Finsa.Caravan.DataAccess.Sql.SqlSecUser](T1.SqlSecUser_Id, T1.SqlSecUser_AppId, T1.SqlSecUser_Login, T1.SqlSecUser_PasswordHash, T1.SqlSecUser_Active, T1.SqlSecUser_FirstName, T1.SqlSecUser_LastName, T1.SqlSecUser_Email, T1.SqlSecUser_EmailConfirmed, T1.SqlSecUser_PhoneNumber, T1.SqlSecUser_PhoneNumberConfirmed, T1.SqlSecUser_SecurityStamp, T1.SqlSecUser_LockoutEnabled, T1.SqlSecUser_LockoutEndDate, T1.SqlSecUser_AccessFailedCount, T1.SqlSecUser_TwoFactorAuthenticationEnabled, T1.SqlSecUser_AvatarFile, T1.SqlSecUser_AvatarFileExtension, T1.SqlSecUser_InsertDate, T1.SqlSecUser_InsertDbUser, T1.SqlSecUser_InsertAppUser, T1.SqlSecUser_UpdateDate, T1.SqlSecUser_UpdateDbUser, T1.SqlSecUser_UpdateAppUser)
     FROM (
         SELECT 
             T.CUSR_ID AS SqlSecUser_Id, 
@@ -498,6 +500,8 @@
             T.CUSR_LOCKOUT_END_DATE AS SqlSecUser_LockoutEndDate, 
             T.CUSR_ACCESS_FAILED_COUNT AS SqlSecUser_AccessFailedCount, 
             T.CUSR_TWO_FACTOR_AUTH_ENABLED AS SqlSecUser_TwoFactorAuthenticationEnabled, 
+            T.CUSR_AVATAR_FILE AS SqlSecUser_AvatarFile, 
+            T.CUSR_AVATAR_FILE_EXT AS SqlSecUser_AvatarFileExtension, 
             T.TRCK_INSERT_DATE AS SqlSecUser_InsertDate, 
             T.TRCK_INSERT_DB_USER AS SqlSecUser_InsertDbUser, 
             T.TRCK_INSERT_APP_USER AS SqlSecUser_InsertAppUser, 
