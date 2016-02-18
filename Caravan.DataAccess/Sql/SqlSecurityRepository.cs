@@ -203,7 +203,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             var sqlGroup = await GetGroupByNameAsync(_queryableDbContext, appId, appName, groupName);
 
             // La chiamata sopra mi assicura che il ruolo ci sia.
-            return _queryableDbContext.SecUsersWithRoles
+            return _queryableDbContext.SecUsersWithGroupsAndRoles
                 .Where(u => u.AppId == appId)
                 .Where(u => u.Roles.Any(r => r.GroupId == sqlGroup.Id))
                 .ProjectTo<SecUser>();
@@ -314,7 +314,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             var sqlRole = await GetRoleByNameAsync(_queryableDbContext, appName, group.Id, groupName, roleName);
 
             // La chiamata sopra mi assicura che il ruolo ci sia.
-            return _queryableDbContext.SecUsersWithRoles
+            return _queryableDbContext.SecUsersWithGroupsAndRoles
                 .Where(u => u.AppId == appId)
                 .Where(u => u.Roles.Any(r => r.Id == sqlRole.Id))
                 .ProjectTo<SecUser>();
@@ -330,10 +330,9 @@ namespace Finsa.Caravan.DataAccess.Sql
             {
                 var appId = await GetAppIdByNameAsync(ctx, appName);
 
-                var q = ctx.SecUsers
+                var q = ctx.SecUsersWithGroupsAndRoles
                     .Include(u => u.App)
                     .Include(u => u.Claims)
-                    .Include("Roles.Group")
                     .Where(u => u.AppId == appId);
 
                 if (userId != null)
@@ -360,7 +359,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             var appId = await GetAppIdByNameAsync(_queryableDbContext, appName);
 
             // La chiamata sopra mi assicura che il ruolo ci sia.
-            return _queryableDbContext.SecUsersWithRoles
+            return _queryableDbContext.SecUsersWithGroupsAndRoles
                 .Where(u => u.AppId == appId)
                 .ProjectTo<SecUser>();
         }
@@ -769,7 +768,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         private static async Task<SqlSecUser> GetUserByLoginAsync(SqlDbContext ctx, int appId, string appName, string userLogin)
         {
-            var user = await ctx.SecUsers.FirstOrDefaultAsync(u => u.AppId == appId && u.Login == userLogin);
+            var user = await ctx.SecUsersWithGroupsAndRoles.FirstOrDefaultAsync(u => u.AppId == appId && u.Login == userLogin);
             if (user == null)
             {
                 throw new SecUserNotFoundException(appName, userLogin);

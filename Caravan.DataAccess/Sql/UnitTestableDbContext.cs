@@ -63,7 +63,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         public DbSet<SqlSecUser> SecUsers { get; set; }
 
-        public IQueryable<SqlSecUser> SecUsersWithRoles => SecUsers.Include(u => u.Roles);
+        public IQueryable<SqlSecUser> SecUsersWithGroupsAndRoles => SecUsers.Include("Roles.Group");
 
         #endregion DB Sets - Security
 
