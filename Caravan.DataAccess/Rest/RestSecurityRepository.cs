@@ -5,6 +5,7 @@ using Finsa.Caravan.Common.Security.Exceptions;
 using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Rest.Models;
+using Finsa.CodeServices.Common;
 using RestSharp;
 using System;
 using System.Linq;
@@ -237,7 +238,7 @@ namespace Finsa.Caravan.DataAccess.Rest
             }
         }
 
-        protected override async Task<SecUser[]> GetUsersAsyncInternal(string appName, long? userId, string userLogin, string userEmail)
+        protected override async Task<Option<SecUser>> GetUserAsyncInternal(string appName, long? userId, string userLogin, string userEmail)
         {
             try
             {
@@ -273,8 +274,8 @@ namespace Finsa.Caravan.DataAccess.Rest
                     }
                     throw new Exception(response.ErrorMessage);
                 }
-                var users = new[] { response.Data.Body };
-                return users;
+                var user = response.Data.Body;
+                return (user == null) ? Option.None<SecUser>() : Option.Some(user);
             }
             catch (Exception exception)
             {

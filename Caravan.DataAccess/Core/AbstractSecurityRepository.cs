@@ -495,25 +495,6 @@ namespace Finsa.Caravan.DataAccess.Core
 
         #region Users
 
-        public async Task<SecUser[]> GetUsersAsync(string appName)
-        {
-            // Preconditions
-            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
-
-            appName = appName.ToLowerInvariant();
-            var logCtx = $"Retrieving all users from application '{appName}'";
-
-            try
-            {
-                return await GetUsersAsyncInternal(appName, null, null, null);
-            }
-            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
-            {
-                // Lascio emergere l'eccezione...
-                return default(SecUser[]);
-            }
-        }
-
         public async Task<IQueryable<SecUser>> QueryUsersAsync(string appName)
         {
             // Preconditions
@@ -543,12 +524,12 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
-                var users = await GetUsersAsyncInternal(appName, userId, null, null);
-                if (users.Length == 0)
+                var user = await GetUserAsyncInternal(appName, userId, null, null);
+                if (!user.HasValue)
                 {
                     throw new SecUserNotFoundException(appName, userId);
                 }
-                return users[0];
+                return user.Value;
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
@@ -569,12 +550,12 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
-                var users = await GetUsersAsyncInternal(appName, null, userLogin, null);
-                if (users.Length == 0)
+                var user = await GetUserAsyncInternal(appName, null, userLogin, null);
+                if (!user.HasValue)
                 {
                     throw new SecUserNotFoundException(appName, userLogin);
                 }
-                return users[0];
+                return user.Value;
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
@@ -595,12 +576,12 @@ namespace Finsa.Caravan.DataAccess.Core
 
             try
             {
-                var users = await GetUsersAsyncInternal(appName, null, null, userEmail);
-                if (users.Length == 0)
+                var user = await GetUserAsyncInternal(appName, null, null, userEmail);
+                if (!user.HasValue)
                 {
                     throw new SecUserNotFoundException(appName, userEmail);
                 }
-                return users[0];
+                return user.Value;
             }
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
@@ -663,10 +644,12 @@ namespace Finsa.Caravan.DataAccess.Core
                     Context = logCtx
                 });
             }
+#pragma warning disable CC0004 // Catch block cannot be empty
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
+#pragma warning restore CC0004 // Catch block cannot be empty
         }
 
         public async Task UpdateUserAsync(string appName, string userLogin, SecUserUpdates userUpdates)
@@ -697,10 +680,12 @@ namespace Finsa.Caravan.DataAccess.Core
                     Context = logCtx
                 });
             }
+#pragma warning disable CC0004 // Catch block cannot be empty
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
+#pragma warning restore CC0004 // Catch block cannot be empty
         }
 
         public async Task AddUserToRoleAsync(string appName, string userLogin, string groupName, string roleName)
@@ -726,10 +711,12 @@ namespace Finsa.Caravan.DataAccess.Core
                     Context = logCtx
                 });
             }
+#pragma warning disable CC0004 // Catch block cannot be empty
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
+#pragma warning restore CC0004 // Catch block cannot be empty
         }
 
         public async Task RemoveUserFromRoleAsync(string appName, string userLogin, string groupName, string roleName)
@@ -755,10 +742,12 @@ namespace Finsa.Caravan.DataAccess.Core
                     Context = logCtx
                 });
             }
+#pragma warning disable CC0004 // Catch block cannot be empty
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
+#pragma warning restore CC0004 // Catch block cannot be empty
         }
 
         public async Task<long> AddUserClaimAsync(string appName, string userLogin, SecClaim claim)
@@ -810,10 +799,12 @@ namespace Finsa.Caravan.DataAccess.Core
                     Context = logCtx
                 });
             }
+#pragma warning disable CC0004 // Catch block cannot be empty
             catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
             {
                 // Lascio emergere l'eccezione...
             }
+#pragma warning restore CC0004 // Catch block cannot be empty
         }
 
         #endregion Users
@@ -992,7 +983,7 @@ namespace Finsa.Caravan.DataAccess.Core
 
         protected abstract Task<IQueryable<SecUser>> QueryUsersInGroupAsyncInternal(string appName, string groupName);
 
-        protected abstract Task<SecUser[]> GetUsersAsyncInternal(string appName, long? userId, string userLogin, string userEmail);
+        protected abstract Task<Option<SecUser>> GetUserAsyncInternal(string appName, long? userId, string userLogin, string userEmail);
 
         protected abstract Task<IQueryable<SecUser>> QueryUsersAsyncInternal(string appName);
 

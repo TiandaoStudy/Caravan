@@ -324,7 +324,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         #region Users
 
-        protected override async Task<SecUser[]> GetUsersAsyncInternal(string appName, long? userId, string userLogin, string userEmail)
+        protected override async Task<Option<SecUser>> GetUserAsyncInternal(string appName, long? userId, string userLogin, string userEmail)
         {
             using (var ctx = _dbContextFactory.Create())
             {
@@ -348,9 +348,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                     q = q.Where(u => u.Email == userEmail);
                 }
 
-                return q.AsEnumerable()
-                    .Select(Mapper.Map<SecUser>)
-                    .ToArray();
+                return q.ProjectTo<SecUser>().FirstAsOption();
             }
         }
 

@@ -63,7 +63,7 @@ namespace Finsa.Caravan.WebForms.Pages
 
       private async void MostraMultiSelectForNew() 
       {
-         var allowedUsers = await CaravanDataSource.Security.GetUsersAsync(CaravanCommonConfiguration.Instance.AppName);
+         var allowedUsers = await CaravanDataSource.Security.QueryUsersAsync(CaravanCommonConfiguration.Instance.AppName);
 
           //Users
           DataTable tableLeft = new DataTable();
@@ -112,7 +112,7 @@ namespace Finsa.Caravan.WebForms.Pages
           {
 
               SecUser[] blockedUsersToGroup = null;// ((SecGroup)ViewState["group"]).Users;
-              var allowedUsers = (await CaravanDataSource.Security.GetUsersAsync(CaravanCommonConfiguration.Instance.AppName)).Except(blockedUsersToGroup);
+              var allowedUsers = (await CaravanDataSource.Security.QueryUsersAsync(CaravanCommonConfiguration.Instance.AppName)).Except(blockedUsersToGroup);
 
               //Users
               DataTable _tableLeft = new DataTable();

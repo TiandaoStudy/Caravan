@@ -89,7 +89,7 @@ namespace FLEX.Web.Pages
             var usersInEntries = entries.Where(e => e.UserLogin != null).Select(e => e.UserLogin).ToHashSet();
             var groupsInEntries = entries.Where(e => e.GroupName != null).Select(e => e.GroupName).ToHashSet();
 
-            var allUsers = await CaravanDataSource.Security.GetUsersAsync(CaravanCommonConfiguration.Instance.AppName);
+            var allUsers = await CaravanDataSource.Security.QueryUsersAsync(CaravanCommonConfiguration.Instance.AppName);
             var allGroups = await CaravanDataSource.Security.GetGroupsAsync(CaravanCommonConfiguration.Instance.AppName);
 
             var allowedUsers = allUsers.Where(u => !usersInEntries.Contains(u.Login));
