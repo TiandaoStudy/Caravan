@@ -28,7 +28,7 @@ namespace Finsa.Caravan.WebService.Controllers
     /// <summary>
     ///   Controller che si occupa della gestione della sicurezza.
     /// </summary>
-    [RoutePrefix("security"), AuthorizeForCaravan]
+    [RoutePrefix("security"), OAuth2Authorize]
     public sealed class SecurityController : ApiController
     {
         private readonly ICaravanSecurityRepository _securityRepository;

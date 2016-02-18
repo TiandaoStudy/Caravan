@@ -18,7 +18,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\IdentityNinjectRegistrations.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DelegatingHandlers\LoggingDelegatingHandler.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Filters\AuthorizeForCaravanAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Filters\HttpExceptionFilterAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Filters\Models\HttpExceptionResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Filters\OAuth2AuthorizeAttribute.cs" />

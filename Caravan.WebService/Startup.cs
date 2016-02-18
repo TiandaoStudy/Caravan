@@ -15,7 +15,6 @@ using Finsa.Caravan.DataAccess.Sql.Logging;
 using Finsa.Caravan.DataAccess.Sql.Oracle;
 using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebApi.Filters;
-using Finsa.Caravan.WebApi.Identity.Models;
 using Finsa.Caravan.WebService;
 using Finsa.CodeServices.Common.Portability;
 using Microsoft.Owin;
@@ -31,7 +30,6 @@ using Swashbuckle.Application;
 using System;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 
 [assembly: OwinStartup(typeof(Startup))]
@@ -72,12 +70,6 @@ namespace Finsa.Caravan.WebService
 
             // Inizializzazione gestione identità.
             IdentityConfig.Build(app);
-
-            // Sblocco protezione servizi - NON portare in produzione.
-            AuthorizeForCaravanAttribute.AuthorizationGranted = (actionContext, cancellationToken, log) =>
-            {
-                return Task.FromResult(new AuthorizationResult<bool> { Authorized = true });
-            };
         }
 
         private static IKernel CreateKernel() =>
@@ -155,11 +147,6 @@ namespace Finsa.Caravan.WebService
             RaiseArgumentNullException.IfIsNull(config, nameof(config));
 
             config.Filters.Add(new HttpExceptionFilterAttribute());
-            AuthorizeForCaravanAttribute.AuthorizationGranted = (context, token, log) => Task.FromResult(new AuthorizationResult<bool>
-            {
-                // Liberi tutti, per ora...
-                Authorized = CaravanWebServiceConfiguration.Instance.Security_EnableCaravanServices
-            });
         }
     }
 }
