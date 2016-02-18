@@ -30,7 +30,7 @@ namespace Finsa.Caravan.DataAccess.Core
             {
                 using (var connection = OpenConnection())
                 {
-                    return connection.Database;
+                    return connection.DataSource;
                 }
             }
         }
