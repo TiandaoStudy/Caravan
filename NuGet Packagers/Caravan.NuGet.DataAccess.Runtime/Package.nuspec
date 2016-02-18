@@ -3,7 +3,7 @@
 <package>
     <metadata>
         <id>Finsa.Caravan.DataAccess.Runtime</id>
-        <version>1.41.0</version>
+        <version>1.42.0</version>
         <title>Finsa.Caravan.DataAccess.Runtime</title>
         <authors>Finsa S.p.A.</authors>
         <owners>Finsa S.p.A.</owners>
@@ -23,8 +23,8 @@ A short description of the package. If specified, this shows up in the middle pa
         <copyright>Copyright © Finsa S.p.A. 2014-2024</copyright>
         <dependencies>
             <dependency id="AutoMapper" version="[4.1.1, 5.0.0)" />
-            <dependency id="Finsa.Caravan.Common.Runtime" version="1.41.0" />
-            <dependency id="Finsa.Caravan.DataAccess" version="1.41.0" />
+            <dependency id="Finsa.Caravan.Common.Runtime" version="1.42.0" />
+            <dependency id="Finsa.Caravan.DataAccess" version="1.42.0" />
             <!--<dependency id="IdentityManager.AspNetIdentity" version="1.0.0-beta5-1" />-->
         </dependencies>
         <references></references>
