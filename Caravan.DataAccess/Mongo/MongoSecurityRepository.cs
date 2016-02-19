@@ -166,5 +166,10 @@ namespace Finsa.Caravan.DataAccess.Mongo
         {
             throw new NotImplementedException();
         }
+
+        protected override Task<SecObject[]> GetObjectsForContextAndUserAsyncInternal(string appName, string contextName, string userLogin)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -14,7 +14,6 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using EntityFramework.Extensions;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Identity.Models;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.Common.Security.Exceptions;
@@ -563,9 +562,38 @@ namespace Finsa.Caravan.DataAccess.Sql
                     q = q.Where(o => o.Context.Name == contextName);
                 }
 
-                return q.AsEnumerable()
-                    .Select(Mapper.Map<SecObject>)
-                    .ToArray();
+                return await q.ProjectTo<SecObject>().ToArrayAsync();
+            }
+        }
+
+        protected override async Task<SecObject[]> GetObjectsForContextAndUserAsyncInternal(string appName, string contextName, string userLogin)
+        {
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
+
+                var groupIds = user.Roles.Select(r => (int?) r.GroupId).ToArray();
+                var roleIds = user.Roles.Select(r => (int?) r.Id).ToArray();
+
+                // Gli ID degli oggetti che l'utente può utilizzare.
+                var objectIds = from e in ctx.SecEntries
+                                where e.UserId == user.Id
+                                   || groupIds.Contains(e.GroupId)
+                                   || roleIds.Contains(e.RoleId)
+                                select e.ObjectId;
+
+                var q = from o in ctx.SecObjects
+                        join oId in objectIds.Distinct() on o.Id equals oId
+                        select o;
+
+                // Se il contesto è stato specificato, applico un ulteriore filtro.
+                if (contextName != null)
+                {
+                    q = q.Where(o => o.Context.Name == contextName);
+                }
+
+                return await q.ProjectTo<SecObject>().ToArrayAsync();
             }
         }
 

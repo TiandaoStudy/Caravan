@@ -319,6 +319,10 @@ namespace Finsa.Caravan.Common.Security
 
         Task<SecObject[]> GetObjectsAsync(string appName, string contextName);
 
+        Task<SecObject[]> GetObjectsForUserAsync(string appName, string userLogin);
+
+        Task<SecObject[]> GetObjectsForContextAndUserAsync(string appName, string contextName, string userLogin);
+
         #endregion Objects
 
         #region Entries

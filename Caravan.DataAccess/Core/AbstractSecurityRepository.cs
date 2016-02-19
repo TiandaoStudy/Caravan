@@ -837,6 +837,50 @@ namespace Finsa.Caravan.DataAccess.Core
             return GetObjectsAsyncInternal(appName.ToLowerInvariant(), contextName.ToLowerInvariant());
         }
 
+        public async Task<SecObject[]> GetObjectsForUserAsync(string appName, string userLogin)
+        {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(userLogin), ErrorMessages.NullOrWhiteSpaceUserLogin, nameof(userLogin));
+
+            appName = appName.ToLowerInvariant();
+            userLogin = userLogin.ToLowerInvariant();
+            var logCtx = $"Retrieving objects for '{userLogin}' from application '{appName}'";
+
+            try
+            {
+                return await GetObjectsForContextAndUserAsyncInternal(appName, null, userLogin);
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(SecObject[]);
+            }
+        }
+
+        public async Task<SecObject[]> GetObjectsForContextAndUserAsync(string appName, string contextName, string userLogin)
+        {
+            // Preconditions
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(appName), ErrorMessages.NullOrWhiteSpaceAppName, nameof(appName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(contextName), ErrorMessages.NullOrWhiteSpaceContextName, nameof(contextName));
+            RaiseArgumentException.If(string.IsNullOrWhiteSpace(userLogin), ErrorMessages.NullOrWhiteSpaceUserLogin, nameof(userLogin));
+
+            appName = appName.ToLowerInvariant();
+            contextName = contextName.ToLowerInvariant();
+            userLogin = userLogin.ToLowerInvariant();
+            var logCtx = $"Retrieving objects for '{userLogin}' from context '{contextName}' and application '{appName}'";
+
+            try
+            {
+                return await GetObjectsForContextAndUserAsyncInternal(appName, contextName, userLogin);
+            }
+            catch (Exception ex) when (Log.Rethrowing(new LogMessage { Context = logCtx, Exception = ex }))
+            {
+                // Lascio emergere l'eccezione...
+                return default(SecObject[]);
+            }
+        }
+
         #endregion Objects
 
         #region Entries
@@ -1014,6 +1058,8 @@ namespace Finsa.Caravan.DataAccess.Core
         protected abstract Task<SecContext[]> GetContextsAsyncInternal(string appName);
 
         protected abstract Task<SecObject[]> GetObjectsAsyncInternal(string appName, string contextName);
+
+        protected abstract Task<SecObject[]> GetObjectsForContextAndUserAsyncInternal(string appName, string contextName, string userLogin);
 
         protected abstract Task<SecEntry[]> GetEntriesAsyncInternal(string appName, string contextName, string objectName, string userLogin);
 
