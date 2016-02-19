@@ -28,7 +28,7 @@ namespace Finsa.Caravan.WebService.Controllers
     /// <summary>
     ///   Controller che si occupa della gestione della sicurezza.
     /// </summary>
-    [RoutePrefix("security"), AuthorizeForCaravan]
+    [RoutePrefix("security"), OAuth2Authorize]
     public sealed class SecurityController : ApiController
     {
         private readonly ICaravanSecurityRepository _securityRepository;
@@ -443,18 +443,25 @@ namespace Finsa.Caravan.WebService.Controllers
         #region Objects
 
         /// <summary>
-        ///   Returns all objects in the specified context
+        ///   Restituisce tutti gli oggetti nel contesto specificato, se presente.
         /// </summary>
         /// <param name="appName">The application name.</param>
         /// <param name="contextName">The optional context name</param>
         /// <returns>All objects in the specified context</returns>
-        [Route("{appaName}/objects/{contextName?}")]
-        public async Task<SecObject[]> GetObjects(string appName, string contextName)
-        {
-            return (contextName == null)
-                ? await _securityRepository.GetObjectsAsync(appName)
-                : await _securityRepository.GetObjectsAsync(appName, contextName);
-        }
+        [Route("{appName}/objects/{contextName?}")]
+        public Task<SecObject[]> GetObjects(string appName, string contextName) => (contextName == null)
+            ? _securityRepository.GetObjectsAsync(appName)
+            : _securityRepository.GetObjectsAsync(appName, contextName);
+
+        /// <summary>
+        ///   Restituisce tutti gli oggetti nel contesto specificato, se presente.
+        /// </summary>
+        /// <param name="appName">The application name.</param>
+        /// <param name="contextName">The optional context name</param>
+        /// <returns>All objects in the specified context</returns>
+        [Route("{appName}/objects/forUser/{contextName}/{userLogin}")]
+        public Task<SecObject[]> GetObjectsForContextAndUser(string appName, string contextName, string userLogin) => 
+            _securityRepository.GetObjectsForContextAndUserAsync(appName, contextName, userLogin);
 
         #endregion Objects
 

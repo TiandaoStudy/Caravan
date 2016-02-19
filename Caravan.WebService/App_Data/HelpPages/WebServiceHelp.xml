@@ -214,34 +214,6 @@
               Servizi di utilità per la parte di gestione dell'identità.
             </summary>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.IdentityController.GetSHA256(System.String)">
-            <summary>
-              Calcola l'hash in SHA256 per il secret dato. Utile per popolare le tabelle dei secret.
-            </summary>
-            <param name="secret">Il secret di cui si deve calcolare l'hash in SHA256.</param>
-            <returns>L'hash SHA256 del secret dato.</returns>
-        </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.IdentityController.GetSHA384(System.String)">
-            <summary>
-              Calcola l'hash in SHA384 per il secret dato. Utile per popolare le tabelle dei secret.
-            </summary>
-            <param name="secret">Il secret di cui si deve calcolare l'hash in SHA384.</param>
-            <returns>L'hash SHA384 del secret dato.</returns>
-        </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.IdentityController.GetSHA512(System.String)">
-            <summary>
-              Calcola l'hash in SHA512 per il secret dato. Utile per popolare le tabelle dei secret.
-            </summary>
-            <param name="secret">Il secret di cui si deve calcolare l'hash in SHA512.</param>
-            <returns>L'hash SHA512 del secret dato.</returns>
-        </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.IdentityController.GetAdaptivePasswordHash(System.String)">
-            <summary>
-              Calcola l'hash adattivo per il testo dato. Utile per provare come uscirebbero le password.
-            </summary>
-            <param name="text">Il testo da provare.</param>
-            <returns>L'hash adattivo del testo dato.</returns>
-        </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.LoggerController">
             <summary>
               Controller che si occupa della parte di logging.
