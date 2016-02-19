@@ -448,7 +448,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name.</param>
         /// <param name="contextName">The optional context name</param>
         /// <returns>All objects in the specified context</returns>
-        [Route("{appaName}/objects/{contextName?}")]
+        [Route("{appName}/objects/{contextName?}")]
         public Task<SecObject[]> GetObjects(string appName, string contextName) => (contextName == null)
             ? _securityRepository.GetObjectsAsync(appName)
             : _securityRepository.GetObjectsAsync(appName, contextName);
@@ -459,7 +459,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <param name="appName">The application name.</param>
         /// <param name="contextName">The optional context name</param>
         /// <returns>All objects in the specified context</returns>
-        [Route("{appaName}/objects/forUser/{contextName}/{userLogin}")]
+        [Route("{appName}/objects/forUser/{contextName}/{userLogin}")]
         public Task<SecObject[]> GetObjectsForContextAndUser(string appName, string contextName, string userLogin) => 
             _securityRepository.GetObjectsForContextAndUserAsync(appName, contextName, userLogin);
 
