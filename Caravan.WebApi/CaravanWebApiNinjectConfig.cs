@@ -26,15 +26,21 @@ namespace Finsa.Caravan.WebApi
     public sealed class CaravanWebApiNinjectConfig : NinjectModule
     {
         private readonly DependencyHandling _dependencyHandling;
+        private readonly Settings _settings;
 
         /// <summary>
         ///   Inizializza il modulo.
         /// </summary>
         /// <param name="dependencyHandling">Modalità di gestione delle dipendenze.</param>
-        public CaravanWebApiNinjectConfig(DependencyHandling dependencyHandling)
+        /// <param name="settings">Le impostazioni del modulo.</param>
+        public CaravanWebApiNinjectConfig(DependencyHandling dependencyHandling, Settings settings)
         {
             RaiseArgumentException.IfNot(Enum.IsDefined(typeof(DependencyHandling), dependencyHandling), ErrorMessages.InvalidEnumValue, nameof(dependencyHandling));
+            RaiseArgumentNullException.IfIsNull(settings, nameof(settings));
+            RaiseArgumentNullException.IfIsNull(settings.IdentityManager, nameof(settings.IdentityManager));
+            RaiseArgumentNullException.IfIsNull(settings.IdentityServer, nameof(settings.IdentityServer));
             _dependencyHandling = dependencyHandling;
+            _settings = settings;
         }
 
         /// <summary>
@@ -42,8 +48,8 @@ namespace Finsa.Caravan.WebApi
         /// 
         ///   * <see cref="IAccessTokenExtractor"/> via <see cref="BearerAccessTokenExtractor"/>,
         ///     indipendentemente dall'ambiente di esecuzione.
-        ///   * <see cref="IAuthorizationErrorHandler"/> via
-        ///     <see cref="SimpleAuthorizationErrorHandler"/>, indipendentemente dall'ambiente di esecuzione.
+        ///   * <see cref="IAuthorizationErrorHandler"/> via <see
+        ///     cref="SimpleAuthorizationErrorHandler"/>, indipendentemente dall'ambiente di esecuzione.
         /// </summary>
         public override void Load()
         {
@@ -53,11 +59,26 @@ namespace Finsa.Caravan.WebApi
                 case DependencyHandling.DevelopmentEnvironment:
                 case DependencyHandling.TestEnvironment:
                 case DependencyHandling.ProductionEnvironment:
-                    // Necessarie per la GUI della gestione utenti e per OAuth2. Non richieste per
-                    // gli unit test.
-                    Bind<IdentityServer3.Core.Configuration.IdentityServerServiceFactory>().To<IdentityServerServiceFactory>().InSingletonScope();
-                    Bind<IdentityManager.Configuration.IdentityManagerServiceFactory>().To<IdentityManagerServiceFactory>().InSingletonScope();
-                    Bind<IIdentityManagerService>().To<IdentityManagerService>().InRequestOrThreadScope();
+                    // Dipendenze per la GUI della gestione utenti.
+                    if (_settings.IdentityManager.Enabled)
+                    {
+                        Bind<IdentityManager.Configuration.IdentityManagerServiceFactory>()
+                            .To<IdentityManagerServiceFactory>()
+                            .InSingletonScope();
+
+                        Bind<IIdentityManagerService>()
+                            .To<IdentityManagerService>()
+                            .InRequestOrThreadScope();
+                    }
+
+                    // Dipendenze per il server OAuth2.
+                    if (_settings.IdentityServer.Enabled)
+                    {
+                        Bind<IdentityServer3.Core.Configuration.IdentityServerServiceFactory>()
+                            .To<IdentityServerServiceFactory>()
+                            .InSingletonScope();
+                    }
+
                     break;
 
                 case DependencyHandling.UnitTesting:
@@ -65,9 +86,60 @@ namespace Finsa.Caravan.WebApi
             }
 
             // Bind indipendenti dall'ambiente di esecuzione:
-            Bind<IAccessTokenExtractor>().To<BearerAccessTokenExtractor>().InSingletonScope();
-            Bind<IAccessTokenValidator>().To<IdentityAccessTokenValidator>().InSingletonScope();
-            Bind<IAuthorizationErrorHandler>().To<SimpleAuthorizationErrorHandler>().InSingletonScope();
+
+            Bind<IAccessTokenExtractor>()
+                .To<BearerAccessTokenExtractor>()
+                .InSingletonScope();
+
+            Bind<IAccessTokenValidator>()
+                .To<IdentityAccessTokenValidator>()
+                .InSingletonScope();
+
+            Bind<IAuthorizationErrorHandler>()
+                .To<SimpleAuthorizationErrorHandler>()
+                .InSingletonScope();
+        }
+
+        /// <summary>
+        ///   Le impostazioni del modulo Ninject.
+        /// </summary>
+        public sealed class Settings
+        {
+            /// <summary>
+            ///   Le impostazioni per IdentityManager.
+            /// </summary>
+            public IdentityManagerSettings IdentityManager { get; set; } = new IdentityManagerSettings();
+
+            /// <summary>
+            ///   Le impostazioni per IdentityServer.
+            /// </summary>
+            public IdentityServerSettings IdentityServer { get; set; } = new IdentityServerSettings();
+
+            /// <summary>
+            ///   Le impostazioni per IdentityManager.
+            /// </summary>
+            public sealed class IdentityManagerSettings
+            {
+                /// <summary>
+                ///   Abilita la registrazione delle dipendenze per IdentityManager.
+                /// 
+                ///   Disabilitato di default.
+                /// </summary>
+                public bool Enabled { get; set; } = false;
+            }
+
+            /// <summary>
+            ///   Le impostazioni per IdentityServer.
+            /// </summary>
+            public sealed class IdentityServerSettings
+            {
+                /// <summary>
+                ///   Abilita la registrazione delle dipendenze per IdentityServer.
+                /// 
+                ///   Disabilitato di default.
+                /// </summary>
+                public bool Enabled { get; set; } = false;
+            }
         }
     }
 }

@@ -72,13 +72,22 @@ namespace Finsa.Caravan.WebService
             IdentityConfig.Build(app);
         }
 
-        private static IKernel CreateKernel() =>
-            CaravanServiceProvider.NinjectKernel ??
-            (CaravanServiceProvider.NinjectKernel = new StandardKernel(
+        private static IKernel CreateKernel() {
+            if (CaravanServiceProvider.NinjectKernel != null)
+            {
+                return CaravanServiceProvider.NinjectKernel;
+            }
+
+            var webApiSettings = new CaravanWebApiNinjectConfig.Settings();
+            webApiSettings.IdentityManager.Enabled = true;
+            webApiSettings.IdentityServer.Enabled = true;
+
+            return CaravanServiceProvider.NinjectKernel = new StandardKernel(
                 new NinjectConfig(),
                 new CaravanCommonNinjectConfig(DependencyHandling.Default, "wsCaravan"),
                 new CaravanOracleDataAccessNinjectConfig(DependencyHandling.Default),
-                new CaravanWebApiNinjectConfig(DependencyHandling.Default)));
+                new CaravanWebApiNinjectConfig(DependencyHandling.Default, webApiSettings));
+        }
 
         private static void ConfigureAdminPages(IAppBuilder app)
         {
