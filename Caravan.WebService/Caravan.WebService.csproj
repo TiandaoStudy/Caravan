@@ -331,12 +331,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Caravan\Controllers\" />
+    <Folder Include="Caravan\Middlewares\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Packages\IdentityServer3.AspNetIdentity\IdentityServer3.AspNetIdentity.cs" />
     <Compile Include="CaravanWebServiceConfiguration.cs" />
-    <Compile Include="Controllers\CacheController.cs" />
+    <Compile Include="Caravan\Controllers\CacheController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\IdentityController.cs" />
     <Compile Include="Controllers\LoggerController.cs" />
