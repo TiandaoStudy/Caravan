@@ -13,7 +13,7 @@
 namespace Finsa.Caravan.WebApi.Core
 {
     /// <summary>
-    ///   Constanti usate nelle libreria Finsa.Caravan.WebApi.
+    ///   Constanti usate nella libreria Finsa.Caravan.WebApi.
     /// </summary>
     public static class Constants
     {
