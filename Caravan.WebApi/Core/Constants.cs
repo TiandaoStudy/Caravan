@@ -15,7 +15,7 @@ namespace Finsa.Caravan.WebApi.Core
     /// <summary>
     ///   Constanti usate nelle libreria Finsa.Caravan.WebApi.
     /// </summary>
-    static class Constants
+    public static class Constants
     {
         /// <summary>
         ///   ID usato come correlazione nei log.
