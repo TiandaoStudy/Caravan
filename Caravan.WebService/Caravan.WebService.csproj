@@ -241,12 +241,12 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="PommaLabs.KVLite, Version=5.1.0.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
-      <HintPath>..\packages\PommaLabs.KVLite.Core.5.1.0\lib\net46\PommaLabs.KVLite.dll</HintPath>
+    <Reference Include="PommaLabs.KVLite, Version=5.2.0.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
+      <HintPath>..\packages\PommaLabs.KVLite.Core.5.2.1\lib\net46\PommaLabs.KVLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PommaLabs.KVLite.WebApi, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PommaLabs.KVLite.WebApi.5.1.0\lib\net46\PommaLabs.KVLite.WebApi.dll</HintPath>
+    <Reference Include="PommaLabs.KVLite.WebApi, Version=5.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PommaLabs.KVLite.WebApi.5.2.1\lib\net46\PommaLabs.KVLite.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PommaLabs.Thrower, Version=2.2.0.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
@@ -264,6 +264,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.SQLite, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\PommaLabs.KVLite.SQLite.1.0.99.4\lib\net46\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.20622.1351, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -544,12 +548,14 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.1.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.1.1\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\PommaLabs.KVLite.SQLite.1.0.99.4\build\net46\PommaLabs.KVLite.SQLite.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PommaLabs.KVLite.SQLite.1.0.99.4\build\net46\PommaLabs.KVLite.SQLite.targets'))" />
   </Target>
   <PropertyGroup>
     <PreBuildEvent>cd $(ProjectDir)
 .bin\bower.cmd install --save --force-latest
 </PreBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\PommaLabs.KVLite.SQLite.1.0.99.4\build\net46\PommaLabs.KVLite.SQLite.targets" Condition="Exists('..\packages\PommaLabs.KVLite.SQLite.1.0.99.4\build\net46\PommaLabs.KVLite.SQLite.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
