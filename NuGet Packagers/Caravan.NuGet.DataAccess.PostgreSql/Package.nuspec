@@ -31,7 +31,7 @@ A short description of the package. If specified, this shows up in the middle pa
             <dependency id="IdentityServer3.EntityFramework" version="[2.2.0, 3.0.0)" />
             <dependency id="Npgsql" version="[2.2.7, 3.0.0)" />
             <dependency id="Npgsql.EntityFramework" version="[2.2.7, 3.0.0)" />
-            <dependency id="PommaLabs.KVLite.EntityFramework" version="[5.1.0, 6.0.0)" />
+            <dependency id="PommaLabs.KVLite.EntityFramework" version="[5.2.1, 6.0.0)" />
         </dependencies>
         <references></references>
         <frameworkAssemblies></frameworkAssemblies>
