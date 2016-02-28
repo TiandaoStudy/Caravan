@@ -126,7 +126,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
         private async Task ProxyRequestAsync(IOwinRequest owinRequest, IOwinResponse owinResponse)
         {
             // Preparazione del client e della richiesta REST.
-            var httpRequestUri = new Uri(_settings.TargetEndpointUri, owinRequest.Uri);
+            var httpRequestUri = new Uri(_settings.TargetEndpointUri, owinRequest.Path.ToUriComponent());
             var httpRequest = WebRequest.CreateHttp(httpRequestUri);
 
             // Configurazione della richiesta.
