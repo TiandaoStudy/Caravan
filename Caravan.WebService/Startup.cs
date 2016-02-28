@@ -52,11 +52,15 @@ namespace Finsa.Caravan.WebService
             var kernel = CreateKernel();
 
             // Inizializzatore per Caravan.
-            CaravanWebServiceHelper.OnStart(app, config, new CaravanWebServiceHelper.Settings
+            var webServiceSettings = new CaravanWebServiceHelper.Settings
             {
                 EnableHttpCompressionMiddleware = true,
                 EnableHttpLoggingMiddleware = true
-            });
+            };
+            webServiceSettings.HttpProxyMiddleware.Enabled = true;
+            webServiceSettings.HttpProxyMiddleware.SourceEndpointPath = new PathString("/valuesProxy");
+            webServiceSettings.HttpProxyMiddleware.TargetEndpointUri = new Uri("http://localhost/wsCaravan/values/");
+            CaravanWebServiceHelper.OnStart(app, config, webServiceSettings);
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
 
             // Inizializzatore per Ninject.
