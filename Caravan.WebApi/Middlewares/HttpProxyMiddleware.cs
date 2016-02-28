@@ -126,7 +126,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
         private async Task ProxyRequestAsync(IOwinRequest owinRequest, IOwinResponse owinResponse)
         {
             // Preparazione del client e della richiesta REST.
-            var httpRequestUri = new Uri(_settings.TargetEndpointUri, owinRequest.Path.ToUriComponent());
+            var httpRequestUri = UriCombine(_settings.TargetEndpointUri.AbsoluteUri, owinRequest.Path.Value);
             var httpRequest = WebRequest.CreateHttp(httpRequestUri);
 
             // Configurazione della richiesta.
@@ -168,6 +168,19 @@ namespace Finsa.Caravan.WebApi.Middlewares
             {
                 owinResponse.Headers.Append(headerName, string.Join(", ", httpResponseHeaders.GetValues(headerName)));
             }
+        }
+
+        /// <summary>
+        ///   Unisce i due URI dati.
+        /// </summary>
+        /// <param name="uri1">Il primo URI.</param>
+        /// <param name="uri2">Il secondo URI.</param>
+        /// <returns>I due URI uniti.</returns>
+        private static string UriCombine(string uri1, string uri2)
+        {
+            uri1 = uri1.TrimEnd('/');
+            uri2 = uri2.TrimStart('/');
+            return string.Format("{0}/{1}", uri1, uri2);
         }
 
         /// <summary>
