@@ -131,6 +131,8 @@ namespace Finsa.Caravan.WebApi.Middlewares
 
             // Configurazione della richiesta.
             httpRequest.AllowAutoRedirect = true;
+            httpRequest.AllowReadStreamBuffering = false;
+            httpRequest.AllowWriteStreamBuffering = false;
             httpRequest.AutomaticDecompression = DecompressionMethods.None;
             httpRequest.Method = owinRequest.Method;
 

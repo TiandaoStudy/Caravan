@@ -59,7 +59,7 @@ namespace Finsa.Caravan.WebService
             };
             webServiceSettings.HttpProxyMiddleware.Enabled = true;
             webServiceSettings.HttpProxyMiddleware.SourceEndpointPath = new PathString("/valuesProxy");
-            webServiceSettings.HttpProxyMiddleware.TargetEndpointUri = new Uri("http://localhost/wsCaravan/values/");
+            webServiceSettings.HttpProxyMiddleware.TargetEndpointUri = new Uri("http://localhost:50993/values/");
             CaravanWebServiceHelper.OnStart(app, config, webServiceSettings);
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
 
