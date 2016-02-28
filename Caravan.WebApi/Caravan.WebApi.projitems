@@ -36,6 +36,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Identity\SimpleAuthorizationErrorHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middlewares\HttpCompressionMiddleware.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middlewares\HttpLoggingMiddleware.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Middlewares\HttpProxyMiddleware.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Links\AlternateLink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Links\CollectionLink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Links\EditLink.cs" />

@@ -49,7 +49,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
         {
             RaiseArgumentNullException.IfIsNull(log, nameof(log));
             RaiseArgumentNullException.IfIsNull(settings, nameof(settings));
-            RaiseArgumentException.IfIsNullOrWhiteSpace(settings.EndpointUri.ToString(), nameof(settings.EndpointUri));
+            RaiseArgumentException.IfIsNullOrWhiteSpace(settings.TargetEndpointUri.ToString(), nameof(settings.TargetEndpointUri));
             _log = log;
             _settings = settings;
         }
@@ -127,7 +127,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
         private async Task ProxyRequestAsync(IOwinRequest owinRequest, IOwinResponse owinResponse)
         {
             // Preparazione del client e della richiesta REST.
-            var httpRequestUri = new Uri(_settings.EndpointUri, owinRequest.Uri);
+            var httpRequestUri = new Uri(_settings.TargetEndpointUri, owinRequest.Uri);
             var httpRequest = WebRequest.CreateHttp(httpRequestUri);
 
             // Configurazione della richiesta.
@@ -175,9 +175,19 @@ namespace Finsa.Caravan.WebApi.Middlewares
         public sealed class Settings
         {
             /// <summary>
+            ///   Determina se questo componente debba essere aggiunto alla pipeline.
+            /// </summary>
+            public bool Enabled { get; set; } = false;
+
+            /// <summary>
+            ///   Il percorso da cui le richieste vengono dirottate.
+            /// </summary>
+            public PathString SourceEndpointPath { get; set; } = new PathString("/source");
+
+            /// <summary>
             ///   L'indirizzo a cui dirottare le richieste.
             /// </summary>
-            public Uri EndpointUri { get; set; } = new Uri("http://localhost/myApp/endpoint/");
+            public Uri TargetEndpointUri { get; set; } = new Uri("http://localhost/myApp/target/");
 
             /// <summary>
             ///   Gli header HTTP che non vengono inseriti nella richiesta in proxy.

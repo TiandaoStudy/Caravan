@@ -71,6 +71,16 @@ namespace Finsa.Caravan.WebApi
                 // Inserire il log DOPO la compressione.
                 appBuilder.Use(kernel.Get<HttpLoggingMiddleware>());
             }
+            var proxySettings = settings.HttpProxyMiddleware;
+            if (proxySettings.Enabled)
+            {
+                // Inserire il proxy DOPO gli altri componenti.
+                appBuilder.Map(proxySettings.SourceEndpointPath, ab =>
+                {
+                    var proxyLog = CaravanServiceProvider.FetchLog<HttpProxyMiddleware>();
+                    ab.Use(typeof(HttpProxyMiddleware), proxyLog, proxySettings);
+                });
+            }
 
             // Pulizia dei log più vecchi o che superano una certa soglia di quantità.
             log.Trace("Cleaning up older log entries");
@@ -96,6 +106,11 @@ namespace Finsa.Caravan.WebApi
             ///   Abilitato di default.
             /// </summary>
             public bool EnableHttpLoggingMiddleware { get; set; } = true;
+
+            /// <summary>
+            ///   Le impostazioni del componente di proxy HTTP.
+            /// </summary>
+            public HttpProxyMiddleware.Settings HttpProxyMiddleware { get; } = new HttpProxyMiddleware.Settings();
         }
     }
 }

@@ -128,8 +128,11 @@ namespace Finsa.Caravan.WebApi.Middlewares
                     throw new InvalidOperationException("The response stream has been replaced by an unreadable or unseekable stream");
                 }
 
-                // Determines if the response stream meets the length requirements to be compressed.
-                if (!_disposed && response.Body.Length >= Constants.MinResponseLengthForCompression)
+                // Determines if the response stream meets the requirements to be compressed.
+                var isOkResponse = (response.StatusCode == 200);
+                var isLargeResponse = (response.Body.Length >= Constants.MinResponseLengthForCompression);
+                var isNotEncodedResponse = string.IsNullOrWhiteSpace(response.Headers["Content-Encoding"]);
+                if (!_disposed && isOkResponse && isLargeResponse)
                 {
                     response.Headers["Content-Encoding"] = canGZip ? GZipEncoding : DeflateEncoding;
 
