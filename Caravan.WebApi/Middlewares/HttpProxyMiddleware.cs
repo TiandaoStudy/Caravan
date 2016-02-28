@@ -39,7 +39,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
         }
 
         /// <summary>
-        ///   Inizializza il componente usato per la gestione di OAuth2.
+        ///   Inizializza il componente usato per il proxy HTTP.
         /// </summary>
         /// <param name="next">Il componente successivo nella catena.</param>
         /// <param name="log">Il log su cui scrivere eventuali messaggi.</param>
@@ -55,8 +55,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
         }
 
         /// <summary>
-        ///   Applica una rapida compressione alla risposta HTTP se il client ha specificato
-        ///   esplicitamente che è in grado di accettare risposte compresse.
+        ///   Redirige la request verso l'endpoint specificato e ritorna indietro la response ricevuta.
         /// </summary>
         /// <param name="context">Il contesto di Owin.</param>
         /// <returns>Task per proseguire nella catena di middleware.</returns>
