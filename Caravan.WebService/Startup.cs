@@ -57,8 +57,8 @@ namespace Finsa.Caravan.WebService
             webServiceSettings.HttpCompressionMiddleware.Enabled = true;
             webServiceSettings.HttpLoggingMiddleware.Enabled = true;
             webServiceSettings.HttpProxyMiddleware.Enabled = true;
-            webServiceSettings.HttpProxyMiddleware.SourceEndpointPath = new PathString("/valuesProxy");
-            webServiceSettings.HttpProxyMiddleware.TargetEndpointUri = new Uri("http://localhost:50993/values/");
+            webServiceSettings.HttpProxyMiddleware.SourceEndpointPath = new PathString("/proxyTester");
+            webServiceSettings.HttpProxyMiddleware.TargetEndpointUri = new Uri("http://localhost/wsCaravan/proxy/");
             CaravanWebServiceHelper.OnStart(app, config, webServiceSettings);
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
 
