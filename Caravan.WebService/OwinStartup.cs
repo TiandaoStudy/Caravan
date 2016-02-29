@@ -32,14 +32,14 @@ using System.Data.Entity.Infrastructure.Interception;
 using System.Net.Http;
 using System.Web.Http;
 
-[assembly: OwinStartup(typeof(Startup))]
+[assembly: OwinStartup(typeof(OwinStartup))]
 
 namespace Finsa.Caravan.WebService
 {
     /// <summary>
     ///   Inizializza il servizio di Caravan.
     /// </summary>
-    public sealed class Startup
+    public sealed class OwinStartup
     {
         /// <summary>
         ///   Inizializza il servizio di Caravan.

@@ -728,12 +728,12 @@
             </summary>
             <returns>Il certificato necessario per firmare i TOKEN.</returns>
         </member>
-        <member name="T:Finsa.Caravan.WebService.Startup">
+        <member name="T:Finsa.Caravan.WebService.OwinStartup">
             <summary>
               Inizializza il servizio di Caravan.
             </summary>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Startup.Configuration(Owin.IAppBuilder)">
+        <member name="M:Finsa.Caravan.WebService.OwinStartup.Configuration(Owin.IAppBuilder)">
             <summary>
               Inizializza il servizio di Caravan.
             </summary>

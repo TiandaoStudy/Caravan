@@ -350,7 +350,7 @@
     <Compile Include="IdentityConfig.cs" />
     <Compile Include="NinjectConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Startup.cs" />
+    <Compile Include="OwinStartup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\EFPregeneratedViews\CaravanViews.xml" />
