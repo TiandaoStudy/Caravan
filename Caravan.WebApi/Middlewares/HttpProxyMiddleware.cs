@@ -159,7 +159,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
             {
                 httpResponse = (await httpRequest.GetResponseAsync()) as HttpWebResponse;
             }
-            catch (WebException ex)
+            catch (WebException ex) when (ex.Response is HttpWebResponse)
             {
                 // Le response di errore arrivano all'interno di un'eccezione.
                 httpResponse = ex.Response as HttpWebResponse;
