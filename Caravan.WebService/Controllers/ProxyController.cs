@@ -67,6 +67,7 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <summary>
         ///   Restituisce una response di errore.
         /// </summary>
+        [Route("error")]
         public void GetErrorResponse()
         {
             throw new HttpException(HttpStatusCode.BadRequest, "PROXY ERROR TEST");

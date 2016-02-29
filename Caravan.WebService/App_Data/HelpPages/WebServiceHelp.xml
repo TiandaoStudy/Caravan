@@ -361,6 +361,35 @@
             <param name="appName">Application name</param>
             <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
         </member>
+        <member name="T:Finsa.Caravan.WebService.Controllers.ProxyController">
+            <summary>
+              Controller usato per "giocare" con il middleware di proxy.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.ProxyController.#ctor(Common.Logging.ILog)">
+            <summary>
+              Inietta le dipendenze.
+            </summary>
+            <param name="log">Il log.</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.ProxyController.GetRandomTuples(System.Int32)">
+            <summary>
+              Restituisce una lista di tuple casuali.
+            </summary>
+            <param name="count">Il numero di tuple richieste.</param>
+            <returns>Una lista di tuple casuali.</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.ProxyController.PostRandomTuples(System.Collections.Generic.IEnumerable{System.Tuple{System.Int32,System.String,System.Boolean}})">
+            <summary>
+              Registra nel log le tuple inviate.
+            </summary>
+            <param name="randomTuples">Lista di tuple casuali.</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.ProxyController.GetErrorResponse">
+            <summary>
+              Restituisce una response di errore.
+            </summary>
+        </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.SecurityController">
             <summary>
               Controller che si occupa della gestione della sicurezza.

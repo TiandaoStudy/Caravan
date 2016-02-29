@@ -154,7 +154,16 @@ namespace Finsa.Caravan.WebApi.Middlewares
             }
 
             // Esecuzione della richiesta.
-            var httpResponse = (await httpRequest.GetResponseAsync()) as HttpWebResponse;
+            HttpWebResponse httpResponse;
+            try
+            {
+                httpResponse = (await httpRequest.GetResponseAsync()) as HttpWebResponse;
+            }
+            catch (WebException ex)
+            {
+                // Le response di errore arrivano all'interno di un'eccezione.
+                httpResponse = ex.Response as HttpWebResponse;
+            }
 
             // Copia del body della risposta.
             var httpResponseBody = httpResponse.GetResponseStream();
