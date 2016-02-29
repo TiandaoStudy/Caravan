@@ -11,6 +11,7 @@
 // the License.
 
 using Common.Logging;
+using Finsa.Caravan.WebApi.Middlewares.Models;
 using Microsoft.Owin;
 using PommaLabs.Thrower;
 using System;
@@ -27,8 +28,8 @@ namespace Finsa.Caravan.WebApi.Middlewares
     /// </summary>
     public sealed class HttpProxyMiddleware : OwinMiddleware
     {
-        private readonly ILog _log;
         private readonly Settings _settings;
+        private readonly ILog _log;
 
         /// <summary>
         ///   Imposta gli elementi statici del componente di middleware.
@@ -42,16 +43,16 @@ namespace Finsa.Caravan.WebApi.Middlewares
         ///   Inizializza il componente usato per il proxy HTTP.
         /// </summary>
         /// <param name="next">Il componente successivo nella catena.</param>
-        /// <param name="log">Il log su cui scrivere eventuali messaggi.</param>
         /// <param name="settings">Le impostazioni del componente.</param>
-        public HttpProxyMiddleware(OwinMiddleware next, ILog log, Settings settings)
+        /// <param name="log">Il log su cui scrivere eventuali messaggi.</param>
+        public HttpProxyMiddleware(OwinMiddleware next, Settings settings, ILog log)
             : base(next)
         {
-            RaiseArgumentNullException.IfIsNull(log, nameof(log));
             RaiseArgumentNullException.IfIsNull(settings, nameof(settings));
             RaiseArgumentException.IfIsNullOrWhiteSpace(settings.TargetEndpointUri.ToString(), nameof(settings.TargetEndpointUri));
-            _log = log;
+            RaiseArgumentNullException.IfIsNull(log, nameof(log));
             _settings = settings;
+            _log = log;
         }
 
         /// <summary>
@@ -63,19 +64,19 @@ namespace Finsa.Caravan.WebApi.Middlewares
         {
             // Recupero le informazioni su request e response.
             var owinRequest = context.Request;
-            var response = context.Response;
+            var owinResponse = context.Response;
 
             try
             {
-                await ProxyRequestAsync(owinRequest, response);
+                await ProxyRequestAsync(owinRequest, owinResponse);
             }
             catch (HttpException ex)
             {
                 _log.Error(ex);
 
                 // Preparo la risposta di errore.
-                response.StatusCode = (int) ex.HttpStatusCode;
-                response.ContentType = "text/plain";
+                owinResponse.StatusCode = (int) ex.HttpStatusCode;
+                owinResponse.ContentType = "text/plain";
 
                 // Preparo il body con l'errore.
                 var stringBuilder = new StringBuilder("HTTP PROXY ERROR:");
@@ -91,15 +92,15 @@ namespace Finsa.Caravan.WebApi.Middlewares
                 stringBuilder.AppendLine("Stack trace: ");
                 stringBuilder.AppendLine(ex.StackTrace);
 
-                await response.WriteAsync(stringBuilder.ToString());
+                await owinResponse.WriteAsync(stringBuilder.ToString());
             }
             catch (Exception ex)
             {
                 _log.Error(ex);
 
                 // Preparo la risposta di errore.
-                response.StatusCode = (int) HttpStatusCode.InternalServerError;
-                response.ContentType = "text/plain";
+                owinResponse.StatusCode = (int) HttpStatusCode.InternalServerError;
+                owinResponse.ContentType = "text/plain";
 
                 // Preparo il body con l'errore.
                 var stringBuilder = new StringBuilder("HTTP PROXY ERROR:");
@@ -113,7 +114,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
                 stringBuilder.AppendLine("Stack trace: ");
                 stringBuilder.AppendLine(ex.StackTrace);
 
-                await response.WriteAsync(stringBuilder.ToString());
+                await owinResponse.WriteAsync(stringBuilder.ToString());
             }
         }
 
@@ -126,7 +127,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
         private async Task ProxyRequestAsync(IOwinRequest owinRequest, IOwinResponse owinResponse)
         {
             // Preparazione del client e della richiesta REST.
-            var httpRequestUri = UriCombine(_settings.TargetEndpointUri.AbsoluteUri, owinRequest.Path.Value);
+            var httpRequestUri = UriCombine(_settings.TargetEndpointUri, owinRequest.Path);
             var httpRequest = WebRequest.CreateHttp(httpRequestUri);
 
             // Configurazione della richiesta.
@@ -173,26 +174,16 @@ namespace Finsa.Caravan.WebApi.Middlewares
         /// <summary>
         ///   Unisce i due URI dati.
         /// </summary>
-        /// <param name="uri1">Il primo URI.</param>
-        /// <param name="uri2">Il secondo URI.</param>
+        /// <param name="baseUri">Il primo URI.</param>
+        /// <param name="relativePath">Il secondo URI.</param>
         /// <returns>I due URI uniti.</returns>
-        private static string UriCombine(string uri1, string uri2)
-        {
-            uri1 = uri1.TrimEnd('/');
-            uri2 = uri2.TrimStart('/');
-            return string.Format("{0}/{1}", uri1, uri2);
-        }
+        private static string UriCombine(Uri baseUri, PathString relativePath) => string.Format("{0}/{1}", baseUri, relativePath.Value.TrimStart('/'));
 
         /// <summary>
         ///   Le impostazioni del componente di middleware.
         /// </summary>
-        public sealed class Settings
+        public sealed class Settings : AbstractMiddlewareSettings
         {
-            /// <summary>
-            ///   Determina se questo componente debba essere aggiunto alla pipeline.
-            /// </summary>
-            public bool Enabled { get; set; } = false;
-
             /// <summary>
             ///   Il percorso da cui le richieste vengono dirottate.
             /// </summary>
@@ -215,8 +206,9 @@ namespace Finsa.Caravan.WebApi.Middlewares
         #region HttpWebRequest extensions
 
         /// <summary>
-        ///   Lista di header HTTP che non possono essere "aggiunti" a una <see
-        ///   cref="HttpWebRequest"/>, in quanto possono solo essere impostati tramite le apposite proprietà.
+        ///   Lista di header HTTP che non possono essere "aggiunti" a una
+        ///   <see cref="HttpWebRequest"/>, in quanto possono solo essere impostati tramite le
+        ///   apposite proprietà.
         /// </summary>
         private static HashSet<string> RestrictedHeaders = new HashSet<string>
         {
@@ -287,39 +279,5 @@ namespace Finsa.Caravan.WebApi.Middlewares
         }
 
         #endregion HttpWebRequest extensions
-
-        #region IDisposable support
-
-        private bool disposedValue = false; // To detect redundant calls
-
-        private void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects).
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
-                disposedValue = true;
-            }
-        }
-
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free
-        //       unmanaged resources. ~OAuth2ProxyMiddleware() { // Do not change this code. Put
-        // cleanup code in Dispose(bool disposing) above. Dispose(false); }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above. GC.SuppressFinalize(this);
-        }
-
-        #endregion IDisposable support
     }
 }

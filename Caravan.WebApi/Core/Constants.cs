@@ -36,15 +36,5 @@ namespace Finsa.Caravan.WebApi.Core
         ///   La dimensione minima usata dai buffer di risposta dei componenti di middleware.
         /// </summary>
         public const int MinResponseBufferSize = 512;
-
-        /// <summary>
-        ///   La lunghezza minima per cui viene attivata la compressione della risposta.
-        /// </summary>
-        public const int MinResponseLengthForCompression = 4096;
-
-        /// <summary>
-        ///   Dimensione usata per le risposte di tipo "chunked".
-        /// </summary>
-        public const int ResponseChunkSize = 81920;
     }
 }
