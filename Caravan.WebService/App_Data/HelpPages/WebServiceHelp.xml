@@ -379,6 +379,13 @@
             <param name="count">Il numero di tuple richieste.</param>
             <returns>Una lista di tuple casuali.</returns>
         </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.ProxyController.GetRandomTuplesWithSeed(System.Int32,System.Int32)">
+            <summary>
+              Restituisce una lista di tuple casuali.
+            </summary>
+            <param name="count">Il numero di tuple richieste.</param>
+            <returns>Una lista di tuple casuali.</returns>
+        </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.ProxyController.PostRandomTuples(System.Collections.Generic.IEnumerable{System.Tuple{System.Int32,System.String,System.Boolean}})">
             <summary>
               Registra nel log le tuple inviate.

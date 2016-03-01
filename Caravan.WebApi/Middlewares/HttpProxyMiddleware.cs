@@ -127,13 +127,12 @@ namespace Finsa.Caravan.WebApi.Middlewares
         private async Task ProxyRequestAsync(IOwinRequest owinRequest, IOwinResponse owinResponse)
         {
             // Preparazione del client e della richiesta REST.
-            var httpRequestUri = UriCombine(_settings.TargetEndpointUri, owinRequest.Path);
+            var httpRequestUri = UriCombine(_settings.TargetEndpointUri, owinRequest.Path, owinRequest.QueryString);
             var httpRequest = WebRequest.CreateHttp(httpRequestUri);
+            var requestHasBody = owinRequest.Body.Length != 0;
 
             // Configurazione della richiesta.
             httpRequest.AllowAutoRedirect = true;
-            httpRequest.AllowReadStreamBuffering = false;
-            httpRequest.AllowWriteStreamBuffering = false;
             httpRequest.AutomaticDecompression = DecompressionMethods.None;
             httpRequest.Method = owinRequest.Method;
 
@@ -146,9 +145,13 @@ namespace Finsa.Caravan.WebApi.Middlewares
                 }
             }
 
-            // Copia del body della richiesta, tranne se la richiesta è in GET.
-            if (!httpRequest.Method.Equals("GET", StringComparison.OrdinalIgnoreCase))
+            // Copia del body della richiesta, solo se presente.
+            if (requestHasBody)
             {
+                // Registro la lunghezza del contenuto del body.
+                httpRequest.ContentLength = owinRequest.Body.Length;
+
+                // Avvio la copia dello stream.
                 var httpRequestBody = await httpRequest.GetRequestStreamAsync();
                 await owinRequest.Body.CopyToAsync(httpRequestBody);
             }
@@ -185,8 +188,15 @@ namespace Finsa.Caravan.WebApi.Middlewares
         /// </summary>
         /// <param name="baseUri">Il primo URI.</param>
         /// <param name="relativePath">Il secondo URI.</param>
+        /// <param name="queryString">La componente della query string.</param>
         /// <returns>I due URI uniti.</returns>
-        private static string UriCombine(Uri baseUri, PathString relativePath) => string.Format("{0}/{1}", baseUri, relativePath.Value.TrimStart('/'));
+        private static string UriCombine(Uri baseUri, PathString relativePath, QueryString queryString)
+        {
+            var trimmedRelativePathValue = relativePath.HasValue ? relativePath.Value.TrimStart('/') : string.Empty;
+            return queryString.HasValue
+                 ? string.Format("{0}/{1}?{2}", baseUri, trimmedRelativePathValue, queryString.Value)
+                 : string.Format("{0}/{1}", baseUri, trimmedRelativePathValue);
+        }
 
         /// <summary>
         ///   Le impostazioni del componente di middleware.
@@ -208,7 +218,8 @@ namespace Finsa.Caravan.WebApi.Middlewares
             /// </summary>
             public HashSet<string> FilteredHeaders = new HashSet<string>
             {
-                "Connection"
+                "Connection", // Causa errori vari - Va studiato.
+                "Content-Length" // Viene impostato in automatico dal framework.
             };
         }
 

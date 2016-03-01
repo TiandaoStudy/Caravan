@@ -54,6 +54,21 @@ namespace Finsa.Caravan.WebService.Controllers
                 .Select(i => Tuple.Create(r.Next(), r.NextDouble().ToString(), r.NextBoolean()));
         }
 
+
+        /// <summary>
+        ///   Restituisce una lista di tuple casuali.
+        /// </summary>
+        /// <param name="count">Il numero di tuple richieste.</param>
+        /// <returns>Una lista di tuple casuali.</returns>
+        [Route("randtupleswithseed/{count}")]
+        public IEnumerable<Tuple<int, string, bool>> GetRandomTuplesWithSeed(int count, int seed)
+        {
+            var r = new TRandom(seed);
+            return Enumerable
+                .Range(0, count)
+                .Select(i => Tuple.Create(r.Next(), r.NextDouble().ToString(), r.NextBoolean()));
+        }
+
         /// <summary>
         ///   Registra nel log le tuple inviate.
         /// </summary>
