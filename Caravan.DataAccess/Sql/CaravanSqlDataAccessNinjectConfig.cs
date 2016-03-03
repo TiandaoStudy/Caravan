@@ -16,14 +16,11 @@ using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.DataAccess.Sql.Identity.Services;
 using Finsa.Caravan.DataAccess.Sql.Identity.Stores;
-using Finsa.CodeServices.Common.Portability;
 using IdentityServer3.Core.Services;
-using InteractivePreGeneratedViews;
 using Ninject;
 using PommaLabs.KVLite;
 using PommaLabs.KVLite.EntityFramework;
 using System.Data.Entity.Infrastructure;
-using System.IO;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
@@ -84,8 +81,9 @@ namespace Finsa.Caravan.DataAccess.Sql
                         ContextCreator = () => kernelCopy.Get<SqlDbContext>(),
                         LazyLoadingEnabled = false
                     }).InSingletonScope();
-                    Bind<IDbContextFactory<SqlDbContext>, IConfigurableDbContextFactory<SqlDbContext>>().To<ConfigurableDbContextFactory<SqlDbContext>>().InSingletonScope();
-                    ConfigureEFPregeneratedViews();
+                    Bind<IDbContextFactory<SqlDbContext>, IConfigurableDbContextFactory<SqlDbContext>>()
+                        .To<ConfigurableDbContextFactory<SqlDbContext>>()
+                        .InSingletonScope();
                     break;
 
                 case DependencyHandling.UnitTesting:
@@ -109,27 +107,6 @@ namespace Finsa.Caravan.DataAccess.Sql
 
             // Gestione della cache per EF.
             QueryCacheProvider.Register(() => kernelCopy.Get<ICache>());
-        }
-
-        private void ConfigureEFPregeneratedViews()
-        {
-            // Configura la generazione automatica delle viste per EF.
-            using (var dbContext = Kernel.Get<IDbContextFactory<SqlDbContext>>().Create())
-            {
-                // Per prima cosa, recupero la cartella di destinazione e mi assicuro che esista. Se
-                // non esiste, la creo, altrimenti avrei un errore alla prima query.
-                var pregenViewsPath = CaravanDataAccessConfiguration.Instance.Drivers_Sql_EFPregeneratedViews_Path;
-                var mappedPregenViewsPath = PortableEnvironment.MapPath(pregenViewsPath);
-                if (!Directory.Exists(mappedPregenViewsPath))
-                {
-                    Directory.CreateDirectory(mappedPregenViewsPath);
-                }
-
-                // Quindi, calcolo il nome del file di destinazione e applico il nuovo meccanismo.
-                var caravanPregenViewsFileName = CaravanDataAccessConfiguration.Instance.Drivers_Sql_EFPregeneratedViews_CaravanViewsFileName;
-                var caravanPregenViews = Path.Combine(mappedPregenViewsPath, caravanPregenViewsFileName);
-                InteractiveViews.SetViewCacheFactory(dbContext, new FileViewCacheFactory(caravanPregenViews));
-            }
         }
     }
 }

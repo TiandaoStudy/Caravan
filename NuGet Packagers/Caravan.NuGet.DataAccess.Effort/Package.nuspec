@@ -23,7 +23,6 @@ A short description of the package. If specified, this shows up in the middle pa
         <copyright>Copyright © Finsa S.p.A. 2014-2024</copyright>
         <dependencies>
             <dependency id="Effort.EF6" version="[1.1.4, 2.0.0)" />
-            <dependency id="EFInteractiveViews" version="[1.0.1, 2.0.0)" />
             <dependency id="EntityFramework" version="[6.1.3, 7.0.0)" />
             <dependency id="EntityFramework.CodeFirstStoreFunctions" version="[1.0.0, 2.0.0)" />
             <dependency id="EntityFramework.Triggers" version="[5.4.0, 6.0.0)" />

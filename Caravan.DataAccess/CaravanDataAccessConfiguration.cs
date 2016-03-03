@@ -89,16 +89,6 @@ namespace Finsa.Caravan.DataAccess
 
         public string SqlInitializer { get; set; }
 
-        /// <summary>
-        ///   Il percorso dove memorizzare le viste pre-generate per EF.
-        /// </summary>
-        public string Drivers_Sql_EFPregeneratedViews_Path { get; set; } = "~/App_Data/EFPregeneratedViews";
-
-        /// <summary>
-        ///   Il nome del file dove memorizzare le viste pre-generate di Caravan.
-        /// </summary>
-        public string Drivers_Sql_EFPregeneratedViews_CaravanViewsFileName { get; set; } = "CaravanViews.xml";
-
         #region Oracle
 
         public int OracleStatementCacheSize { get; set; }
