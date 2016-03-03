@@ -353,7 +353,6 @@
     <Compile Include="OwinStartup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\EFPregeneratedViews\CaravanViews.xml" />
     <Content Include="App_Data\HelpPages\WebServiceHelp.xml" />
     <Content Include="Caravan\Administration\js\config.js" />
     <Content Include="Caravan\Administration\css\_bootstrap.css" />
