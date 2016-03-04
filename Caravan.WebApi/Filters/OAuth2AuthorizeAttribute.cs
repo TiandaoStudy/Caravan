@@ -96,7 +96,7 @@ namespace Finsa.Caravan.WebApi.Filters
                     }
                 }
 
-                var authorizationValidator = CaravanServiceProvider.NinjectKernel.Get(AuthorizationValidatorType) as IAuthorizationValidator;
+                var authorizationValidator = ServiceProvider.NinjectKernel.Get(AuthorizationValidatorType) as IAuthorizationValidator;
                 AuthorizationResult<IPrincipal> authorizationResult = await authorizationValidator.ValidateRequestAsync(actionContext, accessTokenValidationResult.Payload);
                 if (!authorizationResult.Authorized)
                 {

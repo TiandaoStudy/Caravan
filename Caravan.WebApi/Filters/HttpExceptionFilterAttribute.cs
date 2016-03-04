@@ -32,7 +32,7 @@ namespace Finsa.Caravan.WebApi.Filters
         /// <summary>
         ///   Un log configurato per questo filtro.
         /// </summary>
-        protected static readonly ILog Log = CaravanServiceProvider.FetchLog<HttpExceptionFilterAttribute>();
+        protected static readonly ILog Log = ServiceProvider.FetchLog<HttpExceptionFilterAttribute>();
 
         /// <summary>
         ///   La mappa contenente tutti i gestori degli errori. Può essere arricchita dai filtri che

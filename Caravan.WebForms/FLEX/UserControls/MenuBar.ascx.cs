@@ -17,7 +17,7 @@ namespace FLEX.Web.UserControls
 {
     public partial class MenuBar : ControlBase
     {
-        private static readonly ICaravanLog Log = CaravanServiceProvider.FetchLog<MenuBar>();
+        private static readonly ICaravanLog Log = ServiceProvider.FetchLog<MenuBar>();
 
         protected void Page_Load(object sender, EventArgs e)
         {

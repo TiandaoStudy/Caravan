@@ -10,24 +10,18 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using Finsa.Caravan.Common;
-using Ninject;
-
-namespace Finsa.Caravan.WebApi.Core
+namespace Finsa.Caravan.Common.Reporting
 {
-    sealed class IdentityServerNinjectRegistration<T> : IdentityServer3.Core.Configuration.Registration<T>
-        where T : class
+    /// <summary>
+    ///   Descrive i metodi necessari da tutte le raccolte di servizi delle sorgenti dati.
+    /// </summary>
+    public interface IDataSourceRequiredServices
     {
-        public IdentityServerNinjectRegistration() : base(r => ServiceProvider.NinjectKernel.Get<T>())
-        {
-        }
-    }
-
-    sealed class IdentityManagerNinjectRegistration<T> : IdentityManager.Configuration.Registration<T>
-        where T : class
-    {
-        public IdentityManagerNinjectRegistration() : base(r => ServiceProvider.NinjectKernel.Get<T>())
-        {
-        }
+        /// <summary>
+        ///   Meotodo invocato da <see cref="AbstractObjectDataSource{TRequiredServices}"/> quando
+        ///   non è disponibile <see cref="ServiceProvider.NinjectKernel"/>. Un caso in cui questo
+        ///   avviene è quando si sta cercando di fare un'anteprima del report.
+        /// </summary>
+        void SetDefaults();
     }
 }

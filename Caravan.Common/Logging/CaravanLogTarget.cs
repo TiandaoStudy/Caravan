@@ -42,7 +42,7 @@ namespace Finsa.Caravan.Common.Logging
             {
                 if (_cachedLogRepository == null)
                 {
-                    _cachedLogRepository = CaravanServiceProvider.NinjectKernel.Get<ICaravanLogRepository>();
+                    _cachedLogRepository = ServiceProvider.NinjectKernel.Get<ICaravanLogRepository>();
                 }
                 return _cachedLogRepository;
             }
@@ -189,7 +189,7 @@ namespace Finsa.Caravan.Common.Logging
             {
                 // Devo loggare immediatamente l'eccezione che è stata ricevuta. Cerco di salvare
                 // comunque il messaggio di log appena emesso.
-                CaravanServiceProvider.EmergencyLog.Error($"Internal error while logging [{logMessage}]", ex);
+                ServiceProvider.EmergencyLog.Error($"Internal error while logging [{logMessage}]", ex);
             }
             catch
             {

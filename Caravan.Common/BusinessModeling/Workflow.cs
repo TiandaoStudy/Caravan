@@ -84,13 +84,13 @@ namespace Finsa.Caravan.Common.BusinessModeling
             {
                 // Creo una nuova istanza del flusso, di modo che le venga anche assegnato un ID.
                 // L'ID è comodo per loggare precisamente quale flusso abbia generato un dato messaggio.
-                workflow = CaravanServiceProvider.NinjectKernel.Get<TWorkflow>();
+                workflow = ServiceProvider.NinjectKernel.Get<TWorkflow>();
             }
             catch (Exception ex)
             {
                 // Devo registrare precisamente l'eccezione. TODO Produrre anche un alert? Non uso
                 // l'istanza presente su workflow, perché probabilmente non esiste.
-                CaravanServiceProvider.EmergencyLog.Fatal($"Creating an instance of workflow {typeof(TWorkflow).Name}", ex);
+                ServiceProvider.EmergencyLog.Fatal($"Creating an instance of workflow {typeof(TWorkflow).Name}", ex);
 
                 // TODO Per ora, la rilancio.
                 throw;

@@ -19,7 +19,7 @@ namespace FLEX.Web.Pages
 {
     public partial class CodeEditor : PageBase
     {
-        private readonly ICaravanLog _log = CaravanServiceProvider.FetchLog<CodeEditor>();
+        private readonly ICaravanLog _log = ServiceProvider.FetchLog<CodeEditor>();
 
         readonly Dictionary<string, string> _filesPath = new Dictionary<string, string>();
 
