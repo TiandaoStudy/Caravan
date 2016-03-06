@@ -26,5 +26,17 @@ namespace Finsa.Caravan.WebApi.Identity.Models
         /// </summary>
         [DataMember]
         public string AccessTokenValidationUrl { get; set; }
+
+        /// <summary>
+        ///   Il codice identificativo del client usato per OAuth2.
+        /// </summary>
+        [DataMember]
+        public string ClientId { get; set; }
+
+        /// <summary>
+        ///   Il "secret" associato al client usato per OAuth2.
+        /// </summary>
+        [DataMember]
+        public string ClientSecret { get; set; }
     }
 }

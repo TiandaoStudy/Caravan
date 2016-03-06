@@ -10,6 +10,8 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Common.Logging;
+using Finsa.Caravan.WebApi.Identity.Models;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -20,6 +22,16 @@ namespace Finsa.Caravan.WebApi.Identity
     /// </summary>
     public interface IAccessTokenExtractor
     {
+        /// <summary>
+        ///   Le impostazioni legate al server di OAuth2.
+        /// </summary>
+        OAuth2AuthorizationSettings AuthorizationSettings { get; }
+
+        /// <summary>
+        ///   Istanza del log per questo filtro.
+        /// </summary>
+        ILog Log { get; }
+
         /// <summary>
         ///   Recupera l'access token dalla richiesta HTTP.
         /// </summary>

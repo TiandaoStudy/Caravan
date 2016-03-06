@@ -34,11 +34,11 @@ namespace Finsa.Caravan.Common.Logging
 
         public static CaravanVariablesContext GlobalVariables
             => _cachedGlobal
-            ?? (_cachedGlobal = new CaravanVariablesContext(CaravanServiceProvider.MemoryCache, CaravanVariablesContextMode.Global, CaravanServiceProvider.NinjectKernel.Get<ICaravanVariablesContextIdentifier>()));
+            ?? (_cachedGlobal = new CaravanVariablesContext(ServiceProvider.MemoryCache, CaravanVariablesContextMode.Global, ServiceProvider.NinjectKernel.Get<ICaravanVariablesContextIdentifier>()));
 
         public static CaravanVariablesContext ThreadVariables
             => _cachedThread
-            ?? (_cachedThread = new CaravanVariablesContext(CaravanServiceProvider.MemoryCache, CaravanVariablesContextMode.Thread, CaravanServiceProvider.NinjectKernel.Get<ICaravanVariablesContextIdentifier>()));
+            ?? (_cachedThread = new CaravanVariablesContext(ServiceProvider.MemoryCache, CaravanVariablesContextMode.Thread, ServiceProvider.NinjectKernel.Get<ICaravanVariablesContextIdentifier>()));
 
         #endregion Static members
 
@@ -91,7 +91,7 @@ namespace Finsa.Caravan.Common.Logging
         public void Set(string key, object newValue)
         {
             var map = GetAndSetVariablesMap();
-            var newTuple = GTuple.Create(CaravanServiceProvider.Clock.UtcNow.Ticks, newValue);
+            var newTuple = GTuple.Create(ServiceProvider.Clock.UtcNow.Ticks, newValue);
             GTuple2<long, object> oldTuple;
             if (map.TryGetValue(key, out oldTuple))
             {

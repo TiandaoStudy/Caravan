@@ -49,7 +49,7 @@ namespace Finsa.Caravan.WebService
                     EnableWelcomePage = true,
 
                     // Gestione della sorgente dati per gli utenti.
-                    Factory = CaravanServiceProvider.NinjectKernel.Get<IdentityServerServiceFactory>()
+                    Factory = ServiceProvider.NinjectKernel.Get<IdentityServerServiceFactory>()
                 };
 
                 // Personalizzazione della parte di autenticazione.
@@ -65,7 +65,7 @@ namespace Finsa.Caravan.WebService
                 var options = new IdentityManagerOptions
                 {
                     // Gestione della sorgente dati per gli utenti.
-                    Factory = CaravanServiceProvider.NinjectKernel.Get<IdentityManagerServiceFactory>()
+                    Factory = ServiceProvider.NinjectKernel.Get<IdentityManagerServiceFactory>()
                 };
 
                 // Gestione della sicurezza della comunicazione.

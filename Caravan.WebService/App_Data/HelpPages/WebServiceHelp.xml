@@ -142,24 +142,71 @@
         </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.HelpController">
             <summary>
-              The HELP controller.
+              Il controller di "help" contiene metodi utili per avere informazioni sul servizio stesso e
+              sugli utenti collegati.
             </summary>
-            <remarks>Adjust routing prefix according to your own needs.</remarks>
-            <remarks>Questo servizio dovrebbe essere esposto pubblicamente.</remarks>
+            <remarks>
+              Il percorso del servizio può essere modificato a proprio piacimento.
+            
+              Questo servizio dovrebbe essere esposto pubblicamente, senza particolari autenticazioni.
+            </remarks>
+        </member>
+        <member name="F:Finsa.Caravan.WebService.Controllers.HelpController._dataSourceManager">
+            <summary>
+              Il gestore della sorgente dati di Caravan.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.#ctor(Finsa.Caravan.DataAccess.ICaravanDataSourceManager)">
+            <summary>
+              Inietta le dipendenze richieste dal controller.
+            </summary>
+            <param name="dataSourceManager">Il gestore della sorgente dati di Caravan.</param>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.Get">
             <summary>
-              Redirects to Swagger help pages.
+              Effettua la redirezione alle pagine di "help" di SwaggerUI.
             </summary>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.GetVersion">
+        <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.GetServiceInfo">
             <summary>
-              Returns the web service version written in the main assembly.
+              Restituisce informazioni sul servizio, come la sorgente dati e la versione.
             </summary>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.GetUserInfo">
             <summary>
-              Returns the authorized user info.
+              Restituisce informazioni sull'utente correntemente autenticato.
+            </summary>
+        </member>
+        <member name="T:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO">
+            <summary>
+              Rappresenta una descrizione sintetica delle informazioni sul servizio.
+            </summary>
+        </member>
+        <member name="P:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO.Version">
+            <summary>
+              La versione del servizio, letta direttamente dall'assembly .NET del servizio stesso.
+            </summary>
+        </member>
+        <member name="P:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO.HostName">
+            <summary>
+              Il nome di rete del server su cui è ospitato il servizio.
+            </summary>
+        </member>
+        <member name="P:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO.Bitness">
+            <summary>
+              L'architettura (x86 oppure x64) del processo che esegue il servizio.
+            </summary>
+        </member>
+        <member name="P:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO.DataSourceName">
+            <summary>
+              Il nome della sorgente dati a cui è collegato Caravan e che, presumibilmente, è
+              condivisa con l'applicativo.
+            </summary>
+        </member>
+        <member name="P:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO.DataSourceKind">
+            <summary>
+              Il tipo della sorgente dati a cui è collegato Caravan e che, presumibilmente, è
+              condivisa con l'applicativo.
             </summary>
         </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.IdentityController">
@@ -167,19 +214,33 @@
               Servizi di utilità per la parte di gestione dell'identità.
             </summary>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.IdentityController.GetSha256(System.String)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.IdentityController.GetSHA256(System.String)">
             <summary>
               Calcola l'hash in SHA256 per il secret dato. Utile per popolare le tabelle dei secret.
             </summary>
             <param name="secret">Il secret di cui si deve calcolare l'hash in SHA256.</param>
             <returns>L'hash SHA256 del secret dato.</returns>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.IdentityController.GetSha512(System.String)">
+        <member name="M:Finsa.Caravan.WebService.Controllers.IdentityController.GetSHA384(System.String)">
+            <summary>
+              Calcola l'hash in SHA384 per il secret dato. Utile per popolare le tabelle dei secret.
+            </summary>
+            <param name="secret">Il secret di cui si deve calcolare l'hash in SHA384.</param>
+            <returns>L'hash SHA384 del secret dato.</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.IdentityController.GetSHA512(System.String)">
             <summary>
               Calcola l'hash in SHA512 per il secret dato. Utile per popolare le tabelle dei secret.
             </summary>
             <param name="secret">Il secret di cui si deve calcolare l'hash in SHA512.</param>
             <returns>L'hash SHA512 del secret dato.</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.IdentityController.GetAdaptivePasswordHash(System.String)">
+            <summary>
+              Calcola l'hash adattivo per il testo dato. Utile per provare come uscirebbero le password.
+            </summary>
+            <param name="text">Il testo da provare.</param>
+            <returns>L'hash adattivo del testo dato.</returns>
         </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.LoggerController">
             <summary>
@@ -299,6 +360,42 @@
             </summary>
             <param name="appName">Application name</param>
             <param name="logLevel">Type of log which can be "warn", "info" or "error"</param>
+        </member>
+        <member name="T:Finsa.Caravan.WebService.Controllers.ProxyController">
+            <summary>
+              Controller usato per "giocare" con il middleware di proxy.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.ProxyController.#ctor(Common.Logging.ILog)">
+            <summary>
+              Inietta le dipendenze.
+            </summary>
+            <param name="log">Il log.</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.ProxyController.GetRandomTuples(System.Int32)">
+            <summary>
+              Restituisce una lista di tuple casuali.
+            </summary>
+            <param name="count">Il numero di tuple richieste.</param>
+            <returns>Una lista di tuple casuali.</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.ProxyController.GetRandomTuplesWithSeed(System.Int32,System.Int32)">
+            <summary>
+              Restituisce una lista di tuple casuali.
+            </summary>
+            <param name="count">Il numero di tuple richieste.</param>
+            <returns>Una lista di tuple casuali.</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.ProxyController.PostRandomTuples(System.Collections.Generic.IEnumerable{System.Tuple{System.Int32,System.String,System.Boolean}})">
+            <summary>
+              Registra nel log le tuple inviate.
+            </summary>
+            <param name="randomTuples">Lista di tuple casuali.</param>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.ProxyController.GetErrorResponse">
+            <summary>
+              Restituisce una response di errore.
+            </summary>
         </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.SecurityController">
             <summary>
@@ -511,7 +608,15 @@
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetObjects(System.String,System.String)">
             <summary>
-              Returns all objects in the specified context
+              Restituisce tutti gli oggetti nel contesto specificato, se presente.
+            </summary>
+            <param name="appName">The application name.</param>
+            <param name="contextName">The optional context name</param>
+            <returns>All objects in the specified context</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.SecurityController.GetObjectsForContextAndUser(System.String,System.String,System.String)">
+            <summary>
+              Restituisce tutti gli oggetti nel contesto specificato, se presente.
             </summary>
             <param name="appName">The application name.</param>
             <param name="contextName">The optional context name</param>
@@ -630,12 +735,12 @@
             </summary>
             <returns>Il certificato necessario per firmare i TOKEN.</returns>
         </member>
-        <member name="T:Finsa.Caravan.WebService.Startup">
+        <member name="T:Finsa.Caravan.WebService.OwinStartup">
             <summary>
               Inizializza il servizio di Caravan.
             </summary>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Startup.Configuration(Owin.IAppBuilder)">
+        <member name="M:Finsa.Caravan.WebService.OwinStartup.Configuration(Owin.IAppBuilder)">
             <summary>
               Inizializza il servizio di Caravan.
             </summary>

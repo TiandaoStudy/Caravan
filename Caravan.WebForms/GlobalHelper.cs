@@ -13,12 +13,12 @@ namespace Finsa.Caravan.WebForms
 {
     public sealed class GlobalHelper
     {
-        private static readonly ICaravanLog Log = CaravanServiceProvider.FetchLog<GlobalHelper>();
+        private static readonly ICaravanLog Log = ServiceProvider.FetchLog<GlobalHelper>();
 
         public static void Application_Start(object sender, EventArgs args, string connectionString)
         {
             // Sets the default connection string.
-            CaravanServiceProvider.NinjectKernel.Get<ICaravanDataSourceManager>().ConnectionString = connectionString;
+            ServiceProvider.NinjectKernel.Get<ICaravanDataSourceManager>().ConnectionString = connectionString;
 
             // After setting the connection string, we can use the logger.
             Log.Info("Application started");
@@ -147,7 +147,7 @@ namespace Finsa.Caravan.WebForms
                     if (_userList.ContainsKey(Cookies.Value))
                     {
                         SecSession _st = (SecSession) _userList[Cookies.Value];
-                        _st.LastVisit = CaravanServiceProvider.Clock.UtcNow;
+                        _st.LastVisit = ServiceProvider.Clock.UtcNow;
                         _st.UserLogin = userName;
                         _userList[Cookies.Value] = _st;
                         //Salvo i dati

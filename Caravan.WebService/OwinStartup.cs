@@ -15,7 +15,6 @@ using Finsa.Caravan.DataAccess.Sql.Logging;
 using Finsa.Caravan.DataAccess.Sql.Oracle;
 using Finsa.Caravan.WebApi;
 using Finsa.Caravan.WebApi.Filters;
-using Finsa.Caravan.WebApi.Identity.Models;
 using Finsa.Caravan.WebService;
 using Finsa.CodeServices.Common.Portability;
 using Microsoft.Owin;
@@ -31,17 +30,16 @@ using Swashbuckle.Application;
 using System;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 
-[assembly: OwinStartup(typeof(Startup))]
+[assembly: OwinStartup(typeof(OwinStartup))]
 
 namespace Finsa.Caravan.WebService
 {
     /// <summary>
     ///   Inizializza il servizio di Caravan.
     /// </summary>
-    public sealed class Startup
+    public sealed class OwinStartup
     {
         /// <summary>
         ///   Inizializza il servizio di Caravan.
@@ -54,11 +52,14 @@ namespace Finsa.Caravan.WebService
             var kernel = CreateKernel();
 
             // Inizializzatore per Caravan.
-            CaravanWebServiceHelper.OnStart(app, config, new CaravanWebServiceHelper.Settings
-            {
-                EnableHttpCompressionMiddleware = true,
-                EnableHttpLoggingMiddleware = true
-            });
+            var webServiceSettings = new CaravanWebServiceHelper.Settings();
+            webServiceSettings.HttpRequestIdentifierMiddleware.Enabled = true;
+            webServiceSettings.HttpCompressionMiddleware.Enabled = true;
+            webServiceSettings.HttpLoggingMiddleware.Enabled = true;
+            webServiceSettings.HttpProxyMiddleware.Enabled = true;
+            webServiceSettings.HttpProxyMiddleware.SourceEndpointPath = new PathString("/proxyTester");
+            webServiceSettings.HttpProxyMiddleware.TargetEndpointUri = new Uri("http://localhost/wsCaravan/proxy/");
+            CaravanWebServiceHelper.OnStart(app, config, webServiceSettings);
             DbInterception.Add(kernel.Get<SqlDbCommandLogger>());
 
             // Inizializzatore per Ninject.
@@ -72,21 +73,24 @@ namespace Finsa.Caravan.WebService
 
             // Inizializzazione gestione identità.
             IdentityConfig.Build(app);
-
-            // Sblocco protezione servizi - NON portare in produzione.
-            AuthorizeForCaravanAttribute.AuthorizationGranted = (actionContext, cancellationToken, log) =>
-            {
-                return Task.FromResult(new AuthorizationResult { Authorized = true });
-            };
         }
 
-        private static IKernel CreateKernel() =>
-            CaravanServiceProvider.NinjectKernel ??
-            (CaravanServiceProvider.NinjectKernel = new StandardKernel(
+        private static IKernel CreateKernel() {
+            if (ServiceProvider.NinjectKernel != null)
+            {
+                return ServiceProvider.NinjectKernel;
+            }
+
+            var webApiSettings = new CaravanWebApiNinjectConfig.Settings();
+            webApiSettings.IdentityManager.Enabled = true;
+            webApiSettings.IdentityServer.Enabled = true;
+
+            return ServiceProvider.NinjectKernel = new StandardKernel(
                 new NinjectConfig(),
                 new CaravanCommonNinjectConfig(DependencyHandling.Default, "wsCaravan"),
                 new CaravanOracleDataAccessNinjectConfig(DependencyHandling.Default),
-                new CaravanWebApiNinjectConfig(DependencyHandling.Default)));
+                new CaravanWebApiNinjectConfig(DependencyHandling.Default, webApiSettings));
+        }
 
         private static void ConfigureAdminPages(IAppBuilder app)
         {
@@ -137,6 +141,7 @@ namespace Finsa.Caravan.WebService
             // Personalizzo le impostazioni del serializzatore JSON.
             config.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
             {
+                ContractResolver = new CodeServices.Serialization.Json.Resolvers.CamelCasePropertyNamesContractResolver(),
                 Formatting = Formatting.None,
                 NullValueHandling = NullValueHandling.Ignore,
                 PreserveReferencesHandling = PreserveReferencesHandling.None,
@@ -154,11 +159,6 @@ namespace Finsa.Caravan.WebService
             RaiseArgumentNullException.IfIsNull(config, nameof(config));
 
             config.Filters.Add(new HttpExceptionFilterAttribute());
-            AuthorizeForCaravanAttribute.AuthorizationGranted = (context, token, log) => Task.FromResult(new AuthorizationResult
-            {
-                // Liberi tutti, per ora...
-                Authorized = CaravanWebServiceConfiguration.Instance.Security_EnableCaravanServices
-            });
         }
     }
 }

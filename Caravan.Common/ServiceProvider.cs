@@ -26,7 +26,7 @@ namespace Finsa.Caravan.Common
     ///   retrocompatibilità verso alcuni componenti che, oramai, non riescono più ad essere
     ///   adattati all'uso di Ninject.
     /// </summary>
-    public static class CaravanServiceProvider
+    public static class ServiceProvider
     {
         /// <summary>
         ///   Copia locale del kernel Ninject usato per la gestione automatica delle dipendenze.
@@ -46,7 +46,6 @@ namespace Finsa.Caravan.Common
 
                 // Quindi, aggiorno anche le varie dipendenze.
                 Clock = value.Get<IClock>();
-                MemoryCache = MemoryCache.DefaultInstance;
             }
         }
 
@@ -61,12 +60,12 @@ namespace Finsa.Caravan.Common
         ///   Il log di emergenza, usato quando il normale log di Caravan va in errore. Scrive
         ///   rigorosamente, e semplicemente, su file, per evitare ulteriori errori.
         /// </summary>
-        public static ILog EmergencyLog { get; } = LogManager.GetLogger("CaravanEmergencyLog");
+        public static ILog EmergencyLog { get; } = LogManager.GetLogger(key: "CaravanEmergencyLog");
 
         /// <summary>
         ///   La cache in memoria usata da alcuni punti critici di Caravan.
         /// </summary>
-        public static MemoryCache MemoryCache { get; private set; }
+        public static MemoryCache MemoryCache => MemoryCache.DefaultInstance;
 
         #endregion Services
 

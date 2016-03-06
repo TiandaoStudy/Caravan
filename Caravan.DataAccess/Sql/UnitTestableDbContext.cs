@@ -17,6 +17,7 @@ using Finsa.Caravan.DataAccess.Sql.Security.Entities;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Linq;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
@@ -61,6 +62,8 @@ namespace Finsa.Caravan.DataAccess.Sql
         public DbSet<SqlSecRole> SecRoles { get; set; }
 
         public DbSet<SqlSecUser> SecUsers { get; set; }
+
+        public IQueryable<SqlSecUser> SecUsersWithGroupsAndRoles => SecUsers.Include("Roles.Group");
 
         #endregion DB Sets - Security
 

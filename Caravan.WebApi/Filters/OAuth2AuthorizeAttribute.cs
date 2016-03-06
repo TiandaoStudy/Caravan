@@ -17,6 +17,7 @@ using Ninject;
 using RestSharp;
 using System;
 using System.Net;
+using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -42,6 +43,13 @@ namespace Finsa.Caravan.WebApi.Filters
         /// </summary>
         [Inject]
         public IAccessTokenExtractor AccessTokenExtractor { get; set; }
+
+        /// <summary>
+        ///   L'oggetto che implementa l'interfaccia <see cref="IAccessTokenValidator"/> da usare
+        ///   per validare gli access token nelle richieste HTTP. Iniettato in automatico da Ninject.
+        /// </summary>
+        [Inject]
+        public IAccessTokenValidator AccessTokenValidator { get; set; }
 
         /// <summary>
         ///   L'oggetto che implementa l'interfaccia <see cref="IAuthorizationErrorHandler"/> da
@@ -72,44 +80,24 @@ namespace Finsa.Caravan.WebApi.Filters
                     await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.MissingAccessToken, message);
                     return;
                 }
-
-                var restClient = new RestClient(AuthorizationSettings.AccessTokenValidationUrl);
-                var restRequest = new RestRequest(Method.POST);
-                restRequest.AddParameter(new Parameter
+                
+                var accessTokenValidationResult = await AccessTokenValidator.ValidateAccessTokenAsync(actionContext, accessToken);
+                if (!accessTokenValidationResult.Authorized)
                 {
-                    Name = "token",
-                    Type = ParameterType.GetOrPost,
-                    Value = accessToken
-                });
-
-                var restResponse = await restClient.ExecuteTaskAsync<dynamic>(restRequest);
-                if (restResponse.ResponseStatus == ResponseStatus.Aborted)
-                {
-                    var message = $"Access token validation request was aborted";
-                    await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidAccessToken, message);
-                    return;
-                }
-                if (restResponse.ResponseStatus == ResponseStatus.TimedOut)
-                {
-                    var message = $"Access token validation request timed out";
-                    await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidAccessToken, message);
-                    return;
-                }
-                if (restResponse.ErrorException != null)
-                {
-                    var message = restResponse.ErrorException.Message;
-                    await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidAccessToken, restResponse.ErrorException);
-                    return;
-                }
-                if (restResponse.StatusCode != HttpStatusCode.OK)
-                {
-                    var message = $"[StatusCode: {restResponse.StatusCode}, Content: '{restResponse.Content}']";
-                    await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidAccessToken, message);
-                    return;
+                    var exception = accessTokenValidationResult.AuthorizationDeniedException;
+                    if (exception != null)
+                    {
+                        await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidAccessToken, exception);
+                    }
+                    else
+                    {
+                        var reason = accessTokenValidationResult.AuthorizationDeniedReason;
+                        await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidAccessToken, reason);
+                    }
                 }
 
-                var authorizationValidator = CaravanServiceProvider.NinjectKernel.Get(AuthorizationValidatorType) as IAuthorizationValidator;
-                AuthorizationResult authorizationResult = await authorizationValidator.ValidateRequestAsync(actionContext, restResponse.Data);
+                var authorizationValidator = ServiceProvider.NinjectKernel.Get(AuthorizationValidatorType) as IAuthorizationValidator;
+                AuthorizationResult<IPrincipal> authorizationResult = await authorizationValidator.ValidateRequestAsync(actionContext, accessTokenValidationResult.Payload);
                 if (!authorizationResult.Authorized)
                 {
                     var exception = authorizationResult.AuthorizationDeniedException;
@@ -124,12 +112,12 @@ namespace Finsa.Caravan.WebApi.Filters
                     }
                 }
 
-                Thread.CurrentPrincipal = authorizationResult.Principal;
-                HttpContext.Current.User = authorizationResult.Principal;
+                Thread.CurrentPrincipal = authorizationResult.Payload;
+                HttpContext.Current.User = authorizationResult.Payload;
             }
             catch (Exception ex) when (!(ex is HttpException))
             {
-                await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.MissingAccessToken, ex);
+                await AuthorizationErrorHandler.HandleErrorAsync(actionContext, AuthorizationErrorContext.InvalidRequest, ex);
             }
         }
     }

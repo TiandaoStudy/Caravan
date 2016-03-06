@@ -27,10 +27,19 @@ namespace Finsa.Caravan.WebApi.Identity
     public sealed class SimpleAuthorizationErrorHandler : IAuthorizationErrorHandler
     {
         /// <summary>
+        ///   Inietta la dipendenze necessarie.
+        /// </summary>
+        /// <param name="log">Istanza del log per questo filtro.</param>
+        public SimpleAuthorizationErrorHandler(ILog log)
+        {
+            RaiseArgumentNullException.IfIsNull(log, nameof(log));
+            Log = log;
+        }
+
+        /// <summary>
         ///   Istanza del log per questo filtro.
         /// </summary>
-        [Inject]
-        public ILog Log { get; set; }
+        public ILog Log { get; }
 
         /// <summary>
         ///   Gestisce un errore avvenuto durante la validazione dell'accesso. Questa variante deve

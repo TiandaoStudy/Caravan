@@ -12,27 +12,50 @@
 
 using Finsa.Caravan.Common.Identity.Models;
 using Finsa.Caravan.Common.Security.Models;
+using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebApi.Filters;
+using PommaLabs.Thrower;
+using System;
 using System.Diagnostics;
 using System.Reflection;
-using System.Security.Principal;
 using System.Web.Http;
+using System.Web.Http.Results;
+using WebApi.OutputCache.V2;
 
 namespace Finsa.Caravan.WebService.Controllers
 {
     /// <summary>
-    ///   The HELP controller.
+    ///   Il controller di "help" contiene metodi utili per avere informazioni sul servizio stesso e
+    ///   sugli utenti collegati.
     /// </summary>
-    /// <remarks>Adjust routing prefix according to your own needs.</remarks>
-    /// <remarks>Questo servizio dovrebbe essere esposto pubblicamente.</remarks>
+    /// <remarks>
+    ///   Il percorso del servizio può essere modificato a proprio piacimento.
+    /// 
+    ///   Questo servizio dovrebbe essere esposto pubblicamente, senza particolari autenticazioni.
+    /// </remarks>
     [RoutePrefix("")]
     public sealed class HelpController : ApiController
     {
         /// <summary>
-        ///   Redirects to Swagger help pages.
+        ///   Il gestore della sorgente dati di Caravan.
         /// </summary>
-        [Route("")]
-        public IHttpActionResult Get()
+        private readonly ICaravanDataSourceManager _dataSourceManager;
+
+        /// <summary>
+        ///   Inietta le dipendenze richieste dal controller.
+        /// </summary>
+        /// <param name="dataSourceManager">Il gestore della sorgente dati di Caravan.</param>
+        public HelpController(ICaravanDataSourceManager dataSourceManager)
+        {
+            RaiseArgumentNullException.IfIsNull(dataSourceManager, nameof(dataSourceManager));
+            _dataSourceManager = dataSourceManager;
+        }
+
+        /// <summary>
+        ///   Effettua la redirezione alle pagine di "help" di SwaggerUI.
+        /// </summary>
+        [Route(""), CacheOutput(NoCache = true)]
+        public RedirectResult Get()
         {
             var uri = Request.RequestUri.ToString();
             var uriWithoutQuery = uri.Substring(0, uri.Length - Request.RequestUri.Query.Length);
@@ -40,20 +63,70 @@ namespace Finsa.Caravan.WebService.Controllers
         }
 
         /// <summary>
-        ///   Returns the web service version written in the main assembly.
+        ///   Restituisce informazioni sul servizio, come la sorgente dati e la versione.
         /// </summary>
-        [Route("help/version")]
-        public string GetVersion()
+        [Route("help/serviceInfo"), CacheOutput(NoCache = true)]
+        public ServiceInfoDTO GetServiceInfo()
         {
+            // Lettura della versione dell'assembly del servizio.
             var assembly = Assembly.GetExecutingAssembly();
             var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            return fvi.FileVersion;
+
+            // Lettura delle informazioni sulla macchina server.
+            var hostName = Environment.MachineName.ToLowerInvariant();
+            var bitness = (IntPtr.Size == 4) ? "x86" : "x64";
+
+            // Lettura delle informazioni sulla sorgente dati.
+            var dsName = _dataSourceManager.DataSourceName.ToLowerInvariant();
+            var dsKind = _dataSourceManager.DataSourceKind.ToString().ToLowerInvariant();
+
+            return new ServiceInfoDTO
+            {
+                Version = fvi.FileVersion,
+                HostName = hostName,
+                Bitness = bitness,
+                DataSourceName = dsName,
+                DataSourceKind = dsKind
+            };
         }
 
         /// <summary>
-        ///   Returns the authorized user info.
+        ///   Restituisce informazioni sull'utente correntemente autenticato.
         /// </summary>
-        [Route("help/userinfo"), OAuth2Authorize]
+        [Route("help/userInfo"), CacheOutput(NoCache = true), OAuth2Authorize]
         public SecUser GetUserInfo() => (User as IdnPrincipal).User;
+
+        /// <summary>
+        ///   Rappresenta una descrizione sintetica delle informazioni sul servizio.
+        /// </summary>
+        public sealed class ServiceInfoDTO
+        {
+            /// <summary>
+            ///   La versione del servizio, letta direttamente dall'assembly .NET del servizio stesso.
+            /// </summary>
+            public string Version { get; set; }
+
+            /// <summary>
+            ///   Il nome di rete del server su cui è ospitato il servizio.
+            /// </summary>
+            public string HostName { get; set; }
+
+            /// <summary>
+            ///   L'architettura (x86 oppure x64) del processo che esegue il servizio.
+            /// </summary>
+            public string Bitness { get; set; }
+
+            /// <summary>
+            ///   Il nome della sorgente dati a cui è collegato Caravan e che, presumibilmente, è
+            ///   condivisa con l'applicativo.
+            /// </summary>
+            public string DataSourceName { get; set; }
+
+            /// <summary>
+            ///   Il tipo della sorgente dati a cui è collegato Caravan e che, presumibilmente, è
+            ///   condivisa con l'applicativo.
+            /// </summary>
+            public string DataSourceKind { get; set; }
+        }
     }
 }

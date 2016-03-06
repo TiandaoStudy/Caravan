@@ -13,6 +13,7 @@
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.WebApi.Core;
+using Finsa.Caravan.WebApi.Middlewares.Models;
 using Finsa.CodeServices.Common;
 using Finsa.CodeServices.Common.IO.RecyclableMemoryStream;
 using Finsa.CodeServices.Serialization;
@@ -24,185 +25,149 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using AppFunc = System.Func<System.Collections.Generic.IDictionary<string, object>, System.Threading.Tasks.Task>;
 
 namespace Finsa.Caravan.WebApi.Middlewares
 {
+    /// <summary>
+    ///   Determina che cosa registrare nel log.
+    /// </summary>
     [Flags]
     public enum HttpLoggingFilter
     {
+        /// <summary>
+        ///   Registra il body della request.
+        /// </summary>
         LogResponseBody = 1,
+
+        /// <summary>
+        ///   Registra il body della response.
+        /// </summary>
         LogRequestBody = 2
     }
 
     /// <summary>
     ///   Middleware that logs HTTP requests and responses.
     /// </summary>
-    public sealed class HttpLoggingMiddleware : IDisposable
+    public sealed class HttpLoggingMiddleware : OwinMiddleware
     {
-        readonly ICaravanLog _log;
-        AppFunc _next;
-        bool _disposed;
+        private readonly Settings _settings;
+        private readonly ICaravanLog _log;
 
         /// <summary>
         ///   Inizializza il componente usato per il logging.
         /// </summary>
+        /// <param name="next">Un riferimento al prossimo componente della pipeline.</param>
+        /// <param name="settings">Le impostazioni del componente.</param>
         /// <param name="log">Il log su cui scrivere eventuali messaggi.</param>
-        public HttpLoggingMiddleware(ICaravanLog log)
+        public HttpLoggingMiddleware(OwinMiddleware next, Settings settings, ICaravanLog log)
+            : base(next)
         {
+            RaiseArgumentNullException.IfIsNull(settings, nameof(settings));
+            RaiseArgumentNullException.IfIsNull(settings.IgnoredPaths, nameof(settings.IgnoredPaths));
             RaiseArgumentNullException.IfIsNull(log, nameof(log));
+            _settings = settings;
             _log = log;
         }
 
-        public HttpLoggingFilter Filter { get; set; } = HttpLoggingFilter.LogRequestBody | HttpLoggingFilter.LogResponseBody;
-
         /// <summary>
-        ///   URI, o pezzi di URI, che non devono essere loggati.
+        ///   Registra nel log delle informazioni relative a request e response.
         /// </summary>
-        public IList<PathString> IgnoredUris { get; } = new List<PathString>
+        /// <param name="context">Il contesto di Owin.</param>
+        /// <returns>Task per proseguire nella catena di middleware.</returns>
+        public async override Task Invoke(IOwinContext context)
         {
-            PathString.FromUriComponent("/logger"),
-            PathString.FromUriComponent("/swagger"),
-            PathString.FromUriComponent("/signalr")
-        };
-
-        /// <summary>
-        ///   Inizializza il componente di Owin.
-        /// </summary>
-        /// <param name="next">Un riferimento al prossimo componente della pipeline.</param>
-        public void Initialize(AppFunc next)
-        {
-            _next = next;
-        }
-
-        /// <summary>
-        ///   Esegue la Dispose del componente.
-        /// </summary>
-        public void Dispose()
-        {
-            _disposed = true;
-        }
-
-        public async Task Invoke(IDictionary<string, object> environment)
-        {
-            var owinContext = new OwinContext(environment);
-            var request = owinContext.Request;
-            var response = owinContext.Response;
-
-            // Utilizzato per associare request e response nel log.
-            var requestId = UniqueIdGenerator.NewBase32("-");
-            _log.ThreadVariablesContext.Set(Constants.RequestId, requestId);
-
-            try
-            {
-                // Aggiungo l'ID della request agli header della response, in modo che sia più
-                // facile il rintracciamento dei log su Caravan.
-                response.Headers.Append(Constants.RequestIdHeader, requestId);
-            }
-            catch (Exception ex)
-            {
-                // Non è un problema se questa operazione fallisce, ma devo comunque registrare lo
-                // strano evento.
-                _log.Error("Could not add the Caravan request ID header...", ex);
-            }
+            // Recupero le informazioni su request e response.
+            var owinRequest = context.Request;
+            var owinResponse = context.Response;
+            var requestId = context.Environment[Constants.RequestIdHeader];
 
             // Indica se è una richiesta per il logger: non vogliamo loggare le chiamate al log.
             // Inoltre, non devono finire nel log neanche le chiamate alle pagine di help di Swagger.
-            var owinRequestUri = owinContext.Request.Uri.SafeToString().ToLowerInvariant();
-            var uriIsIgnored = IgnoredUris.Any(iu => owinRequestUri.Contains(iu.Value));
+            var owinRequestUri = owinRequest.Uri.SafeToString().ToLowerInvariant();
+            var uriIsIgnored = _settings.IgnoredPaths.Any(iu => owinRequestUri.Contains(iu.Value));
 
             // Log request
-            if (!_disposed)
+            try
             {
-                try
+                var body = string.Empty;
+                if (_settings.Filter.HasFlag(HttpLoggingFilter.LogRequestBody) && !uriIsIgnored)
                 {
-                    var body = string.Empty;
-                    if (Filter.HasFlag(HttpLoggingFilter.LogRequestBody) && !uriIsIgnored)
-                    {
-                        body = await FormatBodyStreamAsync(request.Body);
-                    }
+                    body = await FormatBodyStreamAsync(owinRequest.Body);
+                }
 
-                    _log.Trace(new LogMessage
-                    {
-                        ShortMessage = $"Request '{requestId}' at '{request.Uri.SafeToString()}'",
-                        LongMessage = body,
-                        Context = "Logging request",
-                        Arguments = new[]
-                        {
-                            KeyValuePair.Create<string, object>("request_remote_ip_address", request.RemoteIpAddress),
-                            KeyValuePair.Create<string, object>("request_user_agent", request.Headers.Get("User-Agent")),
-                            KeyValuePair.Create<string, object>("request_uri", request.Uri),
-                            KeyValuePair.Create<string, object>("request_method", request.Method),
-                            KeyValuePair.Create<string, object>("request_headers", request.Headers.ToYamlString(LogMessage.ReadableYamlSettings))
-                        }
-                    });
-                }
-                catch (Exception ex)
+                _log.Trace(new LogMessage
                 {
-                    // Eccezione NON rilanciata.
-                    _log.Catching(new LogMessage { Context = "Logging request", Exception = ex });
-                }
+                    ShortMessage = $"Request '{requestId}' at '{owinRequest.Uri.SafeToString()}'",
+                    LongMessage = body,
+                    Context = "Logging request",
+                    Arguments = new[]
+                    {
+                            KeyValuePair.Create<string, object>("request_remote_ip_address", owinRequest.RemoteIpAddress),
+                            KeyValuePair.Create<string, object>("request_user_agent", owinRequest.Headers.Get("User-Agent")),
+                            KeyValuePair.Create<string, object>("request_uri", owinRequest.Uri),
+                            KeyValuePair.Create<string, object>("request_method", owinRequest.Method),
+                            KeyValuePair.Create<string, object>("request_headers", owinRequest.Headers.ToYamlString(LogMessage.ReadableYamlSettings))
+                        }
+                });
+            }
+            catch (Exception ex)
+            {
+                // Eccezione NON rilanciata.
+                _log.Catching(new LogMessage { Context = "Logging request", Exception = ex });
             }
 
             var responseStream = Stream.Null;
             var responseBuffer = RecyclableMemoryStreamManager.Instance.GetStream(Constants.ResponseBufferTag, Constants.MinResponseBufferSize);
 
-            // Perform request
-            if (!_disposed)
+            // Perform request - Buffer the response, only is the URI is not ignored
+            if (!uriIsIgnored)
             {
-                // Buffer the response - Only is the URI is not ignored
-                if (!uriIsIgnored)
-                {
-                    responseStream = response.Body;
-                    response.Body = responseBuffer;
-                }
+                responseStream = owinResponse.Body;
+                owinResponse.Body = responseBuffer;
+            }
 
-                try
-                {
-                    // Run inner handlers
-                    await _next(environment);
-                }
-                catch (Exception ex) when (_log.Fatal(new LogMessage { Context = "Processing request", Exception = ex }))
-                {
-                    // Eccezione rilanciata in automatico, la funzione di log ritorna sempre FALSE.
-                }
+            try
+            {
+                // Run inner handlers.
+                await Next.Invoke(context);
+            }
+            catch (Exception ex) when (_log.Fatal(new LogMessage { Context = "Processing request", Exception = ex }))
+            {
+                // Eccezione rilanciata in automatico, la funzione di log ritorna sempre FALSE.
             }
 
             // Log response
-            if (!_disposed)
+            try
             {
-                try
+                var body = string.Empty;
+                if (_settings.Filter.HasFlag(HttpLoggingFilter.LogResponseBody) && !uriIsIgnored)
                 {
-                    var body = string.Empty;
-                    if (Filter.HasFlag(HttpLoggingFilter.LogResponseBody) && !uriIsIgnored)
-                    {
-                        body = await FormatBodyStreamAsync(response.Body);
+                    body = await FormatBodyStreamAsync(owinResponse.Body);
 
-                        // You need to do this so that the response we buffered is flushed out to
-                        // the client application.
-                        Debug.Assert(responseStream != Stream.Null);
-                        await responseBuffer.CopyToAsync(responseStream);
-                        response.Body = responseStream;
-                        responseBuffer.Dispose();
-                    }
+                    // You need to do this so that the response we buffered is flushed out to the
+                    // client application.
+                    Debug.Assert(responseStream != Stream.Null);
+                    await responseBuffer.CopyToAsync(responseStream);
+                    owinResponse.Body = responseStream;
+                    responseBuffer.Dispose();
+                }
 
-                    _log.Trace(new LogMessage
+                _log.Trace(new LogMessage
+                {
+                    ShortMessage = $"Response '{requestId}' for '{owinRequest.Uri.SafeToString()}'",
+                    LongMessage = body,
+                    Context = "Logging response",
+                    Arguments = new[]
                     {
-                        ShortMessage = $"Response '{requestId}' for '{request.Uri.SafeToString()}'",
-                        LongMessage = body,
-                        Context = "Logging response",
-                        Arguments = new[]
-                        {
-                            KeyValuePair.Create<string, object>("response_status_code", response.StatusCode),
-                            KeyValuePair.Create<string, object>("response_headers", response.Headers.ToYamlString(LogMessage.ReadableYamlSettings))
+                            KeyValuePair.Create<string, object>("response_status_code", owinResponse.StatusCode),
+                            KeyValuePair.Create<string, object>("response_headers", owinResponse.Headers.ToYamlString(LogMessage.ReadableYamlSettings))
                         }
-                    });
-                }
-                catch (Exception ex)
-                {
-                    // Eccezione NON rilanciata.
-                    _log.Catching(new LogMessage { Context = "Logging response", Exception = ex });
-                }
+                });
+            }
+            catch (Exception ex)
+            {
+                // Eccezione NON rilanciata.
+                _log.Catching(new LogMessage { Context = "Logging response", Exception = ex });
             }
         }
 
@@ -233,6 +198,27 @@ namespace Finsa.Caravan.WebApi.Middlewares
             }
 
             return body;
+        }
+
+        /// <summary>
+        ///   Impostazioni del componente di middleware.
+        /// </summary>
+        public sealed class Settings : AbstractMiddlewareSettings
+        {
+            /// <summary>
+            ///   Determina se loggare la request, la response o entrambe.
+            /// </summary>
+            public HttpLoggingFilter Filter { get; set; } = HttpLoggingFilter.LogRequestBody | HttpLoggingFilter.LogResponseBody;
+
+            /// <summary>
+            ///   Percorsi che non devono essere loggati.
+            /// </summary>
+            public IList<PathString> IgnoredPaths { get; } = new List<PathString>
+            {
+                PathString.FromUriComponent("/logger"),
+                PathString.FromUriComponent("/swagger"),
+                PathString.FromUriComponent("/signalr")
+            };
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Finsa.Caravan.WebService.Controllers
     /// <summary>
     ///   Controller che si occupa della parte di logging.
     /// </summary>
-    [RoutePrefix("logger"), AuthorizeForCaravan]
+    [RoutePrefix("logger"), OAuth2Authorize]
     public sealed class LoggerController : ApiController
     {
         static readonly IList<LogLevel> NoLogLevels = new LogLevel[0];

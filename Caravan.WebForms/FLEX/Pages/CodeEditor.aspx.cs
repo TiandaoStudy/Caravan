@@ -19,7 +19,7 @@ namespace FLEX.Web.Pages
 {
     public partial class CodeEditor : PageBase
     {
-        private readonly ICaravanLog _log = CaravanServiceProvider.FetchLog<CodeEditor>();
+        private readonly ICaravanLog _log = ServiceProvider.FetchLog<CodeEditor>();
 
         readonly Dictionary<string, string> _filesPath = new Dictionary<string, string>();
 
@@ -110,7 +110,7 @@ namespace FLEX.Web.Pages
 
                 // Indico nel log che qualcuno ha modificato il file
                 var logMsg = string.Format("File {0} has been changed by {1}", Path.GetFileName(filesPath[nameFiles]), HttpContext.Current.User.Identity.Name);
-                var diff = new DiffMatchPatch();
+                var diff = new diff_match_patch();
                 var diffList = diff.diff_main(oldFile, newFile);
                 _log.Warn(new LogMessage
                 {

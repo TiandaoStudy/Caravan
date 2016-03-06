@@ -434,7 +434,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         private async Task<Dictionary<string, SqlLogSetting>> GetAndSetCachedSettingsAsync(string appName, SqlDbContext ctx)
         {
             // Provo a recuperare le impostazioni di log dalla cache in memoria.
-            var maybe = CaravanServiceProvider.MemoryCache.Get<Dictionary<string, SqlLogSetting>>(CachePartition, appName);
+            var maybe = ServiceProvider.MemoryCache.Get<Dictionary<string, SqlLogSetting>>(CachePartition, appName);
 
             // Se le impostazioni in cache sono ancora valide, le restituisco.
             if (maybe.HasValue)
@@ -449,7 +449,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             // Prima di restituirle, le metto in cache.
             var interval = CaravanDataAccessConfiguration.Instance.Logging_SettingsCache_Interval;
             var utcExpiry = _clock.UtcNow.Add(interval);
-            CaravanServiceProvider.MemoryCache.AddTimed(CachePartition, appName, settings, utcExpiry);
+            ServiceProvider.MemoryCache.AddTimed(CachePartition, appName, settings, utcExpiry);
 
             // Restituisco le impostazioni appena lette da DB.
             return settings;

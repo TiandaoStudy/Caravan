@@ -161,6 +161,15 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Caravan.DataAccess", "Carav
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Caravan.Common", "Caravan.Common\Caravan.Common.shproj", "{3195FC07-6980-44E9-BD7F-9663FCFF7A7B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F2A2BF28-20BE-4CC2-98DC-D6FB14AD8AC6}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+		finsaspa.snk = finsaspa.snk
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+		VERSION.md = VERSION.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Caravan.Common\Caravan.Common.projitems*{11904ed0-33d2-4005-8766-b1e393a32ea7}*SharedItemsImports = 4

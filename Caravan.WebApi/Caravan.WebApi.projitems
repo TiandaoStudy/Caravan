@@ -9,24 +9,23 @@
     <Import_RootNamespace>Finsa.Caravan.WebApi</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Controllers\" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CaravanErrorCodes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CaravanWebApiNinjectConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CaravanWebServiceHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controllers\AbstractReportsController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\IdentityNinjectRegistrations.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DelegatingHandlers\LoggingDelegatingHandler.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Filters\AuthorizeForCaravanAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Filters\HttpExceptionFilterAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Filters\Models\HttpExceptionResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Filters\OAuth2AuthorizeAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Identity\BearerAccessTokenExtractor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Identity\CaravanAuthorizationValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Identity\IAccessTokenExtractor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\IAccessTokenValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Identity\IAuthorizationErrorHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Identity\IAuthorizationValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Identity\IdentityAccessTokenValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Identity\IdentityManagerServiceFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Identity\IdentityServerServiceFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Identity\Models\AuthorizationErrorContext.cs" />
@@ -35,6 +34,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Identity\SimpleAuthorizationErrorHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middlewares\HttpCompressionMiddleware.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middlewares\HttpLoggingMiddleware.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Middlewares\HttpProxyMiddleware.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Middlewares\HttpRequestIdentifierMiddleware.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Middlewares\Models\AbstractMiddlewareSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Links\AlternateLink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Links\CollectionLink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Links\EditLink.cs" />

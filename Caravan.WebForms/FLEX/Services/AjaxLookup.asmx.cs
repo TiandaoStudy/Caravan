@@ -4,7 +4,6 @@ using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebForms.Properties;
 using Finsa.CodeServices.Common.Collections;
-using Finsa.CodeServices.Common.Text;
 using FLEX.Web.XmlSettings.AjaxLookup;
 using Ninject;
 using PommaLabs.KVLite;
@@ -15,6 +14,7 @@ using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
@@ -42,7 +42,7 @@ namespace FLEX.Web.Services
         private const string TokenStart = "{:";
         private const string UserQueryToken = "{:UserQuery:}";
 
-        private static readonly ICaravanLog Log = CaravanServiceProvider.FetchLog<AjaxLookup>();
+        private static readonly ICaravanLog Log = ServiceProvider.FetchLog<AjaxLookup>();
 
         [WebMethod]
         public List<Result> Lookup(string xmlLookup, string lookupBy, string userQuery, string queryFilter)
@@ -62,7 +62,7 @@ namespace FLEX.Web.Services
         {
             var lookupData = LoadAjaxLookupData(xmlLookup, lookupBy);
             var lookupQuery = ProcessQuery(lookupData, userQuery, queryFilter);
-            var resultData = CaravanServiceProvider.NinjectKernel.Get<ICaravanDataSourceManager>().OpenConnection().Query(lookupQuery).ToList();
+            var resultData = ServiceProvider.NinjectKernel.Get<ICaravanDataSourceManager>().OpenConnection().Query(lookupQuery).ToList();
             if (resultData.Count == 0)
             {
                 return new List<Result>();
@@ -127,8 +127,7 @@ namespace FLEX.Web.Services
             // userQuery parameter.
             userQuery = userQuery.Replace("'", "''");
             // Then, we take the XML file and we replace all inputs inside it.
-            return new FastReplacer(TokenStart, TokenEnd)
-               .Append(lookupData.LookupQuery)
+            return new StringBuilder(lookupData.LookupQuery)
                .Replace(UserQueryToken, userQuery)
                .Replace(QueryFilterToken, queryFilter)
                .Replace(ResultCountToken, DefaultResultCount)

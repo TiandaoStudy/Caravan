@@ -210,12 +210,10 @@ namespace Finsa.Caravan.Common.Security
         #region Users
 
         /// <summary>
-        ///   La lista di tutti gli utenti.
+        ///   Apre una query verso il repository degli utenti.
         /// </summary>
-        /// <param name="appName"></param>
-        /// <returns></returns>
-        Task<SecUser[]> GetUsersAsync(string appName);
-
+        /// <param name="appName">Il nome dell'applicativo per cui si desiderano gli utenti.</param>
+        /// <returns>Una query verso il repository degli utenti per l'applicativo dato.</returns>
         Task<IQueryable<SecUser>> QueryUsersAsync(string appName);
 
         /// <summary>
@@ -320,6 +318,10 @@ namespace Finsa.Caravan.Common.Security
         Task<SecObject[]> GetObjectsAsync(string appName);
 
         Task<SecObject[]> GetObjectsAsync(string appName, string contextName);
+
+        Task<SecObject[]> GetObjectsForUserAsync(string appName, string userLogin);
+
+        Task<SecObject[]> GetObjectsForContextAndUserAsync(string appName, string contextName, string userLogin);
 
         #endregion Objects
 

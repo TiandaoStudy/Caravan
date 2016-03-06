@@ -14,7 +14,7 @@ namespace FLEX.Web.UserControls
     /// </summary>
     public partial class FileUpload : ControlBase
     {
-        private static readonly ICaravanLog Log = CaravanServiceProvider.FetchLog<FileUpload>();
+        private static readonly ICaravanLog Log = ServiceProvider.FetchLog<FileUpload>();
 
         protected void Page_Load(object sender, EventArgs e)
         {

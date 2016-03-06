@@ -16,6 +16,8 @@ CREATE TABLE mydb.crvn_sec_users
    , cusr_lockout_end_date          DATE            NOT NULL
    , cusr_access_failed_count       NUMBER(3)       DEFAULT 0 NOT NULL
    , cusr_two_factor_auth_enabled   NUMBER(1)       DEFAULT 0 NOT NULL
+   , cusr_avatar_file               BLOB            
+   , cusr_avatar_file_ext           NVARCHAR2(32)
 
    -- INSERT tracking
    , TRCK_INSERT_DATE               DATE            NOT NULL
@@ -28,6 +30,8 @@ CREATE TABLE mydb.crvn_sec_users
    , TRCK_UPDATE_APP_USER           NVARCHAR2(32) 
 
    , CHECK (cusr_login = lower(cusr_login)) ENABLE
+   , CHECK (cusr_avatar_file_ext = lower(cusr_avatar_file_ext)) ENABLE
+   , CHECK (cusr_avatar_file_ext is null or REGEXP_LIKE(cusr_avatar_file_ext, '^\.[a-z0-9]+$')) ENABLE
    
    -- CHECKs for tracking
    , CHECK (TRCK_INSERT_DB_USER = LOWER(TRCK_INSERT_DB_USER)) ENABLE
@@ -76,6 +80,10 @@ COMMENT ON COLUMN mydb.crvn_sec_users.cusr_access_failed_count
      IS 'Il numero di login fallite per un certo utente';
 COMMENT ON COLUMN mydb.crvn_sec_users.cusr_two_factor_auth_enabled 
      IS 'Indica se un certo utente abbia abilitato la autenticazione a due fattori';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_avatar_file 
+     IS 'Il file contenente la immagine corrispondente al dato utente';
+COMMENT ON COLUMN mydb.crvn_sec_users.cusr_avatar_file_ext 
+     IS 'La estensione del file contenente la immagine corrispondente al dato utente';
 
 CREATE SEQUENCE mydb.crvn_sec_users_id NOCACHE;
 

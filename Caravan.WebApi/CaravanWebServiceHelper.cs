@@ -40,8 +40,8 @@ namespace Finsa.Caravan.WebApi
             RaiseArgumentNullException.IfIsNull(httpConfiguration, nameof(httpConfiguration));
 
             // Il kernel Ninject usato per recuperare le dipendenze.
-            var kernel = CaravanServiceProvider.NinjectKernel;
-            var log = CaravanServiceProvider.FetchLog<CaravanWebServiceHelper>();
+            var kernel = ServiceProvider.NinjectKernel;
+            var log = ServiceProvider.FetchLog<CaravanWebServiceHelper>();
 
             // Loggo l'avvio dell'applicazione.
             log.Info($"Application {CaravanCommonConfiguration.Instance.AppDescription} started");
@@ -60,22 +60,52 @@ namespace Finsa.Caravan.WebApi
             OutputCacheProvider.Register(httpConfiguration, () => kernel.Get<ICache>());
 
             // Registra i componenti di middleware.
-            log.Trace("Registering Owin middlewares");
-            if (settings.EnableHttpCompressionMiddleware)
-            {
-                // Inserire la compressione PRIMA del log.
-                appBuilder.Use(kernel.Get<HttpCompressionMiddleware>());
-            }
-            if (settings.EnableHttpLoggingMiddleware)
-            {
-                // Inserire il log DOPO la compressione.
-                appBuilder.Use(kernel.Get<HttpLoggingMiddleware>());
-            }
+            RegisterOwinMiddlewares(appBuilder, settings, log);
 
             // Pulizia dei log più vecchi o che superano una certa soglia di quantità.
             log.Trace("Cleaning up older log entries");
             var logRepository = kernel.Get<ICaravanLogRepository>();
             Task.Run(() => logRepository.CleanUpEntriesAsync(CaravanCommonConfiguration.Instance.AppName));
+        }
+
+        private static void RegisterOwinMiddlewares(IAppBuilder appBuilder, Settings settings, ICaravanLog log)
+        {
+            log.Trace("Registering Owin middlewares");
+
+            var identifierSettings = settings.HttpRequestIdentifierMiddleware;
+            if (identifierSettings.Enabled)
+            {
+                // Inserire la parte di etichettatura prima di ogni componente.
+                var identifierLog = ServiceProvider.FetchLog<HttpRequestIdentifierMiddleware>();
+                appBuilder.Use(typeof(HttpRequestIdentifierMiddleware), identifierSettings, identifierLog);
+            }
+
+            var compressionSettings = settings.HttpCompressionMiddleware;
+            if (compressionSettings.Enabled)
+            {
+                // Inserire la compressione PRIMA del log.
+                var compressionLog = ServiceProvider.FetchLog<HttpCompressionMiddleware>();
+                appBuilder.Use(typeof(HttpCompressionMiddleware), compressionSettings, compressionLog);
+            }
+
+            var loggingSettings = settings.HttpLoggingMiddleware;
+            if (loggingSettings.Enabled)
+            {
+                // Inserire il log DOPO la compressione.
+                var loggingLog = ServiceProvider.FetchLog<HttpLoggingMiddleware>();
+                appBuilder.Use(typeof(HttpLoggingMiddleware), loggingSettings, loggingLog);
+            }
+
+            var proxySettings = settings.HttpProxyMiddleware;
+            if (proxySettings.Enabled)
+            {
+                // Inserire il proxy DOPO gli altri componenti.
+                appBuilder.Map(proxySettings.SourceEndpointPath, ab =>
+                {
+                    var proxyLog = ServiceProvider.FetchLog<HttpProxyMiddleware>();
+                    ab.Use(typeof(HttpProxyMiddleware), proxySettings, proxyLog);
+                });
+            }
         }
 
         /// <summary>
@@ -84,18 +114,24 @@ namespace Finsa.Caravan.WebApi
         public sealed class Settings
         {
             /// <summary>
-            ///   Abilita il componente Owin che comprime le response.
-            /// 
-            ///   Abilitato di default.
+            ///   Le impostazioni del componente per la compressione delle response.
             /// </summary>
-            public bool EnableHttpCompressionMiddleware { get; set; } = true;
+            public HttpCompressionMiddleware.Settings HttpCompressionMiddleware { get; set; } = new HttpCompressionMiddleware.Settings();
 
             /// <summary>
-            ///   Abilita il componente Owin che registra le request e le response.
-            /// 
-            ///   Abilitato di default.
+            ///   Le impostazioni del componente per la registrazione nel log.
             /// </summary>
-            public bool EnableHttpLoggingMiddleware { get; set; } = true;
+            public HttpLoggingMiddleware.Settings HttpLoggingMiddleware { get; set; } = new HttpLoggingMiddleware.Settings();
+
+            /// <summary>
+            ///   Le impostazioni del componente di proxy HTTP.
+            /// </summary>
+            public HttpProxyMiddleware.Settings HttpProxyMiddleware { get; } = new HttpProxyMiddleware.Settings();
+
+            /// <summary>
+            ///   Le impostazioni del componente per l'etichettatura delle request.
+            /// </summary>
+            public HttpRequestIdentifierMiddleware.Settings HttpRequestIdentifierMiddleware { get; } = new HttpRequestIdentifierMiddleware.Settings();
         }
     }
 }

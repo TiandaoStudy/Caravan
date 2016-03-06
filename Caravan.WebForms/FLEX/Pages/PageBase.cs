@@ -1,6 +1,6 @@
 ﻿using FLEX.Web.MasterPages;
 using FLEX.Web.UserControls;
-using PommaLabs.KVLite.Web;
+using PommaLabs.KVLite.WebForms;
 using System;
 using System.Diagnostics;
 using System.Globalization;

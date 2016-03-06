@@ -12,10 +12,8 @@
 
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using BrockAllen.IdentityReboot;
 using EntityFramework.Extensions;
 using Finsa.Caravan.Common;
-using Finsa.Caravan.Common.Identity.Models;
 using Finsa.Caravan.Common.Logging;
 using Finsa.Caravan.Common.Security;
 using Finsa.Caravan.Common.Security.Exceptions;
@@ -23,10 +21,12 @@ using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess.Core;
 using Finsa.Caravan.DataAccess.Sql.Security.Entities;
 using Finsa.CodeServices.Common;
+using Finsa.CodeServices.Security.PasswordHashing;
 using PommaLabs.Thrower;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Finsa.Caravan.DataAccess.Sql
@@ -38,7 +38,7 @@ namespace Finsa.Caravan.DataAccess.Sql
         private const string UnspecifiedString = "...";
 
         #endregion Constants
-        
+
         private readonly IDbContextFactory<SqlDbContext> _dbContextFactory;
         private readonly SqlDbContext _queryableDbContext;
         private bool _disposed;
@@ -81,7 +81,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 }
 
                 return await q.ProjectTo<SecApp>().ToArrayAsync();
-            }            
+            }
         }
 
         protected override async Task AddAppAsyncInternal(SecApp app)
@@ -97,7 +97,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 {
                     Name = app.Name,
                     Description = app.Description ?? UnspecifiedString,
-                    PasswordHasher = app.PasswordHasher ?? typeof(AdaptivePasswordHasher).AssemblyQualifiedName
+                    PasswordHasher = app.PasswordHasher ?? typeof(AdaptivePBKDF2PasswordHasher).AssemblyQualifiedName
                 });
 
                 await ctx.SaveChangesAsync();
@@ -202,7 +202,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             var sqlGroup = await GetGroupByNameAsync(_queryableDbContext, appId, appName, groupName);
 
             // La chiamata sopra mi assicura che il ruolo ci sia.
-            return _queryableDbContext.SecUsers
+            return _queryableDbContext.SecUsersWithGroupsAndRoles
                 .Where(u => u.AppId == appId)
                 .Where(u => u.Roles.Any(r => r.GroupId == sqlGroup.Id))
                 .ProjectTo<SecUser>();
@@ -313,7 +313,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             var sqlRole = await GetRoleByNameAsync(_queryableDbContext, appName, group.Id, groupName, roleName);
 
             // La chiamata sopra mi assicura che il ruolo ci sia.
-            return _queryableDbContext.SecUsers
+            return _queryableDbContext.SecUsersWithGroupsAndRoles
                 .Where(u => u.AppId == appId)
                 .Where(u => u.Roles.Any(r => r.Id == sqlRole.Id))
                 .ProjectTo<SecUser>();
@@ -323,16 +323,15 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         #region Users
 
-        protected override async Task<SecUser[]> GetUsersAsyncInternal(string appName, long? userId, string userLogin, string userEmail)
+        protected override async Task<Option<SecUser>> GetUserAsyncInternal(string appName, long? userId, string userLogin, string userEmail)
         {
             using (var ctx = _dbContextFactory.Create())
             {
                 var appId = await GetAppIdByNameAsync(ctx, appName);
 
-                var q = ctx.SecUsers
+                var q = ctx.SecUsersWithGroupsAndRoles
                     .Include(u => u.App)
                     .Include(u => u.Claims)
-                    .Include("Roles.Group")
                     .Where(u => u.AppId == appId);
 
                 if (userId != null)
@@ -348,9 +347,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                     q = q.Where(u => u.Email == userEmail);
                 }
 
-                return q.AsEnumerable()
-                    .Select(Mapper.Map<SecUser>)
-                    .ToArray();
+                return q.ProjectTo<SecUser>().FirstAsOption();
             }
         }
 
@@ -359,7 +356,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             var appId = await GetAppIdByNameAsync(_queryableDbContext, appName);
 
             // La chiamata sopra mi assicura che il ruolo ci sia.
-            return _queryableDbContext.SecUsers
+            return _queryableDbContext.SecUsersWithGroupsAndRoles
                 .Where(u => u.AppId == appId)
                 .ProjectTo<SecUser>();
         }
@@ -392,7 +389,9 @@ namespace Finsa.Caravan.DataAccess.Sql
                     LockoutEndDate = newUser.LockoutEndDate,
                     SecurityStamp = newUser.SecurityStamp,
                     TwoFactorAuthenticationEnabled = newUser.TwoFactorAuthenticationEnabled,
-                    InsertAppUser = IdnPrincipal.Current?.Identity.Name
+                    AvatarFile = newUser.AvatarFile,
+                    AvatarFileExtension = newUser.AvatarFileExtension,
+                    InsertAppUser = Thread.CurrentPrincipal?.Identity.Name
                 });
 
                 await ctx.SaveChangesAsync();
@@ -443,7 +442,9 @@ namespace Finsa.Caravan.DataAccess.Sql
                 userUpdates.LockoutEndDate.Do(x => sqlUser.LockoutEndDate = x.ToUniversalTime());
                 userUpdates.AccessFailedCount.Do(x => sqlUser.AccessFailedCount = x);
                 userUpdates.TwoFactorAuthenticationEnabled.Do(x => sqlUser.TwoFactorAuthenticationEnabled = x);
-                sqlUser.UpdateAppUser = IdnPrincipal.Current?.Identity.Name;
+                userUpdates.AvatarFile.Do(x => sqlUser.AvatarFile = x);
+                userUpdates.AvatarFileExtension.Do(x => sqlUser.AvatarFileExtension = x);
+                sqlUser.UpdateAppUser = Thread.CurrentPrincipal?.Identity.Name;
 
                 await ctx.SaveChangesAsync();
             }
@@ -561,9 +562,38 @@ namespace Finsa.Caravan.DataAccess.Sql
                     q = q.Where(o => o.Context.Name == contextName);
                 }
 
-                return q.AsEnumerable()
-                    .Select(Mapper.Map<SecObject>)
-                    .ToArray();
+                return await q.ProjectTo<SecObject>().ToArrayAsync();
+            }
+        }
+
+        protected override async Task<SecObject[]> GetObjectsForContextAndUserAsyncInternal(string appName, string contextName, string userLogin)
+        {
+            using (var ctx = _dbContextFactory.Create())
+            {
+                var appId = await GetAppIdByNameAsync(ctx, appName);
+                var user = await GetUserByLoginAsync(ctx, appId, appName, userLogin);
+
+                var groupIds = user.Roles.Select(r => (int?) r.GroupId).ToArray();
+                var roleIds = user.Roles.Select(r => (int?) r.Id).ToArray();
+
+                // Gli ID degli oggetti che l'utente può utilizzare.
+                var objectIds = from e in ctx.SecEntries
+                                where e.UserId == user.Id
+                                   || groupIds.Contains(e.GroupId)
+                                   || roleIds.Contains(e.RoleId)
+                                select e.ObjectId;
+
+                var q = from o in ctx.SecObjects
+                        join oId in objectIds.Distinct() on o.Id equals oId
+                        select o;
+
+                // Se il contesto è stato specificato, applico un ulteriore filtro.
+                if (contextName != null)
+                {
+                    q = q.Where(o => o.Context.Name == contextName);
+                }
+
+                return await q.ProjectTo<SecObject>().ToArrayAsync();
             }
         }
 
@@ -764,7 +794,7 @@ namespace Finsa.Caravan.DataAccess.Sql
 
         private static async Task<SqlSecUser> GetUserByLoginAsync(SqlDbContext ctx, int appId, string appName, string userLogin)
         {
-            var user = await ctx.SecUsers.FirstOrDefaultAsync(u => u.AppId == appId && u.Login == userLogin);
+            var user = await ctx.SecUsersWithGroupsAndRoles.FirstOrDefaultAsync(u => u.AppId == appId && u.Login == userLogin);
             if (user == null)
             {
                 throw new SecUserNotFoundException(appName, userLogin);

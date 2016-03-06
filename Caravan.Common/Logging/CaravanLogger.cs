@@ -139,7 +139,7 @@ namespace Finsa.Caravan.Common.Logging
             {
                 LogLevel = logLevel,
                 AppName = CaravanCommonConfiguration.Instance.AppName,
-                Date = CaravanServiceProvider.Clock.UtcNow,
+                Date = ServiceProvider.Clock.UtcNow,
                 ShortMessage = logMessage.ShortMessage?.Trim(),
                 LongMessage = tmpLongMessage,
                 Context = logMessage.Context?.Trim(),

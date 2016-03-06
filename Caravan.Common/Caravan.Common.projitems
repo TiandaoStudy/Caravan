@@ -9,14 +9,12 @@
     <Import_RootNamespace>Finsa.Caravan.Common</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Security\Activities\" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BusinessModeling\StateMachine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BusinessModeling\Workflow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CaravanCommonConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CaravanCommonNinjectConfig.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CaravanServiceProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reporting\IDataSourceRequiredServices.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ServiceProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\ErrorMessages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\TaskExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DependencyHandling.cs" />
@@ -46,6 +44,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Logging\Models\LogResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\Models\LogSetting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\Workflows\CleanUpLogRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reporting\AbstractObjectDataSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\CaravanRoleManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\CaravanRoleManagerFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\CaravanRoleStore.cs" />
@@ -86,5 +85,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Security\Services\CaravanEmailService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebForms\ISearchControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebForms\SearchCriteria.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Core\Resources\mr-happy.png" />
   </ItemGroup>
 </Project>

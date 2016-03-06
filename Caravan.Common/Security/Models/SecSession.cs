@@ -45,7 +45,7 @@ namespace Finsa.Caravan.Common.Security.Models
                 UserHostAddress = HttpContext.Current.Request.UserHostAddress == "::1" ? "localhost" : HttpContext.Current.Request.UserHostAddress;
                 UserHostName = HttpContext.Current.Request.UserHostName == "::1" ? "localhost" : HttpContext.Current.Request.UserHostAddress;
             }
-            LastVisit = CaravanServiceProvider.Clock.UtcNow;
+            LastVisit = ServiceProvider.Clock.UtcNow;
         }
 
         #region FormattableObject members

@@ -27,7 +27,7 @@ namespace Finsa.Caravan.WebService.Controllers
     /// <summary>
     ///   Sample controller with basic interactions.
     /// </summary>
-    [RoutePrefix("values"), AuthorizeForCaravan]
+    [RoutePrefix("values"), OAuth2Authorize]
     public sealed class ValuesController : ApiController
     {
         const int CacheSeconds = 120;

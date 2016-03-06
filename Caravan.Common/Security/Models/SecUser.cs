@@ -73,13 +73,38 @@ namespace Finsa.Caravan.Common.Security.Models
         [DataMember(Order = 13)]
         public bool TwoFactorAuthenticationEnabled { get; set; }
 
+        /// <summary>
+        ///   Il file contenente l'immagine corrispondente all'utente. Può non essere specificato.
+        /// </summary>
         [DataMember(Order = 14)]
+        public byte[] AvatarFile { get; set; }
+
+        /// <summary>
+        ///   L'estensione del file contenente l'immagine corrispondente all'utente. Può non essere
+        ///   specificata se il file <see cref="AvatarFile"/> non è presente; altrimenti, entrambi
+        ///   sono presenti.
+        ///   
+        ///   La stringa è comprensiva del punto iniziale (es: ".jpg").
+        /// </summary>
+        [DataMember(Order = 15)]
+        public string AvatarFileExtension { get; set; }
+
+        /// <summary>
+        ///   I gruppi a cui appartiene l'utente.
+        /// </summary>
+        [DataMember(Order = 16)]
         public IEnumerable<SecGroup> Groups { get; set; }
 
-        [DataMember(Order = 15)]
+        /// <summary>
+        ///   I ruoli ricoperti dall'utente.
+        /// </summary>
+        [DataMember(Order = 17)]
         public IEnumerable<SecRole> Roles { get; set; }
 
-        [DataMember(Order = 16)]
+        /// <summary>
+        ///   I "security claim" dell'utente.
+        /// </summary>
+        [DataMember(Order = 18)]
         public IEnumerable<SecClaim> Claims { get; set; }
 
         #region IUser members

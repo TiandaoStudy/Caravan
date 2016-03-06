@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System;
 using System.Linq;
 using Finsa.Caravan.Common.Security;
+using Finsa.CodeServices.Common;
 
 namespace Finsa.Caravan.DataAccess.Mongo
 {
@@ -66,7 +67,7 @@ namespace Finsa.Caravan.DataAccess.Mongo
             throw new System.NotImplementedException();
         }
 
-        protected override Task<SecUser[]> GetUsersAsyncInternal(string appName, long? userId, string userLogin, string userEmail)
+        protected override Task<Option<SecUser>> GetUserAsyncInternal(string appName, long? userId, string userLogin, string userEmail)
         {
             throw new System.NotImplementedException();
         }
@@ -162,6 +163,11 @@ namespace Finsa.Caravan.DataAccess.Mongo
         }
 
         protected override Task<IQueryable<SecUser>> QueryUsersInRoleAsyncInternal(string appName, string groupName, string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task<SecObject[]> GetObjectsForContextAndUserAsyncInternal(string appName, string contextName, string userLogin)
         {
             throw new NotImplementedException();
         }

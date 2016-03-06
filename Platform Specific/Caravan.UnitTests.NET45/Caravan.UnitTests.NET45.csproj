@@ -11,6 +11,8 @@
     <AssemblyName>Finsa.Caravan.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,11 +33,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MimeKit.1.2.19\lib\net45\BouncyCastle.dll</HintPath>
+      <HintPath>..\..\packages\MimeKit.1.2.21\lib\net45\BouncyCastle.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CodeProject.ObjectPool, Version=1.9.2.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\CodeProject.ObjectPool.1.9.2\lib\net45\CodeProject.ObjectPool.dll</HintPath>
+    <Reference Include="CodeProject.ObjectPool, Version=1.10.0.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CodeProject.ObjectPool.1.10.1\lib\net45\CodeProject.ObjectPool.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
@@ -70,36 +72,40 @@
       <HintPath>..\..\packages\EntityFramework.TypedOriginalValues.0.3.1\lib\net40\EntityFramework.TypedOriginalValues.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Clock, Version=4.0.2.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Finsa.CodeServices.Clock.4.0.2\lib\net45\Finsa.CodeServices.Clock.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Clock, Version=4.1.0.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Finsa.CodeServices.Clock.4.1.2\lib\net45\Finsa.CodeServices.Clock.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Common, Version=4.0.7.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Finsa.CodeServices.Common.4.0.7\lib\net45\Finsa.CodeServices.Common.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Common, Version=4.1.0.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Finsa.CodeServices.Common.4.1.2\lib\net45\Finsa.CodeServices.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Compression, Version=4.0.2.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Finsa.CodeServices.Compression.4.0.2\lib\net45\Finsa.CodeServices.Compression.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Compression, Version=4.1.0.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Finsa.CodeServices.Compression.4.1.1\lib\net45\Finsa.CodeServices.Compression.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Compression.Snappy, Version=4.0.2.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Finsa.CodeServices.Compression.Snappy.4.0.2\lib\net45\Finsa.CodeServices.Compression.Snappy.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Compression.Snappy, Version=4.1.0.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Finsa.CodeServices.Compression.Snappy.4.1.1\lib\net45\Finsa.CodeServices.Compression.Snappy.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.MailSender, Version=4.0.7.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Finsa.CodeServices.MailSender.4.0.7\lib\net45\Finsa.CodeServices.MailSender.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.MailSender, Version=4.1.0.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Finsa.CodeServices.MailSender.4.1.1\lib\net45\Finsa.CodeServices.MailSender.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Serialization, Version=4.0.4.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Finsa.CodeServices.Serialization.4.0.4\lib\net45\Finsa.CodeServices.Serialization.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Serialization, Version=4.1.0.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Finsa.CodeServices.Serialization.4.1.1\lib\net45\Finsa.CodeServices.Serialization.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Finsa.CodeServices.Serialization.Json, Version=4.0.4.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Finsa.CodeServices.Serialization.Json.4.0.4\lib\net45\Finsa.CodeServices.Serialization.Json.dll</HintPath>
+    <Reference Include="Finsa.CodeServices.Serialization.Json, Version=4.1.0.0, Culture=neutral, PublicKeyToken=db894830fb4e4dbb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Finsa.CodeServices.Serialization.Json.4.1.1\lib\net45\Finsa.CodeServices.Serialization.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MailKit, Version=1.2.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MailKit.1.2.16\lib\net45\MailKit.dll</HintPath>
+      <HintPath>..\..\packages\MailKit.1.2.19\lib\net45\MailKit.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -107,7 +113,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="MimeKit, Version=1.2.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MimeKit.1.2.19\lib\net45\MimeKit.dll</HintPath>
+      <HintPath>..\..\packages\MimeKit.1.2.21\lib\net45\MimeKit.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -142,12 +148,12 @@
       <HintPath>..\..\packages\NUnitTestAdapter.2.0.0\lib\NUnit.VisualStudio.TestAdapter.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="PommaLabs.KVLite, Version=5.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\PommaLabs.KVLite.Core.5.0.4\lib\net45\PommaLabs.KVLite.dll</HintPath>
+    <Reference Include="PommaLabs.KVLite, Version=5.2.0.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PommaLabs.KVLite.Core.5.2.1\lib\net45\PommaLabs.KVLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PommaLabs.Thrower, Version=2.1.4.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Thrower.2.1.4\lib\net45\PommaLabs.Thrower.dll</HintPath>
+    <Reference Include="PommaLabs.Thrower, Version=2.2.0.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Thrower.2.2.2\lib\net45\PommaLabs.Thrower.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -155,7 +161,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Data.SQLite.Core.MSIL.1.0.99.0\lib\net45\System.Data.SQLite.dll</HintPath>
+      <HintPath>..\..\packages\PommaLabs.KVLite.SQLite.1.0.99.4\lib\net45\System.Data.SQLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Security" />
@@ -174,8 +180,8 @@
       <HintPath>..\..\packages\Westwind.Utilities.Configuration.2.25\lib\net40\Westwind.Utilities.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="YamlDotNet, Version=3.7.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\YamlDotNet.Signed.3.7.0\lib\net35\YamlDotNet.dll</HintPath>
+    <Reference Include="YamlDotNet, Version=3.8.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\YamlDotNet.Signed.3.8.0\lib\net35\YamlDotNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -194,22 +200,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="KVLite.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="KVLite\x64\SQLite.Interop.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="KVLite\x86\SQLite.Interop.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
   <Import Project="..\..\Caravan.UnitTests\Caravan.UnitTests.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\PommaLabs.KVLite.SQLite.1.0.99.4\build\net45\PommaLabs.KVLite.SQLite.targets" Condition="Exists('..\..\packages\PommaLabs.KVLite.SQLite.1.0.99.4\build\net45\PommaLabs.KVLite.SQLite.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Questo progetto fa riferimento a uno o più pacchetti NuGet che non sono presenti in questo computer. Usare lo strumento di ripristino dei pacchetti NuGet per scaricarli. Per altre informazioni, vedere http://go.microsoft.com/fwlink/?LinkID=322105. Il file mancante è {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\PommaLabs.KVLite.SQLite.1.0.99.4\build\net45\PommaLabs.KVLite.SQLite.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\PommaLabs.KVLite.SQLite.1.0.99.4\build\net45\PommaLabs.KVLite.SQLite.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

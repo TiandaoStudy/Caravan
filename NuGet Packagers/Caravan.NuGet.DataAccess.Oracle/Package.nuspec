@@ -3,7 +3,7 @@
 <package>
     <metadata>
         <id>Finsa.Caravan.DataAccess.Oracle</id>
-        <version>1.38.0</version>
+        <version>1.47.0</version>
         <title>Finsa.Caravan.DataAccess.Oracle</title>
         <authors>Finsa S.p.A.</authors>
         <owners>Finsa S.p.A.</owners>
@@ -23,15 +23,14 @@ A short description of the package. If specified, this shows up in the middle pa
         <copyright>Copyright © Finsa S.p.A. 2014-2024</copyright>
         <dependencies>
             <dependency id="Dapper" version="1.42" />
-            <dependency id="EFInteractiveViews" version="[1.0.1, 2.0.0)" />
             <dependency id="EntityFramework" version="[6.1.3, 7.0.0)" />
             <dependency id="EntityFramework.CodeFirstStoreFunctions" version="[1.0.0, 2.0.0)" />
             <dependency id="EntityFramework.Triggers" version="[5.4.0, 6.0.0)" />
-            <dependency id="Finsa.Caravan.DataAccess.Runtime" version="1.38.0" />
+            <dependency id="Finsa.Caravan.DataAccess.Runtime" version="1.47.0" />
             <dependency id="IdentityServer3.EntityFramework" version="[2.2.0, 3.0.0)" />
             <dependency id="Oracle.ManagedDataAccess" version="[12.1.2400, 13.0.0)" />
             <dependency id="Oracle.ManagedDataAccess.EntityFramework" version="[12.1.2400, 13.0.0)" />
-            <dependency id="PommaLabs.KVLite.EntityFramework" version="[5.0.4, 6.0.0)" />
+            <dependency id="PommaLabs.KVLite.EntityFramework" version="[5.2.1, 6.0.0)" />
         </dependencies>
         <references></references>
         <frameworkAssemblies></frameworkAssemblies>
