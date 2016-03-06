@@ -22,6 +22,41 @@ the License.
 
 ### Caravan.Common ###
 
+Da documentare.
+
 ### Caravan.DataAccess ###
 
+Da documentare.
+
+### Caravan.WebApi ###
+
+Da documentare.
+
 ## Riconoscimenti ##
+
+### Autori ###
+
+Caravan è attualmente sviluppato da [Finsa S.p.A.](http://www.finsa.it/) ed è gratuitamente distribuito dietro la Apache License, Version 2.0. Il framework è sviluppato e mantenuto dalle seguenti persone (elencate in ordine alfabetico):
+
+* Alessio Parma
+* Sara Viacava
+
+### Dipendenze ###
+
+Caravan dipende dalle seguenti librerie gratuite e open source (elencate in ordine alfabetico):
+
+* [CodeServices](https://github.com/finsaspa/CodeServices)
+* [Common.Logging](https://github.com/net-commons/common-logging)
+* [DotCMIS](https://chemistry.apache.org/dotnet/dotcmis.html)
+* [DotLiquid](http://dotliquidmarkup.org/)
+* [Json.NET](http://www.newtonsoft.com/json)
+* [KlondikePackager](https://github.com/pomma89/KlondikePackager)
+* [KVLite](https://github.com/pomma89/KVLite)
+* [MailKit](https://github.com/jstedfast/MailKit)
+* [NUnit](http://www.nunit.org/)
+* [Thrower](https://github.com/pomma89/Thrower)
+* [YamlDotNet](http://aaubry.net/pages/yamldotnet.html)
+
+Internamente all'azienda, viene usato [Klondike](https://github.com/themotleyfool/Klondike) per gestire le versioni di sviluppo e test dei pacchetti di Caravan per NuGet.
+
+[Finsa S.p.A.](http://www.finsa.it/) ringrazia tutti coloro che hanno creato e mantengono tali framework e librerie.
