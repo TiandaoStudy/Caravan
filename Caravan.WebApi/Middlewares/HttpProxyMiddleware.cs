@@ -184,6 +184,11 @@ namespace Finsa.Caravan.WebApi.Middlewares
         }
 
         /// <summary>
+        ///   I caratteri usati per fare pulizia all'inizio e alla fine degli URL.
+        /// </summary>
+        private static readonly char[] UrlTrimChars = { '/', '\\' };
+
+        /// <summary>
         ///   Unisce i due URI dati.
         /// </summary>
         /// <param name="baseUri">Il primo URI.</param>
@@ -192,8 +197,8 @@ namespace Finsa.Caravan.WebApi.Middlewares
         /// <returns>I due URI uniti.</returns>
         private static string UriCombine(Uri baseUri, PathString relativePath, QueryString queryString)
         {
-	    var trimmedBaseUriValue = baseUri.AbsoluteUri.TrimEnd('/\');
-            var trimmedRelativePathValue = relativePath.HasValue ? relativePath.Value.TrimStart('/\') : string.Empty;
+	        var trimmedBaseUriValue = baseUri.AbsoluteUri.TrimEnd(UrlTrimChars);
+            var trimmedRelativePathValue = relativePath.HasValue ? relativePath.Value.TrimStart(UrlTrimChars) : string.Empty;
             return queryString.HasValue
                  ? string.Format("{0}/{1}?{2}", trimmedBaseUriValue, trimmedRelativePathValue, queryString.Value)
                  : string.Format("{0}/{1}", trimmedBaseUriValue, trimmedRelativePathValue);
