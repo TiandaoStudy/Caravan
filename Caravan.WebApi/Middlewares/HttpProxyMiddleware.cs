@@ -229,6 +229,11 @@ namespace Finsa.Caravan.WebApi.Middlewares
             };
         }
 
+        private sealed class InternalSettings
+        {
+            public string TrimmedTargetEndpointUrl { get; set; }
+        }
+
         #region HttpWebRequest extensions
 
         /// <summary>
