@@ -192,7 +192,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
         /// <returns>I due URI uniti.</returns>
         private static string UriCombine(Uri baseUri, PathString relativePath, QueryString queryString)
         {
-	    var trimmedBaseUriValue = baseUri.AbsolutePath.TrimEnd('/\');
+	    var trimmedBaseUriValue = baseUri.AbsoluteUri.TrimEnd('/\');
             var trimmedRelativePathValue = relativePath.HasValue ? relativePath.Value.TrimStart('/\') : string.Empty;
             return queryString.HasValue
                  ? string.Format("{0}/{1}?{2}", trimmedBaseUriValue, trimmedRelativePathValue, queryString.Value)
