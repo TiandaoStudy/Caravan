@@ -28,7 +28,7 @@ namespace Finsa.Caravan.Common.Logging.Activities
         /// <summary>
         ///   Il log su cui l'attività scriverà i propri messaggi.
         /// </summary>
-        protected ICaravanLog Log { get; } = ServiceProvider.FetchLog<TLogActivity>();
+        protected ICaravanLog Log { get; } = CaravanServiceProvider.FetchLog<TLogActivity>();
 
         #region Arguments
 

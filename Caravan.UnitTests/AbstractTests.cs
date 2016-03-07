@@ -47,7 +47,7 @@ namespace Finsa.Caravan.UnitTests
         {
             Effort.Provider.EffortProviderConfiguration.RegisterProvider();
 
-            ServiceProvider.NinjectKernel = new StandardKernel(
+            CaravanServiceProvider.NinjectKernel = new StandardKernel(
                 new CaravanCommonNinjectConfig(DependencyHandling.UnitTesting, "caravan"),
                 new CaravanEffortDataAccessNinjectConfig(DependencyHandling.UnitTesting),
                 new NinjectConfig()
@@ -59,7 +59,7 @@ namespace Finsa.Caravan.UnitTests
         {
             // Pulizia della sorgente dati - Per costruzione, si dovrebbe svuotare anche la sorgente
             // dati di Caravan (per ora solo su SQL, in futuro si vedrà).
-            var kernel = ServiceProvider.NinjectKernel;
+            var kernel = CaravanServiceProvider.NinjectKernel;
             MyDbContextFactory = kernel.Get<IUnitTestableDbContextFactory<MyDbContext>>();
             MyDbContextFactory.Reset();
 

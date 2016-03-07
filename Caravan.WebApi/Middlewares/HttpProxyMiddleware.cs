@@ -131,11 +131,6 @@ namespace Finsa.Caravan.WebApi.Middlewares
             var httpRequest = WebRequest.CreateHttp(httpRequestUri);
             var requestHasBody = owinRequest.Body.Length != 0;
 
-            // Configurazione della richiesta.
-            httpRequest.AllowAutoRedirect = true;
-            httpRequest.AutomaticDecompression = DecompressionMethods.None;
-            httpRequest.Method = owinRequest.Method;
-
             // Copia degli header della richiesta.
             foreach (var header in owinRequest.Headers)
             {
@@ -144,6 +139,11 @@ namespace Finsa.Caravan.WebApi.Middlewares
                     SetRawHeader(httpRequest, header.Key, header.Value);
                 }
             }
+
+            // Configurazione della richiesta.
+            httpRequest.AllowAutoRedirect = true;
+            httpRequest.AutomaticDecompression = DecompressionMethods.None;
+            httpRequest.Method = owinRequest.Method;
 
             // Copia del body della richiesta, solo se presente.
             if (requestHasBody)
@@ -160,12 +160,16 @@ namespace Finsa.Caravan.WebApi.Middlewares
             HttpWebResponse httpResponse;
             try
             {
+                _log.Trace($"Proxying the request to '{httpRequestUri}'...");
                 httpResponse = (await httpRequest.GetResponseAsync()) as HttpWebResponse;
             }
             catch (WebException ex) when (ex.Response is HttpWebResponse)
             {
                 // Le response di errore arrivano all'interno di un'eccezione.
                 httpResponse = ex.Response as HttpWebResponse;
+
+                // Registro come "warning" la response di errore.
+                _log.Warn($"Received an error response from {httpResponse.Server} at '{httpResponse.ResponseUri}' ", ex);
             }
 
             // Copia del body della risposta.

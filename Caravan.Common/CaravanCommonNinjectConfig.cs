@@ -77,7 +77,7 @@ namespace Finsa.Caravan.Common
                 case DependencyHandling.TestEnvironment:
                 case DependencyHandling.ProductionEnvironment:
                     Bind<IClock>().To<SystemClock>().InSingletonScope();
-                    Bind<ILog, ICaravanLog>().ToMethod(ctx => LogManager.GetLogger(ctx.Request?.Target?.Member?.ReflectedType ?? typeof(ServiceProvider)) as ICaravanLog);
+                    Bind<ILog, ICaravanLog>().ToMethod(ctx => LogManager.GetLogger(ctx.Request?.Target?.Member?.ReflectedType ?? typeof(CaravanServiceProvider)) as ICaravanLog);
 
                     Bind<ICaravanUserManagerFactory>().To<CaravanUserManagerFactory>().InRequestOrThreadScope();
                     Bind<ICaravanRoleManagerFactory>().To<CaravanRoleManagerFactory>().InRequestOrThreadScope();

@@ -76,16 +76,16 @@ namespace Finsa.Caravan.WebService
         }
 
         private static IKernel CreateKernel() {
-            if (ServiceProvider.NinjectKernel != null)
+            if (CaravanServiceProvider.NinjectKernel != null)
             {
-                return ServiceProvider.NinjectKernel;
+                return CaravanServiceProvider.NinjectKernel;
             }
 
             var webApiSettings = new CaravanWebApiNinjectConfig.Settings();
             webApiSettings.IdentityManager.Enabled = true;
             webApiSettings.IdentityServer.Enabled = true;
 
-            return ServiceProvider.NinjectKernel = new StandardKernel(
+            return CaravanServiceProvider.NinjectKernel = new StandardKernel(
                 new NinjectConfig(),
                 new CaravanCommonNinjectConfig(DependencyHandling.Default, "wsCaravan"),
                 new CaravanOracleDataAccessNinjectConfig(DependencyHandling.Default),

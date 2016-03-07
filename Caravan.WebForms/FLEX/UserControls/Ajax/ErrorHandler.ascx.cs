@@ -16,7 +16,7 @@ namespace FLEX.Web.UserControls.Ajax
 {
     public partial class ErrorHandler : UserControl
     {
-        private static readonly ICaravanLog Log = ServiceProvider.FetchLog<ErrorHandler>();
+        private static readonly ICaravanLog Log = CaravanServiceProvider.FetchLog<ErrorHandler>();
 
         public void CatchException(Exception ex, ErrorLocation location = ErrorLocation.EventHandler)
         {
