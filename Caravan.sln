@@ -164,6 +164,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F2A2BF28-20BE-4CC2-98DC-D6FB14AD8AC6}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
+		CHANGELOG.md = CHANGELOG.md
 		finsaspa.snk = finsaspa.snk
 		LICENSE.md = LICENSE.md
 		README.md = README.md
