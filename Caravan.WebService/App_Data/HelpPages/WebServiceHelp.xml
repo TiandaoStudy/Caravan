@@ -392,6 +392,12 @@
             </summary>
             <param name="randomTuples">Lista di tuple casuali.</param>
         </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.ProxyController.PostNoBody(System.Int32)">
+            <summary>
+              Registra nel log il numero inviato.
+            </summary>
+            <param name="x">Il numero.</param>
+        </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.ProxyController.GetErrorResponse">
             <summary>
               Restituisce una response di errore.

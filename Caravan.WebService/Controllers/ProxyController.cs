@@ -54,7 +54,6 @@ namespace Finsa.Caravan.WebService.Controllers
                 .Select(i => Tuple.Create(r.Next(), r.NextDouble().ToString(), r.NextBoolean()));
         }
 
-
         /// <summary>
         ///   Restituisce una lista di tuple casuali.
         /// </summary>
@@ -77,6 +76,18 @@ namespace Finsa.Caravan.WebService.Controllers
         public void PostRandomTuples(IEnumerable<Tuple<int, string, bool>> randomTuples)
         {
             _log.Info(randomTuples.ToJsonString());
+        }
+
+        /// <summary>
+        ///   Registra nel log il numero inviato.
+        /// </summary>
+        /// <param name="x">Il numero.</param>
+        /// <returns>Il numero.</returns>
+        [Route("nobody/{x}")]
+        public int PostNoBody(int x)
+        {
+            _log.Info($"Received x={x}");
+            return x;
         }
 
         /// <summary>
