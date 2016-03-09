@@ -14,6 +14,7 @@ using Finsa.Caravan.Common.Identity.Models;
 using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebApi.Filters;
+using Finsa.CodeServices.Clock;
 using PommaLabs.Thrower;
 using System;
 using System.Diagnostics;
@@ -42,13 +43,21 @@ namespace Finsa.Caravan.WebService.Controllers
         private readonly ICaravanDataSourceManager _dataSourceManager;
 
         /// <summary>
+        ///   L'orologio di sistema.
+        /// </summary>
+        private readonly IClock _clock;
+
+        /// <summary>
         ///   Inietta le dipendenze richieste dal controller.
         /// </summary>
         /// <param name="dataSourceManager">Il gestore della sorgente dati di Caravan.</param>
-        public HelpController(ICaravanDataSourceManager dataSourceManager)
+        /// <param name="clock">L'orologio di sistema.</param>
+        public HelpController(ICaravanDataSourceManager dataSourceManager, IClock clock)
         {
             RaiseArgumentNullException.IfIsNull(dataSourceManager, nameof(dataSourceManager));
+            RaiseArgumentNullException.IfIsNull(clock, nameof(clock));
             _dataSourceManager = dataSourceManager;
+            _clock = clock;
         }
 
         /// <summary>
@@ -83,8 +92,9 @@ namespace Finsa.Caravan.WebService.Controllers
             return new ServiceInfoDTO
             {
                 Version = fvi.FileVersion,
-                HostName = hostName,
                 Bitness = bitness,
+                HostName = hostName,
+                HostDateTime = _clock.UtcNow,
                 DataSourceName = dsName,
                 DataSourceKind = dsKind
             };
@@ -110,6 +120,11 @@ namespace Finsa.Caravan.WebService.Controllers
             ///   Il nome di rete del server su cui è ospitato il servizio.
             /// </summary>
             public string HostName { get; set; }
+
+            /// <summary>
+            ///   Data e ora UTC del server su cui è ospitato il servizio.
+            /// </summary>
+            public DateTime HostDateTime { get; set; }
 
             /// <summary>
             ///   L'architettura (x86 oppure x64) del processo che esegue il servizio.

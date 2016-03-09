@@ -38,6 +38,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Middlewares\HttpProxyMiddleware.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middlewares\HttpRequestIdentifierMiddleware.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middlewares\Models\AbstractMiddlewareSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Middlewares\OAuth2HandlerMiddleware.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Links\AlternateLink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Links\CollectionLink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Links\EditLink.cs" />
