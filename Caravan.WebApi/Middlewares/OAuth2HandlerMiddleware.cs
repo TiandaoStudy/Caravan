@@ -1,5 +1,6 @@
 ﻿using Common.Logging;
 using Finsa.CodeServices.Common;
+using IdentityModel.Client;
 using Microsoft.Owin;
 using PommaLabs.Thrower;
 using RestSharp.Extensions.MonoHttp;
@@ -187,15 +188,21 @@ namespace Finsa.Caravan.WebApi.Middlewares
         /// <param name="owinRequest">La richiesta OWIN.</param>
         /// <param name="owinResponse">La risposta OWIN.</param>
         /// <returns>Un task.</returns>
-        private Task HandleRedirectAsync(IOwinRequest owinRequest, IOwinResponse owinResponse)
+        private async Task HandleRedirectAsync(IOwinRequest owinRequest, IOwinResponse owinResponse)
         {
             // Visto che il flusso utilizzato è di tipo "code grant", mi aspetto che nel query
             // string sia presenta il codice "code" per proseguire il flusso.
             var authCode = owinRequest.Query["code"];
 
+            // Attivo il client per il recupero dei token.
+            var tokenClient = new TokenClient("https://server/token", "client_id", "secret");
+            var tokenResponse = await tokenClient.RequestAuthorizationCodeAsync(authCode, owinRequest.Uri.AbsoluteUri);
+
+
+            var accessToken = tokenResponse.AccessToken;
+
             // Effettuo il redirect verso la home ed esco dal componente di middleware.
             owinResponse.Redirect(_settings.RedirectUri.AbsoluteUri);
-            return Task.FromResult(0);
         }
 
         public sealed class Settings

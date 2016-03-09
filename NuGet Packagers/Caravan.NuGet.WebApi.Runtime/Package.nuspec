@@ -25,6 +25,7 @@ A short description of the package. If specified, this shows up in the middle pa
             <dependency id="Finsa.Caravan.Common.Runtime" version="1.48.0" />
             <dependency id="Finsa.Caravan.DataAccess.Runtime" version="1.48.0" />
             <dependency id="Finsa.Caravan.WebApi" version="1.48.0" />
+            <dependency id="IdentityModel" version="1.9.1" />
             <dependency id="Microsoft.AspNet.WebApi.Owin" version="5.2.3" />
             <dependency id="Microsoft.AspNet.WebApi.WebHost" version="5.2.3" />
             <dependency id="Microsoft.Owin" version="3.0.1" />
