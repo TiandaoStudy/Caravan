@@ -32,6 +32,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Identity\Models\AuthorizationResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Identity\Models\OAuth2AuthorizationSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Identity\SimpleAuthorizationErrorHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Middlewares\AngularJsAppMiddleware.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middlewares\HttpCompressionMiddleware.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middlewares\HttpLoggingMiddleware.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Middlewares\HttpProxyMiddleware.cs" />
