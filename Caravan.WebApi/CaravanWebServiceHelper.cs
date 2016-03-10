@@ -40,8 +40,8 @@ namespace Finsa.Caravan.WebApi
             RaiseArgumentNullException.IfIsNull(httpConfiguration, nameof(httpConfiguration));
 
             // Il kernel Ninject usato per recuperare le dipendenze.
-            var kernel = ServiceProvider.NinjectKernel;
-            var log = ServiceProvider.FetchLog<CaravanWebServiceHelper>();
+            var kernel = CaravanServiceProvider.NinjectKernel;
+            var log = CaravanServiceProvider.FetchLog<CaravanWebServiceHelper>();
 
             // Loggo l'avvio dell'applicazione.
             log.Info($"Application {CaravanCommonConfiguration.Instance.AppDescription} started");
@@ -76,7 +76,7 @@ namespace Finsa.Caravan.WebApi
             if (identifierSettings.Enabled)
             {
                 // Inserire la parte di etichettatura prima di ogni componente.
-                var identifierLog = ServiceProvider.FetchLog<HttpRequestIdentifierMiddleware>();
+                var identifierLog = CaravanServiceProvider.FetchLog<HttpRequestIdentifierMiddleware>();
                 appBuilder.Use(typeof(HttpRequestIdentifierMiddleware), identifierSettings, identifierLog);
             }
 
@@ -84,7 +84,7 @@ namespace Finsa.Caravan.WebApi
             if (compressionSettings.Enabled)
             {
                 // Inserire la compressione PRIMA del log.
-                var compressionLog = ServiceProvider.FetchLog<HttpCompressionMiddleware>();
+                var compressionLog = CaravanServiceProvider.FetchLog<HttpCompressionMiddleware>();
                 appBuilder.Use(typeof(HttpCompressionMiddleware), compressionSettings, compressionLog);
             }
 
@@ -92,7 +92,7 @@ namespace Finsa.Caravan.WebApi
             if (loggingSettings.Enabled)
             {
                 // Inserire il log DOPO la compressione.
-                var loggingLog = ServiceProvider.FetchLog<HttpLoggingMiddleware>();
+                var loggingLog = CaravanServiceProvider.FetchLog<HttpLoggingMiddleware>();
                 appBuilder.Use(typeof(HttpLoggingMiddleware), loggingSettings, loggingLog);
             }
 
@@ -102,7 +102,7 @@ namespace Finsa.Caravan.WebApi
                 // Inserire il proxy DOPO gli altri componenti.
                 appBuilder.Map(proxySettings.SourceEndpointPath, ab =>
                 {
-                    var proxyLog = ServiceProvider.FetchLog<HttpProxyMiddleware>();
+                    var proxyLog = CaravanServiceProvider.FetchLog<HttpProxyMiddleware>();
                     ab.Use(typeof(HttpProxyMiddleware), proxySettings, proxyLog);
                 });
             }

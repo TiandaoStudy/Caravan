@@ -18,7 +18,7 @@ namespace Finsa.Caravan.WebApi.Core
     sealed class IdentityServerNinjectRegistration<T> : IdentityServer3.Core.Configuration.Registration<T>
         where T : class
     {
-        public IdentityServerNinjectRegistration() : base(r => ServiceProvider.NinjectKernel.Get<T>())
+        public IdentityServerNinjectRegistration() : base(r => CaravanServiceProvider.NinjectKernel.Get<T>())
         {
         }
     }
@@ -26,7 +26,7 @@ namespace Finsa.Caravan.WebApi.Core
     sealed class IdentityManagerNinjectRegistration<T> : IdentityManager.Configuration.Registration<T>
         where T : class
     {
-        public IdentityManagerNinjectRegistration() : base(r => ServiceProvider.NinjectKernel.Get<T>())
+        public IdentityManagerNinjectRegistration() : base(r => CaravanServiceProvider.NinjectKernel.Get<T>())
         {
         }
     }

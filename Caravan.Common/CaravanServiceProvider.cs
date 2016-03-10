@@ -26,7 +26,7 @@ namespace Finsa.Caravan.Common
     ///   retrocompatibilità verso alcuni componenti che, oramai, non riescono più ad essere
     ///   adattati all'uso di Ninject.
     /// </summary>
-    public static class ServiceProvider
+    public static class CaravanServiceProvider
     {
         /// <summary>
         ///   Copia locale del kernel Ninject usato per la gestione automatica delle dipendenze.

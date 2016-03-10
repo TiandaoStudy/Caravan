@@ -11,7 +11,7 @@ namespace FLEX.Web.UserControls
 {
     public partial class PageFooter : ControlBase
     {
-        private static readonly ICaravanLog Log = ServiceProvider.FetchLog<PageFooter>();
+        private static readonly ICaravanLog Log = CaravanServiceProvider.FetchLog<PageFooter>();
 
         protected void Page_Load(object sender, EventArgs e)
         {

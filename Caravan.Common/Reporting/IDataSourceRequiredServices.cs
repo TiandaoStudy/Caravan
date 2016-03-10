@@ -19,7 +19,7 @@ namespace Finsa.Caravan.Common.Reporting
     {
         /// <summary>
         ///   Meotodo invocato da <see cref="AbstractObjectDataSource{TRequiredServices}"/> quando
-        ///   non è disponibile <see cref="ServiceProvider.NinjectKernel"/>. Un caso in cui questo
+        ///   non è disponibile <see cref="CaravanServiceProvider.NinjectKernel"/>. Un caso in cui questo
         ///   avviene è quando si sta cercando di fare un'anteprima del report.
         /// </summary>
         void SetDefaults();

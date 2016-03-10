@@ -38,7 +38,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Mongo\MongoLogRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Mongo\MongoSecurityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Mongo\MongoUtilities.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\CaravanMongoDataAccessNinjectConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\CaravanRestDataAccessNinjectConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Models\RestRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Models\RestResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\RestLogRepository.cs" />

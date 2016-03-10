@@ -16,6 +16,7 @@ using Microsoft.Owin;
 using PommaLabs.Thrower;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
@@ -131,19 +132,16 @@ namespace Finsa.Caravan.WebApi.Middlewares
             var httpRequest = WebRequest.CreateHttp(httpRequestUri);
             var requestHasBody = owinRequest.Body.Length != 0;
 
+            // Copia degli header della richiesta.
+            foreach (var header in owinRequest.Headers.Where(h => !_settings.FilteredHeaders.Contains(h.Key)))
+            {
+                SetRawHeader(httpRequest, header.Key, header.Value);
+            }
+
             // Configurazione della richiesta.
             httpRequest.AllowAutoRedirect = true;
             httpRequest.AutomaticDecompression = DecompressionMethods.None;
             httpRequest.Method = owinRequest.Method;
-
-            // Copia degli header della richiesta.
-            foreach (var header in owinRequest.Headers)
-            {
-                if (!_settings.FilteredHeaders.Contains(header.Key))
-                {
-                    SetRawHeader(httpRequest, header.Key, header.Value);
-                }
-            }
 
             // Copia del body della richiesta, solo se presente.
             if (requestHasBody)
@@ -155,17 +153,28 @@ namespace Finsa.Caravan.WebApi.Middlewares
                 var httpRequestBody = await httpRequest.GetRequestStreamAsync();
                 await owinRequest.Body.CopyToAsync(httpRequestBody);
             }
+            else
+            {
+                // Se il body non è presente, azzero la lunghezza del contenuto. Questa impostazione
+                // è fondamentale per far funzionare le POST/PUT/... per cui non è stato specificato
+                // un body, in quanto non funzionerebbe altrimenti.
+                httpRequest.ContentLength = 0;
+            }
 
             // Esecuzione della richiesta.
             HttpWebResponse httpResponse;
             try
             {
+                _log.Trace($"Proxying the request to '{httpRequestUri}'...");
                 httpResponse = (await httpRequest.GetResponseAsync()) as HttpWebResponse;
             }
             catch (WebException ex) when (ex.Response is HttpWebResponse)
             {
                 // Le response di errore arrivano all'interno di un'eccezione.
                 httpResponse = ex.Response as HttpWebResponse;
+
+                // Registro come "warning" la response di errore.
+                _log.Warn($"Received an error response from {httpResponse.Server} at '{httpResponse.ResponseUri}' ", ex);
             }
 
             // Copia del body della risposta.
@@ -177,7 +186,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
 
             // Copia degli header della risposta.
             var httpResponseHeaders = httpResponse.Headers;
-            foreach (string headerName in httpResponseHeaders)
+            foreach (var headerName in httpResponseHeaders.Cast<string>().Where(h => !_settings.FilteredHeaders.Contains(h)))
             {
                 owinResponse.Headers.Append(headerName, string.Join(", ", httpResponseHeaders.GetValues(headerName)));
             }
@@ -197,7 +206,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
         /// <returns>I due URI uniti.</returns>
         private static string UriCombine(Uri baseUri, PathString relativePath, QueryString queryString)
         {
-	        var trimmedBaseUriValue = baseUri.AbsoluteUri.TrimEnd(UrlTrimChars);
+            var trimmedBaseUriValue = baseUri.AbsoluteUri.TrimEnd(UrlTrimChars);
             var trimmedRelativePathValue = relativePath.HasValue ? relativePath.Value.TrimStart(UrlTrimChars) : string.Empty;
             return queryString.HasValue
                  ? string.Format("{0}/{1}?{2}", trimmedBaseUriValue, trimmedRelativePathValue, queryString.Value)
@@ -225,8 +234,15 @@ namespace Finsa.Caravan.WebApi.Middlewares
             public HashSet<string> FilteredHeaders = new HashSet<string>
             {
                 "Connection", // Causa errori vari - Va studiato.
-                "Content-Length" // Viene impostato in automatico dal framework.
+                "Content-Length", // Viene impostato in automatico dal framework.
+                "Cookie", // Il proxy, in questa implementazione, non muove i cookie.
+                "Host", // Inserire questo header causa enormi grattacapi in alcuni ambienti.
             };
+        }
+
+        private sealed class InternalSettings
+        {
+            public string TrimmedTargetEndpointUrl { get; set; }
         }
 
         #region HttpWebRequest extensions

@@ -1,4 +1,5 @@
-﻿using System.Data.Common;
+﻿using System;
+using System.Data.Common;
 
 namespace Finsa.Caravan.DataAccess.Core
 {
@@ -34,6 +35,11 @@ namespace Finsa.Caravan.DataAccess.Core
                 }
             }
         }
+
+        /// <summary>
+        ///   L'ora presente sul sistema sottostante la sorgente dati.
+        /// </summary>
+        public abstract DateTime DataSourceDateTime { get; }
 
         public abstract string ElaborateConnectionString(string connectionString);
 

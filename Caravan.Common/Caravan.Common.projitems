@@ -14,7 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CaravanCommonConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CaravanCommonNinjectConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reporting\IDataSourceRequiredServices.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ServiceProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CaravanServiceProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\ErrorMessages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\TaskExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DependencyHandling.cs" />

@@ -1,6 +1,8 @@
+using Dapper;
+using Finsa.Caravan.DataAccess.Core;
+using System;
 using System.Data.Common;
 using System.Data.SqlClient;
-using Finsa.Caravan.DataAccess.Core;
 
 namespace Finsa.Caravan.DataAccess.Sql.SqlServer
 {
@@ -9,6 +11,18 @@ namespace Finsa.Caravan.DataAccess.Sql.SqlServer
         public override CaravanDataSourceKind DataSourceKind
         {
             get { return CaravanDataSourceKind.SqlServer; }
+        }
+
+        public override DateTime DataSourceDateTime
+        {
+            get
+            {
+                using (var connection = OpenConnection())
+                {
+                    const string query = "TODO";
+                    return connection.ExecuteScalar<DateTime>(query);
+                }
+            }
         }
 
         public override string ElaborateConnectionString(string connectionString)

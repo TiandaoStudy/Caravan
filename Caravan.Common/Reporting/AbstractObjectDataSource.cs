@@ -31,7 +31,7 @@ namespace Finsa.Caravan.Common.Reporting
         /// </summary>
         static AbstractObjectDataSource()
         {
-            var kernel = ServiceProvider.NinjectKernel;
+            var kernel = CaravanServiceProvider.NinjectKernel;
             if (kernel != null)
             {
                 Services = kernel.Get<TRequiredServices>();

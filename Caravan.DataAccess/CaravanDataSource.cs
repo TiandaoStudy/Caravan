@@ -24,15 +24,15 @@ namespace Finsa.Caravan.DataAccess
     /// <remarks>Mantenuta (momentaneamente) per retrocompatibilità interna a Caravan.</remarks>
     public static class CaravanDataSource
     {
-        internal static ICaravanDataSourceManager Manager => ServiceProvider.NinjectKernel.Get<ICaravanDataSourceManager>();
+        internal static ICaravanDataSourceManager Manager => CaravanServiceProvider.NinjectKernel.Get<ICaravanDataSourceManager>();
 
-        internal static ICaravanLogRepository Logger => ServiceProvider.NinjectKernel.Get<ICaravanLogRepository>();
+        internal static ICaravanLogRepository Logger => CaravanServiceProvider.NinjectKernel.Get<ICaravanLogRepository>();
 
-        internal static ICaravanSecurityRepository Security => ServiceProvider.NinjectKernel.Get<ICaravanSecurityRepository>();
+        internal static ICaravanSecurityRepository Security => CaravanServiceProvider.NinjectKernel.Get<ICaravanSecurityRepository>();
 
         /// <summary>
         ///   Usato negli unit test per resettare rapidamente la base dati di Caravan.
         /// </summary>
-        public static void Reset() => ServiceProvider.NinjectKernel.Get<IUnitTestableDbContextFactory<SqlDbContext>>().Reset();
+        public static void Reset() => CaravanServiceProvider.NinjectKernel.Get<IUnitTestableDbContextFactory<SqlDbContext>>().Reset();
     }
 }

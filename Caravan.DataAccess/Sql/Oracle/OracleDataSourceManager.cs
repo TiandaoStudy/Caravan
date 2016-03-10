@@ -1,5 +1,7 @@
+using Dapper;
 using Finsa.Caravan.DataAccess.Core;
 using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Data.Common;
 using System.Globalization;
 
@@ -8,6 +10,18 @@ namespace Finsa.Caravan.DataAccess.Sql.Oracle
     internal sealed class OracleDataSourceManager : AbstractDataSourceManager
     {
         public override CaravanDataSourceKind DataSourceKind { get; } = CaravanDataSourceKind.Oracle;
+
+        public override DateTime DataSourceDateTime
+        {
+            get
+            {
+                using (var connection = OpenConnection())
+                {
+                    const string query = "SELECT SYS_EXTRACT_UTC(SYSTIMESTAMP) FROM DUAL";
+                    return connection.ExecuteScalar<DateTime>(query);
+                }
+            }
+        }
 
         public override string ElaborateConnectionString(string connectionString)
         {

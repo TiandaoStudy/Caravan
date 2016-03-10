@@ -42,7 +42,7 @@ namespace FLEX.Web.Services
         private const string TokenStart = "{:";
         private const string UserQueryToken = "{:UserQuery:}";
 
-        private static readonly ICaravanLog Log = ServiceProvider.FetchLog<AjaxLookup>();
+        private static readonly ICaravanLog Log = CaravanServiceProvider.FetchLog<AjaxLookup>();
 
         [WebMethod]
         public List<Result> Lookup(string xmlLookup, string lookupBy, string userQuery, string queryFilter)
@@ -62,7 +62,7 @@ namespace FLEX.Web.Services
         {
             var lookupData = LoadAjaxLookupData(xmlLookup, lookupBy);
             var lookupQuery = ProcessQuery(lookupData, userQuery, queryFilter);
-            var resultData = ServiceProvider.NinjectKernel.Get<ICaravanDataSourceManager>().OpenConnection().Query(lookupQuery).ToList();
+            var resultData = CaravanServiceProvider.NinjectKernel.Get<ICaravanDataSourceManager>().OpenConnection().Query(lookupQuery).ToList();
             if (resultData.Count == 0)
             {
                 return new List<Result>();

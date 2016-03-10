@@ -10,6 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using System;
 using System.Data.Common;
 
 namespace Finsa.Caravan.DataAccess
@@ -34,6 +35,11 @@ namespace Finsa.Caravan.DataAccess
         ///   Il nome della sorgente dati a cui è collegato Caravan.
         /// </summary>
         string DataSourceName { get; }
+
+        /// <summary>
+        ///   L'ora presente sul sistema sottostante la sorgente dati.
+        /// </summary>
+        DateTime DataSourceDateTime { get; }
 
         /// <summary>
         ///   Processa la stringa di connessione aggiungendo flag potenzialmente utili.

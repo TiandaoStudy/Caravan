@@ -43,13 +43,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASP.NET", "ASP.NET", "{D2B1
 		Documentation\Issues and Solutions\ASP.NET\Closing JavaScript Modals on IE9.pdf = Documentation\Issues and Solutions\ASP.NET\Closing JavaScript Modals on IE9.pdf
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3495129D-5A6D-47A5-9121-317E6EE3CBB4}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.DataAccess.NET45", "Platform Specific\Caravan.DataAccess.NET45\Caravan.DataAccess.NET45.csproj", "{418B2D91-D53E-49BF-98FC-66DA9490DC37}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.WebApi.NET45", "Platform Specific\Caravan.WebApi.NET45\Caravan.WebApi.NET45.csproj", "{27D82597-28B1-4441-8C42-0A220C38C4D8}"
@@ -164,6 +157,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F2A2BF28-20BE-4CC2-98DC-D6FB14AD8AC6}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
+		CHANGELOG.md = CHANGELOG.md
 		finsaspa.snk = finsaspa.snk
 		LICENSE.md = LICENSE.md
 		README.md = README.md

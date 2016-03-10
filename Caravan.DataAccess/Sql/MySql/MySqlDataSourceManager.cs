@@ -1,5 +1,7 @@
-﻿using System.Data.Common;
+﻿using Dapper;
 using Finsa.Caravan.DataAccess.Core;
+using System;
+using System.Data.Common;
 
 namespace Finsa.Caravan.DataAccess.Sql.MySql
 {
@@ -8,6 +10,18 @@ namespace Finsa.Caravan.DataAccess.Sql.MySql
         public override CaravanDataSourceKind DataSourceKind
         {
             get { return CaravanDataSourceKind.MySql; }
+        }
+
+        public override DateTime DataSourceDateTime
+        {
+            get
+            {
+                using (var connection = OpenConnection())
+                {
+                    const string query = "TODO";
+                    return connection.ExecuteScalar<DateTime>(query);
+                }
+            }
         }
 
         public override string ElaborateConnectionString(string connectionString)

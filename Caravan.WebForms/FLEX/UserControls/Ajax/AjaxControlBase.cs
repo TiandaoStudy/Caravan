@@ -13,7 +13,7 @@ namespace FLEX.Web.UserControls.Ajax
     /// </summary>
     public abstract class AjaxControlBase : ControlBase
     {
-        private static readonly ICaravanLog Log = ServiceProvider.FetchLog<AjaxControlBase>();
+        private static readonly ICaravanLog Log = CaravanServiceProvider.FetchLog<AjaxControlBase>();
 
         private const string DoPostBackViewStateKey = "AjaxControlBase.DoPostBack";
         private const string EnabledViewStateKey = "AjaxControlBase.Enabled";

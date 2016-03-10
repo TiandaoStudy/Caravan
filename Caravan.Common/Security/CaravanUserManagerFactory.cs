@@ -39,8 +39,8 @@ namespace Finsa.Caravan.Common.Security
             var app = await SecurityRepository.GetAppAsync(appName);
             var userStore = new CaravanUserStore(app.Id, app.Name, SecurityRepository);
             var passwordHasherType = Type.GetType(app.PasswordHasher, true, true);
-            var passwordHasher = ServiceProvider.NinjectKernel.Get(passwordHasherType) as IPasswordHasher;
-            var mailSender = ServiceProvider.NinjectKernel.Get<IMailSender>();
+            var passwordHasher = CaravanServiceProvider.NinjectKernel.Get(passwordHasherType) as IPasswordHasher;
+            var mailSender = CaravanServiceProvider.NinjectKernel.Get<IMailSender>();
             return new CaravanUserManager(userStore, passwordHasher, mailSender);
         }
 
