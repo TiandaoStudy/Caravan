@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Finsa.Caravan.DataAccess.Core;
+using System;
 using System.Data.Common;
-using Finsa.Caravan.DataAccess.Core;
 
 namespace Finsa.Caravan.DataAccess.Mongo
 {
@@ -9,6 +9,14 @@ namespace Finsa.Caravan.DataAccess.Mongo
         public override CaravanDataSourceKind DataSourceKind
         {
             get { return CaravanDataSourceKind.MongoDb; }
+        }
+
+        public override DateTime DataSourceDateTime
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public override string ElaborateConnectionString(string connectionString)

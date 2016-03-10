@@ -19,6 +19,7 @@ using PommaLabs.Thrower;
 using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Web.Http;
 using System.Web.Http.Results;
 using WebApi.OutputCache.V2;
@@ -96,7 +97,8 @@ namespace Finsa.Caravan.WebService.Controllers
                 HostName = hostName,
                 HostDateTime = _clock.UtcNow,
                 DataSourceName = dsName,
-                DataSourceKind = dsKind
+                DataSourceKind = dsKind,
+                DataSourceDateTime = _dataSourceManager.DataSourceDateTime
             };
         }
 
@@ -109,39 +111,53 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <summary>
         ///   Rappresenta una descrizione sintetica delle informazioni sul servizio.
         /// </summary>
+        [DataContract]
         public sealed class ServiceInfoDTO
         {
             /// <summary>
             ///   La versione del servizio, letta direttamente dall'assembly .NET del servizio stesso.
             /// </summary>
+            [DataMember(Order = 0)]
             public string Version { get; set; }
+
+            /// <summary>
+            ///   L'architettura (x86 oppure x64) del processo che esegue il servizio.
+            /// </summary>
+            [DataMember(Order = 1)]
+            public string Bitness { get; set; }
 
             /// <summary>
             ///   Il nome di rete del server su cui è ospitato il servizio.
             /// </summary>
+            [DataMember(Order = 2)]
             public string HostName { get; set; }
 
             /// <summary>
             ///   Data e ora UTC del server su cui è ospitato il servizio.
             /// </summary>
+            [DataMember(Order = 3)]
             public DateTime HostDateTime { get; set; }
-
-            /// <summary>
-            ///   L'architettura (x86 oppure x64) del processo che esegue il servizio.
-            /// </summary>
-            public string Bitness { get; set; }
 
             /// <summary>
             ///   Il nome della sorgente dati a cui è collegato Caravan e che, presumibilmente, è
             ///   condivisa con l'applicativo.
             /// </summary>
+            [DataMember(Order = 4)]
             public string DataSourceName { get; set; }
 
             /// <summary>
             ///   Il tipo della sorgente dati a cui è collegato Caravan e che, presumibilmente, è
             ///   condivisa con l'applicativo.
             /// </summary>
+            [DataMember(Order = 5)]
             public string DataSourceKind { get; set; }
+
+            /// <summary>
+            ///   Data e ora della sorgente dati a cui è collegato Caravan e che, presumibilmente, è
+            ///   condivisa con l'applicativo.
+            /// </summary>
+            [DataMember(Order = 6)]
+            public DateTime DataSourceDateTime { get; set; }
         }
     }
 }

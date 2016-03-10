@@ -156,11 +156,17 @@
               Il gestore della sorgente dati di Caravan.
             </summary>
         </member>
-        <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.#ctor(Finsa.Caravan.DataAccess.ICaravanDataSourceManager)">
+        <member name="F:Finsa.Caravan.WebService.Controllers.HelpController._clock">
+            <summary>
+              L'orologio di sistema.
+            </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.#ctor(Finsa.Caravan.DataAccess.ICaravanDataSourceManager,Finsa.CodeServices.Clock.IClock)">
             <summary>
               Inietta le dipendenze richieste dal controller.
             </summary>
             <param name="dataSourceManager">Il gestore della sorgente dati di Caravan.</param>
+            <param name="clock">L'orologio di sistema.</param>
         </member>
         <member name="M:Finsa.Caravan.WebService.Controllers.HelpController.Get">
             <summary>
@@ -187,14 +193,19 @@
               La versione del servizio, letta direttamente dall'assembly .NET del servizio stesso.
             </summary>
         </member>
+        <member name="P:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO.Bitness">
+            <summary>
+              L'architettura (x86 oppure x64) del processo che esegue il servizio.
+            </summary>
+        </member>
         <member name="P:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO.HostName">
             <summary>
               Il nome di rete del server su cui è ospitato il servizio.
             </summary>
         </member>
-        <member name="P:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO.Bitness">
+        <member name="P:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO.HostDateTime">
             <summary>
-              L'architettura (x86 oppure x64) del processo che esegue il servizio.
+              Data e ora UTC del server su cui è ospitato il servizio.
             </summary>
         </member>
         <member name="P:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO.DataSourceName">
@@ -209,10 +220,44 @@
               condivisa con l'applicativo.
             </summary>
         </member>
+        <member name="P:Finsa.Caravan.WebService.Controllers.HelpController.ServiceInfoDTO.DataSourceDateTime">
+            <summary>
+              Data e ora della sorgente dati a cui è collegato Caravan e che, presumibilmente, è
+              condivisa con l'applicativo.
+            </summary>
+        </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.IdentityController">
             <summary>
               Servizi di utilità per la parte di gestione dell'identità.
             </summary>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.IdentityController.GetSHA256(System.String)">
+            <summary>
+              Calcola l'hash in SHA256 per il secret dato. Utile per popolare le tabelle dei secret.
+            </summary>
+            <param name="secret">Il secret di cui si deve calcolare l'hash in SHA256.</param>
+            <returns>L'hash SHA256 del secret dato.</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.IdentityController.GetSHA384(System.String)">
+            <summary>
+              Calcola l'hash in SHA384 per il secret dato. Utile per popolare le tabelle dei secret.
+            </summary>
+            <param name="secret">Il secret di cui si deve calcolare l'hash in SHA384.</param>
+            <returns>L'hash SHA384 del secret dato.</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.IdentityController.GetSHA512(System.String)">
+            <summary>
+              Calcola l'hash in SHA512 per il secret dato. Utile per popolare le tabelle dei secret.
+            </summary>
+            <param name="secret">Il secret di cui si deve calcolare l'hash in SHA512.</param>
+            <returns>L'hash SHA512 del secret dato.</returns>
+        </member>
+        <member name="M:Finsa.Caravan.WebService.Controllers.IdentityController.GetAdaptivePasswordHash(System.String)">
+            <summary>
+              Calcola l'hash adattivo per il testo dato. Utile per provare come uscirebbero le password.
+            </summary>
+            <param name="text">Il testo da provare.</param>
+            <returns>L'hash adattivo del testo dato.</returns>
         </member>
         <member name="T:Finsa.Caravan.WebService.Controllers.LoggerController">
             <summary>
