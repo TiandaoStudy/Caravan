@@ -85,7 +85,6 @@ del "$(ProjectDir)*.nupkg.bak"
 
 copy "$(SolutionDir)Caravan.WebService\Controllers\CacheController.cs" "$(ProjectDir)content/Controllers/Caravan/CacheController.cs"
 copy "$(SolutionDir)Caravan.WebService\Controllers\HelpController.cs" "$(ProjectDir)content/Controllers/Caravan/HelpController.cs"
-copy "$(SolutionDir)Caravan.WebService\Controllers\LoggerController.cs" "$(ProjectDir)content/Controllers/Caravan/LoggerController.cs"
 copy "$(SolutionDir)Caravan.WebService\Controllers\SecurityController.cs" "$(ProjectDir)content/Controllers/Caravan/SecurityController.cs"</PreBuildEvent>
   </PropertyGroup>
 </Project>
