@@ -14,10 +14,12 @@ using Finsa.Caravan.Common.Identity.Models;
 using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.DataAccess;
 using Finsa.Caravan.WebApi.Filters;
+using Finsa.CodeServices.Clock;
 using PommaLabs.Thrower;
 using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Web.Http;
 using System.Web.Http.Results;
 using WebApi.OutputCache.V2;
@@ -42,13 +44,21 @@ namespace Finsa.Caravan.WebService.Controllers
         private readonly ICaravanDataSourceManager _dataSourceManager;
 
         /// <summary>
+        ///   L'orologio di sistema.
+        /// </summary>
+        private readonly IClock _clock;
+
+        /// <summary>
         ///   Inietta le dipendenze richieste dal controller.
         /// </summary>
         /// <param name="dataSourceManager">Il gestore della sorgente dati di Caravan.</param>
-        public HelpController(ICaravanDataSourceManager dataSourceManager)
+        /// <param name="clock">L'orologio di sistema.</param>
+        public HelpController(ICaravanDataSourceManager dataSourceManager, IClock clock)
         {
             RaiseArgumentNullException.IfIsNull(dataSourceManager, nameof(dataSourceManager));
+            RaiseArgumentNullException.IfIsNull(clock, nameof(clock));
             _dataSourceManager = dataSourceManager;
+            _clock = clock;
         }
 
         /// <summary>
@@ -83,10 +93,12 @@ namespace Finsa.Caravan.WebService.Controllers
             return new ServiceInfoDTO
             {
                 Version = fvi.FileVersion,
-                HostName = hostName,
                 Bitness = bitness,
+                HostName = hostName,
+                HostDateTime = _clock.UtcNow,
                 DataSourceName = dsName,
-                DataSourceKind = dsKind
+                DataSourceKind = dsKind,
+                DataSourceDateTime = _dataSourceManager.DataSourceDateTime
             };
         }
 
@@ -99,34 +111,53 @@ namespace Finsa.Caravan.WebService.Controllers
         /// <summary>
         ///   Rappresenta una descrizione sintetica delle informazioni sul servizio.
         /// </summary>
+        [DataContract]
         public sealed class ServiceInfoDTO
         {
             /// <summary>
             ///   La versione del servizio, letta direttamente dall'assembly .NET del servizio stesso.
             /// </summary>
+            [DataMember(Order = 0)]
             public string Version { get; set; }
-
-            /// <summary>
-            ///   Il nome di rete del server su cui è ospitato il servizio.
-            /// </summary>
-            public string HostName { get; set; }
 
             /// <summary>
             ///   L'architettura (x86 oppure x64) del processo che esegue il servizio.
             /// </summary>
+            [DataMember(Order = 1)]
             public string Bitness { get; set; }
+
+            /// <summary>
+            ///   Il nome di rete del server su cui è ospitato il servizio.
+            /// </summary>
+            [DataMember(Order = 2)]
+            public string HostName { get; set; }
+
+            /// <summary>
+            ///   Data e ora UTC del server su cui è ospitato il servizio.
+            /// </summary>
+            [DataMember(Order = 3)]
+            public DateTime HostDateTime { get; set; }
 
             /// <summary>
             ///   Il nome della sorgente dati a cui è collegato Caravan e che, presumibilmente, è
             ///   condivisa con l'applicativo.
             /// </summary>
+            [DataMember(Order = 4)]
             public string DataSourceName { get; set; }
 
             /// <summary>
             ///   Il tipo della sorgente dati a cui è collegato Caravan e che, presumibilmente, è
             ///   condivisa con l'applicativo.
             /// </summary>
+            [DataMember(Order = 5)]
             public string DataSourceKind { get; set; }
+
+            /// <summary>
+            ///   Data e ora della sorgente dati a cui è collegato Caravan e che, presumibilmente, è
+            ///   condivisa con l'applicativo.
+            /// </summary>
+            [DataMember(Order = 6)]
+            public DateTime DataSourceDateTime { get; set; }
         }
     }
 }
