@@ -234,7 +234,9 @@ namespace Finsa.Caravan.WebApi.Middlewares
             public HashSet<string> FilteredHeaders = new HashSet<string>
             {
                 "Connection", // Causa errori vari - Va studiato.
-                "Content-Length" // Viene impostato in automatico dal framework.
+                "Content-Length", // Viene impostato in automatico dal framework.
+                "Cookie", // Il proxy, in questa implementazione, non muove i cookie.
+                "Host", // Inserire questo header causa enormi grattacapi in alcuni ambienti.
             };
         }
 
