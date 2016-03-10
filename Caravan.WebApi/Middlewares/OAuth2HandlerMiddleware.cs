@@ -195,7 +195,7 @@ namespace Finsa.Caravan.WebApi.Middlewares
             var authCode = owinRequest.Query["code"];
 
             // Attivo il client per il recupero dei token.
-            var tokenClient = new TokenClient("https://server/token", "client_id", "secret");
+            var tokenClient = new TokenClient("https://server/token", _settings.ClientId, _settings.ClientSecret);
             var tokenResponse = await tokenClient.RequestAuthorizationCodeAsync(authCode, owinRequest.Uri.AbsoluteUri);
 
 
@@ -218,6 +218,11 @@ namespace Finsa.Caravan.WebApi.Middlewares
             public string ClientId { get; set; }
 
             /// <summary>
+            ///   Il client SECRET da utilizzare con OAuth2.
+            /// </summary>
+            public string ClientSecret { get; set; }
+
+            /// <summary>
             ///   La lista di scope richiesti dal client.
             /// </summary>
             public IEnumerable<string> Scopes { get; set; }
@@ -231,6 +236,11 @@ namespace Finsa.Caravan.WebApi.Middlewares
             ///   L'indirizzo base del portale di OAuth2.
             /// </summary>
             public Uri Site { get; set; }
+
+            /// <summary>
+            ///   Il percorso a cui effettuare la gestione dei token.
+            /// </summary>
+            public PathString TokenPath { get; set; }
 
             /// <summary>
             ///   La modalità di generazione del parametro "nonce". Viene impostato di default a

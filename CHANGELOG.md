@@ -1,4 +1,5 @@
 ### v1.49.0 (10/03/2016) ###
+
 * [UPD] HttpProxyMiddleware ora ignora i cookie e l'header "Host".
 * [UPD] Il servizio "help/serviceInfo" ora restituisce data e ora del server e della sorgente dati.
 
