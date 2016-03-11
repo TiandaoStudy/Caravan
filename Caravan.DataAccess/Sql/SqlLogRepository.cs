@@ -10,7 +10,6 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using AutoMapper;
 using Common.Logging;
 using Finsa.Caravan.Common;
 using Finsa.Caravan.Common.Logging;
@@ -131,8 +130,8 @@ namespace Finsa.Caravan.DataAccess.Sql
                                       where s.AppId == e.AppId && s.LogLevel == e.LogLevel
                                       where DbFunctions.DiffDays(e.Date, utcNow) > s.Days
                                       select e;
-                        
-                        var pagedOldLogs = oldLogs.Take(pageSize).ToArray();                        
+
+                        var pagedOldLogs = oldLogs.Take(pageSize).ToArray();
                         tmpCtx.LogEntries.RemoveRange(pagedOldLogs);
                         await tmpCtx.SaveChangesAsync();
 
@@ -142,7 +141,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                             continue;
                         }
                     }
-                }                
+                }
 
                 // We delete enough entries to preserve the upper limit.
 
@@ -201,7 +200,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 return q.OrderByDescending(s => s.Id)
                     .ThenByDescending(s => s.Date)
                     .AsEnumerable()
-                    .Select(Mapper.Map<LogEntry>)
+                    .Select(CaravanDataAccessConfig.Mapper.Map<LogEntry>)
                     .ToArray();
             }
         }
@@ -302,7 +301,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                     Value9 = e.Value9,
                 });
 
-                return result.Select(Mapper.Map<LogEntry>).ToArray();
+                return result.Select(CaravanDataAccessConfig.Mapper.Map<LogEntry>).ToArray();
             }
         }
 
@@ -314,7 +313,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                     .Include(s => s.App)
                     .Where(e => e.App.Name == appName)
                     .Where(e => e.Id == logId)
-                    .Select(Mapper.Map<LogEntry>)
+                    .Select(CaravanDataAccessConfig.Mapper.Map<LogEntry>)
                     .FirstAsOption();
             }
         }
@@ -352,7 +351,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 return q.OrderBy(s => s.App.Name)
                     .ThenBy(s => s.LogLevel)
                     .AsEnumerable()
-                    .Select(Mapper.Map<LogSetting>)
+                    .Select(CaravanDataAccessConfig.Mapper.Map<LogSetting>)
                     .ToArray();
             }
         }

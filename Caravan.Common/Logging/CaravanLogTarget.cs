@@ -10,7 +10,6 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using AutoMapper;
 using Finsa.Caravan.Common.Logging.Models;
 using Ninject;
 using NLog;
@@ -166,7 +165,7 @@ namespace Finsa.Caravan.Common.Logging
             else
             {
                 // Se non lo è, cerco di generare comunque un messaggio abbozzato.
-                logEntry = CaravanLogger.ToLogEntry(Mapper.Map<LogLevel>(logEvent.Level), new LogMessage
+                logEntry = CaravanLogger.ToLogEntry(CaravanCommonConfig.Mapper.Map<LogLevel>(logEvent.Level), new LogMessage
                 {
                     ShortMessage = logEvent.FormattedMessage?.Trim(),
                     Exception = logEvent.Exception

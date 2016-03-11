@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CaravanErrorCodes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CaravanWebApiConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CaravanWebApiNinjectConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CaravanWebServiceHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controllers\AbstractReportsController.cs" />

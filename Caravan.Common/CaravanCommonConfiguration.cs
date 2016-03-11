@@ -10,8 +10,6 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using AutoMapper;
-using Common.Logging;
 using Finsa.CodeServices.Common.Portability;
 using PommaLabs.KVLite;
 using System;
@@ -51,17 +49,10 @@ namespace Finsa.Caravan.Common
                 ConfigurationSection = "caravan.common"
             });
 
-            OnStart();
-
             return instance;
         }
 
         #endregion Static instance
-
-        #region Static configuration
-
-
-        #endregion
 
         /// <summary>
         ///   Il nome identificativo dell'applicazione Caravan, rigorosamente minuscolo.
@@ -74,26 +65,11 @@ namespace Finsa.Caravan.Common
         public string AppDescription { get; set; } = "My WOW! Caravan App";
 
         /// <summary>
-        ///   L'intervallo dopo il quale le variabili inserite da
-        ///   Caravan dentro la cache di tipo <see cref="ICache"/> vengono automaticamente cancellate.
+        ///   L'intervallo dopo il quale le variabili inserite da Caravan dentro la cache di tipo
+        ///   <see cref="ICache"/> vengono automaticamente cancellate.
         /// 
         ///   L'intervallo di default è di 30 minuti.
         /// </summary>
         public TimeSpan CacheLifetime { get; set; } = TimeSpan.FromMinutes(30);
-
-        #region OnStart
-
-        private static void OnStart()
-        {
-            // Mappings
-            Mapper.CreateMap<string, LogLevel>().ConvertUsing(str =>
-            {
-                LogLevel logLevel;
-                return Enum.TryParse(str, true, out logLevel) ? logLevel : LogLevel.Debug;
-            });
-            Mapper.CreateMap<NLog.LogLevel, LogLevel>();
-        }
-
-        #endregion OnStart
     }
 }

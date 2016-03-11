@@ -6,7 +6,7 @@
     <SharedGUID>11eac664-01e9-424e-9ec5-8fa8f39b20e9</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Caravan.DataAccess</Import_RootNamespace>
+    <Import_RootNamespace>Finsa.Caravan.DataAccess</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)README.md" />
@@ -19,6 +19,7 @@
     <None Include="$(MSBuildThisFileDirectory)Sql\SqlServer\Scripts\Tables.sqlce" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)CaravanDataAccessConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CaravanDataAccessConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CaravanDataAccessNinjectConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CaravanDataSource.cs" />

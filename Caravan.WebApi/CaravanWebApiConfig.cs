@@ -11,40 +11,35 @@
 // the License.
 
 using AutoMapper;
-using Common.Logging;
-using System;
+using Finsa.Caravan.Common;
+using Finsa.Caravan.Common.Security.Models;
+using Finsa.Caravan.WebApi.Models.Security;
 
-namespace Finsa.Caravan.Common
+namespace Finsa.Caravan.WebApi
 {
     /// <summary>
-    ///   Configurazione per la libreria Common.
+    ///   Configurazione per la libreria WebApi.
     /// </summary>
-    public static class CaravanCommonConfig
+    public static class CaravanWebApiConfig
     {
         #region AutoMapper
 
         /// <summary>
-        ///   Imposta le mappature necessarie alla libreria Common.
+        ///   Imposta le mappature necessarie alla libreria WebApi.
         /// </summary>
         /// <param name="cfg">La configurazione per AutoMapper.</param>
-        /// <returns>La configurazione modificata per la libreria Common.</returns>
+        /// <returns>La configurazione modificata per la libreria WebApi.</returns>
         public static IMapperConfiguration SetMappings(IMapperConfiguration cfg)
         {
-            cfg.CreateMap<string, LogLevel>().ConvertUsing(str =>
-            {
-                LogLevel logLevel;
-                return Enum.TryParse(str, true, out logLevel) ? logLevel : LogLevel.Debug;
-            });
-
-            cfg.CreateMap<NLog.LogLevel, LogLevel>();
+            cfg.CreateMap<SecApp, LinkedSecApp>();
 
             return cfg;
         }
 
         /// <summary>
-        ///   Il mappatore della libreria Common.
+        ///   Il mappatore della libreria WebApi.
         /// </summary>
-        public static IMapper Mapper = new MapperConfiguration(cfg => SetMappings(cfg)).CreateMapper();
+        public static IMapper Mapper = new MapperConfiguration(cfg => SetMappings(CaravanCommonConfig.SetMappings(cfg))).CreateMapper();
 
         #endregion AutoMapper
     }

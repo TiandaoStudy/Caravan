@@ -1,4 +1,4 @@
-### v1.50.0 (11/03/2016) ###
+### v1.50.0 (12/03/2016) ###
 
 * [FIX] SqlCorsPolicyService ora gestisce anche gli URL di tipo "file://" (issue #2).
 * [REM] WebApi non permette più di disabilitare le dipendenze di IdentityServer. Risolve bug allo startup.
@@ -6,6 +6,7 @@
 * [UDP] Aggiornato IdentityServer alla versione 2.4.0.
 * [REM] Rimosso il vecchio Reporting Service, ora ne stiamo usando un altro.
 * [FIX] Il DbContext aveva perso il riferimento all'attributo per la gestione del tipo delle date.
+* [UPD] Aggiornate le mappature di Caravan alle nuove API di AutoMapper.
 
 ### v1.49.0 (10/03/2016) ###
 

@@ -47,8 +47,6 @@ namespace Finsa.Caravan.WebService
                 ConfigurationSection = "caravan.webService"
             });
 
-            OnStart();
-
             return instance;
         }
 
@@ -70,13 +68,5 @@ namespace Finsa.Caravan.WebService
         ///   per firmare i TOKEN emessi.
         /// </summary>
         public string Identity_SigningCertificatePassword { get; set; } = "FinsaPassword";
-
-        #region OnStart
-
-        private static void OnStart()
-        {
-        }
-
-        #endregion OnStart
     }
 }

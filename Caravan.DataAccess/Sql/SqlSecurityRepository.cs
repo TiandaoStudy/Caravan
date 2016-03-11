@@ -10,7 +10,6 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
-using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using EntityFramework.Extensions;
 using Finsa.Caravan.Common;
@@ -80,7 +79,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                     q = q.Where(a => a.Name == appName);
                 }
 
-                return await q.ProjectTo<SecApp>().ToArrayAsync();
+                return await q.ProjectTo<SecApp>(CaravanDataAccessConfig.Mapper).ToArrayAsync();
             }
         }
 
@@ -130,7 +129,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 }
 
                 return q.AsEnumerable()
-                    .Select(Mapper.Map<SecGroup>)
+                    .Select(CaravanDataAccessConfig.Mapper.Map<SecGroup>)
                     .ToArray();
             }
         }
@@ -205,7 +204,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             return _queryableDbContext.SecUsersWithGroupsAndRoles
                 .Where(u => u.AppId == appId)
                 .Where(u => u.Roles.Any(r => r.GroupId == sqlGroup.Id))
-                .ProjectTo<SecUser>();
+                .ProjectTo<SecUser>(CaravanDataAccessConfig.Mapper);
         }
 
         #endregion Groups
@@ -237,7 +236,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 }
 
                 return q.AsEnumerable()
-                    .Select(Mapper.Map<SecRole>)
+                    .Select(CaravanDataAccessConfig.Mapper.Map<SecRole>)
                     .ToArray();
             }
         }
@@ -316,7 +315,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             return _queryableDbContext.SecUsersWithGroupsAndRoles
                 .Where(u => u.AppId == appId)
                 .Where(u => u.Roles.Any(r => r.Id == sqlRole.Id))
-                .ProjectTo<SecUser>();
+                .ProjectTo<SecUser>(CaravanDataAccessConfig.Mapper);
         }
 
         #endregion Roles
@@ -347,7 +346,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                     q = q.Where(u => u.Email == userEmail);
                 }
 
-                return q.ProjectTo<SecUser>().FirstAsOption();
+                return q.ProjectTo<SecUser>(CaravanDataAccessConfig.Mapper).FirstAsOption();
             }
         }
 
@@ -358,7 +357,7 @@ namespace Finsa.Caravan.DataAccess.Sql
             // La chiamata sopra mi assicura che il ruolo ci sia.
             return _queryableDbContext.SecUsersWithGroupsAndRoles
                 .Where(u => u.AppId == appId)
-                .ProjectTo<SecUser>();
+                .ProjectTo<SecUser>(CaravanDataAccessConfig.Mapper);
         }
 
         protected override async Task AddUserAsyncInternal(string appName, SecUser newUser)
@@ -538,7 +537,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                     .Where(c => c.App.Id == appId);
 
                 return q.AsEnumerable()
-                    .Select(Mapper.Map<SecContext>)
+                    .Select(CaravanDataAccessConfig.Mapper.Map<SecContext>)
                     .ToArray();
             }
         }
@@ -562,7 +561,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                     q = q.Where(o => o.Context.Name == contextName);
                 }
 
-                return await q.ProjectTo<SecObject>().ToArrayAsync();
+                return await q.ProjectTo<SecObject>(CaravanDataAccessConfig.Mapper).ToArrayAsync();
             }
         }
 
@@ -593,7 +592,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                     q = q.Where(o => o.Context.Name == contextName);
                 }
 
-                return await q.ProjectTo<SecObject>().ToArrayAsync();
+                return await q.ProjectTo<SecObject>(CaravanDataAccessConfig.Mapper).ToArrayAsync();
             }
         }
 
@@ -629,7 +628,7 @@ namespace Finsa.Caravan.DataAccess.Sql
                 }
 
                 return q.AsEnumerable()
-                    .Select(Mapper.Map<SecEntry>)
+                    .Select(CaravanDataAccessConfig.Mapper.Map<SecEntry>)
                     .ToArray();
             }
         }

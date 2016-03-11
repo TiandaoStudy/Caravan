@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Finsa.Caravan.Common.Logging.Models;
+﻿using Finsa.Caravan.Common.Logging.Models;
 using Finsa.Caravan.Common.Security.Models;
 using Finsa.Caravan.WebApi.Models.Links;
 using Newtonsoft.Json;
@@ -14,12 +13,12 @@ namespace Finsa.Caravan.WebApi.Models.Security
     {
         static LinkedSecApp()
         {
-            Mapper.CreateMap<SecApp, LinkedSecApp>();
+            
         }
 
         public LinkedSecApp(SecApp secApp, UrlHelper url)
         {
-            Mapper.Map(secApp, this);
+            CaravanWebApiConfig.Mapper.Map(secApp, this);
             Links.AddLink(new SelfLink(url.Link("GetApps", new { }), Link.HttpGetMethod));
         }
 
