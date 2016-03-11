@@ -27,8 +27,8 @@ A short description of the package. If specified, this shows up in the middle pa
             <dependency id="EntityFramework.CodeFirstStoreFunctions" version="[1.0.0, 2.0.0)" />
             <dependency id="EntityFramework.Triggers" version="[5.4.0, 6.0.0)" />
             <dependency id="Finsa.Caravan.DataAccess.Runtime" version="1.49.0" />
-            <dependency id="IdentityServer3.EntityFramework" version="[2.2.0, 3.0.0)" />
-            <dependency id="NMemory" version="[1.1.2, 2.0.0)" />
+            <dependency id="IdentityServer3.EntityFramework" version="[2.4.1]" />
+            <dependency id="NMemory" version="1.1.2" />
             <dependency id="PommaLabs.KVLite.EntityFramework" version="[5.2.1, 6.0.0)" />
         </dependencies>
         <references></references>
