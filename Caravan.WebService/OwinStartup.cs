@@ -75,7 +75,8 @@ namespace Finsa.Caravan.WebService
             IdentityConfig.Build(app);
         }
 
-        private static IKernel CreateKernel() {
+        private static IKernel CreateKernel()
+        {
             if (CaravanServiceProvider.NinjectKernel != null)
             {
                 return CaravanServiceProvider.NinjectKernel;
@@ -83,7 +84,6 @@ namespace Finsa.Caravan.WebService
 
             var webApiSettings = new CaravanWebApiNinjectConfig.Settings();
             webApiSettings.IdentityManager.Enabled = true;
-            webApiSettings.IdentityServer.Enabled = true;
 
             return CaravanServiceProvider.NinjectKernel = new StandardKernel(
                 new NinjectConfig(),

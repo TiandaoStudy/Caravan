@@ -72,12 +72,9 @@ namespace Finsa.Caravan.WebApi
                     }
 
                     // Dipendenze per il server OAuth2.
-                    if (_settings.IdentityServer.Enabled)
-                    {
-                        Bind<IdentityServer3.Core.Configuration.IdentityServerServiceFactory>()
-                            .To<IdentityServerServiceFactory>()
-                            .InSingletonScope();
-                    }
+                    Bind<IdentityServer3.Core.Configuration.IdentityServerServiceFactory>()
+                        .To<IdentityServerServiceFactory>()
+                        .InSingletonScope();
 
                     break;
 
@@ -133,12 +130,6 @@ namespace Finsa.Caravan.WebApi
             /// </summary>
             public sealed class IdentityServerSettings
             {
-                /// <summary>
-                ///   Abilita la registrazione delle dipendenze per IdentityServer.
-                /// 
-                ///   Disabilitato di default.
-                /// </summary>
-                public bool Enabled { get; set; } = false;
             }
         }
     }

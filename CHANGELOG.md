@@ -1,3 +1,8 @@
+### v1.50.0 (11/03/2016) ###
+
+* [FIX] SqlCorsPolicyService ora gestisce anche gli URL di tipo "file://" (issue #2).
+* [REM] WebApi non permette più di disabilitare le dipendenze di IdentityServer. Risolve bug allo startup.
+
 ### v1.49.0 (10/03/2016) ###
 
 * [UPD] HttpProxyMiddleware ora ignora i cookie e l'header "Host".

@@ -38,35 +38,50 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Services
         {
             using (var ctx = _dbContextFactory.Create())
             {
-                var query =
-                    from client in ctx.IdnClients
-                    from allowed in client.AllowedCorsOrigins
-                    select allowed.Origin;
+                var query = from client in ctx.IdnClients
+                            from allowed in client.AllowedCorsOrigins
+                            select allowed.Origin;
 
                 var urls = await query.ToArrayAsync();
 
-                var origins = urls.Select(GetOrigin).Where(x => x != null).Distinct();
+                var origins = urls.Select(GetOrigin).Where(x => x != null);
 
                 var result = origins.Contains(origin, StringComparer.OrdinalIgnoreCase);
 
                 return result;
-            }                
+            }
         }
 
         private static string GetOrigin(string url)
         {
-            if (url != null && (url.StartsWith("http://", StringComparison.Ordinal) || url.StartsWith("https://", StringComparison.Ordinal)))
+            if (url == null)
             {
-                var idx = url.IndexOf("//", StringComparison.Ordinal);
+                // Non è possibile fare confronti con un indirizzo nullo.
+                return null;
+            }
+
+            // Il tipo di confronto applicato di default nei passi successvi.
+            const StringComparison cmp = StringComparison.OrdinalIgnoreCase;
+
+            if ((url.StartsWith("http://", cmp) || url.StartsWith("https://", cmp)))
+            {
+                var idx = url.IndexOf("//", cmp);
                 if (idx > 0)
                 {
-                    idx = url.IndexOf("/", idx + 2, StringComparison.Ordinal);
+                    idx = url.IndexOf("/", idx + 2, cmp);
                     if (idx >= 0)
                     {
                         url = url.Substring(0, idx);
                     }
                     return url;
                 }
+            }
+
+            if (url.Equals("file://", cmp))
+            {
+                // Gestione aggiuntiva per consentire richieste da parte di applicazioni mobile
+                // ibride, costruite con Cordova o PhoneGap.
+                return url;
             }
 
             return null;
