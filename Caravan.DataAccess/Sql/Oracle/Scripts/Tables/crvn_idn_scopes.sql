@@ -13,6 +13,7 @@ CREATE TABLE mydb.crvn_idn_scopes
    , CSCO_INCL_ALL_CLAIMS_FOR_USER  NUMBER(1)      DEFAULT 0            NOT NULL 
    , CSCO_CLAIMS_RULE               NVARCHAR2(200)
    , CSCO_SHOW_IN_DISCOVERY_DOC     NUMBER(1)      DEFAULT 1            NOT NULL 
+   , CSCO_ALLOW_UNRESTR_INTROSP     NUMBER(1)      DEFAULT 0            NOT NULL 
 
    -- INSERT tracking
    , TRCK_INSERT_DATE               DATE            NOT NULL
@@ -61,5 +62,7 @@ COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_CLAIMS_RULE
      IS 'Rule for determining which claims should be included in the token (this is implementation specific)';
 COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_SHOW_IN_DISCOVERY_DOC
      IS 'Specifies whether this scope is shown in the discovery document. Defaults to true';
+COMMENT ON COLUMN mydb.crvn_idn_scopes.CSCO_ALLOW_UNRESTR_INTROSP
+     IS 'Specifies whether this scope is allowed to see other scopes when using the introspection endpoint. Defaults to false';
 
 CREATE SEQUENCE mydb.sq_crvn_idn_scopes NOCACHE;

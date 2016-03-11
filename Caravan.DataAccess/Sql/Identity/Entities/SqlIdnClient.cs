@@ -85,6 +85,11 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
         /// </summary>
         public virtual bool LogoutSessionRequired { get; set; } = true;
 
+        /// <summary>
+        ///   Specifies if the client will always show a confirmation page for sign-out. Defaults to false.
+        /// </summary>
+        public virtual bool RequireSignOutPrompt { get; set; } = false;
+
         public virtual bool AllowAccessToAllScopes { get; set; }
         public virtual ICollection<SqlIdnClientScope> AllowedScopes { get; set; }
 
@@ -180,6 +185,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
             Property(x => x.AllowClientCredentialsOnly).HasColumnName("CCLI_ALLOW_CLIENT_CREDS_ONLY");
             Property(x => x.LogoutUri).HasColumnName("CCLI_LOGOUT_URI");
             Property(x => x.LogoutSessionRequired).HasColumnName("CCLI_LOGOUT_SESSION_REQUIRED");
+            Property(x => x.RequireSignOutPrompt).HasColumnName("CCLI_REQUIRE_SIGNOUT_PROMPT");
             Property(x => x.AllowAccessToAllScopes).HasColumnName("CCLI_ALLOW_ACCESSALL_SCOPES");
             Property(x => x.IdentityTokenLifetime).HasColumnName("CCLI_IDENTITY_TOKEN_LIFETIME");
             Property(x => x.AccessTokenLifetime).HasColumnName("CCLI_ACCESS_TOKEN_LIFETIME");

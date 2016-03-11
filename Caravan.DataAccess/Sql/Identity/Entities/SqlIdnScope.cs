@@ -65,7 +65,16 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
         [StringLength(200)]
         public virtual string ClaimsRule { get; set; }
 
-        public virtual bool ShowInDiscoveryDocument { get; set; }
+        /// <summary>
+        ///   Specifies whether this scope is shown in the discovery document. Defaults to true.
+        /// </summary>
+        public virtual bool ShowInDiscoveryDocument { get; set; } = true;
+
+        /// <summary>
+        ///   Specifies whether this scope is allowed to see other scopes when using the
+        ///   introspection endpoint. Defaults to false.
+        /// </summary>
+        public virtual bool AllowUnrestrictedIntrospection { get; set; } = false;
     }
 
     /// <summary>
@@ -91,6 +100,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Entities
             Property(x => x.IncludeAllClaimsForUser).HasColumnName("CSCO_INCL_ALL_CLAIMS_FOR_USER");
             Property(x => x.ClaimsRule).HasColumnName("CSCO_CLAIMS_RULE");
             Property(x => x.ShowInDiscoveryDocument).HasColumnName("CSCO_SHOW_IN_DISCOVERY_DOC");
+            Property(x => x.AllowUnrestrictedIntrospection).HasColumnName("CSCO_ALLOW_UNRESTR_INTROSP");
         }
     }
 }

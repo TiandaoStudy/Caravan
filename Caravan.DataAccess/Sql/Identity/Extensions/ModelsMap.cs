@@ -23,29 +23,33 @@ using System.Security.Claims;
 
 namespace Finsa.Caravan.DataAccess.Sql.Identity.Extensions
 {
-    public static class ModelsMap
+    internal static class ModelsMap
     {
+        public static IMapper Mapper { get; set; }
+
         static ModelsMap()
         {
-            Mapper.CreateMap<Scope, SqlIdnScope>(MemberList.Source)
-                .ForSourceMember(x => x.Claims, opts => opts.Ignore())
-                .ForMember(x => x.ScopeClaims, opts => opts.MapFrom(src => src.Claims.Select(x => x)))
-                .ForMember(x => x.ScopeSecrets, opts => opts.MapFrom(src => src.ScopeSecrets.Select(x => x)));
+            Mapper = new MapperConfiguration(config =>
+            {
+                config.CreateMap<Scope, SqlIdnScope>(MemberList.Source)
+                    .ForSourceMember(x => x.Claims, opts => opts.Ignore())
+                    .ForMember(x => x.ScopeClaims, opts => opts.MapFrom(src => src.Claims.Select(x => x)))
+                    .ForMember(x => x.ScopeSecrets, opts => opts.MapFrom(src => src.ScopeSecrets.Select(x => x)));
+                config.CreateMap<ScopeClaim, SqlIdnScopeClaim>(MemberList.Source);
+                config.CreateMap<Secret, SqlIdnScopeSecret>(MemberList.Source);
 
-            Mapper.CreateMap<ScopeClaim, SqlIdnScopeClaim>(MemberList.Source);
-
-            Mapper.CreateMap<Secret, SqlIdnClientSecret>(MemberList.Source);
-
-            Mapper.CreateMap<Client, SqlIdnClient>(MemberList.Source)
-                .ForMember(x => x.UpdateAccessTokenOnRefresh, opt => opt.MapFrom(src => src.UpdateAccessTokenClaimsOnRefresh))
-                .ForMember(x => x.AllowAccessToAllCustomGrantTypes, opt => opt.MapFrom(src => src.AllowAccessToAllCustomGrantTypes))
-                .ForMember(x => x.AllowedCustomGrantTypes, opt => opt.MapFrom(src => src.AllowedCustomGrantTypes.Select(x => new SqlIdnClientCustomGrantType { GrantType = x })))
-                .ForMember(x => x.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris.Select(x => new SqlIdnClientRedirectUri { Uri = x })))
-                .ForMember(x => x.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris.Select(x => new SqlIdnClientPostLogoutRedirectUri { Uri = x })))
-                .ForMember(x => x.IdentityProviderRestrictions, opt => opt.MapFrom(src => src.IdentityProviderRestrictions.Select(x => new SqlIdnClientIdPRestriction { Provider = x })))
-                .ForMember(x => x.AllowedScopes, opt => opt.MapFrom(src => src.AllowedScopes.Select(x => new SqlIdnClientScope { Scope = x })))
-                .ForMember(x => x.AllowedCorsOrigins, opt => opt.MapFrom(src => src.AllowedCorsOrigins.Select(x => new SqlIdnClientCorsOrigin { Origin = x })))
-                .ForMember(x => x.Claims, opt => opt.MapFrom(src => src.Claims.Select(x => new SqlIdnClientClaim { Type = x.Type, Value = x.Value })));
+                config.CreateMap<Secret, SqlIdnClientSecret>(MemberList.Source);
+                config.CreateMap<Client, SqlIdnClient>(MemberList.Source)
+                    .ForMember(x => x.UpdateAccessTokenOnRefresh, opt => opt.MapFrom(src => src.UpdateAccessTokenClaimsOnRefresh))
+                    .ForMember(x => x.AllowAccessToAllCustomGrantTypes, opt => opt.MapFrom(src => src.AllowAccessToAllCustomGrantTypes))
+                    .ForMember(x => x.AllowedCustomGrantTypes, opt => opt.MapFrom(src => src.AllowedCustomGrantTypes.Select(x => new SqlIdnClientCustomGrantType { GrantType = x })))
+                    .ForMember(x => x.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris.Select(x => new SqlIdnClientRedirectUri { Uri = x })))
+                    .ForMember(x => x.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris.Select(x => new SqlIdnClientPostLogoutRedirectUri { Uri = x })))
+                    .ForMember(x => x.IdentityProviderRestrictions, opt => opt.MapFrom(src => src.IdentityProviderRestrictions.Select(x => new SqlIdnClientIdPRestriction { Provider = x })))
+                    .ForMember(x => x.AllowedScopes, opt => opt.MapFrom(src => src.AllowedScopes.Select(x => new SqlIdnClientScope { Scope = x })))
+                    .ForMember(x => x.AllowedCorsOrigins, opt => opt.MapFrom(src => src.AllowedCorsOrigins.Select(x => new SqlIdnClientCorsOrigin { Origin = x })))
+                    .ForMember(x => x.Claims, opt => opt.MapFrom(src => src.Claims.Select(x => new SqlIdnClientClaim { Type = x.Type, Value = x.Value })));
+            }).CreateMapper();
         }
 
         public static SqlIdnScope ToEntity(this Scope s)
