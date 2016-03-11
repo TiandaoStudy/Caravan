@@ -15,6 +15,7 @@
  */
 
 using AutoMapper;
+using Finsa.Caravan.Common.Identity.Models;
 using Finsa.Caravan.DataAccess.Sql.Identity.Entities;
 using System.Linq;
 using System.Security.Claims;
@@ -38,7 +39,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Extensions
 
                 config.CreateMap<SqlIdnClientSecret, IdentityServer3.Core.Models.Secret>(MemberList.Destination)
                      .ForMember(dest => dest.Type, opt => opt.Condition(srs => !srs.IsSourceValueNull));
-                config.CreateMap<SqlIdnClient, IdentityServer3.Core.Models.Client>(MemberList.Destination)
+                config.CreateMap<SqlIdnClient, IdnClient>(MemberList.Destination)
                     .ForMember(x => x.UpdateAccessTokenClaimsOnRefresh, opt => opt.MapFrom(src => src.UpdateAccessTokenOnRefresh))
                     .ForMember(x => x.AllowAccessToAllCustomGrantTypes, opt => opt.MapFrom(src => src.AllowAccessToAllCustomGrantTypes))
                     .ForMember(x => x.AllowedCustomGrantTypes, opt => opt.MapFrom(src => src.AllowedCustomGrantTypes.Select(x => x.GrantType)))
@@ -57,10 +58,10 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Extensions
             return Mapper.Map<SqlIdnScope, IdentityServer3.Core.Models.Scope>(s);
         }
 
-        public static IdentityServer3.Core.Models.Client ToModel(this SqlIdnClient s)
+        public static IdnClient ToModel(this SqlIdnClient s)
         {
             if (s == null) return null;
-            return Mapper.Map<SqlIdnClient, IdentityServer3.Core.Models.Client>(s);
+            return Mapper.Map<SqlIdnClient, IdnClient>(s);
         }
     }
 }
