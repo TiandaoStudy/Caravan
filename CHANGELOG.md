@@ -2,6 +2,8 @@
 
 * [FIX] SqlCorsPolicyService ora gestisce anche gli URL di tipo "file://" (issue #2).
 * [REM] WebApi non permette più di disabilitare le dipendenze di IdentityServer. Risolve bug allo startup.
+* [UPD] Aggiornato AutoMapper alla versione 4.2.1.
+* [UDP] Aggiornato IdentityServer alla versione 2.4.0.
 
 ### v1.49.0 (10/03/2016) ###
 
