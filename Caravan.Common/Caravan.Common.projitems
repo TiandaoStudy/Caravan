@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BusinessModeling\StateMachine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BusinessModeling\Workflow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CaravanCommonConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CaravanCommonConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CaravanCommonNinjectConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reporting\IDataSourceRequiredServices.cs" />

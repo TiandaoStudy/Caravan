@@ -5,6 +5,7 @@
 * [UPD] Aggiornato AutoMapper alla versione 4.2.1.
 * [UDP] Aggiornato IdentityServer alla versione 2.4.0.
 * [REM] Rimosso il vecchio Reporting Service, ora ne stiamo usando un altro.
+* [FIX] Il DbContext aveva perso il riferimento all'attributo per la gestione del tipo delle date.
 
 ### v1.49.0 (10/03/2016) ###
 

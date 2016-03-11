@@ -10,8 +10,10 @@
 // or implied. See the License for the specific language governing permissions and limitations under
 // the License.
 
+using Finsa.Caravan.DataAccess.Sql.Attributes;
 using System.Data.Common;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 namespace Finsa.Caravan.DataAccess.Sql
 {
@@ -55,12 +57,19 @@ namespace Finsa.Caravan.DataAccess.Sql
             : base(dbConnection)
         {
             // Il lazy loading viene disabilitato dalla classe che si occupa di generare i contesti.
+            Init();
         }
 
         public SqlDbContext(ICaravanDataSourceManager dataSourceManager)
             : base(dataSourceManager.CreateConnection())
         {
             // Il lazy loading viene disabilitato dalla classe che si occupa di generare i contesti.
+            Init();
+        }
+
+        private void Init()
+        {
+            (this as IObjectContextAdapter).ObjectContext.ObjectMaterialized += (sender, e) => DateTimeKindAttribute.Apply(e.Entity);
         }
     }
 }

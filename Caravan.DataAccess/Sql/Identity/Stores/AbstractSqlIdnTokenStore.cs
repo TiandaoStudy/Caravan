@@ -75,9 +75,9 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
         {
             using (var ctx = DbContextFactory.Create())
             {
-                var token = await ctx.IdnTokens.FindAsync(key, TokenTypeString);
+                var token = await ctx.IdnTokens.Where(t => t.Key == key && t.TokenTypeString == TokenTypeString).FirstOrDefaultAsync();
 
-                if (token == null || token.Expiry < Clock.UtcNowOffset)
+                if (token == null || token.Expiry < Clock.UtcNow)
                 {
                     return null;
                 }
@@ -90,7 +90,7 @@ namespace Finsa.Caravan.DataAccess.Sql.Identity.Stores
         {
             using (var ctx = DbContextFactory.Create())
             {
-                var token = await ctx.IdnTokens.FindAsync(key, TokenTypeString);
+                var token = await ctx.IdnTokens.Where(t => t.Key == key && t.TokenTypeString == TokenTypeString).FirstOrDefaultAsync();
 
                 if (token != null)
                 {
